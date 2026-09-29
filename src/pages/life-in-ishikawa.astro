@@ -12,7 +12,8 @@ const journeys = [
       'Siapkan alamat tempat tinggal pertama dan informasi kontak universitas.',
       'Pahami kebutuhan awal: uang, telepon/internet, transportasi, obat pribadi, dan kebutuhan musim.',
       'Baca panduan resmi untuk pendatang baru sebelum berangkat.'
-    ]
+    ],
+    href: '/life-in-ishikawa/sebelum-berangkat/'
   },
   {
     id: 'baru-tiba',
@@ -150,6 +151,11 @@ const officialSources = [
                 </li>
               ))}
             </ol>
+            {journey.href && (
+              <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}${journey.href}`} class="mt-6 inline-flex rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition hover:bg-slate-700">
+                Buka panduan lengkap →
+              </a>
+            )}
           </div>
         </article>
       ))}
