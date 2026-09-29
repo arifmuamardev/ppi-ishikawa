@@ -4,6 +4,15 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '17 0 * * 1'
+  push:
+    branches: [main]
+    paths:
+      - 'src/pages/life-in-ishikawa.astro'
+      - 'src/pages/life-in-ishikawa/**'
+      - 'src/components/Guide*.astro'
+      - 'src/data/survival.ts'
+      - 'scripts/check-links.mjs'
+      - '.github/workflows/link-check.yml'
 
 permissions:
   contents: read
