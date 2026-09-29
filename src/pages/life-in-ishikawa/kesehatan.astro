@@ -1,0 +1,305 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../utils/paths';
+
+const sections = [
+  {
+    label: '01',
+    title: 'Mulai dari klinik yang sesuai',
+    intro: 'Untuk keluhan yang tidak mengancam nyawa, biasanya lebih efisien memulai dari clinic/medical institution yang sesuai dengan gejala dan jam layanan, bukan langsung menuju emergency department.',
+    points: [
+      'Cari fasilitas berdasarkan lokasi, specialty, jam layanan, dan dukungan bahasa.',
+      'Gunakan Medical Information Net (NABII) atau portal IFIE untuk mencari fasilitas di Ishikawa.',
+      'Hubungi fasilitas terlebih dahulu bila informasi jam layanan atau bahasa sangat penting bagi Anda.',
+      'Jika membutuhkan rujukan atau pemeriksaan lanjutan, fasilitas pertama dapat mengarahkan ke layanan yang lebih sesuai.'
+    ]
+  },
+  {
+    label: '02',
+    title: 'Gunakan medical insurance yang berlaku',
+    intro: 'Cara pembayaran dan bagian biaya yang ditanggung bergantung pada medical insurance Anda. Jangan menganggap semua mahasiswa mempunyai skema yang sama.',
+    points: [
+      'Bawa bukti eligibility/insurance yang berlaku saat berobat.',
+      'Jika baru tiba dan proses insurance belum selesai, tanyakan terlebih dahulu ke municipality atau university support office tentang status Anda.',
+      'Untuk National Health Insurance, detail enrollment dan contribution ditangani municipality.',
+      'Jangan memakai informasi contribution atau copayment lama sebagai patokan permanen; sistem dan detail dapat berubah.'
+    ]
+  },
+  {
+    label: '03',
+    title: 'Cari fasilitas yang mendukung bahasa asing',
+    intro: 'Ishikawa dan MHLW menyediakan jalur pencarian fasilitas yang dapat menerima foreign patients atau memberikan dukungan bahasa.',
+    points: [
+      'Medical Information Net dapat memfilter fasilitas berdasarkan area dan foreign-language support.',
+      'IFIE menyediakan halaman khusus untuk menemukan fasilitas dengan dukungan bahasa asing di Ishikawa.',
+      'Daftar fasilitas MHLW diperbarui secara berkala; tetap hubungi fasilitas sebelum datang jika Anda membutuhkan dukungan bahasa tertentu.',
+      'Ketersediaan penerjemah, phone interpretation, atau translation device dapat berbeda antar fasilitas.'
+    ]
+  },
+  {
+    label: '04',
+    title: 'Malam, hari libur, dan saat klinik biasa tutup',
+    intro: 'Layanan yang tersedia di malam hari atau hari libur berbeda dari jam kerja biasa. Gunakan sumber municipality atau Medical Information Net untuk informasi yang sedang berlaku.',
+    points: [
+      'Kanazawa menyediakan holiday duty doctor information yang diperbarui secara berkala.',
+      'Jadwal dapat berubah mendadak; hubungi fasilitas sebelum datang bila memungkinkan.',
+      'Medical Information Net juga menyediakan pencarian informasi layanan malam/hari libur.',
+      'Untuk anak, Kanazawa Fire Department mengarahkan ke layanan pediatric emergency information dan #8000.'
+    ]
+  },
+  {
+    label: '05',
+    title: 'Kapan menggunakan ambulans',
+    intro: 'Untuk keadaan darurat medis yang serius atau mengancam nyawa, hubungi 119. Fire and Disaster Management Agency menyediakan panduan penggunaan ambulans dalam Bahasa Indonesia.',
+    points: [
+      'Nomor ambulans dan pemadam kebakaran di Jepang adalah 119.',
+      'Sampaikan bahwa Anda membutuhkan ambulance, lokasi kejadian, kondisi pasien, dan informasi yang diminta operator.',
+      'Jangan menunda panggilan darurat karena khawatir kemampuan bahasa Jepang Anda terbatas.',
+      'Gunakan panduan resmi FDMA untuk memahami kapan keadaan dianggap membutuhkan respons segera.'
+    ]
+  },
+  {
+    label: '06',
+    title: 'Siapkan informasi kesehatan dasar',
+    intro: 'Sedikit persiapan membuat komunikasi dengan tenaga medis lebih mudah, terutama jika bahasa menjadi hambatan.',
+    points: [
+      'Simpan nama obat yang sedang digunakan, termasuk nama generik bila tersedia.',
+      'Catat allergy, kondisi medis penting, dan kontak darurat.',
+      'Bawa daftar obat atau foto kemasan bila informasi tersebut relevan untuk konsultasi.',
+      'Untuk kondisi kronis, simpan ringkasan medis penting dari dokter sebelumnya bila tersedia.'
+    ]
+  },
+  {
+    label: '07',
+    title: 'Obat dan pharmacy',
+    intro: 'Setelah konsultasi, resep dapat diberikan untuk ditebus di pharmacy yang menangani prescription. Obat OTC juga tersedia di drugstore/pharmacy sesuai kategorinya.',
+    points: [
+      'Ikuti instruksi dokter dan pharmacist mengenai dosis dan penggunaan.',
+      'Jangan mengganti atau menghentikan prescription hanya berdasarkan pengalaman orang lain.',
+      'Jika tidak memahami cara penggunaan obat, minta penjelasan sebelum meninggalkan fasilitas.',
+      'Simpan medication notebook atau catatan obat bila Anda menerimanya.'
+    ]
+  }
+];
+
+const liveLinks = [
+  {
+    name: 'Medical Information Net (NABII)',
+    note: 'Cari hospital, clinic, pharmacy, jam layanan, dan foreign-language support. Tersedia English/Chinese/Korean interface.',
+    url: 'https://www.iryou.teikyouseido.mhlw.go.jp/'
+  },
+  {
+    name: 'IFIE — Foreign-language Medical Institutions',
+    note: 'Portal Ishikawa untuk membantu menemukan fasilitas yang dapat memberi dukungan bahasa asing.',
+    url: 'https://www.ifie.or.jp/foreigners_life/medical_institution/'
+  },
+  {
+    name: 'Ishikawa — Medical Institutions Accepting Foreign Patients',
+    note: 'Halaman resmi prefektur yang mengarahkan ke daftar fasilitas MHLW terbaru.',
+    url: 'https://www.pref.ishikawa.lg.jp/iryou/gaikokujinkanja.html'
+  },
+  {
+    name: 'Kanazawa — Holiday Duty Doctor',
+    note: 'Informasi dokter/fasilitas yang bertugas pada hari libur; cek ulang sebelum datang karena jadwal dapat berubah.',
+    url: 'https://catalog-data.city.kanazawa.ishikawa.jp/en/dataset/172014-toubani'
+  },
+  {
+    name: 'Kanazawa Fire Department — Emergency Medical Links',
+    note: 'Holiday doctor, pediatric emergency, #8000, dan emergency-related references.',
+    url: 'https://fire.city.kanazawa.ishikawa.jp/kyukyu.html'
+  }
+];
+
+const practical = [
+  'Simpan alamat rumah dalam bahasa Jepang agar mudah ditunjukkan saat membutuhkan bantuan.',
+  'Simpan nama clinic/hospital terdekat sebagai orientasi, tetapi cek jam layanan sebelum datang.',
+  'Buat catatan singkat berisi allergy, obat rutin, kondisi penting, dan emergency contact.',
+  'Jika bahasa menjadi hambatan, tulis gejala utama dan sejak kapan terjadi sebelum konsultasi.',
+  'Jangan mengandalkan satu aplikasi terjemahan untuk kondisi darurat; gunakan sumber bantuan resmi dan tenaga medis.',
+  'Simpan 119 dan sumber medical search di shortcut/bookmark ponsel.'
+];
+
+const sources = [
+  {
+    owner: 'Ishikawa Prefecture',
+    title: 'Medical Institutions Accepting Foreign Patients',
+    description: 'Halaman prefektur yang diperbarui pada 19 Mei 2026 dan mengarahkan ke daftar nasional MHLW.',
+    url: 'https://www.pref.ishikawa.lg.jp/iryou/gaikokujinkanja.html'
+  },
+  {
+    owner: 'Ministry of Health, Labour and Welfare',
+    title: 'List of Medical Institutions Accepting Foreign Patients',
+    description: 'Daftar nasional yang diperbarui pada 2026, termasuk pembaruan untuk Ishikawa.',
+    url: 'https://www.mhlw.go.jp/stf/newpage_05774.html'
+  },
+  {
+    owner: 'IFIE',
+    title: 'Foreign-language Medical Institutions',
+    description: 'Panduan pencarian fasilitas kesehatan dengan dukungan bahasa asing di Ishikawa.',
+    url: 'https://www.ifie.or.jp/foreigners_life/medical_institution/'
+  },
+  {
+    owner: 'Fire and Disaster Management Agency',
+    title: 'Ambulance Guide for Foreign Visitors',
+    description: 'Panduan penggunaan ambulans dalam berbagai bahasa, termasuk Bahasa Indonesia.',
+    url: 'https://www.fdma.go.jp/publication/portal/post1.html'
+  },
+  {
+    owner: 'Ministry of Health, Labour and Welfare',
+    title: 'Multilingual Materials for Foreign Patients',
+    description: 'Materi penjelasan medis multibahasa; Bahasa Indonesia ditambahkan dalam pembaruan 2024.',
+    url: 'https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/iryou/kokusai/setsumei-ml.html'
+  }
+];
+---
+
+<BaseLayout
+  title="Kesehatan di Ishikawa"
+  description="Panduan kesehatan untuk pelajar Indonesia di Ishikawa: mencari klinik, medical insurance, layanan bahasa asing, malam/libur, pharmacy, dan keadaan darurat."
+>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <a href={withBase('/life-in-ishikawa/')} class="text-sm font-semibold text-brand hover:underline">← Ishikawa Survival Guide</a>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG07 · Kesehatan</p>
+    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Saat membutuhkan layanan kesehatan di Ishikawa.</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+      Tujuan halaman ini bukan menentukan diagnosis, tetapi membantu Anda menemukan jalur layanan yang tepat:
+      clinic/hospital, insurance, dukungan bahasa, layanan malam/libur, pharmacy, dan emergency.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3 text-sm">
+      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Cakupan: Japan-wide + Ishikawa + municipality</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Untuk: mahasiswa & keluarga</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Terakhir diverifikasi: 29 September 2026</span>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
+    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Quick answer</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Tidak darurat? Cari clinic yang sesuai. Darurat serius? 119.</h2>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-700">
+        Untuk kondisi non-emergency, gunakan sumber pencarian fasilitas resmi dan cek jam layanan terlebih dahulu.
+        Untuk keadaan medis serius atau mengancam nyawa, hubungi <strong>119</strong> untuk ambulance.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="space-y-6">
+      {sections.map((section) => (
+        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="flex flex-col gap-5 sm:flex-row">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-sm font-bold text-slate-700">{section.label}</div>
+            <div class="min-w-0 flex-1">
+              <h2 class="text-2xl font-bold tracking-tight text-slate-950">{section.title}</h2>
+              <p class="mt-4 leading-7 text-slate-600">{section.intro}</p>
+              <ul class="mt-5 space-y-3">
+                {section.points.map((point) => (
+                  <li class="flex gap-3 text-sm leading-6 text-slate-700">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Cari layanan saat ini</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Jangan simpan daftar klinik statis di website PPI.</h2>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-600">
+        Jam layanan, specialty, foreign-language support, dan holiday coverage dapat berubah.
+        Karena itu, gunakan pencarian live berikut dan hubungi fasilitas sebelum datang jika informasinya penting.
+      </p>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {liveLinks.map((item) => (
+          <a href={item.url} target="_blank" rel="noreferrer" class="rounded-2xl bg-slate-50 p-4 transition hover:bg-slate-100">
+            <p class="font-bold text-slate-900">{item.name} ↗</p>
+            <p class="mt-1 text-xs leading-5 text-slate-500">{item.note}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Emergency</p>
+        <h2 class="mt-3 text-3xl font-bold">119</h2>
+        <p class="mt-4 leading-7 text-slate-300">
+          Hubungi 119 untuk ambulance atau fire emergency. Fire and Disaster Management Agency menyediakan
+          panduan ambulance resmi dalam Bahasa Indonesia yang menjelaskan cara meminta ambulans dan informasi yang perlu disampaikan.
+        </p>
+        <a
+          href="https://www.fdma.go.jp/publication/portal/post1.html"
+          target="_blank"
+          rel="noreferrer"
+          class="mt-6 inline-flex rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950 transition hover:bg-slate-100"
+        >
+          Panduan ambulans Bahasa Indonesia ↗
+        </a>
+      </div>
+
+      <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-amber-800">Bahasa & komunikasi</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Dukungan bahasa ada, tetapi jangan diasumsikan selalu tersedia.</h2>
+        <p class="mt-4 leading-7 text-slate-700">
+          Ishikawa dan MHLW menyediakan daftar fasilitas yang menerima foreign patients, tetapi metode dukungannya dapat berupa
+          staff multibahasa, telephone interpretation, atau translation device. Hubungi fasilitas terlebih dahulu bila Anda
+          membutuhkan dukungan bahasa tertentu.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">PPI practical notes</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Siapkan informasi sebelum sakit.</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {practical.map((item) => (
+          <div class="rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-700">{item}</div>
+        ))}
+      </div>
+      <p class="mt-5 text-xs leading-5 text-slate-500">Bagian ini adalah tips praktis PPI dan bukan advice medis.</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Sumber resmi</p>
+      <h2 class="mt-3 text-2xl font-bold">Gunakan sumber live untuk fasilitas, dan pemerintah untuk prosedur.</h2>
+      <div class="mt-7 grid gap-4">
+        {sources.map((source) => (
+          <a
+            href={source.url}
+            target="_blank"
+            rel="noreferrer"
+            class="group rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800"
+          >
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{source.owner}</p>
+            <h3 class="mt-2 font-bold text-white group-hover:text-red-200">{source.title} ↗</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-400">{source.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
+    <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <div>
+        <p class="text-sm font-semibold text-brand">Berikutnya</p>
+        <h2 class="mt-1 text-xl font-bold text-slate-950">SG08 — Family & Anak</h2>
+        <p class="mt-2 text-sm text-slate-500">Pregnancy, childbirth, childcare, sekolah, dan dukungan untuk keluarga.</p>
+      </div>
+      <span class="shrink-0 rounded-xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-500">Segera tersedia</span>
+    </div>
+  </section>
+</BaseLayout>
