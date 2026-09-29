@@ -155,7 +155,7 @@ const officialSources = [
               ))}
             </ol>
             {journey.href && (
-              <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}${journey.href}`} class="mt-6 inline-flex rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition hover:bg-slate-700">
+              <a href={withBase(journey.href)} class="mt-6 inline-flex rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition hover:bg-slate-700">
                 Buka panduan lengkap →
               </a>
             )}
