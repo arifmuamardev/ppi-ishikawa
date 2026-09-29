@@ -1,0 +1,266 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../utils/paths';
+
+const checklist = [
+  {
+    title: 'Dokumen perjalanan & status tinggal',
+    items: [
+      'Pastikan paspor dan dokumen perjalanan masih berlaku untuk perjalanan Anda.',
+      'Ikuti daftar dokumen dari universitas, kedutaan/konsulat, dan Immigration Services Agency sesuai status tinggal Anda.',
+      'Simpan salinan digital dokumen penting di tempat yang dapat diakses jika ponsel atau tas utama bermasalah.',
+      'Catat tanggal berakhir status tinggal dan pahami bahwa prosedur setelah tiba akan mengikuti status yang diberikan kepada Anda.'
+    ]
+  },
+  {
+    title: 'Alamat & tempat tinggal pertama',
+    items: [
+      'Pastikan Anda mengetahui alamat tempat tinggal pertama di Jepang dan cara menuju lokasi tersebut.',
+      'Simpan nama, alamat, nomor kontak, serta instruksi check-in dormitory/apartment bila ada.',
+      'Jika menyewa tempat tinggal sendiri, baca kontrak dan biaya awal dengan teliti sebelum menyetujui.',
+      'Ingat bahwa aturan lokal setelah tiba mengikuti municipality tempat Anda tinggal, bukan sekadar nama prefekturnya.'
+    ]
+  },
+  {
+    title: 'Uang & pembayaran',
+    items: [
+      'Siapkan metode pembayaran yang tetap dapat digunakan pada hari-hari pertama sebelum rekening bank Jepang siap.',
+      'Jangan bergantung pada satu kartu atau satu aplikasi pembayaran saja.',
+      'Pastikan Anda memahami cara mengakses dana darurat dari Indonesia bila diperlukan.',
+      'Biaya, kurs, dan dukungan kartu dapat berubah; verifikasi langsung ke bank atau penerbit kartu Anda.'
+    ]
+  },
+  {
+    title: 'Telepon, internet & akses akun',
+    items: [
+      'Pastikan ponsel tidak terkunci pada operator tertentu jika Anda berencana memakai SIM/eSIM Jepang.',
+      'Simpan metode login dan recovery untuk email, akun universitas, bank, serta aplikasi penting.',
+      'Jangan mengandalkan SMS ke nomor Indonesia sebagai satu-satunya metode verifikasi akun.',
+      'Siapkan koneksi sementara untuk hari pertama bila layanan seluler Jepang belum aktif.'
+    ]
+  },
+  {
+    title: 'Kesehatan & obat pribadi',
+    items: [
+      'Bawa informasi obat yang Anda gunakan secara rutin dan simpan nama generik/komposisinya bila tersedia.',
+      'Untuk obat atau alat kesehatan tertentu, cek aturan masuk Jepang dari sumber resmi sebelum membawa dalam jumlah besar.',
+      'Simpan informasi kondisi kesehatan penting yang mungkin perlu diketahui tenaga medis dalam keadaan darurat.',
+      'Setelah tiba, pelajari cara menggunakan sistem kesehatan dan asuransi di municipality Anda.'
+    ]
+  },
+  {
+    title: 'Musim, pakaian & kebutuhan awal',
+    items: [
+      'Cek musim saat Anda tiba dan kondisi cuaca aktual menjelang keberangkatan.',
+      'Ishikawa mengalami musim dingin dan salju; kebutuhan pakaian akan sangat berbeda antara kedatangan musim panas dan musim dingin.',
+      'Tidak semua perlengkapan harus dibeli dari Indonesia; banyak kebutuhan dapat dibeli setelah tiba.',
+      'Untuk perjalanan musim dingin, cek informasi cuaca dan transportasi resmi sebelum berangkat.'
+    ]
+  },
+  {
+    title: 'Darurat & keselamatan',
+    items: [
+      'Simpan kontak universitas dan orang yang dapat dihubungi pada hari kedatangan.',
+      'Kenali nomor darurat Jepang: 110 untuk polisi dan 119 untuk ambulans/pemadam kebakaran.',
+      'Baca panduan bencana Ishikawa sebelum atau segera setelah tiba.',
+      'Gunakan sumber resmi untuk gempa, hujan lebat, salju, tsunami, dan peringatan lain.'
+    ]
+  }
+];
+
+const sources = [
+  {
+    owner: 'Immigration Services Agency of Japan',
+    title: 'Foreign Residents Support Portal',
+    description: 'Portal nasional untuk kehidupan dan prosedur warga asing, dengan informasi multibahasa termasuk Bahasa Indonesia.',
+    url: 'https://www.moj.go.jp/isa/support/portal/'
+  },
+  {
+    owner: 'Immigration Services Agency of Japan',
+    title: 'Guidance for New Entrants to Japan',
+    description: 'Panduan resmi untuk warga asing yang baru masuk Jepang, termasuk status tinggal, pemberitahuan, dan informasi kehidupan.',
+    url: 'https://www.moj.go.jp/isa/support/guidance/'
+  },
+  {
+    owner: 'Ministry of Land, Infrastructure, Transport and Tourism',
+    title: 'Support for Foreign Nationals Looking for Rental Housing',
+    description: 'Panduan mencari dan menyewa tempat tinggal di Jepang; materi tersedia juga dalam Bahasa Indonesia.',
+    url: 'https://www.mlit.go.jp/jutakukentiku/house/jutakukentiku_house_tk3_000017.html'
+  },
+  {
+    owner: 'Ishikawa Prefecture',
+    title: 'Disaster Preparedness Guidebook for Foreign Residents',
+    description: 'Panduan bencana resmi Ishikawa, termasuk edisi Bahasa Indonesia.',
+    url: 'https://www.pref.ishikawa.lg.jp/kokusai/tabunka/bousaigaidoh30.html'
+  },
+  {
+    owner: 'Ishikawa Foundation for International Exchange',
+    title: 'Daily Life Information for Foreign Residents',
+    description: 'Portal lokal untuk informasi kehidupan dan dukungan bagi warga asing di Ishikawa.',
+    url: 'https://www.ifie.or.jp/foreigners_life/'
+  }
+];
+---
+
+<BaseLayout
+  title="Sebelum Berangkat ke Ishikawa"
+  description="Checklist persiapan sebelum datang ke Ishikawa untuk pelajar Indonesia dan keluarga, dengan rujukan sumber resmi Jepang dan Ishikawa."
+>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <a href={withBase('/life-in-ishikawa/')} class="text-sm font-semibold text-brand hover:underline">← Ishikawa Survival Guide</a>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG01 · Sebelum Berangkat</p>
+    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Sebelum berangkat ke Ishikawa.</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+      Fokus pada hal yang sulit diperbaiki ketika sudah berada di perjalanan: dokumen, alamat pertama,
+      akses uang dan akun, kesehatan, serta informasi kedatangan. Detail administratif yang dapat berubah
+      tetap harus diperiksa melalui universitas dan sumber resmi.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3 text-sm">
+      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Cakupan: sebelum masuk Jepang</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Untuk: mahasiswa & keluarga</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Terakhir diverifikasi: 29 September 2026</span>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
+    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Quick answer</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Pastikan tujuh hal ini sebelum berangkat.</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {[
+          'Dokumen perjalanan & status tinggal',
+          'Alamat dan tempat tinggal pertama',
+          'Akses uang & pembayaran',
+          'Telepon, internet & akun',
+          'Kesehatan & obat pribadi',
+          'Musim & kebutuhan awal',
+          'Kontak darurat & informasi bencana'
+        ].map((item, index) => (
+          <div class="flex gap-3 rounded-2xl bg-white p-4 text-sm font-semibold text-slate-800">
+            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-100 text-xs font-bold text-brand">{index + 1}</span>
+            <span>{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="space-y-5">
+      {checklist.map((section, sectionIndex) => (
+        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="flex gap-4">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-sm font-bold text-slate-700">
+              {String(sectionIndex + 1).padStart(2, '0')}
+            </div>
+            <div class="min-w-0 flex-1">
+              <h2 class="text-2xl font-bold tracking-tight text-slate-950">{section.title}</h2>
+              <ul class="mt-5 space-y-3">
+                {section.items.map((item) => (
+                  <li class="flex gap-3 text-sm leading-6 text-slate-700">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Setelah tiba</p>
+        <h2 class="mt-3 text-2xl font-bold">Alamat pertama bukan sekadar informasi pengiriman.</h2>
+        <p class="mt-4 leading-7 text-slate-300">
+          Bagi penduduk jangka menengah/panjang yang baru masuk Jepang, Immigration Services Agency menjelaskan
+          bahwa setelah menetapkan tempat tinggal, pemberitahuan alamat dilakukan melalui municipality tempat tinggal.
+          Karena itu, simpan alamat pertama Anda dengan benar dan lanjutkan ke panduan Hari Pertama setelah tiba.
+        </p>
+        <p class="mt-5 text-sm text-slate-400">Detail prosedur akan dibahas di SG02 dan SG03.</p>
+      </div>
+
+      <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-amber-800">Jangan over-prepare</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Tidak semua hal harus selesai dari Indonesia.</h2>
+        <p class="mt-4 leading-7 text-slate-700">
+          Rekening bank Jepang, layanan seluler, registrasi alamat, asuransi, pension, dan banyak layanan lokal
+          umumnya baru dapat diselesaikan setelah Anda berada di Jepang dan mempunyai kondisi/dokumen yang sesuai.
+          Sebelum berangkat, fokuskan energi pada kesiapan dokumen, akses, dan informasi.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Jika datang bersama keluarga</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Siapkan kebutuhan setiap anggota keluarga secara terpisah.</h2>
+      <p class="mt-4 leading-7 text-slate-600">
+        Dokumen, status tinggal, kesehatan, obat, sekolah/childcare, dan kebutuhan kedatangan pasangan atau anak
+        dapat berbeda dari mahasiswa utama. Gunakan instruksi universitas dan pemerintah yang sesuai untuk masing-masing orang,
+        dan jangan menganggap prosedur mahasiswa otomatis berlaku bagi seluruh keluarga.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">PPI practical notes</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Yang sebaiknya disimpan di ponsel sebelum terbang.</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {[
+          'Alamat lengkap tempat tinggal pertama',
+          'Kontak universitas / host / dormitory',
+          'Rute dari titik kedatangan ke tempat tinggal',
+          'Salinan dokumen penting',
+          'Kontak keluarga / emergency contact',
+          'Akses email dan akun universitas',
+          'Metode pembayaran cadangan',
+          'Panduan bencana Ishikawa'
+        ].map((item) => (
+          <div class="rounded-2xl bg-slate-50 p-4 text-sm font-medium text-slate-700">{item}</div>
+        ))}
+      </div>
+      <p class="mt-5 text-xs leading-5 text-slate-500">
+        Bagian ini adalah catatan praktis PPI, bukan daftar persyaratan resmi pemerintah.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Sumber resmi</p>
+      <h2 class="mt-3 text-2xl font-bold">Verifikasi detail yang dapat berubah sebelum berangkat.</h2>
+      <div class="mt-7 grid gap-4">
+        {sources.map((source) => (
+          <a
+            href={source.url}
+            target="_blank"
+            rel="noreferrer"
+            class="group rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800"
+          >
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{source.owner}</p>
+            <h3 class="mt-2 font-bold text-white group-hover:text-red-200">{source.title} ↗</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-400">{source.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
+    <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <div>
+        <p class="text-sm font-semibold text-brand">Berikutnya</p>
+        <h2 class="mt-1 text-xl font-bold text-slate-950">SG02 — Hari Pertama di Ishikawa</h2>
+        <p class="mt-2 text-sm text-slate-500">Apa yang perlu diprioritaskan setelah Anda benar-benar tiba dan menetapkan tempat tinggal.</p>
+      </div>
+      <span class="shrink-0 rounded-xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-500">Segera tersedia</span>
+    </div>
+  </section>
+</BaseLayout>
