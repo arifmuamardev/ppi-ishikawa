@@ -36,3 +36,11 @@
 - Interactive map untuk panduan housing/places
 
 Catatan: login anggota dan database tidak menjadi prioritas sampai ada kebutuhan yang jelas.
+
+
+## Status 29 September 2026
+
+- SG00–SG14 Survival Guide: draft V1 lengkap dan live.
+- Source registry, centralized metadata, volatility, TOC, prev/next navigation, dan automated external-link audit sudah tersedia.
+- Search indexing tetap dinonaktifkan sampai official launch.
+- Tahap berikutnya: editorial review bersama pengurus, local PPI practical notes, branding resmi, dan validasi berkala sesuai volatility.
