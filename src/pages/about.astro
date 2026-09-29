@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { departments } from '../data/site';
+---
+<BaseLayout title="Tentang">
+  <PageIntro title="Tentang PPI Ishikawa" description="Halaman institusional untuk profil organisasi, visi dan misi, struktur kepengurusan 2026/27, serta arsip lintas periode." />
+  <section class="mx-auto max-w-7xl px-5 pb-20 lg:px-8">
+    <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {['Profil & Sejarah','Visi & Misi','Pengurus 2026/27','Dokumen Organisasi','Mitra','Arsip Periode'].map((x)=><div class="rounded-2xl border border-slate-200 bg-white p-6"><h2 class="font-semibold">{x}</h2><p class="mt-2 text-sm text-slate-500">Konten akan dilengkapi setelah struktur resmi difinalisasi.</p></div>)}
+    </div>
+    <div class="mt-12 rounded-3xl border border-slate-200 bg-white p-7">
+      <h2 class="text-xl font-bold">Departemen</h2>
+      <div class="mt-5 flex flex-wrap gap-2">{departments.map((d)=><span class="rounded-full bg-slate-100 px-3 py-2 text-sm text-slate-700">{d}</span>)}</div>
+    </div>
+  </section>
+</BaseLayout>
