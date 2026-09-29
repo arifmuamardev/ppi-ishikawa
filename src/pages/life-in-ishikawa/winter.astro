@@ -1,0 +1,323 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../utils/paths';
+
+const sections = [
+  {
+    label: '01',
+    title: 'Pahami bahwa winter mengubah rutinitas',
+    intro: 'Salju di Ishikawa bukan hanya soal suhu dingin. Perjalanan, jalan kaki, bicycle, driving, utilities, dan waktu tempuh dapat berubah ketika terjadi snowfall atau freezing.',
+    points: [
+      'Cek weather forecast dan kondisi jalan sebelum perjalanan penting.',
+      'Berikan waktu tambahan untuk berjalan ke bus stop, kampus, atau stasiun.',
+      'Jangan berasumsi transportasi akan berjalan seperti jadwal normal saat heavy snow.',
+      'Jika pemerintah atau operator meminta mengubah rencana perjalanan, prioritaskan keselamatan.'
+    ]
+  },
+  {
+    label: '02',
+    title: 'Pakaian dan perlengkapan dasar',
+    intro: 'Tujuannya bukan memakai pakaian sebanyak mungkin, tetapi menjaga tubuh tetap hangat, kering, dan aman saat berjalan di permukaan basah atau bersalju.',
+    points: [
+      'Gunakan layering agar mudah menyesuaikan suhu antara outdoor dan indoor.',
+      'Prioritaskan footwear dengan grip yang baik dan tahan terhadap kondisi basah.',
+      'Gunakan gloves dan perlindungan kepala/telinga sesuai kondisi.',
+      'Bawa perlindungan hujan karena winter Ishikawa juga dapat basah, bukan hanya bersalju.'
+    ]
+  },
+  {
+    label: '03',
+    title: 'Berjalan kaki di salju dan jalan beku',
+    intro: 'Permukaan yang terlihat hanya basah dapat berubah menjadi licin ketika membeku. Ishikawa memperingatkan risiko jatuh bahkan di tempat yang sudah familiar.',
+    points: [
+      'Kurangi kecepatan dan gunakan langkah lebih pendek pada permukaan licin.',
+      'Perhatikan area yang sering membeku seperti jembatan, tangga, shadowed area, dan permukaan yang telah dipadatkan kendaraan/pejalan kaki.',
+      'Hindari berjalan terlalu dekat dengan atap atau tempat yang berisiko terkena falling snow.',
+      'Jangan menggunakan ponsel sambil berjalan jika kondisi permukaan membutuhkan perhatian penuh.'
+    ]
+  },
+  {
+    label: '04',
+    title: 'Bicycle saat winter',
+    intro: 'Sepeda mungkin nyaman pada hari biasa, tetapi snow, ice, visibility, dan road width dapat membuatnya tidak aman.',
+    points: [
+      'Jangan memaksakan bicycle hanya karena itu moda harian Anda.',
+      'Pertimbangkan bus atau berjalan kaki ketika jalan tertutup snow/ice atau visibility buruk.',
+      'Perhatikan bahwa tumpukan salju dapat mempersempit roadway dan bicycle lane.',
+      'Jika menggunakan bicycle, pastikan lampu dan brake berfungsi serta ikuti aturan lalu lintas yang berlaku.'
+    ]
+  },
+  {
+    label: '05',
+    title: 'Driving di jalan bersalju atau beku',
+    intro: 'Ishikawa memiliki aturan khusus untuk anti-skid equipment pada snow-covered atau frozen roads.',
+    points: [
+      'Untuk snow/studless tires, Ishikawa mewajibkan pemasangan pada seluruh roda.',
+      'Jika memakai normal tires pada kondisi yang memerlukan anti-skid equipment, chain harus dipasang sesuai ketentuan pada drive wheels.',
+      'Kurangi kecepatan, tambah jarak antar kendaraan, dan hindari sudden acceleration, braking, atau steering.',
+      'Sebelum berangkat, cek Ishikawa Snow Road Navigation dan restriction information.'
+    ]
+  },
+  {
+    label: '06',
+    title: 'Heating dan ventilasi',
+    intro: 'Rumah yang hangat tetap membutuhkan ventilasi dan penggunaan heater sesuai instruksi perangkat dan aturan bangunan.',
+    points: [
+      'Gunakan heater hanya sesuai petunjuk dan aturan apartment/dormitory.',
+      'Jaga jarak heater dari pakaian, bedding, dan benda yang mudah terbakar.',
+      'Ventilasi ruangan secara berkala sesuai jenis alat pemanas yang digunakan.',
+      'Jika menggunakan kerosene atau appliance lain, pastikan penggunaan memang diizinkan oleh building/landlord.'
+    ]
+  },
+  {
+    label: '07',
+    title: 'Kondensasi dan jamur',
+    intro: 'Perbedaan suhu indoor–outdoor dapat menyebabkan condensation, terutama di jendela dan area dengan ventilasi rendah.',
+    points: [
+      'Keringkan condensation pada jendela atau frame sebelum menumpuk.',
+      'Gunakan ventilasi secara rutin, terutama setelah memasak, mandi, atau mengeringkan pakaian indoor.',
+      'Jangan menempelkan furniture besar terlalu rapat ke dinding luar jika menyebabkan sirkulasi udara buruk.',
+      'Laporkan leak atau masalah bangunan ke management jika bukan sekadar condensation biasa.'
+    ]
+  },
+  {
+    label: '08',
+    title: 'Cegah pipa air membeku',
+    intro: 'Ishikawa dan Kanazawa memperingatkan bahwa water pipes dapat membeku atau pecah ketika suhu rendah, terutama sekitar −4°C atau lebih rendah, pada pipa terekspos atau lokasi berangin.',
+    points: [
+      'Ikuti petunjuk building/municipal water provider untuk insulation atau water draining.',
+      'Jika pipa membeku, jangan menuangkan air mendidih karena dapat menyebabkan pipa pecah.',
+      'Ishikawa menyarankan menunggu pencairan alami atau menggunakan air hangat secara perlahan melalui kain/towel pada bagian yang membeku.',
+      'Jika pipa pecah, tutup main valve bila dapat dilakukan dengan aman lalu hubungi water provider/authorized repair service.'
+    ]
+  },
+  {
+    label: '09',
+    title: 'Snow removal',
+    intro: 'Membersihkan salju juga memiliki risiko kecelakaan. Ishikawa menekankan perlunya mencegah secondary accidents selama snow removal.',
+    points: [
+      'Jangan melakukan pekerjaan berisiko tinggi sendirian.',
+      'Waspadai falling snow dari atap, lubang/drain tertutup salju, dan permukaan licin.',
+      'Untuk roof snow removal atau pekerjaan berat, ikuti panduan pemerintah dan gunakan bantuan yang sesuai.',
+      'Jangan menumpuk salju sehingga menghalangi jalan, hydrant, emergency route, atau akses bersama.'
+    ]
+  },
+  {
+    label: '10',
+    title: 'Siapkan kemungkinan disruption',
+    intro: 'Heavy snow dapat menyebabkan road closure, keterlambatan/penundaan transportasi, dan gangguan distribusi.',
+    points: [
+      'Simpan makanan, air, obat rutin, dan kebutuhan penting secukupnya sebelum forecast heavy snow.',
+      'Isi daya ponsel dan power bank.',
+      'Cek operator transportasi sebelum berangkat, bukan hanya aplikasi routing umum.',
+      'Untuk perjalanan yang tidak mendesak, perubahan jadwal sering merupakan pilihan paling aman.'
+    ]
+  }
+];
+
+const liveLinks = [
+  {
+    name: 'Ishikawa — Preparing for Snow Disasters',
+    note: 'Panduan resmi keselamatan rumah, snow removal, walking, driving, frozen pipes, dan persiapan kebutuhan dasar.',
+    url: 'https://www.pref.ishikawa.lg.jp/bousai/bousai_g/snow/index.html'
+  },
+  {
+    name: 'Ishikawa Snow Road Navigation',
+    note: 'Snowfall, temperature, road cameras, restrictions, dan snow-clearing status.',
+    url: 'https://www.pref.ishikawa.lg.jp/michi/yukimichi.html'
+  },
+  {
+    name: 'Ishikawa Prefectural Police — Winter Driving',
+    note: 'Panduan driving di snow road serta penggunaan tire/chain.',
+    url: 'https://www2.police.pref.ishikawa.lg.jp/trafficsafety/trafficsafety18/index.html'
+  },
+  {
+    name: 'JMA Multilingual Weather',
+    note: 'Forecast, warning, heavy snow, dan weather information termasuk Bahasa Indonesia.',
+    url: 'https://www.jma.go.jp/jma/kokusai/multi.html'
+  },
+  {
+    name: 'Kanazawa Water — Frozen Pipes',
+    note: 'Panduan lokal pencegahan dan penanganan frozen water pipes.',
+    url: 'https://www2.city.kanazawa.ishikawa.jp/qanda/1068/'
+  }
+];
+
+const practical = [
+  'Sebelum winter pertama, cek apakah apartment menyediakan heater atau Anda harus membeli sendiri.',
+  'Simpan satu pasang footwear dengan grip baik khusus hari bersalju/beku.',
+  'Jangan menunggu badai salju untuk pertama kali mencari snow shovel atau kebutuhan rumah.',
+  'Jika berangkat pagi, cek kondisi semalam karena black ice dapat terbentuk walaupun snowfall sudah berhenti.',
+  'Jadikan bus/train sebagai backup jika bicycle tidak aman.',
+  'Jika akan meninggalkan rumah beberapa hari saat cold spell, cek instruksi anti-freeze dari landlord/water provider.'
+];
+
+const sources = [
+  {
+    owner: 'Ishikawa Prefecture',
+    title: 'Preparing for Snow Disasters',
+    description: 'Diperbarui Februari 2026; mencakup rumah, snow removal, kendaraan, berjalan kaki, frozen pipes, dan stockpiling.',
+    url: 'https://www.pref.ishikawa.lg.jp/bousai/bousai_g/snow/index.html'
+  },
+  {
+    owner: 'Ishikawa Prefecture',
+    title: 'Information on Heavy Snow',
+    description: 'Halaman respons heavy snow 2025/26 yang mengumpulkan road, public transport, weather, dan safety information.',
+    url: 'https://www.pref.ishikawa.lg.jp/saigai/saigai_ooyuki.html'
+  },
+  {
+    owner: 'Ishikawa Prefectural Police',
+    title: 'Winter Road Safety and Tire/Chain Rules',
+    description: 'Aturan dan panduan keselamatan berkendara di snow-covered/frozen roads.',
+    url: 'https://www2.police.pref.ishikawa.lg.jp/trafficsafety/trafficsafety18/index.html'
+  },
+  {
+    owner: 'Ishikawa Prefectural Police',
+    title: 'Anti-skid Equipment Requirements',
+    description: 'Ketentuan Ishikawa mengenai studless/snow tires dan tire chains pada jalan bersalju atau beku.',
+    url: 'https://www2.police.pref.ishikawa.lg.jp/trafficsafety/trafficsafety05/trafficsafety02.html'
+  },
+  {
+    owner: 'Ishikawa Prefecture',
+    title: 'Preventing Frozen Water Pipes',
+    description: 'Panduan pencegahan frozen/burst pipes dan tindakan jika pipa sudah membeku.',
+    url: 'https://www.pref.ishikawa.lg.jp/kankyo/suidou/touketsu.html'
+  }
+];
+---
+
+<BaseLayout
+  title="Winter in Ishikawa"
+  description="Panduan musim dingin untuk pelajar Indonesia di Ishikawa: salju, pakaian, heating, frozen pipes, jalan kaki, bicycle, driving, dan winter travel."
+>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <a href={withBase('/life-in-ishikawa/')} class="text-sm font-semibold text-brand hover:underline">← Ishikawa Survival Guide</a>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG11 · Winter in Ishikawa</p>
+    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Menghadapi musim dingin di Ishikawa.</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+      Winter di Ishikawa memengaruhi lebih dari sekadar pakaian: jalan menjadi licin, waktu perjalanan berubah,
+      transportasi dapat terganggu, dan rumah perlu dipersiapkan menghadapi suhu rendah.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3 text-sm">
+      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Cakupan: Ishikawa</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Untuk: mahasiswa & keluarga</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Terakhir diverifikasi: 29 September 2026</span>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
+    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Quick answer</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Winter preparation = rumah + perjalanan + pakaian.</h2>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-700">
+        Tiga hal yang sebaiknya siap sebelum cold spell pertama: cara menjaga rumah tetap aman, alternatif transportasi
+        ketika bicycle tidak layak digunakan, dan perlengkapan untuk berjalan di kondisi basah/beku.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="space-y-6">
+      {sections.map((section) => (
+        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="flex flex-col gap-5 sm:flex-row">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-sm font-bold text-slate-700">{section.label}</div>
+            <div class="min-w-0 flex-1">
+              <h2 class="text-2xl font-bold tracking-tight text-slate-950">{section.title}</h2>
+              <p class="mt-4 leading-7 text-slate-600">{section.intro}</p>
+              <ul class="mt-5 space-y-3">
+                {section.points.map((point) => (
+                  <li class="flex gap-3 text-sm leading-6 text-slate-700">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Frozen pipes</p>
+        <h2 class="mt-3 text-2xl font-bold">Waspada sekitar −4°C dan di bawahnya.</h2>
+        <p class="mt-4 leading-7 text-slate-300">
+          Ishikawa memperingatkan risiko water pipes membeku ketika minimum temperature sekitar −4°C atau lebih rendah,
+          terutama pada pipa terekspos, tempat teduh, atau lokasi berangin. Jika sudah membeku, jangan menggunakan air mendidih.
+        </p>
+        <a href="https://www.pref.ishikawa.lg.jp/kankyo/suidou/touketsu.html" target="_blank" rel="noreferrer" class="mt-6 inline-flex rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950 transition hover:bg-slate-100">
+          Panduan frozen pipes ↗
+        </a>
+      </div>
+
+      <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-amber-800">Driving</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Normal tires bukan pilihan aman untuk snow road.</h2>
+        <p class="mt-4 leading-7 text-slate-700">
+          Peraturan Ishikawa mengharuskan anti-skid equipment pada snow-covered/frozen roads: snow/studless tires pada semua roda,
+          atau chain sesuai ketentuan jika kendaraan menggunakan normal tires. Cek aturan dan road condition sebelum berkendara.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Live winter information</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Saat snow forecast memburuk, buka sumber live.</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {liveLinks.map((item) => (
+          <a href={item.url} target="_blank" rel="noreferrer" class="rounded-2xl bg-slate-50 p-4 transition hover:bg-slate-100">
+            <p class="font-bold text-slate-900">{item.name} ↗</p>
+            <p class="mt-1 text-xs leading-5 text-slate-500">{item.note}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">PPI practical notes</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Persiapkan winter sebelum benar-benar dibutuhkan.</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {practical.map((item) => (
+          <div class="rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-700">{item}</div>
+        ))}
+      </div>
+      <p class="mt-5 text-xs leading-5 text-slate-500">Bagian ini adalah tips praktis PPI, bukan weather forecast atau aturan hukum.</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Sumber resmi</p>
+      <h2 class="mt-3 text-2xl font-bold">Utamakan Ishikawa Prefecture, police, water provider, dan JMA.</h2>
+      <div class="mt-7 grid gap-4">
+        {sources.map((source) => (
+          <a href={source.url} target="_blank" rel="noreferrer" class="group rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800">
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{source.owner}</p>
+            <h3 class="mt-2 font-bold text-white group-hover:text-red-200">{source.title} ↗</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-400">{source.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
+    <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <div>
+        <p class="text-sm font-semibold text-brand">Berikutnya</p>
+        <h2 class="mt-1 text-xl font-bold text-slate-950">SG12 — Japanese & Support</h2>
+        <p class="mt-2 text-sm text-slate-500">Kelas bahasa Jepang, konsultasi IFIE, bantuan kehidupan, hukum, dan jalur support lainnya.</p>
+      </div>
+      <span class="shrink-0 rounded-xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-500">Segera tersedia</span>
+    </div>
+  </section>
+</BaseLayout>
