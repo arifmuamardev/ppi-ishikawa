@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+---
+<BaseLayout title="Hidup di Ishikawa">
+  <PageIntro eyebrow="Ishikawa Survival Guide" title="Dari sebelum berangkat sampai pulang dari Jepang." description="Knowledge base praktis yang nantinya dapat terus diperbarui tanpa harus membuat ulang booklet setiap tahun." />
+  <section class="mx-auto max-w-7xl px-5 pb-20 lg:px-8">
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {['Sebelum Berangkat','Hari Pertama','Administrasi Kota','Tempat Tinggal','Transportasi','Belanja & Kebutuhan Harian','Kesehatan','Musim Dingin','Darurat & Bencana','Keluarga & Anak','Kehidupan Kampus','Sebelum Meninggalkan Ishikawa'].map((x,i)=><div class="rounded-2xl border border-slate-200 bg-white p-6"><p class="text-xs font-bold text-brand">{String(i+1).padStart(2,'0')}</p><h2 class="mt-2 font-semibold">{x}</h2><p class="mt-2 text-sm leading-6 text-slate-500">Placeholder untuk panduan terverifikasi dan pengalaman anggota.</p></div>)}
+    </div>
+  </section>
+</BaseLayout>
