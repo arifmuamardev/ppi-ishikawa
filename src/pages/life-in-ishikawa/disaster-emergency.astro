@@ -1,0 +1,351 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../utils/paths';
+
+const sections = [
+  {
+    label: '01',
+    title: 'Kenali risiko di sekitar tempat tinggal',
+    intro: 'Risiko bencana berbeda menurut lokasi. Jangan hanya tahu bahwa Anda tinggal di Ishikawa—ketahui juga risiko di alamat dan jalur harian Anda.',
+    points: [
+      'Cek hazard map municipality untuk flood, landslide, tsunami, atau risiko lain yang relevan.',
+      'Ketahui designated emergency evacuation place dan evacuation shelter terdekat.',
+      'Periksa rute menuju tempat aman dari rumah dan kampus.',
+      'Ulangi pengecekan jika Anda pindah alamat.'
+    ]
+  },
+  {
+    label: '02',
+    title: 'Earthquake',
+    intro: 'Saat gempa, lindungi diri dari benda jatuh dan hindari tindakan tergesa-gesa. Setelah guncangan berhenti, cek kondisi sekitar dan ikuti informasi resmi.',
+    points: [
+      'Lindungi kepala dan jaga jarak dari kaca, rak, atau benda yang dapat jatuh.',
+      'Jangan langsung berlari keluar tanpa melihat kondisi sekitar.',
+      'Setelah guncangan, periksa api, kerusakan bangunan, dan jalur keluar jika aman dilakukan.',
+      'Gunakan informasi resmi untuk aftershock, tsunami, evacuation, dan kondisi transportasi.'
+    ]
+  },
+  {
+    label: '03',
+    title: 'Tsunami',
+    intro: 'Jika berada di area pesisir dan ada tsunami warning atau kondisi yang mengharuskan evakuasi, utamakan bergerak menuju tempat yang lebih tinggi atau lokasi evakuasi yang ditentukan.',
+    points: [
+      'Jangan pergi ke pantai atau sungai untuk melihat kondisi.',
+      'Ikuti tsunami warning/advisory dan evacuation information resmi.',
+      'Gunakan hazard map municipality untuk mengetahui tsunami evacuation area.',
+      'Jangan kembali sebelum otoritas menyatakan kondisi aman.'
+    ]
+  },
+  {
+    label: '04',
+    title: 'Heavy rain, flood, dan landslide',
+    intro: 'Hujan lebat dapat menyebabkan flood dan landslide. Jepang menggunakan warning dan evacuation level untuk membantu menentukan tindakan.',
+    points: [
+      'Level 3 berarti kelompok yang membutuhkan waktu lebih lama untuk evakuasi harus mulai mengungsi.',
+      'Level 4 adalah evacuation instruction; orang di area berisiko harus mengungsi sebelum situasi menjadi lebih berbahaya.',
+      'Level 5 adalah emergency safety assurance—situasi sudah sangat berbahaya dan keselamatan harus diamankan semaksimal mungkin.',
+      'Jangan menunggu Level 5 untuk mulai bertindak bila tempat tinggal Anda berada di area berisiko.'
+    ]
+  },
+  {
+    label: '05',
+    title: 'Evacuation place dan evacuation shelter',
+    intro: 'Tempat evakuasi dan shelter memiliki fungsi yang berbeda. Panduan Ishikawa 2026 secara khusus memperjelas fungsi dan aturan shelter bagi foreign residents.',
+    points: [
+      'Designated emergency evacuation place adalah tempat untuk menyelamatkan diri dari bahaya yang sedang terjadi.',
+      'Evacuation shelter adalah tempat tinggal sementara bagi orang yang tidak dapat kembali ke rumah dengan aman.',
+      'Ikuti aturan pengelola shelter dan hormati kebutuhan penghuni lain.',
+      'Jangan menganggap semua sekolah atau gedung publik otomatis menjadi shelter untuk semua jenis bencana.'
+    ]
+  },
+  {
+    label: '06',
+    title: 'Siapkan emergency kit dan rencana keluarga',
+    intro: 'Persiapan sederhana sebelum bencana jauh lebih berguna daripada mencari semuanya saat keadaan darurat.',
+    points: [
+      'Siapkan air, makanan darurat, obat rutin, lampu, battery/power bank, dan kebutuhan dasar sesuai kondisi keluarga.',
+      'Simpan salinan informasi penting dan emergency contact.',
+      'Sepakati cara berkomunikasi dan tempat bertemu jika anggota keluarga terpisah.',
+      'Untuk anak, lansia, kebutuhan medis, atau kebutuhan agama/pribadi tertentu, tambahkan perlengkapan yang relevan.'
+    ]
+  },
+  {
+    label: '07',
+    title: 'Gunakan sumber informasi yang benar',
+    intro: 'Saat bencana, rumor menyebar cepat. Gunakan JMA, Ishikawa Prefecture, municipality, operator transportasi, dan aplikasi resmi/otoritatif.',
+    points: [
+      'JMA menyediakan weather, earthquake, tsunami, dan disaster information dalam banyak bahasa termasuk Bahasa Indonesia.',
+      'Safety tips menyediakan push notification untuk earthquake early warning, tsunami warning, dan weather warning dalam Bahasa Indonesia.',
+      'Ishikawa Disaster Portal mengumpulkan disaster, weather, dan evacuation information tingkat prefektur.',
+      'Untuk sungai, road, atau landslide, gunakan sistem live Ishikawa—bukan screenshot lama dari media sosial.'
+    ]
+  },
+  {
+    label: '08',
+    title: 'Nomor darurat',
+    intro: 'Simpan nomor darurat Jepang dan gunakan sesuai kebutuhan.',
+    points: [
+      '110 — Police.',
+      '119 — Ambulance / Fire.',
+      'Saat menelepon, sampaikan lokasi sejelas mungkin dan ikuti pertanyaan operator.',
+      'Jika bahasa menjadi hambatan, tetap lakukan panggilan ketika situasinya benar-benar darurat.'
+    ]
+  }
+];
+
+const levels = [
+  { level: '1', action: 'Tingkatkan kesiapsiagaan dan mulai memperhatikan informasi.' },
+  { level: '2', action: 'Periksa kembali hazard map dan rencana evakuasi.' },
+  { level: '3', action: 'Lansia dan orang yang membutuhkan waktu lebih lama mulai evakuasi.' },
+  { level: '4', action: 'Evacuation instruction — orang di area berisiko harus mengungsi.' },
+  { level: '5', action: 'Emergency safety assurance — amankan nyawa dengan tindakan terbaik yang masih mungkin.' }
+];
+
+const liveLinks = [
+  {
+    name: 'Ishikawa Disaster Information',
+    note: 'Portal prefektur untuk disaster, weather, evacuation, roads, rivers, dan landslide information.',
+    url: 'https://www.pref.ishikawa.lg.jp/bousai/bousai_g/'
+  },
+  {
+    name: 'Ishikawa River Information',
+    note: 'Live rainfall, river level, monitoring camera, dan warning-level information.',
+    url: 'https://kasen.pref.ishikawa.lg.jp/'
+  },
+  {
+    name: 'Ishikawa Road Information',
+    note: 'Live road restrictions dan road cameras.',
+    url: 'https://douro.pref.ishikawa.lg.jp/'
+  },
+  {
+    name: 'Ishikawa SABO-i',
+    note: 'Live landslide/disaster information dari Ishikawa Prefecture.',
+    url: 'https://sabo.pref.ishikawa.lg.jp/sabo-i/'
+  },
+  {
+    name: 'JMA Multilingual Disaster Information',
+    note: 'Weather, heavy rain, earthquake, tsunami, volcano, dan warning terminology termasuk Bahasa Indonesia.',
+    url: 'https://www.jma.go.jp/jma/kokusai/multi.html'
+  },
+  {
+    name: 'Safety tips',
+    note: 'Push notification untuk earthquake early warning, tsunami, dan weather warnings; mendukung Bahasa Indonesia.',
+    url: 'https://www.jnto.go.jp/safety-tips/eng/app.html'
+  }
+];
+
+const practical = [
+  'Bookmark hazard map untuk rumah dan kampus sebelum terjadi bencana.',
+  'Simpan alamat rumah dalam bahasa Jepang dan lokasi evacuation place terdekat.',
+  'Pastikan power bank tidak kosong dan aktifkan emergency alerts di ponsel.',
+  'Letakkan emergency kit di tempat yang mudah diambil, bukan jauh di storage.',
+  'Jika tinggal bersama keluarga, sepakati siapa membawa dokumen, obat, dan kebutuhan anak.',
+  'Setelah bencana, jangan menyebarkan informasi yang belum diverifikasi.'
+];
+
+const sources = [
+  {
+    owner: 'Ishikawa Prefecture + IFIE',
+    title: 'Disaster Preparedness Guidebook for Foreign Residents',
+    description: 'Direvisi Maret 2026 berdasarkan evaluasi Noto Peninsula Earthquake; tersedia dalam Bahasa Indonesia.',
+    url: 'https://www.pref.ishikawa.lg.jp/kokusai/tabunka/bousaigaidoh30.html'
+  },
+  {
+    owner: 'Cabinet Office, Government of Japan',
+    title: 'Evacuation Information Guidelines',
+    description: 'Pedoman level 1–5 yang direvisi Maret 2026 dan diselaraskan dengan sistem disaster weather information baru.',
+    url: 'https://www.bousai.go.jp/oukyu/hinanjouhou/r3_hinanjouhou_guideline/'
+  },
+  {
+    owner: 'Cabinet Office, Government of Japan',
+    title: 'Disaster Mitigation Points for Foreigners',
+    description: 'Materi kesiapsiagaan bencana multibahasa termasuk Bahasa Indonesia.',
+    url: 'https://www.bousai.go.jp/kyoiku/gensai/index_en.html'
+  },
+  {
+    owner: 'Japan Meteorological Agency',
+    title: 'Multilingual Disaster Information',
+    description: 'Weather, heavy rain, earthquake, tsunami, dan istilah peringatan dalam berbagai bahasa termasuk Bahasa Indonesia.',
+    url: 'https://www.jma.go.jp/jma/kokusai/multi.html'
+  },
+  {
+    owner: 'Ishikawa Prefecture',
+    title: 'Disaster Information Portal',
+    description: 'Hub resmi ke live disaster, weather, evacuation, road, river, dan landslide systems.',
+    url: 'https://www.pref.ishikawa.lg.jp/bousai/bousai_g/'
+  }
+];
+---
+
+<BaseLayout
+  title="Disaster & Emergency di Ishikawa"
+  description="Panduan bencana dan keadaan darurat untuk pelajar Indonesia di Ishikawa: earthquake, tsunami, heavy rain, flood, landslide, evacuation, warning level, dan sumber informasi live."
+>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <a href={withBase('/life-in-ishikawa/')} class="text-sm font-semibold text-brand hover:underline">← Ishikawa Survival Guide</a>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG10 · Disaster & Emergency</p>
+    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Siap sebelum bencana terjadi.</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+      Ishikawa menghadapi risiko earthquake, tsunami, heavy rain, flood, landslide, dan snow disaster.
+      Yang paling penting bukan menghafal semua istilah, tetapi mengetahui risiko lokasi Anda, kapan harus bergerak,
+      dan sumber resmi mana yang harus dibuka.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3 text-sm">
+      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Cakupan: Japan-wide + Ishikawa + municipality</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Untuk: semua residents</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Terakhir diverifikasi: 29 September 2026</span>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
+    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Emergency numbers</p>
+      <div class="mt-4 grid gap-4 sm:grid-cols-2">
+        <div class="rounded-2xl bg-white p-5">
+          <p class="text-4xl font-black text-slate-950">110</p>
+          <p class="mt-1 font-bold text-slate-700">Police</p>
+        </div>
+        <div class="rounded-2xl bg-white p-5">
+          <p class="text-4xl font-black text-slate-950">119</p>
+          <p class="mt-1 font-bold text-slate-700">Ambulance / Fire</p>
+        </div>
+      </div>
+      <p class="mt-5 text-sm leading-6 text-slate-700">
+        Untuk kondisi yang benar-benar darurat, jangan menunda panggilan hanya karena kemampuan bahasa Jepang terbatas.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Panduan utama</p>
+      <h2 class="mt-3 text-2xl font-bold">Buku Panduan Bencana Ishikawa tersedia dalam Bahasa Indonesia.</h2>
+      <p class="mt-4 leading-7 text-slate-300">
+        Ishikawa Prefecture dan IFIE merevisi guide ini pada Maret 2026 setelah mengevaluasi pengalaman foreign residents
+        pada Noto Peninsula Earthquake. Versi baru memperjelas fungsi shelter, sumber informasi multibahasa,
+        persiapan sebelum bencana, dan langkah setelah terkena bencana.
+      </p>
+      <a href="https://www.pref.ishikawa.lg.jp/kokusai/tabunka/bousaigaidoh30.html" target="_blank" rel="noreferrer" class="mt-6 inline-flex rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950 transition hover:bg-slate-100">
+        Buka panduan Bahasa Indonesia ↗
+      </a>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="space-y-6">
+      {sections.map((section) => (
+        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="flex flex-col gap-5 sm:flex-row">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-sm font-bold text-slate-700">{section.label}</div>
+            <div class="min-w-0 flex-1">
+              <h2 class="text-2xl font-bold tracking-tight text-slate-950">{section.title}</h2>
+              <p class="mt-4 leading-7 text-slate-600">{section.intro}</p>
+              <ul class="mt-5 space-y-3">
+                {section.points.map((point) => (
+                  <li class="flex gap-3 text-sm leading-6 text-slate-700">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Evacuation levels</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Pahami level sebelum keadaan mendesak.</h2>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-600">
+        Cabinet Office merevisi evacuation-information guideline pada Maret 2026. Prinsip yang paling penting:
+        <strong>evakuasi harus dilakukan paling lambat pada Level 4 untuk orang yang berada di area berisiko</strong>.
+      </p>
+      <div class="mt-6 space-y-3">
+        {levels.map((item) => (
+          <div class="flex gap-4 rounded-2xl bg-slate-50 p-4">
+            <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white font-black text-brand">{item.level}</div>
+            <p class="pt-1 text-sm leading-6 text-slate-700">{item.action}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Live information</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Saat bencana, gunakan data yang hidup.</h2>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-600">
+        Warning, river level, road closure, landslide risk, dan evacuation information berubah dari menit ke menit.
+        Karena itu website PPI tidak akan menyalin status tersebut.
+      </p>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {liveLinks.map((item) => (
+          <a href={item.url} target="_blank" rel="noreferrer" class="rounded-2xl bg-slate-50 p-4 transition hover:bg-slate-100">
+            <p class="font-bold text-slate-900">{item.name} ↗</p>
+            <p class="mt-1 text-xs leading-5 text-slate-500">{item.note}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">PPI practical notes</p>
+        <h2 class="mt-3 text-2xl font-bold">Persiapan kecil yang sebaiknya selesai sebelum bencana.</h2>
+        <ul class="mt-6 space-y-3">
+          {practical.map((item) => (
+            <li class="flex gap-3 text-sm leading-6 text-slate-300">
+              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-300"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-5 text-xs leading-5 text-slate-500">Bagian ini adalah tips praktis PPI; tindakan aktual harus mengikuti kondisi dan informasi resmi.</p>
+      </div>
+
+      <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-amber-800">Rumor & social media</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Forward bukan berarti benar.</h2>
+        <p class="mt-4 leading-7 text-slate-700">
+          Saat bencana, gunakan informasi dari JMA, Ishikawa Prefecture, municipality, police/fire department,
+          dan operator transportasi. Jangan meneruskan pesan tentang tsunami, shelter, road closure, atau bantuan
+          jika sumbernya tidak dapat diverifikasi.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Sumber resmi</p>
+      <h2 class="mt-3 text-2xl font-bold">Rujukan utama untuk kesiapsiagaan dan keputusan evakuasi.</h2>
+      <div class="mt-7 grid gap-4">
+        {sources.map((source) => (
+          <a href={source.url} target="_blank" rel="noreferrer" class="group rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800">
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{source.owner}</p>
+            <h3 class="mt-2 font-bold text-white group-hover:text-red-200">{source.title} ↗</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-400">{source.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
+    <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <div>
+        <p class="text-sm font-semibold text-brand">Berikutnya</p>
+        <h2 class="mt-1 text-xl font-bold text-slate-950">SG11 — Winter in Ishikawa</h2>
+        <p class="mt-2 text-sm text-slate-500">Salju, pakaian, heating, frozen pipes, berjalan kaki, bicycle, driving, dan winter travel.</p>
+      </div>
+      <span class="shrink-0 rounded-xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-500">Segera tersedia</span>
+    </div>
+  </section>
+</BaseLayout>
