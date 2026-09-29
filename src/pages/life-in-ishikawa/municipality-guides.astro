@@ -1,0 +1,323 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../utils/paths';
+
+const priorityMunicipalities = [
+  {
+    name: 'Kanazawa City',
+    jp: '金沢市',
+    region: 'Ishikawa Central',
+    status: 'Sumber paling lengkap',
+    description: 'Kanazawa memiliki Living Guide resmi berbahasa Inggris yang mencakup resident registration, insurance, pension, tax, housing, garbage, utilities, medical care, childcare, transport, dan disaster preparedness.',
+    links: [
+      ['Kanazawa Living Guide', 'https://digilib.city.kanazawa.ishikawa.jp/doc/32/'],
+      ['Easy Japanese Living Guide', 'https://digilib.city.kanazawa.ishikawa.jp/doc/1438/'],
+      ['Kanazawa City', 'https://www4.city.kanazawa.lg.jp/']
+    ],
+    note: 'Gunakan sebagai referensi utama jika alamat Anda berada di Kanazawa.'
+  },
+  {
+    name: 'Nonoichi City',
+    jp: '野々市市',
+    region: 'Ishikawa Central',
+    status: 'Portal English aktif',
+    description: 'Nonoichi menyediakan halaman khusus foreign residents dengan materi residence change, childcare, consultation, garbage, medical facilities, emergency response, serta Japanese class.',
+    links: [
+      ['Foreign Resident Information', 'https://www.city.nonoichi.lg.jp/soshiki/10/18878.html'],
+      ['Nonoichi City', 'https://www.city.nonoichi.lg.jp/']
+    ],
+    note: 'Perhatikan tahun pembuatan pamphlet; halaman kota sendiri mengingatkan sebagian materi lama mungkin sudah berubah.'
+  },
+  {
+    name: 'Hakusan City',
+    jp: '白山市',
+    region: 'Ishikawa Central',
+    status: 'Living Guide 2025',
+    description: 'Hakusan memiliki Living Guide untuk foreign residents yang direvisi pada Maret 2025, tersedia dalam Easy Japanese, English, Chinese, dan Vietnamese.',
+    links: [
+      ['Hakusan Living Guide', 'https://www.city.hakusan.lg.jp/machi/kokusai/1005266/1007166.html'],
+      ['Foreign Resident Information', 'https://www.city.hakusan.lg.jp/machi/kokusai/1005266/1016220.html'],
+      ['Hakusan City', 'https://www.city.hakusan.lg.jp/']
+    ],
+    note: 'Untuk garbage dan calendar tahunan, gunakan halaman lingkungan Hakusan yang terbaru.'
+  },
+  {
+    name: 'Komatsu City',
+    jp: '小松市',
+    region: 'South Kaga',
+    status: 'Support portal aktif',
+    description: 'Komatsu memiliki foreign-resident support portal dan Guide to Living in Komatsu City yang mencakup procedures, childcare, healthcare, tax, housing, dan education.',
+    links: [
+      ['Foreign Resident Support Portal', 'https://www.city.komatsu.lg.jp/kurasi_tetuzuki/foreigner/index.html'],
+      ['Guide to Living in Komatsu', 'https://www.city.komatsu.lg.jp/soshiki/1028/gaikokujinjuuminshien/1/12653.html'],
+      ['Komatsu City', 'https://www.city.komatsu.lg.jp/']
+    ],
+    note: 'Living Guide diterbitkan 2021 dan halaman koreksi diperbarui 2023; verifikasi detail operasional pada halaman kota terbaru.'
+  },
+  {
+    name: 'Kahoku City',
+    jp: 'かほく市',
+    region: 'Ishikawa Central',
+    status: 'Guide lama — verify first',
+    description: 'Kahoku menyediakan Living Guide berbahasa Inggris/China dan materi garbage multibahasa, tetapi guide utamanya terakhir diperbarui 2021.',
+    links: [
+      ['Kahoku Living Guide', 'https://www.city.kahoku.lg.jp/001/150/152/d000232.html'],
+      ['Garbage Information', 'https://www.city.kahoku.lg.jp/001/102/103/d000148.html'],
+      ['Kahoku City', 'https://www.city.kahoku.lg.jp/']
+    ],
+    note: 'Gunakan guide untuk orientasi saja; konfirmasi procedure, fee, schedule, dan eligibility pada halaman Kahoku terbaru.'
+  }
+];
+
+const regions = [
+  {
+    name: 'Ishikawa Central',
+    municipalities: [
+      ['Kanazawa City', 'https://www4.city.kanazawa.lg.jp/'],
+      ['Kahoku City', 'https://www.city.kahoku.lg.jp/'],
+      ['Hakusan City', 'https://www.city.hakusan.lg.jp/'],
+      ['Nonoichi City', 'https://www.city.nonoichi.lg.jp/'],
+      ['Tsubata Town', 'https://www.town.tsubata.lg.jp/'],
+      ['Uchinada Town', 'https://www.town.uchinada.lg.jp/']
+    ]
+  },
+  {
+    name: 'South Kaga',
+    municipalities: [
+      ['Komatsu City', 'https://www.city.komatsu.lg.jp/'],
+      ['Kaga City', 'https://www.city.kaga.ishikawa.jp/'],
+      ['Nomi City', 'https://www.city.nomi.ishikawa.jp/www/index.html'],
+      ['Kawakita Town', 'http://www.town.kawakita.ishikawa.jp/']
+    ]
+  },
+  {
+    name: 'Noto Central',
+    municipalities: [
+      ['Nanao City', 'https://www.city.nanao.lg.jp/'],
+      ['Hakui City', 'https://www.city.hakui.lg.jp/'],
+      ['Shika Town', 'https://www.town.shika.lg.jp/'],
+      ['Hodatsushimizu Town', 'https://www.hodatsushimizu.jp/'],
+      ['Nakanoto Town', 'https://www.town.nakanoto.ishikawa.jp/']
+    ]
+  },
+  {
+    name: 'Noto North',
+    municipalities: [
+      ['Wajima City', 'https://www.city.wajima.ishikawa.jp/'],
+      ['Suzu City', 'https://www.city.suzu.lg.jp/'],
+      ['Anamizu Town', 'https://www.town.anamizu.lg.jp/'],
+      ['Noto Town', 'https://www.town.noto.lg.jp/']
+    ]
+  }
+];
+
+const localChecklist = [
+  'Resident registration / moving-in / moving-out',
+  'National Health Insurance',
+  'National Pension counter',
+  'My Number / certificate issuance',
+  'Garbage categories and collection calendar',
+  'Childcare / school / child medical support',
+  'Tax and municipal payment',
+  'Water service',
+  'Disaster hazard map and evacuation places',
+  'Local consultation / foreign-language support'
+];
+
+const sources = [
+  {
+    owner: 'Ishikawa Prefecture',
+    title: 'Official Municipality Directory',
+    description: 'Daftar resmi seluruh 19 cities/towns di Ishikawa dan link homepage masing-masing municipality.',
+    url: 'https://www.pref.ishikawa.lg.jp/shimachi.html'
+  },
+  {
+    owner: 'Kanazawa City',
+    title: 'Kanazawa Living Guide',
+    description: 'Living Guide resmi English, produksi Maret 2024 dan berlaku sejak Maret 2024.',
+    url: 'https://digilib.city.kanazawa.ishikawa.jp/doc/32/'
+  },
+  {
+    owner: 'Nonoichi City',
+    title: 'Information for Foreign Residents',
+    description: 'Portal English yang diperbarui Mei 2025 dan mengumpulkan berbagai pamphlet serta local support.',
+    url: 'https://www.city.nonoichi.lg.jp/soshiki/10/18878.html'
+  },
+  {
+    owner: 'Hakusan City',
+    title: 'Living Guide Book',
+    description: 'Living Guide foreign residents yang direvisi Maret 2025.',
+    url: 'https://www.city.hakusan.lg.jp/machi/kokusai/1005266/1007166.html'
+  },
+  {
+    owner: 'Komatsu City',
+    title: 'Foreign Resident Support',
+    description: 'Portal support aktif untuk foreign residents dan Guide to Living in Komatsu City.',
+    url: 'https://www.city.komatsu.lg.jp/kurasi_tetuzuki/foreigner/index.html'
+  },
+  {
+    owner: 'Kahoku City',
+    title: 'Living Guide for Foreign Residents',
+    description: 'Guide berbahasa Inggris/China; karena update utamanya 2021, detail operasional perlu diverifikasi.',
+    url: 'https://www.city.kahoku.lg.jp/001/150/152/d000232.html'
+  }
+];
+---
+
+<BaseLayout
+  title="Municipality Guides di Ishikawa"
+  description="Direktori municipality untuk pelajar Indonesia di Ishikawa: Kanazawa, Nonoichi, Hakusan, Komatsu, Kahoku, dan seluruh 19 cities/towns."
+>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <a href={withBase('/life-in-ishikawa/')} class="text-sm font-semibold text-brand hover:underline">← Ishikawa Survival Guide</a>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG14 · Municipality Guides</p>
+    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Gunakan panduan yang sesuai dengan alamat Anda.</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+      Banyak prosedur kehidupan di Jepang ditangani oleh municipality: alamat, National Health Insurance, garbage,
+      childcare, tax, water, dan layanan lokal lainnya. Karena itu, “tinggal di Ishikawa” belum cukup—Anda harus tahu
+      city atau town tempat alamat Anda terdaftar.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3 text-sm">
+      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Cakupan: seluruh 19 municipality di Ishikawa</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Prioritas: area dengan mahasiswa Indonesia</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Terakhir diverifikasi: 29 September 2026</span>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
+    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Prinsip utama</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Jangan datang ke Kanazawa City Hall jika alamat Anda bukan Kanazawa.</h2>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-700">
+        Residence registration, NHI, garbage, childcare, tax, water, dan banyak layanan lain mengikuti municipality
+        tempat Anda tinggal. Gunakan nama municipality pada alamat/resident registration Anda sebagai titik awal.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Priority guides</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Lima municipality yang sudah dipetakan lebih dalam.</h2>
+    <div class="mt-8 space-y-5">
+      {priorityMunicipalities.map((city) => (
+        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+            <div class="max-w-3xl">
+              <div class="flex flex-wrap items-center gap-3">
+                <h3 class="text-2xl font-bold text-slate-950">{city.name} <span class="font-medium text-slate-400">{city.jp}</span></h3>
+                <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">{city.status}</span>
+              </div>
+              <p class="mt-2 text-xs font-bold uppercase tracking-[0.12em] text-brand">{city.region}</p>
+              <p class="mt-4 leading-7 text-slate-600">{city.description}</p>
+              <p class="mt-4 rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-700">{city.note}</p>
+            </div>
+            <div class="flex min-w-56 flex-col gap-2">
+              {city.links.map(([label, url]) => (
+                <a href={url} target="_blank" rel="noreferrer" class="rounded-xl border border-slate-200 px-4 py-3 text-sm font-bold text-slate-800 transition hover:bg-slate-50">
+                  {label} ↗
+                </a>
+              ))}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Apa yang harus dicari di website municipality?</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Gunakan checklist yang sama, lalu cari aturan lokalnya.</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {localChecklist.map((item) => (
+          <div class="rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-700">{item}</div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Seluruh Ishikawa</p>
+      <h2 class="mt-3 text-2xl font-bold">19 cities & towns.</h2>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-300">
+        Jika municipality Anda belum memiliki panduan khusus di website PPI, gunakan homepage pemerintah lokal berikut.
+        Ishikawa Prefecture membagi 19 municipality menjadi Noto North, Noto Central, Ishikawa Central, dan South Kaga.
+      </p>
+
+      <div class="mt-8 grid gap-6 md:grid-cols-2">
+        {regions.map((region) => (
+          <div class="rounded-2xl border border-slate-700 bg-slate-900 p-5">
+            <h3 class="font-bold text-white">{region.name}</h3>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {region.municipalities.map(([name, url]) => (
+                <a href={url} target="_blank" rel="noreferrer" class="rounded-lg bg-slate-800 px-3 py-2 text-sm text-slate-200 transition hover:bg-slate-700">
+                  {name} ↗
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <a href="https://www.pref.ishikawa.lg.jp/shimachi.html" target="_blank" rel="noreferrer" class="mt-6 inline-flex rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950 transition hover:bg-slate-100">
+        Direktori resmi municipality Ishikawa ↗
+      </a>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-amber-800">Guide lama</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Guidebook lama tetap berguna—tetapi bukan sumber final.</h2>
+        <p class="mt-4 leading-7 text-slate-700">
+          Nonoichi secara eksplisit mengingatkan beberapa pamphlet lama mungkin sudah berubah. Komatsu dan Kahoku juga
+          memiliki guide yang lebih lama. Gunakan dokumen tersebut untuk memahami struktur layanan, lalu verifikasi
+          deadline, fee, eligibility, timetable, dan formulir pada halaman municipality terbaru.
+        </p>
+      </div>
+
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">PPI practical layer</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Tahap berikutnya: pengalaman lokal anggota.</h2>
+        <p class="mt-4 leading-7 text-slate-600">
+          Setelah basis resmi selesai, PPI dapat menambahkan catatan praktis per municipality: city hall counter yang sering digunakan,
+          pengalaman garbage, transport ke kampus, area tempat tinggal mahasiswa, layanan keluarga, dan common confusion.
+          Bagian pengalaman harus selalu diberi label sebagai catatan PPI, bukan aturan pemerintah.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Sumber resmi</p>
+      <h2 class="mt-3 text-2xl font-bold">Mulai dari pemerintah lokal yang benar.</h2>
+      <div class="mt-7 grid gap-4">
+        {sources.map((source) => (
+          <a href={source.url} target="_blank" rel="noreferrer" class="group rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800">
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{source.owner}</p>
+            <h3 class="mt-2 font-bold text-white group-hover:text-red-200">{source.title} ↗</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-400">{source.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 text-center sm:p-10">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">SG00–SG14 selesai</p>
+      <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kembali ke Ishikawa Survival Guide.</h2>
+      <p class="mx-auto mt-4 max-w-2xl leading-7 text-slate-600">
+        Gunakan Start Here untuk memilih panduan berdasarkan situasi Anda: sebelum berangkat, baru tiba,
+        sedang tinggal di Ishikawa, atau akan meninggalkan Jepang.
+      </p>
+      <a href={withBase('/life-in-ishikawa/')} class="mt-6 inline-flex rounded-xl bg-slate-900 px-5 py-3 text-sm font-bold text-white transition hover:bg-slate-700">
+        Kembali ke Start Here →
+      </a>
+    </div>
+  </section>
+</BaseLayout>
