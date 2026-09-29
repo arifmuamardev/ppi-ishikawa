@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+---
+<BaseLayout title="Sumber Daya">
+  <PageIntro title="Sumber daya yang bisa dipakai ulang" description="Dokumen, FAQ, scholarship links, form layanan, publikasi, dan tautan penting yang tidak seharusnya hilang ketika kepengurusan berganti." />
+  <section class="mx-auto max-w-7xl px-5 pb-20 lg:px-8">
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{['Survival Guide','FAQ','Beasiswa','Forms & Services','Publikasi','Useful Links'].map((x)=><div class="rounded-2xl border border-slate-200 bg-white p-6"><h2 class="font-semibold">{x}</h2><p class="mt-2 text-sm text-slate-500">Belum dipublikasikan.</p></div>)}</div>
+  </section>
+</BaseLayout>
