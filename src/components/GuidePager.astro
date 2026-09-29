@@ -10,7 +10,7 @@ const { code } = Astro.props;
 const index = survivalGuides.findIndex((guide) => guide.code === code);
 if (index < 0) throw new Error(`Unknown Survival Guide code: ${code}`);
 
-const previous = index > 0 ? survivalGuides[index - 1] : undefined;
+const previous = index > 1 ? survivalGuides[index - 1] : undefined;
 const next = index < survivalGuides.length - 1 ? survivalGuides[index + 1] : undefined;
 ---
 <nav class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8" aria-label="Navigasi Survival Guide">
