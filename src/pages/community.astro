@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+---
+<BaseLayout title="Komunitas">
+  <PageIntro title="Komunitas PPI Ishikawa" description="Ruang untuk memperkenalkan persebaran anggota, kampus, komunitas minat, alumni, dan jalur bergabung." />
+  <section class="mx-auto max-w-7xl px-5 pb-20 lg:px-8">
+    <div class="grid gap-5 md:grid-cols-3">
+      {['Kampus & Institusi','Komunitas Minat','Data Anggota'].map((x)=><div class="rounded-2xl border border-slate-200 bg-white p-6"><h2 class="font-semibold">{x}</h2><p class="mt-2 text-sm leading-6 text-slate-500">Data publik akan ditampilkan dalam bentuk agregat, tanpa mengekspos data pribadi anggota.</p></div>)}
+    </div>
+  </section>
+</BaseLayout>
