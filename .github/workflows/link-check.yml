@@ -1,0 +1,22 @@
+name: Check external links
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 0 * * 1'
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - name: Check external links
+        run: node scripts/check-links.mjs
