@@ -7,6 +7,7 @@ import { withBase } from '../../utils/paths';
 
 const checklist = [
   {
+    label: '01',
     title: 'Dokumen perjalanan & status tinggal',
     items: [
       'Pastikan paspor dan dokumen perjalanan masih berlaku untuk perjalanan Anda.',
@@ -16,6 +17,7 @@ const checklist = [
     ]
   },
   {
+    label: '02',
     title: 'Alamat & tempat tinggal pertama',
     items: [
       'Pastikan Anda mengetahui alamat tempat tinggal pertama di Jepang dan cara menuju lokasi tersebut.',
@@ -25,6 +27,7 @@ const checklist = [
     ]
   },
   {
+    label: '03',
     title: 'Uang & pembayaran',
     items: [
       'Siapkan metode pembayaran yang tetap dapat digunakan pada hari-hari pertama sebelum rekening bank Jepang siap.',
@@ -34,6 +37,7 @@ const checklist = [
     ]
   },
   {
+    label: '04',
     title: 'Telepon, internet & akses akun',
     items: [
       'Pastikan ponsel tidak terkunci pada operator tertentu jika Anda berencana memakai SIM/eSIM Jepang.',
@@ -43,6 +47,7 @@ const checklist = [
     ]
   },
   {
+    label: '05',
     title: 'Kesehatan & obat pribadi',
     items: [
       'Bawa informasi obat yang Anda gunakan secara rutin dan simpan nama generik/komposisinya bila tersedia.',
@@ -52,6 +57,7 @@ const checklist = [
     ]
   },
   {
+    label: '06',
     title: 'Musim, pakaian & kebutuhan awal',
     items: [
       'Cek musim saat Anda tiba dan kondisi cuaca aktual menjelang keberangkatan.',
@@ -61,6 +67,7 @@ const checklist = [
     ]
   },
   {
+    label: '07',
     title: 'Darurat & keselamatan',
     items: [
       'Simpan kontak universitas dan orang yang dapat dihubungi pada hari kedatangan.',
@@ -122,6 +129,8 @@ const sources = [
     <GuideMeta code="SG01" />
   </section>
 
+  <GuideToc sections={checklist} />
+
   <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
     <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
       <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Quick answer</p>
@@ -148,10 +157,10 @@ const sources = [
   <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
     <div class="space-y-5">
       {checklist.map((section, sectionIndex) => (
-        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        <article id={`bagian-${section.label}`} class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
           <div class="flex gap-4">
             <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-sm font-bold text-slate-700">
-              {String(sectionIndex + 1).padStart(2, '0')}
+              {section.label}
             </div>
             <div class="min-w-0 flex-1">
               <h2 class="text-2xl font-bold tracking-tight text-slate-950">{section.title}</h2>
