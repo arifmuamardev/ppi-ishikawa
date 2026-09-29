@@ -64,6 +64,11 @@ Use this hierarchy:
 | N16 | [Multilingual Information on Disaster Risk Reduction](https://www.jma.go.jp/jma/kokusai/multi.html) | Japan Meteorological Agency | Weather, heavy rain, earthquake, tsunami, volcano | Includes Indonesian | Live | L | SG10, SG11 |
 | N17 | [Safety tips app](https://www.jnto.go.jp/safety-tips/eng/app.html) | Japan Tourism Agency / JNTO | Push alerts for earthquake, tsunami and weather warnings | Includes Indonesian | Live | L/P | SG10 |
 | N18 | [Guidebook for Foreign Children to Start School](https://www.mext.go.jp/a_menu/shotou/clarinet/003/1320860.htm) | MEXT | Enrollment and school-system guidance for foreign children | Multiple languages | Medium | R | SG08 |
+| N19 | [Residence status — Student](https://www.moj.go.jp/isa/applications/status/student) | Immigration Services Agency | Student status, extension of period of stay, current document checklist | JP / browser translation | High | R/L | SG03 |
+| N20 | [Permission for Activities Outside Status](https://www.moj.go.jp/isa/applications/guide/shikakugai.html) | Immigration Services Agency | Part-time work / paid activity outside Student status; permission and working-hour rules | JP / browser translation | High | R | SG03, SG12 |
+| N21 | [Reissuance of Residence Card after Loss](https://www.moj.go.jp/isa/applications/procedures/nyuukokukanri10_00010.html) | Immigration Services Agency | Lost/stolen residence card reporting and reissuance | JP / browser translation | High | R | SG03 |
+| N22 | [Living in Japan — Bank Account and Remittance](https://www.fsa.go.jp/en/user/livinginjapan.html) | Financial Services Agency | Banking, remittance, account safety and foreign-resident guidance | EN + Indonesian materials | High | R/L | SG09, SG13 |
+| N23 | [Income Tax Information for an Individual Who Will Leave Japan](https://www.nta.go.jp/english/taxes/individual/12004.htm) | National Tax Agency | Tax agent and filing considerations before/after departure | EN | High | R | SG13 |
 
 ---
 
@@ -86,6 +91,8 @@ Use this hierarchy:
 | I13 | [Medical Institutions Accepting Foreign Patients](https://www.pref.ishikawa.lg.jp/iryou/gaikokujinkanja.html) | Ishikawa Prefecture | Official route to current medical institution lists | JP | Live | L | SG07 |
 | I14 | [Winter-road safety and tire-chain information](https://www2.police.pref.ishikawa.lg.jp/trafficsafety/trafficsafety18/index.html) | Ishikawa Prefectural Police | Safe winter driving and road-condition references | JP | Seasonal | R/L | SG06, SG11 |
 | I15 | [Road / Transportation Information](https://www.pref.ishikawa.lg.jp/kanko_koryu/kanko/dorokotsu/index.html) | Ishikawa Prefecture | Official directory for roads, rail, airports and transport links | JP | Live | L | SG06 |
+| I16 | [Ishikawa Bicycle Ordinance / Insurance Requirement](https://www.pref.ishikawa.lg.jp/seikatu/koutsu/jitensyajourei.html) | Ishikawa Prefecture | Mandatory bicycle liability insurance; helmet and safe-use policy | JP | Medium | R/P | SG06 |
+| I17 | [Ishikawa Emergency Medical Advice Center #7119](https://www.pref.ishikawa.lg.jp/bousai/7119pr.html) | Ishikawa Prefecture | 24/7 advice when unsure about ambulance/urgent care; supports Indonesian | Multilingual telephone | Live | R/L | SG07 |
 
 ---
 
@@ -137,9 +144,10 @@ Municipality: K01 / H01 / KO01 / relevant municipality
 PPI role: ordered checklist: address registration → insurance → pension/My Number → bank/phone as applicable.
 
 ## SG03 — Administrasi
-Primary: N04, N05, N08, N09, N10, N11  
+Primary: N04, N05, N08, N09, N10, N11, N19, N20, N21  
+Temporary travel: N06  
 Local implementation: municipal guide  
-PPI role: explain systems and sequencing. Official requirements remain authoritative.
+PPI role: explain initial administration plus the residence lifecycle: renewal, re-entry, lost residence card, and part-time work permission. Official requirements remain authoritative.
 
 ## SG04 — Tempat Tinggal
 Primary: N13  
@@ -152,14 +160,14 @@ Garbage: local live sources K06/K07/H03/KA02 etc.
 PPI role: practical local habits. Never write one "Ishikawa garbage schedule."
 
 ## SG06 — Transportasi
-Primary: N14, I15  
+Primary: N14, I15, I16  
 Winter roads: I11, I14  
 Local transport links should be added per municipality/operator when articles are written.  
 PPI role: explain IC cards, bus etiquette, bicycle ownership/parking and common student workflows.
 
 ## SG07 — Kesehatan
 Primary: N09, I05, I13  
-Emergency: N15  
+Emergency: N15; unsure whether urgent/ambulance: I17  
 Kanazawa live care: K08/K09  
 PPI role: explain where to start, how insurance usually works, and how to find a clinic; do not diagnose or hardcode changing provider schedules.
 
@@ -169,7 +177,7 @@ Local services: municipality guide
 PPI role: map pregnancy/childbirth/childcare/school steps to the correct municipal office and university-family context.
 
 ## SG09 — Bank & Money
-Primary: N02 + municipality living guide  
+Primary: N22, N02 + municipality living guide  
 PPI role: practical banking/payment/remittance notes. Bank-specific details must be sourced from each bank when added.
 
 ## SG10 — Disaster & Emergency
@@ -187,7 +195,7 @@ Primary: I04, I06, I02
 PPI role: direct people to the correct support route; keep schedules as links because classes/consultation times change.
 
 ## SG13 — Leaving Ishikawa / Japan
-Primary: N04, N06, N12, N13  
+Primary: N04, N06, N12, N13, N22, N23  
 Municipal move-out procedures: relevant city guide  
 PPI role: checklist for move-out notification, insurance/pension, apartment restoration, utilities, bank/phone, residence card/immigration as applicable.
 
@@ -226,9 +234,11 @@ Every PPI Survival Guide article should contain:
 - **Applies to:** Japan / Ishikawa Prefecture / municipality
 - **Audience:** student / family / all residents
 - **Last verified:** YYYY-MM-DD
-- **Official source(s):** 1–4 registry IDs
-- **PPI practical notes:** clearly separated
+- **Official source(s):** registry IDs shown from centralized metadata
+- **PPI practical notes:** clearly separated where relevant
 - **Volatility:** low / medium / high / live
+
+The user-facing metadata is centralized in `src/data/survival.ts`; do not manually duplicate dates, volatility, pager order, or registry IDs across pages.
 
 Recommended review cycle:
 - Low: once per year
