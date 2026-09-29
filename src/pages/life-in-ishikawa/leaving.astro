@@ -1,0 +1,351 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../utils/paths';
+
+const scenarios = [
+  {
+    title: 'Pindah dari Ishikawa, tetap tinggal di Jepang',
+    items: [
+      'Lakukan moving-out notification di municipality lama dan moving-in notification di municipality baru.',
+      'Update alamat pada residence card melalui prosedur resident registration.',
+      'Pindahkan atau daftar ulang layanan municipality, insurance, school/childcare, dan kontrak sesuai kebutuhan.',
+      'Bank, phone, employer/university, dan layanan lain perlu menerima alamat baru.'
+    ]
+  },
+  {
+    title: 'Meninggalkan Jepang',
+    items: [
+      'Ajukan overseas moving-out notification pada municipality.',
+      'Selesaikan insurance, pension, tax, housing, utilities, bank, dan kontrak sebelum berangkat.',
+      'Jika keluar tanpa re-entry permit karena benar-benar mengakhiri tinggal di Jepang, residence card diserahkan di port of departure.',
+      'Pertimbangkan pension lump-sum withdrawal hanya setelah memahami konsekuensi dan eligibility.'
+    ]
+  }
+];
+
+const sections = [
+  {
+    label: '01',
+    title: 'Tentukan tanggal keluar dan buat timeline mundur',
+    intro: 'Sebagian proses perlu dilakukan jauh sebelum hari penerbangan. Mulai dari kontrak apartment dan university clearance, lalu susun urusan municipality dan financial matters.',
+    points: [
+      'Tentukan last day di apartment, last day di university/work, dan tanggal departure.',
+      'Periksa notice period pada kontrak apartment, phone, internet, utilities, dan layanan lain.',
+      'Jangan menunggu minggu terakhir untuk urusan yang membutuhkan appointment atau inspection.',
+      'Buat satu daftar “before departure / departure day / after departure”.'
+    ]
+  },
+  {
+    label: '02',
+    title: 'Beritahu universitas atau institusi',
+    intro: 'Jika departure berkaitan dengan graduation, completion, withdrawal, atau perubahan status mahasiswa, selesaikan urusan kampus lebih dahulu.',
+    points: [
+      'Konfirmasi graduation/completion documents, transcript, certificate, atau dokumen lain yang diperlukan.',
+      'Selesaikan library, equipment, laboratory, dormitory, tuition, scholarship, dan university account matters.',
+      'Tanyakan sampai kapan university email, cloud storage, atau system account tetap aktif.',
+      'Simpan contact point universitas yang masih dapat dihubungi setelah Anda meninggalkan Jepang.'
+    ]
+  },
+  {
+    label: '03',
+    title: 'Apartment dan move-out',
+    intro: 'Kontrak housing menentukan notice period, inspection, cleaning/restoration, dan key return. Baca kembali bagian move-out sejak awal.',
+    points: [
+      'Beri notice sesuai periode yang tertulis dalam kontrak.',
+      'Jadwalkan move-out inspection bila diperlukan.',
+      'Dokumentasikan kondisi unit setelah barang dikeluarkan.',
+      'Atur bulky waste dan disposal lebih awal karena tidak semua barang dapat dibuang pada household garbage biasa.'
+    ]
+  },
+  {
+    label: '04',
+    title: 'Moving-out notification di municipality',
+    intro: 'Saat pindah alamat, resident registration harus diperbarui. Jika meninggalkan Jepang, lakukan overseas moving-out notification sesuai prosedur municipality.',
+    points: [
+      'Kanazawa Living Guide menyebut moving-out notification dilakukan terlebih dahulu, dalam satu bulan sebelum planned move-out date.',
+      'Jika pindah ke municipality lain di Jepang, gunakan moving-out certificate/procedure lalu registrasi di alamat baru.',
+      'Jika pulang ke luar Jepang, Kanazawa secara eksplisit meminta overseas moving-out notification.',
+      'Untuk municipality selain Kanazawa, cek deadline, lokasi counter, dan dokumen pada website pemerintah setempat.'
+    ]
+  },
+  {
+    label: '05',
+    title: 'National Health Insurance dan layanan municipality',
+    intro: 'Jika Anda peserta National Health Insurance, keluar dari municipality/Jepang juga memengaruhi eligibility dan settlement premium.',
+    points: [
+      'MHLW menyatakan perubahan masuk/keluar NHI pada prinsipnya perlu dilaporkan ke municipality dalam 14 hari.',
+      'Tanyakan apakah ada premium yang masih harus dibayar atau refund yang harus diselesaikan.',
+      'Jika memiliki child-related support, medical subsidy, atau layanan municipality lain, cek prosedur penghentiannya.',
+      'Jangan membuang dokumen insurance sebelum seluruh settlement selesai.'
+    ]
+  },
+  {
+    label: '06',
+    title: 'National Pension',
+    intro: 'Jika tidak lagi memiliki alamat di Jepang, status pension dan opsi setelah departure perlu diperiksa secara terpisah.',
+    points: [
+      'Pastikan enrollment/contribution status Anda sudah benar sampai tanggal departure.',
+      'Non-Japanese yang memenuhi kondisi tertentu dapat mengajukan Lump-sum Withdrawal Payment setelah meninggalkan Jepang.',
+      'Japan Pension Service menetapkan application pada prinsipnya dalam dua tahun sejak Anda tidak lagi memiliki alamat di Jepang.',
+      'Sebelum mengajukan lump-sum, pahami dampaknya terhadap pension coverage record dan kemungkinan social security agreement.'
+    ]
+  },
+  {
+    label: '07',
+    title: 'Tax matters',
+    intro: 'Departure tidak selalu berarti semua tax matters selesai pada hari yang sama. Income tax dan local tax dapat membutuhkan penanganan tambahan.',
+    points: [
+      'Cek outstanding national/local tax sebelum departure.',
+      'Jika masih mempunyai kewajiban income-tax procedure setelah menjadi non-resident, National Tax Agency menjelaskan bahwa tax agent di Jepang mungkin perlu ditunjuk.',
+      'Jika tidak menunjuk tax agent tetapi wajib filing, kondisi tertentu dapat mengharuskan final/quasi-final return sebelum departure.',
+      'Untuk resident tax dan prosedur municipality lainnya, tanyakan langsung ke local tax office/city hall karena situasi tiap orang berbeda.'
+    ]
+  },
+  {
+    label: '08',
+    title: 'Utilities, phone, internet, dan kontrak',
+    intro: 'Listrik, gas, air, internet, mobile phone, subscription, dan kontrak lain harus dihentikan atau dipindahkan secara terpisah.',
+    points: [
+      'Tentukan final service date dan metode final payment.',
+      'Jangan menutup rekening pembayaran terlalu cepat jika final bill belum ditarik.',
+      'Kembalikan rented router, modem, SIM/device, atau equipment bila kontraknya mensyaratkan.',
+      'Simpan bukti cancellation dan tracking number untuk equipment yang dikirim kembali.'
+    ]
+  },
+  {
+    label: '09',
+    title: 'Bank account',
+    intro: 'Rekening bank sering masih dibutuhkan untuk final salary, scholarship, utility settlement, deposit refund, atau tax refund—tetapi jangan dibiarkan aktif tanpa alasan setelah pulang permanen.',
+    points: [
+      'Susun urutan: terima final payment/refund → selesaikan automatic payment → transfer saldo → close account.',
+      'Financial Services Agency secara eksplisit meminta foreign residents menghubungi financial institution ketika kembali ke negara asal dan menutup bank account.',
+      'Jangan memberikan rekening, cash card, passbook, atau online banking kepada orang lain.',
+      'Konfirmasi prosedur closure dengan bank karena persyaratan berbeda.'
+    ]
+  },
+  {
+    label: '10',
+    title: 'Residence card dan departure',
+    intro: 'Perlakuan residence card tergantung apakah Anda benar-benar meninggalkan status tinggal atau keluar dengan re-entry.',
+    points: [
+      'Jika keluar dari Jepang tanpa re-entry permit karena mengakhiri tinggal sebagai mid-to-long-term resident, residence card menjadi invalid dan diserahkan saat departure di port.',
+      'Jika keluar menggunakan re-entry permit/special re-entry karena memang akan kembali, jangan mengikuti checklist permanent departure secara otomatis.',
+      'Jika re-entry period berakhir tanpa kembali, ada aturan pengembalian residence card yang sudah invalid.',
+      'Jika ragu apakah perjalanan Anda termasuk temporary departure atau permanent departure, cek Immigration Services Agency sebelum berangkat.'
+    ]
+  },
+  {
+    label: '11',
+    title: 'Barang, international shipping, dan dokumen',
+    intro: 'Pengiriman internasional dan barang bawaan memiliki aturan negara tujuan serta status layanan yang dapat berubah.',
+    points: [
+      'Cek prohibited/restricted items sebelum mengirim barang.',
+      'Japan Post memperbarui availability international mail menurut negara tujuan; jangan mengandalkan informasi lama.',
+      'Simpan tracking number dan inventory barang bernilai penting.',
+      'Bawa dokumen akademik, immigration, tax, pension, banking, dan employment yang sulit diganti dalam format fisik/digital yang aman.'
+    ]
+  }
+];
+
+const checklist = [
+  'University / employer clearance selesai.',
+  'Apartment notice, inspection, key return selesai.',
+  'Moving-out / overseas moving-out notification selesai.',
+  'NHI dan layanan municipality selesai.',
+  'Pension record dan keputusan lump-sum sudah dipahami.',
+  'Tax / tax-agent issue sudah diperiksa.',
+  'Utilities, internet, phone, subscription dihentikan atau dipindahkan.',
+  'Final payment/refund diterima atau jalurnya sudah jelas.',
+  'Bank account ditutup pada waktu yang tepat.',
+  'Residence card diperlakukan sesuai jenis departure.',
+  'Barang dan international shipping selesai.',
+  'Kontak, dokumen, serta salinan bukti cancellation tersimpan.'
+];
+
+const sources = [
+  {
+    owner: 'Kanazawa City',
+    title: 'Kanazawa Living Guide — Resident Move Notification',
+    description: 'Panduan resmi moving-out; untuk kembali ke luar Jepang, overseas moving-out notification diperlukan.',
+    url: 'https://digilib.city.kanazawa.ishikawa.jp/doc/32/'
+  },
+  {
+    owner: 'Ministry of Health, Labour and Welfare',
+    title: 'Joining / Leaving National Health Insurance',
+    description: 'Perubahan eligibility NHI dilaporkan melalui municipality; MHLW menyebut prinsip notification within 14 days.',
+    url: 'https://www.mhlw.go.jp/stf/newpage_21539.html'
+  },
+  {
+    owner: 'Japan Pension Service',
+    title: 'Leave Japan',
+    description: 'Hub resmi pension untuk orang yang meninggalkan Jepang, termasuk Lump-sum Withdrawal Payment.',
+    url: 'https://www.nenkin.go.jp/international/english/scene/leavejapan/index.html'
+  },
+  {
+    owner: 'National Tax Agency',
+    title: 'Income Tax Information for an Individual Who Will Leave Japan',
+    description: 'Menjelaskan tax agent dan filing/payment jika masih memiliki tax procedures setelah departure.',
+    url: 'https://www.nta.go.jp/english/taxes/individual/12004.htm'
+  },
+  {
+    owner: 'Financial Services Agency',
+    title: 'Financial Services for Foreign Residents',
+    description: 'Panduan bank untuk foreign residents, termasuk perlunya menutup rekening saat kembali ke negara asal.',
+    url: 'https://www.fsa.go.jp/user/livinginjapan.html'
+  },
+  {
+    owner: 'Immigration Services Agency',
+    title: 'Return of Residence Card',
+    description: 'Aturan kapan residence card menjadi invalid dan kapan/di mana harus dikembalikan.',
+    url: 'https://www.moj.go.jp/isa/applications/procedures/nyuukokukanri10_00020'
+  },
+  {
+    owner: 'Japan Post',
+    title: 'International Mail',
+    description: 'Status layanan, country-specific restrictions, shipping methods, dan current international-mail availability.',
+    url: 'https://www.post.japanpost.jp/service/send/oversea/index_en.html'
+  }
+];
+---
+
+<BaseLayout
+  title="Leaving Ishikawa / Japan"
+  description="Checklist meninggalkan Ishikawa atau Jepang: moving-out, housing, insurance, pension, tax, utilities, bank, residence card, dan international shipping."
+>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <a href={withBase('/life-in-ishikawa/')} class="text-sm font-semibold text-brand hover:underline">← Ishikawa Survival Guide</a>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG13 · Leaving Ishikawa / Japan</p>
+    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Selesaikan urusan sebelum pintu terakhir ditutup.</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+      Departure yang rapi bukan hanya membeli tiket pulang. Ada housing, municipality, insurance, pension, tax,
+      bank, utilities, university, dan immigration matters yang perlu diselesaikan dalam urutan yang tepat.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3 text-sm">
+      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Cakupan: pindah dalam Jepang + meninggalkan Jepang</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Untuk: mahasiswa & keluarga</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Terakhir diverifikasi: 29 September 2026</span>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-2">
+      {scenarios.map((scenario) => (
+        <article class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+          <h2 class="text-xl font-bold text-slate-950">{scenario.title}</h2>
+          <ul class="mt-5 space-y-3">
+            {scenario.items.map((item) => (
+              <li class="flex gap-3 text-sm leading-6 text-slate-700">
+                <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Urutan praktis</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Jangan tutup rekening bank terlalu awal.</h2>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-700">
+        Final salary, scholarship, apartment deposit refund, utilities, atau tax refund dapat datang mendekati atau setelah move-out.
+        Pastikan seluruh arus uang selesai atau ada jalur yang sah untuk menyelesaikannya sebelum bank account ditutup.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="space-y-6">
+      {sections.map((section) => (
+        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="flex flex-col gap-5 sm:flex-row">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-sm font-bold text-slate-700">{section.label}</div>
+            <div class="min-w-0 flex-1">
+              <h2 class="text-2xl font-bold tracking-tight text-slate-950">{section.title}</h2>
+              <p class="mt-4 leading-7 text-slate-600">{section.intro}</p>
+              <ul class="mt-5 space-y-3">
+                {section.points.map((point) => (
+                  <li class="flex gap-3 text-sm leading-6 text-slate-700">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Pension</p>
+        <h2 class="mt-3 text-2xl font-bold">Lump-sum withdrawal bukan checklist otomatis.</h2>
+        <p class="mt-4 leading-7 text-slate-300">
+          Japan Pension Service memungkinkan non-Japanese yang memenuhi kondisi tertentu mengajukan Lump-sum Withdrawal Payment,
+          pada prinsipnya dalam dua tahun setelah tidak lagi memiliki alamat di Jepang. Sebelum mengajukan, baca konsekuensinya terhadap pension record.
+        </p>
+        <a href="https://www.nenkin.go.jp/international/english/japanese-system/benefit/payment.html" target="_blank" rel="noreferrer" class="mt-6 inline-flex rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950 transition hover:bg-slate-100">
+          Cek Lump-sum Withdrawal ↗
+        </a>
+      </div>
+
+      <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-amber-800">Tax</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Departure tidak otomatis menutup tax matters.</h2>
+        <p class="mt-4 leading-7 text-slate-700">
+          Jika Anda masih memiliki tax procedures setelah departure, NTA menjelaskan penggunaan tax agent.
+          Jika Anda wajib filing tetapi tidak menunjuk tax agent, final/quasi-final filing sebelum berangkat dapat diperlukan.
+          Situasi pajak berbeda tiap orang, jadi verifikasi sebelum departure.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Final checklist</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Sebelum menuju airport.</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {checklist.map((item, index) => (
+          <div class="flex gap-3 rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-700">
+            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white text-xs font-bold text-brand">{index + 1}</span>
+            <span>{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Sumber resmi</p>
+      <h2 class="mt-3 text-2xl font-bold">Gunakan instansi yang menangani masing-masing urusan.</h2>
+      <div class="mt-7 grid gap-4">
+        {sources.map((source) => (
+          <a href={source.url} target="_blank" rel="noreferrer" class="group rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800">
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{source.owner}</p>
+            <h3 class="mt-2 font-bold text-white group-hover:text-red-200">{source.title} ↗</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-400">{source.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
+    <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <div>
+        <p class="text-sm font-semibold text-brand">Berikutnya</p>
+        <h2 class="mt-1 text-xl font-bold text-slate-950">SG14 — Municipality Guides</h2>
+        <p class="mt-2 text-sm text-slate-500">Kanazawa, Nonoichi, Hakusan, Komatsu, Kahoku, dan jalur informasi lokal lainnya.</p>
+      </div>
+      <span class="shrink-0 rounded-xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-500">Segera tersedia</span>
+    </div>
+  </section>
+</BaseLayout>
