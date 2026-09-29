@@ -1,0 +1,306 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../utils/paths';
+
+const priorities = [
+  {
+    label: '01',
+    title: 'Pastikan tempat tinggal pertama Anda',
+    status: 'Hari pertama',
+    body: 'Simpan alamat lengkap, nama bangunan/kamar bila ada, dan kontak dormitory/landlord/university. Banyak prosedur lokal baru bisa dijalankan setelah Anda benar-benar mempunyai tempat tinggal.',
+    notes: [
+      'Cek cara check-in dan aturan bangunan.',
+      'Pastikan Anda tahu municipality tempat alamat tersebut berada.',
+      'Jangan mengandalkan nama area saja; simpan alamat lengkap dalam format Jepang bila tersedia.'
+    ]
+  },
+  {
+    label: '02',
+    title: 'Daftarkan alamat di municipality',
+    status: 'Prioritas awal',
+    body: 'Bagi mid-to-long-term resident yang baru masuk Jepang, Immigration Services Agency menetapkan pemberitahuan tempat tinggal dalam 14 hari setelah tempat tinggal ditetapkan. Proses dilakukan melalui municipality tempat Anda tinggal.',
+    notes: [
+      'Bawa residence card atau dokumen yang diminta sesuai kondisi Anda.',
+      'Kanazawa, Nonoichi, Hakusan, Komatsu, Kahoku, dan municipality lain memiliki loket/prosedur lokal masing-masing.',
+      'Gunakan halaman resmi municipality untuk daftar dokumen terbaru.'
+    ]
+  },
+  {
+    label: '03',
+    title: 'Cek medical insurance yang berlaku untuk Anda',
+    status: 'Setelah registrasi alamat',
+    body: 'Penduduk Jepang perlu memiliki medical insurance. Bagi orang yang tidak masuk employee health insurance atau skema lain yang berlaku, National Health Insurance biasanya ditangani oleh municipality. Jangan menganggap semua mahasiswa otomatis memiliki kondisi yang sama.',
+    notes: [
+      'Tanyakan ke university support office jika Anda belum yakin skema insurance Anda.',
+      'Verifikasi eligibility dan dokumen ke municipality.',
+      'Simpan informasi insurance setelah diterbitkan karena akan dibutuhkan saat mengakses layanan kesehatan.'
+    ]
+  },
+  {
+    label: '04',
+    title: 'Pahami National Pension dan opsi mahasiswa',
+    status: 'Setelah alamat terdaftar',
+    body: 'National Pension dan pembayaran kontribusinya adalah dua hal berbeda. Mahasiswa yang memenuhi syarat dapat mengajukan Student Special Payment System untuk menunda pembayaran kontribusi selama masa studi; pengajuan ini tidak otomatis.',
+    notes: [
+      'Cek apakah Anda termasuk pihak yang perlu terdaftar dalam National Pension.',
+      'Jika mahasiswa dan memenuhi syarat, pelajari Student Special Payment System.',
+      'Jangan abaikan surat dari Japan Pension Service meskipun Anda berencana mengajukan penundaan pembayaran.'
+    ]
+  },
+  {
+    label: '05',
+    title: 'Simpan informasi My Number',
+    status: 'Setelah resident registration',
+    body: 'My Number digunakan dalam berbagai prosedur administratif di Jepang. Ikuti informasi resmi yang diterima setelah resident registration dan gunakan portal resmi My Number untuk prosedur kartu atau perubahan informasi.',
+    notes: [
+      'Jangan membagikan nomor My Number sembarangan.',
+      'Bedakan antara My Number sebagai nomor administratif dan My Number Card sebagai kartu.',
+      'Simpan dokumen yang datang melalui pos dan baca instruksinya.'
+    ]
+  },
+  {
+    label: '06',
+    title: 'Selesaikan registrasi kampus',
+    status: 'Sesuai jadwal universitas',
+    body: 'Universitas biasanya memiliki prosedur tersendiri untuk enrollment, orientation, student ID, tuition/scholarship, housing, insurance tambahan, dan layanan mahasiswa internasional.',
+    notes: [
+      'Ikuti urutan dan tenggat dari universitas Anda.',
+      'Bawa dokumen yang diminta kampus secara terpisah dari dokumen City Hall.',
+      'Simpan kontak international student office atau supervisor/lab.'
+    ]
+  },
+  {
+    label: '07',
+    title: 'Bangun akses hidup sehari-hari',
+    status: 'Hari-hari pertama',
+    body: 'Setelah administrasi penting berjalan, siapkan komunikasi, pembayaran, transportasi, dan kebutuhan rumah tangga. Tidak semuanya harus selesai pada hari yang sama.',
+    notes: [
+      'Aktifkan metode komunikasi yang dapat diandalkan.',
+      'Siapkan metode pembayaran cadangan sampai rekening atau kartu lokal siap.',
+      'Pelajari rute rutin dari tempat tinggal ke kampus.',
+      'Cek aturan sampah berdasarkan municipality dan district Anda.'
+    ]
+  },
+  {
+    label: '08',
+    title: 'Siapkan akses bantuan dan keadaan darurat',
+    status: 'Jangan ditunda',
+    body: 'Simpan nomor darurat Jepang dan sumber informasi bencana Ishikawa. IFIE juga menyediakan jalur konsultasi bagi warga asing untuk masalah kehidupan, administrasi, kesehatan, pekerjaan, keluarga, dan pendidikan.',
+    notes: [
+      'Police: 110.',
+      'Ambulance / Fire: 119.',
+      'Simpan panduan bencana Ishikawa yang tersedia dalam Bahasa Indonesia.',
+      'Simpan kontak university support dan IFIE.'
+    ]
+  }
+];
+
+const doLater = [
+  'Membuka rekening bank Jepang — tergantung kebutuhan dan dokumen yang sudah tersedia.',
+  'Kontrak SIM/mobile plan jangka panjang — pilih setelah memahami kebutuhan dan syarat provider.',
+  'Membeli semua perlengkapan rumah — prioritaskan kebutuhan dasar dulu.',
+  'Mengurus hal yang tidak punya tenggat dekat — jangan sampai mengganggu registrasi alamat, insurance, pension, atau urusan kampus.'
+];
+
+const sources = [
+  {
+    owner: 'Immigration Services Agency of Japan',
+    title: 'Notification of Place of Residence after New Landing',
+    description: 'Sumber resmi mengenai pemberitahuan alamat untuk mid-to-long-term residents setelah menetapkan tempat tinggal.',
+    url: 'https://www.moj.go.jp/isa/applications/procedures/nyuukokukanri10_00021.html'
+  },
+  {
+    owner: 'Ministry of Health, Labour and Welfare',
+    title: 'National Health Insurance for Foreign Residents',
+    description: 'Informasi resmi mengenai dasar National Health Insurance bagi warga asing yang tinggal di Jepang.',
+    url: 'https://www.mhlw.go.jp/stf/newpage_21895.html'
+  },
+  {
+    owner: 'Japan Pension Service',
+    title: 'National Pension — information for foreign residents',
+    description: 'Informasi pension untuk warga asing, termasuk prosedur enrollment dan sistem terkait.',
+    url: 'https://www.nenkin.go.jp/service/pamphlet/kaigai/information.html'
+  },
+  {
+    owner: 'Japan Pension Service',
+    title: 'Student Special Payment System',
+    description: 'Panduan resmi untuk mahasiswa yang ingin mengajukan penundaan pembayaran kontribusi pension sesuai syarat.',
+    url: 'https://www.nenkin.go.jp/tokusetsu/English/gaikoku-kokumen.html'
+  },
+  {
+    owner: 'My Number Card',
+    title: 'Official My Number Card Portal',
+    description: 'Portal resmi untuk informasi My Number Card dan prosedur terkait.',
+    url: 'https://www.kojinbango-card.go.jp/en/'
+  },
+  {
+    owner: 'Kanazawa City',
+    title: 'Kanazawa Living Guide',
+    description: 'Panduan resmi kehidupan bagi warga asing di Kanazawa; gunakan sebagai contoh municipality guide dan cek municipality Anda sendiri bila tinggal di luar Kanazawa.',
+    url: 'https://digilib.city.kanazawa.ishikawa.jp/doc/32/'
+  },
+  {
+    owner: 'Ishikawa Foundation for International Exchange',
+    title: 'Consultation for Foreign Residents',
+    description: 'Konsultasi kehidupan dan masalah administratif untuk warga asing di Ishikawa.',
+    url: 'https://www.ifie.or.jp/foreigners_life/soudan/'
+  }
+];
+---
+
+<BaseLayout
+  title="Hari Pertama di Ishikawa"
+  description="Urutan praktis untuk hari-hari pertama setelah tiba dan menetapkan tempat tinggal di Ishikawa."
+>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <a href={withBase('/life-in-ishikawa/')} class="text-sm font-semibold text-brand hover:underline">← Ishikawa Survival Guide</a>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG02 · Hari Pertama di Ishikawa</p>
+    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Sudah tiba. Apa yang harus dilakukan dulu?</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+      “Hari pertama” di sini berarti beberapa hari awal setelah Anda benar-benar menetapkan tempat tinggal.
+      Tidak semua urusan harus selesai dalam satu hari. Prioritaskan yang mempunyai tenggat atau menjadi prasyarat bagi proses lain.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3 text-sm">
+      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Cakupan: Jepang + municipality</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Untuk: mahasiswa & keluarga</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Terakhir diverifikasi: 29 September 2026</span>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
+    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Quick answer</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Urutan sederhananya</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {[
+          'Tetapkan tempat tinggal',
+          'Daftarkan alamat',
+          'Cek medical insurance',
+          'Urus pension / student payment system',
+          'Simpan informasi My Number',
+          'Selesaikan registrasi kampus',
+          'Aktifkan kebutuhan hidup sehari-hari',
+          'Simpan akses bantuan & darurat'
+        ].map((item, index) => (
+          <div class="flex gap-3 rounded-2xl bg-white p-4 text-sm font-semibold text-slate-800">
+            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-100 text-xs font-bold text-brand">{index + 1}</span>
+            <span>{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-amber-800">Penting: bukan semuanya “hari pertama”</p>
+      <p class="mt-3 leading-7 text-slate-700">
+        Untuk mid-to-long-term resident yang baru masuk Jepang, pemberitahuan tempat tinggal dilakukan dalam
+        <strong>14 hari setelah tempat tinggal ditetapkan</strong>. Gunakan periode ini sebagai tenggat resmi,
+        bukan sebagai alasan untuk menunda. Banyak prosedur municipality lain juga lebih mudah dilakukan setelah alamat Anda terdaftar.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="space-y-5">
+      {priorities.map((item) => (
+        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="flex flex-col gap-5 sm:flex-row">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-sm font-bold text-slate-700">{item.label}</div>
+            <div class="min-w-0 flex-1">
+              <div class="flex flex-wrap items-center gap-3">
+                <h2 class="text-2xl font-bold tracking-tight text-slate-950">{item.title}</h2>
+                <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">{item.status}</span>
+              </div>
+              <p class="mt-4 leading-7 text-slate-600">{item.body}</p>
+              <ul class="mt-5 space-y-3">
+                {item.notes.map((note) => (
+                  <li class="flex gap-3 text-sm leading-6 text-slate-700">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+                    <span>{note}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Municipality matters</p>
+        <h2 class="mt-3 text-2xl font-bold">Tinggal di Ishikawa tidak selalu berarti mengurus semuanya di Kanazawa City.</h2>
+        <p class="mt-4 leading-7 text-slate-300">
+          Administrasi alamat, National Health Insurance, sampah, childcare, dan beberapa layanan lain mengikuti
+          municipality tempat tinggal Anda. Jika alamat Anda berada di Nonoichi, Hakusan, Komatsu, Kahoku, atau kota lain,
+          gunakan kantor dan panduan municipality tersebut.
+        </p>
+      </div>
+
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Tidak harus langsung</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Beberapa hal boleh menyusul.</h2>
+        <ul class="mt-5 space-y-3">
+          {doLater.map((item) => (
+            <li class="flex gap-3 text-sm leading-6 text-slate-700">
+              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">PPI practical notes</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Buat satu folder “Japan Admin” sejak hari pertama.</h2>
+      <p class="mt-4 leading-7 text-slate-600">
+        Simpan residence-related documents, surat dari City Hall, insurance, pension, My Number, university,
+        housing, utilities, dan bukti pembayaran penting di satu tempat. Ambil foto/scan untuk arsip pribadi,
+        tetapi jaga dokumen sensitif dan jangan membagikannya ke pihak yang tidak perlu.
+      </p>
+      <p class="mt-5 text-xs leading-5 text-slate-500">
+        Ini adalah tips praktis PPI, bukan persyaratan pemerintah.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Sumber resmi</p>
+      <h2 class="mt-3 text-2xl font-bold">Gunakan sumber berikut untuk persyaratan terbaru.</h2>
+      <div class="mt-7 grid gap-4">
+        {sources.map((source) => (
+          <a
+            href={source.url}
+            target="_blank"
+            rel="noreferrer"
+            class="group rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800"
+          >
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{source.owner}</p>
+            <h3 class="mt-2 font-bold text-white group-hover:text-red-200">{source.title} ↗</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-400">{source.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
+    <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <div>
+        <p class="text-sm font-semibold text-brand">Berikutnya</p>
+        <h2 class="mt-1 text-xl font-bold text-slate-950">SG03 — Administrasi</h2>
+        <p class="mt-2 text-sm text-slate-500">Penjelasan lebih rinci tentang residence registration, My Number, National Health Insurance, dan pension.</p>
+      </div>
+      <span class="shrink-0 rounded-xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-500">Segera tersedia</span>
+    </div>
+  </section>
+</BaseLayout>
