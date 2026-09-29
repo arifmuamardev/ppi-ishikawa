@@ -1,5 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import GuideMeta from '../../components/GuideMeta.astro';
+import GuideToc from '../../components/GuideToc.astro';
+import GuidePager from '../../components/GuidePager.astro';
 import { withBase } from '../../utils/paths';
 
 const sections = [
@@ -199,12 +202,10 @@ const sources = [
       transportasi dapat terganggu, dan rumah perlu dipersiapkan menghadapi suhu rendah.
     </p>
 
-    <div class="mt-8 flex flex-wrap gap-3 text-sm">
-      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Cakupan: Ishikawa</span>
-      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Untuk: mahasiswa & keluarga</span>
-      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Terakhir diverifikasi: 29 September 2026</span>
-    </div>
+    <GuideMeta code="SG11" />
   </section>
+
+  <GuideToc sections={sections} />
 
   <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
     <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
@@ -220,7 +221,7 @@ const sources = [
   <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
     <div class="space-y-6">
       {sections.map((section) => (
-        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        <article id={`bagian-${section.label}`} class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
           <div class="flex flex-col gap-5 sm:flex-row">
             <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-sm font-bold text-slate-700">{section.label}</div>
             <div class="min-w-0 flex-1">
@@ -310,14 +311,5 @@ const sources = [
     </div>
   </section>
 
-  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
-    <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-      <div>
-        <p class="text-sm font-semibold text-brand">Berikutnya</p>
-        <h2 class="mt-1 text-xl font-bold text-slate-950">SG12 — Japanese & Support</h2>
-        <p class="mt-2 text-sm text-slate-500">Kelas bahasa Jepang, konsultasi IFIE, bantuan kehidupan, hukum, dan jalur support lainnya.</p>
-      </div>
-      <a href={withBase('/life-in-ishikawa/japanese-support/')} class="shrink-0 rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition hover:bg-slate-700">Buka SG12 →</a>
-    </div>
-  </section>
+  <GuidePager code="SG11" />
 </BaseLayout>
