@@ -1,10 +1,47 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
+import { withBase } from '../utils/paths';
+
+const resources = [
+  {
+    title: 'Survival Guide',
+    description: 'SG00–SG14: panduan hidup untuk mahasiswa dan keluarga di Ishikawa.',
+    status: 'Tersedia',
+    href: '/life-in-ishikawa/'
+  },
+  { title: 'FAQ', description: 'Pertanyaan yang paling sering muncul dari anggota dan pendatang baru.', status: 'Dalam persiapan' },
+  { title: 'Beasiswa', description: 'Tautan dan informasi beasiswa yang relevan.', status: 'Dalam persiapan' },
+  { title: 'Forms & Services', description: 'Akses cepat ke layanan dan formulir PPI.', status: 'Dalam persiapan' },
+  { title: 'Publikasi', description: 'Publikasi, laporan, dan institutional memory.', status: 'Dalam persiapan' },
+  { title: 'Useful Links', description: 'Direktori sumber resmi dan layanan penting.', status: 'Dalam persiapan' }
+];
 ---
 <BaseLayout title="Sumber Daya">
   <PageIntro title="Sumber daya yang bisa dipakai ulang" description="Dokumen, FAQ, scholarship links, form layanan, publikasi, dan tautan penting yang tidak seharusnya hilang ketika kepengurusan berganti." />
   <section class="mx-auto max-w-7xl px-5 pb-20 lg:px-8">
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{['Survival Guide','FAQ','Beasiswa','Forms & Services','Publikasi','Useful Links'].map((x)=><div class="rounded-2xl border border-slate-200 bg-white p-6"><h2 class="font-semibold">{x}</h2><p class="mt-2 text-sm text-slate-500">Belum dipublikasikan.</p></div>)}</div>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {resources.map((resource) => {
+        const content = (
+          <>
+            <div class="flex items-start justify-between gap-4">
+              <h2 class="font-semibold text-slate-950">{resource.title}</h2>
+              <span class={`rounded-full px-2.5 py-1 text-xs font-bold ${resource.href ? 'bg-green-50 text-green-700' : 'bg-slate-100 text-slate-600'}`}>
+                {resource.status}
+              </span>
+            </div>
+            <p class="mt-3 text-sm leading-6 text-slate-600">{resource.description}</p>
+          </>
+        );
+
+        return resource.href ? (
+          <a href={withBase(resource.href)} class="rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-red-200 hover:shadow-sm">
+            {content}
+          </a>
+        ) : (
+          <div class="rounded-2xl border border-slate-200 bg-white p-6">{content}</div>
+        );
+      })}
+    </div>
   </section>
 </BaseLayout>
