@@ -1,0 +1,20 @@
+---
+import { getGuide } from '../data/survival';
+
+interface Props {
+  code: string;
+}
+
+const { code } = Astro.props;
+const guide = getGuide(code);
+
+if (!guide) {
+  throw new Error(`Unknown Survival Guide code: ${code}`);
+}
+---
+<div class="mt-8 flex flex-wrap gap-3 text-sm" aria-label="Metadata panduan">
+  <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Cakupan: {guide.appliesTo}</span>
+  <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Untuk: {guide.audience}</span>
+  <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Terakhir diverifikasi: {guide.lastVerified}</span>
+  <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Perubahan: {guide.volatility}</span>
+</div>
