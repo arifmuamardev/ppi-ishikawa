@@ -75,6 +75,63 @@ const sections = [
       'Simpan bukti pengajuan/approval dan perhatikan periode yang disetujui.'
     ],
     callout: 'Jika menerima payment slip atau surat pension padahal merasa sudah mengajukan student special payment, jangan abaikan—cek status aplikasi Anda.'
+  },
+  {
+    id: 'renewal',
+    label: '06',
+    title: 'Perpanjangan period of stay',
+    scope: 'Immigration Services Agency',
+    intro: 'Jika Anda ingin melanjutkan aktivitas dengan status tinggal yang sama setelah period of stay berakhir, ajukan extension sebelum masa tinggal habis. Untuk status Student, Immigration Services Agency menyediakan halaman dan checklist khusus.',
+    points: [
+      'ISA menyatakan application untuk extension pada umumnya dapat diajukan hingga tiga bulan sebelum period of stay berakhir.',
+      'Jangan menyamakan masa berlaku student ID, scholarship, atau kontrak apartment dengan period of stay pada residence card.',
+      'Siapkan dokumen universitas dan dokumen lain sesuai checklist terbaru untuk status Student.',
+      'Jika application masih diproses dan Anda perlu keluar Jepang sementara, cek aturan re-entry serta kondisi application Anda sebelum berangkat.'
+    ],
+    callout: 'Catat expiry date residence card di calendar jauh sebelum deadline. Untuk dokumen dan biaya, gunakan checklist ISA terbaru.'
+  },
+  {
+    id: 'reentry',
+    label: '07',
+    title: 'Keluar Jepang sementara & re-entry',
+    scope: 'Immigration Services Agency',
+    intro: 'Perjalanan pulang sementara, conference, atau liburan ke luar Jepang berbeda dari permanent departure. Pastikan Anda menggunakan jalur re-entry yang sesuai.',
+    points: [
+      'Untuk deemed/special re-entry, pemegang status tinggal dan passport yang memenuhi syarat pada prinsipnya dapat kembali dalam satu tahun sejak departure tanpa regular re-entry permit.',
+      'Jika period of stay berakhir lebih dahulu dari satu tahun, batas re-entry mengikuti expiry period of stay tersebut.',
+      'Saat departure, nyatakan bahwa Anda bermaksud kembali dan ikuti prosedur re-entry departure record/ED card yang berlaku.',
+      'Untuk perjalanan yang tidak memenuhi syarat deemed re-entry atau membutuhkan periode lebih panjang, cek regular re-entry permit sebelum berangkat.'
+    ],
+    callout: 'Jangan keluar Jepang dengan asumsi “residence card masih ada berarti pasti bisa kembali”. Cek passport, period of stay, dan re-entry route sebelum departure.'
+  },
+  {
+    id: 'lost-card',
+    label: '08',
+    title: 'Residence card hilang atau dicuri',
+    scope: 'Immigration Services Agency + Police',
+    intro: 'Jika residence card hilang, dicuri, atau musnah, lakukan pelaporan dan reissuance dengan cepat.',
+    points: [
+      'Untuk kehilangan atau pencurian, laporkan ke police dan simpan bukti/report number yang diperlukan.',
+      'ISA menetapkan application untuk reissuance karena kehilangan pada prinsipnya dalam 14 hari sejak mengetahui kehilangan.',
+      'Application dilakukan melalui Regional Immigration Services Office yang berwenang, bukan sekadar mengganti kartu di city hall.',
+      'Gunakan halaman resmi residence-card procedures karena dokumen yang diperlukan dapat berubah.'
+    ],
+    callout: 'Jangan menunda hanya karena memiliki foto residence card. Foto bukan pengganti kartu dan bukan pengganti prosedur reissuance.'
+  },
+  {
+    id: 'part-time',
+    label: '09',
+    title: 'Part-time work & activity permission',
+    scope: 'Immigration Services Agency',
+    intro: 'Status Student diberikan untuk belajar. Jika akan melakukan pekerjaan berbayar di luar aktivitas yang diizinkan oleh status tersebut, pastikan Anda memiliki permission for activities outside the scope of status of residence (資格外活動許可) yang sesuai.',
+    points: [
+      'Cek bagian belakang residence card atau dokumen permission untuk memastikan izin Anda.',
+      'Untuk comprehensive permission yang umum pada international students, batasnya pada prinsipnya sampai 28 jam per minggu.',
+      'Pada long vacation resmi institusi pendidikan, ISA menjelaskan batas sampai 8 jam per hari untuk student yang memiliki permission yang sesuai.',
+      'Permission tersebut hanya berlaku selama syaratnya terpenuhi; ISA juga menjelaskan bahwa comprehensive permission mahasiswa tidak berlaku lagi setelah tidak enrolled/graduated.',
+      'Pekerjaan pada adult-entertainment business tidak termasuk aktivitas yang diizinkan oleh comprehensive permission mahasiswa.'
+    ],
+    callout: 'Jangan menerima shift hanya berdasarkan “teman saya juga bekerja di sana”. Pastikan permission, total jam, dan jenis pekerjaan Anda sendiri sesuai.'
   }
 ];
 
@@ -146,21 +203,44 @@ const sources = [
     title: 'Student Special Payment System',
     description: 'Official student payment-postponement scheme, eligibility, application route, and documentation.',
     url: 'https://www.nenkin.go.jp/tokusetsu/English/gaikoku-kokumen.html'
+  },
+  {
+    owner: 'Immigration Services Agency',
+    title: 'Residence Status — Student',
+    description: 'Current procedures for Student status, including extension of period of stay.',
+    url: 'https://www.moj.go.jp/isa/applications/status/student'
+  },
+  {
+    owner: 'Immigration Services Agency',
+    title: 'Deemed Re-entry Permit',
+    description: 'Official rules for temporary departure and return, including the one-year principle and period-of-stay limit.',
+    url: 'https://www.moj.go.jp/isa/applications/procedures/minashisainyukoku_00001'
+  },
+  {
+    owner: 'Immigration Services Agency',
+    title: 'Residence Card Procedures',
+    description: 'Official hub for residence-card changes, loss, damage, reissuance, and return.',
+    url: 'https://www.moj.go.jp/isa/applications/procedures/zairyucard.html'
+  },
+  {
+    owner: 'Immigration Services Agency',
+    title: 'Permission for Activities Outside Status',
+    description: 'Official rules for part-time work and other paid activity outside the scope of residence status.',
+    url: 'https://www.moj.go.jp/isa/applications/guide/shikakugai.html'
   }
 ];
 ---
 
 <BaseLayout
   title="Administrasi Dasar di Jepang"
-  description="Panduan administrasi dasar bagi pelajar Indonesia di Ishikawa: registrasi alamat, My Number, National Health Insurance, National Pension, dan Student Special Payment System."
+  description="Panduan administrasi bagi pelajar Indonesia di Ishikawa: registrasi alamat, My Number, insurance, pension, renewal, re-entry, residence card, dan part-time work."
 >
   <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
     <a href={withBase('/life-in-ishikawa/')} class="text-sm font-semibold text-brand hover:underline">← Ishikawa Survival Guide</a>
     <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG03 · Administrasi</p>
     <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Administrasi dasar setelah tinggal di Jepang.</h1>
     <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
-      Lima topik ini saling berkaitan, tetapi bukan satu proses yang sama. Pahami fungsi masing-masing agar Anda
-      tidak mengira registrasi kampus sudah otomatis menyelesaikan kewajiban municipality, insurance, atau pension.
+      Panduan ini dimulai dari lima urusan administrasi awal, lalu dilanjutkan dengan prosedur penting selama tinggal di Jepang: renewal, re-entry, residence card, dan part-time work. Pahami fungsi masing-masing agar registrasi kampus tidak dianggap otomatis menyelesaikan kewajiban pemerintah.
     </p>
 
     <GuideMeta code="SG03" />
@@ -170,7 +250,7 @@ const sources = [
 
   <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
     <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Peta sederhana</p>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Administrasi awal</p>
       <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
         {[
           ['1', 'Address'],
@@ -192,18 +272,6 @@ const sources = [
     </div>
   </section>
 
-  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
-    <nav class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6" aria-label="Daftar isi administrasi">
-      <p class="text-sm font-bold uppercase tracking-[0.14em] text-slate-500">Di halaman ini</p>
-      <div class="mt-4 flex flex-wrap gap-2">
-        {sections.map((section) => (
-          <a href={`#${section.id}`} class="rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-200">
-            {section.title}
-          </a>
-        ))}
-      </div>
-    </nav>
-  </section>
 
   <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
     <div class="space-y-6">
