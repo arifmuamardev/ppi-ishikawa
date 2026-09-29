@@ -1,5 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import GuideMeta from '../../components/GuideMeta.astro';
+import GuideToc from '../../components/GuideToc.astro';
+import GuidePager from '../../components/GuidePager.astro';
 import { withBase } from '../../utils/paths';
 
 const checklist = [
@@ -116,11 +119,7 @@ const sources = [
       tetap harus diperiksa melalui universitas dan sumber resmi.
     </p>
 
-    <div class="mt-8 flex flex-wrap gap-3 text-sm">
-      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Cakupan: sebelum masuk Jepang</span>
-      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Untuk: mahasiswa & keluarga</span>
-      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Terakhir diverifikasi: 29 September 2026</span>
-    </div>
+    <GuideMeta code="SG01" />
   </section>
 
   <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
@@ -253,14 +252,5 @@ const sources = [
     </div>
   </section>
 
-  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
-    <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-      <div>
-        <p class="text-sm font-semibold text-brand">Berikutnya</p>
-        <h2 class="mt-1 text-xl font-bold text-slate-950">SG02 — Hari Pertama di Ishikawa</h2>
-        <p class="mt-2 text-sm text-slate-500">Apa yang perlu diprioritaskan setelah Anda benar-benar tiba dan menetapkan tempat tinggal.</p>
-      </div>
-      <a href={withBase('/life-in-ishikawa/hari-pertama/')} class="shrink-0 rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition hover:bg-slate-700">Buka SG02 →</a>
-    </div>
-  </section>
+  <GuidePager code="SG01" />
 </BaseLayout>
