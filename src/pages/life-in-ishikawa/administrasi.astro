@@ -1,0 +1,315 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../utils/paths';
+
+const sections = [
+  {
+    id: 'address',
+    label: '01',
+    title: 'Residence & registrasi alamat',
+    scope: 'Municipality + Immigration',
+    intro: 'Setelah menetapkan tempat tinggal, mid-to-long-term resident perlu memberitahukan alamat kepada municipality tempat tinggal. Untuk pendatang baru, tenggat resminya adalah dalam 14 hari setelah tempat tinggal ditetapkan.',
+    points: [
+      'Prosedur dilakukan di city/ward/town/village office sesuai alamat Anda.',
+      'Gunakan residence card; jika residence card akan diterbitkan kemudian, ikuti instruksi resmi yang berlaku pada kondisi Anda.',
+      'Jika tinggal bersama keluarga, municipality dapat meminta bukti hubungan keluarga sesuai prosedur yang berlaku.',
+      'Jika kemudian pindah alamat, lakukan moving-out/moving-in atau change-of-address procedure sesuai municipality.'
+    ],
+    callout: 'Kanazawa City Hall bukan loket untuk semua penduduk Prefektur Ishikawa. Gunakan municipality sesuai alamat Anda.'
+  },
+  {
+    id: 'mynumber',
+    label: '02',
+    title: 'My Number',
+    scope: 'Municipality + J-LIS',
+    intro: 'My Number adalah nomor administratif individual. Setelah Anda mempunyai resident registration di Jepang, My Number diterbitkan dan Individual Number Notice dikirim ke alamat terdaftar.',
+    points: [
+      'Foreign residents yang memiliki resident registration juga mendapatkan My Number.',
+      'Individual Number Notice biasanya dikirim sekitar 2–3 minggu setelah registrasi residence.',
+      'Individual Number Notice memberi tahu nomor Anda, tetapi bukan kartu identitas dan bukan My Number Card.',
+      'My Number Card adalah kartu terpisah yang dapat diajukan dan digunakan untuk identifikasi serta berbagai layanan administratif.'
+    ],
+    callout: 'Bedakan “My Number”, “Individual Number Notice”, dan “My Number Card”. Tiga istilah ini sering dianggap sama padahal fungsinya berbeda.'
+  },
+  {
+    id: 'insurance',
+    label: '03',
+    title: 'Medical insurance / National Health Insurance',
+    scope: 'Municipality + MHLW',
+    intro: 'Penduduk Jepang harus berada dalam skema medical insurance yang sesuai. Jika Anda tinggal di Jepang dan tidak termasuk skema health insurance lain atau pengecualian yang berlaku, National Health Insurance (NHI) biasanya menjadi skema yang ditangani municipality.',
+    points: [
+      'Eligibility tidak boleh ditentukan hanya berdasarkan status “mahasiswa”; periksa kondisi insurance Anda.',
+      'Jika Anda menjadi peserta NHI atau berhenti menjadi peserta, prosedur dilakukan melalui municipality sesuai ketentuan yang berlaku.',
+      'MHLW menyatakan pelaporan ketika menjadi atau berhenti menjadi peserta NHI pada prinsipnya dilakukan dalam 14 hari.',
+      'Besaran contribution/premium dan perhitungan lokal dapat berubah; cek municipality Anda, jangan mengandalkan angka lama dari komunitas.'
+    ],
+    callout: 'Jangan menunda berobat karena belum memahami sistemnya. Simpan dokumen insurance dan gunakan sumber resmi/IFIE bila membutuhkan bantuan menemukan layanan kesehatan.'
+  },
+  {
+    id: 'pension',
+    label: '04',
+    title: 'National Pension',
+    scope: 'Japan Pension Service + Municipality',
+    intro: 'Semua resident Jepang berusia 20–59 tahun, tanpa memandang kewarganegaraan, pada prinsipnya harus tercakup dalam National Pension, dengan kategori yang bergantung pada status kerja dan keluarga.',
+    points: [
+      'Mahasiswa yang tidak termasuk Category II atau III umumnya masuk Category I.',
+      'Category I biasanya mengurus enrollment melalui municipality tempat tinggal atau Japan Pension Service.',
+      'Enrollment dalam pension dan kewajiban membayar contribution adalah bagian sistem yang harus ditangani dengan benar; jangan mengabaikan surat pension.',
+      'Jumlah contribution dapat berubah setiap tahun, sehingga panduan PPI tidak menyimpan angka tetap.'
+    ],
+    callout: 'Untuk mahasiswa, langkah setelah enrollment sering kali adalah mengecek kelayakan Student Special Payment System—bukan menganggap pension otomatis “gratis”.'
+  },
+  {
+    id: 'student-payment',
+    label: '05',
+    title: 'Student Special Payment System',
+    scope: 'Japan Pension Service',
+    intro: 'Mahasiswa yang memenuhi persyaratan dapat mengajukan Student Special Payment System agar pembayaran contribution ditunda selama masa studi. Sistem ini berdasarkan aplikasi dan pemeriksaan kelayakan.',
+    points: [
+      'Status mahasiswa saja tidak membuat penundaan pembayaran berlaku otomatis.',
+      'Japan Pension Service menilai berdasarkan ketentuan yang berlaku, termasuk income applicant.',
+      'Pengajuan dapat dilakukan melalui municipality, Japan Pension Service, dan pada sebagian kasus melalui sekolah/universitas.',
+      'Simpan bukti pengajuan/approval dan perhatikan periode yang disetujui.'
+    ],
+    callout: 'Jika menerima payment slip atau surat pension padahal merasa sudah mengajukan student special payment, jangan abaikan—cek status aplikasi Anda.'
+  }
+];
+
+const commonMistakes = [
+  'Mengurus di Kanazawa City Hall padahal alamat terdaftar berada di Nonoichi/Hakusan/municipality lain.',
+  'Menganggap registrasi universitas otomatis menggantikan registrasi alamat di municipality.',
+  'Mengira Individual Number Notice adalah My Number Card.',
+  'Menganggap semua mahasiswa otomatis bebas membayar National Pension.',
+  'Membuang surat dari City Hall, Japan Pension Service, atau My Number karena tidak memahami isinya.',
+  'Menggunakan angka premium/contribution dari teman atau posting lama tanpa mengecek sumber resmi terbaru.',
+  'Nama/romanization berbeda-beda pada dokumen; bila ada ketidaksesuaian, tanyakan ke loket resmi sebelum membuat asumsi sendiri.'
+];
+
+const municipalityLinks = [
+  {
+    name: 'Kanazawa',
+    url: 'https://digilib.city.kanazawa.ishikawa.jp/doc/32/',
+    note: 'Kanazawa Living Guide'
+  },
+  {
+    name: 'Hakusan',
+    url: 'https://www.city.hakusan.lg.jp/machi/kokusai/1005266/1007166.html',
+    note: 'Living Guide Book'
+  },
+  {
+    name: 'Nonoichi',
+    url: 'https://www.city.nonoichi.lg.jp/soshiki/10/18878.html',
+    note: 'Information for Foreign Residents'
+  },
+  {
+    name: 'Komatsu',
+    url: 'https://www.city.komatsu.lg.jp/kurasi_tetuzuki/foreigner/index.html',
+    note: 'Foreign Resident Support Portal'
+  },
+  {
+    name: 'Kahoku',
+    url: 'https://www.city.kahoku.lg.jp/001/150/152/d000232.html',
+    note: 'Foreign Resident Guide — verify current details because the guide is older'
+  }
+];
+
+const sources = [
+  {
+    owner: 'Immigration Services Agency of Japan',
+    title: 'Guidance for New Entrants — notification of address',
+    description: 'Official guidance requiring mid-to-long-term residents to notify their municipality within 14 days after establishing a place of residence.',
+    url: 'https://www.moj.go.jp/isa/support/guidance/'
+  },
+  {
+    owner: 'My Number Card Official Site (J-LIS)',
+    title: 'Individual Number Notice / My Number',
+    description: 'Explains assignment and delivery of My Number information after residence registration, including foreign residents.',
+    url: 'https://www.kojinbango-card.go.jp/en-tsuchicard/'
+  },
+  {
+    owner: 'Ministry of Health, Labour and Welfare',
+    title: 'National Health Insurance — enrollment and withdrawal',
+    description: 'Official eligibility overview and the role of the municipality in NHI procedures.',
+    url: 'https://www.mhlw.go.jp/stf/newpage_21539.html'
+  },
+  {
+    owner: 'Japan Pension Service',
+    title: 'Enroll in Pension System',
+    description: 'Official explanation of National Pension coverage and Categories I–III, including students and foreign residents.',
+    url: 'https://www.nenkin.go.jp/international/english/purpose/enroll/index.html'
+  },
+  {
+    owner: 'Japan Pension Service',
+    title: 'Student Special Payment System',
+    description: 'Official student payment-postponement scheme, eligibility, application route, and documentation.',
+    url: 'https://www.nenkin.go.jp/tokusetsu/English/gaikoku-kokumen.html'
+  }
+];
+---
+
+<BaseLayout
+  title="Administrasi Dasar di Jepang"
+  description="Panduan administrasi dasar bagi pelajar Indonesia di Ishikawa: registrasi alamat, My Number, National Health Insurance, National Pension, dan Student Special Payment System."
+>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <a href={withBase('/life-in-ishikawa/')} class="text-sm font-semibold text-brand hover:underline">← Ishikawa Survival Guide</a>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG03 · Administrasi</p>
+    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Administrasi dasar setelah tinggal di Jepang.</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+      Lima topik ini saling berkaitan, tetapi bukan satu proses yang sama. Pahami fungsi masing-masing agar Anda
+      tidak mengira registrasi kampus sudah otomatis menyelesaikan kewajiban municipality, insurance, atau pension.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3 text-sm">
+      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Cakupan: Japan-wide + municipality</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Untuk: resident / mahasiswa</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Terakhir diverifikasi: 29 September 2026</span>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
+    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Peta sederhana</p>
+      <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        {[
+          ['1', 'Address'],
+          ['2', 'My Number'],
+          ['3', 'Insurance'],
+          ['4', 'Pension'],
+          ['5', 'Student Payment']
+        ].map(([n, label]) => (
+          <div class="rounded-2xl bg-white p-4">
+            <p class="text-xs font-bold text-brand">{n}</p>
+            <p class="mt-1 text-sm font-bold text-slate-900">{label}</p>
+          </div>
+        ))}
+      </div>
+      <p class="mt-5 text-sm leading-6 text-slate-700">
+        Urutan aktual dapat berbeda tergantung status tinggal, pekerjaan, keluarga, dan municipality.
+        Gunakan peta ini untuk memahami sistem, bukan sebagai pengganti instruksi loket resmi.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <nav class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6" aria-label="Daftar isi administrasi">
+      <p class="text-sm font-bold uppercase tracking-[0.14em] text-slate-500">Di halaman ini</p>
+      <div class="mt-4 flex flex-wrap gap-2">
+        {sections.map((section) => (
+          <a href={`#${section.id}`} class="rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-200">
+            {section.title}
+          </a>
+        ))}
+      </div>
+    </nav>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="space-y-6">
+      {sections.map((section) => (
+        <article id={section.id} class="scroll-mt-28 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="flex flex-col gap-5 sm:flex-row">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-sm font-bold text-slate-700">{section.label}</div>
+            <div class="min-w-0 flex-1">
+              <div class="flex flex-wrap items-center gap-3">
+                <h2 class="text-2xl font-bold tracking-tight text-slate-950">{section.title}</h2>
+                <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">{section.scope}</span>
+              </div>
+              <p class="mt-4 leading-7 text-slate-600">{section.intro}</p>
+              <ul class="mt-5 space-y-3">
+                {section.points.map((point) => (
+                  <li class="flex gap-3 text-sm leading-6 text-slate-700">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+              <div class="mt-6 rounded-2xl bg-amber-50 p-4 text-sm leading-6 text-amber-950">
+                <strong>Perlu diingat:</strong> {section.callout}
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Municipality</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Mulai dari kota tempat Anda terdaftar.</h2>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-600">
+        Detail loket, formulir, jam layanan, dan dokumen dapat berbeda. Gunakan halaman municipality sebagai rujukan lokal,
+        sementara aturan sistem nasional tetap merujuk ke lembaga nasional yang bertanggung jawab.
+      </p>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {municipalityLinks.map((item) => (
+          <a href={item.url} target="_blank" rel="noreferrer" class="rounded-2xl bg-slate-50 p-4 transition hover:bg-slate-100">
+            <p class="font-bold text-slate-900">{item.name} ↗</p>
+            <p class="mt-1 text-xs leading-5 text-slate-500">{item.note}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Common mistakes</p>
+        <h2 class="mt-3 text-2xl font-bold">Kesalahan kecil bisa membuat proses berulang.</h2>
+        <ul class="mt-6 space-y-3">
+          {commonMistakes.map((item) => (
+            <li class="flex gap-3 text-sm leading-6 text-slate-300">
+              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-300"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">PPI practical notes</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Jangan buang surat resmi yang belum Anda pahami.</h2>
+        <p class="mt-4 leading-7 text-slate-600">
+          Pada bulan-bulan awal Anda dapat menerima surat dari municipality, pension service, insurance, atau layanan lain.
+          Simpan amplop dan seluruh isinya sampai Anda yakin apa fungsinya. Jika tidak memahami bahasa atau maksud surat,
+          minta bantuan university support office, municipality, IFIE, atau orang yang memang memahami dokumen tersebut.
+        </p>
+        <p class="mt-5 text-xs leading-5 text-slate-500">Ini adalah tips praktis PPI, bukan ketentuan hukum.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Sumber resmi</p>
+      <h2 class="mt-3 text-2xl font-bold">Gunakan aturan nasional untuk sistem nasional, dan municipality untuk implementasi lokal.</h2>
+      <div class="mt-7 grid gap-4">
+        {sources.map((source) => (
+          <a
+            href={source.url}
+            target="_blank"
+            rel="noreferrer"
+            class="group rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800"
+          >
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{source.owner}</p>
+            <h3 class="mt-2 font-bold text-white group-hover:text-red-200">{source.title} ↗</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-400">{source.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
+    <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <div>
+        <p class="text-sm font-semibold text-brand">Berikutnya</p>
+        <h2 class="mt-1 text-xl font-bold text-slate-950">SG04 — Tempat Tinggal</h2>
+        <p class="mt-2 text-sm text-slate-500">Apartment, kontrak, biaya awal, utilities, move-in, dan hal yang perlu diperiksa sebelum menandatangani.</p>
+      </div>
+      <span class="shrink-0 rounded-xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-500">Segera tersedia</span>
+    </div>
+  </section>
+</BaseLayout>
