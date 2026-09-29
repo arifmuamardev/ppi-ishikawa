@@ -82,6 +82,28 @@ const sections = [
       'Jika tidak memahami cara penggunaan obat, minta penjelasan sebelum meninggalkan fasilitas.',
       'Simpan medication notebook atau catatan obat bila Anda menerimanya.'
     ]
+  },
+  {
+    label: '08',
+    title: '#7119 — saat ragu perlu ambulans atau tidak',
+    intro: 'Ishikawa Emergency Medical Advice Center (#7119) mulai beroperasi 1 Februari 2026 untuk membantu ketika Anda ragu apakah perlu memanggil ambulans atau segera pergi ke rumah sakit.',
+    points: [
+      'Layanan menerima konsultasi 24 jam setiap hari.',
+      'Bahasa Indonesia termasuk dalam bahasa yang didukung.',
+      'Dari smartphone/mobile phone, hubungi #7119; bila tidak tersambung, Ishikawa menyediakan nomor 076-213-7119.',
+      'Jika kondisi jelas gawat atau berat, jangan menggunakan #7119 sebagai pengganti emergency call—hubungi 119.'
+    ]
+  },
+  {
+    label: '09',
+    title: 'Mental health dan dental care',
+    intro: 'Kebutuhan kesehatan tidak hanya emergency atau penyakit fisik akut. Counseling/mental-health support dan dental care juga sebaiknya ditangani melalui jalur profesional.',
+    points: [
+      'Untuk counseling atau mental-health support, cek layanan student support/counseling universitas serta medical institution yang sesuai.',
+      'Untuk dental care, gunakan Medical Information Net untuk mencari dental clinic dan dukungan bahasa yang tersedia.',
+      'Jika gejala mental-health menjadi keadaan darurat atau membahayakan keselamatan, gunakan emergency service yang sesuai.',
+      'Jangan menunggu masalah menjadi berat hanya karena khawatir kendala bahasa; gunakan IFIE atau dukungan kampus untuk mencari jalur layanan.'
+    ]
   }
 ];
 
@@ -123,6 +145,12 @@ const practical = [
 ];
 
 const sources = [
+  {
+    owner: 'Ishikawa Prefecture',
+    title: '#7119 Ishikawa Emergency Medical Advice Center',
+    description: '24/7 telephone consultation launched 1 February 2026 for people unsure whether they need an ambulance or urgent care; supports Indonesian.',
+    url: 'https://www.pref.ishikawa.lg.jp/bousai/7119pr.html'
+  },
   {
     owner: 'Ishikawa Prefecture',
     title: 'Medical Institutions Accepting Foreign Patients',
@@ -177,10 +205,9 @@ const sources = [
   <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
     <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
       <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Quick answer</p>
-      <h2 class="mt-3 text-2xl font-bold text-slate-950">Tidak darurat? Cari clinic yang sesuai. Darurat serius? 119.</h2>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Darurat serius: 119. Masih ragu: #7119. Tidak darurat: cari clinic yang sesuai.</h2>
       <p class="mt-4 max-w-3xl leading-7 text-slate-700">
-        Untuk kondisi non-emergency, gunakan sumber pencarian fasilitas resmi dan cek jam layanan terlebih dahulu.
-        Untuk keadaan medis serius atau mengancam nyawa, hubungi <strong>119</strong> untuk ambulance.
+        Untuk keadaan medis serius atau mengancam nyawa, hubungi <strong>119</strong>. Jika Anda ragu apakah perlu ambulance atau immediate medical care, gunakan <strong>#7119</strong>. Untuk kondisi non-emergency, gunakan sumber pencarian fasilitas resmi.
       </p>
     </div>
   </section>
