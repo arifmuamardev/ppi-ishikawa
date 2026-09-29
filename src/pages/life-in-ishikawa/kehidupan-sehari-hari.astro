@@ -1,0 +1,282 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../utils/paths';
+
+const sections = [
+  {
+    label: '01',
+    title: 'Sampah: mulai dari municipality dan district Anda',
+    intro: 'Aturan pemilahan, hari pengumpulan, dan lokasi membuang sampah tidak seragam untuk seluruh Ishikawa. Bahkan dalam satu kota, jadwal dapat berbeda menurut district.',
+    points: [
+      'Cari municipality tempat alamat Anda terdaftar, lalu cari garbage calendar untuk district/area Anda.',
+      'Pisahkan sampah sesuai kategori resmi setempat; jangan meniru jadwal atau kategori teman yang tinggal di area lain.',
+      'Perhatikan hari, waktu, lokasi, dan jenis kantong atau metode pembuangan yang diwajibkan.',
+      'Untuk barang besar, baterai, elektronik, dan benda khusus, cek prosedur terpisah karena sering tidak boleh dibuang bersama household waste biasa.'
+    ]
+  },
+  {
+    label: '02',
+    title: 'Electricity, gas, water, dan internet',
+    intro: 'Utilities dapat diurus melalui landlord, management company, dormitory, atau langsung dengan provider tergantung tempat tinggal.',
+    points: [
+      'Pastikan mana yang sudah termasuk rent dan mana yang harus dikontrak sendiri.',
+      'Simpan customer number, tanggal mulai layanan, metode pembayaran, dan kontak provider.',
+      'Gas tertentu dapat memerlukan appointment untuk membuka layanan.',
+      'Saat pindah, jangan lupa proses penghentian atau transfer layanan secara terpisah.'
+    ]
+  },
+  {
+    label: '03',
+    title: 'Belanja kebutuhan harian',
+    intro: 'Untuk kebutuhan sehari-hari, kombinasi supermarket, drugstore, convenience store, home center, dan toko online biasanya sudah cukup. Pilih berdasarkan fungsi, bukan sekadar kebiasaan dari Indonesia.',
+    points: [
+      'Supermarket cocok untuk groceries dan kebutuhan rumah tangga reguler.',
+      'Drugstore sering menjual toiletries, household goods, dan obat OTC tertentu.',
+      'Convenience store praktis untuk kebutuhan cepat, pembayaran layanan tertentu, ATM, dan layanan cetak tergantung jaringan.',
+      'Home center berguna untuk perlengkapan rumah, storage, winter goods, bicycle accessories, dan kebutuhan DIY.'
+    ]
+  },
+  {
+    label: '04',
+    title: 'Alamat, paket, dan delivery',
+    intro: 'Simpan alamat Jepang dalam format yang benar, termasuk nama building dan nomor kamar. Ini mengurangi masalah ketika menerima paket, dokumen resmi, atau layanan ke rumah.',
+    points: [
+      'Gunakan alamat persis seperti yang diberikan oleh landlord/dormitory atau yang terdaftar resmi.',
+      'Masukkan nama building dan room number bila diperlukan.',
+      'Pastikan nama pada mailbox/door mengikuti aturan tempat tinggal Anda.',
+      'Untuk missed delivery, ikuti instruksi carrier pada slip atau aplikasi resmi.'
+    ]
+  },
+  {
+    label: '05',
+    title: 'Aturan lingkungan dan bangunan',
+    intro: 'Kehidupan di apartment/dormitory juga dipengaruhi aturan bangunan dan lingkungan sekitar.',
+    points: [
+      'Perhatikan aturan noise terutama malam hari.',
+      'Gunakan bicycle parking dan car parking yang diperbolehkan.',
+      'Jangan menaruh barang pribadi di common area tanpa izin.',
+      'Periksa aturan smoking, pets, tamu, laundry, dan penggunaan fasilitas bersama jika berlaku.'
+    ]
+  },
+  {
+    label: '06',
+    title: 'Pembayaran rutin dan surat tagihan',
+    intro: 'Beberapa tagihan dapat dibayar melalui bank transfer, direct debit, kartu, aplikasi, atau convenience store tergantung penyedia layanan.',
+    points: [
+      'Baca tanggal jatuh tempo setiap invoice.',
+      'Simpan bukti pembayaran jika metode pembayaran tidak langsung tercatat.',
+      'Jika tidak memahami surat tagihan, jangan abaikan—minta bantuan sebelum jatuh tempo.',
+      'Hindari membuat asumsi hanya dari warna amplop atau nama pengirim.'
+    ]
+  },
+  {
+    label: '07',
+    title: 'Musim dan kebiasaan rumah tangga',
+    intro: 'Ishikawa memiliki hujan dan salju yang cukup signifikan, sehingga rutinitas rumah tangga juga berubah menurut musim.',
+    points: [
+      'Perhatikan ventilasi dan kelembapan untuk mengurangi kondensasi dan jamur.',
+      'Pada musim dingin, pelajari penggunaan heater secara aman dan kondisi pipa/water supply di tempat tinggal Anda.',
+      'Jangan menghalangi jalur evakuasi atau menumpuk barang di area bersama.',
+      'Cek kondisi cuaca dan jalan sebelum aktivitas luar rumah pada hari bersalju.'
+    ]
+  }
+];
+
+const practical = [
+  'Simpan screenshot atau bookmark garbage calendar district Anda.',
+  'Buat daftar customer number untuk listrik, gas, air, internet, dan provider lain.',
+  'Simpan alamat Jepang dalam dua versi: teks yang mudah dicopy dan foto/dokumen resmi.',
+  'Foto mailbox, garbage station, bicycle parking, dan meter/utilities saat baru pindah bila membantu orientasi.',
+  'Gunakan satu folder untuk invoice, kontrak, dan surat resmi rumah tangga.',
+  'Jangan buang benda yang Anda ragu kategorinya sebelum cek garbage dictionary resmi.'
+];
+
+const localSources = [
+  {
+    name: 'Kanazawa — Garbage collection calendar',
+    detail: 'Open data resmi 2026; jadwal berbeda menurut district.',
+    url: 'https://catalog-data.city.kanazawa.ishikawa.jp/dataset/172014-chikubetu'
+  },
+  {
+    name: 'Kanazawa — Garbage sorting dictionary',
+    detail: 'Cari kategori pembuangan berdasarkan jenis barang.',
+    url: 'https://catalog-data.city.kanazawa.ishikawa.jp/dataset/172014-gomibunbetsujiten'
+  },
+  {
+    name: 'Hakusan — 2026 Waste Disposal Calendar (English)',
+    detail: 'Calendar resmi per area; tersedia English version.',
+    url: 'https://www.city.hakusan.lg.jp/seikatsu/kankyo/1001731/1005551/1007529.html'
+  },
+  {
+    name: 'Nonoichi — Information for Foreign Residents',
+    detail: 'Portal municipal untuk daily-life information dan layanan warga asing.',
+    url: 'https://www.city.nonoichi.lg.jp/soshiki/10/18878.html'
+  },
+  {
+    name: 'Komatsu — Foreign Resident Support Portal',
+    detail: 'Portal resmi untuk garbage, registration, childcare, tax, disaster, dan kebutuhan lain.',
+    url: 'https://www.city.komatsu.lg.jp/kurasi_tetuzuki/foreigner/index.html'
+  },
+  {
+    name: 'Kahoku — Foreign Resident Guide',
+    detail: 'Gunakan sebagai orientasi; detail operasional perlu diverifikasi karena sebagian guide lebih lama.',
+    url: 'https://www.city.kahoku.lg.jp/001/150/152/d000232.html'
+  }
+];
+
+const sources = [
+  {
+    owner: 'Kanazawa City',
+    title: 'Kanazawa Living Guide',
+    description: 'Panduan resmi kehidupan warga asing di Kanazawa: utilities, garbage, housing, daily life, dan berbagai layanan lokal.',
+    url: 'https://digilib.city.kanazawa.ishikawa.jp/doc/32/'
+  },
+  {
+    owner: 'IFIE',
+    title: 'Useful Information for Daily Life',
+    description: 'Hub rujukan resmi/otoritatif untuk warga asing di Ishikawa.',
+    url: 'https://www.ifie.or.jp/foreigners_life/life_guide/'
+  },
+  {
+    owner: 'Ishikawa Prefecture',
+    title: 'Snow and disaster information',
+    description: 'Sumber prefektur untuk keselamatan saat salju dan kondisi bencana.',
+    url: 'https://www.pref.ishikawa.lg.jp/bousai/bousai_g/snow/index.html'
+  }
+];
+---
+
+<BaseLayout
+  title="Kehidupan Sehari-hari di Ishikawa"
+  description="Panduan kehidupan sehari-hari di Ishikawa: sampah, utilities, belanja, delivery, aturan lingkungan, pembayaran rutin, dan kebiasaan rumah tangga."
+>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <a href={withBase('/life-in-ishikawa/')} class="text-sm font-semibold text-brand hover:underline">← Ishikawa Survival Guide</a>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG05 · Kehidupan Sehari-hari</p>
+    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Menjalani kehidupan sehari-hari di Ishikawa.</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+      Bagian ini berisi rutinitas yang akan Anda temui setelah urusan awal selesai: sampah, utilities,
+      belanja, delivery, tagihan, dan aturan lingkungan. Untuk sampah dan layanan lokal, municipality Anda
+      selalu lebih penting daripada informasi umum tingkat prefektur.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3 text-sm">
+      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Cakupan: municipality + daily life</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Untuk: mahasiswa & keluarga</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Terakhir diverifikasi: 29 September 2026</span>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
+    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Satu prinsip utama</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Jangan pernah memakai satu jadwal sampah untuk seluruh Ishikawa.</h2>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-700">
+        Jadwal dan kategori pembuangan ditentukan secara lokal. Kanazawa, misalnya, menerbitkan garbage collection calendar
+        berdasarkan district, sementara Hakusan menerbitkan calendar terpisah untuk banyak area. Selalu cocokkan dengan alamat Anda.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="space-y-6">
+      {sections.map((section) => (
+        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="flex flex-col gap-5 sm:flex-row">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-sm font-bold text-slate-700">{section.label}</div>
+            <div class="min-w-0 flex-1">
+              <h2 class="text-2xl font-bold tracking-tight text-slate-950">{section.title}</h2>
+              <p class="mt-4 leading-7 text-slate-600">{section.intro}</p>
+              <ul class="mt-5 space-y-3">
+                {section.points.map((point) => (
+                  <li class="flex gap-3 text-sm leading-6 text-slate-700">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Garbage by municipality</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Gunakan sumber lokal yang masih aktif.</h2>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-600">
+        Jadwal adalah data dinamis. Website PPI sebaiknya tidak menyalin tanggal pengumpulan; cukup bantu anggota menemukan
+        sumber yang benar lalu arahkan mereka ke calendar/dictionary resmi.
+      </p>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {localSources.map((item) => (
+          <a href={item.url} target="_blank" rel="noreferrer" class="rounded-2xl bg-slate-50 p-4 transition hover:bg-slate-100">
+            <p class="font-bold text-slate-900">{item.name} ↗</p>
+            <p class="mt-1 text-xs leading-5 text-slate-500">{item.detail}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">PPI practical notes</p>
+        <h2 class="mt-3 text-2xl font-bold">Buat sistem kecil untuk rumah tangga Anda.</h2>
+        <ul class="mt-6 space-y-3">
+          {practical.map((item) => (
+            <li class="flex gap-3 text-sm leading-6 text-slate-300">
+              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-300"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-5 text-xs leading-5 text-slate-500">Bagian ini adalah tips praktis PPI, bukan aturan resmi.</p>
+      </div>
+
+      <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-amber-800">Untuk informasi yang berubah</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Link lebih baik daripada copy.</h2>
+        <p class="mt-4 leading-7 text-slate-700">
+          Jadwal sampah, jam layanan, provider, tarif, campaign point, dan layanan delivery dapat berubah.
+          Survival Guide sebaiknya menjelaskan cara menemukan informasinya, tetapi tidak menyimpan detail dinamis sebagai fakta permanen.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Sumber resmi</p>
+      <h2 class="mt-3 text-2xl font-bold">Gunakan municipality untuk aturan lokal dan prefektur untuk konteks regional.</h2>
+      <div class="mt-7 grid gap-4">
+        {sources.map((source) => (
+          <a
+            href={source.url}
+            target="_blank"
+            rel="noreferrer"
+            class="group rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800"
+          >
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{source.owner}</p>
+            <h3 class="mt-2 font-bold text-white group-hover:text-red-200">{source.title} ↗</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-400">{source.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
+    <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <div>
+        <p class="text-sm font-semibold text-brand">Berikutnya</p>
+        <h2 class="mt-1 text-xl font-bold text-slate-950">SG06 — Transportasi</h2>
+        <p class="mt-2 text-sm text-slate-500">Bus, train, bicycle, car, winter travel, dan cara membaca pilihan transportasi secara praktis.</p>
+      </div>
+      <span class="shrink-0 rounded-xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-500">Segera tersedia</span>
+    </div>
+  </section>
+</BaseLayout>
