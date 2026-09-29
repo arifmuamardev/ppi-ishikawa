@@ -1,0 +1,270 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../utils/paths';
+
+const sections = [
+  {
+    label: '01',
+    title: 'Siapkan uang untuk masa awal',
+    intro: 'Rekening Jepang belum tentu dapat digunakan segera setelah tiba. Siapkan lebih dari satu cara mengakses uang untuk kebutuhan awal.',
+    points: [
+      'Bawa metode pembayaran yang dapat digunakan sebelum rekening Jepang aktif.',
+      'Jangan bergantung pada satu kartu, satu ATM network, atau satu aplikasi.',
+      'Periksa foreign transaction fee dan withdrawal fee langsung ke penerbit kartu Anda.',
+      'Simpan dana darurat terpisah dari dompet utama.'
+    ]
+  },
+  {
+    label: '02',
+    title: 'Membuka rekening bank',
+    intro: 'Bank melakukan identity verification dan pemeriksaan lain saat membuka rekening. Dokumen dan cara pengajuan dapat berbeda antar bank.',
+    points: [
+      'Siapkan residence card dan dokumen identitas/alamat yang diminta bank.',
+      'Mahasiswa dapat diminta menunjukkan student ID atau bukti enrollment.',
+      'Bank dapat meminta informasi purpose of account, status tinggal, masa tinggal, pekerjaan/sekolah, dan informasi lain.',
+      'Jangan menjadikan pengalaman satu anggota sebagai checklist universal untuk semua bank.'
+    ]
+  },
+  {
+    label: '03',
+    title: 'Pilih rekening berdasarkan kebutuhan',
+    intro: 'Tidak selalu perlu memilih bank yang sama dengan teman. Lihat bagaimana rekening itu akan dipakai selama studi.',
+    points: [
+      'Cek apakah universitas, scholarship, employer, atau landlord membutuhkan metode pembayaran tertentu.',
+      'Pertimbangkan ATM access, online banking, transfer, debit card, direct debit, dan dukungan bahasa.',
+      'Periksa biaya layanan pada sumber bank yang terbaru.',
+      'Jika membutuhkan international transfer, cek biaya, exchange rate, receiving fee, dan waktu proses secara terpisah.'
+    ]
+  },
+  {
+    label: '04',
+    title: 'ATM, transfer, dan pembayaran rutin',
+    intro: 'ATM dan transfer bank adalah bagian rutin kehidupan di Jepang, tetapi jam layanan dan fee dapat berbeda menurut bank, ATM, waktu, dan jenis transaksi.',
+    points: [
+      'Cek fee dan operating hours pada bank/ATM yang benar sebelum transaksi.',
+      'Pastikan nama penerima, bank, branch, account type, dan account number benar sebelum transfer.',
+      'Untuk rent, utilities, phone, insurance, atau layanan lain, simpan metode pembayaran dan tanggal jatuh tempo.',
+      'Aktifkan transaction notification jika bank menyediakan fitur tersebut.'
+    ]
+  },
+  {
+    label: '05',
+    title: 'International remittance',
+    intro: 'Pengiriman uang dari/ke luar Jepang tunduk pada pemeriksaan bank atau money transfer service dan dapat membutuhkan informasi tujuan serta sumber dana.',
+    points: [
+      'Gunakan bank atau money transfer provider yang sah.',
+      'Bandingkan total biaya, bukan hanya transfer fee: perhatikan exchange rate dan receiving/intermediary charges.',
+      'Simpan bukti transfer dan dokumen sumber dana bila diperlukan.',
+      'Jangan mengirim uang atas nama orang lain jika Anda tidak memahami transaksi tersebut.'
+    ]
+  },
+  {
+    label: '06',
+    title: 'Update alamat dan period of stay',
+    intro: 'Informasi nasabah harus tetap sesuai kondisi terbaru. Perubahan alamat atau period of stay dapat memerlukan update ke bank.',
+    points: [
+      'Setelah pindah rumah, cek apakah bank membutuhkan address update.',
+      'Setelah memperpanjang period of stay, perbarui informasi residence card sesuai prosedur bank.',
+      'FSA, NPA, dan Immigration Services Agency secara khusus mengingatkan foreign residents untuk memperbarui informasi period of stay agar transaksi tidak dibatasi.',
+      'Jangan mengabaikan permintaan verifikasi resmi dari bank—tetapi pastikan permintaan tersebut benar-benar berasal dari channel resmi.'
+    ]
+  },
+  {
+    label: '07',
+    title: 'Jaga rekening dari fraud dan penyalahgunaan',
+    intro: 'Rekening, cash card, PIN, password, dan authentication code adalah informasi sensitif. Rekening bank tidak boleh dipinjamkan, dijual, atau diberikan kepada pihak lain.',
+    points: [
+      'Jangan menjual atau menyerahkan rekening, passbook, cash card, atau akses online banking.',
+      'Jangan memberikan PIN, password, one-time code, atau authentication information kepada orang yang menghubungi Anda.',
+      'Periksa transaksi secara berkala dan segera hubungi bank bila menemukan transaksi mencurigakan.',
+      'Jika menjadi korban transfer scam, FSA menyarankan segera menghubungi polisi dan financial institution tujuan transfer.'
+    ]
+  },
+  {
+    label: '08',
+    title: 'Sebelum meninggalkan Jepang',
+    intro: 'Rekening yang tidak lagi diperlukan sebaiknya diselesaikan sebelum meninggalkan Jepang agar tidak menjadi sumber masalah administratif atau penyalahgunaan.',
+    points: [
+      'Pastikan scholarship, salary, refund, atau final payment yang masih ditunggu sudah dipertimbangkan.',
+      'Selesaikan automatic payments dan direct debit yang terhubung ke rekening.',
+      'Ikuti prosedur bank untuk menutup rekening ketika meninggalkan Jepang secara permanen.',
+      'Jangan memberikan rekening yang tidak dipakai kepada orang lain.'
+    ]
+  }
+];
+
+const practical = [
+  'Simpan nama bank, branch, account number, dan nama pemilik rekening dalam format yang mudah dicopy.',
+  'Pisahkan informasi rekening dari PIN dan password.',
+  'Simpan satu kartu/metode pembayaran cadangan di tempat berbeda.',
+  'Gunakan password unik untuk online banking dan aktifkan security features yang tersedia.',
+  'Sebelum mentransfer jumlah besar, periksa nama penerima dan detail rekening dua kali.',
+  'Jangan mengambil keputusan finansial dari DM, grup chat, atau telepon yang meminta tindakan mendesak.'
+];
+
+const sources = [
+  {
+    owner: 'Financial Services Agency (FSA)',
+    title: 'Living in Japan: How to Open a Bank Account and Send Money',
+    description: 'Panduan resmi untuk foreign residents mengenai rekening dan remittance. Tersedia dalam Bahasa Indonesia.',
+    url: 'https://www.fsa.go.jp/en/user/livinginjapan.html'
+  },
+  {
+    owner: 'Financial Services Agency',
+    title: 'Financial Measures for Foreign Residents',
+    description: 'Hub FSA yang diperbarui Juli 2026, termasuk guidance tentang bank account, remittance, dan update period of stay.',
+    url: 'https://www.fsa.go.jp/user/livinginjapan.html'
+  },
+  {
+    owner: 'Japan Post Bank',
+    title: 'Account Opening for Foreign Nationals',
+    description: 'Contoh resmi bank-specific requirements untuk foreign customers, termasuk residence card dan student ID bagi status Student.',
+    url: 'https://www.jp-bank.japanpost.jp/kaisetu/kat_gaikokujin.html'
+  },
+  {
+    owner: 'Immigration Services Agency',
+    title: 'Living and Working Guidebook',
+    description: 'Panduan nasional untuk foreign residents yang juga mencakup bank account dan daily-life rules.',
+    url: 'https://www.moj.go.jp/isa/guidebook_all.html'
+  },
+  {
+    owner: 'Financial Services Agency',
+    title: 'Support for Victims of Transfer Fraud',
+    description: 'Panduan resmi tindakan awal jika menjadi korban fraud yang menggunakan bank transfer.',
+    url: 'https://www.fsa.go.jp/policy/kyuusai/furikome/'
+  }
+];
+---
+
+<BaseLayout
+  title="Bank & Money di Jepang"
+  description="Panduan bank dan pembayaran untuk pelajar Indonesia di Ishikawa: membuka rekening, ATM, transfer, remittance, update data, keamanan, dan persiapan keuangan."
+>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <a href={withBase('/life-in-ishikawa/')} class="text-sm font-semibold text-brand hover:underline">← Ishikawa Survival Guide</a>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG09 · Bank & Money</p>
+    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Mengelola uang dan rekening selama tinggal di Jepang.</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+      Rekening bank penting untuk scholarship, salary, rent, utilities, dan pembayaran lain, tetapi kebutuhan setiap orang berbeda.
+      Panduan ini menjelaskan prinsip dasarnya; persyaratan, fee, dan layanan spesifik harus selalu dicek langsung ke bank.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3 text-sm">
+      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Cakupan: Japan-wide</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Untuk: mahasiswa & keluarga</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Terakhir diverifikasi: 29 September 2026</span>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
+    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Quick answer</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Tidak ada satu rekening yang “wajib” untuk semua mahasiswa.</h2>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-700">
+        Pilih berdasarkan kebutuhan nyata: penerimaan scholarship/salary, ATM, transfer, pembayaran rutin, online banking,
+        dukungan bahasa, dan international remittance. Persyaratan account opening dapat berbeda antar bank.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="space-y-6">
+      {sections.map((section) => (
+        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="flex flex-col gap-5 sm:flex-row">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-sm font-bold text-slate-700">{section.label}</div>
+            <div class="min-w-0 flex-1">
+              <h2 class="text-2xl font-bold tracking-tight text-slate-950">{section.title}</h2>
+              <p class="mt-4 leading-7 text-slate-600">{section.intro}</p>
+              <ul class="mt-5 space-y-3">
+                {section.points.map((point) => (
+                  <li class="flex gap-3 text-sm leading-6 text-slate-700">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Bahasa Indonesia tersedia</p>
+        <h2 class="mt-3 text-2xl font-bold">Mulai dari panduan FSA, bukan dari pengalaman orang lain.</h2>
+        <p class="mt-4 leading-7 text-slate-300">
+          Financial Services Agency menyediakan panduan resmi “Living in Japan: How to Open a Bank Account and Send Money”
+          dalam Bahasa Indonesia. Ini adalah sumber terbaik untuk memahami sistem sebelum memilih bank tertentu.
+        </p>
+        <a href="https://www.fsa.go.jp/en/user/livinginjapan.html" target="_blank" rel="noreferrer" class="mt-6 inline-flex rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950 transition hover:bg-slate-100">
+          Buka panduan FSA ↗
+        </a>
+      </div>
+
+      <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-amber-800">Bank-specific requirements</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Contoh: Japan Post Bank.</h2>
+        <p class="mt-4 leading-7 text-slate-700">
+          Japan Post Bank meminta foreign customers menunjukkan residence card, dan untuk residence status “Student”
+          meminta student ID atau bukti enrollment. Bank lain dapat mempunyai proses yang berbeda, jadi halaman PPI tidak
+          menjadikan requirement satu bank sebagai aturan universal.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">PPI practical notes</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Buat sistem pembayaran yang punya cadangan.</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {practical.map((item) => (
+          <div class="rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-700">{item}</div>
+        ))}
+      </div>
+      <p class="mt-5 text-xs leading-5 text-slate-500">Bagian ini adalah tips praktis PPI, bukan financial advice.</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Keamanan rekening</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Jangan pernah menjual, meminjamkan, atau menyerahkan rekening Anda.</h2>
+      <p class="mt-4 leading-7 text-slate-700">
+        Financial institutions dan pemerintah Jepang memperingatkan bahwa bank accounts dapat disalahgunakan untuk fraud dan money laundering.
+        Japan Post Bank secara eksplisit menyatakan bahwa menjual atau menyerahkan account, passbook, atau cash card untuk digunakan pihak ketiga merupakan tindak pidana.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Sumber resmi</p>
+      <h2 class="mt-3 text-2xl font-bold">Gunakan regulator untuk prinsip, bank untuk detail produknya.</h2>
+      <div class="mt-7 grid gap-4">
+        {sources.map((source) => (
+          <a href={source.url} target="_blank" rel="noreferrer" class="group rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800">
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{source.owner}</p>
+            <h3 class="mt-2 font-bold text-white group-hover:text-red-200">{source.title} ↗</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-400">{source.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
+    <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <div>
+        <p class="text-sm font-semibold text-brand">Berikutnya</p>
+        <h2 class="mt-1 text-xl font-bold text-slate-950">SG10 — Disaster & Emergency</h2>
+        <p class="mt-2 text-sm text-slate-500">Earthquake, heavy rain, tsunami, evacuation, emergency alerts, dan persiapan bencana di Ishikawa.</p>
+      </div>
+      <span class="shrink-0 rounded-xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-500">Segera tersedia</span>
+    </div>
+  </section>
+</BaseLayout>
