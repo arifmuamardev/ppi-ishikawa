@@ -1,0 +1,44 @@
+---
+import { survivalGuides } from '../data/survival';
+import { withBase } from '../utils/paths';
+
+interface Props {
+  code: string;
+}
+
+const { code } = Astro.props;
+const index = survivalGuides.findIndex((guide) => guide.code === code);
+if (index < 0) throw new Error(`Unknown Survival Guide code: ${code}`);
+
+const previous = index > 0 ? survivalGuides[index - 1] : undefined;
+const next = index < survivalGuides.length - 1 ? survivalGuides[index + 1] : undefined;
+---
+<nav class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8" aria-label="Navigasi Survival Guide">
+  <div class="grid gap-3 rounded-3xl border border-slate-200 bg-white p-5 sm:grid-cols-3 sm:p-6">
+    <div>
+      {previous ? (
+        <a href={withBase(previous.href)} class="flex h-full flex-col rounded-2xl bg-slate-50 p-4 transition hover:bg-slate-100">
+          <span class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">← Sebelumnya</span>
+          <span class="mt-2 font-bold text-slate-950">{previous.code} · {previous.title}</span>
+        </a>
+      ) : <span />}
+    </div>
+    <a href={withBase('/life-in-ishikawa/')} class="flex h-full flex-col items-center justify-center rounded-2xl border border-slate-200 p-4 text-center transition hover:bg-slate-50">
+      <span class="text-xs font-bold uppercase tracking-[0.12em] text-brand">Start Here</span>
+      <span class="mt-2 font-bold text-slate-950">Semua panduan</span>
+    </a>
+    <div>
+      {next ? (
+        <a href={withBase(next.href)} class="flex h-full flex-col rounded-2xl bg-slate-900 p-4 text-white transition hover:bg-slate-700 sm:text-right">
+          <span class="text-xs font-bold uppercase tracking-[0.12em] text-slate-300">Berikutnya →</span>
+          <span class="mt-2 font-bold">{next.code} · {next.title}</span>
+        </a>
+      ) : (
+        <a href={withBase('/life-in-ishikawa/')} class="flex h-full flex-col rounded-2xl bg-slate-900 p-4 text-white transition hover:bg-slate-700 sm:text-right">
+          <span class="text-xs font-bold uppercase tracking-[0.12em] text-slate-300">Selesai</span>
+          <span class="mt-2 font-bold">Kembali ke Start Here →</span>
+        </a>
+      )}
+    </div>
+  </div>
+</nav>
