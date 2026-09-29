@@ -1,0 +1,300 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../utils/paths';
+
+const sections = [
+  {
+    label: '01',
+    title: 'Bus: cek tujuan, cara naik, dan metode bayar',
+    intro: 'Bus adalah moda penting di Kanazawa dan banyak area Ishikawa. Cara naik dan metode bayar dapat berbeda menurut operator atau jenis layanan.',
+    points: [
+      'Cek destination display di bagian depan/samping bus sebelum naik.',
+      'Pada banyak local bus Hokutetsu, penumpang mengambil numbered ticket saat naik dan membayar saat turun; jika memakai contactless payment yang didukung, tap saat naik dan turun sesuai petunjuk operator.',
+      'Jangan menganggap Suica/ICOCA dapat dipakai pada semua bus. Dukungan nationwide transit IC berbeda antar layanan.',
+      'Untuk jadwal dan tarif, gunakan pencarian resmi operator karena timetable dapat berubah.'
+    ]
+  },
+  {
+    label: '02',
+    title: 'Train dan Hokuriku Shinkansen',
+    intro: 'Ishikawa terhubung dengan jaringan JR dan Hokuriku Shinkansen. Untuk perjalanan antarkota, gunakan sumber JR resmi untuk rute, reservasi, perubahan layanan, dan jadwal.',
+    points: [
+      'Kanazawa Station adalah hub utama untuk Hokuriku Shinkansen dan jaringan regional.',
+      'Periksa jenis kereta dan stasiun pemberhentian sebelum membeli tiket.',
+      'Gunakan website/aplikasi resmi untuk jadwal aktual; jangan mengandalkan timetable statis di website PPI.',
+      'Pada hari dengan cuaca buruk atau gangguan layanan, cek service information sebelum menuju stasiun.'
+    ]
+  },
+  {
+    label: '03',
+    title: 'Bicycle: praktis, tetapi tetap kendaraan',
+    intro: 'Sepeda sangat praktis untuk mahasiswa, tetapi secara hukum merupakan kendaraan dan harus mengikuti aturan lalu lintas Jepang.',
+    points: [
+      'Pada prinsipnya sepeda berjalan di sisi kiri roadway.',
+      'Gunakan lampu pada malam hari, patuhi traffic signal dan stop sign, serta jangan berkendara di bawah pengaruh alkohol.',
+      'Menggunakan smartphone sambil mengendarai sepeda dilarang.',
+      'Penggunaan helmet merupakan effort obligation; gunakan untuk keselamatan.',
+      'Mulai April 2026, sistem traffic infraction notification (blue ticket) juga berlaku untuk pelanggaran sepeda tertentu.'
+    ]
+  },
+  {
+    label: '04',
+    title: 'Bicycle parking',
+    intro: 'Jangan parkir sepeda hanya karena ada ruang kosong. Gunakan bicycle parking resmi dan perhatikan prohibited parking zones.',
+    points: [
+      'Kanazawa memiliki municipal bicycle parking areas.',
+      'Di area tertentu, sepeda yang diparkir di prohibited zone dapat dipindahkan.',
+      'Periksa aturan bicycle parking kampus, apartment, stasiun, dan pusat kota secara terpisah.',
+      'Jika menggunakan sepeda setiap hari, simpan lokasi parking resmi dekat kampus dan stasiun di ponsel.'
+    ]
+  },
+  {
+    label: '05',
+    title: 'Car dan driving',
+    intro: 'Mengemudi di Jepang membutuhkan licence yang sah untuk kondisi Anda, pemahaman aturan lalu lintas, insurance, parking, dan kesiapan musim dingin.',
+    points: [
+      'Jangan mengemudi hanya karena memiliki SIM dari Indonesia; cek persyaratan licence/permit yang sah di Jepang untuk situasi Anda.',
+      'Jika memiliki mobil, pastikan insurance, inspection/maintenance, dan parking memenuhi ketentuan yang berlaku.',
+      'Untuk perjalanan musim dingin, cek kondisi jalan dan perlengkapan kendaraan sebelum berangkat.',
+      'Gunakan sumber kepolisian/pemerintah untuk aturan mengemudi; jangan bergantung pada pengalaman informal.'
+    ]
+  },
+  {
+    label: '06',
+    title: 'Winter travel',
+    intro: 'Salju dapat mengubah perjalanan yang biasanya sederhana menjadi jauh lebih lambat atau berisiko. Rencana transportasi musim dingin harus fleksibel.',
+    points: [
+      'Cek weather warning, road cameras, snowfall, restrictions, dan snow-clearing information sebelum perjalanan penting.',
+      'Berikan waktu tambahan untuk bus, jalan kaki, dan perjalanan menuju stasiun/kampus.',
+      'Pada kondisi buruk, prioritaskan informasi operator dan pemerintah daripada jadwal normal.',
+      'Untuk pengemudi, ikuti ketentuan dan panduan keselamatan winter driving dari kepolisian dan pengelola jalan.'
+    ]
+  },
+  {
+    label: '07',
+    title: 'Pilih moda berdasarkan kebutuhan',
+    intro: 'Tidak ada satu moda terbaik untuk semua mahasiswa. Lokasi tempat tinggal, kampus, musim, jam aktivitas, dan kebutuhan keluarga sangat menentukan.',
+    points: [
+      'Bus cocok untuk banyak perjalanan rutin tetapi perlu memperhatikan timetable.',
+      'Bicycle fleksibel untuk jarak pendek-menengah saat kondisi aman.',
+      'Train berguna untuk koridor tertentu dan perjalanan regional/antarkota.',
+      'Car dapat membantu untuk kebutuhan tertentu tetapi membawa biaya, parking, maintenance, dan tanggung jawab lebih besar.'
+    ]
+  }
+];
+
+const practical = [
+  'Simpan nama bus stop terdekat dalam tulisan Jepang dan English/romaji jika tersedia.',
+  'Screenshot rute pulang sebelum perjalanan pertama, terutama jika koneksi internet belum stabil.',
+  'Simpan satu metode pembayaran cadangan untuk bus.',
+  'Datang sedikit lebih awal untuk perjalanan penting; timetable bukan jaminan terhadap disruption.',
+  'Untuk sepeda, cek parking sebelum tiba di tujuan—not after.',
+  'Pada musim dingin, cek kondisi aktual sebelum berangkat meskipun rutenya sudah sangat familiar.'
+];
+
+const liveLinks = [
+  {
+    name: 'Hokutetsu — Timetable & fare search',
+    note: 'Jadwal dan tarif route bus terbaru.',
+    url: 'https://www.hokutetsu.co.jp/route-bus/timetable/'
+  },
+  {
+    name: 'Hokutetsu — How to Ride',
+    note: 'Panduan English untuk destination display, numbered ticket, pembayaran, dan turun dari bus.',
+    url: 'https://www.hokutetsu.co.jp/en/howtoride/'
+  },
+  {
+    name: 'Hokutetsu — Contactless payment',
+    note: 'Daftar layanan yang mendukung credit/debit contactless payment dan cara tap.',
+    url: 'https://www.hokutetsu.co.jp/touch/'
+  },
+  {
+    name: 'JR West — Hokuriku Shinkansen',
+    note: 'Informasi resmi train types, stops, dan layanan Hokuriku Shinkansen.',
+    url: 'https://www.westjr.co.jp/global/en/train/shinkansen/hokuriku-shinkansen/'
+  },
+  {
+    name: 'Ishikawa Snow Road Navigation',
+    note: 'Snowfall, temperature, road cameras, restrictions, dan snow-clearing information.',
+    url: 'https://www.pref.ishikawa.lg.jp/michi/yukimichi.html'
+  }
+];
+
+const sources = [
+  {
+    owner: 'Ishikawa Prefectural Police',
+    title: 'Traffic Safety for Foreign Pedestrians and Cyclists',
+    description: 'Multilingual traffic-safety materials, bicycle rules, smartphone/alcohol restrictions, and current bicycle enforcement information.',
+    url: 'https://www2.police.pref.ishikawa.lg.jp/trafficsafety/trafficsafety14/trafficsafety01.html'
+  },
+  {
+    owner: 'Ishikawa Prefectural Police',
+    title: 'Bicycle Traffic Safety Measures',
+    description: 'Current bicycle rulebook and information about the blue-ticket system introduced in April 2026.',
+    url: 'https://www2.police.pref.ishikawa.lg.jp/trafficsafety/trafficsafety01/trafficsafety040.html'
+  },
+  {
+    owner: 'Ishikawa Prefecture',
+    title: 'Ishikawa Snow Road Navigation',
+    description: 'Live winter-road information including snowfall, temperature, road cameras, restrictions, and snow-clearing status.',
+    url: 'https://www.pref.ishikawa.lg.jp/michi/yukimichi.html'
+  },
+  {
+    owner: 'Hokuriku Railroad',
+    title: 'How to Ride Local Buses',
+    description: 'Official English instructions for route buses in the Kanazawa area.',
+    url: 'https://www.hokutetsu.co.jp/en/howtoride/'
+  },
+  {
+    owner: 'JR West',
+    title: 'Hokuriku Shinkansen',
+    description: 'Official information for Hokuriku Shinkansen services.',
+    url: 'https://www.westjr.co.jp/global/en/train/shinkansen/hokuriku-shinkansen/'
+  }
+];
+---
+
+<BaseLayout
+  title="Transportasi di Ishikawa"
+  description="Panduan transportasi untuk pelajar Indonesia di Ishikawa: bus, train, bicycle, car, pembayaran, dan perjalanan saat musim dingin."
+>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <a href={withBase('/life-in-ishikawa/')} class="text-sm font-semibold text-brand hover:underline">← Ishikawa Survival Guide</a>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG06 · Transportasi</p>
+    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Bergerak di Ishikawa.</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+      Bus, train, bicycle, dan car mempunyai fungsi yang berbeda. Survival Guide ini menjelaskan cara berpikir dan aturan dasarnya;
+      untuk jadwal, tarif, gangguan layanan, dan kondisi jalan, selalu gunakan sumber live dari operator atau pemerintah.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3 text-sm">
+      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Cakupan: Ishikawa + operator transport</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Untuk: mahasiswa & keluarga</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Terakhir diverifikasi: 29 September 2026</span>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
+    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Quick answer</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Jangan hafalkan jadwal; hafalkan sumbernya.</h2>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-700">
+        Timetable, fare, payment support, dan disruption berubah. Website PPI sebaiknya membantu Anda memahami
+        cara naik dan memilih moda, lalu mengarahkan ke data operator yang hidup.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="space-y-6">
+      {sections.map((section) => (
+        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="flex flex-col gap-5 sm:flex-row">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-sm font-bold text-slate-700">{section.label}</div>
+            <div class="min-w-0 flex-1">
+              <h2 class="text-2xl font-bold tracking-tight text-slate-950">{section.title}</h2>
+              <p class="mt-4 leading-7 text-slate-600">{section.intro}</p>
+              <ul class="mt-5 space-y-3">
+                {section.points.map((point) => (
+                  <li class="flex gap-3 text-sm leading-6 text-slate-700">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-amber-800">Tentang pembayaran bus</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">“IC card bisa dipakai” bukan aturan universal.</h2>
+      <p class="mt-4 leading-7 text-slate-700">
+        Hokutetsu sekarang mendukung contactless credit/debit payment pada banyak rail dan bus services,
+        tetapi nationwide interoperable transit IC seperti Suica/ICOCA tidak didukung secara seragam pada semua layanan.
+        Cek metode pembayaran untuk bus/route yang benar sebelum berangkat.
+      </p>
+      <a href="https://www.hokutetsu.co.jp/touch/" target="_blank" rel="noreferrer" class="mt-5 inline-flex rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-900 shadow-sm">
+        Cek metode pembayaran Hokutetsu ↗
+      </a>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Live links</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Untuk data yang berubah, buka sumber langsung.</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {liveLinks.map((item) => (
+          <a href={item.url} target="_blank" rel="noreferrer" class="rounded-2xl bg-slate-50 p-4 transition hover:bg-slate-100">
+            <p class="font-bold text-slate-900">{item.name} ↗</p>
+            <p class="mt-1 text-xs leading-5 text-slate-500">{item.note}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">PPI practical notes</p>
+        <h2 class="mt-3 text-2xl font-bold">Kurangi friction pada perjalanan pertama.</h2>
+        <ul class="mt-6 space-y-3">
+          {practical.map((item) => (
+            <li class="flex gap-3 text-sm leading-6 text-slate-300">
+              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-300"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-5 text-xs leading-5 text-slate-500">Bagian ini adalah tips praktis PPI, bukan aturan operator.</p>
+      </div>
+
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Bicycle in Kanazawa</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Parkir juga bagian dari aturan bersepeda.</h2>
+        <p class="mt-4 leading-7 text-slate-600">
+          Kanazawa menyediakan municipal bicycle parking, sementara beberapa area pusat kota merupakan bicycle-parking prohibited zones.
+          Sepeda yang ditinggalkan di prohibited zone dapat dipindahkan, sehingga cek parking resmi sebelum menuju tujuan.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Sumber resmi</p>
+      <h2 class="mt-3 text-2xl font-bold">Operator untuk operasi; pemerintah/polisi untuk aturan dan keselamatan.</h2>
+      <div class="mt-7 grid gap-4">
+        {sources.map((source) => (
+          <a
+            href={source.url}
+            target="_blank"
+            rel="noreferrer"
+            class="group rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800"
+          >
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{source.owner}</p>
+            <h3 class="mt-2 font-bold text-white group-hover:text-red-200">{source.title} ↗</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-400">{source.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
+    <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <div>
+        <p class="text-sm font-semibold text-brand">Berikutnya</p>
+        <h2 class="mt-1 text-xl font-bold text-slate-950">SG07 — Kesehatan</h2>
+        <p class="mt-2 text-sm text-slate-500">Cara mencari klinik, memahami medical insurance, emergency care, dan layanan foreign-language support.</p>
+      </div>
+      <span class="shrink-0 rounded-xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-500">Segera tersedia</span>
+    </div>
+  </section>
+</BaseLayout>
