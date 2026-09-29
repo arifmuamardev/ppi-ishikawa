@@ -1,0 +1,281 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../utils/paths';
+
+const sections = [
+  {
+    label: '01',
+    title: 'Pilih tipe tempat tinggal',
+    intro: 'Mahasiswa dapat tinggal di dormitory, apartment pribadi, share house, atau opsi lain yang disediakan universitas/market. Masing-masing punya trade-off pada biaya, aturan, fleksibilitas, dan jarak ke kampus.',
+    points: [
+      'Dormitory biasanya lebih sederhana untuk awal, tetapi bisa memiliki aturan, masa tinggal, atau ketersediaan terbatas.',
+      'Private apartment memberi fleksibilitas lebih besar tetapi biasanya membutuhkan lebih banyak proses kontrak dan biaya awal.',
+      'Jangan hanya membandingkan rent bulanan; lihat total biaya awal, lokasi, utilities, internet, parking, dan biaya ketika keluar.',
+      'Periksa akses ke kampus, supermarket, bus stop, klinik, dan kondisi musim dingin di area tersebut.'
+    ]
+  },
+  {
+    label: '02',
+    title: 'Pahami biaya awal sebelum tanda tangan',
+    intro: 'Biaya masuk apartment di Jepang sering terdiri dari beberapa komponen dan berbeda antar properti. Jangan berasumsi bahwa “rent” adalah satu-satunya biaya.',
+    points: [
+      'Minta breakdown tertulis untuk seluruh biaya awal sebelum menyetujui kontrak.',
+      'Istilah yang dapat muncul antara lain deposit, key money, agency fee, insurance, guarantee company fee, cleaning fee, dan biaya lain sesuai kontrak.',
+      'Tidak semua properti memakai semua komponen tersebut.',
+      'Karena nominal dan struktur biaya sangat bervariasi, PPI tidak menyimpan angka standar sebagai patokan.'
+    ]
+  },
+  {
+    label: '03',
+    title: 'Guarantor dan guarantee company',
+    intro: 'Sebagian kontrak sewa membutuhkan guarantor atau penggunaan rent guarantee company. Ketentuannya tergantung properti, landlord, dan management company.',
+    points: [
+      'Tanyakan sejak awal apakah guarantor dibutuhkan atau guarantee company wajib digunakan.',
+      'Periksa biaya awal dan biaya renewal guarantee company bila ada.',
+      'Jangan berasumsi universitas otomatis menjadi guarantor.',
+      'Jika universitas menyediakan housing support, tanyakan apakah ada skema atau agen yang direkomendasikan.'
+    ]
+  },
+  {
+    label: '04',
+    title: 'Baca kontrak dan Important Matters Explanation',
+    intro: 'Sebelum menandatangani, pahami isi kontrak, masa sewa, renewal, larangan, biaya, dan ketentuan keluar. MLIT menyediakan contoh dokumen serta checklist multibahasa, termasuk Bahasa Indonesia.',
+    points: [
+      'Periksa masa kontrak dan apakah kontrak bersifat regular lease atau fixed-term lease.',
+      'Periksa ketentuan renewal dan biaya renewal jika ada.',
+      'Periksa larangan terkait pets, smoking, subletting, jumlah penghuni, atau penggunaan lain.',
+      'Jangan menandatangani bagian yang tidak Anda pahami; minta penjelasan atau gunakan materi terjemahan resmi.'
+    ]
+  },
+  {
+    label: '05',
+    title: 'Cek kondisi unit saat move-in',
+    intro: 'Dokumentasikan kondisi unit sebelum menaruh banyak barang. Ini berguna untuk membedakan kerusakan lama dari kerusakan yang terjadi selama masa tinggal.',
+    points: [
+      'Foto/video lantai, dinding, pintu, jendela, kitchen, bathroom, fixtures, dan area yang sudah rusak atau bernoda.',
+      'Laporkan defect yang sudah ada kepada landlord/management sesuai prosedur mereka.',
+      'Simpan foto dengan tanggal dan salinan laporan.',
+      'MLIT menyediakan contoh checklist kondisi properti untuk move-in dan move-out.'
+    ]
+  },
+  {
+    label: '06',
+    title: 'Aktifkan utilities',
+    intro: 'Electricity, gas, water, dan internet dapat memiliki prosedur aktivasi yang berbeda tergantung properti dan provider.',
+    points: [
+      'Tanyakan kepada dormitory, landlord, atau management company utilities mana yang sudah termasuk dan mana yang harus dikontrak sendiri.',
+      'Gas dapat memerlukan appointment untuk pembukaan layanan tergantung tipe dan provider.',
+      'Simpan customer number dan metode pembayaran untuk setiap utility.',
+      'Jangan menyalin provider dari teman tanpa memastikan area dan bangunan Anda memakai layanan yang sama.'
+    ]
+  },
+  {
+    label: '07',
+    title: 'Pahami aturan hidup di properti',
+    intro: 'Banyak masalah rental bukan soal kontrak utama, tetapi aturan penggunaan bangunan dan lingkungan.',
+    points: [
+      'Ikuti aturan sampah berdasarkan municipality dan district, bukan aturan tempat tinggal teman.',
+      'Periksa aturan bicycle parking, car parking, noise, common area, dan delivery.',
+      'Gunakan alamat lengkap dan nomor kamar untuk kiriman.',
+      'Jika ada masalah dengan fasilitas, hubungi management company/landlord melalui jalur yang ditentukan.'
+    ]
+  },
+  {
+    label: '08',
+    title: 'Rencanakan move-out sejak awal',
+    intro: 'Ketentuan pemberitahuan keluar, cleaning, key return, dan restoration berbeda antar kontrak. Membaca bagian move-out sejak awal mencegah biaya tak terduga.',
+    points: [
+      'Periksa notice period untuk terminasi kontrak.',
+      'Pahami konsep restoration to original condition (genjō kaifuku) dan pembagian tanggung jawab.',
+      'Lakukan move-out inspection dan simpan bukti kondisi unit.',
+      'Atur penghentian utilities, pengembalian kunci, dan perubahan alamat secara terpisah.'
+    ]
+  }
+];
+
+const beforeSigning = [
+  'Total biaya awal sudah tertulis dan dipahami.',
+  'Rent, management/common fee, dan biaya rutin lain sudah jelas.',
+  'Tanggal mulai dan akhir kontrak sudah jelas.',
+  'Aturan renewal/termination sudah jelas.',
+  'Ketentuan guarantor / guarantee company sudah jelas.',
+  'Utilities yang termasuk dan tidak termasuk sudah jelas.',
+  'Aturan penghuni, tamu, pets, smoking, parking, dan bicycle sudah jelas.',
+  'Kondisi move-out dan cleaning/restoration sudah dibaca.',
+  'Alamat, akses kampus, dan kondisi musim dingin lokasi sudah dipertimbangkan.'
+];
+
+const sources = [
+  {
+    owner: 'Ministry of Land, Infrastructure, Transport and Tourism (MLIT)',
+    title: 'Support for Foreign Nationals Looking for Rental Housing',
+    description: 'Portal resmi dengan Apartment Search Guidebook, contoh kontrak, checklist, dan materi Bahasa Indonesia.',
+    url: 'https://www.mlit.go.jp/jutakukentiku/house/jutakukentiku_house_tk3_000017.html'
+  },
+  {
+    owner: 'Kanazawa City',
+    title: 'Kanazawa Living Guide',
+    description: 'Panduan resmi kehidupan di Kanazawa yang juga mencakup housing, utilities, dan kehidupan sehari-hari.',
+    url: 'https://digilib.city.kanazawa.ishikawa.jp/doc/32/'
+  },
+  {
+    owner: 'Hakusan City',
+    title: 'Living Guide Book',
+    description: 'Panduan resmi untuk foreign residents di Hakusan; direvisi Maret 2025.',
+    url: 'https://www.city.hakusan.lg.jp/machi/kokusai/1005266/1007166.html'
+  },
+  {
+    owner: 'IFIE',
+    title: 'Daily Life Information for Foreign Residents',
+    description: 'Portal kehidupan warga asing di Ishikawa dan jalur konsultasi jika membutuhkan bantuan.',
+    url: 'https://www.ifie.or.jp/foreigners_life/'
+  }
+];
+---
+
+<BaseLayout
+  title="Tempat Tinggal di Ishikawa"
+  description="Panduan housing untuk pelajar Indonesia di Ishikawa: memilih tempat tinggal, memahami biaya dan kontrak, move-in, utilities, serta move-out."
+>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <a href={withBase('/life-in-ishikawa/')} class="text-sm font-semibold text-brand hover:underline">← Ishikawa Survival Guide</a>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG04 · Tempat Tinggal</p>
+    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Mencari dan menempati rumah di Ishikawa.</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+      Untuk housing, masalah paling sering bukan hanya mencari unit yang murah, tetapi memahami total biaya,
+      kontrak, guarantor, kondisi unit, utilities, dan aturan saat keluar. Gunakan panduan ini sebagai checklist,
+      lalu verifikasi detail dengan landlord, management company, universitas, dan sumber resmi.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3 text-sm">
+      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Cakupan: rental housing di Jepang + konteks Ishikawa</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Untuk: mahasiswa & keluarga</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Terakhir diverifikasi: 29 September 2026</span>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
+    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Quick answer</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Jangan pilih apartment hanya dari harga sewanya.</h2>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-700">
+        Bandingkan <strong>total biaya awal + biaya bulanan + lokasi + aturan kontrak + biaya keluar</strong>.
+        Dua apartment dengan rent yang sama dapat memiliki total biaya yang sangat berbeda.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="space-y-6">
+      {sections.map((section) => (
+        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="flex flex-col gap-5 sm:flex-row">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-sm font-bold text-slate-700">{section.label}</div>
+            <div class="min-w-0 flex-1">
+              <h2 class="text-2xl font-bold tracking-tight text-slate-950">{section.title}</h2>
+              <p class="mt-4 leading-7 text-slate-600">{section.intro}</p>
+              <ul class="mt-5 space-y-3">
+                {section.points.map((point) => (
+                  <li class="flex gap-3 text-sm leading-6 text-slate-700">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Sebelum tanda tangan</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Checklist singkat kontrak housing.</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {beforeSigning.map((item, index) => (
+          <div class="flex gap-3 rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-700">
+            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white text-xs font-bold text-brand">{index + 1}</span>
+            <span>{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Bahasa Indonesia tersedia</p>
+        <h2 class="mt-3 text-2xl font-bold">Gunakan materi MLIT saat kontrak terasa sulit.</h2>
+        <p class="mt-4 leading-7 text-slate-300">
+          MLIT menyediakan Apartment Search Guidebook dalam Bahasa Indonesia, serta contoh application form,
+          Important Matters Explanation, rental contract, dan checklist yang dapat membantu memahami istilah rental Jepang.
+        </p>
+        <a
+          href="https://www.mlit.go.jp/jutakukentiku/house/jutakukentiku_house_tk3_000017.html"
+          target="_blank"
+          rel="noreferrer"
+          class="mt-6 inline-flex rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950 transition hover:bg-slate-100"
+        >
+          Buka portal housing MLIT ↗
+        </a>
+      </div>
+
+      <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-amber-800">PPI practical notes</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Foto kondisi unit pada hari pertama.</h2>
+        <p class="mt-4 leading-7 text-slate-700">
+          Sebelum menata barang, dokumentasikan goresan, noda, kerusakan, atau fixture yang tidak berfungsi.
+          Simpan foto/video dan laporkan kondisi yang sudah ada melalui jalur management yang benar.
+          Ini bukan aturan pemerintah, tetapi langkah praktis untuk mengurangi salah paham saat move-out.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Konteks Ishikawa</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Lokasi yang nyaman di musim panas belum tentu nyaman di musim dingin.</h2>
+      <p class="mt-4 leading-7 text-slate-600">
+        Saat menilai lokasi, pertimbangkan akses ke kampus ketika hujan atau salju, jarak berjalan kaki ke bus stop,
+        tempat parkir sepeda, kebutuhan pemanas, dan akses ke supermarket. Kanazawa Living Guide sendiri menekankan
+        bahwa Kanazawa memiliki banyak hari hujan dan salju pada musim dingin.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Sumber resmi</p>
+      <h2 class="mt-3 text-2xl font-bold">Rujuk sumber resmi sebelum membuat keputusan kontrak.</h2>
+      <div class="mt-7 grid gap-4">
+        {sources.map((source) => (
+          <a
+            href={source.url}
+            target="_blank"
+            rel="noreferrer"
+            class="group rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800"
+          >
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{source.owner}</p>
+            <h3 class="mt-2 font-bold text-white group-hover:text-red-200">{source.title} ↗</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-400">{source.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
+    <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <div>
+        <p class="text-sm font-semibold text-brand">Berikutnya</p>
+        <h2 class="mt-1 text-xl font-bold text-slate-950">SG05 — Kehidupan Sehari-hari</h2>
+        <p class="mt-2 text-sm text-slate-500">Sampah, utilities, belanja, aturan lingkungan, dan kebutuhan hidup sehari-hari.</p>
+      </div>
+      <span class="shrink-0 rounded-xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-500">Segera tersedia</span>
+    </div>
+  </section>
+</BaseLayout>
