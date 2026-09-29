@@ -1,5 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import GuideMeta from '../../components/GuideMeta.astro';
+import GuideToc from '../../components/GuideToc.astro';
+import GuidePager from '../../components/GuidePager.astro';
 import { withBase } from '../../utils/paths';
 
 const sections = [
@@ -160,12 +163,10 @@ const sources = [
       tidak mengira registrasi kampus sudah otomatis menyelesaikan kewajiban municipality, insurance, atau pension.
     </p>
 
-    <div class="mt-8 flex flex-wrap gap-3 text-sm">
-      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Cakupan: Japan-wide + municipality</span>
-      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Untuk: resident / mahasiswa</span>
-      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Terakhir diverifikasi: 29 September 2026</span>
-    </div>
+    <GuideMeta code="SG03" />
   </section>
+
+  <GuideToc sections={sections} />
 
   <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
     <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
@@ -302,14 +303,5 @@ const sources = [
     </div>
   </section>
 
-  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
-    <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-      <div>
-        <p class="text-sm font-semibold text-brand">Berikutnya</p>
-        <h2 class="mt-1 text-xl font-bold text-slate-950">SG04 — Tempat Tinggal</h2>
-        <p class="mt-2 text-sm text-slate-500">Apartment, kontrak, biaya awal, utilities, move-in, dan hal yang perlu diperiksa sebelum menandatangani.</p>
-      </div>
-      <a href={withBase('/life-in-ishikawa/tempat-tinggal/')} class="shrink-0 rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition hover:bg-slate-700">Buka panduan SG04 →</a>
-    </div>
-  </section>
+  <GuidePager code="SG03" />
 </BaseLayout>
