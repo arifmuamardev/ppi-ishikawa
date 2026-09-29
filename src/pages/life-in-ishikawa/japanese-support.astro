@@ -1,0 +1,262 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../utils/paths';
+
+const sections = [
+  {
+    label: '01',
+    title: 'Belajar bahasa Jepang sesuai kebutuhan',
+    intro: 'Tujuan belajar setiap orang berbeda. Ada yang butuh Japanese untuk kehidupan sehari-hari, ada yang mengejar kemampuan akademik atau kerja.',
+    points: [
+      'Untuk komunikasi sehari-hari dan interaksi lokal, community Japanese classes bisa menjadi pilihan yang ringan dan terjangkau.',
+      'Untuk studi intensif, JLPT, lanjut studi, atau pekerjaan, Japanese language school atau kelas yang lebih terstruktur mungkin lebih sesuai.',
+      'IFIE mengumpulkan daftar community Japanese classes di berbagai wilayah Ishikawa.',
+      'Hubungi kelas sebelum datang karena jadwal, kapasitas, atau lokasi dapat berubah.'
+    ]
+  },
+  {
+    label: '02',
+    title: 'IFIE Japanese classes',
+    intro: 'IFIE menyediakan beberapa bentuk pembelajaran Japanese, termasuk level-based classes, private classes, dan online classes pada periode tertentu.',
+    points: [
+      'Pilihan kelas dapat berubah setiap term, jadi gunakan halaman IFIE sebagai sumber live.',
+      'IFIE memiliki kelas dari tingkat beginner sampai intermediate.',
+      'Sebagian program tersedia online melalui Zoom.',
+      'Untuk private class, jadwal dan fee berbeda dari group class; cek halaman resmi sebelum mendaftar.'
+    ]
+  },
+  {
+    label: '03',
+    title: 'Konsultasi kehidupan sehari-hari',
+    intro: 'IFIE menyediakan konsultasi gratis untuk foreign residents di Ishikawa mengenai berbagai persoalan kehidupan.',
+    points: [
+      'Topiknya mencakup residence procedures, employment, healthcare, welfare, childbirth, parenting, dan education.',
+      'Layanan konsultasi tersedia dalam beberapa bahasa, termasuk Bahasa Indonesia.',
+      'Konsultasi kehidupan reguler tersedia pada hari kerja sesuai jadwal IFIE.',
+      'Jika tidak yakin harus bertanya ke instansi mana, IFIE dapat membantu mengarahkan Anda.'
+    ]
+  },
+  {
+    label: '04',
+    title: 'Konsultasi hukum',
+    intro: 'Untuk masalah yang membutuhkan perspektif profesional, IFIE juga mengadakan legal consultation dengan administrative scrivener dan lawyer pada jadwal tertentu.',
+    points: [
+      'Topik dapat mencakup nationality, visa/residence status, marriage/divorce, inheritance, tax, insurance/pension, labor, debt, dan traffic accident.',
+      'Konsultasi legal bersifat appointment-based dan jadwalnya terbatas.',
+      'Interpretation dapat diminta saat booking, tetapi availability tidak selalu dijamin.',
+      'Untuk kasus mendesak atau di luar jadwal, gunakan jalur resmi lain seperti FRESC atau Houterasu sesuai isu.'
+    ]
+  },
+  {
+    label: '05',
+    title: 'Dukungan dari universitas',
+    intro: 'Untuk urusan yang terkait langsung dengan status mahasiswa, kampus biasanya menjadi jalur pertama yang paling efisien.',
+    points: [
+      'Gunakan international student office untuk enrollment, scholarship, tuition, housing kampus, dan dokumen universitas.',
+      'Untuk masalah akademik, gunakan supervisor, academic advisor, atau unit akademik yang sesuai.',
+      'Untuk wellbeing atau counseling, cek student support/counseling service kampus.',
+      'Jangan mengandalkan PPI untuk menggantikan keputusan resmi universitas.'
+    ]
+  },
+  {
+    label: '06',
+    title: 'Masalah residence status atau immigration',
+    intro: 'Untuk persoalan residence status, renewal, activity permission, atau prosedur immigration, gunakan Immigration Services Agency sebagai otoritas utama.',
+    points: [
+      'IFIE dapat membantu menjelaskan atau mengarahkan, tetapi keputusan immigration berada pada otoritas immigration.',
+      'Gunakan Foreign Residents Support Portal dan FRESC untuk informasi nasional.',
+      'Jangan menggunakan pengalaman kasus orang lain sebagai kepastian untuk kasus Anda.',
+      'Simpan dokumen dan riwayat komunikasi jika isu Anda kompleks.'
+    ]
+  },
+  {
+    label: '07',
+    title: 'Masalah pekerjaan dan upah',
+    intro: 'Jika bekerja part-time atau full-time, pertanyaan mengenai labor conditions sebaiknya diarahkan ke lembaga yang menangani ketenagakerjaan.',
+    points: [
+      'Pastikan aktivitas kerja sesuai residence status dan permission yang berlaku.',
+      'Untuk labor conditions, gunakan Ministry of Health, Labour and Welfare atau Ishikawa Labour Bureau.',
+      'Simpan employment contract, payslip, dan komunikasi penting dengan employer.',
+      'Jika terjadi sengketa, cari jalur konsultasi resmi sebelum mengambil tindakan yang berisiko.'
+    ]
+  },
+  {
+    label: '08',
+    title: 'PPI sebagai penghubung, bukan pengganti layanan profesional',
+    intro: 'PPI dapat membantu orientasi, pengalaman praktis, dan menghubungkan anggota dengan sumber yang tepat. Tetapi beberapa masalah harus ditangani langsung oleh lembaga resmi atau profesional.',
+    points: [
+      'Gunakan PPI untuk bertanya “mulai dari mana?” atau memahami konteks lokal.',
+      'Untuk immigration, hukum, kesehatan, finansial, atau keselamatan, gunakan sumber resmi.',
+      'Jangan mengirim dokumen pribadi sensitif ke grup publik.',
+      'Jika masalah menyangkut keselamatan atau keadaan darurat, gunakan emergency service dan bukan menunggu balasan komunitas.'
+    ]
+  }
+];
+
+const supportMap = [
+  ['Bahasa Jepang', 'IFIE / community Japanese classes'],
+  ['Masalah hidup sehari-hari', 'IFIE consultation'],
+  ['Masalah hukum', 'IFIE legal consultation / Houterasu'],
+  ['Immigration / residence', 'Immigration Services Agency / FRESC'],
+  ['Masalah kampus', 'University international/student support'],
+  ['Pekerjaan / upah', 'MHLW / Ishikawa Labour Bureau'],
+  ['Kesehatan', 'Medical institution / IFIE medical support'],
+  ['Darurat', '110 / 119']
+];
+
+const sources = [
+  {
+    owner: 'IFIE',
+    title: 'Japanese Classes in Ishikawa',
+    description: 'Daftar community Japanese classes di Ishikawa; list diperbarui Juli 2026 dan IFIE menyarankan menghubungi kelas sebelum datang.',
+    url: 'https://www.ifie.or.jp/foreigners_study/class_ishikawa/'
+  },
+  {
+    owner: 'IFIE',
+    title: 'IFIE Japanese Language Classes',
+    description: 'Level-based, private, dan online Japanese classes yang ditawarkan IFIE.',
+    url: 'https://www.ifie.or.jp/foreigners_study/class/'
+  },
+  {
+    owner: 'IFIE',
+    title: 'Free Consultation for Foreign Residents',
+    description: 'Konsultasi kehidupan dan hukum untuk foreign residents di Ishikawa, termasuk dukungan Bahasa Indonesia.',
+    url: 'https://www.ifie.or.jp/foreigners_life/soudan/'
+  },
+  {
+    owner: 'Immigration Services Agency',
+    title: 'Foreign Residents Support Portal',
+    description: 'Portal nasional untuk residence procedures dan foreign-resident support.',
+    url: 'https://www.moj.go.jp/isa/support/portal/'
+  },
+  {
+    owner: 'Immigration Services Agency',
+    title: 'FRESC',
+    description: 'Foreign Residents Support Center untuk konsultasi berbagai isu terkait kehidupan dan residence di Jepang.',
+    url: 'https://www.moj.go.jp/isa/support/fresc/fresc01.html'
+  }
+];
+---
+
+<BaseLayout
+  title="Japanese & Support di Ishikawa"
+  description="Panduan belajar bahasa Jepang dan mencari bantuan di Ishikawa: IFIE classes, konsultasi kehidupan, legal support, university support, immigration, dan labor consultation."
+>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <a href={withBase('/life-in-ishikawa/')} class="text-sm font-semibold text-brand hover:underline">← Ishikawa Survival Guide</a>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG12 · Japanese & Support</p>
+    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Belajar bahasa Jepang dan tahu ke mana harus meminta bantuan.</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+      Tidak semua masalah harus diselesaikan sendiri. Ishikawa memiliki jaringan kelas Japanese, konsultasi kehidupan,
+      legal support, layanan kampus, dan lembaga pemerintah yang dapat membantu sesuai jenis masalah.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3 text-sm">
+      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Cakupan: Ishikawa + national support</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Untuk: mahasiswa & keluarga</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Terakhir diverifikasi: 29 September 2026</span>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
+    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Quick answer</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Kalau tidak tahu harus mulai dari mana, mulai dari IFIE.</h2>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-700">
+        IFIE menyediakan informasi Japanese classes dan konsultasi gratis untuk foreign residents di Ishikawa.
+        Untuk isu yang membutuhkan keputusan resmi—misalnya immigration, hukum, universitas, atau labor—lanjutkan ke lembaga yang berwenang.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Support map</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Masalah apa → ke mana?</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {supportMap.map(([topic, destination]) => (
+          <div class="rounded-2xl bg-slate-50 p-4">
+            <p class="text-sm font-bold text-slate-950">{topic}</p>
+            <p class="mt-1 text-sm leading-6 text-slate-600">{destination}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="space-y-6">
+      {sections.map((section) => (
+        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="flex flex-col gap-5 sm:flex-row">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-sm font-bold text-slate-700">{section.label}</div>
+            <div class="min-w-0 flex-1">
+              <h2 class="text-2xl font-bold tracking-tight text-slate-950">{section.title}</h2>
+              <p class="mt-4 leading-7 text-slate-600">{section.intro}</p>
+              <ul class="mt-5 space-y-3">
+                {section.points.map((point) => (
+                  <li class="flex gap-3 text-sm leading-6 text-slate-700">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Bahasa Indonesia</p>
+        <h2 class="mt-3 text-2xl font-bold">IFIE menerima konsultasi dalam Bahasa Indonesia.</h2>
+        <p class="mt-4 leading-7 text-slate-300">
+          IFIE menyediakan consultation form Bahasa Indonesia dan menyebut Bahasa Indonesia sebagai salah satu bahasa
+          layanan konsultasi kehidupan maupun legal consultation.
+        </p>
+        <a href="https://www.ifie.or.jp/foreigners_life/soudan/" target="_blank" rel="noreferrer" class="mt-6 inline-flex rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950 transition hover:bg-slate-100">
+          Buka layanan konsultasi IFIE ↗
+        </a>
+      </div>
+
+      <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-amber-800">Jadwal berubah</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Jangan simpan jadwal kelas sebagai fakta permanen.</h2>
+        <p class="mt-4 leading-7 text-slate-700">
+          IFIE memperbarui daftar community Japanese classes pada Juli 2026 dan bahkan mengingatkan bahwa informasi kelas
+          bisa menjadi lama. Karena itu PPI hanya menjelaskan pilihan dan selalu menautkan ke halaman live IFIE.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Sumber utama</p>
+      <h2 class="mt-3 text-2xl font-bold">Gunakan support service sesuai jenis persoalan.</h2>
+      <div class="mt-7 grid gap-4">
+        {sources.map((source) => (
+          <a href={source.url} target="_blank" rel="noreferrer" class="group rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800">
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{source.owner}</p>
+            <h3 class="mt-2 font-bold text-white group-hover:text-red-200">{source.title} ↗</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-400">{source.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
+    <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <div>
+        <p class="text-sm font-semibold text-brand">Berikutnya</p>
+        <h2 class="mt-1 text-xl font-bold text-slate-950">SG13 — Leaving Ishikawa / Japan</h2>
+        <p class="mt-2 text-sm text-slate-500">Moving-out, apartment, utilities, insurance, pension, bank, residence card, dan urusan akhir sebelum pulang.</p>
+      </div>
+      <span class="shrink-0 rounded-xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-500">Segera tersedia</span>
+    </div>
+  </section>
+</BaseLayout>
