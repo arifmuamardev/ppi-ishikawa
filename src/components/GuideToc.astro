@@ -1,5 +1,6 @@
 ---
 interface SectionItem {
+  id?: string;
   label: string;
   title: string;
 }
@@ -16,7 +17,7 @@ const { sections } = Astro.props;
     <div class="mt-4 grid gap-2 sm:grid-cols-2">
       {sections.map((section) => (
         <a
-          href={`#bagian-${section.label}`}
+          href={`#${section.id ?? `bagian-${section.label}`}`}
           class="rounded-xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-brand"
         >
           <span class="mr-2 text-xs font-bold text-brand">{section.label}</span>
