@@ -4,7 +4,10 @@ import { departments, vision, communityOffers, closingStatement } from '../data/
 import { campuses, campusCensus, campusHubProfileBySlug } from '../data/campuses';
 import { withBase } from '../utils/paths';
 ---
-<BaseLayout>
+<BaseLayout
+  title="Beranda"
+  description="Rumah digital PPI Ishikawa 2026/27: Survival Guide, Campus Hub, komunitas, sumber daya, dan jalur kolaborasi untuk pelajar Indonesia di Prefektur Ishikawa."
+>
   <section class="mx-auto max-w-7xl px-5 pb-14 pt-16 lg:px-8 lg:pb-20 lg:pt-24">
     <div class="grid items-center gap-12 lg:grid-cols-[1.25fr_.75fr]">
       <div>
@@ -14,7 +17,7 @@ import { withBase } from '../utils/paths';
         <p class="mt-4 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">{vision.supporting}</p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href={withBase('/life-in-ishikawa/')} class="rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-dark">Buka Survival Guide</a>
-          <a href={withBase('/about/')} class="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-800 transition hover:border-slate-400">Tentang PPI Ishikawa</a>
+          <a href={withBase('/community/kampus/')} class="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-800 transition hover:border-slate-400">Temukan kampusmu</a>
         </div>
       </div>
       <aside class="space-y-4">
@@ -46,10 +49,10 @@ import { withBase } from '../utils/paths';
   <section class="border-b border-slate-200 bg-white">
     <div class="mx-auto grid max-w-7xl gap-5 px-5 py-10 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
       {[
-        ['Pendatang baru','Persiapan sebelum berangkat sampai administrasi awal.','/life-in-ishikawa/'],
-        ['Anggota','Komunitas, layanan, dan informasi yang relevan selama tinggal di Ishikawa.','/community/'],
-        ['Program','Mandat departemen, kegiatan, dan dokumentasi hasil kerja.','/programs/'],
-        ['Mitra','Pintu masuk untuk kolaborasi dengan institusi dan komunitas.','/contact/']
+        ['Baru / akan tiba','Mulai dari persiapan, hari pertama, dan administrasi awal.','/life-in-ishikawa/'],
+        ['Cari kampus','Masuk ke Campus Hub dan panduan khusus kampusmu.','/community/kampus/'],
+        ['Butuh bantuan','Cari jalur dukungan bahasa, kehidupan, kampus, dan layanan profesional.','/life-in-ishikawa/japanese-support/'],
+        ['Kolaborasi','Hubungi PPI Ishikawa untuk kerja sama dan jejaring.','/contact/']
       ].map(([title,desc,href]) => (
         <a href={withBase(href)} class="group rounded-2xl border border-slate-200 p-5 transition hover:-translate-y-0.5 hover:border-red-200 hover:shadow-sm">
           <h2 class="font-semibold text-slate-950 group-hover:text-brand">{title}</h2>
@@ -128,10 +131,42 @@ import { withBase } from '../utils/paths';
     </div>
   </section>
 
-  <section class="mx-auto max-w-7xl px-5 py-16 lg:px-8 lg:py-24">
+  <section class="border-y border-slate-200 bg-white">
+    <div class="mx-auto max-w-7xl px-5 py-16 lg:px-8 lg:py-20">
+      <div class="grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
+        <div>
+          <p class="text-sm font-bold uppercase tracking-[0.18em] text-brand">Gunakan sekarang</p>
+          <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Informasi yang sudah siap dipakai.</h2>
+          <p class="mt-4 max-w-xl leading-7 text-slate-600">Website ini dibangun sebagai alat bantu yang tetap berguna lintas kepengurusan. Mulai dari kebutuhan Anda, bukan dari struktur organisasinya.</p>
+          <a href={withBase('/resources/')} class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">Lihat semua sumber daya →</a>
+        </div>
+
+        <div class="grid gap-3 sm:grid-cols-2">
+          {[
+            ['Survival Guide','SG00–SG14 untuk datang, tinggal, keluarga, kesehatan, transportasi, winter, hingga meninggalkan Jepang.','/life-in-ishikawa/','Tersedia'],
+            ['Municipality Guides','Panduan layanan dan sumber resmi berdasarkan kota/town tempat Anda tinggal.','/life-in-ishikawa/municipality-guides/','Tersedia'],
+            ['Bencana & Darurat','Nomor darurat, evakuasi, sumber live Ishikawa, dan kesiapsiagaan.','/life-in-ishikawa/disaster-emergency/','Tersedia'],
+            ['Bahasa & Dukungan','Kelas bahasa, IFIE, consultation route, immigration, campus support, dan labor support.','/life-in-ishikawa/japanese-support/','Tersedia']
+          ].map(([title,desc,href,status]) => (
+            <a href={withBase(href)} class="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
+              <div class="flex items-start justify-between gap-3">
+                <h3 class="font-bold text-slate-950 group-hover:text-brand">{title}</h3>
+                <span class="rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-700">{status}</span>
+              </div>
+              <p class="mt-2 text-sm leading-6 text-slate-600">{desc}</p>
+              <p class="mt-4 text-sm font-bold text-brand">Buka →</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 py-16 lg:px-8 lg:py-20">
     <div class="max-w-3xl">
       <p class="text-sm font-bold uppercase tracking-[0.18em] text-accent-dark">Untuk anggota</p>
-      <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Empat hal yang ingin kami hadirkan.</h2>
+      <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Yang ingin kami hadirkan.</h2>
+      <p class="mt-4 leading-7 text-slate-600">Empat orientasi ini menjadi ukuran apakah kegiatan dan layanan PPI benar-benar berguna bagi pelajar Indonesia di Ishikawa.</p>
     </div>
     <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       {communityOffers.map((item, index) => (
@@ -144,22 +179,30 @@ import { withBase } from '../utils/paths';
     </div>
   </section>
 
-  <section class="mx-auto max-w-7xl px-5 pb-16 lg:px-8 lg:pb-24">
-    <div class="grid gap-10 lg:grid-cols-[.75fr_1.25fr]">
-      <div>
-        <p class="text-sm font-bold uppercase tracking-[0.18em] text-brand">Struktur kerja</p>
-        <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Tujuh departemen untuk kebutuhan komunitas.</h2>
-        <p class="mt-4 leading-7 text-slate-600">Struktur 2026/27 memisahkan fungsi akademik, olahraga, kemahasiswaan, internal, budaya, media, dan hubungan eksternal agar tanggung jawab lebih jelas.</p>
-        <a href={withBase('/about/')} class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">Lihat struktur organisasi →</a>
-      </div>
-      <div class="grid gap-3 sm:grid-cols-2">
-        {departments.map((dept, i) => (
-          <div class="rounded-2xl border border-slate-200 bg-white p-5">
-            <p class="text-xs font-bold text-accent-dark">{String(i + 1).padStart(2, '0')}</p>
-            <p class="mt-2 font-semibold text-slate-900">{dept.name}</p>
-            <p class="mt-2 text-sm leading-6 text-slate-600">{dept.description}</p>
+  <section class="mx-auto max-w-7xl px-5 pb-16 lg:px-8 lg:pb-20">
+    <div class="rounded-[2rem] border border-slate-200 bg-white p-7 sm:p-9">
+      <div class="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-center">
+        <div>
+          <p class="text-sm font-bold uppercase tracking-[0.18em] text-brand">Organisasi di belakang layanan</p>
+          <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Struktur dibuat untuk membagi tanggung jawab, bukan memenuhi homepage.</h2>
+          <p class="mt-4 leading-7 text-slate-600">Kepengurusan 2026/27 memiliki fungsi pimpinan, sekretariat, keuangan, dan tujuh departemen. Detail mandat dan pembagian kerja tersedia di halaman organisasi dan program.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href={withBase('/about/')} class="rounded-full bg-slate-950 px-5 py-3 text-sm font-bold text-white">Tentang & struktur →</a>
+            <a href={withBase('/programs/')} class="rounded-full border border-slate-300 px-5 py-3 text-sm font-bold text-slate-800">Fokus program →</a>
           </div>
-        ))}
+        </div>
+
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">7 departemen</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {departments.map((dept, i) => (
+              <span class="rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-semibold text-slate-700">
+                {String(i + 1).padStart(2, '0')} · {dept.name}
+              </span>
+            ))}
+          </div>
+          <p class="mt-5 text-sm leading-6 text-slate-500">Program kerja final akan dipublikasikan setelah penetapan; homepage tidak menampilkan kegiatan sebagai final sebelum itu.</p>
+        </div>
       </div>
     </div>
   </section>
