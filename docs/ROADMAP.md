@@ -16,7 +16,6 @@
 - Visi, misi, dan program kerja
 - Kanal kontak resmi
 - Agenda kegiatan
-- Survival Guide versi awal
 - Halaman flagship program
 
 ## V2 — setelah konten stabil
@@ -38,9 +37,12 @@
 Catatan: login anggota dan database tidak menjadi prioritas sampai ada kebutuhan yang jelas.
 
 
-## Status 29 September 2026
+## Status 30 September 2026
 
-- SG00–SG14 Survival Guide: draft V1 lengkap dan live.
+- SG00–SG14 Survival Guide: V1 draft lengkap, editorial pass selesai, dan live.
 - Source registry, centralized metadata, volatility, TOC, prev/next navigation, dan automated external-link audit sudah tersedia.
+- Home, Tentang, Komunitas, Program, Sumber Daya, dan Kontak sudah diubah dari placeholder menjadi draft publik yang usable.
+- Struktur organisasi 2026/27 tersedia pada level posisi/fungsi tanpa mempublikasikan nama sebelum penetapan resmi.
+- Editorial style dan maintenance workflow sudah terdokumentasi.
 - Search indexing tetap dinonaktifkan sampai official launch.
-- Tahap berikutnya: editorial review bersama pengurus, local PPI practical notes, branding resmi, dan validasi berkala sesuai volatility.
+- Prioritas berikutnya: finalisasi visi-misi, nama pengurus, program kerja, kanal kontak resmi, branding, institutional memory, dan local PPI practical notes.
