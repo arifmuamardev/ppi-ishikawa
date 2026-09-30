@@ -1,31 +1,37 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { departments, site } from '../data/site';
+import { site } from '../data/site';
+import { departments } from '../data/organization';
 import { withBase } from '../utils/paths';
 ---
 <BaseLayout>
   <section class="mx-auto max-w-7xl px-5 pb-14 pt-16 lg:px-8 lg:pb-24 lg:pt-24">
     <div class="grid items-end gap-12 lg:grid-cols-[1.25fr_.75fr]">
       <div>
-        <p class="inline-flex rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-brand">Website Foundation · 2026/27</p>
-        <h1 class="mt-6 max-w-5xl text-5xl font-bold leading-[1.03] tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">Rumah digital pelajar Indonesia di Ishikawa.</h1>
+        <p class="inline-flex rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-brand">PPI Ishikawa · 2026/27</p>
+        <h1 class="mt-6 max-w-5xl text-5xl font-bold leading-[1.03] tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">{site.tagline}</h1>
         <p class="mt-7 max-w-3xl text-lg leading-8 text-slate-600">{site.description}</p>
         <div class="mt-8 flex flex-wrap gap-3">
-          <a href={withBase('/life-in-ishikawa')} class="rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-dark">Baru di Ishikawa?</a>
-          <a href={withBase('/programs')} class="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-800 transition hover:border-slate-400">Lihat Program</a>
+          <a href={withBase('/life-in-ishikawa/')} class="rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-dark">Buka Survival Guide</a>
+          <a href={withBase('/about/')} class="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-800 transition hover:border-slate-400">Tentang PPI Ishikawa</a>
         </div>
       </div>
       <aside class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <p class="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">Status saat ini</p>
-        <p class="mt-3 text-xl font-semibold text-slate-950">Sedang dipersiapkan</p>
-        <p class="mt-2 text-sm leading-6 text-slate-600">Website ini disiapkan sebagai fondasi digital PPI Ishikawa periode 2026/27. Struktur, program, kontak, dan data anggota akan difinalisasi setelah kepengurusan resmi.</p>
+        <p class="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">Status website</p>
+        <p class="mt-3 text-xl font-semibold text-slate-950">Survival Guide sudah tersedia</p>
+        <p class="mt-2 text-sm leading-6 text-slate-600">SG00–SG14 sudah dapat digunakan. Informasi pengurus, program, kanal resmi, dan arsip organisasi akan dilengkapi mengikuti finalisasi kepengurusan 2026/27.</p>
       </aside>
     </div>
   </section>
 
   <section class="border-y border-slate-200 bg-white">
     <div class="mx-auto grid max-w-7xl gap-5 px-5 py-10 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
-      {[['Pendatang Baru','Panduan sebelum berangkat sampai minggu pertama.','/life-in-ishikawa'],['Anggota','Komunitas, layanan, dan informasi internal.','/community'],['Kegiatan','Program, agenda, dan dokumentasi.','/programs'],['Mitra','Kolaborasi dengan institusi dan komunitas.','/contact']].map(([title,desc,href]) => (
+      {[
+        ['Pendatang baru','Persiapan sebelum berangkat sampai administrasi awal.','/life-in-ishikawa/'],
+        ['Anggota','Komunitas, layanan, dan informasi yang relevan selama tinggal di Ishikawa.','/community/'],
+        ['Program','Mandat departemen, kegiatan, dan dokumentasi hasil kerja.','/programs/'],
+        ['Mitra','Pintu masuk untuk kolaborasi dengan institusi dan komunitas.','/contact/']
+      ].map(([title,desc,href]) => (
         <a href={withBase(href)} class="group rounded-2xl border border-slate-200 p-5 transition hover:-translate-y-0.5 hover:border-red-200 hover:shadow-sm">
           <h2 class="font-semibold text-slate-950 group-hover:text-brand">{title}</h2>
           <p class="mt-2 text-sm leading-6 text-slate-600">{desc}</p>
@@ -38,14 +44,16 @@ import { withBase } from '../utils/paths';
     <div class="grid gap-10 lg:grid-cols-[.75fr_1.25fr]">
       <div>
         <p class="text-sm font-bold uppercase tracking-[0.18em] text-brand">Struktur kerja</p>
-        <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Tujuh bidang untuk kebutuhan anggota.</h2>
-        <p class="mt-4 text-slate-600">Halaman program nantinya menghubungkan setiap bidang dengan program kerja, PIC, dokumentasi, dan hasil kegiatan.</p>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Tujuh departemen untuk kebutuhan komunitas.</h2>
+        <p class="mt-4 leading-7 text-slate-600">Struktur 2026/27 memisahkan fungsi akademik, olahraga, kemahasiswaan, internal, budaya, media, dan hubungan eksternal agar tanggung jawab lebih jelas.</p>
+        <a href={withBase('/about/')} class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">Lihat struktur organisasi →</a>
       </div>
       <div class="grid gap-3 sm:grid-cols-2">
         {departments.map((dept, i) => (
           <div class="rounded-2xl border border-slate-200 bg-white p-5">
-            <p class="text-xs font-bold text-slate-400">0{i + 1}</p>
-            <p class="mt-2 font-semibold text-slate-900">{dept}</p>
+            <p class="text-xs font-bold text-slate-500">{String(i + 1).padStart(2, '0')}</p>
+            <p class="mt-2 font-semibold text-slate-900">{dept.name}</p>
+            <p class="mt-2 text-sm leading-6 text-slate-600">{dept.description}</p>
           </div>
         ))}
       </div>
@@ -54,12 +62,12 @@ import { withBase } from '../utils/paths';
 
   <section class="mx-auto max-w-7xl px-5 pb-20 lg:px-8">
     <div class="rounded-[2rem] bg-slate-950 p-8 text-white sm:p-12">
-      <p class="text-sm font-bold uppercase tracking-[0.18em] text-red-300">Arah pengembangan</p>
-      <h2 class="mt-3 max-w-3xl text-3xl font-bold tracking-tight">Bukan hanya profil organisasi, tetapi pusat informasi yang tetap berguna lintas periode.</h2>
+      <p class="text-sm font-bold uppercase tracking-[0.18em] text-red-300">Yang ingin dijaga lintas periode</p>
+      <h2 class="mt-3 max-w-3xl text-3xl font-bold tracking-tight">Website ini bukan hanya profil organisasi, tetapi tempat informasi tetap hidup ketika kepengurusan berganti.</h2>
       <div class="mt-8 grid gap-4 md:grid-cols-3">
-        <div class="rounded-2xl bg-white/5 p-5"><strong>Survival Guide</strong><p class="mt-2 text-sm leading-6 text-slate-300">Housing, transportasi, kesehatan, musim dingin, administrasi, dan kehidupan sehari-hari.</p></div>
-        <div class="rounded-2xl bg-white/5 p-5"><strong>Institutional Memory</strong><p class="mt-2 text-sm leading-6 text-slate-300">Pengurus, program, dokumen, publikasi, dan arsip periode sebelumnya.</p></div>
-        <div class="rounded-2xl bg-white/5 p-5"><strong>Public Gateway</strong><p class="mt-2 text-sm leading-6 text-slate-300">Pintu masuk untuk calon mahasiswa, mitra Jepang, media, dan komunitas.</p></div>
+        <div class="rounded-2xl bg-white/5 p-5"><strong>Survival Guide</strong><p class="mt-2 text-sm leading-6 text-slate-300">Panduan praktis berbasis sumber resmi untuk hidup di Ishikawa.</p></div>
+        <div class="rounded-2xl bg-white/5 p-5"><strong>Memori Organisasi</strong><p class="mt-2 text-sm leading-6 text-slate-300">Pengurus, program, dokumen, publikasi, dan arsip periode sebelumnya.</p></div>
+        <div class="rounded-2xl bg-white/5 p-5"><strong>Pintu Kolaborasi</strong><p class="mt-2 text-sm leading-6 text-slate-300">Informasi yang jelas bagi calon mahasiswa, mitra, media, dan komunitas.</p></div>
       </div>
     </div>
   </section>
