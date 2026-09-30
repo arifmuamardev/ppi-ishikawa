@@ -51,7 +51,6 @@ const dataPoints = JSON.stringify(points);
   rel="stylesheet"
   href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
 />
-<script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script is:inline>
   (() => {
     const escapeHtml = (value) =>
@@ -116,10 +115,29 @@ const dataPoints = JSON.stringify(points);
       });
     };
 
+    const ensureLeaflet = () => {
+      if (window.L) {
+        initialize();
+        return;
+      }
+
+      const existing = document.querySelector('script[data-ppi-leaflet]');
+      if (existing) {
+        existing.addEventListener('load', initialize, { once: true });
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+      script.dataset.ppiLeaflet = 'true';
+      script.addEventListener('load', initialize, { once: true });
+      document.head.appendChild(script);
+    };
+
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initialize, { once: true });
+      document.addEventListener('DOMContentLoaded', ensureLeaflet, { once: true });
     } else {
-      initialize();
+      ensureLeaflet();
     }
   })();
 </script>
