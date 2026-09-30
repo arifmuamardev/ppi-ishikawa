@@ -1,122 +1,278 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PageIntro from '../../../components/PageIntro.astro';
-import { campuses, campusCensus } from '../../../data/campuses';
+import { campuses, campusCensus, campusHubProfileBySlug } from '../../../data/campuses';
 import { withBase } from '../../../utils/paths';
 
+const areaGroups = [
+  {
+    area: 'Kanazawa',
+    description: 'Kota utama dan pusat aktivitas komunitas; pola commute berbeda antara pusat kota, Kakuma, dan area selatan Kanazawa.',
+    items: ['Kanazawa University', 'Alice Gakuen · Kanazawa Campus']
+  },
+  {
+    area: 'Nonoichi',
+    description: 'Area compact di selatan Kanazawa dengan akses rail/bus/bicycle yang penting untuk kehidupan mahasiswa.',
+    items: ['Kanazawa Institute of Technology', 'Ishikawa Prefectural University']
+  },
+  {
+    area: 'Hakusan',
+    description: 'Koridor rail di selatan Nonoichi; pilihan housing harus disesuaikan dengan Kasama atau Matto.',
+    items: ['Kinjo University · Kasama Campus', 'Kinjo University · Matto Campus']
+  },
+  {
+    area: 'Nomi',
+    description: 'Lingkungan graduate/research yang lebih terpisah dari pusat Kanazawa sehingga mobility planning sangat penting.',
+    items: ['JAIST']
+  },
+  {
+    area: 'Kaga',
+    description: 'Area Daishoji di bagian selatan prefektur dengan pola daily life yang berbeda dari Kanazawa metropolitan area.',
+    items: ['Alice Gakuen · Kaga Campus']
+  }
+];
+
+const needs = [
+  {
+    title: 'Saya mahasiswa baru',
+    description: 'Pilih kampus, lalu gunakan bagian “Minggu pertama” sebagai starting checklist.',
+    href: '#campus-pack'
+  },
+  {
+    title: 'Saya sedang mencari tempat tinggal',
+    description: 'Bandingkan dormitory/private housing dan pola commute sebelum memilih area.',
+    href: '#bandingkan'
+  },
+  {
+    title: 'Saya bingung harus bertanya ke siapa',
+    description: 'Setiap Campus Pack memiliki contact map untuk academic, international, health, dan career support.',
+    href: '#campus-pack'
+  },
+  {
+    title: 'Saya belum tahu area Ishikawa',
+    description: 'Mulai dari wilayah kampus: Kanazawa, Nonoichi, Hakusan, Nomi, atau Kaga.',
+    href: '#wilayah'
+  }
+];
 ---
+
 <BaseLayout
-  title="Kampus di Ishikawa"
-  description="Direktori kampus dan institusi pendidikan yang memiliki anggota PPI Ishikawa berdasarkan sensus September 2026."
+  title="Campus Hub · Kampus di Ishikawa"
+  description="Campus Hub PPI Ishikawa untuk enam institusi dengan anggota tercatat: perbandingan lokasi, housing, transportasi, international support, dan Campus Pack lengkap."
 >
   <PageIntro
-    title="Kampus di Ishikawa"
-    description="Peta institusi tempat anggota PPI Ishikawa belajar—dengan tautan resmi, dukungan mahasiswa internasional, dan informasi praktis yang akan terus dikembangkan."
+    title="Campus Hub"
+    description="Kenali kampusmu, pahami area tempat tinggal dan commute, lalu masuk ke Campus Pack yang sesuai. Enam institusi di bawah memiliki anggota PPI Ishikawa tercatat pada sensus September 2026."
   />
 
   <section class="mx-auto max-w-7xl px-5 pb-10 lg:px-8">
-    <div class="grid gap-4 sm:grid-cols-3">
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="rounded-2xl border border-slate-200 bg-white p-5">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Campus Pack</p>
+        <p class="mt-2 text-3xl font-bold text-slate-950">{campuses.length}/{campuses.length}</p>
+        <p class="mt-1 text-sm text-slate-600">Semua institusi tercatat sudah memiliki panduan khusus.</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-5">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Wilayah</p>
+        <p class="mt-2 text-3xl font-bold text-slate-950">{areaGroups.length}</p>
+        <p class="mt-1 text-sm text-slate-600">Kanazawa, Nonoichi, Hakusan, Nomi, dan Kaga.</p>
+      </div>
       <div class="rounded-2xl border border-slate-200 bg-white p-5">
         <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Basis data</p>
         <p class="mt-2 text-2xl font-bold text-slate-950">{campusCensus.verified}</p>
         <p class="mt-1 text-sm text-slate-600">Sensus anggota + survey mahasiswa baru.</p>
       </div>
       <div class="rounded-2xl border border-slate-200 bg-white p-5">
-        <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Institusi tercatat</p>
-        <p class="mt-2 text-2xl font-bold text-slate-950">{campuses.length}</p>
-        <p class="mt-1 text-sm text-slate-600">Memiliki anggota tercatat pada data periode sebelumnya.</p>
-      </div>
-      <div class="rounded-2xl border border-slate-200 bg-white p-5">
-        <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Privasi anggota</p>
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Privasi</p>
         <p class="mt-2 text-xl font-bold text-slate-950">Tanpa jumlah per kampus</p>
-        <p class="mt-1 text-sm text-slate-600">Website hanya menunjukkan kehadiran komunitas, bukan data individu atau jumlah kecil.</p>
+        <p class="mt-1 text-sm text-slate-600">Kami menunjukkan coverage komunitas, bukan data individu.</p>
       </div>
     </div>
 
     <div class="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-slate-700">
-      <strong class="text-slate-950">Cakupan PPI tidak berhenti pada enam institusi ini.</strong>
-      PPI Ishikawa ditujukan bagi pelajar Indonesia di seluruh Prefektur Ishikawa. Daftar di bawah menunjukkan institusi yang memiliki anggota tercatat pada data September 2026, bukan daftar eksklusif kampus yang boleh bergabung.
+      <strong class="text-slate-950">PPI Ishikawa tidak terbatas pada enam institusi ini.</strong>
+      Daftar ini menunjukkan institusi yang memiliki anggota tercatat pada data September 2026. Pelajar Indonesia dari institusi lain di Prefektur Ishikawa tetap bagian dari cakupan komunitas.
     </div>
   </section>
 
   <section class="mx-auto max-w-7xl px-5 py-10 lg:px-8">
-    <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-      <div>
-        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Kampus dengan anggota tercatat</p>
-        <h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-950">Enam institusi dalam sensus 2026.</h2>
-      </div>
-      <p class="max-w-xl text-sm leading-6 text-slate-500">Informasi resmi berasal dari website institusi. Catatan PPI akan dilengkapi bertahap berdasarkan pengalaman anggota.</p>
+    <div class="max-w-3xl">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Mulai dari kebutuhanmu</p>
+      <h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-950">Tidak harus membaca semuanya dari awal.</h2>
+      <p class="mt-3 leading-7 text-slate-600">Campus Hub membantu memilih titik masuk. Detail resmi dan langkah praktis tetap berada di Campus Pack masing-masing.</p>
     </div>
 
-    <div class="mt-8 grid gap-5 lg:grid-cols-2">
-      {campuses.map((campus) => (
-        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
-          <div class="flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">{campus.type} · {campus.city}</p>
-              <h3 class="mt-2 text-2xl font-bold text-slate-950">{campus.shortName}</h3>
-              {campus.japanese && <p class="mt-1 text-sm text-slate-500">{campus.japanese}</p>}
-            </div>
-            <span class="rounded-full bg-amber-50 px-3 py-2 text-xs font-bold text-accent-dark">Anggota tercatat · {campus.censusDate}</span>
-          </div>
+    <div class="mt-7 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {needs.map((item) => (
+        <a href={item.href} class="group rounded-3xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
+          <h3 class="font-bold text-slate-950 group-hover:text-brand">{item.title}</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
+          <span class="mt-4 inline-flex text-sm font-bold text-brand">Mulai →</span>
+        </a>
+      ))}
+    </div>
+  </section>
 
-          <p class="mt-5 leading-7 text-slate-600">{campus.summary}</p>
+  <section id="wilayah" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+      <div>
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Wilayah kampus</p>
+        <h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-950">Lokasi membentuk cara hidup mahasiswa.</h2>
+      </div>
+      <p class="max-w-2xl text-sm leading-6 text-slate-500">Jarak ke kampus, rail/bus, bicycle, winter, dan lokasi practicum atau laboratory dapat lebih menentukan daripada jarak garis lurus di peta.</p>
+    </div>
 
-          <div class="mt-5 rounded-2xl bg-slate-50 p-4">
-            <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Catatan PPI</p>
-            <p class="mt-2 text-sm leading-6 text-slate-700">{campus.ppiNote}</p>
-          </div>
-
-          <div class="mt-5 flex flex-wrap gap-2">
-            {campus.officialLinks.map((link) => (
-              <a href={link.url} target="_blank" rel="noreferrer" class="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-700 transition hover:border-slate-400">
-                {link.label} ↗
-              </a>
+    <div class="mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+      {areaGroups.map((group) => (
+        <article class="rounded-3xl border border-slate-200 bg-white p-5">
+          <h3 class="text-xl font-bold text-slate-950">{group.area}</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{group.description}</p>
+          <div class="mt-4 space-y-2">
+            {group.items.map((item) => (
+              <div class="rounded-xl bg-slate-50 px-3 py-2 text-xs font-semibold leading-5 text-slate-700">{item}</div>
             ))}
           </div>
-
-          <a
-            href={withBase(`/community/kampus/${campus.slug}/`)}
-            class="mt-6 inline-flex text-sm font-bold text-brand hover:underline"
-          >
-            Detail kampus & panduan PPI →
-          </a>
         </article>
       ))}
     </div>
   </section>
 
+  <section id="bandingkan" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <div class="max-w-3xl">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Perbandingan cepat</p>
+      <h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-950">Enam institusi, enam pola kehidupan mahasiswa.</h2>
+      <p class="mt-3 leading-7 text-slate-600">Tabel ini bukan ranking. Tujuannya memberi konteks sebelum Anda masuk ke panduan kampus yang lebih detail.</p>
+    </div>
+
+    <div class="mt-7 overflow-x-auto rounded-3xl border border-slate-200 bg-white">
+      <table class="min-w-[1080px] w-full border-collapse text-left text-sm">
+        <thead class="bg-slate-950 text-white">
+          <tr>
+            <th class="px-5 py-4 font-bold">Institusi</th>
+            <th class="px-5 py-4 font-bold">Profil studi</th>
+            <th class="px-5 py-4 font-bold">Housing</th>
+            <th class="px-5 py-4 font-bold">Mobility</th>
+            <th class="px-5 py-4 font-bold">Support utama</th>
+          </tr>
+        </thead>
+        <tbody>
+          {campuses.map((campus) => {
+            const profile = campusHubProfileBySlug[campus.slug];
+            return (
+              <tr class="border-t border-slate-100 align-top">
+                <td class="px-5 py-5">
+                  <a href={withBase(`/community/kampus/${campus.slug}/`)} class="font-bold text-slate-950 hover:text-brand hover:underline">{campus.shortName}</a>
+                  <p class="mt-1 text-xs text-slate-500">{campus.city} · {campus.type}</p>
+                </td>
+                <td class="px-5 py-5 leading-6 text-slate-600">{profile.studyProfile}</td>
+                <td class="px-5 py-5 leading-6 text-slate-600">{profile.housing}</td>
+                <td class="px-5 py-5 leading-6 text-slate-600">{profile.mobility}</td>
+                <td class="px-5 py-5 leading-6 text-slate-600">{profile.supportPoint}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+
+    <p class="mt-3 text-xs leading-5 text-slate-500">Housing, admission, timetable, scholarship, dan support arrangements dapat berubah. Campus Pack menautkan sumber resmi dan tanggal verifikasi untuk pengecekan aktual.</p>
+  </section>
+
+  <section id="campus-pack" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">6 Campus Pack</p>
+        <h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-950">Pilih kampusmu.</h2>
+      </div>
+      <p class="max-w-xl text-sm leading-6 text-slate-500">Setiap pack memiliki 10 bagian: orientasi kampus, langkah awal, support route, housing/transport, academic atau vocational life, daily life, FAQ, dan sumber resmi.</p>
+    </div>
+
+    <div class="mt-8 grid gap-5 lg:grid-cols-2">
+      {campuses.map((campus) => {
+        const profile = campusHubProfileBySlug[campus.slug];
+        return (
+          <article class="flex flex-col rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">{campus.type} · {campus.city}</p>
+                <h3 class="mt-2 text-2xl font-bold text-slate-950">{campus.shortName}</h3>
+                {campus.japanese && <p class="mt-1 text-sm text-slate-500">{campus.japanese}</p>}
+              </div>
+              <span class="rounded-full bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-700">Campus Pack tersedia</span>
+            </div>
+
+            <p class="mt-5 leading-7 text-slate-600">{campus.summary}</p>
+
+            <div class="mt-5 rounded-2xl bg-slate-50 p-4">
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Fokus utama</p>
+              <p class="mt-2 text-sm leading-6 text-slate-700">{profile.academicFocus}</p>
+            </div>
+
+            <div class="mt-4 grid gap-3 sm:grid-cols-2">
+              <div class="rounded-2xl border border-slate-100 p-4">
+                <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Housing</p>
+                <p class="mt-2 text-sm leading-6 text-slate-700">{profile.housing}</p>
+              </div>
+              <div class="rounded-2xl border border-slate-100 p-4">
+                <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Support route</p>
+                <p class="mt-2 text-sm leading-6 text-slate-700">{profile.supportPoint}</p>
+              </div>
+            </div>
+
+            <div class="mt-4 flex flex-wrap gap-2">
+              {profile.tags.map((tag) => (
+                <span class="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700">{tag}</span>
+              ))}
+            </div>
+
+            <div class="mt-auto pt-6">
+              <a
+                href={withBase(`/community/kampus/${campus.slug}/`)}
+                class="inline-flex rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white transition hover:opacity-90"
+              >
+                Buka Campus Pack →
+              </a>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
   <section class="mx-auto max-w-7xl px-5 py-10 lg:px-8">
-    <div class="rounded-3xl bg-slate-950 p-7 text-white sm:p-9">
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-soft">Konteks Ishikawa</p>
-      <h2 class="mt-3 text-2xl font-bold">Ishikawa memiliki lebih banyak institusi pendidikan tinggi.</h2>
-      <p class="mt-4 max-w-3xl leading-7 text-slate-300">
-        University Consortium Ishikawa mencantumkan 20 institusi pendidikan tinggi anggota, termasuk universitas, junior college, dan KOSEN. Untuk website PPI, kami memisahkan daftar umum tersebut dari institusi yang memang memiliki anggota PPI tercatat.
-      </p>
-      <a href="https://www.ucon-i.jp/about/members/" target="_blank" rel="noreferrer" class="mt-6 inline-flex rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950">
-        Lihat daftar University Consortium Ishikawa ↗
-      </a>
+    <div class="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
+      <div class="rounded-3xl bg-slate-950 p-7 text-white sm:p-9">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-soft">Campus Pack + Survival Guide</p>
+        <h2 class="mt-3 text-2xl font-bold">Gunakan keduanya bersama.</h2>
+        <p class="mt-4 max-w-3xl leading-7 text-slate-300">Campus Pack menjawab hal yang spesifik pada institusi. Survival Guide menjawab sistem hidup di Jepang yang lintas kampus—administrasi, housing, transportasi, kesehatan, keluarga, bahasa, dan kebutuhan sehari-hari.</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href={withBase('/life-in-ishikawa/administrasi/')} class="rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950">Administrasi →</a>
+          <a href={withBase('/life-in-ishikawa/tempat-tinggal/')} class="rounded-xl border border-slate-700 px-4 py-3 text-sm font-bold text-white">Tempat tinggal →</a>
+          <a href={withBase('/life-in-ishikawa/transportasi/')} class="rounded-xl border border-slate-700 px-4 py-3 text-sm font-bold text-white">Transportasi →</a>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-slate-200 bg-white p-7 sm:p-9">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Cara membaca informasi</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Official first, PPI for context.</h2>
+        <p class="mt-4 text-sm leading-6 text-slate-600">Campus Pack menyusun informasi resmi agar lebih mudah dipakai, lalu menambahkan konteks praktis PPI. Untuk admission, fee, scholarship, timetable, visa/residence, dan aturan lain yang berubah, keputusan akhir harus kembali ke sumber resmi.</p>
+      </div>
     </div>
   </section>
 
   <section class="mx-auto max-w-7xl px-5 pb-20 pt-10 lg:px-8">
     <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Yang akan ditambahkan per kampus</p>
-      <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {[
-          'Lokasi kampus & transportasi',
-          'International student support',
-          'Housing / dormitory',
-          'Administrasi khusus kampus',
-          'Fasilitas & kehidupan kampus',
-          'Catatan praktis mahasiswa Indonesia',
-          'Kontak liaison PPI jika ditetapkan',
-          'FAQ kampus',
-          'Link resmi yang paling sering dibutuhkan'
-        ].map((item) => (
-          <div class="rounded-2xl bg-slate-50 p-4 text-sm font-medium text-slate-700">{item}</div>
-        ))}
+      <div class="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div>
+          <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Di luar enam institusi</p>
+          <h2 class="mt-3 text-2xl font-bold text-slate-950">Ishikawa memiliki lebih banyak institusi pendidikan tinggi.</h2>
+          <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-600">University Consortium Ishikawa mencantumkan institusi pendidikan tinggi lain di prefektur ini. Jika anggota PPI berasal dari kampus yang belum tercatat, coverage komunitas tetap berlaku dan directory dapat diperbarui pada sensus berikutnya.</p>
+        </div>
+        <a href="https://www.ucon-i.jp/about/members/" target="_blank" rel="noreferrer" class="inline-flex rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">
+          University Consortium Ishikawa ↗
+        </a>
       </div>
+      <p class="mt-6 border-t border-slate-100 pt-5 text-xs leading-5 text-slate-500">{campusCensus.note}</p>
     </div>
   </section>
 </BaseLayout>
