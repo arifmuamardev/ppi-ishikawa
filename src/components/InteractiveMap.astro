@@ -1,0 +1,125 @@
+---
+import type { CampusMapPoint } from '../data/campus-map';
+
+interface Props {
+  points: CampusMapPoint[];
+  heightClass?: string;
+  showLegend?: boolean;
+  class?: string;
+}
+
+const {
+  points,
+  heightClass = 'h-[360px] sm:h-[430px]',
+  showLegend = true,
+  class: className = ''
+} = Astro.props;
+
+const dataPoints = JSON.stringify(points);
+---
+
+<div class={`overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm ${className}`}>
+  <div
+    class={`ppi-leaflet-map w-full bg-slate-100 ${heightClass}`}
+    data-points={dataPoints}
+    aria-label="Peta lokasi kampus"
+  ></div>
+
+  {showLegend && (
+    <div class="border-t border-slate-100 bg-white p-4 sm:p-5">
+      <div class="flex flex-wrap gap-2">
+        {points.map((point) => (
+          <a
+            href={`https://www.openstreetmap.org/?mlat=${point.lat}&mlon=${point.lng}#map=16/${point.lat}/${point.lng}`}
+            target="_blank"
+            rel="noreferrer"
+            class="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-700 transition hover:border-amber-200 hover:bg-amber-50"
+          >
+            {point.shortName}{point.approximate ? ' · area' : ''}
+          </a>
+        ))}
+      </div>
+      <div class="mt-3 flex flex-col gap-2 text-[11px] leading-5 text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+        <p>Map data © OpenStreetMap contributors. Marker bertanda “area” menggunakan titik area alamat resmi, bukan koordinat gedung presisi.</p>
+        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer" class="shrink-0 font-semibold hover:underline">Attribution ↗</a>
+      </div>
+    </div>
+  )}
+</div>
+
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+<script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script is:inline>
+  (() => {
+    const escapeHtml = (value) =>
+      String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+
+    const initialize = () => {
+      if (!window.L) return;
+
+      document.querySelectorAll('.ppi-leaflet-map[data-points]').forEach((element) => {
+        if (element.dataset.mapReady === 'true') return;
+
+        let points = [];
+        try {
+          points = JSON.parse(element.dataset.points || '[]');
+        } catch {
+          return;
+        }
+        if (!points.length) return;
+
+        element.dataset.mapReady = 'true';
+
+        const map = window.L.map(element, {
+          scrollWheelZoom: false,
+          zoomControl: true
+        });
+
+        window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        const bounds = [];
+        points.forEach((point) => {
+          const marker = window.L.marker([point.lat, point.lng]).addTo(map);
+          const approx = point.approximate
+            ? '<div style="margin-top:4px;font-size:11px;color:#92400e">Area alamat resmi · posisi marker bersifat perkiraan.</div>'
+            : '';
+          const popup =
+            '<div style="min-width:190px">' +
+              '<strong>' + escapeHtml(point.name) + '</strong>' +
+              '<div style="margin-top:5px;font-size:12px;line-height:1.5;color:#475569">' + escapeHtml(point.address) + '</div>' +
+              approx +
+              '<div style="margin-top:8px"><a href="' + encodeURI(point.officialUrl) + '" target="_blank" rel="noreferrer" style="font-weight:700;color:#b91c1c">Akses resmi ↗</a></div>' +
+            '</div>';
+
+          marker.bindPopup(popup);
+          bounds.push([point.lat, point.lng]);
+        });
+
+        if (bounds.length === 1) {
+          map.setView(bounds[0], 15);
+        } else {
+          map.fitBounds(bounds, { padding: [28, 28], maxZoom: 13 });
+        }
+
+        setTimeout(() => map.invalidateSize(), 50);
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initialize, { once: true });
+    } else {
+      initialize();
+    }
+  })();
+</script>
