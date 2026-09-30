@@ -1,0 +1,30 @@
+---
+interface Props {
+  id: 'ir' | 'hokutetsu' | 'jr' | 'ifie' | 'jma' | 'isa' | 'police' | 'fire';
+  size?: 'sm' | 'md';
+  class?: string;
+}
+const { id, size = 'md', class: className = '' } = Astro.props;
+const marks = {
+  ir: { short: 'IR', long: 'IR Ishikawa Railway' },
+  hokutetsu: { short: '北鉄', long: 'Hokutetsu' },
+  jr: { short: 'JR', long: 'JR' },
+  ifie: { short: 'IFIE', long: 'Ishikawa Foundation for International Exchange' },
+  jma: { short: 'JMA', long: 'Japan Meteorological Agency' },
+  isa: { short: 'ISA', long: 'Immigration Services Agency' },
+  police: { short: '110', long: 'Police' },
+  fire: { short: '119', long: 'Ambulance / Fire' }
+} as const;
+const mark = marks[id];
+const sizes = {
+  sm: 'h-10 min-w-10 rounded-xl px-2 text-[11px]',
+  md: 'h-12 min-w-12 rounded-2xl px-3 text-xs'
+};
+---
+<span
+  class={`inline-flex items-center justify-center border border-slate-200 bg-white font-black tracking-tight text-slate-800 shadow-sm ${sizes[size]} ${className}`}
+  aria-label={mark.long}
+  title={mark.long}
+>
+  {mark.short}
+</span>
