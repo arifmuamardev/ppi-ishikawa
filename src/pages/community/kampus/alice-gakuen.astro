@@ -2,8 +2,12 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import GuideToc from '../../../components/GuideToc.astro';
 import InstitutionMark from '../../../components/InstitutionMark.astro';
+import InteractiveMap from '../../../components/InteractiveMap.astro';
 import { withBase } from '../../../utils/paths';
 import { alicePack, aliceSections, aliceQuickLinks, aliceContactMap, aliceFaq } from '../../../data/campus-alice';
+import { campusMapPoints } from '../../../data/campus-map';
+
+const campusMap = campusMapPoints['alice-gakuen'];
 
 const ppiLinks = [
   ['Administrasi di Jepang', '/life-in-ishikawa/administrasi/'],
@@ -42,6 +46,25 @@ const ppiLinks = [
         <a href={url} target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-200 bg-white p-4 text-sm font-bold text-slate-800 transition hover:border-amber-200 hover:shadow-sm">
           {label} ↗
         </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-8 lg:px-8">
+    <div class="mb-5">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Dua lokasi di Ishikawa</p>
+      <h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-950">Kanazawa dan Kaga perlu diperlakukan sebagai dua pola commute yang berbeda.</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-600">Marker menggunakan titik area alamat resmi. Untuk pintu masuk dan rute aktual, buka akses resmi Alice dari marker.</p>
+    </div>
+    <div class="grid gap-5 lg:grid-cols-2">
+      {campusMap.map((point) => (
+        <div>
+          <div class="mb-3">
+            <h3 class="font-bold text-slate-950">{point.name}</h3>
+            <p class="mt-1 text-xs leading-5 text-slate-500">{point.address}</p>
+          </div>
+          <InteractiveMap points={[point]} heightClass="h-[300px] sm:h-[340px]" />
+        </div>
       ))}
     </div>
   </section>
