@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PageIntro from '../../../components/PageIntro.astro';
+import TopicIcon from '../../../components/TopicIcon.astro';
 import { campuses, campusCensus, campusHubProfileBySlug } from '../../../data/campuses';
 import { withBase } from '../../../utils/paths';
 
@@ -96,6 +97,13 @@ const needs = [
   </section>
 
   <section class="mx-auto max-w-7xl px-5 py-10 lg:px-8">
+    <figure class="mb-10 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
+      <img src={withBase('/illustrations/campus-hub-map.svg')} alt="Skema lima wilayah dan enam institusi pada Campus Hub PPI Ishikawa" width="1200" height="760" class="h-auto w-full" loading="eager" />
+      <figcaption class="border-t border-slate-100 bg-slate-50 px-5 py-3 text-xs leading-5 text-slate-500">
+        Skema orientasi wilayah, bukan peta skala. Gunakan halaman Campus Pack dan sumber transportasi resmi untuk rute aktual.
+      </figcaption>
+    </figure>
+
     <div class="max-w-3xl">
       <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Mulai dari kebutuhanmu</p>
       <h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-950">Tidak harus membaca semuanya dari awal.</h2>
@@ -103,9 +111,12 @@ const needs = [
     </div>
 
     <div class="mt-7 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-      {needs.map((item) => (
+      {needs.map((item, index) => (
         <a href={item.href} class="group rounded-3xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
-          <h3 class="font-bold text-slate-950 group-hover:text-brand">{item.title}</h3>
+          <span class="grid size-11 place-items-center rounded-2xl bg-amber-50 text-accent-dark">
+            <TopicIcon name={(['arrival','housing','support','transport'] as const)[index]} class="size-6" />
+          </span>
+          <h3 class="mt-4 font-bold text-slate-950 group-hover:text-brand">{item.title}</h3>
           <p class="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
           <span class="mt-4 inline-flex text-sm font-bold text-brand">Mulai →</span>
         </a>
