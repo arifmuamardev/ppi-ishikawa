@@ -1,12 +1,16 @@
 ---
+import { municipalityLogos } from '../data/municipality-logos';
+
 interface Props {
-  id: 'kanazawa' | 'nonoichi' | 'hakusan' | 'komatsu' | 'kahoku' | 'nomi' | 'kaga';
+  id: keyof typeof municipalityLogos;
   size?: 'sm' | 'md';
   class?: string;
 }
 
 const { id, size = 'md', class: className = '' } = Astro.props;
-const marks = {
+const logo = municipalityLogos[id];
+
+const fallback = {
   kanazawa: { jp: '金沢', en: 'Kanazawa' },
   nonoichi: { jp: '野々市', en: 'Nonoichi' },
   hakusan: { jp: '白山', en: 'Hakusan' },
@@ -15,18 +19,32 @@ const marks = {
   nomi: { jp: '能美', en: 'Nomi' },
   kaga: { jp: '加賀', en: 'Kaga' }
 } as const;
-const mark = marks[id];
+
 const sizes = {
-  sm: 'min-w-11 h-11 rounded-xl px-2 text-[11px]',
-  md: 'min-w-14 h-14 rounded-2xl px-3 text-xs'
+  sm: 'h-11 w-14 rounded-xl p-1.5',
+  md: 'h-14 w-20 rounded-2xl p-2'
 };
+
+const mark = fallback[id];
 ---
 
 <span
-  class={`inline-flex flex-col items-center justify-center border border-slate-200 bg-white font-bold leading-tight text-slate-800 shadow-sm ${sizes[size]} ${className}`}
-  aria-label={mark.en}
-  title={mark.en}
+  class={`inline-flex items-center justify-center border border-slate-200 bg-white shadow-sm ${sizes[size]} ${className}`}
+  aria-label={logo?.name ?? mark.en}
+  title={logo?.name ?? mark.en}
 >
-  <span>{mark.jp}</span>
-  <span class="mt-0.5 text-[9px] font-semibold uppercase tracking-wide text-slate-400">{mark.en}</span>
+  {logo ? (
+    <img
+      src={logo.imageUrl}
+      alt={`${logo.name} logo`}
+      class="max-h-full max-w-full object-contain"
+      loading="lazy"
+      referrerpolicy="no-referrer"
+    />
+  ) : (
+    <span class="flex flex-col items-center justify-center font-bold leading-tight text-slate-800">
+      <span>{mark.jp}</span>
+      <span class="mt-0.5 text-[9px] font-semibold uppercase tracking-wide text-slate-400">{mark.en}</span>
+    </span>
+  )}
 </span>
