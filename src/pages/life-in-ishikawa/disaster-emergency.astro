@@ -4,9 +4,9 @@ import GuideMeta from '../../components/GuideMeta.astro';
 import GuideToc from '../../components/GuideToc.astro';
 import GuidePager from '../../components/GuidePager.astro';
 import ServiceMark from '../../components/ServiceMark.astro';
-import OfficialBrand from '../../components/OfficialBrand.astro';
+import InstitutionMark from '../../components/InstitutionMark.astro';
 import { withBase } from '../../utils/paths';
-import { officialBrands } from '../../data/official-brands';
+
 
 const sections = [
   {
@@ -210,7 +210,7 @@ const sources = [
 
     <GuideMeta code="SG10" />
     <div class="mt-7 flex flex-wrap items-center gap-3">
-      <OfficialBrand brand={officialBrands.hotIshikawa} compact={true} class="w-fit" />
+      <InstitutionMark id="ishikawa" size="md" />
       <ServiceMark id="jma" />
       <ServiceMark id="police" />
       <ServiceMark id="fire" />
