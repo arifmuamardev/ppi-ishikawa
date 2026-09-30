@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { departments, vision, communityOffers, closingStatement } from '../data/organization';
-import { campuses, campusCensus } from '../data/campuses';
+import { campuses, campusCensus, campusHubProfileBySlug } from '../data/campuses';
 import { withBase } from '../utils/paths';
 ---
 <BaseLayout>
@@ -29,8 +29,8 @@ import { withBase } from '../utils/paths';
         </div>
         <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
           <p class="text-xs font-bold uppercase tracking-[0.18em] text-accent-dark">Status website</p>
-          <p class="mt-3 text-xl font-semibold text-slate-950">Survival Guide sudah tersedia</p>
-          <p class="mt-2 text-sm leading-6 text-slate-600">SG00–SG14 sudah dapat digunakan. Informasi pengurus, program, kanal resmi, dan arsip organisasi akan dilengkapi mengikuti finalisasi kepengurusan 2026/27.</p>
+          <p class="mt-3 text-xl font-semibold text-slate-950">Survival Guide + 6 Campus Packs tersedia</p>
+          <p class="mt-2 text-sm leading-6 text-slate-600">Panduan hidup di Ishikawa dan panduan khusus enam institusi sudah dapat digunakan. Informasi pengurus, program, kanal resmi, dan arsip organisasi terus dilengkapi mengikuti periode 2026/27.</p>
         </div>
       </aside>
     </div>
@@ -60,37 +60,71 @@ import { withBase } from '../utils/paths';
   </section>
 
   <section class="mx-auto max-w-7xl px-5 py-16 lg:px-8 lg:py-24">
-    <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-      <div class="max-w-3xl">
-        <p class="text-sm font-bold uppercase tracking-[0.18em] text-brand">Komunitas lintas kampus</p>
-        <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">Pelajar Indonesia di berbagai kampus di Ishikawa.</h2>
-        <p class="mt-4 max-w-2xl leading-7 text-slate-600">
-          Berdasarkan data anggota yang diverifikasi hingga {campusCensus.verified}, komunitas PPI Ishikawa terhubung dengan enam institusi berikut. Cakupan PPI tetap terbuka bagi pelajar Indonesia di seluruh Prefektur Ishikawa.
-        </p>
-      </div>
-      <a href={withBase('/community/kampus/')} class="inline-flex shrink-0 items-center rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800 transition hover:border-slate-400">
-        Lihat semua info kampus →
-      </a>
-    </div>
-
-    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {campuses.map((campus) => (
-        <a
-          href={withBase(`/community/kampus/${campus.slug}/`)}
-          class="group rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm"
-        >
-          <div class="flex items-start justify-between gap-4">
-            <div>
-              <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">{campus.city}</p>
-              <h3 class="mt-2 text-xl font-bold text-slate-950 group-hover:text-brand">{campus.shortName}</h3>
-              {campus.japanese && <p class="mt-1 text-sm text-slate-500">{campus.japanese}</p>}
-            </div>
-            <span class="rounded-full bg-slate-50 px-3 py-1 text-[11px] font-bold text-slate-600">{campus.type}</span>
+    <div class="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
+      <div class="grid gap-8 bg-slate-950 p-7 text-white sm:p-9 lg:grid-cols-[1.25fr_.75fr] lg:p-12">
+        <div>
+          <p class="text-sm font-bold uppercase tracking-[0.18em] text-accent-soft">Komunitas lintas kampus</p>
+          <h2 class="mt-3 max-w-3xl text-3xl font-bold tracking-tight sm:text-4xl">Satu PPI, berbagai kehidupan kampus di Ishikawa.</h2>
+          <p class="mt-4 max-w-2xl leading-7 text-slate-300">
+            Berdasarkan data anggota hingga {campusCensus.verified}, PPI Ishikawa terhubung dengan enam institusi di Kanazawa, Nonoichi, Hakusan, Nomi, dan Kaga. Masing-masing kini memiliki Campus Pack khusus.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href={withBase('/community/kampus/')} class="rounded-full bg-white px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-slate-100">Buka Campus Hub →</a>
+            <a href={withBase('/community/kampus/#bandingkan')} class="rounded-full border border-slate-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-slate-800">Bandingkan kampus →</a>
           </div>
-          <p class="mt-4 line-clamp-2 text-sm leading-6 text-slate-600">{campus.summary}</p>
-          <p class="mt-5 text-sm font-bold text-brand">Lihat detail kampus →</p>
-        </a>
-      ))}
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="rounded-2xl border border-slate-700 bg-slate-900 p-5">
+            <p class="text-3xl font-bold">6/6</p>
+            <p class="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Campus Pack</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-slate-900 p-5">
+            <p class="text-3xl font-bold">5</p>
+            <p class="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Wilayah</p>
+          </div>
+          <div class="col-span-2 rounded-2xl border border-slate-700 bg-slate-900 p-5">
+            <p class="text-sm font-bold text-white">Coverage komunitas tetap terbuka</p>
+            <p class="mt-2 text-xs leading-5 text-slate-400">Enam institusi ini berasal dari sensus anggota, bukan batas keanggotaan PPI Ishikawa.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid gap-px bg-slate-200 sm:grid-cols-2 lg:grid-cols-3">
+        {campuses.map((campus) => {
+          const profile = campusHubProfileBySlug[campus.slug];
+          return (
+            <a
+              href={withBase(`/community/kampus/${campus.slug}/`)}
+              class="group bg-white p-6 transition hover:bg-amber-50/40 sm:p-7"
+            >
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">{campus.city}</p>
+                  <h3 class="mt-2 text-xl font-bold text-slate-950 group-hover:text-brand">{campus.shortName}</h3>
+                  {campus.japanese && <p class="mt-1 text-sm text-slate-500">{campus.japanese}</p>}
+                </div>
+                <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-600">{campus.type.replace(' university','').replace(' graduate',' grad.')}</span>
+              </div>
+
+              <p class="mt-4 text-sm leading-6 text-slate-600">{profile.studyProfile}</p>
+
+              <div class="mt-4 flex flex-wrap gap-2">
+                {profile.tags.slice(0, 2).map((tag) => (
+                  <span class="rounded-full border border-slate-200 px-2.5 py-1 text-[11px] font-semibold text-slate-600">{tag}</span>
+                ))}
+              </div>
+
+              <p class="mt-5 text-sm font-bold text-brand">Buka Campus Pack →</p>
+            </a>
+          );
+        })}
+      </div>
+
+      <div class="flex flex-col gap-3 border-t border-slate-200 bg-slate-50 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <p class="text-sm leading-6 text-slate-600">Belum melihat kampusmu? PPI Ishikawa tetap mencakup pelajar Indonesia di seluruh Prefektur Ishikawa.</p>
+        <a href={withBase('/community/kampus/')} class="shrink-0 text-sm font-bold text-brand hover:underline">Lihat cakupan & Campus Hub →</a>
+      </div>
     </div>
   </section>
 
