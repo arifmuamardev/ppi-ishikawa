@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import TopicIcon from '../components/TopicIcon.astro';
 import { departments, vision, communityOffers, closingStatement } from '../data/organization';
 import { campuses, campusCensus, campusHubProfileBySlug } from '../data/campuses';
 import { withBase } from '../utils/paths';
@@ -21,14 +22,18 @@ import { withBase } from '../utils/paths';
         </div>
       </div>
       <aside class="space-y-4">
-        <div class="brand-logo-panel rounded-3xl p-6 shadow-sm sm:p-8">
+        <div class="relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
           <img
-            src={withBase('/brand/ppi-ishikawa-logo.webp')}
-            alt="Logo PPI Ishikawa"
-            width="469"
-            height="426"
-            class="mx-auto h-auto w-full max-w-[270px]"
+            src={withBase('/illustrations/home-community.svg')}
+            alt="Ilustrasi pelajar Indonesia belajar, berbagi informasi, dan menjelajahi Ishikawa"
+            width="1200"
+            height="675"
+            class="aspect-[16/9] h-auto w-full object-cover"
+            loading="eager"
           />
+          <div class="absolute bottom-4 left-4 rounded-2xl bg-white/90 p-3 shadow-sm backdrop-blur">
+            <img src={withBase('/brand/ppi-ishikawa-logo.webp')} alt="" width="469" height="426" class="h-auto w-16" />
+          </div>
         </div>
         <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
           <p class="text-xs font-bold uppercase tracking-[0.18em] text-accent-dark">Status website</p>
@@ -49,13 +54,16 @@ import { withBase } from '../utils/paths';
   <section class="border-b border-slate-200 bg-white">
     <div class="mx-auto grid max-w-7xl gap-5 px-5 py-10 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
       {[
-        ['Baru / akan tiba','Mulai dari persiapan, hari pertama, dan administrasi awal.','/life-in-ishikawa/'],
-        ['Cari kampus','Masuk ke Campus Hub dan panduan khusus kampusmu.','/community/kampus/'],
-        ['Butuh bantuan','Cari jalur dukungan bahasa, kehidupan, kampus, dan layanan profesional.','/life-in-ishikawa/japanese-support/'],
-        ['Kolaborasi','Hubungi PPI Ishikawa untuk kerja sama dan jejaring.','/contact/']
-      ].map(([title,desc,href]) => (
+        ['arrival','Baru / akan tiba','Mulai dari persiapan, hari pertama, dan administrasi awal.','/life-in-ishikawa/'],
+        ['campus','Cari kampus','Masuk ke Campus Hub dan panduan khusus kampusmu.','/community/kampus/'],
+        ['support','Butuh bantuan','Cari jalur dukungan bahasa, kehidupan, kampus, dan layanan profesional.','/life-in-ishikawa/japanese-support/'],
+        ['collaboration','Kolaborasi','Hubungi PPI Ishikawa untuk kerja sama dan jejaring.','/contact/']
+      ].map(([icon,title,desc,href]) => (
         <a href={withBase(href)} class="group rounded-2xl border border-slate-200 p-5 transition hover:-translate-y-0.5 hover:border-red-200 hover:shadow-sm">
-          <h2 class="font-semibold text-slate-950 group-hover:text-brand">{title}</h2>
+          <span class="grid size-11 place-items-center rounded-2xl bg-amber-50 text-accent-dark">
+            <TopicIcon name={icon as any} class="size-6" />
+          </span>
+          <h2 class="mt-4 font-semibold text-slate-950 group-hover:text-brand">{title}</h2>
           <p class="mt-2 text-sm leading-6 text-slate-600">{desc}</p>
         </a>
       ))}
@@ -143,15 +151,18 @@ import { withBase } from '../utils/paths';
 
         <div class="grid gap-3 sm:grid-cols-2">
           {[
-            ['Survival Guide','SG00–SG14 untuk datang, tinggal, keluarga, kesehatan, transportasi, winter, hingga meninggalkan Jepang.','/life-in-ishikawa/','Tersedia'],
-            ['Municipality Guides','Panduan layanan dan sumber resmi berdasarkan kota/town tempat Anda tinggal.','/life-in-ishikawa/municipality-guides/','Tersedia'],
-            ['Bencana & Darurat','Nomor darurat, evakuasi, sumber live Ishikawa, dan kesiapsiagaan.','/life-in-ishikawa/disaster-emergency/','Tersedia'],
-            ['Bahasa & Dukungan','Kelas bahasa, IFIE, consultation route, immigration, campus support, dan labor support.','/life-in-ishikawa/japanese-support/','Tersedia']
-          ].map(([title,desc,href,status]) => (
+            ['guide','Survival Guide','SG00–SG14 untuk datang, tinggal, keluarga, kesehatan, transportasi, winter, hingga meninggalkan Jepang.','/life-in-ishikawa/','Tersedia'],
+            ['city','Municipality Guides','Panduan layanan dan sumber resmi berdasarkan kota/town tempat Anda tinggal.','/life-in-ishikawa/municipality-guides/','Tersedia'],
+            ['emergency','Bencana & Darurat','Nomor darurat, evakuasi, sumber live Ishikawa, dan kesiapsiagaan.','/life-in-ishikawa/disaster-emergency/','Tersedia'],
+            ['language','Bahasa & Dukungan','Kelas bahasa, IFIE, consultation route, immigration, campus support, dan labor support.','/life-in-ishikawa/japanese-support/','Tersedia']
+          ].map(([icon,title,desc,href,status]) => (
             <a href={withBase(href)} class="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
               <div class="flex items-start justify-between gap-3">
-                <h3 class="font-bold text-slate-950 group-hover:text-brand">{title}</h3>
+                <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-slate-100 text-brand"><TopicIcon name={icon as any} class="size-5" /></span>
                 <span class="rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-700">{status}</span>
+              </div>
+              <div class="mt-4">
+                <h3 class="font-bold text-slate-950 group-hover:text-brand">{title}</h3>
               </div>
               <p class="mt-2 text-sm leading-6 text-slate-600">{desc}</p>
               <p class="mt-4 text-sm font-bold text-brand">Buka →</p>
