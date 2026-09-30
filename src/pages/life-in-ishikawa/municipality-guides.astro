@@ -5,6 +5,7 @@ import GuideToc from '../../components/GuideToc.astro';
 import GuidePager from '../../components/GuidePager.astro';
 import MunicipalityMark from '../../components/MunicipalityMark.astro';
 import OfficialBrand from '../../components/OfficialBrand.astro';
+import InstitutionMark from '../../components/InstitutionMark.astro';
 import { withBase } from '../../utils/paths';
 import { officialBrands } from '../../data/official-brands';
 
@@ -190,8 +191,12 @@ const sources = [
     </p>
 
     <GuideMeta code="SG14" />
-    <div class="mt-7 max-w-sm">
-      <OfficialBrand brand={officialBrands.hotIshikawa} />
+    <div class="mt-7 flex flex-wrap items-center gap-4">
+      <InstitutionMark id="ishikawa" size="lg" />
+      <div>
+        <p class="text-sm font-bold text-slate-900">Ishikawa Prefecture</p>
+        <p class="mt-1 text-xs leading-5 text-slate-500">Panduan municipality dan layanan lokal di seluruh prefektur.</p>
+      </div>
     </div>
   </section>
 
