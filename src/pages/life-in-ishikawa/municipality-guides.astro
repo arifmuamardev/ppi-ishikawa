@@ -3,12 +3,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import GuideMeta from '../../components/GuideMeta.astro';
 import GuideToc from '../../components/GuideToc.astro';
 import GuidePager from '../../components/GuidePager.astro';
+import MunicipalityMark from '../../components/MunicipalityMark.astro';
+import OfficialBrand from '../../components/OfficialBrand.astro';
 import { withBase } from '../../utils/paths';
+import { officialBrands } from '../../data/official-brands';
 
 const priorityMunicipalities = [
   {
     name: 'Kanazawa City',
     jp: '金沢市',
+    markId: 'kanazawa',
     region: 'Ishikawa Central',
     status: 'Sumber paling lengkap',
     description: 'Kanazawa memiliki Living Guide resmi berbahasa Inggris yang mencakup resident registration, insurance, pension, tax, housing, garbage, utilities, medical care, childcare, transport, dan disaster preparedness.',
@@ -22,6 +26,7 @@ const priorityMunicipalities = [
   {
     name: 'Nonoichi City',
     jp: '野々市市',
+    markId: 'nonoichi',
     region: 'Ishikawa Central',
     status: 'Portal English aktif',
     description: 'Nonoichi menyediakan halaman khusus foreign residents dengan materi residence change, childcare, consultation, garbage, medical facilities, emergency response, serta Japanese class.',
@@ -34,6 +39,7 @@ const priorityMunicipalities = [
   {
     name: 'Hakusan City',
     jp: '白山市',
+    markId: 'hakusan',
     region: 'Ishikawa Central',
     status: 'Living Guide 2025',
     description: 'Hakusan memiliki Living Guide untuk foreign residents yang direvisi pada Maret 2025, tersedia dalam Easy Japanese, English, Chinese, dan Vietnamese.',
@@ -47,6 +53,7 @@ const priorityMunicipalities = [
   {
     name: 'Komatsu City',
     jp: '小松市',
+    markId: 'komatsu',
     region: 'South Kaga',
     status: 'Support portal aktif',
     description: 'Komatsu memiliki foreign-resident support portal dan Guide to Living in Komatsu City yang mencakup procedures, childcare, healthcare, tax, housing, dan education.',
@@ -60,6 +67,7 @@ const priorityMunicipalities = [
   {
     name: 'Kahoku City',
     jp: 'かほく市',
+    markId: 'kahoku',
     region: 'Ishikawa Central',
     status: 'Official page lama — verify first',
     description: 'Kahoku menyediakan Living Guide berbahasa Inggris/China dan materi garbage multibahasa. Official page yang memuat guide tersebut bertanggal 2021, sehingga detail operasional harus diverifikasi kembali.',
@@ -182,6 +190,9 @@ const sources = [
     </p>
 
     <GuideMeta code="SG14" />
+    <div class="mt-7 max-w-sm">
+      <OfficialBrand brand={officialBrands.hotIshikawa} />
+    </div>
   </section>
 
   <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
@@ -203,13 +214,23 @@ const sources = [
         <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
           <div class="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
             <div class="max-w-3xl">
-              <div class="flex flex-wrap items-center gap-3">
-                <h3 class="text-2xl font-bold text-slate-950">{city.name} <span class="font-medium text-slate-400">{city.jp}</span></h3>
-                <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">{city.status}</span>
+              <div class="flex items-start gap-4">
+                <MunicipalityMark id={city.markId as any} size="md" class="shrink-0" />
+                <div>
+                  <div class="flex flex-wrap items-center gap-3">
+                    <h3 class="text-2xl font-bold text-slate-950">{city.name} <span class="font-medium text-slate-400">{city.jp}</span></h3>
+                    <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">{city.status}</span>
+                  </div>
+                    </div>
               </div>
               <p class="mt-2 text-xs font-bold uppercase tracking-[0.12em] text-brand">{city.region}</p>
               <p class="mt-4 leading-7 text-slate-600">{city.description}</p>
               <p class="mt-4 rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-700">{city.note}</p>
+              {city.markId === 'kanazawa' && (
+                <div class="mt-4 max-w-[270px]">
+                  <OfficialBrand brand={officialBrands.visitKanazawa} compact={true} />
+                </div>
+              )}
             </div>
             <div class="flex min-w-56 flex-col gap-2">
               {city.links.map(([label, url]) => (
