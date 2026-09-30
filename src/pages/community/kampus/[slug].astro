@@ -4,7 +4,7 @@ import { campuses } from '../../../data/campuses';
 import { withBase } from '../../../utils/paths';
 
 export function getStaticPaths() {
-  return campuses.map((campus) => ({
+  return campuses.filter((campus) => campus.slug !== 'kanazawa-university').map((campus) => ({
     params: { slug: campus.slug },
     props: { campus }
   }));
