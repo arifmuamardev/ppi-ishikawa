@@ -1,5 +1,7 @@
 # Content Guide
 
+Untuk bahasa, istilah, nada, dan aturan editorial publik, lihat `docs/EDITORIAL-STYLE.md`.
+
 ## Prinsip
 
 1. Informasi yang cepat berubah harus mencantumkan tanggal pembaruan.
