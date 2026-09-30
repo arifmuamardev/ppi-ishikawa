@@ -1,48 +1,94 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
+import TopicIcon from '../components/TopicIcon.astro';
 import { withBase } from '../utils/paths';
 
-const contactTypes = [
-  ['Anggota & pendatang baru', 'Pertanyaan tentang komunitas, kedatangan, kehidupan di Ishikawa, atau layanan anggota.'],
-  ['Kolaborasi', 'Kerja sama dengan universitas, institusi, komunitas, organisasi, atau mitra kegiatan.'],
-  ['Media & publikasi', 'Permintaan informasi organisasi, dokumentasi kegiatan, atau komunikasi publik.'],
-  ['Internal organisasi', 'Administrasi kepengurusan, dokumen, program, dan koordinasi lintas bidang.']
+const helpRoutes = [
+  {
+    icon: 'arrival',
+    title: 'Baru / akan datang',
+    description: 'Persiapan sebelum berangkat, hari pertama, administrasi awal, tempat tinggal, dan kebutuhan dasar.',
+    href: '/life-in-ishikawa/',
+    action: 'Mulai dari Survival Guide'
+  },
+  {
+    icon: 'campus',
+    title: 'Pertanyaan tentang kampus',
+    description: 'Cari panduan khusus KU, JAIST, KIT, IPU, Kinjo, atau Alice Gakuen.',
+    href: '/community/kampus/',
+    action: 'Buka Campus Hub'
+  },
+  {
+    icon: 'support',
+    title: 'Butuh bantuan kehidupan',
+    description: 'Bahasa Jepang, konsultasi IFIE, immigration, kampus, labor support, dan jalur profesional.',
+    href: '/life-in-ishikawa/japanese-support/',
+    action: 'Cari jalur bantuan'
+  },
+  {
+    icon: 'emergency',
+    title: 'Darurat atau masalah kesehatan',
+    description: 'Nomor darurat, #7119, fasilitas kesehatan, bencana, evakuasi, dan sumber informasi live.',
+    href: '/life-in-ishikawa/disaster-emergency/',
+    action: 'Buka informasi darurat'
+  }
 ];
 ---
 <BaseLayout title="Kontak">
   <PageIntro
     title="Hubungi PPI Ishikawa"
-    description="Pintu masuk untuk anggota, calon mahasiswa, mitra, media, dan komunitas."
+    description="Temukan jalur informasi yang paling sesuai dengan kebutuhanmu."
   />
 
-  <section class="mx-auto max-w-7xl px-5 pb-12 lg:px-8">
+  <section class="mx-auto max-w-7xl px-5 pb-14 lg:px-8">
     <div class="grid gap-4 md:grid-cols-2">
-      {contactTypes.map(([title, description]) => (
-        <article class="rounded-2xl border border-slate-200 bg-white p-6">
-          <h2 class="font-bold text-slate-950">{title}</h2>
-          <p class="mt-2 text-sm leading-6 text-slate-600">{description}</p>
-        </article>
+      {helpRoutes.map((item) => (
+        <a href={withBase(item.href)} class="group rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm sm:p-7">
+          <span class="grid size-11 place-items-center rounded-2xl bg-amber-50 text-accent-dark">
+            <TopicIcon name={item.icon as any} class="size-6" />
+          </span>
+          <h2 class="mt-5 text-xl font-bold text-slate-950 group-hover:text-brand">{item.title}</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
+          <p class="mt-5 text-sm font-bold text-brand">{item.action} →</p>
+        </a>
       ))}
     </div>
   </section>
 
-  <section class="mx-auto max-w-7xl px-5 pb-12 lg:px-8">
-    <div class="rounded-3xl border border-amber-200 bg-amber-50 p-7 sm:p-8">
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-amber-800">Kanal resmi 2026/27</p>
-      <h2 class="mt-3 text-2xl font-bold text-slate-950">Kanal kontak resmi 2026/27 belum tersedia.</h2>
-      <p class="mt-3 max-w-3xl leading-7 text-slate-700">Sampai kanal resmi tersedia, gunakan informasi dan panduan yang sudah tersedia di situs ini. Hindari mengirim data pribadi ke kontak yang tidak tercantum sebagai kanal resmi PPI Ishikawa.</p>
-    </div>
-  </section>
+  <section class="mx-auto max-w-7xl px-5 pb-14 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-[1.15fr_.85fr]">
+      <div class="rounded-[2rem] bg-slate-950 p-7 text-white sm:p-9">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Jika mendesak</p>
+        <h2 class="mt-3 text-2xl font-bold">Jangan menunggu balasan organisasi untuk keadaan darurat.</h2>
+        <div class="mt-6 grid gap-3 sm:grid-cols-3">
+          <div class="rounded-2xl border border-slate-700 bg-slate-900 p-5">
+            <p class="text-3xl font-black">110</p>
+            <p class="mt-1 text-sm font-semibold text-slate-300">Police</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-slate-900 p-5">
+            <p class="text-3xl font-black">119</p>
+            <p class="mt-1 text-sm font-semibold text-slate-300">Ambulance / Fire</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-slate-900 p-5">
+            <p class="text-3xl font-black">#7119</p>
+            <p class="mt-1 text-sm font-semibold text-slate-300">Medical advice</p>
+          </div>
+        </div>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href={withBase('/life-in-ishikawa/disaster-emergency/')} class="rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950">Bencana & darurat →</a>
+          <a href={withBase('/life-in-ishikawa/kesehatan/')} class="rounded-xl border border-slate-600 px-4 py-3 text-sm font-bold text-white">Panduan kesehatan →</a>
+        </div>
+      </div>
 
-  <section class="mx-auto max-w-7xl px-5 pb-20 lg:px-8">
-    <div class="rounded-3xl bg-slate-950 p-7 text-white sm:p-9">
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Butuh informasi sekarang?</p>
-      <h2 class="mt-3 text-2xl font-bold">Gunakan panduan yang sudah tersedia.</h2>
-      <p class="mt-3 max-w-3xl leading-7 text-slate-300">Untuk pertanyaan umum tentang hidup di Ishikawa, administrasi, kesehatan, bantuan, atau bencana, Survival Guide sudah dapat digunakan tanpa menunggu kanal kontak organisasi.</p>
-      <div class="mt-6 flex flex-wrap gap-3">
-        <a href={withBase('/life-in-ishikawa/')} class="rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950">Buka Survival Guide</a>
-        <a href={withBase('/life-in-ishikawa/japanese-support/')} class="rounded-xl border border-slate-600 px-4 py-3 text-sm font-bold text-white">Cari jalur bantuan</a>
+      <div class="rounded-[2rem] border border-amber-200 bg-amber-50 p-7 sm:p-9">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-amber-800">Kontak organisasi</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Untuk kolaborasi, media, dan urusan organisasi.</h2>
+        <p class="mt-4 leading-7 text-slate-700">Kanal resmi periode 2026/27 akan ditampilkan di sini. Gunakan hanya kanal yang tercantum pada halaman ini untuk komunikasi resmi dan pengiriman data pribadi.</p>
+        <div class="mt-6 rounded-2xl border border-amber-200 bg-white p-5">
+          <p class="text-sm font-bold text-slate-950">Kanal resmi</p>
+          <p class="mt-2 text-sm leading-6 text-slate-500">Belum dipublikasikan.</p>
+        </div>
       </div>
     </div>
   </section>
