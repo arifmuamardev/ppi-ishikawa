@@ -1,0 +1,301 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import GuideToc from '../../../components/GuideToc.astro';
+import { withBase } from '../../../utils/paths';
+import { alicePack, aliceSections, aliceQuickLinks, aliceContactMap, aliceFaq } from '../../../data/campus-alice';
+
+const ppiLinks = [
+  ['Administrasi di Jepang', '/life-in-ishikawa/administrasi/'],
+  ['Tempat Tinggal', '/life-in-ishikawa/tempat-tinggal/'],
+  ['Transportasi', '/life-in-ishikawa/transportasi/'],
+  ['Kesehatan', '/life-in-ishikawa/kesehatan/'],
+  ['Keluarga & Anak', '/life-in-ishikawa/family-anak/'],
+  ['Municipality guides', '/life-in-ishikawa/municipality-guides/']
+];
+---
+
+<BaseLayout
+  title="Alice Gakuen Campus Pack"
+  description="Panduan praktis pelajar Indonesia di Vocational School Alice Gakuen: Kanazawa dan Kaga Campus, Japanese Language, International Business, Care Worker, dormitory, part-time work, transportasi, student support, dan career."
+>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <a href={withBase('/community/kampus/')} class="text-sm font-semibold text-brand hover:underline">← Kampus di Ishikawa</a>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.18em] text-accent-dark">PPI Ishikawa · Campus Pack</p>
+    <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Vocational School Alice Gakuen</h1>
+    <p class="mt-2 text-lg text-slate-500">専門学校アリス学園 · Kanazawa / Kaga</p>
+    <p class="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
+      Panduan praktis untuk pelajar Indonesia di Alice Gakuen. Kebutuhan siswa Japanese Language, International Business, dan Care Worker tidak selalu sama dengan mahasiswa universitas, sehingga Campus Pack ini memberi perhatian khusus pada dormitory, dukungan kehidupan sehari-hari, part-time work, bahasa Jepang, vocational pathway, dan transisi ke studi atau pekerjaan berikutnya.
+    </p>
+
+    <div class="mt-7 flex flex-wrap gap-3 text-sm">
+      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Vocational school</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Kanazawa + Kaga</span>
+      <span class="rounded-full border border-amber-200 bg-amber-50 px-4 py-2 font-semibold text-accent-dark">Terakhir diverifikasi: {alicePack.lastVerified}</span>
+    </div>
+
+    <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {aliceQuickLinks.map(([label, url]) => (
+        <a href={url} target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-200 bg-white p-4 text-sm font-bold text-slate-800 transition hover:border-amber-200 hover:shadow-sm">
+          {label} ↗
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <GuideToc sections={aliceSections} />
+
+  <section id="bagian-01" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">01 · Kenali Alice Gakuen</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Bukan university campus biasa: sekolah, tempat tinggal, bahasa, dan career saling terhubung erat.</h2>
+    <div class="mt-7 grid gap-5 md:grid-cols-3">
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="text-xl font-bold text-slate-950">Japanese Language</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Tersedia di Kanazawa dan Kaga. Fokusnya tidak hanya Japanese proficiency, tetapi juga adaptation to life in Japan serta persiapan untuk progression ke pendidikan berikutnya.</p>
+        <a href="https://gakuen.alice-japan.net/courses/japanese" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Japanese Language ↗</a>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="text-xl font-bold text-slate-950">International Business</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Program dua tahun di Kanazawa dan Kaga dengan business skills, communication, hospitality, tourism, service, Japanese, dan career preparation untuk bekerja di Jepang.</p>
+        <a href="https://gakuen.alice-japan.net/courses/business" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">International Business ↗</a>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="text-xl font-bold text-slate-950">Care Worker</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Program Kanazawa yang menggabungkan theory, practical skills, long-term practicum, communication, dan persiapan national examination untuk certified care worker.</p>
+        <a href="https://gakuen.alice-japan.net/courses/nursing-care" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Care Worker ↗</a>
+      </article>
+    </div>
+  </section>
+
+  <section id="bagian-02" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">02 · Program & kampus</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Pastikan program, kampus, dan tujuan setelah lulus sejak awal.</h2>
+    <div class="mt-7 overflow-hidden rounded-3xl border border-slate-200 bg-white">
+      <div class="grid border-b border-slate-200 bg-slate-50 px-5 py-4 text-sm font-bold text-slate-700 sm:grid-cols-[1.4fr_1fr_1fr]">
+        <span>Program</span><span>Kanazawa</span><span>Kaga</span>
+      </div>
+      {[
+        ['Japanese Language Department', '✓', '✓'],
+        ['International Business Department', '✓', '✓'],
+        ['Care Worker Department', '✓', '—']
+      ].map(([program,kanazawa,kaga]) => (
+        <div class="grid gap-2 border-b border-slate-100 px-5 py-4 text-sm last:border-0 sm:grid-cols-[1.4fr_1fr_1fr]">
+          <strong class="text-slate-950">{program}</strong>
+          <span class="text-slate-600">{kanazawa}</span>
+          <span class="text-slate-600">{kaga}</span>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-5 grid gap-4 md:grid-cols-2">
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-950">Kanazawa Campus</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Berada di Enkoji-honmachi, Kanazawa. Cocok dipahami sebagai ekosistem utama Alice di Ishikawa karena ketiga program tersedia di sini.</p>
+      </article>
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-950">Kaga Campus</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Berada di Daishoji, Kaga. Japanese Language dan International Business tersedia di sini; daily life dan mobilitas berbeda cukup jauh dari kehidupan mahasiswa di Kanazawa.</p>
+      </article>
+    </div>
+
+    <div class="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-6">
+      <h3 class="font-bold text-slate-950">Japanese school → vocational program adalah salah satu pathway, bukan kewajiban.</h3>
+      <p class="mt-2 text-sm leading-6 text-slate-700">Alice secara eksplisit mencantumkan internal progression dari Japanese Language Department ke International Business atau Care Worker. Tetap bandingkan dengan pilihan sekolah/universitas lain, eligibility, Japanese level, biaya, dan tujuan career Anda.</p>
+    </div>
+  </section>
+
+  <section id="bagian-03" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">03 · Minggu pertama</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Di Alice, adaptation ke kehidupan Jepang adalah bagian dari keberhasilan studi.</h2>
+    <div class="mt-7 grid gap-3">
+      {[
+        ['1', 'Pastikan course, campus, dan class', 'Japanese Language dapat memiliki morning atau afternoon class. Simpan timetable aktual dan jangan berasumsi semua siswa memiliki pola harian yang sama.'],
+        ['2', 'Selesaikan dormitory / housing', 'Untuk Japanese Language students di Kanazawa dan Kaga, dormitory pada prinsipnya diwajibkan. Pahami room assignment, payment, utilities, house rules, dan prosedur pindah/keluar.'],
+        ['3', 'Selesaikan city procedures', 'Residence registration, National Health Insurance, pension, My Number, dan aturan sampah mengikuti municipality tempat tinggal. Academic Affairs/life-support staff dapat membantu proses adaptasi.'],
+        ['4', 'Kenali aturan bicycle dan commute', 'Banyak siswa Kanazawa/Kaga bergerak dengan berjalan kaki atau sepeda. Pahami bicycle registration, insurance, traffic rules, winter safety, dan lokasi parkir.'],
+        ['5', 'Pastikan 資格外活動許可 sebelum bekerja', 'Part-time work tidak otomatis diperbolehkan hanya karena Anda berstatus Student. Cek izin pada residence card dan pahami batas waktu kerja.'],
+        ['6', 'Tentukan target belajar dan next step', 'Target JLPT, progression, practicum, national exam, job search, atau perubahan residence status perlu direncanakan sebelum mendekati masa kelulusan.']
+      ].map(([n,title,desc]) => (
+        <div class="grid gap-3 rounded-2xl border border-slate-200 bg-white p-5 sm:grid-cols-[44px_1fr]">
+          <span class="grid size-10 place-items-center rounded-full bg-amber-50 text-sm font-bold text-accent-dark">{n}</span>
+          <div>
+            <h3 class="font-bold text-slate-950">{title}</h3>
+            <p class="mt-1 text-sm leading-6 text-slate-600">{desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="bagian-04" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">04 · Ke mana harus bertanya</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Alice memisahkan academic, daily-life, dan employment support dengan cukup jelas.</h2>
+    <div class="mt-7 grid gap-4 md:grid-cols-2">
+      {aliceContactMap.map((item) => (
+        <article class="rounded-2xl border border-slate-200 bg-white p-5">
+          <h3 class="font-bold text-slate-950">{item.title}</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{item.topics}</p>
+        </article>
+      ))}
+    </div>
+    <a href="https://gakuen.alice-japan.net/entrance-exam/teachers" target="_blank" rel="noreferrer" class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">School support structure ↗</a>
+  </section>
+
+  <section id="bagian-05" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">05 · Dormitory & housing</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Dormitory adalah bagian penting dari student life—tetapi aturannya berbeda menurut program.</h2>
+
+    <div class="mt-7 rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+      <h3 class="text-xl font-bold text-slate-950">Untuk Japanese Language Department</h3>
+      <p class="mt-3 leading-7 text-slate-700">Official dormitory guidance menyatakan siswa Japanese Language Department di Kanazawa dan Kaga pada prinsipnya harus tinggal di student dormitory. Sekolah menentukan penempatan kamar; siswa tidak pada prinsipnya memilih kamar sendiri.</p>
+      <a href="https://gakuen.alice-japan.net/entrance-exam/dormitory" target="_blank" rel="noreferrer" class="mt-5 inline-flex rounded-xl border border-amber-200 bg-white px-4 py-3 text-sm font-bold text-slate-800">Dormitory details ↗</a>
+    </div>
+
+    <div class="mt-5 grid gap-4 md:grid-cols-3">
+      {[
+        ['Room assignment', 'Dorm memiliki beberapa tipe kamar dan kapasitas. Penempatan ditentukan sekolah dengan mempertimbangkan kondisi seperti nationality dan gender.'],
+        ['Biaya & fasilitas', 'Official page menjelaskan rent/utilities, insurance, basic room equipment, serta optional items. Gunakan angka terbaru pada halaman resmi sebelum membayar.'],
+        ['Pindah / keluar dorm', 'Room change dan move-out mengikuti prosedur sekolah dan pada prinsipnya dibatasi pada periode tertentu. Jangan menandatangani private housing baru sebelum status dorm Anda jelas.']
+      ].map(([title,desc]) => (
+        <article class="rounded-2xl border border-slate-200 bg-white p-5">
+          <h3 class="font-bold text-slate-950">{title}</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{desc}</p>
+        </article>
+      ))}
+    </div>
+
+    <a href={withBase('/life-in-ishikawa/tempat-tinggal/')} class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">SG04 · Tempat Tinggal →</a>
+  </section>
+
+  <section id="bagian-06" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">06 · Transportasi Kanazawa & Kaga</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Jangan memperlakukan Kanazawa dan Kaga sebagai satu area commute.</h2>
+
+    <div class="mt-7 grid gap-5 md:grid-cols-2">
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Kanazawa</p>
+        <h3 class="mt-2 text-xl font-bold text-slate-950">Enkoji-honmachi</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Official access menyebut bus dari Kanazawa Station menuju Enkoji atau Fushimidai sebagai opsi praktis. Nishi-Kanazawa disebut sebagai stasiun terdekat, sementara aktivitas sehari-hari siswa banyak dilakukan dengan bicycle.</p>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Kaga</p>
+        <h3 class="mt-2 text-xl font-bold text-slate-950">Daishoji</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Kaga Campus berada sekitar 13 menit berjalan kaki dari Daishoji Station menurut official access. Area kehidupan siswa lebih lokal; bicycle juga menjadi moda penting untuk sekolah, belanja, dan kegiatan harian.</p>
+      </article>
+    </div>
+
+    <div class="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+      <p class="text-sm leading-6 text-slate-700"><strong>Catatan:</strong> halaman access Alice masih memuat beberapa contoh perjalanan antarkota dengan catatan waktu data sebelumnya. Campus Pack hanya menyimpan pola akses lokal yang stabil; cek timetable JR/IR, bus, dan airport transport secara live saat bepergian.</p>
+    </div>
+
+    <div class="mt-5 flex flex-wrap gap-3">
+      <a href="https://gakuen.alice-japan.net/access" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Access resmi ↗</a>
+      <a href={withBase('/life-in-ishikawa/transportasi/')} class="rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white">SG06 · Transportasi →</a>
+    </div>
+  </section>
+
+  <section id="bagian-07" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">07 · Studi & bahasa Jepang</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Target bahasa dan attendance bukan sekadar nilai—keduanya memengaruhi pathway berikutnya.</h2>
+
+    <div class="mt-7 grid gap-4 md:grid-cols-2">
+      {[
+        ['Japanese Language', 'Gunakan target JLPT/J-TEST dan progression plan yang realistis. Alice juga mengajarkan Japanese untuk daily life dan cultural adaptation, bukan hanya test preparation.'],
+        ['International Business', 'Japanese level, business communication, service/hospitality knowledge, computer skills, dan career study berjalan bersama. Rencanakan job-search vocabulary sejak awal.'],
+        ['Care Worker', 'Bahasa Jepang harus berkembang bersama technical vocabulary, communication with users, practicum requirements, dan national-exam preparation.'],
+        ['Attendance & school calendar', 'Orientation, exams, school events, practicum, long vacation, dan graduation mempunyai pola berbeda per department. Gunakan calendar dan notice resmi sekolah, bukan asumsi dari teman program lain.']
+      ].map(([title,desc]) => (
+        <article class="rounded-2xl border border-slate-200 bg-white p-5">
+          <h3 class="font-bold text-slate-950">{title}</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{desc}</p>
+        </article>
+      ))}
+    </div>
+
+    <a href="https://gakuen.alice-japan.net/entrance-exam/calendar" target="_blank" rel="noreferrer" class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">Annual calendar ↗</a>
+  </section>
+
+  <section id="bagian-08" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">08 · Part-time work & biaya hidup</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Part-time work boleh membantu biaya hidup, tetapi bukan pengganti rencana keuangan.</h2>
+
+    <div class="mt-7 grid gap-5 md:grid-cols-2">
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="text-xl font-bold text-slate-950">Aturan dasar</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Student status memerlukan 資格外活動許可 untuk part-time work. Batas umum adalah total maksimum 28 jam per minggu selama masa kuliah dan maksimum 8 jam per hari pada long vacation resmi. Multiple jobs dihitung bersama.</p>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="text-xl font-bold text-slate-950">Support Alice</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Alice mencantumkan consultation part-time work sebagai bagian dari life support dan aktif bekerja dengan perusahaan yang menerima international students. Gunakan support ini bila jadwal kerja, kontrak, workplace, atau komunikasi menjadi masalah.</p>
+      </article>
+    </div>
+
+    <div class="mt-5 rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-soft">Budget rule</p>
+      <h3 class="mt-2 text-2xl font-bold">Jangan membuat budget dengan asumsi selalu bekerja 28 jam.</h3>
+      <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-300">Official Alice page menyediakan contoh living cost dan part-time income untuk Kanazawa/Kaga, tetapi angka itu hanya illustration. Jam kerja aktual bergantung pada study load, attendance, employer, health, season, dan izin. Siapkan dana yang cukup agar study tetap menjadi aktivitas utama.</p>
+      <a href="https://gakuen.alice-japan.net/entrance-exam/living-cost" target="_blank" rel="noreferrer" class="mt-5 inline-flex text-sm font-bold text-accent-soft hover:underline">Living-cost example ↗</a>
+    </div>
+  </section>
+
+  <section id="bagian-09" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">09 · Career & langkah setelah lulus</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Mulai dari tujuan akhir, lalu susun Japanese level, qualification, dan residence-status pathway.</h2>
+
+    <div class="mt-7 grid gap-4 md:grid-cols-3">
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-950">Lanjut studi</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Japanese Language students dapat melanjutkan ke Alice atau institusi lain. Mulai research sekolah/universitas, entrance requirements, JLPT/EJU bila diperlukan, dan financial plan jauh sebelum graduation.</p>
+      </article>
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-950">Bekerja di Jepang</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">International Business dan Care Worker memiliki pathway kerja yang berbeda. Job offer saja tidak otomatis berarti residence status sesuai; cocokkan pekerjaan, qualification, dan immigration category.</p>
+      </article>
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-950">Career support</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Employment Support Center menyediakan career guidance, individual consultation, entry-sheet guidance, interview preparation, dan job-search support.</p>
+      </article>
+    </div>
+
+    <div class="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-5">
+      <p class="text-sm leading-6 text-slate-700"><strong>Untuk Care Worker:</strong> scholarship dapat memiliki syarat khusus terkait study atau pekerjaan setelah lulus. Jangan hanya melihat nominal bantuan; baca obligation, repayment/waiver conditions, dan employer/region requirements pada dokumen terbaru.</p>
+    </div>
+  </section>
+
+  <section id="bagian-10" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">10 · FAQ pelajar Indonesia</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Jawaban cepat untuk program, dorm, kerja, studi, dan daily life.</h2>
+    <div class="mt-7 space-y-3">
+      {aliceFaq.map((item) => (
+        <details class="rounded-2xl border border-slate-200 bg-white p-5">
+          <summary class="cursor-pointer font-bold text-slate-950">{item.q}</summary>
+          <p class="mt-3 text-sm leading-6 text-slate-600">{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">PPI Ishikawa Survival Guide</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Campus Pack fokus pada Alice; Survival Guide menangani sistem hidup di Jepang.</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {ppiLinks.map(([label, href]) => (
+          <a href={withBase(href)} class="rounded-2xl bg-slate-50 p-4 text-sm font-bold text-slate-800 transition hover:bg-slate-100">{label} →</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-20 pt-10 lg:px-8">
+    <div class="rounded-[2rem] border border-amber-200 bg-amber-50 p-7 sm:p-9">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-dark">Sumber & maintenance</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Admission, tuition, scholarship, dormitory, work rules, transport, dan progression requirements dapat berubah.</h2>
+      <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-700">Campus Pack ini terakhir diverifikasi pada {alicePack.lastVerified}. Untuk keputusan aktual, gunakan sumber resmi Alice Gakuen berikut.</p>
+      <div class="mt-6 grid gap-2 sm:grid-cols-2">
+        {alicePack.officialSources.map(([label, url]) => (
+          <a href={url} target="_blank" rel="noreferrer" class="rounded-xl border border-amber-200 bg-white px-4 py-3 text-sm font-bold text-slate-800 transition hover:border-amber-300">{label} ↗</a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
