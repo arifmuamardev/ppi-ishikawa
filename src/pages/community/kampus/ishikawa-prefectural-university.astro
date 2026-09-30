@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import GuideToc from '../../../components/GuideToc.astro';
+import LicensedPhoto from '../../../components/LicensedPhoto.astro';
 import { withBase } from '../../../utils/paths';
+import { campusMedia } from '../../../data/media';
 import { ipuPack, ipuSections, ipuQuickLinks, ipuContactMap, ipuFaq } from '../../../data/campus-ipu';
 
 const ppiLinks = [
@@ -12,6 +14,7 @@ const ppiLinks = [
   ['Keluarga & Anak', '/life-in-ishikawa/family-anak/'],
   ['Panduan Nonoichi', '/life-in-ishikawa/municipality-guides/']
 ];
+const campusPhoto = campusMedia['ishikawa-prefectural-university']!;
 ---
 
 <BaseLayout
@@ -40,6 +43,10 @@ const ppiLinks = [
         </a>
       ))}
     </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-4 lg:px-8">
+    <LicensedPhoto media={campusPhoto} imageClass="aspect-[16/9] w-full object-cover" />
   </section>
 
   <GuideToc sections={ipuSections} />
