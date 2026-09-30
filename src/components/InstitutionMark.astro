@@ -10,11 +10,17 @@ interface Props {
 const { id, size = 'md', class: className = '' } = Astro.props;
 const logo = institutionLogos[id];
 
-const sizes = {
-  sm: 'h-10 w-14 rounded-xl p-1.5',
-  md: 'h-12 w-16 rounded-2xl p-2',
-  lg: 'h-16 w-20 rounded-2xl p-2.5'
-};
+const sizes = logo.shape === 'wide'
+  ? {
+      sm: 'h-10 w-20 rounded-xl p-1.5',
+      md: 'h-12 w-28 rounded-2xl p-2',
+      lg: 'h-16 w-36 rounded-2xl p-2.5'
+    }
+  : {
+      sm: 'h-10 w-10 rounded-xl p-1.5',
+      md: 'h-12 w-12 rounded-2xl p-2',
+      lg: 'h-16 w-16 rounded-2xl p-2.5'
+    };
 ---
 
 <span
