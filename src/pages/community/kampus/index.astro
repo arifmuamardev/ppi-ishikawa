@@ -4,7 +4,6 @@ import PageIntro from '../../components/PageIntro.astro';
 import { campuses, campusCensus } from '../../data/campuses';
 import { withBase } from '../../utils/paths';
 
-const totalMembers = campuses.reduce((sum, campus) => sum + campus.memberCount, 0);
 ---
 <BaseLayout
   title="Kampus di Ishikawa"
@@ -28,9 +27,9 @@ const totalMembers = campuses.reduce((sum, campus) => sum + campus.memberCount, 
         <p class="mt-1 text-sm text-slate-600">Memiliki anggota tercatat pada data periode sebelumnya.</p>
       </div>
       <div class="rounded-2xl border border-slate-200 bg-white p-5">
-        <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Anggota pada 6 institusi</p>
-        <p class="mt-2 text-2xl font-bold text-slate-950">{totalMembers}</p>
-        <p class="mt-1 text-sm text-slate-600">Ditampilkan hanya dalam bentuk agregat.</p>
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Privasi anggota</p>
+        <p class="mt-2 text-xl font-bold text-slate-950">Tanpa jumlah per kampus</p>
+        <p class="mt-1 text-sm text-slate-600">Website hanya menunjukkan kehadiran komunitas, bukan data individu atau jumlah kecil.</p>
       </div>
     </div>
 
@@ -58,10 +57,7 @@ const totalMembers = campuses.reduce((sum, campus) => sum + campus.memberCount, 
               <h3 class="mt-2 text-2xl font-bold text-slate-950">{campus.shortName}</h3>
               {campus.japanese && <p class="mt-1 text-sm text-slate-500">{campus.japanese}</p>}
             </div>
-            <div class="rounded-2xl bg-slate-50 px-4 py-3 text-right">
-              <p class="text-2xl font-bold text-brand">{campus.memberCount}</p>
-              <p class="text-xs text-slate-500">anggota tercatat</p>
-            </div>
+            <span class="rounded-full bg-amber-50 px-3 py-2 text-xs font-bold text-accent-dark">Anggota tercatat · {campus.censusDate}</span>
           </div>
 
           <p class="mt-5 leading-7 text-slate-600">{campus.summary}</p>
