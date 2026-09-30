@@ -1,6 +1,6 @@
-# PPI Ishikawa 2026/27 — Website Foundation
+# PPI Ishikawa 2026/27 — Public Website
 
-Fondasi website publik PPI Ishikawa untuk periode 2026/27.
+Website publik PPI Ishikawa untuk periode 2026/27. Saat ini mencakup halaman institusional, struktur organisasi draft, dan Ishikawa Survival Guide SG00–SG14.
 
 ## Stack
 
@@ -26,20 +26,15 @@ npm run preview
 
 ## GitHub Pages
 
-Konfigurasi awal diasumsikan memakai repository:
+Repository saat ini:
 
 `arifmuamardev/ppi-ishikawa`
 
-sehingga preview publiknya akan berada di:
+dengan deployment publik di:
 
 `https://arifmuamardev.github.io/ppi-ishikawa/`
 
-Setelah repository dibuat:
-
-1. Push semua file ke branch `main`.
-2. Buka **Settings → Pages**.
-3. Pada **Source**, pilih **GitHub Actions**.
-4. Workflow `.github/workflows/deploy.yml` akan melakukan build dan deployment setiap ada push ke `main`.
+Workflow `.github/workflows/deploy.yml` melakukan build dan deployment setiap ada push ke `main`.
 
 ## Saat pindah ke ppi-ishikawa.org
 
@@ -62,3 +57,21 @@ Website dirancang bukan hanya sebagai profil organisasi, tetapi sebagai:
 - pintu kolaborasi eksternal.
 
 Jangan menyimpan data pribadi anggota, nomor telepon personal, token, password, atau secret di repository publik.
+
+
+## Status konten
+
+- SG00–SG14 Survival Guide: tersedia.
+- Home, Tentang, Komunitas, Program, Sumber Daya, dan Kontak: draft publik aktif.
+- Struktur organisasi: fungsi dan posisi sudah tersedia; nama pengurus menunggu penetapan resmi.
+- Visi, misi, program kerja final, kanal kontak resmi, dan data agregat anggota: belum dipublikasikan.
+- Search indexing: sengaja dinonaktifkan sampai official launch.
+
+## Maintenance
+
+- Metadata Survival Guide: `src/data/survival.ts`
+- Struktur organisasi: `src/data/organization.ts`
+- Source registry: `docs/survival/OFFICIAL-SOURCE-REGISTRY.md`
+- Editorial style: `docs/EDITORIAL-STYLE.md`
+- Content maintenance: `docs/CONTENT-GUIDE.md`
+- External link audit: `.github/workflows/link-check.yml`
