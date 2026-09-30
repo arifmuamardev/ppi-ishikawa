@@ -4,7 +4,7 @@ import { campuses } from '../../../data/campuses';
 import { withBase } from '../../../utils/paths';
 
 export function getStaticPaths() {
-  return campuses.filter((campus) => !['kanazawa-university', 'jaist', 'kanazawa-institute-of-technology', 'ishikawa-prefectural-university', 'kinjo-university'].includes(campus.slug)).map((campus) => ({
+  return campuses.filter((campus) => !['kanazawa-university', 'jaist', 'kanazawa-institute-of-technology', 'ishikawa-prefectural-university', 'kinjo-university', 'alice-gakuen'].includes(campus.slug)).map((campus) => ({
     params: { slug: campus.slug },
     props: { campus }
   }));
