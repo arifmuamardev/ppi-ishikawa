@@ -257,5 +257,5 @@ export const campusHubProfileBySlug = Object.fromEntries(
 export const campusCensus = {
   verified: 'September 2026',
   totalRepresentedInstitutions: campuses.length,
-  note: 'Kehadiran anggota diverifikasi dari data sensus anggota dan survey mahasiswa baru periode 2025/26. Jumlah dan data individu tidak ditampilkan di website publik.'
+  note: 'Kehadiran anggota diverifikasi dari data sensus anggota dan survey mahasiswa baru periode 2025/26. Data digunakan untuk menunjukkan cakupan institusi; jumlah dan identitas individu tidak dipublikasikan.'
 };
