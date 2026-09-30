@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
+import TopicIcon from '../components/TopicIcon.astro';
 import { withBase } from '../utils/paths';
 
 const entryPoints = [
@@ -33,6 +34,10 @@ const entryPoints = [
   />
 
   <section class="mx-auto max-w-7xl px-5 pb-12 lg:px-8">
+    <div class="mb-8 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
+      <img src={withBase('/illustrations/community-support.svg')} alt="Ilustrasi komunitas PPI Ishikawa: menyambut pendatang baru, belajar bersama, keluarga, dan dukungan mahasiswa" width="1200" height="675" class="aspect-[16/9] h-auto w-full object-cover" loading="eager" />
+    </div>
+
     <div class="mb-6 rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:flex sm:items-center sm:justify-between sm:gap-6">
       <div>
         <p class="text-sm font-bold uppercase tracking-[0.14em] text-accent-dark">Kampus di Ishikawa</p>
@@ -42,9 +47,12 @@ const entryPoints = [
       <a href={withBase('/community/kampus/')} class="mt-5 inline-flex shrink-0 rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white sm:mt-0">Buka Campus Hub →</a>
     </div>
     <div class="grid gap-4 md:grid-cols-2">
-      {entryPoints.map((item) => (
+      {entryPoints.map((item, index) => (
         <a href={withBase(item.href)} class="rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-red-200 hover:shadow-sm">
-          <h2 class="font-bold text-slate-950">{item.title}</h2>
+          <span class="grid size-11 place-items-center rounded-2xl bg-amber-50 text-accent-dark">
+            <TopicIcon name={(['arrival','guide','family','support'] as const)[index]} class="size-6" />
+          </span>
+          <h2 class="mt-4 font-bold text-slate-950">{item.title}</h2>
           <p class="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
         </a>
       ))}
@@ -54,18 +62,21 @@ const entryPoints = [
   <section class="mx-auto max-w-7xl px-5 py-10 lg:px-8">
     <div class="grid gap-5 md:grid-cols-3">
       <article class="rounded-3xl border border-slate-200 bg-white p-6">
-        <p class="text-sm font-bold uppercase tracking-[0.14em] text-brand">Kampus & institusi</p>
+        <span class="grid size-10 place-items-center rounded-xl bg-slate-100 text-brand"><TopicIcon name="campus" class="size-5" /></span>
+        <p class="mt-4 text-sm font-bold uppercase tracking-[0.14em] text-brand">Kampus & institusi</p>
         <h2 class="mt-3 text-xl font-bold text-slate-950">6 Campus Pack tersedia</h2>
         <p class="mt-3 text-sm leading-6 text-slate-600">Enam institusi dengan anggota tercatat pada sensus September 2026 sudah memiliki panduan khusus. Cakupan PPI tetap terbuka untuk pelajar Indonesia di seluruh Prefektur Ishikawa.</p>
         <a href={withBase('/community/kampus/')} class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Jelajahi Campus Hub →</a>
       </article>
       <article class="rounded-3xl border border-slate-200 bg-white p-6">
-        <p class="text-sm font-bold uppercase tracking-[0.14em] text-brand">Data anggota</p>
+        <span class="grid size-10 place-items-center rounded-xl bg-slate-100 text-brand"><TopicIcon name="documents" class="size-5" /></span>
+        <p class="mt-4 text-sm font-bold uppercase tracking-[0.14em] text-brand">Data anggota</p>
         <h2 class="mt-3 text-xl font-bold text-slate-950">Publik hanya dalam bentuk agregat</h2>
         <p class="mt-3 text-sm leading-6 text-slate-600">Website publik tidak akan menampilkan nomor telepon, alamat, atau data pribadi anggota. Statistik komunitas akan ditampilkan dalam bentuk agregat bila sudah siap.</p>
       </article>
       <article class="rounded-3xl border border-slate-200 bg-white p-6">
-        <p class="text-sm font-bold uppercase tracking-[0.14em] text-brand">Bergabung</p>
+        <span class="grid size-10 place-items-center rounded-xl bg-slate-100 text-brand"><TopicIcon name="collaboration" class="size-5" /></span>
+        <p class="mt-4 text-sm font-bold uppercase tracking-[0.14em] text-brand">Bergabung</p>
         <h2 class="mt-3 text-xl font-bold text-slate-950">Satu jalur resmi</h2>
         <p class="mt-3 text-sm leading-6 text-slate-600">Form registrasi dan kanal anggota akan ditambahkan setelah kanal resmi kepengurusan 2026/27 ditetapkan.</p>
       </article>
