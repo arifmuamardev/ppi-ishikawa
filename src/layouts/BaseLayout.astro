@@ -20,7 +20,26 @@ const pageTitle = title ? `${title} · ${site.name}` : `${site.name} ${site.peri
     <meta name="description" content={description} />
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
     <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet" />
-    <meta name="theme-color" content="#111827" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="color-scheme" content="light dark" />
+    <script is:inline>
+      (() => {
+        const key = 'ppi-ishikawa-theme';
+        let theme;
+        try {
+          const saved = localStorage.getItem(key);
+          theme = saved === 'dark' || saved === 'light'
+            ? saved
+            : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        } catch {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+        document.documentElement.dataset.theme = theme;
+        const themeColor = document.querySelector('meta[name="theme-color"]');
+        if (themeColor) themeColor.setAttribute('content', theme === 'dark' ? '#020617' : '#ffffff');
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
     <title>{pageTitle}</title>
   </head>
