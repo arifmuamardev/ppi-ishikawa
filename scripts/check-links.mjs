@@ -1,14 +1,14 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
-const root = path.resolve('src/pages');
+const root = path.resolve('src');
 const files = [];
 
 async function walk(dir) {
   for (const entry of await fs.readdir(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) await walk(full);
-    else if (entry.isFile() && entry.name.endsWith('.astro')) files.push(full);
+    else if (entry.isFile() && (entry.name.endsWith('.astro') || entry.name.endsWith('.ts'))) files.push(full);
   }
 }
 
