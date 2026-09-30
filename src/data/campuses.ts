@@ -134,22 +134,23 @@ export const campuses: Campus[] = [
     type: 'Private university',
     city: 'Hakusan',
     censusDate: 'September 2026',
-    summary: 'Universitas swasta di Hakusan dengan program kesehatan, sosial, pendidikan, dan bidang profesional lainnya.',
+    summary: 'Universitas swasta di Hakusan dengan bidang interdisciplinary economics, social welfare/education, rehabilitation, nursing, serta graduate study di comprehensive rehabilitation.',
     officialFacts: [
-      'Kampus berlokasi di Kasama-machi, Hakusan, dekat Kaga-Kasama Station.',
-      'International Exchange Center menyediakan dukungan terkait residency, housing, medical matters, study, dan scholarships bagi mahasiswa internasional.',
-      'University/College menyediakan jalur informasi admission khusus international students.'
+      'Kasama Campus menampung empat faculties dan Graduate School of Comprehensive Rehabilitation; Matto Campus juga digunakan oleh Faculty of Nursing dan Advanced Course of Public Health Nursing.',
+      'International Exchange Center menyediakan consultation terkait residence status, housing, medical matters, daily life, study, dan scholarships untuk international students.',
+      'Kinjo memiliki international-student admission route tersendiri dan tidak menyediakan foreign-student dormitory; mahasiswa internasional menggunakan private apartments.'
     ],
     ppiFocus: [
-      'Akses dari Kanazawa/Hakusan dan mobilitas harian.',
-      'International Exchange Center sebagai support route utama.',
-      'Housing dan kebutuhan harian di area Hakusan.',
-      'Catatan praktis anggota Indonesia di Kinjo University.'
+      'Membedakan kebutuhan Kasama Campus dan Matto Campus sejak memilih housing dan commute.',
+      'International Exchange Center sebagai support route utama mahasiswa internasional.',
+      'Private housing, transportasi Hakusan, dan administrasi daily life.',
+      'Health, counseling, accessibility, practicum, dan career support.'
     ],
     officialLinks: [
-      { label: 'Official English website', url: 'https://www.kinjo.ac.jp/english/' },
+      { label: 'Official website', url: 'https://www.kinjo.ac.jp/ku/' },
+      { label: 'International students', url: 'https://www.kinjo.ac.jp/english/' },
       { label: 'International Exchange Center', url: 'https://www.kinjo.ac.jp/english/student/center.html' },
-      { label: 'Access', url: 'https://www.kinjo.ac.jp/english/access/access.html' }
+      { label: 'Campus & access', url: 'https://www.kinjo.ac.jp/ku/access/' }
     ]
   },
   {
