@@ -2,6 +2,8 @@
 
 Last checked: 1 October 2026
 
+> **Permission status (1 October 2026):** PPI Ishikawa project owner confirmed that permission to use the required official logos has been obtained. The website may therefore use the official marks listed here, while still preserving each mark's original proportions, colors, clear space, and other brand rules.
+
 This registry is for public-facing PPI Ishikawa website assets. Prefer official source files or official link banners. Do not recreate official marks from screenshots.
 
 ## Campuses
