@@ -11,6 +11,8 @@ on:
       - 'src/pages/life-in-ishikawa/**'
       - 'src/components/Guide*.astro'
       - 'src/data/survival.ts'
+      - 'src/pages/community/kampus/**'
+      - 'src/data/campus*.ts'
       - 'scripts/check-links.mjs'
       - '.github/workflows/link-check.yml'
 
