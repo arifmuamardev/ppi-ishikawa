@@ -26,3 +26,185 @@ body {
   background: #fecaca;
   color: #7f1d1d;
 }
+
+
+/* Light / dark theme ------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+  --color-ink: #e2e8f0;
+  --color-paper: #020617;
+  --color-brand: #f87171;
+  --color-brand-dark: #ef4444;
+}
+
+html.dark {
+  background: #020617;
+}
+
+html.dark body {
+  color: #e2e8f0;
+  background:
+    radial-gradient(circle at top left, rgba(239, 68, 68, 0.10), transparent 30rem),
+    linear-gradient(#020617, #0f172a 42rem);
+}
+
+/* Surfaces */
+html.dark .bg-white {
+  background-color: #0f172a;
+}
+
+html.dark .bg-white\/90 {
+  background-color: rgb(15 23 42 / 0.92);
+}
+
+html.dark .bg-white\/5 {
+  background-color: rgb(255 255 255 / 0.07);
+}
+
+html.dark .bg-slate-50 {
+  background-color: #111827;
+}
+
+html.dark .bg-slate-100 {
+  background-color: #1e293b;
+}
+
+html.dark .bg-slate-800 {
+  background-color: #1e293b;
+}
+
+html.dark .bg-slate-900 {
+  background-color: #0f172a;
+}
+
+html.dark .bg-slate-950 {
+  background-color: #020617;
+}
+
+html.dark .bg-red-50 {
+  background-color: rgb(127 29 29 / 0.22);
+}
+
+html.dark .bg-amber-50 {
+  background-color: rgb(120 53 15 / 0.24);
+}
+
+html.dark .bg-green-50 {
+  background-color: rgb(20 83 45 / 0.25);
+}
+
+/* Text */
+html.dark .text-slate-950,
+html.dark .text-slate-900 {
+  color: #f8fafc;
+}
+
+html.dark .text-slate-800,
+html.dark .text-slate-700 {
+  color: #e2e8f0;
+}
+
+html.dark .text-slate-600,
+html.dark .text-slate-300 {
+  color: #cbd5e1;
+}
+
+html.dark .text-slate-500,
+html.dark .text-slate-400 {
+  color: #94a3b8;
+}
+
+html.dark .text-amber-800 {
+  color: #fbbf24;
+}
+
+html.dark .text-green-700 {
+  color: #86efac;
+}
+
+/* Borders */
+html.dark .border-slate-100 {
+  border-color: #1e293b;
+}
+
+html.dark .border-slate-200,
+html.dark .border-slate-200\/80 {
+  border-color: #334155;
+}
+
+html.dark .border-slate-300 {
+  border-color: #475569;
+}
+
+html.dark .border-slate-500,
+html.dark .border-slate-600,
+html.dark .border-slate-700 {
+  border-color: #475569;
+}
+
+html.dark .border-red-200 {
+  border-color: #7f1d1d;
+}
+
+html.dark .border-amber-200 {
+  border-color: #92400e;
+}
+
+/* Interaction states */
+html.dark .hover\:bg-slate-50:hover {
+  background-color: #1e293b;
+}
+
+html.dark .hover\:bg-slate-100:hover {
+  background-color: #334155;
+}
+
+html.dark .hover\:bg-slate-700:hover {
+  background-color: #334155;
+}
+
+html.dark .hover\:bg-slate-800:hover {
+  background-color: #1e293b;
+}
+
+html.dark .hover\:border-slate-400:hover,
+html.dark .hover\:border-slate-500:hover {
+  border-color: #64748b;
+}
+
+html.dark .hover\:border-red-200:hover {
+  border-color: #b91c1c;
+}
+
+html.dark .focus-visible\:ring-offset-2:focus-visible {
+  --tw-ring-offset-color: #020617;
+}
+
+/* Theme-toggle icon state */
+[data-theme-icon="sun"] {
+  display: none;
+}
+
+html.dark [data-theme-icon="sun"] {
+  display: block;
+}
+
+html.dark [data-theme-icon="moon"] {
+  display: none;
+}
+
+html.dark ::selection {
+  background: #7f1d1d;
+  color: #fee2e2;
+}
+
+/* Slightly stronger shadows on dark surfaces */
+html.dark .shadow-sm,
+html.dark .shadow-xl {
+  --tw-shadow-color: rgb(0 0 0 / 0.35);
+}
