@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import GuideMeta from '../../components/GuideMeta.astro';
 import GuideToc from '../../components/GuideToc.astro';
 import GuidePager from '../../components/GuidePager.astro';
+import ServiceMark from '../../components/ServiceMark.astro';
 import { withBase } from '../../utils/paths';
 
 const sections = [
@@ -155,6 +156,11 @@ const sources = [
     </p>
 
     <GuideMeta code="SG12" />
+    <div class="mt-7 flex flex-wrap items-center gap-3">
+      <ServiceMark id="ifie" />
+      <ServiceMark id="isa" />
+      <p class="max-w-xl text-xs leading-5 text-slate-500">IFIE untuk dukungan lokal Ishikawa; Immigration Services Agency untuk prosedur residence/immigration.</p>
+    </div>
   </section>
 
   <GuideToc sections={sections} />
