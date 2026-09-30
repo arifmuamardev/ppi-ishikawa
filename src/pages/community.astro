@@ -1,12 +1,73 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
+import { withBase } from '../utils/paths';
+
+const entryPoints = [
+  {
+    title: 'Pendatang baru',
+    description: 'Mulai dari persiapan kedatangan, administrasi awal, tempat tinggal, transportasi, dan kebutuhan sehari-hari.',
+    href: '/life-in-ishikawa/'
+  },
+  {
+    title: 'Mahasiswa yang sudah tinggal di Ishikawa',
+    description: 'Akses informasi kesehatan, bantuan, bencana, musim dingin, keuangan, dan layanan lokal.',
+    href: '/life-in-ishikawa/kehidupan-sehari-hari/'
+  },
+  {
+    title: 'Keluarga',
+    description: 'Panduan untuk pasangan dan anak: pregnancy, childcare, sekolah, kesehatan, dan layanan keluarga.',
+    href: '/life-in-ishikawa/family-anak/'
+  },
+  {
+    title: 'Butuh bantuan',
+    description: 'Temukan jalur konsultasi IFIE, dukungan kampus, immigration, labor, dan layanan profesional.',
+    href: '/life-in-ishikawa/japanese-support/'
+  }
+];
 ---
 <BaseLayout title="Komunitas">
-  <PageIntro title="Komunitas PPI Ishikawa" description="Ruang untuk memperkenalkan persebaran anggota, kampus, komunitas minat, alumni, dan jalur bergabung." />
-  <section class="mx-auto max-w-7xl px-5 pb-20 lg:px-8">
+  <PageIntro
+    title="Komunitas PPI Ishikawa"
+    description="PPI Ishikawa menghubungkan mahasiswa, keluarga, pendatang baru, alumni, serta jejaring Indonesia di Prefektur Ishikawa."
+  />
+
+  <section class="mx-auto max-w-7xl px-5 pb-12 lg:px-8">
+    <div class="grid gap-4 md:grid-cols-2">
+      {entryPoints.map((item) => (
+        <a href={withBase(item.href)} class="rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-red-200 hover:shadow-sm">
+          <h2 class="font-bold text-slate-950">{item.title}</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 py-10 lg:px-8">
     <div class="grid gap-5 md:grid-cols-3">
-      {['Kampus & Institusi','Komunitas Minat','Data Anggota'].map((x)=><div class="rounded-2xl border border-slate-200 bg-white p-6"><h2 class="font-semibold">{x}</h2><p class="mt-2 text-sm leading-6 text-slate-500">Data publik akan ditampilkan dalam bentuk agregat, tanpa mengekspos data pribadi anggota.</p></div>)}
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <p class="text-sm font-bold uppercase tracking-[0.14em] text-brand">Kampus & institusi</p>
+        <h2 class="mt-3 text-xl font-bold text-slate-950">Persebaran komunitas</h2>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Daftar kampus dan institusi anggota akan ditampilkan setelah data 2026/27 diverifikasi.</p>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <p class="text-sm font-bold uppercase tracking-[0.14em] text-brand">Data anggota</p>
+        <h2 class="mt-3 text-xl font-bold text-slate-950">Publik hanya dalam bentuk agregat</h2>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Website publik tidak akan menampilkan nomor telepon, alamat, atau data pribadi anggota. Statistik komunitas akan ditampilkan dalam bentuk agregat bila sudah siap.</p>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <p class="text-sm font-bold uppercase tracking-[0.14em] text-brand">Bergabung</p>
+        <h2 class="mt-3 text-xl font-bold text-slate-950">Satu jalur resmi</h2>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Form registrasi dan kanal anggota akan ditambahkan setelah kanal resmi kepengurusan 2026/27 ditetapkan.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 pb-20 pt-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-7 text-white sm:p-9">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Prinsip privasi</p>
+      <h2 class="mt-3 text-2xl font-bold">Komunitas tidak harus berarti data pribadi menjadi publik.</h2>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-300">Website akan memisahkan informasi publik organisasi dari data internal anggota. Informasi pribadi hanya boleh digunakan melalui sistem dan tujuan yang memang memerlukannya.</p>
     </div>
   </section>
 </BaseLayout>
