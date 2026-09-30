@@ -10,11 +10,11 @@ export const site = {
 
 export const nav = [
   { label: 'Tentang', href: '/about' },
+  { label: 'Kampus', href: '/community/kampus' },
   { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa' },
   { label: 'Komunitas', href: '/community' },
   { label: 'Program', href: '/programs' },
   { label: 'Sumber Daya', href: '/resources' },
-  { label: 'Kontak', href: '/contact' },
 ];
 
 export const departments = departmentData.map((department) => department.name);
