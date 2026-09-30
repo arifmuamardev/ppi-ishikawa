@@ -89,6 +89,15 @@ export const publicMedia: Record<string, PublicMedia> = {
     credit: 'Drivephotographer / Wikimedia Commons',
     license: 'CC0 1.0',
     alt: 'Gedung Kanazawa City Hall'
+  },
+  omichoMarket: {
+    id: 'omicho-market',
+    title: 'Omicho Market, Kanazawa',
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Kanazawa_Omicho_Market,_Japan_(48876956676).jpg?width=1400',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Kanazawa_Omicho_Market,_Japan_(48876956676).jpg',
+    credit: 'dconvertini / Wikimedia Commons',
+    license: 'CC BY-SA 2.0',
+    alt: 'Aktivitas belanja di Omicho Market, Kanazawa'
   }
 };
 
