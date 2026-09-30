@@ -1,0 +1,35 @@
+---
+interface Props {
+  id: 'kanazawa-university' | 'jaist' | 'kanazawa-institute-of-technology' | 'ishikawa-prefectural-university' | 'kinjo-university' | 'alice-gakuen' | 'ishikawa';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+}
+
+const { id, size = 'md', class: className = '' } = Astro.props;
+
+const marks = {
+  'kanazawa-university': { short: 'KU', long: 'Kanazawa University' },
+  'jaist': { short: 'JAIST', long: 'JAIST' },
+  'kanazawa-institute-of-technology': { short: 'KIT', long: 'Kanazawa Institute of Technology' },
+  'ishikawa-prefectural-university': { short: 'IPU', long: 'Ishikawa Prefectural University' },
+  'kinjo-university': { short: 'KINJO', long: 'Kinjo University' },
+  'alice-gakuen': { short: 'ALICE', long: 'Alice Gakuen' },
+  'ishikawa': { short: '石川', long: 'Ishikawa Prefecture' }
+} as const;
+
+const sizeClasses = {
+  sm: 'h-10 min-w-10 rounded-xl px-2 text-xs',
+  md: 'h-12 min-w-12 rounded-2xl px-3 text-sm',
+  lg: 'h-16 min-w-16 rounded-2xl px-4 text-base'
+};
+
+const mark = marks[id];
+---
+
+<span
+  class={`inline-flex items-center justify-center border border-slate-200 bg-white font-black tracking-tight text-slate-800 shadow-sm ${sizeClasses[size]} ${className}`}
+  aria-label={mark.long}
+  title={mark.long}
+>
+  {mark.short}
+</span>
