@@ -1,0 +1,258 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import GuideToc from '../../../components/GuideToc.astro';
+import { withBase } from '../../../utils/paths';
+import { kitPack, kitSections, kitQuickLinks, kitContactMap, kitFaq } from '../../../data/campus-kit';
+
+const ppiLinks = [
+  ['Administrasi di Jepang', '/life-in-ishikawa/administrasi/'],
+  ['Tempat Tinggal', '/life-in-ishikawa/tempat-tinggal/'],
+  ['Transportasi', '/life-in-ishikawa/transportasi/'],
+  ['Kesehatan', '/life-in-ishikawa/kesehatan/'],
+  ['Keluarga & Anak', '/life-in-ishikawa/family-anak/'],
+  ['Bahasa Jepang & Dukungan', '/life-in-ishikawa/japanese-support/']
+];
+---
+
+<BaseLayout
+  title="Kanazawa Institute of Technology Campus Pack"
+  description="Panduan praktis mahasiswa Indonesia di Kanazawa Institute of Technology: Ohgigaoka, housing, transportasi, international support, kesehatan, Japanese programs, career, dan FAQ."
+>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <a href={withBase('/community/kampus/')} class="text-sm font-semibold text-brand hover:underline">← Kampus di Ishikawa</a>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.18em] text-accent-dark">PPI Ishikawa · Campus Pack</p>
+    <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Kanazawa Institute of Technology</h1>
+    <p class="mt-2 text-lg text-slate-500">金沢工業大学 · KIT · Nonoichi</p>
+    <p class="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
+      Panduan praktis untuk mahasiswa Indonesia di KIT. Fokus utamanya adalah Ohgigaoka Campus, hubungan dengan Yatsukaho Research Campus, housing mahasiswa internasional, akses dari Kanazawa, layanan kampus, dan jalur dukungan yang paling berguna untuk kehidupan sehari-hari.
+    </p>
+
+    <div class="mt-7 flex flex-wrap gap-3 text-sm">
+      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Private university</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Ohgigaoka · Nonoichi</span>
+      <span class="rounded-full border border-amber-200 bg-amber-50 px-4 py-2 font-semibold text-accent-dark">Terakhir diverifikasi: {kitPack.lastVerified}</span>
+    </div>
+
+    <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {kitQuickLinks.map(([label, url]) => (
+        <a href={url} target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-200 bg-white p-4 text-sm font-bold text-slate-800 transition hover:border-amber-200 hover:shadow-sm">
+          {label} ↗
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <GuideToc sections={kitSections} />
+
+  <section id="bagian-01" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">01 · Kenali KIT</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Ohgigaoka adalah pusat student life; Yatsukaho memperluas aktivitas riset.</h2>
+    <div class="mt-7 grid gap-5 md:grid-cols-2">
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Ohgigaoka Campus</p>
+        <h3 class="mt-2 text-xl font-bold text-slate-950">扇が丘キャンパス</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Campus utama di Nonoichi. Campus map mencantumkan Student Support Center, International Programs Center, Library Center, Career Planning and Placement Services, cafeterias, convenience store, Health Center, Study Hall, dan berbagai fasilitas akademik.</p>
+        <a href="https://www.kanazawa-it.ac.jp/ekit/map/ohgigaoka.html" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Ohgigaoka map & access ↗</a>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Yatsukaho Research Campus</p>
+        <h3 class="mt-2 text-xl font-bold text-slate-950">やつかほリサーチキャンパス</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Research campus KIT di Hakusan. KIT menyediakan shuttle gratis antara Ohgigaoka dan Yatsukaho untuk mahasiswa dan staf pada hari serta jadwal yang ditentukan.</p>
+        <a href="https://www.kanazawa-it.ac.jp/ekit/map/yatsukaho.html" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Yatsukaho & shuttle ↗</a>
+      </article>
+    </div>
+  </section>
+
+  <section id="bagian-02" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">02 · Minggu pertama</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Mulai dari program dan status Anda, karena kebutuhan incoming students tidak selalu sama.</h2>
+    <div class="mt-7 grid gap-3">
+      {[
+        ['1', 'Ikuti orientation program Anda', 'Degree, graduate, research, exchange, dan short-term students dapat menerima instruksi berbeda. Gunakan informasi dari program/office yang menerima Anda.'],
+        ['2', 'Pastikan housing & commute', 'Kenali apakah Anda tinggal di International Community House, KIT-designated apartment, atau private housing lain, lalu uji rute ke Ohgigaoka.'],
+        ['3', 'Selesaikan administrasi Jepang', 'Registrasi alamat, insurance, pension, dan urusan municipality mengikuti alamat tempat tinggal. Untuk incoming programs tertentu, KIT memberikan guidance tambahan setelah arrival.'],
+        ['4', 'Temukan Center for International Programs', 'Simpan halaman International Exchanges dan Living Information sebagai titik awal untuk pertanyaan international-student specific.'],
+        ['5', 'Kenali fasilitas inti', 'Student Support Center, library, cafeteria, convenience store, Health Center, Counseling Center, dan Career Planning and Placement Services akan sering relevan.'],
+        ['6', 'Cek academic/lab expectations', 'Mahasiswa graduate/research mengikuti arahan program dan supervisor; jangan mengandalkan pola dari program atau intake lain.']
+      ].map(([n,title,desc]) => (
+        <div class="grid gap-3 rounded-2xl border border-slate-200 bg-white p-5 sm:grid-cols-[44px_1fr]">
+          <span class="grid size-10 place-items-center rounded-full bg-amber-50 text-sm font-bold text-accent-dark">{n}</span>
+          <div>
+            <h3 class="font-bold text-slate-950">{title}</h3>
+            <p class="mt-1 text-sm leading-6 text-slate-600">{desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <a href="https://www.kanazawa-it.ac.jp/ekit/exchanges/faq.html" target="_blank" rel="noreferrer" class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">Incoming Students FAQ ↗</a>
+  </section>
+
+  <section id="bagian-03" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">03 · Ke mana harus bertanya</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kenali fungsi office sebelum membutuhkan bantuan.</h2>
+    <div class="mt-7 grid gap-4 md:grid-cols-2">
+      {kitContactMap.map((item) => (
+        <article class="rounded-2xl border border-slate-200 bg-white p-5">
+          <h3 class="font-bold text-slate-950">{item.title}</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{item.topics}</p>
+        </article>
+      ))}
+    </div>
+    <div class="mt-5 flex flex-wrap gap-3">
+      <a href="https://www.kanazawa-it.ac.jp/ekit/exchanges/center.html" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Center for International Programs ↗</a>
+      <a href="https://www.kanazawa-it.ac.jp/ekit/life/facilities/index.html" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Campus facilities ↗</a>
+    </div>
+  </section>
+
+  <section id="bagian-04" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">04 · Housing</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Housing berbeda menurut jenis dan durasi program.</h2>
+    <div class="mt-7 grid gap-5 md:grid-cols-2">
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="text-xl font-bold text-slate-950">KIT International Community House</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Fasilitas residence sekaligus international-exchange space. KIT menyatakan fasilitas ini pada prinsipnya digunakan untuk kelompok mahasiswa internasional dalam short-term international programs.</p>
+        <p class="mt-3 text-xs leading-5 text-slate-500">Jangan mengasumsikan semua mahasiswa internasional eligible. Penempatan mengikuti program dan keputusan KIT.</p>
+        <a href="https://www.kanazawa-it.ac.jp/ekit/exchanges/living.html" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Living information ↗</a>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="text-xl font-bold text-slate-950">KIT-designated apartment</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Untuk mahasiswa yang resmi enrolled atau tinggal lebih dari tiga bulan, KIT menyediakan jalur designated apartment. Banyak pilihan berada dalam walking/bicycle distance dari kampus, tetapi detail kamar, rent, availability, dan kontrak berubah.</p>
+        <a href={withBase('/life-in-ishikawa/tempat-tinggal/')} class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">SG04 · Tempat Tinggal →</a>
+      </article>
+    </div>
+  </section>
+
+  <section id="bagian-05" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">05 · Transportasi & kampus</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Nonoichi membuat pilihan housing dan moda transport sangat terkait.</h2>
+    <div class="mt-7 grid gap-4 md:grid-cols-3">
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-950">Kanazawa Station → KIT</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">KIT menyediakan petunjuk bus dari Kanazawa Station menuju halte Kanazawa Kogyo Daigaku-mae. Gunakan timetable/operator terbaru karena route dan fare dapat berubah.</p>
+      </article>
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-950">Nonoichi Kodai-mae</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Campus map KIT menunjukkan Hokutetsu Ishikawa Line dan Nonoichi Kodai-mae Station sebagai salah satu titik akses area kampus.</p>
+      </article>
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-950">Ohgigaoka ↔ Yatsukaho</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Shuttle internal KIT menghubungkan campus utama dan research campus. Gunakan timetable resmi semester berjalan.</p>
+      </article>
+    </div>
+    <div class="mt-5 flex flex-wrap gap-3">
+      <a href="https://www.kanazawa-it.ac.jp/ekit/map/ohgigaoka.html" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Ohgigaoka access ↗</a>
+      <a href="https://www.kanazawa-it.ac.jp/ekit/map/yatsukaho.html" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Yatsukaho shuttle ↗</a>
+      <a href={withBase('/life-in-ishikawa/transportasi/')} class="rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white">SG06 · Transportasi →</a>
+    </div>
+  </section>
+
+  <section id="bagian-06" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">06 · Kesehatan & counseling</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">KIT punya layanan kampus dan bantuan medis multilingual tertentu.</h2>
+    <div class="mt-7 grid gap-5 md:grid-cols-3">
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="font-bold text-slate-950">Health Center</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Health Center berada di Ohgigaoka dan menyediakan basic medical/health support untuk mahasiswa sesuai sistem kampus.</p>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="font-bold text-slate-950">Counseling Center</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Counseling Center menerima konsultasi terkait interpersonal, daily life, dan psychological concerns serta dapat menghubungkan mahasiswa dengan dukungan lain.</p>
+      </article>
+      <article class="rounded-3xl border border-amber-200 bg-amber-50 p-6">
+        <h3 class="font-bold text-slate-950">Multilingual medical assistance</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-700">KIT mempublikasikan Inbound Medical Assistance Service bagi kategori pengguna terdaftar. Bahasa Indonesia termasuk dalam daftar bahasa layanan. Eligibility harus dikonfirmasi menurut status/program.</p>
+      </article>
+    </div>
+    <div class="mt-5 flex flex-wrap gap-3">
+      <a href="https://www.kanazawa-it.ac.jp/ekit/life/facilities/index.html" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Campus facilities ↗</a>
+      <a href="https://www.kanazawa-it.ac.jp/ekit/exchanges/pdf/handbook.pdf" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Medical assistance handbook ↗</a>
+      <a href={withBase('/life-in-ishikawa/kesehatan/')} class="rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white">SG07 · Kesehatan →</a>
+    </div>
+  </section>
+
+  <section id="bagian-07" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">07 · Bahasa Jepang & international life</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Program bahasa Jepang tersedia, tetapi formatnya bergantung pada jalur international program.</h2>
+    <div class="mt-7 grid gap-5 md:grid-cols-2">
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="font-bold text-slate-950">KIT Japanese Language Program</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">KIT menjalankan Japanese Language Program dalam kerangka international exchange, termasuk summer program untuk mahasiswa partner institutions. Jangan menganggap semua kelas otomatis terbuka untuk setiap kategori mahasiswa internasional.</p>
+        <a href="https://www.kanazawa-it.ac.jp/international/ijst.html" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Japanese education program ↗</a>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="font-bold text-slate-950">International Programs Center</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Center for International Programs mengelola berbagai kegiatan exchange/international programs serta menjadi jalur penting bagi incoming students yang membutuhkan guidance program-specific.</p>
+        <a href="https://www.kanazawa-it.ac.jp/ekit/exchanges/center.html" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Center for International Programs ↗</a>
+      </article>
+    </div>
+  </section>
+
+  <section id="bagian-08" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">08 · Academic, project & career</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">KIT kuat pada project-based learning dan career support.</h2>
+    <div class="mt-7 grid gap-4 md:grid-cols-3">
+      {[
+        ['Academic & research', 'Graduate students mengikuti program, laboratory, supervisor, dan academic procedures masing-masing. Gunakan informasi program resmi untuk requirement dan milestone.'],
+        ['Projects & facilities', 'KIT menonjolkan fasilitas seperti Yumekobo, Challenge Lab, Library Center, Innovation & Design Studio, dan berbagai research facilities sebagai bagian dari learning environment.'],
+        ['Career', 'Career Planning and Placement Services menyediakan career advice, mock interviews, résumé review, employer information, events, internship support, dan layanan terkait employment.']
+      ].map(([title,desc]) => (
+        <article class="rounded-2xl border border-slate-200 bg-white p-5">
+          <h3 class="font-bold text-slate-950">{title}</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{desc}</p>
+        </article>
+      ))}
+    </div>
+    <div class="mt-5 flex flex-wrap gap-3">
+      <a href="https://www.kanazawa-it.ac.jp/ekit/education/curriculum/graduate/index.html" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Graduate programs ↗</a>
+      <a href="https://www.kanazawa-it.ac.jp/career/index.html" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Career center ↗</a>
+    </div>
+  </section>
+
+  <section id="bagian-09" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">09 · Keluarga & daily life</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Untuk family life, alamat tempat tinggal lebih penting daripada nama kampus.</h2>
+    <p class="mt-4 max-w-3xl leading-7 text-slate-600">KIT dapat membantu konteks kampus dan international-program matters, tetapi pregnancy, birth, childcare, school, child medical subsidy, garbage, dan layanan keluarga mengikuti municipality tempat tinggal—sering kali Nonoichi atau Kanazawa tergantung apartment Anda.</p>
+    <div class="mt-5 flex flex-wrap gap-3">
+      <a href={withBase('/life-in-ishikawa/family-anak/')} class="rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white">SG08 · Keluarga & Anak →</a>
+      <a href={withBase('/life-in-ishikawa/municipality-guides/')} class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Panduan pemerintah lokal →</a>
+    </div>
+  </section>
+
+  <section id="bagian-10" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">10 · FAQ mahasiswa Indonesia</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Jawaban cepat untuk incoming dan daily life.</h2>
+    <div class="mt-7 space-y-3">
+      {kitFaq.map((item) => (
+        <details class="rounded-2xl border border-slate-200 bg-white p-5">
+          <summary class="cursor-pointer font-bold text-slate-950">{item.q}</summary>
+          <p class="mt-3 text-sm leading-6 text-slate-600">{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">PPI Ishikawa Survival Guide</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Campus Pack menjelaskan konteks KIT; Survival Guide menjelaskan hidup di Ishikawa.</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {ppiLinks.map(([label, href]) => (
+          <a href={withBase(href)} class="rounded-2xl bg-slate-50 p-4 text-sm font-bold text-slate-800 transition hover:bg-slate-100">{label} →</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-20 pt-10 lg:px-8">
+    <div class="rounded-[2rem] border border-amber-200 bg-amber-50 p-7 sm:p-9">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-dark">Sumber & maintenance</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Housing, shuttle, medical assistance, fee, dan program dapat berubah.</h2>
+      <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-700">Campus Pack ini terakhir diverifikasi pada {kitPack.lastVerified}. Untuk keputusan aktual, gunakan sumber resmi KIT berikut.</p>
+      <div class="mt-6 grid gap-2 sm:grid-cols-2">
+        {kitPack.officialSources.map(([label, url]) => (
+          <a href={url} target="_blank" rel="noreferrer" class="rounded-xl border border-amber-200 bg-white px-4 py-3 text-sm font-bold text-slate-800 transition hover:border-amber-300">{label} ↗</a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
