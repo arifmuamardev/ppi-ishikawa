@@ -95,7 +95,7 @@ export const ipuFaq = [
   },
   {
     q: 'Apa yang ada di sekitar kampus?',
-    a: 'Guide resmi kampus menyoroti layanan di Nonoichi seperti city hall, library/civic learning center, shopping, community bus, dan area komersial. PPI akan mengembangkan bagian ini menjadi catatan praktis tanpa mengubahnya menjadi rekomendasi komersial.'
+    a: 'Guide resmi kampus menyoroti layanan di Nonoichi seperti city hall, library/civic learning center, shopping, community bus, dan area komersial. Untuk kebutuhan sehari-hari, cocokkan informasi tersebut dengan lokasi housing dan Municipality Guide Nonoichi.'
   },
   {
     q: 'Bagaimana career support di IPU?',
