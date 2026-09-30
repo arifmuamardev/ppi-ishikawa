@@ -1,0 +1,32 @@
+---
+import type { PublicMedia } from '../data/media';
+
+interface Props {
+  media: PublicMedia;
+  eager?: boolean;
+  class?: string;
+  imageClass?: string;
+}
+
+const {
+  media,
+  eager = false,
+  class: className = '',
+  imageClass = 'aspect-[16/9] w-full object-cover'
+} = Astro.props;
+---
+
+<figure class={`overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm ${className}`}>
+  <img
+    src={media.imageUrl}
+    alt={media.alt}
+    width="1280"
+    height="960"
+    class={imageClass}
+    loading={eager ? 'eager' : 'lazy'}
+    referrerpolicy="no-referrer"
+  />
+  <figcaption class="border-t border-slate-100 bg-slate-50 px-5 py-3 text-[11px] leading-5 text-slate-500">
+    {media.title} · <a href={media.sourcePage} target="_blank" rel="noreferrer" class="underline hover:text-slate-700">{media.credit}</a> · {media.license}
+  </figcaption>
+</figure>
