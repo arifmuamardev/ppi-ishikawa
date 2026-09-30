@@ -3,9 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import GuideMeta from '../components/GuideMeta.astro';
 import TopicIcon from '../components/TopicIcon.astro';
 import InstitutionMark from '../components/InstitutionMark.astro';
+import OfficialBrand from '../components/OfficialBrand.astro';
 import { survivalGuides } from '../data/survival';
 import { withBase } from '../utils/paths';
 import { publicMedia } from '../data/media';
+import { officialBrands } from '../data/official-brands';
 
 const journeys = [
   {
@@ -109,8 +111,8 @@ const officialSources = [
 >
   <section class="mx-auto max-w-7xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
     <div class="max-w-4xl">
-      <div class="flex items-center gap-3">
-        <InstitutionMark id="ishikawa" size="md" />
+      <div class="flex flex-wrap items-center gap-3">
+        <OfficialBrand brand={officialBrands.hotIshikawa} compact={true} class="w-fit" />
         <p class="text-sm font-bold uppercase tracking-[0.2em] text-brand">Ishikawa Survival Guide · SG00</p>
       </div>
       <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Mulai dari kondisi Anda sekarang.</h1>
