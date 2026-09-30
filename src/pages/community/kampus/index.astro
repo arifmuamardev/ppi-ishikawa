@@ -3,6 +3,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PageIntro from '../../../components/PageIntro.astro';
 import TopicIcon from '../../../components/TopicIcon.astro';
 import InstitutionMark from '../../../components/InstitutionMark.astro';
+import MunicipalityMark from '../../../components/MunicipalityMark.astro';
 
 import { campuses, campusCensus, campusHubProfileBySlug } from '../../../data/campuses';
 import { withBase } from '../../../utils/paths';
@@ -12,26 +13,31 @@ import { publicMedia, campusMedia } from '../../../data/media';
 const areaGroups = [
   {
     area: 'Kanazawa',
+    markId: 'kanazawa',
     description: 'Kota utama dan pusat aktivitas komunitas; pola commute berbeda antara pusat kota, Kakuma, dan area selatan Kanazawa.',
     items: ['Kanazawa University', 'Alice Gakuen · Kanazawa Campus']
   },
   {
     area: 'Nonoichi',
+    markId: 'nonoichi',
     description: 'Area compact di selatan Kanazawa dengan akses rail/bus/bicycle yang penting untuk kehidupan mahasiswa.',
     items: ['Kanazawa Institute of Technology', 'Ishikawa Prefectural University']
   },
   {
     area: 'Hakusan',
+    markId: 'hakusan',
     description: 'Koridor rail di selatan Nonoichi; pilihan housing harus disesuaikan dengan Kasama atau Matto.',
     items: ['Kinjo University · Kasama Campus', 'Kinjo University · Matto Campus']
   },
   {
     area: 'Nomi',
+    markId: 'nomi',
     description: 'Lingkungan graduate/research yang lebih terpisah dari pusat Kanazawa sehingga mobility planning sangat penting.',
     items: ['JAIST']
   },
   {
     area: 'Kaga',
+    markId: 'kaga',
     description: 'Area Daishoji di bagian selatan prefektur dengan pola daily life yang berbeda dari Kanazawa metropolitan area.',
     items: ['Alice Gakuen · Kaga Campus']
   }
@@ -161,7 +167,10 @@ const needs = [
     <div class="mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
       {areaGroups.map((group) => (
         <article class="rounded-3xl border border-slate-200 bg-white p-5">
-          <h3 class="text-xl font-bold text-slate-950">{group.area}</h3>
+          <div class="flex items-center gap-3">
+            <MunicipalityMark id={group.markId as any} size="sm" class="shrink-0" />
+            <h3 class="text-xl font-bold text-slate-950">{group.area}</h3>
+          </div>
           <p class="mt-2 text-sm leading-6 text-slate-600">{group.description}</p>
           <div class="mt-4 space-y-2">
             {group.items.map((item) => (
