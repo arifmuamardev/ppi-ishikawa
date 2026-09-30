@@ -62,9 +62,10 @@ Jangan menyimpan data pribadi anggota, nomor telepon personal, token, password, 
 ## Status konten
 
 - SG00–SG14 Survival Guide: tersedia.
-- Home, Tentang, Komunitas, Program, Sumber Daya, dan Kontak: draft publik aktif.
-- Struktur organisasi: fungsi dan posisi sudah tersedia; nama pengurus menunggu penetapan resmi.
-- Visi, misi, program kerja final, kanal kontak resmi, dan data agregat anggota: belum dipublikasikan.
+- Campus Hub + 6/6 Campus Packs: tersedia.
+- Home, Tentang, Komunitas, Program, Sumber Daya, dan Kontak: aktif sebagai draft publik.
+- Arah/visi 2026/27 dan struktur fungsi organisasi: tersedia; nama pengurus menunggu publikasi resmi.
+- Program kerja final, kanal kontak resmi, dan data agregat anggota: belum dipublikasikan.
 - Search indexing: sengaja dinonaktifkan sampai official launch.
 
 ## Maintenance
