@@ -1,3 +1,5 @@
+import { departments as departmentData } from './organization';
+
 export const site = {
   name: 'PPI Ishikawa',
   period: '2026/27',
@@ -15,12 +17,4 @@ export const nav = [
   { label: 'Kontak', href: '/contact' },
 ];
 
-export const departments = [
-  'Akademik',
-  'Olahraga',
-  'Kemahasiswaan',
-  'Kekeluargaan / Internal',
-  'Seni Budaya',
-  'Media',
-  'Humas / Eksternal',
-];
+export const departments = departmentData.map((department) => department.name);
