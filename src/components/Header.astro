@@ -1,6 +1,7 @@
 ---
 import { nav, site } from '../data/site';
 import { withBase } from '../utils/paths';
+import ThemeToggle from './ThemeToggle.astro';
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '');
 const isActive = (href: string) => {
@@ -31,6 +32,7 @@ const isActive = (href: string) => {
     </nav>
 
     <div class="flex items-center gap-2">
+      <ThemeToggle />
       <a href={withBase('/contact')} class="hidden rounded-full bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand sm:inline-flex">
         Hubungi Kami
       </a>
