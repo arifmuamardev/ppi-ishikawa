@@ -1,0 +1,248 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import GuideToc from '../../../components/GuideToc.astro';
+import { withBase } from '../../../utils/paths';
+import { kanazawaUniversityPack, kuSections, kuQuickLinks, kuFaq } from '../../../data/campus-kanazawa-university';
+
+const ppiLinks = [
+  ['Administrasi di Jepang', '/life-in-ishikawa/administrasi/'],
+  ['Tempat Tinggal', '/life-in-ishikawa/tempat-tinggal/'],
+  ['Transportasi', '/life-in-ishikawa/transportasi/'],
+  ['Kesehatan', '/life-in-ishikawa/kesehatan/'],
+  ['Keluarga & Anak', '/life-in-ishikawa/family-anak/'],
+  ['Bahasa Jepang & Dukungan', '/life-in-ishikawa/japanese-support/']
+];
+---
+
+<BaseLayout
+  title="Kanazawa University Campus Pack"
+  description="Panduan praktis mahasiswa Indonesia di Kanazawa University: kampus, minggu pertama, housing, transportasi, dukungan internasional, bahasa Jepang, prayer room, career, keluarga, dan FAQ."
+>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <a href={withBase('/community/kampus/')} class="text-sm font-semibold text-brand hover:underline">← Kampus di Ishikawa</a>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.18em] text-accent-dark">PPI Ishikawa · Campus Pack</p>
+    <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Kanazawa University</h1>
+    <p class="mt-2 text-lg text-slate-500">金沢大学 · Kanazawa</p>
+    <p class="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
+      Panduan praktis untuk mahasiswa Indonesia di Kanazawa University. Informasi resmi kampus tetap menjadi sumber utama; PPI membantu menyusun urutan, konteks, dan hal yang paling sering dibutuhkan mahasiswa baru maupun mahasiswa yang sudah tinggal di Ishikawa.
+    </p>
+
+    <div class="mt-7 flex flex-wrap gap-3 text-sm">
+      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">National university</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Kakuma + Takaramachi–Tsuruma</span>
+      <span class="rounded-full border border-amber-200 bg-amber-50 px-4 py-2 font-semibold text-accent-dark">Terakhir diverifikasi: {kanazawaUniversityPack.lastVerified}</span>
+    </div>
+
+    <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {kuQuickLinks.map(([label, url]) => (
+        <a href={url} target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-200 bg-white p-4 text-sm font-bold text-slate-800 transition hover:border-amber-200 hover:shadow-sm">
+          {label} ↗
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <GuideToc sections={kuSections} />
+
+  <section id="bagian-01" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">01 · Kenali kampusmu</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Dua campus area utama, pengalaman harian yang berbeda.</h2>
+    <div class="mt-7 grid gap-5 md:grid-cols-2">
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Kakuma Campus</p>
+        <h3 class="mt-2 text-xl font-bold text-slate-950">角間キャンパス</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Pusat bagi Transdisciplinary Sciences, Humanities and Social Sciences, serta Science, Engineering and Pharmacy. Dormitory mahasiswa internasional juga berada di area Kakuma.</p>
+        <a href="https://www.kanazawa-u.ac.jp/en/university/campus-guidance/map" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Buka campus map ↗</a>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Takaramachi–Tsuruma</p>
+        <h3 class="mt-2 text-xl font-bold text-slate-950">宝町・鶴間キャンパス</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Berfokus pada medicine dan health sciences serta berdekatan dengan Kanazawa University Hospital. Lokasinya lebih dekat ke pusat kota dibanding Kakuma.</p>
+        <a href="https://www.kanazawa-u.ac.jp/en/university/campus-guidance/tokucyou" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Lihat campus features ↗</a>
+      </article>
+    </div>
+  </section>
+
+  <section id="bagian-02" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">02 · Minggu pertama</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Urutan yang aman untuk mahasiswa baru.</h2>
+    <div class="mt-7 grid gap-3">
+      {[
+        ['1', 'Ikuti admission & orientation', 'Periksa instruksi school/graduate school Anda. KU mempublikasikan orientation/admission procedures per intake dan program.'],
+        ['2', 'Pastikan housing & akses kampus', 'Kenali apakah aktivitas utama Anda di Kakuma atau Takaramachi–Tsuruma dan uji rute commute sebelum jadwal akademik padat.'],
+        ['3', 'Selesaikan administrasi kota', 'Registrasi alamat, insurance, pension, My Number, dan urusan municipality mengikuti alamat tempat tinggal Anda—bukan campus office.'],
+        ['4', 'Kenali One-Stop support', 'Simpan halaman International Student Support dan One-Stop Consultation Counter sebelum Anda membutuhkannya.'],
+        ['5', 'Aktifkan rutinitas akademik', 'Pastikan Anda memahami portal, course registration, lab/supervisor communication, dan jadwal yang berlaku untuk program Anda.'],
+        ['6', 'Cek dukungan tambahan', 'Japanese classes, health/counseling, prayer rooms, scholarship, dan career support tersedia melalui jalur kampus masing-masing.']
+      ].map(([n,title,desc]) => (
+        <div class="grid gap-3 rounded-2xl border border-slate-200 bg-white p-5 sm:grid-cols-[44px_1fr]">
+          <span class="grid size-10 place-items-center rounded-full bg-amber-50 text-sm font-bold text-accent-dark">{n}</span>
+          <div>
+            <h3 class="font-bold text-slate-950">{title}</h3>
+            <p class="mt-1 text-sm leading-6 text-slate-600">{desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <a href={withBase('/life-in-ishikawa/hari-pertama/')} class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">Lihat SG02 · Hari Pertama di Ishikawa →</a>
+  </section>
+
+  <section id="bagian-03" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <div class="rounded-[2rem] bg-slate-950 p-7 text-white sm:p-9">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-soft">03 · Ke mana harus bertanya</p>
+      <h2 class="mt-3 text-3xl font-bold">Mulai dari One-Stop Consultation jika Anda tidak tahu jalurnya.</h2>
+      <p class="mt-4 max-w-3xl leading-7 text-slate-300">
+        Kanazawa University menyediakan One-Stop Consultation Counter untuk mahasiswa internasional. Topik yang dicantumkan meliputi admission, scholarship, tuition exemption, status of residence/visa, apartment/dormitory, insurance, national pension, family support, advising/counseling, dan kehidupan sehari-hari.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="https://intl-support.w3.kanazawa-u.ac.jp/inquiry/" target="_blank" rel="noreferrer" class="rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950">One-Stop Consultation ↗</a>
+        <a href="https://intl-support.w3.kanazawa-u.ac.jp/" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-600 px-4 py-3 text-sm font-bold text-white">International Student Support ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="bagian-04" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">04 · Tempat tinggal</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Dormitory kampus atau private apartment.</h2>
+    <div class="mt-7 grid gap-5 md:grid-cols-3">
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="font-bold text-slate-950">Sakigake</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Share-house style student housing di Kakuma. Unitnya menggabungkan mahasiswa internasional dengan Resident Advisors mahasiswa Jepang.</p>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="font-bold text-slate-950">Hokumei</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Share-house style student housing di Kakuma yang menggabungkan mahasiswa internasional dan mahasiswa Jepang.</p>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="font-bold text-slate-950">Private apartment</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">KU Co-op dan private real-estate route dapat digunakan. Cek guarantor/guarantee company, initial costs, utilities, dan contract terms sebelum menandatangani.</p>
+      </article>
+    </div>
+    <div class="mt-5 flex flex-wrap gap-3">
+      <a href="https://www.kanazawa-u.ac.jp/en/students/livelihood/residence" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Housing resmi KU ↗</a>
+      <a href="https://intl-support.w3.kanazawa-u.ac.jp/campuslife/apartment/index.php" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Private apartment guidance ↗</a>
+      <a href={withBase('/life-in-ishikawa/tempat-tinggal/')} class="rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white">SG04 · Tempat Tinggal →</a>
+    </div>
+    <p class="mt-4 text-xs leading-5 text-slate-500">Biaya, eligibility, dan availability dormitory berubah per intake; selalu gunakan halaman housing resmi untuk nilai terbaru.</p>
+  </section>
+
+  <section id="bagian-05" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">05 · Transportasi</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kenali rute sebelum bergantung pada satu moda.</h2>
+    <div class="mt-7 grid gap-5 md:grid-cols-2">
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="font-bold text-slate-950">Dari Kanazawa Station</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">KU menyediakan halaman akses resmi yang menunjuk bus menuju Kakuma maupun Takaramachi–Tsuruma. Nomor rute dan timetable dapat berubah, jadi cek langsung sebelum perjalanan.</p>
+        <a href="https://www.kanazawa-u.ac.jp/university/campus-guidance/access/" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Akses resmi ↗</a>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="font-bold text-slate-950">KU shuttle antar-kampus</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Shuttle gratis menghubungkan Kakuma dan Takaramachi–Tsuruma pada hari operasional universitas. Student/staff ID perlu dibawa. Gunakan timetable resmi untuk jadwal terbaru.</p>
+        <a href="https://www.kanazawa-u.ac.jp/students/livelihood/shuttle_bus/?wovn=en" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Shuttle bus ↗</a>
+      </article>
+    </div>
+    <a href={withBase('/life-in-ishikawa/transportasi/')} class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">SG06 · Transportasi →</a>
+  </section>
+
+  <section id="bagian-06" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">06 · Kesehatan & dukungan</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Gunakan jalur kampus sebelum masalah menjadi berat.</h2>
+    <div class="mt-7 grid gap-4 md:grid-cols-2">
+      <div class="rounded-2xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-950">Health Service Center</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">KU menyediakan health management dan student counseling melalui layanan kampus.</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-950">Student Counseling</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Ada beberapa consultation desks termasuk counseling, disability support, LGBTQ+ consultation, career support, dan KUGS Support Network.</p>
+      </div>
+    </div>
+    <div class="mt-5 flex flex-wrap gap-3">
+      <a href="https://www.kanazawa-u.ac.jp/en/students/consultation/" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Student counseling ↗</a>
+      <a href={withBase('/life-in-ishikawa/kesehatan/')} class="rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white">SG07 · Kesehatan →</a>
+    </div>
+  </section>
+
+  <section id="bagian-07" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">07 · Bahasa Jepang & ibadah</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Dua fasilitas yang sangat relevan untuk mahasiswa Indonesia.</h2>
+    <div class="mt-7 grid gap-5 md:grid-cols-2">
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="font-bold text-slate-950">Integrated Japanese Language Program</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">IJLP ditujukan untuk mahasiswa internasional KU yang memenuhi syarat dan mendukung kebutuhan bahasa Jepang untuk study, research, seminar, serta kehidupan sehari-hari.</p>
+        <a href="https://www.kanazawa-u.ac.jp/en/global-network/study/ijlp/" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">IJLP ↗</a>
+      </article>
+      <article class="rounded-3xl border border-amber-200 bg-amber-50 p-6">
+        <h3 class="font-bold text-slate-950">Prayer rooms di Kakuma</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-700">KU mencantumkan tiga prayer room yang dapat digunakan mahasiswa internasional: Human and Social Sciences Hall 3, Natural Science Main Hall, dan Natural Science Hall 5.</p>
+        <a href="https://intl-support.w3.kanazawa-u.ac.jp/campuslife/campus/prayer.php" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Prayer room map ↗</a>
+      </article>
+    </div>
+  </section>
+
+  <section id="bagian-08" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">08 · Academic, research & career</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Ikuti aturan school/lab; gunakan layanan universitas untuk support lintas program.</h2>
+    <div class="mt-7 grid gap-4 md:grid-cols-3">
+      {[
+        ['Academic', 'Course registration, orientation, degree requirements, dan academic procedures mengikuti school/graduate school Anda.'],
+        ['Research', 'Lab/supervisor practice berbeda antar-program. PPI dapat membantu konteks praktis, tetapi keputusan akademik tetap melalui supervisor dan program.'],
+        ['Career', 'Career Support Office dan Link KAGAYAKI menyediakan guidance, business Japanese, career education, internship, dan support khusus international students.']
+      ].map(([title,desc]) => (
+        <article class="rounded-2xl border border-slate-200 bg-white p-5">
+          <h3 class="font-bold text-slate-950">{title}</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{desc}</p>
+        </article>
+      ))}
+    </div>
+    <a href="https://career-support.adm.kanazawa-u.ac.jp/international/" target="_blank" rel="noreferrer" class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">Career support for international students ↗</a>
+  </section>
+
+  <section id="bagian-09" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">09 · Keluarga</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Pisahkan support kampus dan layanan pemerintah setempat.</h2>
+    <p class="mt-4 max-w-3xl leading-7 text-slate-600">One-Stop Consultation KU memasukkan family support dalam cakupan konsultasi mahasiswa internasional. Untuk pregnancy, birth, childcare, school, child medical subsidy, dan administrasi keluarga, layanan utamanya mengikuti municipality tempat tinggal.</p>
+    <div class="mt-5 flex flex-wrap gap-3">
+      <a href="https://intl-support.w3.kanazawa-u.ac.jp/inquiry/" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">KU One-Stop ↗</a>
+      <a href={withBase('/life-in-ishikawa/family-anak/')} class="rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white">SG08 · Keluarga & Anak →</a>
+    </div>
+  </section>
+
+  <section id="bagian-10" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">10 · FAQ mahasiswa Indonesia</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Jawaban cepat sebelum membuka detail.</h2>
+    <div class="mt-7 space-y-3">
+      {kuFaq.map((item) => (
+        <details class="rounded-2xl border border-slate-200 bg-white p-5">
+          <summary class="cursor-pointer font-bold text-slate-950">{item.q}</summary>
+          <p class="mt-3 text-sm leading-6 text-slate-600">{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">PPI Ishikawa Survival Guide</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Campus Pack tidak menggantikan panduan hidup di Jepang.</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {ppiLinks.map(([label, href]) => (
+          <a href={withBase(href)} class="rounded-2xl bg-slate-50 p-4 text-sm font-bold text-slate-800 transition hover:bg-slate-100">{label} →</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-20 pt-10 lg:px-8">
+    <div class="rounded-[2rem] border border-amber-200 bg-amber-50 p-7 sm:p-9">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-dark">Sumber & maintenance</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Informasi resmi tetap menjadi sumber final.</h2>
+      <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-700">Campus Pack ini terakhir diverifikasi pada {kanazawaUniversityPack.lastVerified}. Jadwal, biaya, application period, eligibility, dan layanan dapat berubah. Untuk hal yang berdampak pada keputusan Anda, buka sumber resmi berikut.</p>
+      <div class="mt-6 grid gap-2 sm:grid-cols-2">
+        {kanazawaUniversityPack.officialSources.map(([label, url]) => (
+          <a href={url} target="_blank" rel="noreferrer" class="rounded-xl border border-amber-200 bg-white px-4 py-3 text-sm font-bold text-slate-800 transition hover:border-amber-300">{label} ↗</a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
