@@ -54,7 +54,7 @@ export const communityOffers = [
   }
 ];
 
-export const closingStatement = 'PPI yang dekat, relevan, dan bermanfaat — bukan karena satu orang mengerjakan semuanya, tetapi karena kita bekerja dengan arah dan tanggung jawab yang jelas.';
+export const closingStatement = 'PPI yang dekat, relevan, dan bermanfaat tumbuh dari kepedulian, kerja bersama, dan tanggung jawab yang dijalankan dengan baik.';
 
 export const leadership = [
   {
