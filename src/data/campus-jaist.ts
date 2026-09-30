@@ -68,7 +68,7 @@ export const jaistContactMap = [
 export const jaistFaq = [
   {
     q: 'Saya baru diterima di JAIST. Apa halaman pertama yang harus saya cek?',
-    a: 'Mulai dari Notice to New Students untuk intake Anda, lalu cek Student Housing, Contact Information, Access, dan Handbook. Tanggal move-in, orientation, student ID, health check, serta course registration berbeda menurut intake sehingga tidak disalin sebagai tanggal permanen di Campus Pack ini.'
+    a: 'Mulai dari Notice to New Students untuk intake Anda, lalu cek Student Housing, Contact Information, Access, dan Handbook. Tanggal move-in, orientation, student ID, health check, serta course registration berbeda menurut intake, jadi selalu gunakan notice untuk intake Anda.'
   },
   {
     q: 'Apakah saya harus punya mobil?',
