@@ -109,7 +109,7 @@ export const kinjoFaq = [
   },
   {
     q: 'Apakah ada dukungan dari sesama mahasiswa?',
-    a: 'Ya. Peer Supporter program menjalankan aktivitas seperti new-student交流, consultation sessions, study sessions sebelum ujian, dan practicum-related consultation untuk membantu mahasiswa beradaptasi.'
+    a: 'Ya. Peer Supporter program menjalankan aktivitas seperti new-student exchange activities, consultation sessions, study sessions sebelum ujian, dan practicum-related consultation untuk membantu mahasiswa beradaptasi.'
   },
   {
     q: 'Apakah Preparation Program for Foreign Students sama dengan degree program Kinjo University?',
