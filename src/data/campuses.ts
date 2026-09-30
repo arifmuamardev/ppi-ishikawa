@@ -161,22 +161,24 @@ export const campuses: Campus[] = [
     type: 'Vocational school',
     city: 'Kanazawa / Kaga',
     censusDate: 'September 2026',
-    summary: 'Sekolah vokasi dengan kampus di Kanazawa dan Kaga serta program untuk international business, care welfare, dan Japanese language.',
+    summary: 'Sekolah vokasi di Kanazawa dan Kaga dengan Japanese Language, International Business, serta Care Worker programs dan dukungan kehidupan sehari-hari yang kuat untuk international students.',
     officialFacts: [
-      'Alice Gakuen memiliki Kanazawa Campus dan Kaga Campus di Ishikawa.',
-      'Program untuk international students mencakup International Business, Care Welfare, dan Japanese Language.',
-      'Website resminya menyediakan admission information, scholarship, living expenses, dormitory, serta informasi kehidupan mahasiswa internasional.'
+      'Japanese Language Department tersedia di Kanazawa dan Kaga; International Business juga tersedia di kedua kampus, sedangkan Care Worker Department berada di Kanazawa.',
+      'Untuk Japanese Language students di Kanazawa dan Kaga, official dormitory guidance menyatakan pada prinsipnya siswa tinggal di student dormitory.',
+      'Alice menyediakan academic-affairs, life-support, multilingual, dan employment-support routes untuk isu seperti city procedures, residence status, part-time work, illness/accident, study, serta career.'
     ],
     ppiFocus: [
-      'Membedakan informasi Kanazawa Campus dan Kaga Campus.',
-      'Dukungan pelajar vocational/Japanese-language yang kebutuhannya dapat berbeda dari university students.',
-      'Housing, part-time work, transportasi, dan administrasi sehari-hari.',
-      'Integrasi anggota Alice Gakuen ke komunitas PPI Ishikawa yang lebih luas.'
+      'Membedakan Kanazawa Campus dan Kaga Campus serta program yang tersedia di masing-masing lokasi.',
+      'Dormitory, housing rules, bicycle/transport, city procedures, dan daily-life adaptation.',
+      'Part-time work yang legal dan tetap seimbang dengan attendance serta study.',
+      'Japanese-language progression, vocational study, career support, dan pathway setelah lulus.'
     ],
     officialLinks: [
       { label: 'Official website', url: 'https://gakuen.alice-japan.net/' },
       { label: 'International student admissions', url: 'https://gakuen.alice-japan.net/entrance-exam/admissions-in' },
-      { label: 'School information', url: 'https://gakuen.alice-japan.net/about-us' }
+      { label: 'Courses', url: 'https://gakuen.alice-japan.net/courses' },
+      { label: 'Dormitory & student life', url: 'https://gakuen.alice-japan.net/entrance-exam/dormitory' },
+      { label: 'Campus & access', url: 'https://gakuen.alice-japan.net/access' }
     ]
   }
 ];
