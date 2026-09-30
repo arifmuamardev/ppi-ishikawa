@@ -26,16 +26,17 @@ Palet website diambil dari logo PPI Ishikawa yang digunakan pada periode ini. Wa
 ## Asset
 
 - Full logo: `public/brand/ppi-ishikawa-logo.webp`
-- Header/footer wordmark: `public/brand/ppi-ishikawa-wordmark.webp`
+- Alias kompatibilitas: `public/brand/ppi-ishikawa-wordmark.webp` saat ini menunjuk pada gambar logo utuh yang sama; jangan gunakan sebagai varian crop.
 
 Asset web berasal dari logo yang diberikan pengurus dan dioptimalkan sebagai lossless WebP.
 
 ## Penempatan
 
-- Header: wordmark compact.
-- Homepage: full logo.
-- Footer: wordmark.
-- Untuk ukuran sangat kecil, jangan mengecilkan full logo sampai tulisan tidak terbaca; gunakan wordmark atau asset compact khusus jika nanti tersedia.
+- Header: gunakan logo utuh dengan aspect ratio asli.
+- Homepage: gunakan logo utuh dengan aspect ratio asli.
+- Footer: gunakan logo utuh dengan aspect ratio asli.
+- Logo tidak boleh di-crop, diregangkan, dipipihkan, dipisahkan menjadi wordmark/mark, atau diubah proporsinya.
+- Jika dibutuhkan versi compact di masa depan, gunakan hanya asset resmi yang memang disediakan sebagai varian logo—bukan hasil crop dari logo utama.
 
 ## Dark mode
 
