@@ -3,8 +3,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import GuideMeta from '../../components/GuideMeta.astro';
 import GuideToc from '../../components/GuideToc.astro';
 import GuidePager from '../../components/GuidePager.astro';
+import LicensedPhoto from '../../components/LicensedPhoto.astro';
 import ServiceMark from '../../components/ServiceMark.astro';
 import { withBase } from '../../utils/paths';
+import { publicMedia } from '../../data/media';
 
 const sections = [
   {
@@ -195,6 +197,13 @@ const sources = [
       <ServiceMark id="jr" />
       <p class="max-w-xl text-xs leading-5 text-slate-500">Penanda layanan untuk membantu mengenali operator yang sering muncul dalam panduan; bukan logo resmi.</p>
     </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-8 lg:px-8">
+    <div class="mb-4">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Transportasi harian di Kanazawa</p>
+    </div>
+    <LicensedPhoto media={publicMedia.kanazawaFlatBus} imageClass="aspect-[16/9] w-full object-cover" />
   </section>
 
   <GuideToc sections={sections} />
