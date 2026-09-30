@@ -53,6 +53,42 @@ export const publicMedia: Record<string, PublicMedia> = {
     credit: '663highland / Wikimedia Commons',
     license: 'CC BY 2.5',
     alt: 'Jalan di kawasan Higashiyama-higashi, Kanazawa'
+  },
+  kanazawaFlatBus: {
+    id: 'kanazawa-flat-bus',
+    title: 'Kanazawa Flat Bus',
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Kanazawa_Flat_Bus_Zaimoku-route.jpg?width=1400',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Kanazawa_Flat_Bus_Zaimoku-route.jpg',
+    credit: 'Hirorinmasa / Wikimedia Commons',
+    license: 'CC BY-SA 3.0',
+    alt: 'Kanazawa Flat Bus di halte Fukuro-machi'
+  },
+  kanazawaSnow: {
+    id: 'kanazawa-snow',
+    title: 'Snow in Kanazawa',
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Snow_in_Kanazawa_(20250222_~_Image_1).jpg?width=1400',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Snow_in_Kanazawa_(20250222_~_Image_1).jpg',
+    credit: 'Fumikas Sagisavas / Wikimedia Commons',
+    license: 'CC0 1.0',
+    alt: 'Pemandangan bersalju di Kanazawa'
+  },
+  kanazawaMedicalCenter: {
+    id: 'kanazawa-medical-center',
+    title: 'National Hospital Organization Kanazawa Medical Center',
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/National_Hospital_Organization_Kanazawa_Medical_Center.JPG?width=1400',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:National_Hospital_Organization_Kanazawa_Medical_Center.JPG',
+    credit: 'Waka77 / Wikimedia Commons',
+    license: 'Public Domain',
+    alt: 'National Hospital Organization Kanazawa Medical Center'
+  },
+  kanazawaCityHall: {
+    id: 'kanazawa-city-hall',
+    title: 'Kanazawa City Hall',
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Kanazawa_city_hall.jpg?width=1400',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Kanazawa_city_hall.jpg',
+    credit: 'Drivephotographer / Wikimedia Commons',
+    license: 'CC0 1.0',
+    alt: 'Gedung Kanazawa City Hall'
   }
 };
 
