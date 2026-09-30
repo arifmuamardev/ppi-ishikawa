@@ -10,15 +10,35 @@ const resources = [
     status: 'Tersedia',
     href: '/life-in-ishikawa/'
   },
+  {
+    title: 'Panduan Pemerintah Lokal',
+    description: 'Kanazawa, Nonoichi, Hakusan, Komatsu, Kahoku, dan seluruh 19 municipality di Ishikawa.',
+    status: 'Tersedia',
+    href: '/life-in-ishikawa/municipality-guides/'
+  },
+  {
+    title: 'Bahasa Jepang & Dukungan',
+    description: 'Kelas bahasa Jepang, IFIE, konsultasi hukum, immigration, kampus, dan labor support.',
+    status: 'Tersedia',
+    href: '/life-in-ishikawa/japanese-support/'
+  },
+  {
+    title: 'Bencana & Darurat',
+    description: 'Nomor darurat, evakuasi, sumber live Ishikawa, JMA, dan kesiapsiagaan bencana.',
+    status: 'Tersedia',
+    href: '/life-in-ishikawa/disaster-emergency/'
+  },
   { title: 'FAQ', description: 'Pertanyaan yang paling sering muncul dari anggota dan pendatang baru.', status: 'Dalam persiapan' },
   { title: 'Beasiswa', description: 'Tautan dan informasi beasiswa yang relevan.', status: 'Dalam persiapan' },
-  { title: 'Forms & Services', description: 'Akses cepat ke layanan dan formulir PPI.', status: 'Dalam persiapan' },
-  { title: 'Publikasi', description: 'Publikasi, laporan, dan institutional memory.', status: 'Dalam persiapan' },
-  { title: 'Useful Links', description: 'Direktori sumber resmi dan layanan penting.', status: 'Dalam persiapan' }
+  { title: 'Form & Layanan', description: 'Akses ke form dan layanan resmi PPI Ishikawa.', status: 'Dalam persiapan' },
+  { title: 'Publikasi & Arsip', description: 'Publikasi, laporan, dokumentasi, dan memori organisasi.', status: 'Dalam persiapan' }
 ];
 ---
 <BaseLayout title="Sumber Daya">
-  <PageIntro title="Sumber daya yang bisa dipakai ulang" description="Dokumen, FAQ, scholarship links, form layanan, publikasi, dan tautan penting yang tidak seharusnya hilang ketika kepengurusan berganti." />
+  <PageIntro
+    title="Sumber daya"
+    description="Panduan, dokumen, tautan, dan layanan yang tetap berguna meskipun kepengurusan berganti."
+  />
   <section class="mx-auto max-w-7xl px-5 pb-20 lg:px-8">
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {resources.map((resource) => {
