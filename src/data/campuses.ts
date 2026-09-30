@@ -183,6 +183,77 @@ export const campuses: Campus[] = [
   }
 ];
 
+export interface CampusHubProfile {
+  slug: string;
+  studyProfile: string;
+  academicFocus: string;
+  housing: string;
+  mobility: string;
+  supportPoint: string;
+  tags: string[];
+}
+
+export const campusHubProfiles: CampusHubProfile[] = [
+  {
+    slug: 'kanazawa-university',
+    studyProfile: 'Undergraduate, graduate, exchange, research',
+    academicFocus: 'Comprehensive university: humanities, sciences, engineering, medicine, health, pharmacy, dan bidang lintas disiplin.',
+    housing: 'University housing dan private apartment; pilihan sangat dipengaruhi campus assignment.',
+    mobility: 'Bus-centered untuk Kakuma; Takaramachi–Tsuruma memiliki pola commute berbeda.',
+    supportPoint: 'One-Stop Consultation Counter / international student support',
+    tags: ['Comprehensive', 'Research', 'Multi-campus']
+  },
+  {
+    slug: 'jaist',
+    studyProfile: 'Graduate-focused: master, doctoral, research',
+    academicFocus: 'Graduate education dan research pada information science, materials science, serta knowledge science.',
+    housing: 'Student housing tersedia; private apartment juga relevan menurut kebutuhan.',
+    mobility: 'Nomi-based; shuttle/bus, bicycle, dan car planning lebih penting dibanding kampus pusat kota.',
+    supportPoint: 'International Student Section',
+    tags: ['Graduate', 'Research', 'Nomi']
+  },
+  {
+    slug: 'kanazawa-institute-of-technology',
+    studyProfile: 'Undergraduate, graduate, exchange / research',
+    academicFocus: 'Engineering, information, architecture, bioscience, psychology, dan project-based education.',
+    housing: 'Accommodation options bergantung program/durasi; private housing di Nonoichi juga umum.',
+    mobility: 'Nonoichi; bus dan bicycle relatif penting untuk daily commute.',
+    supportPoint: 'Center for International Programs',
+    tags: ['Engineering', 'Project-based', 'Nonoichi']
+  },
+  {
+    slug: 'ishikawa-prefectural-university',
+    studyProfile: 'Undergraduate dan graduate',
+    academicFocus: 'Bioresources, environmental science, food science, dan applied life science.',
+    housing: 'Tidak memiliki university dormitory; private housing perlu direncanakan sejak awal.',
+    mobility: 'Nonoichi; IR Nonoichi + community shuttle/bus, bicycle, atau car.',
+    supportPoint: 'Academic & Student Affairs Section',
+    tags: ['Bioresources', 'Environment', 'Food']
+  },
+  {
+    slug: 'kinjo-university',
+    studyProfile: 'Undergraduate dan selected graduate / advanced study',
+    academicFocus: 'Economics, social welfare/education, rehabilitation, nursing, dan professional pathways.',
+    housing: 'Tidak ada foreign-student dormitory; international students menggunakan private apartment.',
+    mobility: 'Kasama dan Matto harus dibedakan; rail access utama melalui Kaga-Kasama / Matto.',
+    supportPoint: 'International Exchange Center',
+    tags: ['Health', 'Welfare', 'Professional']
+  },
+  {
+    slug: 'alice-gakuen',
+    studyProfile: 'Japanese language dan vocational',
+    academicFocus: 'Japanese Language, International Business, serta Care Worker education.',
+    housing: 'Dormitory menjadi bagian penting terutama untuk Japanese Language students; aturan berbeda menurut program.',
+    mobility: 'Kanazawa dan Kaga adalah dua pola hidup berbeda; bus/bicycle di Kanazawa, Daishoji-centered di Kaga.',
+    supportPoint: 'Academic Affairs + life-support staff',
+    tags: ['Japanese', 'Vocational', 'Career pathway']
+  }
+];
+
+export const campusHubProfileBySlug = Object.fromEntries(
+  campusHubProfiles.map((profile) => [profile.slug, profile])
+) as Record<string, CampusHubProfile>;
+
 export const campusCensus = {
   verified: 'September 2026',
   totalRepresentedInstitutions: campuses.length,
