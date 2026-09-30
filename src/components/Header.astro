@@ -11,12 +11,17 @@ const isActive = (href: string) => {
 ---
 <header class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur">
   <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 lg:px-8">
-    <a href={withBase('/')} class="flex items-center gap-3 font-semibold tracking-tight text-slate-950">
-      <span class="grid size-10 place-items-center rounded-xl bg-brand text-sm font-bold text-white">PPI</span>
-      <span>
-        <span class="block leading-none">{site.name}</span>
-        <span class="mt-1 block text-xs font-medium text-slate-500">Periode {site.period}</span>
+    <a href={withBase('/')} class="flex items-center gap-3" aria-label={`${site.name} — Beranda`}>
+      <span class="brand-logo-shell rounded-xl px-2.5 py-1.5">
+        <img
+          src={withBase('/brand/ppi-ishikawa-wordmark.webp')}
+          alt="PPI Ishikawa"
+          width="411"
+          height="100"
+          class="h-7 w-auto sm:h-8"
+        />
       </span>
+      <span class="hidden text-xs font-semibold text-accent-dark xl:block">Periode {site.period}</span>
     </a>
 
     <nav class="hidden items-center gap-5 text-sm font-medium text-slate-600 lg:flex" aria-label="Navigasi utama">
