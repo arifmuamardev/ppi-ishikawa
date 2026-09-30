@@ -1,0 +1,269 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import GuideToc from '../../../components/GuideToc.astro';
+import { withBase } from '../../../utils/paths';
+import { kinjoPack, kinjoSections, kinjoQuickLinks, kinjoContactMap, kinjoFaq } from '../../../data/campus-kinjo';
+
+const ppiLinks = [
+  ['Administrasi di Jepang', '/life-in-ishikawa/administrasi/'],
+  ['Tempat Tinggal', '/life-in-ishikawa/tempat-tinggal/'],
+  ['Transportasi', '/life-in-ishikawa/transportasi/'],
+  ['Kesehatan', '/life-in-ishikawa/kesehatan/'],
+  ['Keluarga & Anak', '/life-in-ishikawa/family-anak/'],
+  ['Panduan Hakusan', '/life-in-ishikawa/municipality-guides/']
+];
+---
+
+<BaseLayout
+  title="Kinjo University Campus Pack"
+  description="Panduan praktis mahasiswa Indonesia di Kinjo University: Kasama dan Matto Campus, international-student support, housing, transportasi, kesehatan, counseling, career, daily life di Hakusan, dan FAQ."
+>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <a href={withBase('/community/kampus/')} class="text-sm font-semibold text-brand hover:underline">← Kampus di Ishikawa</a>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.18em] text-accent-dark">PPI Ishikawa · Campus Pack</p>
+    <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Kinjo University</h1>
+    <p class="mt-2 text-lg text-slate-500">金城大学 · Hakusan</p>
+    <p class="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
+      Panduan praktis untuk mahasiswa Indonesia di Kinjo University. Campus Pack ini memberi perhatian khusus pada support mahasiswa internasional, private housing, mobilitas antara Kasama dan Matto Campus, serta studi profesional di bidang ekonomi, social welfare/education, rehabilitation, dan nursing.
+    </p>
+
+    <div class="mt-7 flex flex-wrap gap-3 text-sm">
+      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">Private university</span>
+      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Kasama + Matto · Hakusan</span>
+      <span class="rounded-full border border-amber-200 bg-amber-50 px-4 py-2 font-semibold text-accent-dark">Terakhir diverifikasi: {kinjoPack.lastVerified}</span>
+    </div>
+
+    <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {kinjoQuickLinks.map(([label, url]) => (
+        <a href={url} target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-200 bg-white p-4 text-sm font-bold text-slate-800 transition hover:border-amber-200 hover:shadow-sm">
+          {label} ↗
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <GuideToc sections={kinjoSections} />
+
+  <section id="bagian-01" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">01 · Kenali Kinjo</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kampus profesional dengan dua lokasi utama di Hakusan.</h2>
+    <div class="mt-7 grid gap-5 md:grid-cols-2">
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="text-xl font-bold text-slate-950">Undergraduate</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Kinjo University memiliki Faculty of Interdisciplinary Economics, Faculty of Human and Social Sciences, Faculty of Medical Health, dan Faculty of Nursing. Banyak program terhubung langsung dengan practicum, professional qualification, community work, atau career preparation.</p>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="text-xl font-bold text-slate-950">Graduate & advanced study</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Graduate School berfokus pada Comprehensive Rehabilitation. Kinjo juga memiliki Advanced Course of Public Health Nursing. Karena lokasi aktivitas dapat berbeda, cek campus assignment setiap program dan practicum.</p>
+        <a href="https://www.kinjo.ac.jp/ku/" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Academic programs ↗</a>
+      </article>
+    </div>
+
+    <div class="mt-5 rounded-3xl border border-slate-200 bg-slate-50 p-6">
+      <h3 class="font-bold text-slate-950">Dua kampus bukan sekadar alamat.</h3>
+      <p class="mt-2 text-sm leading-6 text-slate-600">Kasama Campus adalah basis utama universitas dan Graduate School. Matto Campus juga digunakan oleh Faculty of Nursing serta Advanced Course of Public Health Nursing. Untuk housing dan commute, selalu mulai dari lokasi kegiatan Anda yang paling sering.</p>
+    </div>
+  </section>
+
+  <section id="bagian-02" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">02 · Minggu pertama</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kenali support route dan uji commute sebelum jadwal mulai padat.</h2>
+    <div class="mt-7 grid gap-3">
+      {[
+        ['1', 'Pastikan program dan campus', 'Cek apakah kegiatan utama Anda berlangsung di Kasama Campus, Matto Campus, atau keduanya—terutama untuk nursing, practicum, dan kegiatan lintas kampus.'],
+        ['2', 'Hubungi International Exchange Center', 'Untuk mahasiswa internasional, simpan support route untuk residence status, housing, medical matters, daily life, study, dan scholarship.'],
+        ['3', 'Selesaikan private housing', 'Kinjo tidak memiliki foreign-student dormitory. Pastikan apartment, kontrak, guarantor/co-signer arrangement, utilities, dan akses ke kampus sudah jelas.'],
+        ['4', 'Uji rute Kaga-Kasama / Matto', 'Coba commute aktual dari tempat tinggal pada jam yang akan Anda gunakan. Timetable kereta, bus, dan shuttle harus dicek dari sumber live.'],
+        ['5', 'Kenali advisor dan support desk', 'Simpan kontak academic/study advisor, Health Room, Counseling Room, Disability Support Center, Career Support Center, dan International Exchange Center.'],
+        ['6', 'Pahami practicum dan professional pathway', 'Banyak program Kinjo berorientasi praktik dan professional qualification. Cek dress code, insurance, transport, required documents, serta schedule practicum sejak awal.']
+      ].map(([n,title,desc]) => (
+        <div class="grid gap-3 rounded-2xl border border-slate-200 bg-white p-5 sm:grid-cols-[44px_1fr]">
+          <span class="grid size-10 place-items-center rounded-full bg-amber-50 text-sm font-bold text-accent-dark">{n}</span>
+          <div>
+            <h3 class="font-bold text-slate-950">{title}</h3>
+            <p class="mt-1 text-sm leading-6 text-slate-600">{desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="bagian-03" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">03 · Ke mana harus bertanya</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Jangan berhenti di satu office—gunakan jalur sesuai masalahnya.</h2>
+    <div class="mt-7 grid gap-4 md:grid-cols-2">
+      {kinjoContactMap.map((item) => (
+        <article class="rounded-2xl border border-slate-200 bg-white p-5">
+          <h3 class="font-bold text-slate-950">{item.title}</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{item.topics}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section id="bagian-04" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">04 · International student support</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">International Exchange Center adalah pintu masuk utama untuk isu lintas administrasi dan daily life.</h2>
+    <div class="mt-7 rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+      <h3 class="text-xl font-bold text-slate-950">Support yang disebutkan resmi</h3>
+      <p class="mt-3 leading-7 text-slate-700">Kinjo menjelaskan bahwa International Exchange Center memberi consultation terkait residence status, housing, medical matters dan kehidupan sehari-hari, sekaligus informasi studi dan scholarship. Center ini melibatkan staff dari berbagai faculty/department dan menyediakan dukungan multibahasa.</p>
+      <div class="mt-5 flex flex-wrap gap-3">
+        <a href="https://www.kinjo.ac.jp/english/student/center.html" target="_blank" rel="noreferrer" class="rounded-xl border border-amber-200 bg-white px-4 py-3 text-sm font-bold text-slate-800">International Exchange Center ↗</a>
+        <a href="https://www.kinjo.ac.jp/english/prospective/examination.html" target="_blank" rel="noreferrer" class="rounded-xl border border-amber-200 bg-white px-4 py-3 text-sm font-bold text-slate-800">International admissions ↗</a>
+      </div>
+    </div>
+
+    <div class="mt-5 grid gap-4 md:grid-cols-3">
+      {[
+        ['Admission', 'Kinjo memiliki jalur dan guidance khusus international students. Eligibility dan Japanese-language requirements harus dicek per admission year.'],
+        ['Scholarship', 'Panduan 2026 mencantumkan special tuition-reduction scholarship untuk international students; gunakan guideline terbaru sebelum menghitung biaya.'],
+        ['Preparation program', 'Kinjo College menjalankan Preparation Program for Foreign Students. Ini berbeda dari degree route Kinjo University, jadi jangan mencampur prosedurnya.']
+      ].map(([title,desc]) => (
+        <article class="rounded-2xl border border-slate-200 bg-white p-5">
+          <h3 class="font-bold text-slate-950">{title}</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{desc}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section id="bagian-05" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">05 · Housing</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Tidak ada foreign-student dormitory: pilih apartment berdasarkan campus dan commute aktual.</h2>
+    <div class="mt-7 grid gap-5 md:grid-cols-2">
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="text-xl font-bold text-slate-950">Yang dinyatakan Kinjo</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Informasi resmi international students menyatakan bahwa Kinjo tidak memiliki dormitory khusus mahasiswa asing. International students menggunakan ordinary apartments, dan universitas menyediakan housing consultation.</p>
+        <a href="https://www.kinjo.ac.jp/english/prospective/living.html" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Housing & living information ↗</a>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="text-xl font-bold text-slate-950">Co-signer support</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Kinjo juga menjelaskan kemungkinan universitas menjadi co-signer apabila persyaratan tertentu dipenuhi, termasuk consultation sebelum kontrak dan insurance yang ditentukan. Konfirmasi kembali prosedur yang berlaku saat Anda menyewa.</p>
+      </article>
+    </div>
+
+    <div class="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+      <p class="text-sm leading-6 text-slate-700"><strong>Catatan maintenance:</strong> halaman English Kinjo memuat beberapa contoh biaya lama. Campus Pack sengaja tidak mengarsipkan angka tersebut sebagai biaya saat ini. Untuk keputusan housing, gunakan quotation apartment, biaya guarantor, utilities, commute, winter access, dan contract terms yang aktual.</p>
+    </div>
+    <a href={withBase('/life-in-ishikawa/tempat-tinggal/')} class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">SG04 · Tempat Tinggal →</a>
+  </section>
+
+  <section id="bagian-06" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">06 · Transportasi & dua kampus</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kasama dan Matto punya pola commute yang berbeda.</h2>
+    <div class="mt-7 grid gap-4 md:grid-cols-3">
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-950">Kasama Campus</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Current official access mencantumkan IR Ishikawa Railway ke Kaga-Kasama Station, lalu sekitar 10 menit berjalan kaki. Kanazawa dan Komatsu sama-sama terhubung dengan rail corridor ini.</p>
+      </article>
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-950">Matto Campus</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Akses utamanya melalui Matto Station; dari station tersedia pilihan berjalan kaki serta shuttle/local bus. Ini terutama relevan untuk Nursing dan Public Health Nursing.</p>
+      </article>
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-950">Bus / car</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Official page juga mencantumkan Hokutetsu Bus ke Kasama pada waktu tertentu serta free parking. Jadwal bus/shuttle berubah, sehingga cek sumber live sebelum perjalanan.</p>
+      </article>
+    </div>
+    <div class="mt-5 flex flex-wrap gap-3">
+      <a href="https://www.kinjo.ac.jp/ku/access/" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Access resmi ↗</a>
+      <a href={withBase('/life-in-ishikawa/transportasi/')} class="rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white">SG06 · Transportasi →</a>
+    </div>
+  </section>
+
+  <section id="bagian-07" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">07 · Kesehatan, counseling & accessibility</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Support system Kinjo cukup berlapis—gunakan yang paling sesuai kebutuhan.</h2>
+    <div class="mt-7 grid gap-4 md:grid-cols-2">
+      {[
+        ['Health Room', 'Menangani health management, annual check-up, health consultation, first aid, referral guidance, dan koordinasi dengan support lain bila diperlukan.'],
+        ['Counseling Room', 'Qualified clinical psychologists/certified psychologists menangani consultation tentang relationships, study, practicum, career, stress, dan student life.'],
+        ['Disability Support Center', 'Menjadi consultation point untuk reasonable accommodation, koordinasi dengan faculty/staff, follow-up, dan study support.'],
+        ['Human Rights / harassment route', 'Kinjo memiliki Human Rights Committee dan harassment consultation framework. Untuk kasus sensitif, gunakan official consultation route dan dokumentasikan kebutuhan Anda.']
+      ].map(([title,desc]) => (
+        <article class="rounded-2xl border border-slate-200 bg-white p-5">
+          <h3 class="font-bold text-slate-950">{title}</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{desc}</p>
+        </article>
+      ))}
+    </div>
+    <a href={withBase('/life-in-ishikawa/kesehatan/')} class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">SG07 · Kesehatan →</a>
+  </section>
+
+  <section id="bagian-08" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">08 · Studi, career & fasilitas</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kinjo menggabungkan academic support dengan professional preparation.</h2>
+    <div class="mt-7 grid gap-5 md:grid-cols-2">
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="font-bold text-slate-950">Study support & peer support</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Kinjo menggunakan study-advisor system dan menyediakan learning commons. Peer Supporter juga menjalankan new-student activities, consultation, study sessions sebelum ujian, dan practicum-related support.</p>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <a href="https://www.kinjo.ac.jp/ku/campuslife/studentsupport.html" target="_blank" rel="noreferrer" class="text-sm font-bold text-brand hover:underline">Student support ↗</a>
+          <a href="https://www.kinjo.ac.jp/ku/campuslife/peer-supporter.html" target="_blank" rel="noreferrer" class="text-sm font-bold text-brand hover:underline">Peer Supporter ↗</a>
+        </div>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="font-bold text-slate-950">Career Support Center</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Career support mencakup guidance, industry/job preparation, application documents, interview practice, individual consultation, job information, dan berbagai seminars. Dukungan dimulai sebelum tahun akhir.</p>
+        <a href="https://www.kinjo.ac.jp/ku/job/support.html" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Career support ↗</a>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="font-bold text-slate-950">University Library</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Library tersedia di Kasama dan Matto Campus dengan koleksi bidang universitas, OPAC, reading resources, dan study support. Opening hours dapat berubah menurut semester dan calendar.</p>
+        <a href="https://www.kinjo.ac.jp/ku/campuslife/library.html" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">University Library ↗</a>
+      </article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 class="font-bold text-slate-950">Practicum-aware planning</h3>
+        <p class="mt-3 text-sm leading-6 text-slate-600">Untuk welfare, rehabilitation, nursing, education, dan bidang profesional lain, jadwal practicum dapat mengubah kebutuhan transport, pakaian, health requirements, dan waktu kerja part-time. Prioritaskan academic/practicum calendar.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="bagian-09" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">09 · Hakusan & daily life</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Lokasi housing menentukan municipality, commute, dan layanan harian Anda.</h2>
+    <p class="mt-4 max-w-3xl leading-7 text-slate-600">Kasama dan Matto berada di Hakusan, tetapi mahasiswa dapat tinggal di Hakusan, Kanazawa, atau area lain sepanjang commute memungkinkan. Residence registration, National Health Insurance, pension, My Number, garbage rules, childcare, dan layanan keluarga mengikuti municipality tempat Anda benar-benar tinggal.</p>
+    <div class="mt-5 flex flex-wrap gap-3">
+      <a href={withBase('/life-in-ishikawa/municipality-guides/')} class="rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white">Municipality guides →</a>
+      <a href={withBase('/life-in-ishikawa/family-anak/')} class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">SG08 · Keluarga & Anak →</a>
+    </div>
+  </section>
+
+  <section id="bagian-10" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">10 · FAQ mahasiswa Indonesia</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Jawaban cepat untuk admission, housing, campus, support, dan career.</h2>
+    <div class="mt-7 space-y-3">
+      {kinjoFaq.map((item) => (
+        <details class="rounded-2xl border border-slate-200 bg-white p-5">
+          <summary class="cursor-pointer font-bold text-slate-950">{item.q}</summary>
+          <p class="mt-3 text-sm leading-6 text-slate-600">{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">PPI Ishikawa Survival Guide</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Campus Pack fokus pada Kinjo; Survival Guide menangani sistem hidup di Jepang.</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {ppiLinks.map(([label, href]) => (
+          <a href={withBase(href)} class="rounded-2xl bg-slate-50 p-4 text-sm font-bold text-slate-800 transition hover:bg-slate-100">{label} →</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-20 pt-10 lg:px-8">
+    <div class="rounded-[2rem] border border-amber-200 bg-amber-50 p-7 sm:p-9">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-dark">Sumber & maintenance</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Admission, scholarship, housing, timetable, practicum, dan support details dapat berubah.</h2>
+      <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-700">Campus Pack ini terakhir diverifikasi pada {kinjoPack.lastVerified}. Untuk keputusan aktual, gunakan sumber resmi Kinjo berikut.</p>
+      <div class="mt-6 grid gap-2 sm:grid-cols-2">
+        {kinjoPack.officialSources.map(([label, url]) => (
+          <a href={url} target="_blank" rel="noreferrer" class="rounded-xl border border-amber-200 bg-white px-4 py-3 text-sm font-bold text-slate-800 transition hover:border-amber-300">{label} ↗</a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
