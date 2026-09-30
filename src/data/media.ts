@@ -65,12 +65,12 @@ export const publicMedia: Record<string, PublicMedia> = {
   },
   kanazawaSnow: {
     id: 'kanazawa-snow',
-    title: 'Snow in Kanazawa',
-    imageUrl: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Snow_in_Kanazawa_(20250222_~_Image_1).jpg?width=1400',
-    sourcePage: 'https://commons.wikimedia.org/wiki/File:Snow_in_Kanazawa_(20250222_~_Image_1).jpg',
-    credit: 'Fumikas Sagisavas / Wikimedia Commons',
+    title: 'Kanazawa Castle in snow',
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Kanazawa_Castle_260123_05.jpg?width=1400',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Kanazawa_Castle_260123_05.jpg',
+    credit: 'Aspere / Wikimedia Commons',
     license: 'CC0 1.0',
-    alt: 'Pemandangan bersalju di Kanazawa'
+    alt: 'Kanazawa Castle tertutup salju pada musim dingin'
   },
   kanazawaMedicalCenter: {
     id: 'kanazawa-medical-center',
@@ -93,11 +93,11 @@ export const publicMedia: Record<string, PublicMedia> = {
   omichoMarket: {
     id: 'omicho-market',
     title: 'Omicho Market, Kanazawa',
-    imageUrl: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Kanazawa_Omicho_Market,_Japan_(48876956676).jpg?width=1400',
-    sourcePage: 'https://commons.wikimedia.org/wiki/File:Kanazawa_Omicho_Market,_Japan_(48876956676).jpg',
-    credit: 'dconvertini / Wikimedia Commons',
-    license: 'CC BY-SA 2.0',
-    alt: 'Aktivitas belanja di Omicho Market, Kanazawa'
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Kanazawa_fish_market.jpg?width=1400',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Kanazawa_fish_market.jpg',
+    credit: 'Zacharymccune / Wikimedia Commons',
+    license: 'CC BY-SA 4.0',
+    alt: 'Produk makanan laut di Omicho Market, Kanazawa'
   }
 };
 
