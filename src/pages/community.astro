@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
 import TopicIcon from '../components/TopicIcon.astro';
 import { withBase } from '../utils/paths';
+import { publicMedia } from '../data/media';
 
 const entryPoints = [
   {
@@ -34,9 +35,12 @@ const entryPoints = [
   />
 
   <section class="mx-auto max-w-7xl px-5 pb-12 lg:px-8">
-    <div class="mb-8 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
-      <img src={withBase('/illustrations/community-support.svg')} alt="Ilustrasi komunitas PPI Ishikawa: menyambut pendatang baru, belajar bersama, keluarga, dan dukungan mahasiswa" width="1200" height="675" class="aspect-[16/9] h-auto w-full object-cover" loading="eager" />
-    </div>
+    <figure class="mb-8 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
+      <img src={publicMedia.higashiyama.imageUrl} alt={publicMedia.higashiyama.alt} width="1600" height="1067" class="aspect-[16/9] h-auto w-full object-cover" loading="eager" referrerpolicy="no-referrer" />
+      <figcaption class="border-t border-slate-100 bg-slate-50 px-5 py-3 text-xs leading-5 text-slate-500">
+        Higashiyama-higashi, Kanazawa · <a href={publicMedia.higashiyama.sourcePage} target="_blank" rel="noreferrer" class="underline">{publicMedia.higashiyama.credit}</a> · {publicMedia.higashiyama.license}
+      </figcaption>
+    </figure>
 
     <div class="mb-6 rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:flex sm:items-center sm:justify-between sm:gap-6">
       <div>
