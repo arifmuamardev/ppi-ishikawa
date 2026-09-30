@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="t d">
+<title id="t">Skema Campus Hub PPI Ishikawa</title><desc id="d">Skema lokasi lima wilayah dan enam institusi anggota PPI Ishikawa: Kanazawa, Nonoichi, Hakusan, Nomi, dan Kaga.</desc>
+<defs>
+<linearGradient id="sea" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e3f4fb"/><stop offset="1" stop-color="#b9e1ee"/></linearGradient>
+<linearGradient id="land" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dcebc4"/><stop offset="1" stop-color="#9dc8a5"/></linearGradient>
+<filter id="s"><feDropShadow dy="8" stdDeviation="10" flood-color="#203039" flood-opacity=".14"/></filter>
+</defs>
+<rect width="1200" height="760" rx="38" fill="url(#sea)"/>
+<circle cx="101" cy="97" r="51" fill="#fff4c9" opacity=".9"/>
+<g fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".8"><path d="M66 198h98M42 226h62M930 128h111M1001 157h88M48 635h107M1000 673h117"/></g>
+<!-- stylized Ishikawa silhouette -->
+<path d="M647 39c68 12 105 42 114 86 8 38-9 74-42 106-27 26-44 55-37 88 6 29 28 54 52 79 34 36 46 72 28 107-19 37-59 52-81 87-21 33-21 75-5 129l-163 2c-24-55-24-99-2-135 17-28 52-47 61-79 9-31-8-63-29-91-27-36-40-76-29-116 8-31 29-56 54-81 32-32 48-66 37-103-9-31-28-54-59-72Z" fill="url(#land)" stroke="#fff" stroke-width="10" filter="url(#s)"/>
+<path d="M628 90c32 62 3 111-35 154-38 42-45 83-12 125 40 51 53 91 21 137-34 49-44 98-26 160" fill="none" stroke="#fff" stroke-width="15" stroke-linecap="round" opacity=".72"/>
+<path d="M628 90c32 62 3 111-35 154-38 42-45 83-12 125 40 51 53 91 21 137-34 49-44 98-26 160" fill="none" stroke="#315e7b" stroke-width="5" stroke-dasharray="10 13" stroke-linecap="round"/>
+<!-- area labels / markers -->
+<g font-family="system-ui, sans-serif" font-weight="700" fill="#203039">
+<g transform="translate(525 316)"><circle r="20" fill="#bc3c34" stroke="#fff" stroke-width="6"/><text x="33" y="7" font-size="25">Kanazawa</text></g>
+<g transform="translate(551 392)"><circle r="18" fill="#df863e" stroke="#fff" stroke-width="6"/><text x="31" y="7" font-size="24">Nonoichi</text></g>
+<g transform="translate(525 474)"><circle r="18" fill="#7c5ab5" stroke="#fff" stroke-width="6"/><text x="31" y="7" font-size="24">Hakusan</text></g>
+<g transform="translate(587 541)"><circle r="18" fill="#43866d" stroke="#fff" stroke-width="6"/><text x="31" y="7" font-size="24">Nomi</text></g>
+<g transform="translate(555 629)"><circle r="18" fill="#df5670" stroke="#fff" stroke-width="6"/><text x="31" y="7" font-size="24">Kaga</text></g>
+</g>
+<!-- transport -->
+<g transform="translate(706 406)" filter="url(#s)">
+<rect width="111" height="48" rx="22" fill="#fff"/><rect x="15" y="11" width="81" height="22" rx="10" fill="#477996"/><circle cx="34" cy="39" r="7" fill="#29333d"/><circle cx="78" cy="39" r="7" fill="#29333d"/>
+</g>
+<g transform="translate(684 564)" filter="url(#s)"><circle cx="20" cy="29" r="15" fill="none" stroke="#3c7f68" stroke-width="6"/><circle cx="75" cy="29" r="15" fill="none" stroke="#3c7f68" stroke-width="6"/><path d="M20 29 42 5l14 24H20Zm22-24h19M56 29l17-24" fill="none" stroke="#3c7f68" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></g>
+<!-- left title / legend -->
+<g filter="url(#s)">
+<rect x="56" y="54" width="365" height="189" rx="30" fill="#fff" opacity=".94"/>
+<circle cx="100" cy="102" r="24" fill="#b63831"/><path d="M87 105h26M100 92v26" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+<text x="141" y="108" font-family="system-ui, sans-serif" font-size="31" font-weight="800" fill="#203039">Campus Hub</text>
+<text x="85" y="154" font-family="system-ui, sans-serif" font-size="18" fill="#58676d">6 institusi · 5 wilayah</text>
+<text x="85" y="184" font-family="system-ui, sans-serif" font-size="16" fill="#708086">Skema orientasi — bukan peta skala.</text>
+<text x="85" y="214" font-family="system-ui, sans-serif" font-size="16" fill="#708086">Gunakan Campus Pack untuk detail akses.</text>
+</g>
+<!-- campus list -->
+<g font-family="system-ui, sans-serif" filter="url(#s)">
+<g transform="translate(835 62)"><rect width="315" height="88" rx="22" fill="#fff"/><circle cx="38" cy="44" r="20" fill="#bc3c34"/><text x="72" y="37" font-size="19" font-weight="800" fill="#203039">Kanazawa University</text><text x="72" y="63" font-size="15" fill="#718086">Kanazawa</text></g>
+<g transform="translate(835 165)"><rect width="315" height="88" rx="22" fill="#fff"/><circle cx="38" cy="44" r="20" fill="#43866d"/><text x="72" y="37" font-size="19" font-weight="800" fill="#203039">JAIST</text><text x="72" y="63" font-size="15" fill="#718086">Nomi</text></g>
+<g transform="translate(835 268)"><rect width="315" height="88" rx="22" fill="#fff"/><circle cx="38" cy="44" r="20" fill="#df863e"/><text x="72" y="35" font-size="17" font-weight="800" fill="#203039">Kanazawa Institute</text><text x="72" y="56" font-size="17" font-weight="800" fill="#203039">of Technology</text><text x="226" y="56" font-size="14" fill="#718086">Nonoichi</text></g>
+<g transform="translate(835 371)"><rect width="315" height="88" rx="22" fill="#fff"/><circle cx="38" cy="44" r="20" fill="#e8a13c"/><text x="72" y="35" font-size="17" font-weight="800" fill="#203039">Ishikawa Prefectural</text><text x="72" y="56" font-size="17" font-weight="800" fill="#203039">University</text><text x="218" y="56" font-size="14" fill="#718086">Nonoichi</text></g>
+<g transform="translate(835 474)"><rect width="315" height="88" rx="22" fill="#fff"/><circle cx="38" cy="44" r="20" fill="#7c5ab5"/><text x="72" y="37" font-size="19" font-weight="800" fill="#203039">Kinjo University</text><text x="72" y="63" font-size="15" fill="#718086">Hakusan</text></g>
+<g transform="translate(835 577)"><rect width="315" height="88" rx="22" fill="#fff"/><circle cx="38" cy="44" r="20" fill="#df5670"/><text x="72" y="37" font-size="19" font-weight="800" fill="#203039">Alice Gakuen</text><text x="72" y="63" font-size="15" fill="#718086">Kanazawa / Kaga</text></g>
+</g>
+<g transform="translate(71 610)" font-family="system-ui, sans-serif"><rect width="367" height="91" rx="25" fill="#203039" opacity=".92"/><text x="28" y="37" fill="#fff" font-size="18" font-weight="800">Housing + commute harus dibaca bersama.</text><text x="28" y="65" fill="#cbd5d6" font-size="15">Rail · bus · bicycle · winter · campus assignment</text></g>
+</svg>
