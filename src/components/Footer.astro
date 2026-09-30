@@ -5,8 +5,17 @@ import { withBase } from '../utils/paths';
 <footer class="border-t border-slate-200 bg-white">
   <div class="mx-auto grid max-w-7xl gap-10 px-5 py-12 lg:grid-cols-[1.4fr_1fr] lg:px-8">
     <div>
-      <p class="text-lg font-semibold text-slate-950">{site.name}</p>
-      <p class="mt-3 max-w-xl text-sm leading-6 text-slate-600">{site.description}</p>
+      <a href={withBase('/')} class="brand-logo-shell rounded-xl px-3 py-2" aria-label={`${site.name} — Beranda`}>
+        <img
+          src={withBase('/brand/ppi-ishikawa-wordmark.webp')}
+          alt="PPI Ishikawa"
+          width="411"
+          height="100"
+          class="h-9 w-auto"
+        />
+      </a>
+      <div class="brand-gold-rule mt-5 max-w-xs"></div>
+      <p class="mt-4 max-w-xl text-sm leading-6 text-slate-600">{site.description}</p>
       <p class="mt-6 text-xs text-slate-500">Fondasi website periode {site.period}. Informasi resmi akan diperbarui setelah kepengurusan ditetapkan.</p>
     </div>
     <div class="grid grid-cols-2 gap-3 text-sm">
