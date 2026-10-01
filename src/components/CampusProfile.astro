@@ -25,7 +25,7 @@ const googleMapsEmbedUrl = (mapUrl: string, fallback: string) => {
   <div class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
     <div class="max-w-3xl">
       <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Profil kampus</p>
-      <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kenali karakter kampus sebelum masuk ke detail praktis.</h2>
+      <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kenali kampus secara ringkas, buka detail saat diperlukan.</h2>
     </div>
 
     <div class="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -34,267 +34,223 @@ const googleMapsEmbedUrl = (mapUrl: string, fallback: string) => {
           <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">{item.label}</p>
           <p class="mt-2 text-xl font-bold tracking-tight text-slate-950">{item.value}</p>
           {item.note && <p class="mt-2 text-xs leading-5 text-slate-600">{item.note}</p>}
-          <p class="mt-3 text-[11px] font-bold text-brand">Sumber resmi ↗</p>
         </a>
       ))}
     </div>
 
-    <div class="mt-7 grid gap-4 md:grid-cols-2">
-      <article class="rounded-2xl bg-slate-50 p-5">
-        <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Sejarah singkat</p>
-        <p class="mt-3 text-sm leading-6 text-slate-700">{profile.history}</p>
-      </article>
-      <article class="rounded-2xl bg-slate-50 p-5">
-        <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Struktur akademik</p>
-        <p class="mt-3 text-sm leading-6 text-slate-700">{profile.academicStructure}</p>
-      </article>
-      <article class="rounded-2xl bg-slate-50 p-5">
-        <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Karakter akademik</p>
-        <p class="mt-3 text-sm leading-6 text-slate-700">{profile.academicCharacter}</p>
-      </article>
-      <article class="rounded-2xl bg-slate-50 p-5">
-        <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Lingkungan kampus</p>
-        <p class="mt-3 text-sm leading-6 text-slate-700">{profile.campusEnvironment}</p>
-      </article>
-    </div>
-
-    <div class="mt-7 rounded-3xl border border-amber-200 bg-amber-50 p-5 sm:p-6">
+    <div class="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-5 sm:p-6">
       <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Orientasi cepat</p>
       <p class="mt-2 text-lg font-bold leading-7 text-slate-950">{profile.orientation}</p>
+      <div class="mt-4 flex flex-wrap gap-2">
+        {profile.studyAreas.map((area) => (
+          <span class="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-slate-700">{area}</span>
+        ))}
+      </div>
     </div>
 
-    <div class="mt-5 grid gap-4 lg:grid-cols-2">
-      <article class="rounded-3xl border border-slate-200 bg-white p-6">
-        <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Bidang studi utama</p>
-        <div class="mt-4 flex flex-wrap gap-2">
-          {profile.studyAreas.map((area) => (
-            <span class="rounded-full bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-700">{area}</span>
-          ))}
-        </div>
-      </article>
-
-      <article class="rounded-3xl border border-slate-200 bg-white p-6">
-        <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Fasilitas & center khas</p>
-        <ul class="mt-4 space-y-2">
-          {profile.signatureFacilities.map((facility) => (
-            <li class="flex gap-3 text-sm leading-6 text-slate-700">
-              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
-              <span>{facility}</span>
-            </li>
-          ))}
-        </ul>
-      </article>
-    </div>
-
-    <article class="mt-5 rounded-3xl border border-slate-200 bg-slate-50 p-6">
-      <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Karakter pengalaman belajar</p>
-      <p class="mt-3 text-sm leading-7 text-slate-700">{profile.studentExperience}</p>
-    </article>
-
-    {visuals.length > 0 && (
-      <section class="mt-7">
-        <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+    <div class="mt-7 space-y-3">
+      <details class="group rounded-2xl border border-slate-200 bg-white">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
           <div>
-            <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Visual kampus</p>
-            <h3 class="mt-2 text-2xl font-bold tracking-tight text-slate-950">Lihat sebagian ruang yang membentuk pengalaman kampus.</h3>
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Tentang kampus</p>
+            <h3 class="mt-1 text-lg font-bold text-slate-950">Sejarah, struktur, karakter akademik, dan lingkungan kampus</h3>
           </div>
-          <p class="max-w-xl text-xs leading-5 text-slate-500">Visual ditampilkan hanya jika sumber dan lisensi penggunaan ulangnya jelas.</p>
-        </div>
-        <div class="mt-5 grid gap-4 md:grid-cols-2">
-          {visuals.map((media) => (
-            <LicensedPhoto media={media} imageClass="aspect-[4/3] w-full object-cover" />
-          ))}
-        </div>
-      </section>
-    )}
-
-    <section class="mt-7">
-      <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-7">
-        <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Useful Places Around Campus</p>
-            <h3 class="mt-2 text-2xl font-bold tracking-tight text-slate-950">Titik praktis yang sering dibutuhkan mahasiswa baru.</h3>
-          </div>
-          <p class="max-w-xl text-xs leading-5 text-slate-500">Tautan membuka pencarian peta agar pengguna dapat melihat rute, jam buka, dan pilihan sekitar yang paling aktual.</p>
-        </div>
-
-        <div class="mt-5 overflow-hidden rounded-3xl border border-slate-200 bg-slate-50">
-          <iframe
-            src={`https://www.google.com/maps?q=${encodeURIComponent(profile.mapOverviewQuery)}&output=embed`}
-            title={`Google Maps overview · ${profile.mapOverviewQuery}`}
-            class="h-[320px] w-full border-0 sm:h-[420px]"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            allowfullscreen
-          ></iframe>
-          <div class="border-t border-slate-200 bg-white px-5 py-4">
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Peta overview</p>
-            <p class="mt-1 text-sm leading-6 text-slate-600">Gunakan peta ini untuk memahami posisi area kampus secara umum. Kartu di bawah memberi titik praktis satu per satu dengan tautan Google Maps.</p>
-          </div>
-        </div>
-
-        <div class="mt-5 grid gap-4 md:grid-cols-2">
-          {profile.usefulPlaces.map((place) => (
-            <article class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-              <iframe
-                src={googleMapsEmbedUrl(place.mapUrl, place.name)}
-                title={`Google Maps · ${place.name}`}
-                class="h-52 w-full border-0"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                allowfullscreen
-              ></iframe>
-              <div class="p-5">
-                <span class="inline-flex rounded-full bg-white px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-600">{place.category}</span>
-                <h4 class="mt-3 text-lg font-bold text-slate-950">{place.name}</h4>
-                <p class="mt-2 text-sm leading-6 text-slate-600">{place.description}</p>
-                <a href={place.mapUrl} target="_blank" rel="noreferrer" class="mt-4 inline-flex text-xs font-bold text-brand hover:underline">
-                  Buka di Google Maps ↗
-                </a>
-              </div>
+          <span class="text-2xl leading-none text-slate-400 transition group-open:rotate-45">+</span>
+        </summary>
+        <div class="border-t border-slate-100 px-5 pb-6 pt-5 sm:px-6">
+          <div class="grid gap-4 md:grid-cols-2">
+            <article class="rounded-2xl bg-slate-50 p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Sejarah singkat</p>
+              <p class="mt-2 text-sm leading-6 text-slate-700">{profile.history}</p>
             </article>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <section class="mt-7">
-      <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-7">
-        <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-soft">Student Life Snapshot</p>
-            <h3 class="mt-2 text-2xl font-bold tracking-tight">Seperti apa pola hidup sehari-hari di sekitar kampus?</h3>
+            <article class="rounded-2xl bg-slate-50 p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Struktur akademik</p>
+              <p class="mt-2 text-sm leading-6 text-slate-700">{profile.academicStructure}</p>
+            </article>
+            <article class="rounded-2xl bg-slate-50 p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Karakter akademik</p>
+              <p class="mt-2 text-sm leading-6 text-slate-700">{profile.academicCharacter}</p>
+            </article>
+            <article class="rounded-2xl bg-slate-50 p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Lingkungan kampus</p>
+              <p class="mt-2 text-sm leading-6 text-slate-700">{profile.campusEnvironment}</p>
+            </article>
           </div>
-          <a href={profile.studentLife.sourceUrl} target="_blank" rel="noreferrer" class="text-xs font-bold text-accent-soft hover:underline">Sumber kehidupan kampus ↗</a>
-        </div>
 
-        <div class="mt-5 grid gap-4 md:grid-cols-2">
-          <article class="rounded-2xl border border-slate-700 bg-slate-900 p-5">
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Transportasi harian</p>
-            <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.transport}</p>
+          <article class="mt-4 rounded-2xl border border-slate-200 bg-white p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.12em] text-brand">Karakter pengalaman belajar</p>
+            <p class="mt-2 text-sm leading-6 text-slate-700">{profile.studentExperience}</p>
           </article>
-          <article class="rounded-2xl border border-slate-700 bg-slate-900 p-5">
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Pola area tinggal</p>
-            <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.livingArea}</p>
-          </article>
-          <article class="rounded-2xl border border-slate-700 bg-slate-900 p-5">
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Kebutuhan sehari-hari</p>
-            <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.dailyNeeds}</p>
-          </article>
-          <article class="rounded-2xl border border-slate-700 bg-slate-900 p-5">
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Musim dingin</p>
-            <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.winter}</p>
-          </article>
-        </div>
 
-        <div class="mt-4 rounded-2xl border border-slate-700 bg-slate-900 p-5">
-          <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-soft">Koneksi ke komunitas PPI</p>
-          <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.community}</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="mt-7">
-      <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-7">
-        <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">International Student Snapshot</p>
-            <h3 class="mt-2 text-2xl font-bold tracking-tight text-slate-950">Hal utama yang perlu dipahami mahasiswa internasional.</h3>
+          <div class="mt-4 rounded-2xl bg-slate-950 p-5 text-white">
+            <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-soft">Yang menonjol</p>
+            <ul class="mt-3 space-y-2">
+              {profile.distinctive.map((item) => (
+                <li class="flex gap-3 text-sm leading-6 text-slate-300">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-soft"></span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <a href={profile.internationalStudent.sourceUrl} target="_blank" rel="noreferrer" class="text-xs font-bold text-brand hover:underline">Sumber internasional resmi ↗</a>
         </div>
+      </details>
 
-        <div class="mt-5 grid gap-4 md:grid-cols-2">
-          <article class="rounded-2xl bg-slate-50 p-5">
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Jalur masuk</p>
-            <p class="mt-2 text-sm leading-6 text-slate-700">{profile.internationalStudent.admission}</p>
-          </article>
-          <article class="rounded-2xl bg-slate-50 p-5">
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Bahasa pengantar</p>
-            <p class="mt-2 text-sm leading-6 text-slate-700">{profile.internationalStudent.language}</p>
-          </article>
-          <article class="rounded-2xl bg-slate-50 p-5">
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Tempat tinggal</p>
-            <p class="mt-2 text-sm leading-6 text-slate-700">{profile.internationalStudent.housing}</p>
-          </article>
-          <article class="rounded-2xl bg-slate-50 p-5">
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Beasiswa & dukungan biaya</p>
-            <p class="mt-2 text-sm leading-6 text-slate-700">{profile.internationalStudent.funding}</p>
-          </article>
+      <details class="group rounded-2xl border border-slate-200 bg-white">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Mahasiswa internasional</p>
+            <h3 class="mt-1 text-lg font-bold text-slate-950">Admission, bahasa, tempat tinggal, biaya, dan first contact</h3>
+          </div>
+          <span class="text-2xl leading-none text-slate-400 transition group-open:rotate-45">+</span>
+        </summary>
+        <div class="border-t border-slate-100 px-5 pb-6 pt-5 sm:px-6">
+          <div class="grid gap-4 md:grid-cols-2">
+            <article class="rounded-2xl bg-slate-50 p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Jalur masuk</p>
+              <p class="mt-2 text-sm leading-6 text-slate-700">{profile.internationalStudent.admission}</p>
+            </article>
+            <article class="rounded-2xl bg-slate-50 p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Bahasa pengantar</p>
+              <p class="mt-2 text-sm leading-6 text-slate-700">{profile.internationalStudent.language}</p>
+            </article>
+            <article class="rounded-2xl bg-slate-50 p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Tempat tinggal</p>
+              <p class="mt-2 text-sm leading-6 text-slate-700">{profile.internationalStudent.housing}</p>
+            </article>
+            <article class="rounded-2xl bg-slate-50 p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Beasiswa & dukungan biaya</p>
+              <p class="mt-2 text-sm leading-6 text-slate-700">{profile.internationalStudent.funding}</p>
+            </article>
+          </div>
+          <div class="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-dark">First contact</p>
+            <p class="mt-2 text-base font-bold text-slate-950">{profile.internationalStudent.firstContact}</p>
+            <a href={profile.internationalStudent.sourceUrl} target="_blank" rel="noreferrer" class="mt-3 inline-flex text-xs font-bold text-brand hover:underline">Sumber internasional resmi ↗</a>
+          </div>
         </div>
+      </details>
 
-        <div class="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-5">
-          <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-dark">First contact</p>
-          <p class="mt-2 text-base font-bold text-slate-950">{profile.internationalStudent.firstContact}</p>
-          <p class="mt-2 text-xs leading-5 text-slate-600">Detail admission, scholarship, eligibility, dan housing dapat berubah setiap intake. Selalu gunakan halaman resmi terbaru sebelum mengambil keputusan.</p>
+      <details class="group rounded-2xl border border-slate-200 bg-white">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Kehidupan mahasiswa & peta</p>
+            <h3 class="mt-1 text-lg font-bold text-slate-950">Transportasi, area tinggal, kebutuhan harian, musim dingin, dan lokasi penting</h3>
+          </div>
+          <span class="text-2xl leading-none text-slate-400 transition group-open:rotate-45">+</span>
+        </summary>
+        <div class="border-t border-slate-100 px-5 pb-6 pt-5 sm:px-6">
+          <div class="grid gap-4 md:grid-cols-2">
+            <article class="rounded-2xl bg-slate-950 p-5 text-white">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Transportasi harian</p>
+              <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.transport}</p>
+            </article>
+            <article class="rounded-2xl bg-slate-950 p-5 text-white">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Pola area tinggal</p>
+              <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.livingArea}</p>
+            </article>
+            <article class="rounded-2xl bg-slate-950 p-5 text-white">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Kebutuhan sehari-hari</p>
+              <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.dailyNeeds}</p>
+            </article>
+            <article class="rounded-2xl bg-slate-950 p-5 text-white">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Musim dingin</p>
+              <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.winter}</p>
+            </article>
+          </div>
+
+          <div class="mt-4 rounded-2xl border border-slate-700 bg-slate-950 p-5 text-white">
+            <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-soft">Koneksi ke komunitas PPI</p>
+            <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.community}</p>
+          </div>
+
+          <div class="mt-5 overflow-hidden rounded-2xl border border-slate-200">
+            <iframe
+              src={`https://www.google.com/maps?q=${encodeURIComponent(profile.mapOverviewQuery)}&output=embed`}
+              title={`Google Maps overview · ${profile.mapOverviewQuery}`}
+              class="h-[300px] w-full border-0 sm:h-[360px]"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+            ></iframe>
+          </div>
+
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            {profile.usefulPlaces.map((place) => (
+              <article class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <p class="text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500">{place.category}</p>
+                <h4 class="mt-2 font-bold text-slate-950">{place.name}</h4>
+                <p class="mt-2 text-sm leading-6 text-slate-600">{place.description}</p>
+                <div class="mt-3 flex flex-wrap gap-3">
+                  <a href={place.mapUrl} target="_blank" rel="noreferrer" class="text-xs font-bold text-brand hover:underline">Google Maps ↗</a>
+                  <a href={googleMapsEmbedUrl(place.mapUrl, place.name)} target="_blank" rel="noreferrer" class="text-xs font-bold text-slate-600 hover:underline">Lihat peta ↗</a>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </details>
 
-    <section class="mt-7">
-      <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Academic & Research Highlights</p>
-          <h3 class="mt-2 text-2xl font-bold tracking-tight text-slate-950">Tema akademik yang paling membantu membaca identitas kampus.</h3>
+      <details class="group rounded-2xl border border-slate-200 bg-white">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Akademik & riset</p>
+            <h3 class="mt-1 text-lg font-bold text-slate-950">Highlight program, center, dan tema riset utama</h3>
+          </div>
+          <span class="text-2xl leading-none text-slate-400 transition group-open:rotate-45">+</span>
+        </summary>
+        <div class="border-t border-slate-100 px-5 pb-6 pt-5 sm:px-6">
+          <div class="grid gap-4 md:grid-cols-2">
+            {profile.academicHighlights.map((item) => (
+              <a href={item.url} target="_blank" rel="noreferrer" class="group/card rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-amber-200 hover:shadow-sm">
+                <span class="inline-flex rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-600">{item.category}</span>
+                <h4 class="mt-3 text-lg font-bold text-slate-950 group-hover/card:text-brand">{item.title}</h4>
+                <p class="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
+              </a>
+            ))}
+          </div>
         </div>
-        <p class="max-w-xl text-xs leading-5 text-slate-500">Highlight dipilih dari program, center, atau area akademik resmi—bukan sebagai ranking antarkampus.</p>
-      </div>
-      <div class="mt-5 grid gap-4 md:grid-cols-2">
-        {profile.academicHighlights.map((item) => (
-          <a href={item.url} target="_blank" rel="noreferrer" class="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
-            <span class="inline-flex rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-600">{item.category}</span>
-            <h4 class="mt-3 text-lg font-bold text-slate-950 group-hover:text-brand">{item.title}</h4>
-            <p class="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
-            <p class="mt-4 text-xs font-bold text-brand">Pelajari dari sumber resmi ↗</p>
-          </a>
-        ))}
-      </div>
-    </section>
+      </details>
 
-    <section class="mt-7">
-      <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Facilities & Campus Landmarks</p>
-          <h3 class="mt-2 text-2xl font-bold tracking-tight text-slate-950">Tempat yang membantu memahami karakter kampus.</h3>
+      <details class="group rounded-2xl border border-slate-200 bg-white">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Fasilitas & visual</p>
+            <h3 class="mt-1 text-lg font-bold text-slate-950">Center khas, landmark kampus, dan visual berlisensi</h3>
+          </div>
+          <span class="text-2xl leading-none text-slate-400 transition group-open:rotate-45">+</span>
+        </summary>
+        <div class="border-t border-slate-100 px-5 pb-6 pt-5 sm:px-6">
+          <div class="grid gap-4 sm:grid-cols-2">
+            {profile.landmarks.map((landmark) => (
+              <a href={landmark.url} target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:border-amber-200">
+                <span class="inline-flex rounded-full bg-white px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-accent-dark">{landmark.type}</span>
+                <h4 class="mt-3 text-lg font-bold text-slate-950">{landmark.name}</h4>
+                <p class="mt-2 text-sm leading-6 text-slate-600">{landmark.description}</p>
+              </a>
+            ))}
+          </div>
+
+          {visuals.length > 0 && (
+            <div class="mt-5 grid gap-4 md:grid-cols-2">
+              {visuals.map((media) => (
+                <LicensedPhoto media={media} imageClass="aspect-[4/3] w-full object-cover" />
+              ))}
+            </div>
+          )}
+
+          <div class="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-dark">Sumber profil</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              {profile.profileSources.map((source) => (
+                <a href={source.url} target="_blank" rel="noreferrer" class="rounded-xl border border-amber-200 bg-white px-3 py-2 text-xs font-bold text-slate-800">
+                  {source.label} ↗
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
-        <p class="max-w-xl text-xs leading-5 text-slate-500">Dipilih karena relevan untuk belajar, riset, kehidupan kampus, atau dukungan mahasiswa—bukan sekadar landmark visual.</p>
-      </div>
-      <div class="mt-5 grid gap-4 sm:grid-cols-2">
-        {profile.landmarks.map((landmark) => (
-          <a href={landmark.url} target="_blank" rel="noreferrer" class="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
-            <span class="inline-flex rounded-full bg-amber-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-accent-dark">{landmark.type}</span>
-            <h4 class="mt-3 text-lg font-bold text-slate-950 group-hover:text-brand">{landmark.name}</h4>
-            <p class="mt-2 text-sm leading-6 text-slate-600">{landmark.description}</p>
-            <p class="mt-4 text-xs font-bold text-brand">Lihat sumber resmi ↗</p>
-          </a>
-        ))}
-      </div>
-    </section>
-
-    <div class="mt-7 grid gap-5 lg:grid-cols-[1.25fr_.75fr]">
-      <div class="rounded-3xl bg-slate-950 p-6 text-white">
-        <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-soft">Yang menonjol</p>
-        <ul class="mt-4 space-y-3">
-          {profile.distinctive.map((item) => (
-            <li class="flex gap-3 text-sm leading-6 text-slate-300">
-              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-soft"></span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6">
-        <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Sumber profil</p>
-        <p class="mt-3 text-sm leading-6 text-slate-700">Ringkasan ini disusun dari sumber resmi kampus. Gunakan halaman berikut bila ingin membaca konteks institusi secara lebih lengkap.</p>
-        <div class="mt-4 space-y-2">
-          {profile.profileSources.map((source) => (
-            <a href={source.url} target="_blank" rel="noreferrer" class="block rounded-xl border border-amber-200 bg-white px-4 py-3 text-sm font-bold text-slate-800 transition hover:border-amber-300">
-              {source.label} ↗
-            </a>
-          ))}
-        </div>
-      </div>
+      </details>
     </div>
   </div>
 </section>
