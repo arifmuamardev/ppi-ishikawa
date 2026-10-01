@@ -81,27 +81,27 @@ export const relatedSurvivalContent: Record<string, RelatedContentItem[]> = {
 export const campusRelatedContent: Record<string, RelatedContentItem[]> = {
   'kanazawa-university': [
     { title: 'Transportasi', description: 'Pahami commute ke Kakuma dan pilihan mobilitas dari Kanazawa.', href: '/life-in-ishikawa/transportasi/', icon: 'transport' },
-    { title: 'Panduan Kanazawa', description: 'Layanan municipality mengikuti alamat tempat tinggal di Kanazawa atau city lain.', href: '/life-in-ishikawa/municipality-guides/', icon: 'city' },
+    { title: 'Panduan Kanazawa', description: 'Layanan municipality mengikuti alamat tempat tinggal di Kanazawa atau city lain.', href: '/life-in-ishikawa/municipality-guides/#kanazawa', icon: 'city' },
     { title: 'Tempat Tinggal', description: 'Bandingkan dormitory, apartment, biaya, dan akses sebelum memilih lokasi.', href: '/life-in-ishikawa/tempat-tinggal/', icon: 'housing' }
   ],
   jaist: [
     { title: 'Transportasi', description: 'JAIST membutuhkan perhatian khusus pada shuttle, train, dan first/last mile.', href: '/life-in-ishikawa/transportasi/', icon: 'transport' },
-    { title: 'Panduan Nomi', description: 'City services, garbage, family support, dan local procedures mengikuti Nomi.', href: '/life-in-ishikawa/municipality-guides/', icon: 'city' },
+    { title: 'Panduan Nomi', description: 'City services, garbage, family support, dan local procedures mengikuti Nomi.', href: '/life-in-ishikawa/municipality-guides/#nomi', icon: 'city' },
     { title: 'Tempat Tinggal', description: 'Bandingkan student housing dengan kebutuhan family, transport, dan daily life.', href: '/life-in-ishikawa/tempat-tinggal/', icon: 'housing' }
   ],
   'kanazawa-institute-of-technology': [
     { title: 'Transportasi', description: 'Nonoichi dan Kanazawa punya banyak opsi mobilitas, tetapi commute tetap perlu dihitung.', href: '/life-in-ishikawa/transportasi/', icon: 'transport' },
-    { title: 'Panduan Nonoichi', description: 'Gunakan layanan municipality sesuai alamat tinggal, terutama untuk administrasi dan garbage.', href: '/life-in-ishikawa/municipality-guides/', icon: 'city' },
+    { title: 'Panduan Nonoichi', description: 'Gunakan layanan municipality sesuai alamat tinggal, terutama untuk administrasi dan garbage.', href: '/life-in-ishikawa/municipality-guides/#nonoichi', icon: 'city' },
     { title: 'Tempat Tinggal', description: 'Pertimbangkan jarak ke Ohgigaoka, station, supermarket, dan winter travel.', href: '/life-in-ishikawa/tempat-tinggal/', icon: 'housing' }
   ],
   'ishikawa-prefectural-university': [
     { title: 'Transportasi', description: 'IPU berada di Nonoichi; cek akses bus, bicycle, dan pilihan commute lainnya.', href: '/life-in-ishikawa/transportasi/', icon: 'transport' },
-    { title: 'Panduan Nonoichi', description: 'Layanan municipality penting untuk resident registration, garbage, dan family support.', href: '/life-in-ishikawa/municipality-guides/', icon: 'city' },
+    { title: 'Panduan Nonoichi', description: 'Layanan municipality penting untuk resident registration, garbage, dan family support.', href: '/life-in-ishikawa/municipality-guides/#nonoichi', icon: 'city' },
     { title: 'Kehidupan Sehari-hari', description: 'Hubungkan lokasi kampus dengan shopping, daily services, dan kebutuhan rutin.', href: '/life-in-ishikawa/kehidupan-sehari-hari/', icon: 'guide' }
   ],
   'kinjo-university': [
     { title: 'Transportasi', description: 'Kasama/Hakusan memerlukan perencanaan train, bicycle, bus, atau car sesuai housing.', href: '/life-in-ishikawa/transportasi/', icon: 'transport' },
-    { title: 'Panduan Hakusan', description: 'Gunakan Hakusan Living Guide untuk layanan lokal sesuai alamat tempat tinggal.', href: '/life-in-ishikawa/municipality-guides/', icon: 'city' },
+    { title: 'Panduan Hakusan', description: 'Gunakan Hakusan Living Guide untuk layanan lokal sesuai alamat tempat tinggal.', href: '/life-in-ishikawa/municipality-guides/#hakusan', icon: 'city' },
     { title: 'Tempat Tinggal', description: 'Nilai housing berdasarkan access ke kampus dan kehidupan harian di Hakusan.', href: '/life-in-ishikawa/tempat-tinggal/', icon: 'housing' }
   ],
   'alice-gakuen': [
