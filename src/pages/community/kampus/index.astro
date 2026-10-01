@@ -8,7 +8,7 @@ import MunicipalityMark from '../../../components/MunicipalityMark.astro';
 import ContextualText from '../../../components/ContextualText.astro';
 import InteractiveMap from '../../../components/InteractiveMap.astro';
 
-import { campuses, campusCensus, campusHubProfileBySlug } from '../../../data/campuses';
+import { campuses, campusCensus, campusHubProfileBySlug, campusProfileBySlug } from '../../../data/campuses';
 import { withBase } from '../../../utils/paths';
 import { campusMedia } from '../../../data/media';
 import { campusOverviewPoints } from '../../../data/campus-map';
@@ -233,7 +233,7 @@ const needs = [
             <th class="px-5 py-4 font-bold">Institusi</th>
             <th class="px-5 py-4 font-bold">Profil studi</th>
             <th class="px-5 py-4 font-bold">Tempat tinggal</th>
-            <th class="px-5 py-4 font-bold">Mobility</th>
+            <th class="px-5 py-4 font-bold">Mobilitas</th>
             <th class="px-5 py-4 font-bold">Dukungan utama</th>
           </tr>
         </thead>
@@ -288,9 +288,19 @@ const needs = [
 
             <p class="mt-5 leading-7 text-slate-600">{campus.summary}</p>
 
-            <div class="mt-5 rounded-2xl bg-slate-50 p-4">
-              <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Fokus utama</p>
+            <div class="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-4">
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Karakter kampus</p>
+              <p class="mt-2 text-sm font-semibold leading-6 text-slate-800">{campusProfileBySlug[campus.slug].orientation}</p>
+            </div>
+
+            <div class="mt-4 rounded-2xl bg-slate-50 p-4">
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Fokus akademik</p>
               <p class="mt-2 text-sm leading-6 text-slate-700">{profile.academicFocus}</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                {campusProfileBySlug[campus.slug].studyAreas.slice(0, 4).map((area) => (
+                  <span class="rounded-full bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-600">{area}</span>
+                ))}
+              </div>
             </div>
 
             <div class="mt-4 grid gap-3 sm:grid-cols-2">
