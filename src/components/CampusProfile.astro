@@ -1,6 +1,7 @@
 ---
 import type { CampusProfileDetail } from '../data/campuses';
 import LicensedPhoto from './LicensedPhoto.astro';
+import TopicIcon from './TopicIcon.astro';
 import { campusProfileMedia } from '../data/media';
 
 interface Props {
@@ -19,6 +20,25 @@ const googleMapsEmbedUrl = (mapUrl: string, fallback: string) => {
     return `https://www.google.com/maps?q=${encodeURIComponent(fallback)}&output=embed`;
   }
 };
+
+const glanceIcon = (label: string) => {
+  const key = label.toLowerCase();
+  if (key.includes('mahasiswa') || key.includes('international')) return 'collaboration';
+  if (key.includes('struktur') || key.includes('faculty') || key.includes('graduate')) return 'academic';
+  if (key.includes('luas') || key.includes('kampus')) return 'building';
+  if (key.includes('sejarah') || key.includes('didirikan') || key.includes('berdiri')) return 'info';
+  return 'campus';
+};
+
+const placeIcon = (category: string) => {
+  const key = category.toLowerCase();
+  if (key.includes('transport')) return 'transport';
+  if (key.includes('belanja') || key.includes('makan')) return 'city';
+  if (key.includes('kesehatan')) return 'health';
+  if (key.includes('administrasi')) return 'documents';
+  if (key.includes('kampus')) return 'campus';
+  return 'map';
+};
 ---
 
 <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
@@ -31,7 +51,10 @@ const googleMapsEmbedUrl = (mapUrl: string, fallback: string) => {
     <div class="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
       {profile.glance.map((item) => (
         <a href={item.sourceUrl} target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-amber-200 hover:bg-amber-50">
-          <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">{item.label}</p>
+          <div class="flex items-center gap-2">
+            <span class="grid size-9 place-items-center rounded-xl bg-white text-brand"><TopicIcon name={glanceIcon(item.label) as any} class="size-5" /></span>
+            <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">{item.label}</p>
+          </div>
           <p class="mt-2 text-xl font-bold tracking-tight text-slate-950">{item.value}</p>
           {item.note && <p class="mt-2 text-xs leading-5 text-slate-600">{item.note}</p>}
         </a>
@@ -39,7 +62,10 @@ const googleMapsEmbedUrl = (mapUrl: string, fallback: string) => {
     </div>
 
     <div class="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-5 sm:p-6">
-      <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Orientasi cepat</p>
+      <div class="flex items-center gap-2">
+        <span class="grid size-9 place-items-center rounded-xl bg-white text-accent-dark"><TopicIcon name="guide" class="size-5" /></span>
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Orientasi cepat</p>
+      </div>
       <p class="mt-2 text-lg font-bold leading-7 text-slate-950">{profile.orientation}</p>
       <div class="mt-4 flex flex-wrap gap-2">
         {profile.studyAreas.map((area) => (
@@ -51,9 +77,12 @@ const googleMapsEmbedUrl = (mapUrl: string, fallback: string) => {
     <div class="mt-7 space-y-3">
       <details class="group rounded-2xl border border-slate-200 bg-white">
         <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
-          <div>
+          <div class="flex items-start gap-3">
+            <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-brand"><TopicIcon name="info" class="size-5" /></span>
+            <div>
             <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Tentang kampus</p>
             <h3 class="mt-1 text-lg font-bold text-slate-950">Sejarah, struktur, karakter akademik, dan lingkungan kampus</h3>
+            </div>
           </div>
           <span class="text-2xl leading-none text-slate-400 transition group-open:rotate-45">+</span>
         </summary>
@@ -98,33 +127,51 @@ const googleMapsEmbedUrl = (mapUrl: string, fallback: string) => {
 
       <details class="group rounded-2xl border border-slate-200 bg-white">
         <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
-          <div>
+          <div class="flex items-start gap-3">
+            <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-brand"><TopicIcon name="collaboration" class="size-5" /></span>
+            <div>
             <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Mahasiswa internasional</p>
             <h3 class="mt-1 text-lg font-bold text-slate-950">Admission, bahasa, tempat tinggal, biaya, dan first contact</h3>
+            </div>
           </div>
           <span class="text-2xl leading-none text-slate-400 transition group-open:rotate-45">+</span>
         </summary>
         <div class="border-t border-slate-100 px-5 pb-6 pt-5 sm:px-6">
           <div class="grid gap-4 md:grid-cols-2">
             <article class="rounded-2xl bg-slate-50 p-5">
+              <div class="flex items-center gap-2">
+              <TopicIcon name="documents" class="size-4 text-slate-500" />
               <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Jalur masuk</p>
+            </div>
               <p class="mt-2 text-sm leading-6 text-slate-700">{profile.internationalStudent.admission}</p>
             </article>
             <article class="rounded-2xl bg-slate-50 p-5">
+              <div class="flex items-center gap-2">
+              <TopicIcon name="language" class="size-4 text-slate-500" />
               <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Bahasa pengantar</p>
+            </div>
               <p class="mt-2 text-sm leading-6 text-slate-700">{profile.internationalStudent.language}</p>
             </article>
             <article class="rounded-2xl bg-slate-50 p-5">
+              <div class="flex items-center gap-2">
+              <TopicIcon name="housing" class="size-4 text-slate-500" />
               <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Tempat tinggal</p>
+            </div>
               <p class="mt-2 text-sm leading-6 text-slate-700">{profile.internationalStudent.housing}</p>
             </article>
             <article class="rounded-2xl bg-slate-50 p-5">
+              <div class="flex items-center gap-2">
+              <TopicIcon name="scholarship" class="size-4 text-slate-500" />
               <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Beasiswa & dukungan biaya</p>
+            </div>
               <p class="mt-2 text-sm leading-6 text-slate-700">{profile.internationalStudent.funding}</p>
             </article>
           </div>
           <div class="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-5">
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-dark">First contact</p>
+            <div class="flex items-center gap-2">
+              <TopicIcon name="support" class="size-4 text-accent-dark" />
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-dark">First contact</p>
+            </div>
             <p class="mt-2 text-base font-bold text-slate-950">{profile.internationalStudent.firstContact}</p>
             <a href={profile.internationalStudent.sourceUrl} target="_blank" rel="noreferrer" class="mt-3 inline-flex text-xs font-bold text-brand hover:underline">Sumber internasional resmi ↗</a>
           </div>
@@ -133,34 +180,52 @@ const googleMapsEmbedUrl = (mapUrl: string, fallback: string) => {
 
       <details class="group rounded-2xl border border-slate-200 bg-white">
         <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
-          <div>
+          <div class="flex items-start gap-3">
+            <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-brand"><TopicIcon name="map" class="size-5" /></span>
+            <div>
             <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Kehidupan mahasiswa & peta</p>
             <h3 class="mt-1 text-lg font-bold text-slate-950">Transportasi, area tinggal, kebutuhan harian, musim dingin, dan lokasi penting</h3>
+            </div>
           </div>
           <span class="text-2xl leading-none text-slate-400 transition group-open:rotate-45">+</span>
         </summary>
         <div class="border-t border-slate-100 px-5 pb-6 pt-5 sm:px-6">
           <div class="grid gap-4 md:grid-cols-2">
             <article class="rounded-2xl bg-slate-950 p-5 text-white">
+              <div class="flex items-center gap-2">
+              <TopicIcon name="transport" class="size-4 text-slate-400" />
               <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Transportasi harian</p>
+            </div>
               <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.transport}</p>
             </article>
             <article class="rounded-2xl bg-slate-950 p-5 text-white">
+              <div class="flex items-center gap-2">
+              <TopicIcon name="housing" class="size-4 text-slate-400" />
               <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Pola area tinggal</p>
+            </div>
               <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.livingArea}</p>
             </article>
             <article class="rounded-2xl bg-slate-950 p-5 text-white">
+              <div class="flex items-center gap-2">
+              <TopicIcon name="city" class="size-4 text-slate-400" />
               <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Kebutuhan sehari-hari</p>
+            </div>
               <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.dailyNeeds}</p>
             </article>
             <article class="rounded-2xl bg-slate-950 p-5 text-white">
+              <div class="flex items-center gap-2">
+              <TopicIcon name="winter" class="size-4 text-slate-400" />
               <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Musim dingin</p>
+            </div>
               <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.winter}</p>
             </article>
           </div>
 
           <div class="mt-4 rounded-2xl border border-slate-700 bg-slate-950 p-5 text-white">
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-soft">Koneksi ke komunitas PPI</p>
+            <div class="flex items-center gap-2">
+              <TopicIcon name="collaboration" class="size-4 text-accent-soft" />
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-soft">Koneksi ke komunitas PPI</p>
+            </div>
             <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.community}</p>
           </div>
 
@@ -178,7 +243,10 @@ const googleMapsEmbedUrl = (mapUrl: string, fallback: string) => {
           <div class="mt-4 grid gap-3 sm:grid-cols-2">
             {profile.usefulPlaces.map((place) => (
               <article class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <p class="text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500">{place.category}</p>
+                <div class="flex items-center gap-2">
+                  <span class="grid size-8 place-items-center rounded-lg bg-white text-brand"><TopicIcon name={placeIcon(place.category) as any} class="size-4" /></span>
+                  <p class="text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500">{place.category}</p>
+                </div>
                 <h4 class="mt-2 font-bold text-slate-950">{place.name}</h4>
                 <p class="mt-2 text-sm leading-6 text-slate-600">{place.description}</p>
                 <div class="mt-3 flex flex-wrap gap-3">
@@ -193,9 +261,12 @@ const googleMapsEmbedUrl = (mapUrl: string, fallback: string) => {
 
       <details class="group rounded-2xl border border-slate-200 bg-white">
         <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
-          <div>
+          <div class="flex items-start gap-3">
+            <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-brand"><TopicIcon name="research" class="size-5" /></span>
+            <div>
             <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Akademik & riset</p>
             <h3 class="mt-1 text-lg font-bold text-slate-950">Highlight program, center, dan tema riset utama</h3>
+            </div>
           </div>
           <span class="text-2xl leading-none text-slate-400 transition group-open:rotate-45">+</span>
         </summary>
@@ -214,9 +285,12 @@ const googleMapsEmbedUrl = (mapUrl: string, fallback: string) => {
 
       <details class="group rounded-2xl border border-slate-200 bg-white">
         <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
-          <div>
+          <div class="flex items-start gap-3">
+            <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-brand"><TopicIcon name="building" class="size-5" /></span>
+            <div>
             <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Fasilitas & visual</p>
             <h3 class="mt-1 text-lg font-bold text-slate-950">Center khas, landmark kampus, dan visual berlisensi</h3>
+            </div>
           </div>
           <span class="text-2xl leading-none text-slate-400 transition group-open:rotate-45">+</span>
         </summary>
