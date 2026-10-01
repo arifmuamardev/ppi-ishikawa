@@ -213,12 +213,22 @@ export interface InternationalStudentSnapshot {
   sourceUrl: string;
 }
 
+export interface StudentLifeSnapshot {
+  transport: string;
+  livingArea: string;
+  dailyNeeds: string;
+  winter: string;
+  community: string;
+  sourceUrl: string;
+}
+
 export interface CampusProfileDetail {
   slug: string;
   glance: CampusGlanceItem[];
   landmarks: CampusLandmark[];
   academicHighlights: CampusAcademicHighlight[];
   internationalStudent: InternationalStudentSnapshot;
+  studentLife: StudentLifeSnapshot;
   history: string;
   academicStructure: string;
   academicCharacter: string;
@@ -259,6 +269,14 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       funding: 'MEXT, JASSO, tuition exemption/reduction, dan scholarship internal/eksternal tersedia tergantung status mahasiswa.',
       firstContact: 'International Student Support / One-Stop Consultation Counter',
       sourceUrl: 'https://www.kanazawa-u.ac.jp/en/global-network/study/'
+    },
+    studentLife: {
+      transport: 'Kakuma sangat bergantung pada Hokutetsu Bus; university shuttle menghubungkan Kakuma dan Takaramachi–Tsuruma pada hari kerja tertentu. Sepeda dan mobil juga digunakan sesuai aturan kampus.',
+      livingArea: 'Mahasiswa tersebar di sekitar Kakuma, Morinosato, pusat Kanazawa, dan area yang lebih dekat Takaramachi–Tsuruma sesuai lokasi studi.',
+      dailyNeeds: 'Kampus menyediakan cafeteria/store; kebutuhan harian lain banyak dipenuhi di Morinosato atau pusat Kanazawa.',
+      winter: 'Rute ke Kakuma menanjak dan musim dingin dapat memengaruhi bus, sepeda, serta waktu perjalanan. Buffer waktu dan rencana transport alternatif penting.',
+      community: 'Akses ke kegiatan PPI relatif mudah dari area Kanazawa, tetapi mahasiswa Kakuma dan Takaramachi–Tsuruma memiliki pola perjalanan harian yang berbeda.',
+      sourceUrl: 'https://www.kanazawa-u.ac.jp/en/students/livelihood/'
     },
     history: 'Berakar dari Smallpox Vaccination Center Kaga Domain yang didirikan pada 1862; kini Kanazawa University merupakan universitas nasional komprehensif dengan sejarah lebih dari 160 tahun.',
     academicStructure: '4 colleges, 20 schools, dan 7 graduate schools. Spektrumnya mencakup humanities, social sciences, science, engineering, medicine, health sciences, pharmacy, hingga bidang lintas disiplin.',
@@ -308,6 +326,14 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       firstContact: 'International Student Section',
       sourceUrl: 'https://www.jaist.ac.jp/english/international/'
     },
+    studentLife: {
+      transport: 'JAIST Shuttle menghubungkan Asahidai dengan Komatsu dan Tsurugi; Nomi Bus berguna untuk belanja, rumah sakit, city hall, dan kebutuhan lain di Nomi.',
+      livingArea: 'Student Housing dan JAIST HOUSE berada di campus area; sebagian mahasiswa juga tinggal di luar kampus dan menyesuaikan perjalanan dengan shuttle atau kendaraan pribadi.',
+      dailyNeeds: 'Cafeteria, convenience store, health center, library, gym, dan housing berada dalam satu cluster kampus. Untuk pilihan belanja lebih luas, mahasiswa perlu keluar dari Asahidai.',
+      winter: 'Asahidai berada di area yang lebih terbuka dan terpisah dari pusat kota; salju dan kondisi jalan membuat jadwal shuttle serta perencanaan mobilitas penting.',
+      community: 'Kegiatan PPI banyak berlangsung di Kanazawa, sehingga mahasiswa JAIST biasanya perlu merencanakan perjalanan Nomi–Kanazawa lebih awal.',
+      sourceUrl: 'https://www.jaist.ac.jp/english/top/access/'
+    },
     history: 'Didirikan pada 1990 sebagai universitas pascasarjana nasional independen pertama di Jepang tanpa divisi undergraduate.',
     academicStructure: 'Pendidikan berpusat pada graduate study dan riset lanjutan. Area utamanya berkembang dari Knowledge Science, Information Science, dan Materials Science dalam struktur graduate school terpadu.',
     academicCharacter: 'Lingkungan graduate-focused dengan pendidikan berbasis coursework yang sistematis dan riset frontier science and technology. Mahasiswa datang dari latar disiplin yang beragam.',
@@ -355,6 +381,14 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       funding: 'Scholarship dan tuition-related support mengikuti status program dan skema penerimaan masing-masing.',
       firstContact: 'Center for International Programs',
       sourceUrl: 'https://www.kanazawa-it.ac.jp/ekit/exchanges/index.html'
+    },
+    studentLife: {
+      transport: 'Ohgigaoka dapat dicapai dengan Hokutetsu Bus dari Kanazawa Station; dari pusat Kanazawa perjalanan bus sekitar 30–40 menit menurut panduan resmi.',
+      livingArea: 'Nonoichi dan area selatan Kanazawa praktis untuk akses ke Ohgigaoka. Pilihan tempat tinggal tetap perlu disesuaikan dengan program dan durasi studi.',
+      dailyNeeds: 'Cafeteria, library, student support, international programs, dan fasilitas belajar tersedia di kampus; Nonoichi memiliki banyak toko dan layanan dalam radius harian.',
+      winter: 'Sepeda tetap berguna pada banyak musim, tetapi salju dapat mengurangi kepraktisannya. Bus atau berjalan kaki perlu menjadi alternatif saat kondisi jalan buruk.',
+      community: 'Lokasi Nonoichi masih relatif dekat dengan Kanazawa, sehingga akses ke kegiatan PPI umumnya lebih mudah dibanding kampus yang berada lebih jauh ke selatan.',
+      sourceUrl: 'https://www.kanazawa-it.ac.jp/ekit/map/ohgigaoka.html'
     },
     history: 'Kanazawa Institute of Technology berkembang sebagai universitas swasta teknologi dengan orientasi kuat pada pendidikan rekayasa, kreativitas, dan hubungan antara pembelajaran dengan penerapan di masyarakat.',
     academicStructure: 'Struktur akademik terkini mencakup enam faculties dan 17 departments, termasuk engineering, information, media/information design, architecture, bioscience/chemistry, serta bidang terkait.',
@@ -404,6 +438,14 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       firstContact: 'Academic & Student Affairs Section',
       sourceUrl: 'https://www.ishikawa-pu.ac.jp/admission/'
     },
+    studentLife: {
+      transport: 'Akses dapat menggunakan JR Nonoichi yang dilanjutkan community shuttle/bus; sepeda dan mobil juga relevan untuk kehidupan sehari-hari.',
+      livingArea: 'Mahasiswa umumnya perlu memilih private housing di Nonoichi atau area dengan koneksi praktis ke kampus Suematsu karena tidak ada university dormitory.',
+      dailyNeeds: 'Nonoichi menyediakan supermarket, drugstore, restoran, city facilities, dan community bus; kebutuhan sehari-hari relatif tersebar di sekitar kota.',
+      winter: 'Perjalanan dengan sepeda dapat menjadi lebih sulit saat salju; akses bus/shuttle dan jarak berjalan kaki dari tempat tinggal perlu dipertimbangkan.',
+      community: 'Secara geografis masih dekat dengan Kanazawa dan KIT/Nonoichi area, sehingga relatif mudah terhubung dengan kegiatan PPI dan mahasiswa kampus lain.',
+      sourceUrl: 'https://www.ishikawa-pu.ac.jp/access/'
+    },
     history: 'Universitas publik yang dikelola oleh Ishikawa Prefectural Public University Corporation dan berakar kuat pada kebutuhan pertanian, lingkungan, pangan, serta biosains di wilayah Ishikawa.',
     academicStructure: 'Faculty of Bioresources and Environmental Sciences mencakup Bioproduction Science, Environmental Science, dan Food Science; graduate study memperdalam bidang bioresources/environment dan applied life science.',
     academicCharacter: 'Kampusnya relatif spesialis dibanding universitas komprehensif: pendidikan dan riset berpusat pada hubungan antara sumber daya hayati, lingkungan, pangan, pertanian, dan life science.',
@@ -452,6 +494,14 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       firstContact: 'International Exchange Center',
       sourceUrl: 'https://www.kinjo.ac.jp/english/'
     },
+    studentLife: {
+      transport: 'Kasama Campus dekat koridor Kaga-Kasama; Matto Campus memiliki pola akses berbeda. Pemilihan route perlu mengikuti faculty dan lokasi kelas/practicum.',
+      livingArea: 'Karena tidak ada foreign-student dormitory, mahasiswa internasional menggunakan private apartment; akses rail/bus menjadi faktor penting saat memilih lokasi.',
+      dailyNeeds: 'Hakusan memiliki layanan harian di sekitar stasiun dan koridor utama, tetapi pola belanja dan commute berbeda dari pusat Kanazawa.',
+      winter: 'Rail biasanya menjadi tulang punggung perjalanan yang lebih stabil, sementara sepeda dan bus lokal dapat lebih terpengaruh kondisi musim dingin.',
+      community: 'Untuk kegiatan PPI di Kanazawa, mahasiswa perlu memperhitungkan perjalanan Hakusan–Kanazawa dan jadwal kereta terakhir.',
+      sourceUrl: 'https://www.kinjo.ac.jp/english/prospective/living.html'
+    },
     history: 'Kinjo University berkembang sebagai universitas swasta di Hakusan dengan pendidikan yang dekat dengan kebutuhan profesi, layanan masyarakat, kesehatan, welfare, pendidikan, dan ekonomi.',
     academicStructure: 'Memiliki faculties pada Interdisciplinary Economics, Human and Social Sciences, Health Sciences, dan Nursing, ditambah Advanced Course of Public Health Nursing serta Graduate School of Comprehensive Rehabilitation.',
     academicCharacter: 'Banyak program diarahkan pada kompetensi profesional dan praktik lapangan. Universitas juga menekankan pendidikan kelompok kecil dan pendampingan mahasiswa dari awal hingga akhir studi.',
@@ -499,6 +549,14 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       funding: 'Informasi biaya, reduction, dan dukungan finansial mengikuti program serta intake masing-masing.',
       firstContact: 'Academic Affairs / international life-support staff',
       sourceUrl: 'https://gakuen.alice-japan.net/entrance-exam/admissions-in'
+    },
+    studentLife: {
+      transport: 'Kanazawa Campus mengikuti pola bus/bicycle kota Kanazawa, sedangkan Kaga Campus lebih berpusat pada Daishoji dan jaringan transportasi Kaga.',
+      livingArea: 'Japanese Language students di Kanazawa dan Kaga pada prinsipnya tinggal di dormitory yang ditentukan sekolah; aturan berbeda dapat berlaku untuk program lain.',
+      dailyNeeds: 'Kehidupan siswa sangat terkait dengan dormitory, sekolah, part-time work, supermarket, city procedures, dan kemampuan bahasa Jepang praktis.',
+      winter: 'Kanazawa dan Kaga sama-sama mengalami musim dingin Hokuriku; siswa perlu mempertimbangkan jarak dorm–kampus, sepatu salju, dan waktu perjalanan.',
+      community: 'Siswa Kanazawa lebih dekat dengan pusat kegiatan PPI; siswa Kaga perlu merencanakan perjalanan yang lebih panjang untuk kegiatan lintas wilayah.',
+      sourceUrl: 'https://gakuen.alice-japan.net/entrance-exam/dormitory'
     },
     history: 'Alice International Gakuen group was established in 1992 and develops vocational education, Japanese-language education, welfare-related training, and support for international human resources.',
     academicStructure: 'Di Ishikawa, Alice Gakuen memiliki Japanese Language Department, International Business Department, dan Care Worker Department, dengan kegiatan pendidikan di Kanazawa dan Kaga.',
