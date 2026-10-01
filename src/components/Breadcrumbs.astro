@@ -1,0 +1,28 @@
+---
+import { withBase } from '../utils/paths';
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  class?: string;
+}
+
+const { items, class: className = '' } = Astro.props;
+---
+
+<nav class={`flex flex-wrap items-center gap-x-2 gap-y-1 text-sm ${className}`} aria-label="Breadcrumb">
+  {items.map((item, index) => (
+    <>
+      {index > 0 && <span class="text-slate-300" aria-hidden="true">/</span>}
+      {item.href ? (
+        <a href={withBase(item.href)} class="font-semibold text-slate-500 transition hover:text-brand hover:underline">{item.label}</a>
+      ) : (
+        <span class="font-semibold text-slate-700" aria-current="page">{item.label}</span>
+      )}
+    </>
+  ))}
+</nav>
