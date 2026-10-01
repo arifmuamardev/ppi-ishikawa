@@ -67,42 +67,52 @@ export const jaistContactMap = [
 
 export const jaistFaq = [
   {
+    id: 'new-student-start',
     q: 'Saya baru diterima di JAIST. Apa halaman pertama yang harus saya cek?',
     a: 'Mulai dari Notice to New Students untuk intake Anda, lalu cek Student Housing, Contact Information, Access, dan Handbook. Tanggal move-in, orientation, student ID, health check, serta course registration berbeda menurut intake, jadi selalu gunakan notice untuk intake Anda.'
   },
   {
+    id: 'perlu-mobil',
     q: 'Apakah saya harus punya mobil?',
     a: 'Tidak selalu. JAIST menyediakan shuttle menuju stasiun lokal dan Nomi City memiliki community bus untuk berbagai tujuan di kota. Namun kenyamanan mobilitas sangat bergantung pada tempat tinggal, jadwal, dan aktivitas Anda. Coba rute commute aktual sebelum memutuskan housing.'
   },
   {
+    id: 'komatsu-vs-tsurugi-line',
     q: 'Apa beda Komatsu Line dan Tsurugi Line?',
     a: 'Pada informasi akses yang berlaku saat halaman ini diverifikasi, JAIST Shuttle Komatsu Line menggunakan reservasi, sedangkan Tsurugi Line menuju Tsurugi Station tidak memerlukan reservasi. Selalu cek halaman Access karena timetable dan cara operasi dapat berubah.'
   },
   {
+    id: 'tinggal-di-luar-nomi',
     q: 'Apakah bisa tinggal di Kanazawa atau Nonoichi?',
     a: 'Bisa saja memilih private housing di luar Nomi. JAIST sendiri mencantumkan opsi apartment di Nomi dan kota sekitar seperti Hakusan, Komatsu, Kanazawa, dan Nonoichi. Pertimbangkan waktu commute serta koneksi ke Tsurugi/Komatsu sebelum menandatangani kontrak.'
   },
   {
+    id: 'family-housing',
     q: 'Apakah tersedia housing untuk pasangan atau keluarga?',
     a: 'Student Housing JAIST mencakup single, double, dan family units selain JAIST HOUSE. Availability tidak dijamin, jadi cek eligibility dan ketersediaan langsung melalui Student Welfare Section.'
   },
   {
+    id: 'visa-scholarship-tutor',
     q: 'Saya bingung tentang visa, scholarship, atau tutor. Hubungi siapa?',
     a: 'International Student Section adalah jalur utama untuk international-student support, scholarship, immigration guidance, tutors, dan beberapa administrasi terkait mahasiswa internasional.'
   },
   {
+    id: 'kesehatan-counseling',
     q: 'Apakah ada layanan kesehatan dan counseling di kampus?',
     a: 'Ya. Health Care Center menyediakan general health care, first aid, health consultation, dan Student Counseling Service dengan professional counselors. Untuk emergency serius tetap gunakan layanan darurat yang sesuai.'
   },
   {
+    id: 'kelas-bahasa-jepang',
     q: 'Apakah ada kelas bahasa Jepang?',
     a: 'JAIST bekerja sama dengan Nomi International Exchange Association untuk menyediakan JAIST–Nomi City Collaborative Japanese Course bagi mahasiswa yang ingin belajar bahasa Jepang. Cek halaman international career/support untuk informasi terbaru.'
   },
   {
+    id: 'karier-di-jepang',
     q: 'Bagaimana jika saya ingin bekerja di Jepang setelah lulus?',
     a: 'Career Support Office menyediakan seminar, career counseling, internship information, interview preparation, dan dukungan lain. JAIST juga menyediakan informasi khusus international students dan dukungan bahasa Jepang untuk job hunting.'
   },
   {
+    id: 'handbook-vs-ppi',
     q: 'Apakah informasi PPI menggantikan JAIST Handbook?',
     a: 'Tidak. Campus Pack membantu mengarahkan Anda ke jalur yang tepat. Aturan akademik, housing, immigration support, fees, timetable, dan prosedur resmi tetap mengikuti JAIST serta lembaga pemerintah.'
   }
