@@ -66,42 +66,52 @@ export const ipuContactMap = [
 
 export const ipuFaq = [
   {
+    id: 'dormitory',
     q: 'Apakah Ishikawa Prefectural University punya dormitory?',
     a: 'Tidak. FAQ resmi untuk international applicants menyatakan universitas tidak memiliki dormitory. Academic & Student Affairs Section dapat memberikan informasi real-estate di sekitar kampus, tetapi kontrak private housing tetap harus diperiksa sendiri.'
   },
   {
+    id: 'akses-dari-kanazawa',
     q: 'Bagaimana akses dari Kanazawa?',
     a: 'IPU mencantumkan beberapa jalur: shuttle Nonkey dari IR Nonoichi Station langsung ke kampus, Hokutetsu Bus dari Kanazawa Station, serta akses mobil. Timetable dan fare dapat berubah, jadi selalu cek sumber live sebelum berangkat.'
   },
   {
+    id: 'bidang-utama',
     q: 'Apa bidang utama IPU?',
     a: 'Undergraduate IPU berfokus pada Bioproduction Science, Environmental Science, dan Food Science. Graduate school mencakup master-level Production Science, Environmental Science, Food Science, Applied Life Science serta doctoral programs pada Nature–Human Coexistence Science dan Biofunction Development Science.'
   },
   {
+    id: 'jalur-mahasiswa-internasional',
     q: 'Apakah ada jalur khusus mahasiswa internasional?',
     a: 'Ya. Website resmi memuat privately financed international student special selection untuk undergraduate dan foreign-student special selection pada jalur graduate/doctoral tertentu. Detail eligibility, dokumen, dan intake berubah tiap admission year.'
   },
   {
+    id: 'tutor-internasional',
     q: 'Apakah ada tutor untuk mahasiswa internasional?',
     a: 'Graduate/student-support information IPU mencantumkan dukungan tutor yang membantu kehidupan dan studi international students sebagai bagian dari program student support.'
   },
   {
+    id: 'ra-ta',
     q: 'Apakah graduate students bisa menjadi RA atau TA?',
     a: 'IPU mencantumkan Research Assistant dan Teaching Assistant untuk graduate students yang memenuhi ketentuan. Rekrutmen, eligibility, workload, dan kompensasi mengikuti pengumuman resmi kampus.'
   },
   {
+    id: 'counseling',
     q: 'Kalau butuh counseling, harus ke mana?',
     a: 'IPU menyediakan Health Room dan Counseling Room. Academic/student-life support juga tersedia melalui Academic & Student Affairs Section serta Academic Advisor.'
   },
   {
+    id: 'sekitar-kampus',
     q: 'Apa yang ada di sekitar kampus?',
     a: 'Guide resmi kampus menyoroti layanan di Nonoichi seperti city hall, library/civic learning center, shopping, community bus, dan area komersial. Untuk kebutuhan sehari-hari, cocokkan informasi tersebut dengan lokasi housing dan Municipality Guide Nonoichi.'
   },
   {
+    id: 'career-support',
     q: 'Bagaimana career support di IPU?',
     a: 'Career Center dan Employment Support Office menyediakan consultation, résumé/entry-sheet review, interview guidance, seminar, dan informasi kerja. Setelah laboratory assignment, mahasiswa juga dapat berkonsultasi dengan faculty/lab.'
   },
   {
+    id: 'admission-vs-campus-pack',
     q: 'Apakah Campus Pack ini menggantikan informasi admission IPU?',
     a: 'Tidak. Admission dates, eligibility, exam route, fees, scholarship/tuition systems, dan foreign-student selection harus selalu dicek pada halaman resmi untuk admission year yang Anda tuju.'
   }
