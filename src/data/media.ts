@@ -149,3 +149,63 @@ export const campusMedia: Record<string, PublicMedia | null> = {
   },
   'alice-gakuen': null
 };
+
+
+export const campusProfileMedia: Record<string, PublicMedia[]> = {
+  'kanazawa-university': [
+    {
+      id: 'ku-central-library',
+      title: 'Kanazawa University Central Library',
+      imageUrl: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Kanazawa_Univ._Central_Library.jpg?width=1280',
+      sourcePage: 'https://commons.wikimedia.org/wiki/File:Kanazawa_Univ._Central_Library.jpg',
+      credit: 'Miisan1112 / Wikimedia Commons',
+      license: 'CC BY-SA 4.0',
+      alt: 'Central Library Kanazawa University di Kakuma Campus'
+    }
+  ],
+  'jaist': [
+    {
+      id: 'jaist-information-science',
+      title: 'Information Science Building, JAIST',
+      imageUrl: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/The_building_of_Information_Science_at_JAIST.JPG?width=1280',
+      sourcePage: 'https://commons.wikimedia.org/wiki/File:The_building_of_Information_Science_at_JAIST.JPG',
+      credit: 'Jwalker / Wikimedia Commons',
+      license: 'CC BY-SA 3.0',
+      alt: 'Gedung Information Science di JAIST'
+    }
+  ],
+  'kanazawa-institute-of-technology': [
+    {
+      id: 'kit-yumekobo',
+      title: 'Yumekobo · Factory for Dreams and Ideas',
+      imageUrl: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/KIT_Yumekobo.jpg?width=1280',
+      sourcePage: 'https://commons.wikimedia.org/wiki/File:KIT_Yumekobo.jpg',
+      credit: 'Hirorinmasa / Wikimedia Commons',
+      license: 'CC BY-SA 3.0',
+      alt: 'Yumekobo, ruang produksi dan project di Kanazawa Institute of Technology'
+    }
+  ],
+  'ishikawa-prefectural-university': [
+    {
+      id: 'ipu-campus-profile',
+      title: 'Ishikawa Prefectural University',
+      imageUrl: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Ishikawa_Prefectural_University.jpg?width=1280',
+      sourcePage: 'https://commons.wikimedia.org/wiki/File:Ishikawa_Prefectural_University.jpg',
+      credit: 'Hirorinmasa / Wikimedia Commons',
+      license: 'CC BY-SA 3.0',
+      alt: 'Kampus Ishikawa Prefectural University di Nonoichi'
+    }
+  ],
+  'kinjo-university': [
+    {
+      id: 'kinjo-campus-profile',
+      title: 'Kinjo University',
+      imageUrl: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Kinjyo_University.jpg?width=1280',
+      sourcePage: 'https://commons.wikimedia.org/wiki/File:Kinjyo_University.jpg',
+      credit: 'Hirorinmasa / Wikimedia Commons',
+      license: 'CC BY-SA 3.0',
+      alt: 'Gerbang Kinjo University di Hakusan'
+    }
+  ],
+  'alice-gakuen': []
+};
