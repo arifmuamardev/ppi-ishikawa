@@ -3,6 +3,7 @@ import type { CampusProfileDetail } from '../data/campuses';
 import LicensedPhoto from './LicensedPhoto.astro';
 import TopicIcon from './TopicIcon.astro';
 import { campusProfileMedia } from '../data/media';
+import { campuses } from '../data/campuses';
 
 interface Props {
   profile: CampusProfileDetail;
@@ -10,6 +11,18 @@ interface Props {
 
 const { profile } = Astro.props;
 const visuals = campusProfileMedia[profile.slug] ?? [];
+const campus = campuses.find((item) => item.slug === profile.slug);
+const officialWebsite = campus?.officialLinks.find((item) => /official website/i.test(item.label)) ?? campus?.officialLinks[0];
+const internationalLink = campus?.officialLinks.find((item) => /international|study at/i.test(item.label));
+const accessLink = campus?.officialLinks.find((item) => /access|campus/i.test(item.label));
+const housingLink = campus?.officialLinks.find((item) => /living|housing|dorm/i.test(item.label));
+const quickLinks = [
+  officialWebsite && { label: 'Website resmi', url: officialWebsite.url, icon: 'campus' },
+  internationalLink && { label: 'International', url: internationalLink.url, icon: 'collaboration' },
+  accessLink && { label: 'Akses kampus', url: accessLink.url, icon: 'transport' },
+  housingLink && { label: 'Housing', url: housingLink.url, icon: 'housing' },
+  { label: 'Google Maps', url: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(profile.mapOverviewQuery)}`, icon: 'map' }
+].filter(Boolean) as { label: string; url: string; icon: any }[];
 
 const googleMapsEmbedUrl = (mapUrl: string, fallback: string) => {
   try {
@@ -74,8 +87,41 @@ const placeIcon = (category: string) => {
       </div>
     </div>
 
+    <div class="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
+      <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Quick actions</p>
+          <p class="mt-1 text-sm text-slate-600">Akses cepat ke halaman yang paling sering dibutuhkan.</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          {quickLinks.map((item) => (
+            <a href={item.url} target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 transition hover:border-amber-200 hover:text-brand">
+              <TopicIcon name={item.icon} class="size-4" />
+              <span>{item.label}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+      {campus?.censusDate && (
+        <div class="mt-4 flex items-center gap-2 border-t border-slate-200 pt-4 text-xs text-slate-500">
+          <TopicIcon name="info" class="size-4" />
+          <span>Informasi kampus terakhir diperiksa: <strong class="font-semibold text-slate-700">{campus.censusDate}</strong></span>
+        </div>
+      )}
+    </div>
+
+    <nav class="sticky top-3 z-20 mt-5 overflow-x-auto rounded-2xl border border-slate-200 bg-white/95 p-2 shadow-sm backdrop-blur" aria-label="Navigasi profil kampus">
+      <div class="flex min-w-max gap-1">
+        <a href="#tentang-kampus" class="rounded-xl px-3 py-2 text-xs font-bold text-slate-600 hover:bg-amber-50 hover:text-brand">Tentang</a>
+        <a href="#mahasiswa-internasional" class="rounded-xl px-3 py-2 text-xs font-bold text-slate-600 hover:bg-amber-50 hover:text-brand">Internasional</a>
+        <a href="#kehidupan-mahasiswa" class="rounded-xl px-3 py-2 text-xs font-bold text-slate-600 hover:bg-amber-50 hover:text-brand">Student Life</a>
+        <a href="#akademik-riset" class="rounded-xl px-3 py-2 text-xs font-bold text-slate-600 hover:bg-amber-50 hover:text-brand">Akademik</a>
+        <a href="#fasilitas-visual" class="rounded-xl px-3 py-2 text-xs font-bold text-slate-600 hover:bg-amber-50 hover:text-brand">Fasilitas</a>
+      </div>
+    </nav>
+
     <div class="mt-7 space-y-3">
-      <details class="group rounded-2xl border border-slate-200 bg-white">
+      <details id="tentang-kampus" class="group scroll-mt-24 rounded-2xl border border-slate-200 bg-white">
         <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
           <div class="flex items-start gap-3">
             <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-brand"><TopicIcon name="info" class="size-5" /></span>
@@ -125,7 +171,7 @@ const placeIcon = (category: string) => {
         </div>
       </details>
 
-      <details class="group rounded-2xl border border-slate-200 bg-white">
+      <details id="mahasiswa-internasional" class="group scroll-mt-24 rounded-2xl border border-slate-200 bg-white">
         <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
           <div class="flex items-start gap-3">
             <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-brand"><TopicIcon name="collaboration" class="size-5" /></span>
@@ -178,7 +224,7 @@ const placeIcon = (category: string) => {
         </div>
       </details>
 
-      <details class="group rounded-2xl border border-slate-200 bg-white">
+      <details id="kehidupan-mahasiswa" class="group scroll-mt-24 rounded-2xl border border-slate-200 bg-white">
         <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
           <div class="flex items-start gap-3">
             <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-brand"><TopicIcon name="map" class="size-5" /></span>
@@ -259,7 +305,7 @@ const placeIcon = (category: string) => {
         </div>
       </details>
 
-      <details class="group rounded-2xl border border-slate-200 bg-white">
+      <details id="akademik-riset" class="group scroll-mt-24 rounded-2xl border border-slate-200 bg-white">
         <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
           <div class="flex items-start gap-3">
             <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-brand"><TopicIcon name="research" class="size-5" /></span>
@@ -283,7 +329,7 @@ const placeIcon = (category: string) => {
         </div>
       </details>
 
-      <details class="group rounded-2xl border border-slate-200 bg-white">
+      <details id="fasilitas-visual" class="group scroll-mt-24 rounded-2xl border border-slate-200 bg-white">
         <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
           <div class="flex items-start gap-3">
             <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-brand"><TopicIcon name="building" class="size-5" /></span>
