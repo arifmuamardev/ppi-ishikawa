@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ContextualText from '../../../components/ContextualText.astro';
 import { campuses } from '../../../data/campuses';
 import { withBase } from '../../../utils/paths';
 
@@ -22,7 +23,7 @@ const { campus } = Astro.props;
     <p class="mt-8 text-sm font-bold uppercase tracking-[0.18em] text-accent-dark">{campus.type} · {campus.city}</p>
     <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">{campus.name}</h1>
     {campus.japanese && <p class="mt-3 text-lg text-slate-500">{campus.japanese}</p>}
-    <p class="mt-6 max-w-3xl text-lg leading-8 text-slate-600">{campus.summary}</p>
+    <p class="mt-6 max-w-3xl text-lg leading-8 text-slate-600"><ContextualText text={campus.summary} maxLinks={2} /></p>
 
     <div class="mt-7 flex flex-wrap gap-3">
       <span class="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white">{campus.city}</span>
