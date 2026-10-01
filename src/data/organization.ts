@@ -82,30 +82,37 @@ export const leadership = [
 export const departments = [
   {
     name: 'Akademik',
+    slug: 'akademik',
     description: 'Kegiatan akademik, riset, pengembangan kapasitas, dan berbagi pengetahuan.'
   },
   {
     name: 'Olahraga',
+    slug: 'olahraga',
     description: 'Aktivitas olahraga, kebugaran, dan ruang interaksi anggota melalui kegiatan fisik.'
   },
   {
     name: 'Kemahasiswaan',
+    slug: 'kemahasiswaan',
     description: 'Dukungan kebutuhan mahasiswa, pendatang baru, kesejahteraan, dan akses informasi.'
   },
   {
     name: 'Kekeluargaan / Internal',
+    slug: 'kekeluargaan-internal',
     description: 'Kebersamaan anggota, komunikasi internal, keterlibatan keluarga, dan rasa memiliki terhadap komunitas.'
   },
   {
     name: 'Seni Budaya',
+    slug: 'seni-budaya',
     description: 'Kegiatan seni, budaya Indonesia, ekspresi kreatif, dan representasi budaya di Ishikawa.'
   },
   {
     name: 'Media',
+    slug: 'media',
     description: 'Informasi publik, dokumentasi, desain, konten, dan pengelolaan kanal digital organisasi.'
   },
   {
     name: 'Humas / Eksternal',
+    slug: 'humas-eksternal',
     description: 'Hubungan dengan mitra, institusi, komunitas, media, dan jejaring di luar organisasi.'
   }
 ];
