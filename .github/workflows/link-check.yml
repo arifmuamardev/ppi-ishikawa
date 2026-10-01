@@ -7,15 +7,9 @@ on:
   push:
     branches: [main]
     paths:
-      - 'src/pages/life-in-ishikawa.astro'
-      - 'src/pages/life-in-ishikawa/**'
-      - 'src/components/Guide*.astro'
-      - 'src/components/ContextualText.astro'
-      - 'src/components/RelatedLinks.astro'
-      - 'src/data/survival.ts'
-      - 'src/data/related-content.ts'
-      - 'src/pages/community/kampus/**'
-      - 'src/data/campus*.ts'
+      - 'src/pages/**'
+      - 'src/components/**'
+      - 'src/data/**'
       - 'scripts/check-links.mjs'
       - 'scripts/check-internal-links.mjs'
       - '.github/workflows/link-check.yml'
