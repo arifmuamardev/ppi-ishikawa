@@ -1,0 +1,102 @@
+---
+import TopicIcon from './TopicIcon.astro';
+import { withBase } from '../utils/paths';
+
+interface Props {
+  campusSlug: string;
+  question: string;
+  answer: string;
+}
+
+const { campusSlug, question, answer } = Astro.props;
+const text = `${question} ${answer}`.toLowerCase();
+
+const municipalityByCampus: Record<string, { label: string; href: string }[]> = {
+  'kanazawa-university': [{ label: 'Panduan Kanazawa', href: '/life-in-ishikawa/municipality-guides/#kanazawa' }],
+  'jaist': [{ label: 'Panduan Nomi', href: '/life-in-ishikawa/municipality-guides/#nomi' }],
+  'kanazawa-institute-of-technology': [{ label: 'Panduan Nonoichi', href: '/life-in-ishikawa/municipality-guides/#nonoichi' }],
+  'ishikawa-prefectural-university': [{ label: 'Panduan Nonoichi', href: '/life-in-ishikawa/municipality-guides/#nonoichi' }],
+  'kinjo-university': [{ label: 'Panduan Hakusan', href: '/life-in-ishikawa/municipality-guides/#hakusan' }],
+  'alice-gakuen': [
+    { label: 'Panduan Kanazawa', href: '/life-in-ishikawa/municipality-guides/#kanazawa' },
+    { label: 'Panduan Kaga', href: '/life-in-ishikawa/municipality-guides/#kaga' }
+  ]
+};
+
+const candidates = [
+  {
+    keys: ['housing', 'dorm', 'apartment', 'tempat tinggal', 'sewa', 'room'],
+    label: 'Tempat Tinggal',
+    href: '/life-in-ishikawa/tempat-tinggal/',
+    icon: 'housing'
+  },
+  {
+    keys: ['transport', 'bus', 'train', 'station', 'shuttle', 'commute', 'bicycle', 'sepeda', 'mobilitas'],
+    label: 'Transportasi',
+    href: '/life-in-ishikawa/transportasi/',
+    icon: 'transport'
+  },
+  {
+    keys: ['winter', 'salju', 'snow', 'musim dingin'],
+    label: 'Musim Dingin',
+    href: '/life-in-ishikawa/musim-dingin/',
+    icon: 'winter'
+  },
+  {
+    keys: ['health', 'hospital', 'clinic', 'medical', 'sakit', 'kesehatan', 'insurance'],
+    label: 'Kesehatan',
+    href: '/life-in-ishikawa/kesehatan/',
+    icon: 'health'
+  },
+  {
+    keys: ['city hall', 'residence', 'my number', 'pension', 'administrasi', 'alamat', 'municipality', 'ward'],
+    label: 'Administrasi',
+    href: '/life-in-ishikawa/administrasi/',
+    icon: 'documents'
+  },
+  {
+    keys: ['part-time', 'baito', 'kerja', 'work', 'career', 'job'],
+    label: 'Kerja & Kehidupan Mahasiswa',
+    href: '/life-in-ishikawa/kerja-paruh-waktu/',
+    icon: 'money'
+  },
+  {
+    keys: ['family', 'keluarga', 'anak', 'spouse'],
+    label: 'Keluarga',
+    href: '/life-in-ishikawa/keluarga/',
+    icon: 'family'
+  },
+  {
+    keys: ['japanese', 'bahasa', 'language', 'jlpt'],
+    label: 'Bahasa',
+    href: '/life-in-ishikawa/bahasa/',
+    icon: 'language'
+  }
+];
+
+const matched = candidates
+  .filter((item) => item.keys.some((key) => text.includes(key)))
+  .slice(0, 2);
+
+const needsMunicipality = ['city hall','residence','alamat','housing','apartment','transport','bus','station','daily life','kehidupan sehari-hari']
+  .some((key) => text.includes(key));
+
+const municipalityLinks = needsMunicipality ? (municipalityByCampus[campusSlug] ?? []).slice(0, 2) : [];
+
+const links = [
+  ...matched.map((item) => ({ label: item.label, href: item.href, icon: item.icon })),
+  ...municipalityLinks.map((item) => ({ ...item, icon: 'map' }))
+].filter((item, index, arr) => arr.findIndex((x) => x.href === item.href) === index).slice(0, 3);
+---
+
+{links.length > 0 && (
+  <div class="mt-4 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-4">
+    <span class="mr-1 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400">Panduan terkait</span>
+    {links.map((item) => (
+      <a href={withBase(item.href)} class="inline-flex items-center gap-1.5 rounded-lg bg-slate-50 px-2.5 py-1.5 text-xs font-bold text-slate-600 transition hover:bg-amber-50 hover:text-brand">
+        <TopicIcon name={item.icon as any} class="size-3.5" />
+        {item.label} →
+      </a>
+    ))}
+  </div>
+)}
