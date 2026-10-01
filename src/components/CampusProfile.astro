@@ -1,0 +1,63 @@
+---
+import type { CampusProfileDetail } from '../data/campuses';
+
+interface Props {
+  profile: CampusProfileDetail;
+}
+
+const { profile } = Astro.props;
+---
+
+<section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+  <div class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+    <div class="max-w-3xl">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Profil kampus</p>
+      <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kenali karakter kampus sebelum masuk ke detail praktis.</h2>
+    </div>
+
+    <div class="mt-7 grid gap-4 md:grid-cols-2">
+      <article class="rounded-2xl bg-slate-50 p-5">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Sejarah singkat</p>
+        <p class="mt-3 text-sm leading-6 text-slate-700">{profile.history}</p>
+      </article>
+      <article class="rounded-2xl bg-slate-50 p-5">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Struktur akademik</p>
+        <p class="mt-3 text-sm leading-6 text-slate-700">{profile.academicStructure}</p>
+      </article>
+      <article class="rounded-2xl bg-slate-50 p-5">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Karakter akademik</p>
+        <p class="mt-3 text-sm leading-6 text-slate-700">{profile.academicCharacter}</p>
+      </article>
+      <article class="rounded-2xl bg-slate-50 p-5">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Lingkungan kampus</p>
+        <p class="mt-3 text-sm leading-6 text-slate-700">{profile.campusEnvironment}</p>
+      </article>
+    </div>
+
+    <div class="mt-7 grid gap-5 lg:grid-cols-[1.25fr_.75fr]">
+      <div class="rounded-3xl bg-slate-950 p-6 text-white">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-soft">Yang menonjol</p>
+        <ul class="mt-4 space-y-3">
+          {profile.distinctive.map((item) => (
+            <li class="flex gap-3 text-sm leading-6 text-slate-300">
+              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-soft"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-dark">Sumber profil</p>
+        <p class="mt-3 text-sm leading-6 text-slate-700">Ringkasan ini disusun dari sumber resmi kampus. Gunakan halaman berikut bila ingin membaca konteks institusi secara lebih lengkap.</p>
+        <div class="mt-4 space-y-2">
+          {profile.profileSources.map((source) => (
+            <a href={source.url} target="_blank" rel="noreferrer" class="block rounded-xl border border-amber-200 bg-white px-4 py-3 text-sm font-bold text-slate-800 transition hover:border-amber-300">
+              {source.label} ↗
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
