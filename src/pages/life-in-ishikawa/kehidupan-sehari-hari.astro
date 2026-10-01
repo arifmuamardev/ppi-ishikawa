@@ -3,9 +3,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import GuideMeta from '../../components/GuideMeta.astro';
 import GuideToc from '../../components/GuideToc.astro';
 import GuidePager from '../../components/GuidePager.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
 import ContextualText from '../../components/ContextualText.astro';
 import LicensedPhoto from '../../components/LicensedPhoto.astro';
 import { withBase } from '../../utils/paths';
+import { relatedSurvivalContent } from '../../data/related-content';
 import { publicMedia } from '../../data/media';
 
 const sections = [
@@ -289,6 +291,8 @@ const sources = [
       </div>
     </div>
   </section>
+
+  <RelatedLinks items={relatedSurvivalContent.SG05} />
 
   <GuidePager code="SG05" />
 </BaseLayout>
