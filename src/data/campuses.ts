@@ -204,11 +204,21 @@ export interface CampusAcademicHighlight {
   url: string;
 }
 
+export interface InternationalStudentSnapshot {
+  admission: string;
+  language: string;
+  housing: string;
+  funding: string;
+  firstContact: string;
+  sourceUrl: string;
+}
+
 export interface CampusProfileDetail {
   slug: string;
   glance: CampusGlanceItem[];
   landmarks: CampusLandmark[];
   academicHighlights: CampusAcademicHighlight[];
+  internationalStudent: InternationalStudentSnapshot;
   history: string;
   academicStructure: string;
   academicCharacter: string;
@@ -242,6 +252,14 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { title: 'Institute of Nature and Environmental Technology', category: 'Environment', description: 'Pusat riset yang mencakup lingkungan, atmospheric science, regional environment, dan isu alam yang relevan dengan kawasan Sea of Japan.', url: 'https://www.kanazawa-u.ac.jp/en/research/' },
       { title: 'Advanced Mobility & Manufacturing Institutes', category: 'Engineering', description: 'Dua institut yang memperlihatkan arah riset terapan universitas pada mobility, manufacturing, design, dan engineering technologies.', url: 'https://www.kanazawa-u.ac.jp/en/research/' }
     ],
+    internationalStudent: {
+      admission: 'Jalur international undergraduate/graduate, exchange, research student, dan program lain berbeda menurut school/graduate school.',
+      language: 'Banyak program reguler menggunakan bahasa Jepang; sejumlah graduate/program internasional menggunakan English atau bilingual format.',
+      housing: 'University housing tersedia dalam beberapa kategori, tetapi kapasitas dan eligibility berbeda; private apartment tetap umum.',
+      funding: 'MEXT, JASSO, tuition exemption/reduction, dan scholarship internal/eksternal tersedia tergantung status mahasiswa.',
+      firstContact: 'International Student Support / One-Stop Consultation Counter',
+      sourceUrl: 'https://www.kanazawa-u.ac.jp/en/global-network/study/'
+    },
     history: 'Berakar dari Smallpox Vaccination Center Kaga Domain yang didirikan pada 1862; kini Kanazawa University merupakan universitas nasional komprehensif dengan sejarah lebih dari 160 tahun.',
     academicStructure: '4 colleges, 20 schools, dan 7 graduate schools. Spektrumnya mencakup humanities, social sciences, science, engineering, medicine, health sciences, pharmacy, hingga bidang lintas disiplin.',
     academicCharacter: 'Research university yang menggabungkan pendidikan komprehensif dengan riset lintas bidang. Skala dan pilihan bidangnya paling luas di antara kampus anggota PPI Ishikawa saat ini.',
@@ -282,6 +300,14 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { title: 'AI & Soft Robotics', category: 'Robotics', description: 'Research core yang menghubungkan artificial intelligence, soft robotics, sensing, dan interaksi dengan dunia fisik.', url: 'https://www.jaist.ac.jp/english/about/history/' },
       { title: 'Quantum Materials & Information Sciences', category: 'Quantum', description: 'Neo Excellent Core untuk riset pada material kuantum dan information sciences yang dibentuk dalam penguatan riset frontier JAIST.', url: 'https://www.jaist.ac.jp/english/about/history/' }
     ],
+    internationalStudent: {
+      admission: 'Fokus pada master, doctoral, research student, dan visiting/special visiting routes untuk pelamar internasional.',
+      language: 'Banyak aktivitas akademik dan riset dapat dilakukan dalam English, terutama pada graduate study; requirement tetap berbeda menurut program/lab.',
+      housing: 'Student housing dan JAIST HOUSE berada di dalam/sekitar campus area; private housing juga digunakan.',
+      funding: 'MEXT, JASSO, JAIST scholarship/financial support, dan tuition-related support tersedia menurut eligibility.',
+      firstContact: 'International Student Section',
+      sourceUrl: 'https://www.jaist.ac.jp/english/international/'
+    },
     history: 'Didirikan pada 1990 sebagai universitas pascasarjana nasional independen pertama di Jepang tanpa divisi undergraduate.',
     academicStructure: 'Pendidikan berpusat pada graduate study dan riset lanjutan. Area utamanya berkembang dari Knowledge Science, Information Science, dan Materials Science dalam struktur graduate school terpadu.',
     academicCharacter: 'Lingkungan graduate-focused dengan pendidikan berbasis coursework yang sistematis dan riset frontier science and technology. Mahasiswa datang dari latar disiplin yang beragam.',
@@ -322,6 +348,14 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { title: 'Architecture & Design', category: 'Built environment', description: 'Bidang architecture dan design menjadi salah satu kekuatan akademik KIT dengan orientasi pada perancangan, teknologi, dan implementasi.', url: 'https://www.kanazawa-it.ac.jp/' },
       { title: 'Bioscience & Applied Chemistry', category: 'Bio & chemistry', description: 'KIT juga memiliki jalur bioscience dan applied chemistry yang memperluas spektrum universitas di luar engineering klasik.', url: 'https://www.kanazawa-it.ac.jp/' }
     ],
+    internationalStudent: {
+      admission: 'Incoming international students dapat datang melalui degree, exchange, research, atau partner-program route tergantung skema.',
+      language: 'Program reguler terutama berbahasa Jepang; program exchange/international tertentu menyediakan dukungan atau coursework dalam English.',
+      housing: 'Accommodation options tersedia untuk jenis program tertentu; private housing di Nonoichi juga umum.',
+      funding: 'Scholarship dan tuition-related support mengikuti status program dan skema penerimaan masing-masing.',
+      firstContact: 'Center for International Programs',
+      sourceUrl: 'https://www.kanazawa-it.ac.jp/ekit/exchanges/index.html'
+    },
     history: 'Kanazawa Institute of Technology berkembang sebagai universitas swasta teknologi dengan orientasi kuat pada pendidikan rekayasa, kreativitas, dan hubungan antara pembelajaran dengan penerapan di masyarakat.',
     academicStructure: 'Struktur akademik terkini mencakup enam faculties dan 17 departments, termasuk engineering, information, media/information design, architecture, bioscience/chemistry, serta bidang terkait.',
     academicCharacter: 'Project Design education menjadi ciri penting KIT: mahasiswa dibiasakan menemukan masalah, merumuskan solusi, menguji gagasan, dan bekerja pada persoalan yang terhubung dengan masyarakat atau industri.',
@@ -362,6 +396,14 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { title: 'Food Science', category: 'Food', description: 'Menghubungkan kimia, mikrobiologi, nutrisi, keamanan, pengolahan, dan pengembangan pangan.', url: 'https://www.ishikawa-pu.ac.jp/undergraduate/' },
       { title: 'Applied Life Science', category: 'Life science', description: 'Graduate-level research memperdalam bioscience, biotechnology, dan life science dengan fasilitas eksperimen yang kuat.', url: 'https://www.ishikawa-pu.ac.jp/admission/graduate_admission/' }
     ],
+    internationalStudent: {
+      admission: 'Tersedia special selection untuk international students pada jalur tertentu; graduate admission memiliki ketentuan tersendiri.',
+      language: 'Sebagian besar program reguler menggunakan bahasa Jepang; kemampuan Japanese penting untuk perkuliahan dan kehidupan akademik sehari-hari.',
+      housing: 'Tidak memiliki university dormitory; mahasiswa perlu menyiapkan private housing.',
+      funding: 'Scholarship eksternal dan dukungan mahasiswa dapat tersedia, tetapi eligibility harus diperiksa per tahun akademik.',
+      firstContact: 'Academic & Student Affairs Section',
+      sourceUrl: 'https://www.ishikawa-pu.ac.jp/admission/'
+    },
     history: 'Universitas publik yang dikelola oleh Ishikawa Prefectural Public University Corporation dan berakar kuat pada kebutuhan pertanian, lingkungan, pangan, serta biosains di wilayah Ishikawa.',
     academicStructure: 'Faculty of Bioresources and Environmental Sciences mencakup Bioproduction Science, Environmental Science, dan Food Science; graduate study memperdalam bidang bioresources/environment dan applied life science.',
     academicCharacter: 'Kampusnya relatif spesialis dibanding universitas komprehensif: pendidikan dan riset berpusat pada hubungan antara sumber daya hayati, lingkungan, pangan, pertanian, dan life science.',
@@ -402,6 +444,14 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { title: 'Social Welfare & Education', category: 'Welfare & education', description: 'Bidang social welfare, child education, dan human services menjadi salah satu pilar akademik utama Kinjo.', url: 'https://www.kinjo.ac.jp/english/about/department.html' },
       { title: 'Interdisciplinary Economics', category: 'Economics', description: 'Faculty of Interdisciplinary Economics menghubungkan business, economics, regional society, dan practical problem-solving.', url: 'https://www.kinjo.ac.jp/english/about/department.html' }
     ],
+    internationalStudent: {
+      admission: 'Memiliki international-student admission route tersendiri untuk program tertentu.',
+      language: 'Perkuliahan reguler umumnya menggunakan bahasa Jepang; kemampuan Japanese penting untuk class, practicum, dan professional training.',
+      housing: 'Tidak menyediakan foreign-student dormitory; mahasiswa internasional menggunakan private apartment.',
+      funding: 'Tuition reduction dan scholarship support tersedia menurut ketentuan yang berlaku.',
+      firstContact: 'International Exchange Center',
+      sourceUrl: 'https://www.kinjo.ac.jp/english/'
+    },
     history: 'Kinjo University berkembang sebagai universitas swasta di Hakusan dengan pendidikan yang dekat dengan kebutuhan profesi, layanan masyarakat, kesehatan, welfare, pendidikan, dan ekonomi.',
     academicStructure: 'Memiliki faculties pada Interdisciplinary Economics, Human and Social Sciences, Health Sciences, dan Nursing, ditambah Advanced Course of Public Health Nursing serta Graduate School of Comprehensive Rehabilitation.',
     academicCharacter: 'Banyak program diarahkan pada kompetensi profesional dan praktik lapangan. Universitas juga menekankan pendidikan kelompok kecil dan pendampingan mahasiswa dari awal hingga akhir studi.',
@@ -442,6 +492,14 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { title: 'Care Worker Education', category: 'Care & welfare', description: 'Program care worker mengarah pada kompetensi profesional dan kesiapan bekerja di sektor welfare/care di Jepang.', url: 'https://gakuen.alice-japan.net/courses' },
       { title: 'Employment & Career Pathway', category: 'Career', description: 'Pendidikan vokasi didukung jalur employment support dan persiapan transisi siswa internasional menuju kerja atau studi berikutnya.', url: 'https://gakuen.alice-japan.net/' }
     ],
+    internationalStudent: {
+      admission: 'International students dapat masuk ke Japanese Language, International Business, atau Care Worker routes sesuai syarat program.',
+      language: 'Japanese menjadi bahasa utama pembelajaran dan target kompetensi; level awal berbeda menurut program.',
+      housing: 'Japanese Language students pada prinsipnya tinggal di student dormitory sesuai guidance sekolah.',
+      funding: 'Informasi biaya, reduction, dan dukungan finansial mengikuti program serta intake masing-masing.',
+      firstContact: 'Academic Affairs / international life-support staff',
+      sourceUrl: 'https://gakuen.alice-japan.net/entrance-exam/admissions-in'
+    },
     history: 'Alice International Gakuen group was established in 1992 and develops vocational education, Japanese-language education, welfare-related training, and support for international human resources.',
     academicStructure: 'Di Ishikawa, Alice Gakuen memiliki Japanese Language Department, International Business Department, dan Care Worker Department, dengan kegiatan pendidikan di Kanazawa dan Kaga.',
     academicCharacter: 'Berbeda dari universitas, Alice berorientasi pada language progression, vocational skills, qualification, employment preparation, dan transisi mahasiswa internasional menuju studi atau pekerjaan berikutnya.',
