@@ -18,16 +18,16 @@ export const kanazawaUniversityPack = {
 };
 
 export const kuSections = [
-  { label: '01', title: 'Kenali kampusmu' },
-  { label: '02', title: 'Minggu pertama' },
-  { label: '03', title: 'Ke mana harus bertanya' },
-  { label: '04', title: 'Tempat tinggal' },
-  { label: '05', title: 'Transportasi' },
-  { label: '06', title: 'Kesehatan & dukungan' },
-  { label: '07', title: 'Bahasa Jepang & ibadah' },
-  { label: '08', title: 'Academic, research & career' },
-  { label: '09', title: 'Keluarga' },
-  { label: '10', title: 'FAQ mahasiswa Indonesia' }
+  { id: 'kenali-kampus', label: '01', title: 'Kenali kampusmu' },
+  { id: 'minggu-pertama', label: '02', title: 'Minggu pertama' },
+  { id: 'kontak-dukungan', label: '03', title: 'Ke mana harus bertanya' },
+  { id: 'tempat-tinggal', label: '04', title: 'Tempat tinggal' },
+  { id: 'transportasi', label: '05', title: 'Transportasi' },
+  { id: 'kesehatan-dukungan', label: '06', title: 'Kesehatan & dukungan' },
+  { id: 'bahasa-ibadah', label: '07', title: 'Bahasa Jepang & ibadah' },
+  { id: 'akademik-riset-karier', label: '08', title: 'Academic, research & career' },
+  { id: 'keluarga', label: '09', title: 'Keluarga' },
+  { id: 'faq', label: '10', title: 'FAQ mahasiswa Indonesia' }
 ];
 
 export const kuQuickLinks = [
