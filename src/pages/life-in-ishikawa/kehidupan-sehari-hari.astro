@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import GuideMeta from '../../components/GuideMeta.astro';
 import GuideToc from '../../components/GuideToc.astro';
 import GuidePager from '../../components/GuidePager.astro';
+import ContextualText from '../../components/ContextualText.astro';
 import LicensedPhoto from '../../components/LicensedPhoto.astro';
 import { withBase } from '../../utils/paths';
 import { publicMedia } from '../../data/media';
@@ -208,12 +209,12 @@ const sources = [
             <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-sm font-bold text-slate-700">{section.label}</div>
             <div class="min-w-0 flex-1">
               <h2 class="text-2xl font-bold tracking-tight text-slate-950">{section.title}</h2>
-              <p class="mt-4 leading-7 text-slate-600">{section.intro}</p>
+              <p class="mt-4 leading-7 text-slate-600"><ContextualText text={section.intro} maxLinks={2} /></p>
               <ul class="mt-5 space-y-3">
                 {section.points.map((point) => (
                   <li class="flex gap-3 text-sm leading-6 text-slate-700">
                     <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
-                    <span>{point}</span>
+                    <span><ContextualText text={point} maxLinks={1} /></span>
                   </li>
                 ))}
               </ul>
