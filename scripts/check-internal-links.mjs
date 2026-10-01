@@ -28,6 +28,15 @@ function normalizeInternalHref(raw) {
   const [beforeHash, fragment = ''] = raw.split('#');
   const pathname = beforeHash.split('?')[0];
 
+  const assetPath = pathname.startsWith(base + '/') ? pathname.slice(base.length) : pathname;
+  if (
+    assetPath.startsWith('/_astro/') ||
+    assetPath.startsWith('/brand/') ||
+    assetPath.startsWith('/images/') ||
+    assetPath.startsWith('/illustrations/') ||
+    /\.[a-z0-9]{2,8}$/i.test(assetPath)
+  ) return null;
+
   let normalized = pathname;
   if (normalized.startsWith(base + '/')) normalized = normalized.slice(base.length);
   else if (normalized === base) normalized = '/';
