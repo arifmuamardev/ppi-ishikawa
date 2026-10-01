@@ -231,6 +231,7 @@ export interface UsefulPlace {
 
 export interface CampusProfileDetail {
   slug: string;
+  mapOverviewQuery: string;
   glance: CampusGlanceItem[];
   landmarks: CampusLandmark[];
   academicHighlights: CampusAcademicHighlight[];
@@ -252,6 +253,7 @@ export interface CampusProfileDetail {
 export const campusProfileDetails: CampusProfileDetail[] = [
   {
     slug: 'kanazawa-university',
+    mapOverviewQuery: 'Kanazawa University Kakuma Campus',
     glance: [
       { label: 'Sejarah', value: '160+ tahun', note: 'Akar institusi sejak 1862', sourceUrl: 'https://www.kanazawa-u.ac.jp/en/university/' },
       { label: 'Mahasiswa', value: '10.787', note: 'Angka profil universitas yang ditampilkan saat ini', sourceUrl: 'https://www.kanazawa-u.ac.jp/en/university/' },
@@ -314,6 +316,7 @@ export const campusProfileDetails: CampusProfileDetail[] = [
   },
   {
     slug: 'jaist',
+    mapOverviewQuery: 'JAIST Nomi Ishikawa',
     glance: [
       { label: 'Didirikan', value: '1990', note: 'Graduate university nasional tanpa undergraduate division', sourceUrl: 'https://www.jaist.ac.jp/english/about/mission/' },
       { label: 'Mahasiswa', value: '1.132', note: '747 master + 385 doctoral; 1 Mei 2026', sourceUrl: 'https://www.jaist.ac.jp/about/outline/student.html' },
@@ -376,6 +379,7 @@ export const campusProfileDetails: CampusProfileDetail[] = [
   },
   {
     slug: 'kanazawa-institute-of-technology',
+    mapOverviewQuery: 'Kanazawa Institute of Technology Ohgigaoka Campus',
     glance: [
       { label: 'Mahasiswa', value: '6.331', note: '5.780 undergraduate + 551 graduate; 1 Mei 2026', sourceUrl: 'https://www.kanazawa-it.ac.jp/about_kit/gakuseisuu.html' },
       { label: 'Undergraduate', value: '5.780', note: 'Data 1 Mei 2026', sourceUrl: 'https://www.kanazawa-it.ac.jp/about_kit/gakuseisuu.html' },
@@ -438,6 +442,7 @@ export const campusProfileDetails: CampusProfileDetail[] = [
   },
   {
     slug: 'ishikawa-prefectural-university',
+    mapOverviewQuery: 'Ishikawa Prefectural University Nonoichi',
     glance: [
       { label: 'Mahasiswa', value: '589', note: '535 undergraduate + 54 graduate; 1 Mei 2026', sourceUrl: 'https://www.ishikawa-pu.ac.jp/information/outline/number-2/' },
       { label: 'Undergraduate', value: '535', note: 'Faculty of Bioresources and Environmental Sciences', sourceUrl: 'https://www.ishikawa-pu.ac.jp/information/outline/number-2/' },
@@ -500,6 +505,7 @@ export const campusProfileDetails: CampusProfileDetail[] = [
   },
   {
     slug: 'kinjo-university',
+    mapOverviewQuery: 'Kinjo University Kasama Campus',
     glance: [
       { label: 'Faculties', value: '4', note: 'Interdisciplinary Economics, Human and Social Sciences, Health Sciences, Nursing', sourceUrl: 'https://www.kinjo.ac.jp/english/about/department.html' },
       { label: 'Graduate', value: '1 school', note: 'Graduate School of Comprehensive Rehabilitation', sourceUrl: 'https://www.kinjo.ac.jp/english/about/department.html' },
@@ -562,6 +568,7 @@ export const campusProfileDetails: CampusProfileDetail[] = [
   },
   {
     slug: 'alice-gakuen',
+    mapOverviewQuery: 'Alice Gakuen Kanazawa',
     glance: [
       { label: 'Berdiri', value: '1992', note: 'Alice International Gakuen didirikan setelah dua tahun persiapan', sourceUrl: 'https://gakuen.alice-japan.net/about-us/history' },
       { label: 'Kampus Ishikawa', value: '2', note: 'Kanazawa dan Kaga', sourceUrl: 'https://gakuen.alice-japan.net/access' },
