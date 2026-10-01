@@ -19,16 +19,16 @@ export const alicePack = {
 };
 
 export const aliceSections = [
-  { label: '01', title: 'Kenali Alice Gakuen' },
-  { label: '02', title: 'Program & kampus' },
-  { label: '03', title: 'Minggu pertama' },
-  { label: '04', title: 'Ke mana harus bertanya' },
-  { label: '05', title: 'Dormitory & housing' },
-  { label: '06', title: 'Transportasi Kanazawa & Kaga' },
-  { label: '07', title: 'Studi & bahasa Jepang' },
-  { label: '08', title: 'Part-time work & biaya hidup' },
-  { label: '09', title: 'Career & langkah setelah lulus' },
-  { label: '10', title: 'FAQ pelajar Indonesia' }
+  { id: 'kenali-alice', label: '01', title: 'Kenali Alice Gakuen' },
+  { id: 'program-kampus', label: '02', title: 'Program & kampus' },
+  { id: 'minggu-pertama', label: '03', title: 'Minggu pertama' },
+  { id: 'kontak-dukungan', label: '04', title: 'Ke mana harus bertanya' },
+  { id: 'dormitory-housing', label: '05', title: 'Dormitory & housing' },
+  { id: 'transportasi-kanazawa-kaga', label: '06', title: 'Transportasi Kanazawa & Kaga' },
+  { id: 'studi-bahasa-jepang', label: '07', title: 'Studi & bahasa Jepang' },
+  { id: 'part-time-biaya-hidup', label: '08', title: 'Part-time work & biaya hidup' },
+  { id: 'karier-setelah-lulus', label: '09', title: 'Career & langkah setelah lulus' },
+  { id: 'faq', label: '10', title: 'FAQ pelajar Indonesia' }
 ];
 
 export const aliceQuickLinks = [
