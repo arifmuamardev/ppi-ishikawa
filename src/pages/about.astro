@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
 import { leadership, departments, vision, values, kaizen } from '../data/organization';
+import { generalRelatedContent } from '../data/related-content';
 ---
 <BaseLayout title="Tentang">
   <PageIntro
@@ -140,4 +142,5 @@ import { leadership, departments, vision, values, kaizen } from '../data/organiz
       <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-600">Arsip kepengurusan, program, publikasi, dan dokumentasi membantu anggota mengenal perjalanan organisasi serta menjadi rujukan bagi periode berikutnya.</p>
     </article>
   </section>
+  <RelatedLinks items={generalRelatedContent.about} title="Lanjutkan mengenal PPI Ishikawa" />
 </BaseLayout>
