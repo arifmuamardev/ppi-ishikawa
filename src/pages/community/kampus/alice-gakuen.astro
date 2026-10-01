@@ -3,6 +3,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import GuideToc from '../../../components/GuideToc.astro';
 import InstitutionMark from '../../../components/InstitutionMark.astro';
 import ContextualText from '../../../components/ContextualText.astro';
+import CampusFaqGuideLinks from '../../../components/CampusFaqGuideLinks.astro';
 import RelatedLinks from '../../../components/RelatedLinks.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import CampusProfile from '../../../components/CampusProfile.astro';
@@ -309,6 +310,7 @@ const campusMap = campusMapPoints['alice-gakuen'];
           <span id={`faq-${String(index + 1).padStart(2, '0')}`} class="sr-only" aria-hidden="true"></span>
           <summary class="cursor-pointer font-bold text-slate-950">{item.q}</summary>
           <p class="mt-3 text-sm leading-6 text-slate-600"><ContextualText text={item.a} maxLinks={2} /></p>
+          <CampusFaqGuideLinks campusSlug="alice-gakuen" question={item.q} answer={item.a} />
         </details>
       ))}
     </div>
