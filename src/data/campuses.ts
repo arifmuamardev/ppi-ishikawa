@@ -222,6 +222,13 @@ export interface StudentLifeSnapshot {
   sourceUrl: string;
 }
 
+export interface UsefulPlace {
+  name: string;
+  category: string;
+  description: string;
+  mapUrl: string;
+}
+
 export interface CampusProfileDetail {
   slug: string;
   glance: CampusGlanceItem[];
@@ -229,6 +236,7 @@ export interface CampusProfileDetail {
   academicHighlights: CampusAcademicHighlight[];
   internationalStudent: InternationalStudentSnapshot;
   studentLife: StudentLifeSnapshot;
+  usefulPlaces: UsefulPlace[];
   history: string;
   academicStructure: string;
   academicCharacter: string;
@@ -278,6 +286,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       community: 'Akses ke kegiatan PPI relatif mudah dari area Kanazawa, tetapi mahasiswa Kakuma dan Takaramachi–Tsuruma memiliki pola perjalanan harian yang berbeda.',
       sourceUrl: 'https://www.kanazawa-u.ac.jp/en/students/livelihood/'
     },
+    usefulPlaces: [
+      { name: 'Kakuma Campus Bus Stop', category: 'Transport', description: 'Titik utama turun/naik bus untuk akses Kakuma Campus.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Kanazawa+University+Kakuma+Campus+bus+stop' },
+      { name: 'Morinosato Area', category: 'Belanja & makan', description: 'Area dekat Kakuma dengan supermarket, restoran, drugstore, dan kebutuhan harian mahasiswa.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Morinosato+Kanazawa' },
+      { name: 'Kanazawa University Hospital', category: 'Kesehatan', description: 'Rumah sakit universitas utama di Takaramachi dan rujukan penting untuk layanan medis.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Kanazawa+University+Hospital' },
+      { name: 'Kanazawa City Hall', category: 'Administrasi', description: 'Pusat administrasi kota untuk berbagai urusan kependudukan dan layanan kota.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Kanazawa+City+Hall' }
+    ],
     history: 'Berakar dari Smallpox Vaccination Center Kaga Domain yang didirikan pada 1862; kini Kanazawa University merupakan universitas nasional komprehensif dengan sejarah lebih dari 160 tahun.',
     academicStructure: '4 colleges, 20 schools, dan 7 graduate schools. Spektrumnya mencakup humanities, social sciences, science, engineering, medicine, health sciences, pharmacy, hingga bidang lintas disiplin.',
     academicCharacter: 'Research university yang menggabungkan pendidikan komprehensif dengan riset lintas bidang. Skala dan pilihan bidangnya paling luas di antara kampus anggota PPI Ishikawa saat ini.',
@@ -334,6 +348,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       community: 'Kegiatan PPI banyak berlangsung di Kanazawa, sehingga mahasiswa JAIST biasanya perlu merencanakan perjalanan Nomi–Kanazawa lebih awal.',
       sourceUrl: 'https://www.jaist.ac.jp/english/top/access/'
     },
+    usefulPlaces: [
+      { name: 'JAIST Bus Stop', category: 'Transport', description: 'Titik utama shuttle/bus di area kampus Asahidai.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=JAIST+bus+stop+Nomi' },
+      { name: 'Tsurugi Station', category: 'Transport', description: 'Salah satu titik rail utama yang terhubung dengan shuttle JAIST.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Tsurugi+Station+Ishikawa' },
+      { name: 'Nomi City Hall', category: 'Administrasi', description: 'Pusat layanan kota Nomi untuk prosedur kependudukan dan administrasi lokal.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Nomi+City+Hall' },
+      { name: 'Nomi Area Supermarkets', category: 'Belanja', description: 'Pilihan supermarket dan toko harian berada di luar cluster Asahidai dan biasanya diakses dengan bus, mobil, atau perjalanan terencana.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=supermarket+Nomi+Ishikawa' }
+    ],
     history: 'Didirikan pada 1990 sebagai universitas pascasarjana nasional independen pertama di Jepang tanpa divisi undergraduate.',
     academicStructure: 'Pendidikan berpusat pada graduate study dan riset lanjutan. Area utamanya berkembang dari Knowledge Science, Information Science, dan Materials Science dalam struktur graduate school terpadu.',
     academicCharacter: 'Lingkungan graduate-focused dengan pendidikan berbasis coursework yang sistematis dan riset frontier science and technology. Mahasiswa datang dari latar disiplin yang beragam.',
@@ -390,6 +410,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       community: 'Lokasi Nonoichi masih relatif dekat dengan Kanazawa, sehingga akses ke kegiatan PPI umumnya lebih mudah dibanding kampus yang berada lebih jauh ke selatan.',
       sourceUrl: 'https://www.kanazawa-it.ac.jp/ekit/map/ohgigaoka.html'
     },
+    usefulPlaces: [
+      { name: 'Ohgigaoka Campus', category: 'Transport', description: 'Titik utama akses kampus KIT di Nonoichi.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Kanazawa+Institute+of+Technology+Ohgigaoka' },
+      { name: 'Nonoichi Station Area', category: 'Transport & belanja', description: 'Koridor penting untuk rail access, toko, restoran, dan kebutuhan harian.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Nonoichi+Station+Ishikawa' },
+      { name: 'Nonoichi City Hall', category: 'Administrasi', description: 'Pusat layanan kota untuk registrasi alamat dan layanan warga.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Nonoichi+City+Hall' },
+      { name: 'Nonoichi Supermarkets', category: 'Belanja', description: 'Banyak pilihan supermarket dan drugstore tersebar di Nonoichi dan area selatan Kanazawa.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=supermarket+Nonoichi+Ishikawa' }
+    ],
     history: 'Kanazawa Institute of Technology berkembang sebagai universitas swasta teknologi dengan orientasi kuat pada pendidikan rekayasa, kreativitas, dan hubungan antara pembelajaran dengan penerapan di masyarakat.',
     academicStructure: 'Struktur akademik terkini mencakup enam faculties dan 17 departments, termasuk engineering, information, media/information design, architecture, bioscience/chemistry, serta bidang terkait.',
     academicCharacter: 'Project Design education menjadi ciri penting KIT: mahasiswa dibiasakan menemukan masalah, merumuskan solusi, menguji gagasan, dan bekerja pada persoalan yang terhubung dengan masyarakat atau industri.',
@@ -446,6 +472,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       community: 'Secara geografis masih dekat dengan Kanazawa dan KIT/Nonoichi area, sehingga relatif mudah terhubung dengan kegiatan PPI dan mahasiswa kampus lain.',
       sourceUrl: 'https://www.ishikawa-pu.ac.jp/access/'
     },
+    usefulPlaces: [
+      { name: 'Ishikawa Prefectural University', category: 'Kampus', description: 'Titik utama kampus Suematsu di Nonoichi.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Ishikawa+Prefectural+University' },
+      { name: 'Nonoichi Station', category: 'Transport', description: 'Rail access utama dari arah Kanazawa, dilanjutkan bus/shuttle atau sepeda.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Nonoichi+Station+Ishikawa' },
+      { name: 'Nonoichi City Hall', category: 'Administrasi', description: 'Pusat administrasi kota untuk prosedur penduduk dan layanan lokal.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Nonoichi+City+Hall' },
+      { name: 'Suematsu / Nonoichi Shopping Area', category: 'Belanja', description: 'Area sekitar kampus dan pusat Nonoichi memiliki supermarket, drugstore, dan restoran untuk kebutuhan harian.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=supermarket+Suematsu+Nonoichi' }
+    ],
     history: 'Universitas publik yang dikelola oleh Ishikawa Prefectural Public University Corporation dan berakar kuat pada kebutuhan pertanian, lingkungan, pangan, serta biosains di wilayah Ishikawa.',
     academicStructure: 'Faculty of Bioresources and Environmental Sciences mencakup Bioproduction Science, Environmental Science, dan Food Science; graduate study memperdalam bidang bioresources/environment dan applied life science.',
     academicCharacter: 'Kampusnya relatif spesialis dibanding universitas komprehensif: pendidikan dan riset berpusat pada hubungan antara sumber daya hayati, lingkungan, pangan, pertanian, dan life science.',
@@ -502,6 +534,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       community: 'Untuk kegiatan PPI di Kanazawa, mahasiswa perlu memperhitungkan perjalanan Hakusan–Kanazawa dan jadwal kereta terakhir.',
       sourceUrl: 'https://www.kinjo.ac.jp/english/prospective/living.html'
     },
+    usefulPlaces: [
+      { name: 'Kaga-Kasama Station', category: 'Transport', description: 'Stasiun rail penting untuk akses Kasama Campus.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Kaga-Kasama+Station' },
+      { name: 'Matto Station', category: 'Transport', description: 'Titik rail utama untuk akses area Matto dan fasilitas terkait Nursing.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Matto+Station+Ishikawa' },
+      { name: 'Hakusan City Hall', category: 'Administrasi', description: 'Pusat layanan administrasi Kota Hakusan.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Hakusan+City+Hall' },
+      { name: 'Kasama / Matto Shopping Area', category: 'Belanja', description: 'Supermarket, restoran, dan layanan harian tersebar di koridor Kasama–Matto.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=supermarket+Hakusan+Ishikawa' }
+    ],
     history: 'Kinjo University berkembang sebagai universitas swasta di Hakusan dengan pendidikan yang dekat dengan kebutuhan profesi, layanan masyarakat, kesehatan, welfare, pendidikan, dan ekonomi.',
     academicStructure: 'Memiliki faculties pada Interdisciplinary Economics, Human and Social Sciences, Health Sciences, dan Nursing, ditambah Advanced Course of Public Health Nursing serta Graduate School of Comprehensive Rehabilitation.',
     academicCharacter: 'Banyak program diarahkan pada kompetensi profesional dan praktik lapangan. Universitas juga menekankan pendidikan kelompok kecil dan pendampingan mahasiswa dari awal hingga akhir studi.',
@@ -558,6 +596,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       community: 'Siswa Kanazawa lebih dekat dengan pusat kegiatan PPI; siswa Kaga perlu merencanakan perjalanan yang lebih panjang untuk kegiatan lintas wilayah.',
       sourceUrl: 'https://gakuen.alice-japan.net/entrance-exam/dormitory'
     },
+    usefulPlaces: [
+      { name: 'Alice Gakuen Kanazawa Campus', category: 'Kampus', description: 'Kampus utama Kanazawa di Enkoji-honmachi.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Alice+Gakuen+Kanazawa' },
+      { name: 'Alice Gakuen Kaga Campus', category: 'Kampus', description: 'Kampus Kaga di area Daishoji.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Alice+Gakuen+Kaga' },
+      { name: 'Daishoji Station', category: 'Transport', description: 'Titik rail penting untuk siswa Kaga Campus.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Daishoji+Station' },
+      { name: 'Kaga City Hall', category: 'Administrasi', description: 'Pusat administrasi Kota Kaga untuk siswa yang tinggal di wilayah Kaga.', mapUrl: 'https://www.google.com/maps/search/?api=1&query=Kaga+City+Hall' }
+    ],
     history: 'Alice International Gakuen group was established in 1992 and develops vocational education, Japanese-language education, welfare-related training, and support for international human resources.',
     academicStructure: 'Di Ishikawa, Alice Gakuen memiliki Japanese Language Department, International Business Department, dan Care Worker Department, dengan kegiatan pendidikan di Kanazawa dan Kaga.',
     academicCharacter: 'Berbeda dari universitas, Alice berorientasi pada language progression, vocational skills, qualification, employment preparation, dan transisi mahasiswa internasional menuju studi atau pekerjaan berikutnya.',
