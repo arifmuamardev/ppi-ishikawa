@@ -118,6 +118,21 @@ const googleMapsEmbedUrl = (mapUrl: string, fallback: string) => {
           <p class="max-w-xl text-xs leading-5 text-slate-500">Tautan membuka pencarian peta agar pengguna dapat melihat rute, jam buka, dan pilihan sekitar yang paling aktual.</p>
         </div>
 
+        <div class="mt-5 overflow-hidden rounded-3xl border border-slate-200 bg-slate-50">
+          <iframe
+            src={`https://www.google.com/maps?q=${encodeURIComponent(profile.mapOverviewQuery)}&output=embed`}
+            title={`Google Maps overview · ${profile.mapOverviewQuery}`}
+            class="h-[320px] w-full border-0 sm:h-[420px]"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+          ></iframe>
+          <div class="border-t border-slate-200 bg-white px-5 py-4">
+            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Peta overview</p>
+            <p class="mt-1 text-sm leading-6 text-slate-600">Gunakan peta ini untuk memahami posisi area kampus secara umum. Kartu di bawah memberi titik praktis satu per satu dengan tautan Google Maps.</p>
+          </div>
+        </div>
+
         <div class="mt-5 grid gap-4 md:grid-cols-2">
           {profile.usefulPlaces.map((place) => (
             <article class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
