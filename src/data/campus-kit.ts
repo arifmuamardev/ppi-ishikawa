@@ -15,16 +15,16 @@ export const kitPack = {
 };
 
 export const kitSections = [
-  { label: '01', title: 'Kenali KIT' },
-  { label: '02', title: 'Minggu pertama' },
-  { label: '03', title: 'Ke mana harus bertanya' },
-  { label: '04', title: 'Housing' },
-  { label: '05', title: 'Transportasi & kampus' },
-  { label: '06', title: 'Kesehatan & counseling' },
-  { label: '07', title: 'Bahasa Jepang & international life' },
-  { label: '08', title: 'Academic, project & career' },
-  { label: '09', title: 'Keluarga & daily life' },
-  { label: '10', title: 'FAQ mahasiswa Indonesia' }
+  { id: 'kenali-kit', label: '01', title: 'Kenali KIT' },
+  { id: 'minggu-pertama', label: '02', title: 'Minggu pertama' },
+  { id: 'kontak-dukungan', label: '03', title: 'Ke mana harus bertanya' },
+  { id: 'housing', label: '04', title: 'Housing' },
+  { id: 'transportasi-kampus', label: '05', title: 'Transportasi & kampus' },
+  { id: 'kesehatan-counseling', label: '06', title: 'Kesehatan & counseling' },
+  { id: 'bahasa-international-life', label: '07', title: 'Bahasa Jepang & international life' },
+  { id: 'akademik-proyek-karier', label: '08', title: 'Academic, project & career' },
+  { id: 'keluarga-daily-life', label: '09', title: 'Keluarga & daily life' },
+  { id: 'faq', label: '10', title: 'FAQ mahasiswa Indonesia' }
 ];
 
 export const kitQuickLinks = [
