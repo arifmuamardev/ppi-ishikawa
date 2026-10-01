@@ -83,6 +83,34 @@ const priorityMunicipalities = [
       ['Kahoku City', 'https://www.city.kahoku.lg.jp/']
     ],
     note: 'Gunakan guide untuk orientasi saja; konfirmasi procedure, fee, schedule, dan eligibility pada halaman Kahoku terbaru.'
+  },
+  {
+    name: 'Nomi City',
+    jp: '能美市',
+    markId: 'nomi',
+    region: 'South Kaga',
+    status: 'Multilingual procedure + local support',
+    description: 'Nomi menyediakan layanan administrasi tertentu melalui smart application yang mendukung tujuh bahasa, termasuk English, serta memiliki Nomi International Exchange Association (NIEA) sebagai jalur dukungan lokal dan pertukaran internasional.',
+    links: [
+      ['Multilingual Smart Application', 'https://www.city.nomi.ishikawa.jp/docs/2077.html'],
+      ['International Exchange Organizations', 'https://www.city.nomi.ishikawa.jp/docs/795.html'],
+      ['Nomi City', 'https://www.city.nomi.lg.jp/index.html']
+    ],
+    note: 'Untuk JAIST dan warga Nomi, gunakan halaman kota terbaru untuk procedure resmi; NIEA dapat melengkapi kebutuhan bahasa dan dukungan komunitas.'
+  },
+  {
+    name: 'Kaga City',
+    jp: '加賀市',
+    markId: 'kaga',
+    region: 'South Kaga',
+    status: 'Foreign resident support portal',
+    description: 'Kaga memiliki halaman khusus untuk foreign residents yang mengumpulkan Daily Living Guide, garbage rules multibahasa, Japanese lessons, dan jalur konsultasi. Materi living guide utamanya lebih lama, sehingga detail operasional perlu diverifikasi pada halaman kota terbaru.',
+    links: [
+      ['Support for Foreign Residents', 'https://www.city.kaga.ishikawa.jp/soshiki/sangyou/kankousyoukou/kankokouryu/2/gaikokujinshien/1306.html'],
+      ['Daily Living Guide (English)', 'https://www.city.kaga.ishikawa.jp/material/files/group/17/dailylivingguide_en.pdf'],
+      ['Kaga City', 'https://www.city.kaga.ishikawa.jp/']
+    ],
+    note: 'Untuk Alice Gakuen Kaga dan warga Kaga, gunakan foreign resident portal sebagai orientasi lalu konfirmasi fee, schedule, eligibility, dan formulir pada halaman terbaru.'
   }
 ];
 
@@ -177,6 +205,18 @@ const sources = [
     title: 'Living Guide for Foreign Residents',
     description: 'Guide berbahasa Inggris/China; karena update utamanya 2021, detail operasional perlu diverifikasi.',
     url: 'https://www.city.kahoku.lg.jp/001/150/152/d000232.html'
+  },
+  {
+    owner: 'Nomi City',
+    title: 'Multilingual Smart Application',
+    description: 'Layanan persiapan resident move notification yang mendukung tujuh bahasa dan membantu pengecekan dokumen sebelum datang ke city hall.',
+    url: 'https://www.city.nomi.ishikawa.jp/docs/2077.html'
+  },
+  {
+    owner: 'Kaga City',
+    title: 'Support for Foreign Residents',
+    description: 'Portal resmi yang mengumpulkan living guide, garbage information, Japanese lessons, dan consultation routes.',
+    url: 'https://www.city.kaga.ishikawa.jp/soshiki/sangyou/kankousyoukou/kankokouryu/2/gaikokujinshien/1306.html'
   }
 ];
 ---
@@ -226,7 +266,7 @@ const sources = [
 
   <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
     <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Panduan prioritas</p>
-    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Lima municipality yang sudah dipetakan lebih dalam.</h2>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Tujuh municipality yang sudah dipetakan lebih dalam.</h2>
     <div class="mt-8 space-y-5">
       {priorityMunicipalities.map((city) => (
         <article id={city.markId} class="scroll-mt-24 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
@@ -291,7 +331,6 @@ const sources = [
             <div class="mt-4 flex flex-wrap gap-2">
               {region.municipalities.map(([name, url]) => (
                 <a
-                  id={name === 'Nomi City' ? 'nomi' : name === 'Kaga City' ? 'kaga' : undefined}
                   href={url}
                   target="_blank"
                   rel="noreferrer"
