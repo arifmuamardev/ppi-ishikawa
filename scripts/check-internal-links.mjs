@@ -1,8 +1,8 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
-const srcRoot = path.resolve('src');
-const pagesRoot = path.join(srcRoot, 'pages');
+const distRoot = path.resolve('dist');
+const base = '/ppi-ishikawa';
 
 async function walk(dir, filter = () => true) {
   const out = [];
@@ -14,62 +14,88 @@ async function walk(dir, filter = () => true) {
   return out;
 }
 
-const pageFiles = await walk(pagesRoot, (name) => name.endsWith('.astro'));
-const sourceFiles = await walk(srcRoot, (name) => name.endsWith('.astro') || name.endsWith('.ts'));
-
-function routeFromPage(file) {
-  const relative = path.relative(pagesRoot, file).replaceAll(path.sep, '/');
-  if (relative.includes('[')) return null;
-
-  let route = '/' + relative.replace(/\.astro$/, '');
-  route = route.replace(/\/index$/, '/');
-  if (!route.endsWith('/')) route += '/';
-  route = route.replace(/\/+/g, '/');
-  return route;
+function routeFromHtml(file) {
+  let relative = path.relative(distRoot, file).replaceAll(path.sep, '/');
+  if (relative === 'index.html') return '/';
+  relative = relative.replace(/\/index\.html$/, '/').replace(/\.html$/, '/');
+  return '/' + relative.replace(/^\/+/, '');
 }
 
-const routes = new Set(['/']);
-for (const file of pageFiles) {
-  const route = routeFromPage(file);
-  if (route) routes.add(route);
+function normalizeInternalHref(raw) {
+  if (!raw || raw.startsWith('#')) return null;
+  if (/^(?:https?:|mailto:|tel:|javascript:)/i.test(raw)) return null;
+
+  const [beforeHash, fragment = ''] = raw.split('#');
+  const pathname = beforeHash.split('?')[0];
+
+  let normalized = pathname;
+  if (normalized.startsWith(base + '/')) normalized = normalized.slice(base.length);
+  else if (normalized === base) normalized = '/';
+
+  if (!normalized.startsWith('/')) return null;
+  if (normalized !== '/' && !normalized.endsWith('/')) normalized += '/';
+
+  return { route: normalized, fragment };
 }
 
-const refs = new Map();
-const literalPath = /['"`](\/(?!\/)[A-Za-z0-9_./#-]+)['"`]/g;
+const htmlFiles = await walk(distRoot, (name) => name.endsWith('.html'));
+const routes = new Map();
 
-for (const file of sourceFiles) {
-  const text = await fs.readFile(file, 'utf8');
-  for (const match of text.matchAll(literalPath)) {
-    const raw = match[1];
-    if (
-      raw.startsWith('/brand/') ||
-      raw.startsWith('/images/') ||
-      raw.startsWith('/illustrations/') ||
-      raw.startsWith('/favicon') ||
-      /\.[a-z0-9]{2,5}(?:#.*)?$/i.test(raw)
-    ) continue;
+for (const file of htmlFiles) {
+  const html = await fs.readFile(file, 'utf8');
+  const route = routeFromHtml(file);
+  const ids = new Set();
 
-    const pathname = raw.split('#')[0].split('?')[0];
-    if (!pathname || pathname.includes('$') || pathname.includes('{')) continue;
-
-    const normalized = pathname === '/'
-      ? '/'
-      : (pathname.endsWith('/') ? pathname : pathname + '/');
-
-    if (!refs.has(normalized)) refs.set(normalized, new Set());
-    refs.get(normalized).add(path.relative(process.cwd(), file));
+  for (const match of html.matchAll(/\sid=["']([^"']+)["']/g)) {
+    ids.add(match[1]);
   }
+
+  routes.set(route, { file, html, ids });
 }
 
+let checkedRoutes = 0;
+let checkedFragments = 0;
 let broken = 0;
-for (const [target, files] of refs) {
-  if (routes.has(target)) {
-    console.log(`OK     ${target}`);
-  } else {
-    broken += 1;
-    console.error(`BROKEN ${target} :: ${[...files].join(', ')}`);
+
+for (const [sourceRoute, page] of routes) {
+  for (const match of page.html.matchAll(/\shref=["']([^"']+)["']/g)) {
+    const raw = match[1];
+
+    if (raw.startsWith('#')) {
+      const fragment = raw.slice(1);
+      if (!fragment) continue;
+      checkedFragments += 1;
+      if (!page.ids.has(fragment)) {
+        broken += 1;
+        console.error(`BROKEN #${fragment} :: ${sourceRoute}`);
+      }
+      continue;
+    }
+
+    const target = normalizeInternalHref(raw);
+    if (!target) continue;
+
+    checkedRoutes += 1;
+    const destination = routes.get(target.route);
+
+    if (!destination) {
+      broken += 1;
+      console.error(`BROKEN ${target.route} :: linked from ${sourceRoute}`);
+      continue;
+    }
+
+    if (target.fragment) {
+      checkedFragments += 1;
+      if (!destination.ids.has(target.fragment)) {
+        broken += 1;
+        console.error(`BROKEN ${target.route}#${target.fragment} :: linked from ${sourceRoute}`);
+      }
+    }
   }
 }
 
-console.log(`Checked ${refs.size} unique internal route literals. Broken: ${broken}.`);
+console.log(
+  `Checked ${routes.size} rendered routes, ${checkedRoutes} internal links, and ${checkedFragments} fragment links. Broken: ${broken}.`
+);
+
 if (broken > 0) process.exit(1);
