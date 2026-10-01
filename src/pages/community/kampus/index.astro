@@ -199,19 +199,33 @@ const needs = [
       </div>
     </div>
     <div class="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {campuses.filter((campus) => campusMedia[campus.slug]).map((campus) => {
-        const media = campusMedia[campus.slug]!;
+      {campuses.map((campus) => {
+        const media = campusMedia[campus.slug];
         return (
           <figure class="overflow-hidden rounded-3xl border border-slate-200 bg-white">
             <a href={withBase(`/community/kampus/${campus.slug}/`)} class="group block">
-              <img src={media.imageUrl} alt={media.alt} width="1280" height="960" class="aspect-[4/3] w-full object-cover transition duration-300 group-hover:scale-[1.02]" loading="lazy" referrerpolicy="no-referrer" />
+              {media ? (
+                <img src={media.imageUrl} alt={media.alt} width="1280" height="960" class="aspect-[4/3] w-full object-cover transition duration-300 group-hover:scale-[1.02]" loading="lazy" referrerpolicy="no-referrer" />
+              ) : (
+                <div class="grid aspect-[4/3] place-items-center bg-gradient-to-br from-slate-50 to-amber-50 p-8">
+                  <div class="flex flex-col items-center text-center">
+                    <InstitutionMark id={campus.slug as any} size="lg" />
+                    <p class="mt-5 text-sm font-bold text-slate-700">Visual resmi kampus</p>
+                    <p class="mt-1 max-w-xs text-xs leading-5 text-slate-500">Foto dengan lisensi penggunaan ulang yang jelas belum tersedia. Buka Campus Pack untuk akses ke situs dan informasi resmi.</p>
+                  </div>
+                </div>
+              )}
               <div class="p-5">
                 <p class="font-bold text-slate-950 group-hover:text-brand">{campus.shortName}</p>
                 <p class="mt-1 text-sm text-slate-500">{campus.city}</p>
               </div>
             </a>
             <figcaption class="border-t border-slate-100 px-5 py-3 text-[10px] leading-4 text-slate-500">
-              <a href={media.sourcePage} target="_blank" rel="noreferrer" class="hover:underline">{media.credit}</a> · {media.license}
+              {media ? (
+                <><a href={media.sourcePage} target="_blank" rel="noreferrer" class="hover:underline">{media.credit}</a> · {media.license}</>
+              ) : (
+                <>Logo resmi institusi · foto berlisensi belum tersedia</>
+              )}
             </figcaption>
           </figure>
         );
