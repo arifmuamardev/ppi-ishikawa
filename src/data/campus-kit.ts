@@ -65,42 +65,52 @@ export const kitContactMap = [
 
 export const kitFaq = [
   {
+    id: 'lokasi-kampus-utama',
     q: 'Kampus utama KIT ada di mana?',
     a: 'Ohgigaoka Campus berada di Nonoichi. Campus map resmi menunjukkan International Programs Center, Student Support Center, Library Center, cafeterias, Health Center, Career Planning and Placement Services, serta fasilitas lain dalam area kampus.'
   },
   {
+    id: 'akses-dari-kanazawa',
     q: 'Bagaimana akses dari Kanazawa Station?',
     a: 'Halaman akses resmi KIT menjelaskan rute bus dari Kanazawa Station ke halte Kanazawa Kogyo Daigaku-mae. Rute, halte, fare, dan timetable dapat berubah, jadi cek halaman operator atau akses resmi sebelum perjalanan.'
   },
   {
+    id: 'yatsukaho-research-campus',
     q: 'Apa itu Yatsukaho Research Campus?',
     a: 'Yatsukaho adalah research campus KIT di Hakusan. KIT menyediakan shuttle gratis dari Ohgigaoka ke Yatsukaho untuk mahasiswa dan staf pada jadwal operasional yang ditetapkan.'
   },
   {
+    id: 'housing-mahasiswa-internasional',
     q: 'Di mana mahasiswa internasional biasanya tinggal?',
     a: 'Untuk program jangka pendek, KIT dapat menempatkan peserta di International Community House. Untuk mahasiswa yang resmi terdaftar atau tinggal lebih lama, KIT juga menyediakan jalur designated apartment. Penempatan dan eligibility tetap mengikuti keputusan kampus.'
   },
   {
+    id: 'international-community-house',
     q: 'Apakah KIT International Community House sama dengan dormitory biasa?',
     a: 'Tidak persis. Fasilitas ini dirancang sebagai tempat tinggal sekaligus ruang international exchange dan terutama digunakan untuk peserta program internasional tertentu. Gunakan living information resmi untuk memastikan apakah program Anda eligible.'
   },
   {
+    id: 'bantuan-medis-multibahasa',
     q: 'Saya butuh dokter tetapi bahasa Jepang terbatas. Apa ada bantuan?',
     a: 'KIT menyediakan Inbound Medical Assistance Service untuk kategori pengguna yang terdaftar. Layanan multilingual yang dipublikasikan KIT mencakup Bahasa Indonesia. Eligibility berbeda menurut status/program, sehingga cek handbook atau Center for International Programs sebelum mengandalkannya.'
   },
   {
+    id: 'counseling',
     q: 'Apakah ada counseling di kampus?',
     a: 'Ya. Counseling Center KIT menyediakan counseling untuk berbagai masalah kehidupan mahasiswa dan isu psikologis. Untuk kondisi medis atau emergency, gunakan jalur kesehatan/darurat yang sesuai.'
   },
   {
+    id: 'program-bahasa-jepang',
     q: 'Apakah ada Japanese language program?',
     a: 'KIT menjalankan Japanese education/programs dalam konteks international exchange, termasuk KIT Japanese Language Program untuk peserta dari partner institutions. Ketersediaan kelas untuk mahasiswa degree/research harus dicek berdasarkan status dan program masing-masing.'
   },
   {
+    id: 'career-support',
     q: 'Bagaimana career support di KIT?',
     a: 'Career Planning and Placement Services menyediakan dukungan seperti career advice, mock interview, résumé review, employer information, dan berbagai program career development. Detail eligibility dan schedule mengikuti informasi kampus.'
   },
   {
+    id: 'campus-guide-vs-ppi',
     q: 'Apakah informasi PPI menggantikan Campus Guide KIT?',
     a: 'Tidak. Campus Pack membantu mahasiswa Indonesia memahami jalur yang relevan. Aturan akademik, housing, medical assistance, schedule, fee, dan prosedur resmi tetap mengikuti KIT.'
   }
