@@ -183,6 +183,131 @@ export const campuses: Campus[] = [
   }
 ];
 
+export interface CampusProfileDetail {
+  slug: string;
+  history: string;
+  academicStructure: string;
+  academicCharacter: string;
+  campusEnvironment: string;
+  distinctive: string[];
+  profileSources: CampusLink[];
+}
+
+export const campusProfileDetails: CampusProfileDetail[] = [
+  {
+    slug: 'kanazawa-university',
+    history: 'Berakar dari Smallpox Vaccination Center Kaga Domain yang didirikan pada 1862; kini Kanazawa University merupakan universitas nasional komprehensif dengan sejarah lebih dari 160 tahun.',
+    academicStructure: '4 colleges, 20 schools, dan 7 graduate schools. Spektrumnya mencakup humanities, social sciences, science, engineering, medicine, health sciences, pharmacy, hingga bidang lintas disiplin.',
+    academicCharacter: 'Research university yang menggabungkan pendidikan komprehensif dengan riset lintas bidang. Skala dan pilihan bidangnya paling luas di antara kampus anggota PPI Ishikawa saat ini.',
+    campusEnvironment: 'Kakuma adalah kampus terbesar dan berada di area perbukitan; Takaramachi–Tsuruma menjadi pusat medicine dan health sciences. Pemilihan tempat tinggal dan rute perjalanan sangat dipengaruhi lokasi studi.',
+    distinctive: [
+      'Universitas komprehensif dengan lebih dari 160 tahun sejarah institusional.',
+      'Dua pola kehidupan kampus utama: Kakuma dan Takaramachi–Tsuruma.',
+      'Ekosistem riset luas, termasuk science, engineering, medicine, humanities, dan interdisciplinary research.',
+      'Layanan mahasiswa internasional memiliki One-Stop Consultation Counter sebagai pintu awal konsultasi.'
+    ],
+    profileSources: [
+      { label: 'About Kanazawa University', url: 'https://www.kanazawa-u.ac.jp/en/university/' },
+      { label: 'Campus Map', url: 'https://www.kanazawa-u.ac.jp/en/university/campus-guidance/map/' },
+      { label: 'Campus Life & Support', url: 'https://www.kanazawa-u.ac.jp/en/students/livelihood/' }
+    ]
+  },
+  {
+    slug: 'jaist',
+    history: 'Didirikan pada 1990 sebagai universitas pascasarjana nasional independen pertama di Jepang tanpa divisi undergraduate.',
+    academicStructure: 'Pendidikan berpusat pada graduate study dan riset lanjutan. Area utamanya berkembang dari Knowledge Science, Information Science, dan Materials Science dalam struktur graduate school terpadu.',
+    academicCharacter: 'Lingkungan graduate-focused dengan pendidikan berbasis coursework yang sistematis dan riset frontier science and technology. Mahasiswa datang dari latar disiplin yang beragam.',
+    campusEnvironment: 'Kampus Asahidai di Nomi bersifat terintegrasi: gedung riset, lecture halls, library, cafeteria, student housing, JAIST HOUSE, gym, dan layanan utama berada dalam satu kawasan.',
+    distinctive: [
+      'Tidak memiliki undergraduate division; kehidupan akademiknya berpusat pada master, doctoral, dan research.',
+      'Dirancang sejak awal sebagai model pendidikan pascasarjana berbasis riset tingkat lanjut.',
+      'Kampus dan student housing berada dalam satu lingkungan Asahidai yang relatif terpisah dari pusat kota.',
+      'Mobilitas shuttle/bus dan perencanaan tempat tinggal berpengaruh besar pada pengalaman sehari-hari.'
+    ],
+    profileSources: [
+      { label: 'Mission & Goals', url: 'https://www.jaist.ac.jp/english/about/mission/' },
+      { label: 'Campus Map', url: 'https://www.jaist.ac.jp/english/top/campusmap/' },
+      { label: 'JAIST Overview', url: 'https://www.jaist.ac.jp/english/' }
+    ]
+  },
+  {
+    slug: 'kanazawa-institute-of-technology',
+    history: 'Kanazawa Institute of Technology berkembang sebagai universitas swasta teknologi dengan orientasi kuat pada pendidikan rekayasa, kreativitas, dan hubungan antara pembelajaran dengan penerapan di masyarakat.',
+    academicStructure: 'Struktur akademik terkini mencakup enam faculties dan 17 departments, termasuk engineering, information, media/information design, architecture, bioscience/chemistry, serta bidang terkait.',
+    academicCharacter: 'Project Design education menjadi ciri penting KIT: mahasiswa dibiasakan menemukan masalah, merumuskan solusi, menguji gagasan, dan bekerja pada persoalan yang terhubung dengan masyarakat atau industri.',
+    campusEnvironment: 'Ohgigaoka Campus di Nonoichi menjadi pusat utama kehidupan mahasiswa; Yatsukaho Research Campus di Hakusan memperluas aktivitas riset dan proyek tertentu.',
+    distinctive: [
+      'Identitas kuat pada engineering, technology, design, dan problem-solving.',
+      'Project-based learning digunakan sebagai bagian penting dari pendidikan.',
+      'Ohgigaoka memiliki banyak fasilitas belajar dan aktivitas mahasiswa yang dirancang untuk penggunaan aktif di luar jam kelas.',
+      'Hubungan dengan industri dan proyek implementatif cukup menonjol dalam model pendidikan KIT.'
+    ],
+    profileSources: [
+      { label: 'About KIT', url: 'https://www.kanazawa-it.ac.jp/about_kit/' },
+      { label: 'KIT Main Site', url: 'https://www.kanazawa-it.ac.jp/' },
+      { label: 'International Exchange', url: 'https://www.kanazawa-it.ac.jp/ekit/exchanges/index.html' }
+    ]
+  },
+  {
+    slug: 'ishikawa-prefectural-university',
+    history: 'Universitas publik yang dikelola oleh Ishikawa Prefectural Public University Corporation dan berakar kuat pada kebutuhan pertanian, lingkungan, pangan, serta biosains di wilayah Ishikawa.',
+    academicStructure: 'Faculty of Bioresources and Environmental Sciences mencakup Bioproduction Science, Environmental Science, dan Food Science; graduate study memperdalam bidang bioresources/environment dan applied life science.',
+    academicCharacter: 'Kampusnya relatif spesialis dibanding universitas komprehensif: pendidikan dan riset berpusat pada hubungan antara sumber daya hayati, lingkungan, pangan, pertanian, dan life science.',
+    campusEnvironment: 'Kampus Suematsu di Nonoichi memiliki fasilitas yang langsung mendukung pembelajaran terapan, seperti experimental farm, greenhouse, Bioresource Engineering Research Institute, water-related experimental facilities, dan LEAF lab.',
+    distinctive: [
+      'Fokus akademik jelas pada agriculture, environment, food, bioresources, dan applied life science.',
+      'Banyak fasilitas kampus berkaitan langsung dengan eksperimen biologis, pertanian, dan lingkungan.',
+      'Skala bidang yang lebih fokus membuat hubungan study–laboratory–fieldwork terasa kuat.',
+      'Lokasinya di Nonoichi menghubungkan suasana kampus yang tenang dengan akses ke kawasan Kanazawa.'
+    ],
+    profileSources: [
+      { label: 'University Guide', url: 'https://www.ishikawa-pu.ac.jp/information/university_guide/' },
+      { label: 'Campus Facilities', url: 'https://www.ishikawa-pu.ac.jp/access/campusmap/' },
+      { label: 'Around Campus', url: 'https://www.ishikawa-pu.ac.jp/campus/guide/' }
+    ]
+  },
+  {
+    slug: 'kinjo-university',
+    history: 'Kinjo University berkembang sebagai universitas swasta di Hakusan dengan pendidikan yang dekat dengan kebutuhan profesi, layanan masyarakat, kesehatan, welfare, pendidikan, dan ekonomi.',
+    academicStructure: 'Memiliki faculties pada Interdisciplinary Economics, Human and Social Sciences, Health Sciences, dan Nursing, ditambah Advanced Course of Public Health Nursing serta Graduate School of Comprehensive Rehabilitation.',
+    academicCharacter: 'Banyak program diarahkan pada kompetensi profesional dan praktik lapangan. Universitas juga menekankan pendidikan kelompok kecil dan pendampingan mahasiswa dari awal hingga akhir studi.',
+    campusEnvironment: 'Kasama Campus menjadi basis utama banyak program, sedangkan Matto Campus juga penting terutama untuk Nursing. Karena itu lokasi kelas dan practicum harus dipahami sejak memilih tempat tinggal.',
+    distinctive: [
+      'Kuat pada bidang health, rehabilitation, nursing, welfare, education, dan professional pathways.',
+      'Pembelajaran memiliki hubungan erat dengan qualification, practicum, dan kesiapan kerja profesional.',
+      'Kasama dan Matto menciptakan dua pola perjalanan kampus yang perlu dibedakan.',
+      'International Exchange Center menjadi jalur penting bagi mahasiswa internasional.'
+    ],
+    profileSources: [
+      { label: 'University Overview', url: 'https://www.kinjo.ac.jp/ku/outline/' },
+      { label: 'University Features', url: 'https://www.kinjo.ac.jp/ku/outline/feature.html' },
+      { label: 'International Student Guide', url: 'https://www.kinjo.ac.jp/english/prospective/pdf/A%20General%20Guide%20for%20International%20Students.pdf' }
+    ]
+  },
+  {
+    slug: 'alice-gakuen',
+    history: 'Alice International Gakuen group was established in 1992 and develops vocational education, Japanese-language education, welfare-related training, and support for international human resources.',
+    academicStructure: 'Di Ishikawa, Alice Gakuen memiliki Japanese Language Department, International Business Department, dan Care Worker Department, dengan kegiatan pendidikan di Kanazawa dan Kaga.',
+    academicCharacter: 'Berbeda dari universitas, Alice berorientasi pada language progression, vocational skills, qualification, employment preparation, dan transisi mahasiswa internasional menuju studi atau pekerjaan berikutnya.',
+    campusEnvironment: 'Kanazawa Campus berada di Enkoji-honmachi, sedangkan Kaga Campus berada di Daishoji. Kedua lokasi memiliki pola transportasi, tempat tinggal, dan kehidupan sehari-hari yang berbeda.',
+    distinctive: [
+      'Lingkungan belajar multinasional dengan siswa internasional dari lebih dari sepuluh negara menurut profil resmi sekolah.',
+      'Jalur Japanese Language dapat terhubung ke program vocational internal tertentu.',
+      'International Business dan Care Worker menekankan keterampilan yang langsung terkait dengan pekerjaan di Jepang.',
+      'Dukungan kehidupan sehari-hari, dormitory, part-time work, dan employment support menjadi bagian penting pengalaman siswa.'
+    ],
+    profileSources: [
+      { label: 'About Alice', url: 'https://gakuen.alice-japan.net/about-us' },
+      { label: 'Courses', url: 'https://gakuen.alice-japan.net/courses' },
+      { label: 'Alice in 10 Keywords', url: 'https://gakuen.alice-japan.net/about-us/alice-keywords' }
+    ]
+  }
+];
+
+export const campusProfileBySlug = Object.fromEntries(
+  campusProfileDetails.map((profile) => [profile.slug, profile])
+) as Record<string, CampusProfileDetail>;
+
 export interface CampusHubProfile {
   slug: string;
   studyProfile: string;
