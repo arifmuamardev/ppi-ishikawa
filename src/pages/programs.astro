@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
 import { departments } from '../data/organization';
+import { generalRelatedContent } from '../data/related-content';
 ---
 <BaseLayout title="Program & Kegiatan">
   <PageIntro
@@ -32,4 +34,5 @@ import { departments } from '../data/organization';
       ))}
     </div>
   </section>
+  <RelatedLinks items={generalRelatedContent.programs} title="Lihat konteks organisasi di balik program" />
 </BaseLayout>
