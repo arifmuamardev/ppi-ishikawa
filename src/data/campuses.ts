@@ -190,9 +190,17 @@ export interface CampusGlanceItem {
   sourceUrl: string;
 }
 
+export interface CampusLandmark {
+  name: string;
+  type: string;
+  description: string;
+  url: string;
+}
+
 export interface CampusProfileDetail {
   slug: string;
   glance: CampusGlanceItem[];
+  landmarks: CampusLandmark[];
   history: string;
   academicStructure: string;
   academicCharacter: string;
@@ -213,6 +221,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { label: 'Mahasiswa', value: '10.787', note: 'Angka profil universitas yang ditampilkan saat ini', sourceUrl: 'https://www.kanazawa-u.ac.jp/en/university/' },
       { label: 'Struktur', value: '4 colleges · 20 schools', note: 'Ditambah 7 graduate schools', sourceUrl: 'https://www.kanazawa-u.ac.jp/en/university/' },
       { label: 'Luas kampus', value: '±2,41 juta m²', note: 'Total campus area yang dicantumkan universitas', sourceUrl: 'https://www.kanazawa-u.ac.jp/en/university/' }
+    ],
+    landmarks: [
+      { name: 'Central Library', type: 'Belajar', description: 'Perpustakaan utama di Kakuma North Area dan salah satu titik penting kehidupan akademik lintas bidang.', url: 'https://library.kanazawa-u.ac.jp/' },
+      { name: 'Natural Science and Technology Library', type: 'Belajar & riset', description: 'Perpustakaan khusus di Kakuma South Area yang dekat dengan kompleks natural science dan engineering.', url: 'https://library.kanazawa-u.ac.jp/' },
+      { name: 'Kanazawa University Hospital', type: 'Kesehatan & pendidikan', description: 'Rumah sakit universitas di area Takaramachi yang menjadi pusat layanan medis sekaligus pendidikan klinis.', url: 'https://web.hosp.kanazawa-u.ac.jp/' },
+      { name: 'Nano Life Science Institute', type: 'Riset', description: 'Salah satu pusat riset unggulan di Kakuma yang mencerminkan kekuatan riset advanced science universitas.', url: 'https://nanolsi.kanazawa-u.ac.jp/en/' }
     ],
     history: 'Berakar dari Smallpox Vaccination Center Kaga Domain yang didirikan pada 1862; kini Kanazawa University merupakan universitas nasional komprehensif dengan sejarah lebih dari 160 tahun.',
     academicStructure: '4 colleges, 20 schools, dan 7 graduate schools. Spektrumnya mencakup humanities, social sciences, science, engineering, medicine, health sciences, pharmacy, hingga bidang lintas disiplin.',
@@ -242,6 +256,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { label: 'Intake 2026', value: '305', note: '256 master + 49 doctoral; April 2026', sourceUrl: 'https://www.jaist.ac.jp/about/outline/newstudent.html' },
       { label: 'Fokus studi', value: 'Graduate only', note: 'Master, doctoral, research / advanced science & technology', sourceUrl: 'https://www.jaist.ac.jp/english/' }
     ],
+    landmarks: [
+      { name: 'Center for Nano Materials and Technology', type: 'Riset', description: 'Pusat fasilitas nano dengan clean room, machine shop, NMR, mass spectrometry, dan instrumen analisis tingkat lanjut.', url: 'https://www.jaist.ac.jp/nmcenter/facility/' },
+      { name: 'JAIST Innovation Plaza', type: 'Inovasi', description: 'Fasilitas yang menonjol dalam ekosistem kolaborasi dan innovation-related activities di kampus Asahidai.', url: 'https://www.jaist.ac.jp/english/top/campusmap/' },
+      { name: 'JAIST Library', type: 'Belajar', description: 'Perpustakaan berada di tengah cluster utama kampus dan dekat dengan Institute Hall serta gedung riset.', url: 'https://www.jaist.ac.jp/library/english/' },
+      { name: 'JAIST HOUSE & Student Housing', type: 'Kehidupan kampus', description: 'Housing berada di dalam kawasan kampus, sehingga kehidupan sehari-hari sangat terintegrasi dengan lingkungan akademik.', url: 'https://www.jaist.ac.jp/english/top/campusmap/' }
+    ],
     history: 'Didirikan pada 1990 sebagai universitas pascasarjana nasional independen pertama di Jepang tanpa divisi undergraduate.',
     academicStructure: 'Pendidikan berpusat pada graduate study dan riset lanjutan. Area utamanya berkembang dari Knowledge Science, Information Science, dan Materials Science dalam struktur graduate school terpadu.',
     academicCharacter: 'Lingkungan graduate-focused dengan pendidikan berbasis coursework yang sistematis dan riset frontier science and technology. Mahasiswa datang dari latar disiplin yang beragam.',
@@ -269,6 +289,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { label: 'Undergraduate', value: '5.780', note: 'Data 1 Mei 2026', sourceUrl: 'https://www.kanazawa-it.ac.jp/about_kit/gakuseisuu.html' },
       { label: 'Graduate', value: '551', note: 'Data 1 Mei 2026', sourceUrl: 'https://www.kanazawa-it.ac.jp/about_kit/gakuseisuu.html' },
       { label: 'Karakter', value: 'Project Design', note: 'Problem-solving dan project-based education', sourceUrl: 'https://www.kanazawa-it.ac.jp/about_kit/' }
+    ],
+    landmarks: [
+      { name: 'Ohgigaoka Campus', type: 'Kampus utama', description: 'Pusat utama pendidikan dan aktivitas mahasiswa KIT di Nonoichi.', url: 'https://www.kanazawa-it.ac.jp/ekit/map/ohgigaoka.html' },
+      { name: 'Yatsukaho Research Campus', type: 'Riset', description: 'Research campus di Hakusan yang mendukung aktivitas riset dan proyek tertentu di luar Ohgigaoka.', url: 'https://www.kanazawa-it.ac.jp/ekit/map/yatsukaho.html' },
+      { name: 'Library Center', type: 'Belajar', description: 'Salah satu fasilitas inti untuk belajar mandiri dan akses sumber akademik mahasiswa.', url: 'https://www.kanazawa-it.ac.jp/' },
+      { name: 'Project Design Facilities', type: 'Project-based learning', description: 'Ruang dan fasilitas pembelajaran yang mendukung problem finding, prototyping, teamwork, dan project implementation.', url: 'https://www.kanazawa-it.ac.jp/about_kit/' }
     ],
     history: 'Kanazawa Institute of Technology berkembang sebagai universitas swasta teknologi dengan orientasi kuat pada pendidikan rekayasa, kreativitas, dan hubungan antara pembelajaran dengan penerapan di masyarakat.',
     academicStructure: 'Struktur akademik terkini mencakup enam faculties dan 17 departments, termasuk engineering, information, media/information design, architecture, bioscience/chemistry, serta bidang terkait.',
@@ -298,6 +324,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { label: 'Graduate', value: '54', note: '47 master + 7 doctoral; 1 Mei 2026', sourceUrl: 'https://www.ishikawa-pu.ac.jp/information/outline/number-2/' },
       { label: 'Departemen utama', value: '3', note: 'Bioproduction, Environmental, Food Science', sourceUrl: 'https://www.ishikawa-pu.ac.jp/undergraduate/' }
     ],
+    landmarks: [
+      { name: 'University Farm', type: 'Field learning', description: 'Sekitar 2,6 ha lahan pertanian dengan greenhouse dan fasilitas praktikum untuk pembelajaran produksi pertanian secara langsung.', url: 'https://www.ishikawa-pu.ac.jp/research/farm/' },
+      { name: 'Research Institute for Bioresources and Biotechnology', type: 'Riset', description: 'Pusat riset yang terhubung erat dengan kekuatan kampus pada bioresources dan life science.', url: 'https://www.ishikawa-pu.ac.jp/' },
+      { name: 'Large Greenhouse & Environmental Facilities', type: 'Eksperimen', description: 'Bagian dari cluster fasilitas eksperimen untuk tanaman, lingkungan, air, dan biosains.', url: 'https://www.ishikawa-pu.ac.jp/access/campusmap/' },
+      { name: 'Library & Information Center', type: 'Belajar', description: 'Pusat sumber belajar yang berada di kompleks utama kampus Suematsu.', url: 'https://www.ishikawa-pu.ac.jp/access/campusmap/' }
+    ],
     history: 'Universitas publik yang dikelola oleh Ishikawa Prefectural Public University Corporation dan berakar kuat pada kebutuhan pertanian, lingkungan, pangan, serta biosains di wilayah Ishikawa.',
     academicStructure: 'Faculty of Bioresources and Environmental Sciences mencakup Bioproduction Science, Environmental Science, dan Food Science; graduate study memperdalam bidang bioresources/environment dan applied life science.',
     academicCharacter: 'Kampusnya relatif spesialis dibanding universitas komprehensif: pendidikan dan riset berpusat pada hubungan antara sumber daya hayati, lingkungan, pangan, pertanian, dan life science.',
@@ -326,6 +358,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { label: 'Kampus utama', value: 'Kasama + Matto', note: 'Lokasi studi berbeda menurut program', sourceUrl: 'https://www.kinjo.ac.jp/ku/access/' },
       { label: 'International support', value: 'Dedicated center', note: 'International Exchange Center lintas faculty/department', sourceUrl: 'https://www.kinjo.ac.jp/english/student/center.html' }
     ],
+    landmarks: [
+      { name: 'Kasama Campus Library', type: 'Belajar', description: 'Perpustakaan dengan koleksi sekitar 130 ribu buku dan materi yang berfokus pada bidang akademik universitas.', url: 'https://www.kinjo.ac.jp/ku/campuslife/library.html' },
+      { name: 'KINJO Sky Deck', type: 'Campus life', description: 'Rooftop deck ber-Wi-Fi di Kasama Campus dengan pandangan ke Hakusan dan Laut Jepang pada cuaca cerah.', url: 'https://www.kinjo.ac.jp/ku/campuslife/factory.html' },
+      { name: 'Learning Commons', type: 'Belajar kolaboratif', description: 'Ruang untuk group work dan diskusi yang mendukung pembelajaran aktif mahasiswa.', url: 'https://www.kinjo.ac.jp/ku/campuslife/studentsupport.html' },
+      { name: 'Career Support Center', type: 'Karier', description: 'Pusat dengan staf khusus untuk konsultasi individual, mock interview, résumé review, dan informasi kerja.', url: 'https://www.kinjo.ac.jp/ku/job/support.html' }
+    ],
     history: 'Kinjo University berkembang sebagai universitas swasta di Hakusan dengan pendidikan yang dekat dengan kebutuhan profesi, layanan masyarakat, kesehatan, welfare, pendidikan, dan ekonomi.',
     academicStructure: 'Memiliki faculties pada Interdisciplinary Economics, Human and Social Sciences, Health Sciences, dan Nursing, ditambah Advanced Course of Public Health Nursing serta Graduate School of Comprehensive Rehabilitation.',
     academicCharacter: 'Banyak program diarahkan pada kompetensi profesional dan praktik lapangan. Universitas juga menekankan pendidikan kelompok kecil dan pendampingan mahasiswa dari awal hingga akhir studi.',
@@ -353,6 +391,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { label: 'Kampus Ishikawa', value: '2', note: 'Kanazawa dan Kaga', sourceUrl: 'https://gakuen.alice-japan.net/access' },
       { label: 'Program utama', value: '3', note: 'Japanese Language, International Business, Care Worker', sourceUrl: 'https://gakuen.alice-japan.net/courses' },
       { label: 'Jaringan internasional', value: '10+ negara/region', note: 'Menerima siswa melalui partner institutions di lebih dari 10 negara/region', sourceUrl: 'https://gakuen.alice-japan.net/about-us/education-philosophy' }
+    ],
+    landmarks: [
+      { name: 'Kanazawa Campus', type: 'Kampus', description: 'Kampus Enkoji-honmachi untuk Japanese Language, International Business, dan Care Worker.', url: 'https://gakuen.alice-japan.net/access' },
+      { name: 'Kaga Campus', type: 'Kampus', description: 'Kampus di area Daishoji untuk Japanese Language dan International Business.', url: 'https://gakuen.alice-japan.net/access' },
+      { name: 'Student Dormitory Network', type: 'Tempat tinggal', description: 'Dormitory menjadi bagian penting pengalaman siswa; Japanese Language students pada prinsipnya tinggal di dorm sesuai ketentuan sekolah.', url: 'https://gakuen.alice-japan.net/entrance-exam/dormitory' },
+      { name: 'Employment Support Center', type: 'Karier', description: 'Jalur khusus untuk employment support dan koneksi dengan perusahaan yang menerima international students.', url: 'https://gakuen.alice-japan.net/' }
     ],
     history: 'Alice International Gakuen group was established in 1992 and develops vocational education, Japanese-language education, welfare-related training, and support for international human resources.',
     academicStructure: 'Di Ishikawa, Alice Gakuen memiliki Japanese Language Department, International Business Department, dan Care Worker Department, dengan kegiatan pendidikan di Kanazawa dan Kaga.',
