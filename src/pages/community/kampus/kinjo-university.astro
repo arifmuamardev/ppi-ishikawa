@@ -4,6 +4,7 @@ import GuideToc from '../../../components/GuideToc.astro';
 import InstitutionMark from '../../../components/InstitutionMark.astro';
 import ContextualText from '../../../components/ContextualText.astro';
 import RelatedLinks from '../../../components/RelatedLinks.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import LicensedPhoto from '../../../components/LicensedPhoto.astro';
 import InteractiveMap from '../../../components/InteractiveMap.astro';
 import { campusRelatedContent } from '../../../data/related-content';
@@ -21,7 +22,7 @@ const campusMap = campusMapPoints['kinjo-university'];
   description="Panduan praktis mahasiswa Indonesia di Kinjo University: Kasama dan Matto Campus, international-student support, housing, transportasi, kesehatan, counseling, career, daily life di Hakusan, dan FAQ."
 >
   <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
-    <a href={withBase('/community/kampus/')} class="text-sm font-semibold text-brand hover:underline">← Kampus di Ishikawa</a>
+    <Breadcrumbs items={[{ label: 'Beranda', href: '/' }, { label: 'Kampus', href: '/community/kampus/' }, { label: 'Kinjo University' }]} />
     <p class="mt-8 text-sm font-bold uppercase tracking-[0.18em] text-accent-dark">PPI Ishikawa · Campus Pack</p>
     <div class="mt-4 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
       <InstitutionMark id="kinjo-university" size="lg" class="shrink-0" />
