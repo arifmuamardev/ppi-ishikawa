@@ -189,6 +189,10 @@ export interface CampusProfileDetail {
   academicStructure: string;
   academicCharacter: string;
   campusEnvironment: string;
+  studyAreas: string[];
+  signatureFacilities: string[];
+  studentExperience: string;
+  orientation: string;
   distinctive: string[];
   profileSources: CampusLink[];
 }
@@ -200,6 +204,30 @@ export const campusProfileDetails: CampusProfileDetail[] = [
     academicStructure: '4 colleges, 20 schools, dan 7 graduate schools. Spektrumnya mencakup humanities, social sciences, science, engineering, medicine, health sciences, pharmacy, hingga bidang lintas disiplin.',
     academicCharacter: 'Research university yang menggabungkan pendidikan komprehensif dengan riset lintas bidang. Skala dan pilihan bidangnya paling luas di antara kampus anggota PPI Ishikawa saat ini.',
     campusEnvironment: 'Kakuma adalah kampus terbesar dan berada di area perbukitan; Takaramachi–Tsuruma menjadi pusat medicine dan health sciences. Pemilihan tempat tinggal dan rute perjalanan sangat dipengaruhi lokasi studi.',
+    studyAreas: ["Japanese Language","International Business","Care Worker / welfare education","Career and employment preparation"],
+    signatureFacilities: undefined,
+    studentExperience: 'Ritme belajar lebih dekat dengan language acquisition, attendance, vocational practice, qualification, part-time-work management, dan persiapan kerja atau studi lanjutan. Bagi siswa internasional, dukungan kehidupan sehari-hari menjadi bagian penting dari pengalaman sekolah.',
+    orientation: 'Sekolah vokasi dan bahasa yang menghubungkan kemampuan bahasa Jepang, keterampilan kerja, qualification, dan jalur setelah lulus.',
+    studyAreas: ["Interdisciplinary Economics","Social Welfare & Education","Rehabilitation / Health Sciences","Nursing","Comprehensive Rehabilitation"],
+    signatureFacilities: undefined,
+    studentExperience: 'Banyak program memiliki practicum, professional training, qualification preparation, dan interaksi dengan institusi eksternal. Karena itu pengalaman mahasiswa tidak hanya dibentuk oleh kelas, tetapi juga praktik, placement, dan kesiapan profesi.',
+    orientation: 'Universitas profesional dengan fokus kuat pada kesehatan, welfare, pendidikan, ekonomi, dan jalur menuju profesi.',
+    studyAreas: ["Bioproduction Science","Environmental Science","Food Science","Applied Life Science"],
+    signatureFacilities: undefined,
+    studentExperience: 'Pengalaman belajar dekat dengan laboratory, fieldwork, agriculture, environmental measurement, food science, dan eksperimen biologis. Skala disiplin yang lebih fokus membuat hubungan antara mata kuliah, laboratorium, dan fasilitas eksperimen terlihat jelas.',
+    orientation: 'Universitas publik spesialis yang berpusat pada bioresources, lingkungan, pangan, pertanian, dan life science.',
+    studyAreas: ["Engineering","Information & computer fields","Architecture & design","Bioscience & chemistry","Media / information design"],
+    signatureFacilities: undefined,
+    studentExperience: 'Mahasiswa banyak berhadapan dengan project, team-based problem solving, presentation, prototyping, dan aktivitas yang menghubungkan kelas dengan kasus nyata. Kultur kampus menempatkan belajar aktif di luar lecture sebagai bagian penting dari pengalaman pendidikan.',
+    orientation: 'Universitas teknologi dengan identitas kuat pada project-based learning, engineering, design, dan penerapan solusi.',
+    studyAreas: ["Information Science","Knowledge Science","Materials Science","Interdisciplinary graduate research"],
+    signatureFacilities: undefined,
+    studentExperience: 'Kehidupan akademik berpusat pada research group, coursework pascasarjana, seminar, dan aktivitas laboratorium. Karena sebagian besar fasilitas utama berada di Asahidai, batas antara ruang belajar, riset, dan kehidupan kampus terasa lebih terintegrasi.',
+    orientation: 'Graduate university khusus yang kehidupan akademiknya dibentuk oleh riset, seminar, dan komunitas pascasarjana.',
+    studyAreas: ["Humanities & social sciences","Science & engineering","Medicine & health sciences","Pharmacy","Transdisciplinary sciences"],
+    signatureFacilities: undefined,
+    studentExperience: 'Pengalaman belajar sangat bergantung pada school, laboratory, dan campus assignment. Di Kakuma, banyak bidang berada dalam satu kawasan besar sehingga interaksi lintas disiplin lebih mudah; mahasiswa medicine dan health sciences memiliki ritme yang lebih terpusat di Takaramachi–Tsuruma.',
+    orientation: 'Universitas komprehensif dan research-oriented dengan spektrum bidang paling luas dalam jaringan kampus PPI Ishikawa.',
     distinctive: [
       'Universitas komprehensif dengan lebih dari 160 tahun sejarah institusional.',
       'Dua pola kehidupan kampus utama: Kakuma dan Takaramachi–Tsuruma.',
