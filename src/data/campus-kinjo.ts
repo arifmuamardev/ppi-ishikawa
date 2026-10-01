@@ -68,50 +68,62 @@ export const kinjoContactMap = [
 
 export const kinjoFaq = [
   {
+    id: 'dormitory-internasional',
     q: 'Apakah Kinjo University punya dormitory untuk mahasiswa internasional?',
     a: 'Tidak. Informasi resmi untuk international students menyatakan tidak ada foreign-student dormitory; mahasiswa tinggal di apartment biasa. International Exchange Center dapat membantu konsultasi housing, dan universitas menjelaskan skema co-signer dalam kondisi tertentu. Biaya sewa dan initial cost berubah, jadi gunakan sumber live dan kontrak aktual.'
   },
   {
+    id: 'jumlah-kampus',
     q: 'Kinjo University punya berapa kampus?',
     a: 'Ada dua lokasi utama yang relevan. Kasama Campus di Hakusan menjadi basis utama untuk faculties dan Graduate School of Comprehensive Rehabilitation. Matto Campus digunakan oleh Faculty of Nursing dan Advanced Course of Public Health Nursing. Pastikan lokasi kelas/practicum Anda sebelum memilih housing.'
   },
   {
+    id: 'akses-kasama',
     q: 'Bagaimana akses ke Kasama Campus dari Kanazawa?',
     a: 'Rute utama adalah IR Ishikawa Railway menuju Kaga-Kasama Station lalu berjalan sekitar 10 menit. Official access page juga mencantumkan Hokutetsu Bus dari Kanazawa Station pada waktu tertentu dan akses mobil. Timetable dapat berubah sehingga jangan menyimpan jadwal sebagai informasi statis.'
   },
   {
+    id: 'akses-matto',
     q: 'Bagaimana akses ke Matto Campus?',
     a: 'Official access page mencantumkan IR Ishikawa Railway menuju Matto Station, lalu berjalan kaki atau menggunakan shuttle/local bus. Untuk mahasiswa nursing, bedakan perjalanan ke Matto Campus dari kegiatan yang berlangsung di Kasama Campus.'
   },
   {
+    id: 'jalur-mahasiswa-internasional',
     q: 'Apakah ada jalur khusus mahasiswa internasional?',
     a: 'Ya. Kinjo menyediakan international-student admission information dan selection guidelines tersendiri. Eligibility, Japanese-language requirements, program yang menerima, dokumen, jadwal, dan kuota dapat berubah setiap admission year.'
   },
   {
+    id: 'international-exchange-center',
     q: 'Apa fungsi International Exchange Center?',
     a: 'Center ini adalah support route utama untuk international students. Layanan resminya mencakup consultation tentang residence status, housing, medical matters dan daily life, serta information terkait study dan scholarships. Dukungan tersedia dalam beberapa bahasa.'
   },
   {
+    id: 'tuition-reduction',
     q: 'Apakah ada tuition reduction untuk international students?',
     a: 'Panduan international-student 2026 menjelaskan special scholarship yang dapat mengurangi tuition 50% setelah aplikasi saat enrollment, dengan ketentuan akademik dan student conduct. Karena skema dapat berubah, cek guideline admission year terbaru sebelum membuat perencanaan biaya.'
   },
   {
+    id: 'counseling-health-support',
     q: 'Kalau butuh counseling atau health support, harus ke mana?',
     a: 'Kinjo memiliki Health Room dan Counseling Room. Health Room menangani health management, consultation dan first response; Counseling Room menyediakan konselor berkualifikasi untuk isu personal, study, practicum, relationship, stress, dan career.'
   },
   {
+    id: 'disability-support',
     q: 'Apakah ada disability-related study support?',
     a: 'Ya. Disability Support Center menerima consultation dan request untuk reasonable accommodation serta mengoordinasikan support dengan faculty dan staff terkait.'
   },
   {
+    id: 'career-support',
     q: 'Bagaimana career support di Kinjo?',
     a: 'Career Support Center menyediakan guidance sejak awal masa studi, job information, document review, interview practice, seminars, dan individual support. Dukungan ini sangat relevan karena banyak program Kinjo terhubung langsung dengan professional qualification dan practicum.'
   },
   {
+    id: 'peer-support',
     q: 'Apakah ada dukungan dari sesama mahasiswa?',
     a: 'Ya. Peer Supporter program menjalankan aktivitas seperti new-student exchange activities, consultation sessions, study sessions sebelum ujian, dan practicum-related consultation untuk membantu mahasiswa beradaptasi.'
   },
   {
+    id: 'preparation-program-vs-degree',
     q: 'Apakah Preparation Program for Foreign Students sama dengan degree program Kinjo University?',
     a: 'Tidak. Preparation Program for Foreign Students diselenggarakan melalui Kinjo College untuk persiapan bahasa Jepang dan studi sebelum melanjutkan ke program reguler. Mahasiswa degree Kinjo University mengikuti admission route programnya sendiri.'
   }
