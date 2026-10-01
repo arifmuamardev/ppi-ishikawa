@@ -16,16 +16,16 @@ export const ipuPack = {
 };
 
 export const ipuSections = [
-  { label: '01', title: 'Kenali IPU' },
-  { label: '02', title: 'Minggu pertama' },
-  { label: '03', title: 'Ke mana harus bertanya' },
-  { label: '04', title: 'Housing' },
-  { label: '05', title: 'Transportasi & Nonoichi' },
-  { label: '06', title: 'Kesehatan & counseling' },
-  { label: '07', title: 'Graduate & research support' },
-  { label: '08', title: 'Career & campus facilities' },
-  { label: '09', title: 'Keluarga & daily life' },
-  { label: '10', title: 'FAQ mahasiswa Indonesia' }
+  { id: 'kenali-ipu', label: '01', title: 'Kenali IPU' },
+  { id: 'minggu-pertama', label: '02', title: 'Minggu pertama' },
+  { id: 'kontak-dukungan', label: '03', title: 'Ke mana harus bertanya' },
+  { id: 'housing', label: '04', title: 'Housing' },
+  { id: 'transportasi-nonoichi', label: '05', title: 'Transportasi & Nonoichi' },
+  { id: 'kesehatan-counseling', label: '06', title: 'Kesehatan & counseling' },
+  { id: 'graduate-riset', label: '07', title: 'Graduate & research support' },
+  { id: 'karier-fasilitas', label: '08', title: 'Career & campus facilities' },
+  { id: 'keluarga-daily-life', label: '09', title: 'Keluarga & daily life' },
+  { id: 'faq', label: '10', title: 'FAQ mahasiswa Indonesia' }
 ];
 
 export const ipuQuickLinks = [
