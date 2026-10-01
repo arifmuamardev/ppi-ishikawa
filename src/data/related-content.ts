@@ -106,8 +106,8 @@ export const campusRelatedContent: Record<string, RelatedContentItem[]> = {
   ],
   'alice-gakuen': [
     { title: 'Transportasi', description: 'Kanazawa dan Kaga memiliki pola commute yang berbeda; pilih panduan sesuai kampus.', href: '/life-in-ishikawa/transportasi/', icon: 'transport' },
-    { title: 'Panduan Pemerintah Lokal', description: 'Gunakan municipality Kanazawa atau Kaga sesuai lokasi dan alamat tempat tinggal.', href: '/life-in-ishikawa/municipality-guides/', icon: 'city' },
-    { title: 'Bahasa Jepang & Dukungan', description: 'Cari IFIE dan jalur support lain ketika kebutuhan bahasa melampaui dukungan kampus.', href: '/life-in-ishikawa/japanese-support/', icon: 'language' }
+    { title: 'Panduan Kanazawa', description: 'Untuk Alice Kanazawa, gunakan layanan lokal sesuai municipality dan alamat tempat tinggal.', href: '/life-in-ishikawa/municipality-guides/#kanazawa', icon: 'city' },
+    { title: 'Panduan Kaga', description: 'Untuk Alice Kaga, gunakan jalur municipality Kaga untuk administrasi dan layanan lokal.', href: '/life-in-ishikawa/municipality-guides/#kaga', icon: 'city' }
   ]
 };
 
