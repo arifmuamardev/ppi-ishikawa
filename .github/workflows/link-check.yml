@@ -1,4 +1,4 @@
-name: Check external links
+name: Check site links
 
 on:
   workflow_dispatch:
@@ -10,10 +10,12 @@ on:
       - 'src/pages/life-in-ishikawa.astro'
       - 'src/pages/life-in-ishikawa/**'
       - 'src/components/Guide*.astro'
+      - 'src/components/ContextualText.astro'
       - 'src/data/survival.ts'
       - 'src/pages/community/kampus/**'
       - 'src/data/campus*.ts'
       - 'scripts/check-links.mjs'
+      - 'scripts/check-internal-links.mjs'
       - '.github/workflows/link-check.yml'
 
 permissions:
@@ -29,5 +31,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
+      - name: Check internal links
+        run: node scripts/check-internal-links.mjs
       - name: Check external links
         run: node scripts/check-links.mjs
