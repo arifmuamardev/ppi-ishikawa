@@ -4,6 +4,7 @@ import GuideMeta from '../../components/GuideMeta.astro';
 import GuideToc from '../../components/GuideToc.astro';
 import GuidePager from '../../components/GuidePager.astro';
 import RelatedLinks from '../../components/RelatedLinks.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import ContextualText from '../../components/ContextualText.astro';
 import LicensedPhoto from '../../components/LicensedPhoto.astro';
 import ServiceMark from '../../components/ServiceMark.astro';
@@ -185,7 +186,7 @@ const sources = [
   description="Panduan transportasi untuk pelajar Indonesia di Ishikawa: bus, train, bicycle, car, pembayaran, dan perjalanan saat musim dingin."
 >
   <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
-    <a href={withBase('/life-in-ishikawa/')} class="text-sm font-semibold text-brand hover:underline">← Ishikawa Survival Guide</a>
+    <Breadcrumbs items={[{ label: 'Beranda', href: '/' }, { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' }, { label: 'Transportasi' }]} />
     <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG06 · Transportasi</p>
     <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Bergerak di Ishikawa.</h1>
     <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
