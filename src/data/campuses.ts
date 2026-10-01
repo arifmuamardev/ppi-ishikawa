@@ -183,8 +183,16 @@ export const campuses: Campus[] = [
   }
 ];
 
+export interface CampusGlanceItem {
+  label: string;
+  value: string;
+  note?: string;
+  sourceUrl: string;
+}
+
 export interface CampusProfileDetail {
   slug: string;
+  glance: CampusGlanceItem[];
   history: string;
   academicStructure: string;
   academicCharacter: string;
@@ -200,6 +208,12 @@ export interface CampusProfileDetail {
 export const campusProfileDetails: CampusProfileDetail[] = [
   {
     slug: 'kanazawa-university',
+    glance: [
+      { label: 'Sejarah', value: '160+ tahun', note: 'Akar institusi sejak 1862', sourceUrl: 'https://www.kanazawa-u.ac.jp/en/university/' },
+      { label: 'Mahasiswa', value: '10.787', note: 'Angka profil universitas yang ditampilkan saat ini', sourceUrl: 'https://www.kanazawa-u.ac.jp/en/university/' },
+      { label: 'Struktur', value: '4 colleges · 20 schools', note: 'Ditambah 7 graduate schools', sourceUrl: 'https://www.kanazawa-u.ac.jp/en/university/' },
+      { label: 'Luas kampus', value: '±2,41 juta m²', note: 'Total campus area yang dicantumkan universitas', sourceUrl: 'https://www.kanazawa-u.ac.jp/en/university/' }
+    ],
     history: 'Berakar dari Smallpox Vaccination Center Kaga Domain yang didirikan pada 1862; kini Kanazawa University merupakan universitas nasional komprehensif dengan sejarah lebih dari 160 tahun.',
     academicStructure: '4 colleges, 20 schools, dan 7 graduate schools. Spektrumnya mencakup humanities, social sciences, science, engineering, medicine, health sciences, pharmacy, hingga bidang lintas disiplin.',
     academicCharacter: 'Research university yang menggabungkan pendidikan komprehensif dengan riset lintas bidang. Skala dan pilihan bidangnya paling luas di antara kampus anggota PPI Ishikawa saat ini.',
@@ -222,6 +236,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
   },
   {
     slug: 'jaist',
+    glance: [
+      { label: 'Didirikan', value: '1990', note: 'Graduate university nasional tanpa undergraduate division', sourceUrl: 'https://www.jaist.ac.jp/english/about/mission/' },
+      { label: 'Mahasiswa', value: '1.132', note: '747 master + 385 doctoral; 1 Mei 2026', sourceUrl: 'https://www.jaist.ac.jp/about/outline/student.html' },
+      { label: 'Intake 2026', value: '305', note: '256 master + 49 doctoral; April 2026', sourceUrl: 'https://www.jaist.ac.jp/about/outline/newstudent.html' },
+      { label: 'Fokus studi', value: 'Graduate only', note: 'Master, doctoral, research / advanced science & technology', sourceUrl: 'https://www.jaist.ac.jp/english/' }
+    ],
     history: 'Didirikan pada 1990 sebagai universitas pascasarjana nasional independen pertama di Jepang tanpa divisi undergraduate.',
     academicStructure: 'Pendidikan berpusat pada graduate study dan riset lanjutan. Area utamanya berkembang dari Knowledge Science, Information Science, dan Materials Science dalam struktur graduate school terpadu.',
     academicCharacter: 'Lingkungan graduate-focused dengan pendidikan berbasis coursework yang sistematis dan riset frontier science and technology. Mahasiswa datang dari latar disiplin yang beragam.',
@@ -244,6 +264,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
   },
   {
     slug: 'kanazawa-institute-of-technology',
+    glance: [
+      { label: 'Mahasiswa', value: '6.331', note: '5.780 undergraduate + 551 graduate; 1 Mei 2026', sourceUrl: 'https://www.kanazawa-it.ac.jp/about_kit/gakuseisuu.html' },
+      { label: 'Undergraduate', value: '5.780', note: 'Data 1 Mei 2026', sourceUrl: 'https://www.kanazawa-it.ac.jp/about_kit/gakuseisuu.html' },
+      { label: 'Graduate', value: '551', note: 'Data 1 Mei 2026', sourceUrl: 'https://www.kanazawa-it.ac.jp/about_kit/gakuseisuu.html' },
+      { label: 'Karakter', value: 'Project Design', note: 'Problem-solving dan project-based education', sourceUrl: 'https://www.kanazawa-it.ac.jp/about_kit/' }
+    ],
     history: 'Kanazawa Institute of Technology berkembang sebagai universitas swasta teknologi dengan orientasi kuat pada pendidikan rekayasa, kreativitas, dan hubungan antara pembelajaran dengan penerapan di masyarakat.',
     academicStructure: 'Struktur akademik terkini mencakup enam faculties dan 17 departments, termasuk engineering, information, media/information design, architecture, bioscience/chemistry, serta bidang terkait.',
     academicCharacter: 'Project Design education menjadi ciri penting KIT: mahasiswa dibiasakan menemukan masalah, merumuskan solusi, menguji gagasan, dan bekerja pada persoalan yang terhubung dengan masyarakat atau industri.',
@@ -266,6 +292,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
   },
   {
     slug: 'ishikawa-prefectural-university',
+    glance: [
+      { label: 'Mahasiswa', value: '589', note: '535 undergraduate + 54 graduate; 1 Mei 2026', sourceUrl: 'https://www.ishikawa-pu.ac.jp/information/outline/number-2/' },
+      { label: 'Undergraduate', value: '535', note: 'Faculty of Bioresources and Environmental Sciences', sourceUrl: 'https://www.ishikawa-pu.ac.jp/information/outline/number-2/' },
+      { label: 'Graduate', value: '54', note: '47 master + 7 doctoral; 1 Mei 2026', sourceUrl: 'https://www.ishikawa-pu.ac.jp/information/outline/number-2/' },
+      { label: 'Departemen utama', value: '3', note: 'Bioproduction, Environmental, Food Science', sourceUrl: 'https://www.ishikawa-pu.ac.jp/undergraduate/' }
+    ],
     history: 'Universitas publik yang dikelola oleh Ishikawa Prefectural Public University Corporation dan berakar kuat pada kebutuhan pertanian, lingkungan, pangan, serta biosains di wilayah Ishikawa.',
     academicStructure: 'Faculty of Bioresources and Environmental Sciences mencakup Bioproduction Science, Environmental Science, dan Food Science; graduate study memperdalam bidang bioresources/environment dan applied life science.',
     academicCharacter: 'Kampusnya relatif spesialis dibanding universitas komprehensif: pendidikan dan riset berpusat pada hubungan antara sumber daya hayati, lingkungan, pangan, pertanian, dan life science.',
@@ -288,6 +320,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
   },
   {
     slug: 'kinjo-university',
+    glance: [
+      { label: 'Faculties', value: '4', note: 'Interdisciplinary Economics, Human and Social Sciences, Health Sciences, Nursing', sourceUrl: 'https://www.kinjo.ac.jp/english/about/department.html' },
+      { label: 'Graduate', value: '1 school', note: 'Graduate School of Comprehensive Rehabilitation', sourceUrl: 'https://www.kinjo.ac.jp/english/about/department.html' },
+      { label: 'Kampus utama', value: 'Kasama + Matto', note: 'Lokasi studi berbeda menurut program', sourceUrl: 'https://www.kinjo.ac.jp/ku/access/' },
+      { label: 'International support', value: 'Dedicated center', note: 'International Exchange Center lintas faculty/department', sourceUrl: 'https://www.kinjo.ac.jp/english/student/center.html' }
+    ],
     history: 'Kinjo University berkembang sebagai universitas swasta di Hakusan dengan pendidikan yang dekat dengan kebutuhan profesi, layanan masyarakat, kesehatan, welfare, pendidikan, dan ekonomi.',
     academicStructure: 'Memiliki faculties pada Interdisciplinary Economics, Human and Social Sciences, Health Sciences, dan Nursing, ditambah Advanced Course of Public Health Nursing serta Graduate School of Comprehensive Rehabilitation.',
     academicCharacter: 'Banyak program diarahkan pada kompetensi profesional dan praktik lapangan. Universitas juga menekankan pendidikan kelompok kecil dan pendampingan mahasiswa dari awal hingga akhir studi.',
@@ -310,6 +348,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
   },
   {
     slug: 'alice-gakuen',
+    glance: [
+      { label: 'Berdiri', value: '1992', note: 'Alice International Gakuen didirikan setelah dua tahun persiapan', sourceUrl: 'https://gakuen.alice-japan.net/about-us/history' },
+      { label: 'Kampus Ishikawa', value: '2', note: 'Kanazawa dan Kaga', sourceUrl: 'https://gakuen.alice-japan.net/access' },
+      { label: 'Program utama', value: '3', note: 'Japanese Language, International Business, Care Worker', sourceUrl: 'https://gakuen.alice-japan.net/courses' },
+      { label: 'Jaringan internasional', value: '10+ negara/region', note: 'Menerima siswa melalui partner institutions di lebih dari 10 negara/region', sourceUrl: 'https://gakuen.alice-japan.net/about-us/education-philosophy' }
+    ],
     history: 'Alice International Gakuen group was established in 1992 and develops vocational education, Japanese-language education, welfare-related training, and support for international human resources.',
     academicStructure: 'Di Ishikawa, Alice Gakuen memiliki Japanese Language Department, International Business Department, dan Care Worker Department, dengan kegiatan pendidikan di Kanazawa dan Kaga.',
     academicCharacter: 'Berbeda dari universitas, Alice berorientasi pada language progression, vocational skills, qualification, employment preparation, dan transisi mahasiswa internasional menuju studi atau pekerjaan berikutnya.',
