@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
 import TopicIcon from '../components/TopicIcon.astro';
 import { withBase } from '../utils/paths';
 import { publicMedia } from '../data/media';
+import { generalRelatedContent } from '../data/related-content';
 
 const entryPoints = [
   {
@@ -94,4 +96,5 @@ const entryPoints = [
       <p class="mt-4 max-w-3xl leading-7 text-slate-300">Informasi pribadi anggota hanya digunakan untuk kebutuhan organisasi yang relevan dan tidak dipublikasikan tanpa dasar yang jelas.</p>
     </div>
   </section>
+  <RelatedLinks items={generalRelatedContent.community} title="Jelajahi komunitas lebih lanjut" />
 </BaseLayout>
