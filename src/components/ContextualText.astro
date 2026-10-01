@@ -28,8 +28,12 @@ const rules = [
   { href: '/life-in-ishikawa/leaving/', terms: ['leaving Japan', 'meninggalkan Jepang', 'moving out'] }
 ] as const;
 
+const currentPath = Astro.url.pathname.replace(/\/$/, '');
+const normalizeHref = (href: string) => withBase(href).replace(/\/$/, '');
+
 const aliasMap = new Map<string, string>();
 for (const rule of rules) {
+  if (normalizeHref(rule.href) === currentPath) continue;
   for (const term of rule.terms) aliasMap.set(term.toLowerCase(), rule.href);
 }
 
