@@ -43,7 +43,7 @@ const escapeRegex = (value: string) => {
 };
 
 const aliases = [...aliasMap.keys()].sort((a, b) => b.length - a.length);
-const matcher = new RegExp('(' + aliases.map(escapeRegex).join('|') + ')', 'gi');
+const matcher = new RegExp('(?<![\\p{L}\\p{N}])(' + aliases.map(escapeRegex).join('|') + ')(?![\\p{L}\\p{N}])', 'giu');
 
 const segments: Array<{ type: 'text' | 'link'; value: string; href?: string }> = [];
 const usedHrefs = new Set<string>();
