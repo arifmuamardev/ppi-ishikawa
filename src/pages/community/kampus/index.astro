@@ -4,6 +4,7 @@ import PageIntro from '../../../components/PageIntro.astro';
 import TopicIcon from '../../../components/TopicIcon.astro';
 import InstitutionMark from '../../../components/InstitutionMark.astro';
 import MunicipalityMark from '../../../components/MunicipalityMark.astro';
+import ContextualText from '../../../components/ContextualText.astro';
 import InteractiveMap from '../../../components/InteractiveMap.astro';
 
 import { campuses, campusCensus, campusHubProfileBySlug } from '../../../data/campuses';
@@ -235,10 +236,10 @@ const needs = [
                   <a href={withBase(`/community/kampus/${campus.slug}/`)} class="font-bold text-slate-950 hover:text-brand hover:underline">{campus.shortName}</a>
                   <p class="mt-1 text-xs text-slate-500">{campus.city} · {campus.type}</p>
                 </td>
-                <td class="px-5 py-5 leading-6 text-slate-600">{profile.studyProfile}</td>
-                <td class="px-5 py-5 leading-6 text-slate-600">{profile.housing}</td>
-                <td class="px-5 py-5 leading-6 text-slate-600">{profile.mobility}</td>
-                <td class="px-5 py-5 leading-6 text-slate-600">{profile.supportPoint}</td>
+                <td class="px-5 py-5 leading-6 text-slate-600"><ContextualText text={profile.studyProfile} maxLinks={1} /></td>
+                <td class="px-5 py-5 leading-6 text-slate-600"><ContextualText text={profile.housing} maxLinks={1} /></td>
+                <td class="px-5 py-5 leading-6 text-slate-600"><ContextualText text={profile.mobility} maxLinks={1} /></td>
+                <td class="px-5 py-5 leading-6 text-slate-600"><ContextualText text={profile.supportPoint} maxLinks={1} /></td>
               </tr>
             );
           })}
