@@ -18,7 +18,7 @@ const areaGroups = [
   {
     area: 'Kanazawa',
     markId: 'kanazawa',
-    description: 'Kota utama dan pusat aktivitas komunitas; pola commute berbeda antara pusat kota, Kakuma, dan area selatan Kanazawa.',
+    description: 'Kota utama dan pusat aktivitas komunitas; pola perjalanan harian berbeda antara pusat kota, Kakuma, dan area selatan Kanazawa.',
     items: ['Kanazawa University', 'Alice Gakuen · Kanazawa Campus']
   },
   {
@@ -30,7 +30,7 @@ const areaGroups = [
   {
     area: 'Hakusan',
     markId: 'hakusan',
-    description: 'Koridor rail di selatan Nonoichi; pilihan housing harus disesuaikan dengan Kasama atau Matto.',
+    description: 'Koridor rail di selatan Nonoichi; pilihan tempat tinggal harus disesuaikan dengan Kasama atau Matto.',
     items: ['Kinjo University · Kasama Campus', 'Kinjo University · Matto Campus']
   },
   {
@@ -42,7 +42,7 @@ const areaGroups = [
   {
     area: 'Kaga',
     markId: 'kaga',
-    description: 'Area Daishoji di bagian selatan prefektur dengan pola daily life yang berbeda dari Kanazawa metropolitan area.',
+    description: 'Area Daishoji di bagian selatan prefektur dengan pola kehidupan sehari-hari yang berbeda dari Kanazawa metropolitan area.',
     items: ['Alice Gakuen · Kaga Campus']
   }
 ];
@@ -55,12 +55,12 @@ const needs = [
   },
   {
     title: 'Saya sedang mencari tempat tinggal',
-    description: 'Bandingkan dormitory/private housing dan pola commute sebelum memilih area.',
+    description: 'Bandingkan dormitory/private housing dan pola perjalanan harian sebelum memilih area.',
     href: '#bandingkan'
   },
   {
     title: 'Saya bingung harus bertanya ke siapa',
-    description: 'Setiap Campus Pack memiliki contact map untuk academic, international, health, dan career support.',
+    description: 'Setiap Campus Pack memiliki peta kontak untuk akademik, layanan internasional, kesehatan, dan dukungan karier.',
     href: '#campus-pack'
   },
   {
@@ -73,14 +73,14 @@ const needs = [
 
 <BaseLayout
   title="Campus Hub · Kampus di Ishikawa"
-  description="Campus Hub PPI Ishikawa untuk enam institusi dengan anggota tercatat: perbandingan lokasi, housing, transportasi, international support, dan Campus Pack lengkap."
+  description="Campus Hub PPI Ishikawa untuk enam institusi dengan anggota tercatat: perbandingan lokasi, tempat tinggal, transportasi, dukungan mahasiswa internasional, dan Campus Pack lengkap."
 >
   <div class="mx-auto max-w-7xl px-5 pt-10 lg:px-8">
     <Breadcrumbs items={[{ label: 'Beranda', href: '/' }, { label: 'Komunitas', href: '/community/' }, { label: 'Campus Hub' }]} />
   </div>
   <PageIntro
     title="Campus Hub"
-    description="Kenali kampusmu, pahami area tempat tinggal dan commute, lalu masuk ke Campus Pack yang sesuai. Enam institusi di bawah memiliki anggota PPI Ishikawa tercatat pada sensus September 2026."
+    description="Kenali kampusmu, pahami area tempat tinggal dan perjalanan harian, lalu masuk ke Campus Pack yang sesuai. Enam institusi di bawah memiliki anggota PPI Ishikawa tercatat pada sensus September 2026."
   />
 
   <section class="mx-auto max-w-7xl px-5 pb-10 lg:px-8">
@@ -125,7 +125,7 @@ const needs = [
           <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Ishikawa secara geografis</p>
         </div>
         <h2 class="mt-3 text-2xl font-bold tracking-tight text-slate-950">Kampus anggota tersebar dari Kanazawa sampai Kaga.</h2>
-        <p class="mt-4 leading-7 text-slate-600">Peta membantu melihat bentuk prefektur; untuk kehidupan mahasiswa, lokasi municipality dan koneksi rail/bus lebih penting daripada jarak garis lurus. Gunakan pembagian wilayah di bawah bersama informasi commute pada Campus Pack.</p>
+        <p class="mt-4 leading-7 text-slate-600">Peta membantu melihat bentuk prefektur; untuk kehidupan mahasiswa, lokasi pemerintah kota dan koneksi kereta/bus lebih penting daripada jarak garis lurus. Gunakan pembagian wilayah di bawah bersama informasi perjalanan harian pada Campus Pack.</p>
         <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-5">
           {areaGroups.map((group) => (
             <a href="#wilayah" class="rounded-2xl bg-slate-50 px-3 py-4 text-center">
@@ -232,9 +232,9 @@ const needs = [
           <tr>
             <th class="px-5 py-4 font-bold">Institusi</th>
             <th class="px-5 py-4 font-bold">Profil studi</th>
-            <th class="px-5 py-4 font-bold">Housing</th>
+            <th class="px-5 py-4 font-bold">Tempat tinggal</th>
             <th class="px-5 py-4 font-bold">Mobility</th>
-            <th class="px-5 py-4 font-bold">Support utama</th>
+            <th class="px-5 py-4 font-bold">Dukungan utama</th>
           </tr>
         </thead>
         <tbody>
@@ -257,7 +257,7 @@ const needs = [
       </table>
     </div>
 
-    <p class="mt-3 text-xs leading-5 text-slate-500">Housing, admission, timetable, scholarship, dan support arrangements dapat berubah. Campus Pack menautkan sumber resmi dan tanggal verifikasi untuk pengecekan aktual.</p>
+    <p class="mt-3 text-xs leading-5 text-slate-500">Tempat tinggal, penerimaan, jadwal, beasiswa, dan pengaturan dukungan dapat berubah. Campus Pack menautkan sumber resmi dan tanggal verifikasi untuk pengecekan aktual.</p>
   </section>
 
   <section id="campus-pack" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-10 lg:px-8">
@@ -266,7 +266,7 @@ const needs = [
         <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">6 Campus Pack</p>
         <h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-950">Pilih kampusmu.</h2>
       </div>
-      <p class="max-w-xl text-sm leading-6 text-slate-500">Setiap pack memiliki 10 bagian: orientasi kampus, langkah awal, support route, housing/transport, academic atau vocational life, daily life, FAQ, dan sumber resmi.</p>
+      <p class="max-w-xl text-sm leading-6 text-slate-500">Setiap pack memiliki 10 bagian: orientasi kampus, langkah awal, jalur dukungan, tempat tinggal/transportasi, kehidupan akademik atau vokasi, kehidupan sehari-hari, FAQ, dan sumber resmi.</p>
     </div>
 
     <div class="mt-8 grid gap-5 lg:grid-cols-2">
@@ -295,11 +295,11 @@ const needs = [
 
             <div class="mt-4 grid gap-3 sm:grid-cols-2">
               <div class="rounded-2xl border border-slate-100 p-4">
-                <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Housing</p>
+                <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Tempat tinggal</p>
                 <p class="mt-2 text-sm leading-6 text-slate-700">{profile.housing}</p>
               </div>
               <div class="rounded-2xl border border-slate-100 p-4">
-                <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Support route</p>
+                <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Jalur dukungan</p>
                 <p class="mt-2 text-sm leading-6 text-slate-700">{profile.supportPoint}</p>
               </div>
             </div>
@@ -329,7 +329,7 @@ const needs = [
       <div class="rounded-3xl bg-slate-950 p-7 text-white sm:p-9">
         <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-soft">Campus Pack + Survival Guide</p>
         <h2 class="mt-3 text-2xl font-bold">Gunakan keduanya bersama.</h2>
-        <p class="mt-4 max-w-3xl leading-7 text-slate-300">Campus Pack menjawab hal yang spesifik pada institusi. Survival Guide menjawab sistem hidup di Jepang yang lintas kampus—administrasi, housing, transportasi, kesehatan, keluarga, bahasa, dan kebutuhan sehari-hari.</p>
+        <p class="mt-4 max-w-3xl leading-7 text-slate-300">Campus Pack menjawab hal yang spesifik pada institusi. Survival Guide menjawab sistem hidup di Jepang yang lintas kampus—administrasi, tempat tinggal, transportasi, kesehatan, keluarga, bahasa, dan kebutuhan sehari-hari.</p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a href={withBase('/life-in-ishikawa/administrasi/')} class="rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950">Administrasi →</a>
           <a href={withBase('/life-in-ishikawa/tempat-tinggal/')} class="rounded-xl border border-slate-700 px-4 py-3 text-sm font-bold text-white">Tempat tinggal →</a>
@@ -340,7 +340,7 @@ const needs = [
       <div class="rounded-3xl border border-slate-200 bg-white p-7 sm:p-9">
         <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Cara membaca informasi</p>
         <h2 class="mt-3 text-2xl font-bold text-slate-950">Gunakan sumber resmi untuk keputusan penting.</h2>
-        <p class="mt-4 text-sm leading-6 text-slate-600">Campus Pack membantu memahami konteks praktis setiap institusi. Untuk admission, fee, scholarship, timetable, visa/residence, dan aturan lain yang dapat berubah, selalu periksa sumber resmi terbaru.</p>
+        <p class="mt-4 text-sm leading-6 text-slate-600">Campus Pack membantu memahami konteks praktis setiap institusi. Untuk penerimaan, biaya, beasiswa, jadwal, visa/status tinggal, dan aturan lain yang dapat berubah, selalu periksa sumber resmi terbaru.</p>
       </div>
     </div>
   </section>
