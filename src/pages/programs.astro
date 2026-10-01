@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
 import RelatedLinks from '../components/RelatedLinks.astro';
 import { departments } from '../data/organization';
+import { withBase } from '../utils/paths';
 import { generalRelatedContent } from '../data/related-content';
 ---
 <BaseLayout title="Program & Kegiatan">
@@ -16,13 +17,14 @@ import { generalRelatedContent } from '../data/related-content';
       <p class="text-sm font-bold uppercase tracking-[0.16em] text-amber-800">Status 2026/27</p>
       <h2 class="mt-3 text-2xl font-bold text-slate-950">Kenali fokus kerja setiap departemen.</h2>
       <p class="mt-3 max-w-3xl leading-7 text-slate-700">Lihat bidang tanggung jawab masing-masing departemen. Program dan jadwal resmi akan ditampilkan ketika sudah ditetapkan.</p>
+      <a href={withBase('/about/#struktur-organisasi')} class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Lihat struktur organisasi →</a>
     </div>
   </section>
 
   <section class="mx-auto max-w-7xl px-5 pb-20 pt-8 lg:px-8">
     <div class="grid gap-4 md:grid-cols-2">
       {departments.map((department, index) => (
-        <article class="rounded-2xl border border-slate-200 bg-white p-6">
+        <article id={`departemen-${String(index + 1).padStart(2, '0')}`} class="scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6">
           <div class="flex items-start justify-between gap-4">
             <div>
               <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Departemen {String(index + 1).padStart(2, '0')}</p>
