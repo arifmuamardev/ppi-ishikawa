@@ -1,0 +1,82 @@
+---
+import { withBase } from '../utils/paths';
+
+interface Props {
+  text: string;
+  maxLinks?: number;
+  class?: string;
+}
+
+const { text, maxLinks = 2, class: className = '' } = Astro.props;
+
+const rules = [
+  { href: '/community/kampus/', terms: ['Campus Hub', 'Campus Pack'] },
+  { href: '/life-in-ishikawa/', terms: ['Survival Guide'] },
+  { href: '/life-in-ishikawa/sebelum-berangkat/', terms: ['sebelum berangkat', 'before departure'] },
+  { href: '/life-in-ishikawa/hari-pertama/', terms: ['hari pertama', 'baru tiba', 'arrival'] },
+  { href: '/life-in-ishikawa/administrasi/', terms: ['National Health Insurance', 'NHI', 'National Pension', 'My Number', 'resident registration', 'residence registration', 'administrasi'] },
+  { href: '/life-in-ishikawa/tempat-tinggal/', terms: ['tempat tinggal', 'housing', 'private housing', 'apartment', 'dormitory'] },
+  { href: '/life-in-ishikawa/transportasi/', terms: ['transportasi', 'transport', 'commute', 'bicycle', 'bus'] },
+  { href: '/life-in-ishikawa/kesehatan/', terms: ['kesehatan', 'medical', 'health', 'clinic', 'hospital'] },
+  { href: '/life-in-ishikawa/winter/', terms: ['winter', 'heavy snow', 'snow', 'salju'] },
+  { href: '/life-in-ishikawa/disaster-emergency/', terms: ['bencana', 'disaster', 'evacuation', 'emergency'] },
+  { href: '/life-in-ishikawa/japanese-support/', terms: ['IFIE', 'Japanese support', 'bahasa Jepang', 'Japanese-language support'] },
+  { href: '/life-in-ishikawa/family-anak/', terms: ['childcare', 'family', 'keluarga', 'anak'] },
+  { href: '/life-in-ishikawa/bank-money/', terms: ['bank account', 'rekening', 'bank', 'money'] },
+  { href: '/life-in-ishikawa/municipality-guides/', terms: ['municipality', 'city hall', 'pemerintah lokal'] },
+  { href: '/life-in-ishikawa/kehidupan-sehari-hari/', terms: ['kehidupan sehari-hari', 'daily life'] },
+  { href: '/life-in-ishikawa/leaving/', terms: ['leaving Japan', 'meninggalkan Jepang', 'moving out'] }
+] as const;
+
+const aliasMap = new Map<string, string>();
+for (const rule of rules) {
+  for (const term of rule.terms) aliasMap.set(term.toLowerCase(), rule.href);
+}
+
+const escapeRegex = (value: string) => {
+  const special = '\\^$.*+?()[]{}|';
+  return value.split('').map((char) => special.includes(char) ? '\\' + char : char).join('');
+};
+
+const aliases = [...aliasMap.keys()].sort((a, b) => b.length - a.length);
+const matcher = new RegExp('(' + aliases.map(escapeRegex).join('|') + ')', 'gi');
+
+const segments: Array<{ type: 'text' | 'link'; value: string; href?: string }> = [];
+const usedHrefs = new Set<string>();
+let cursor = 0;
+let linked = 0;
+let match: RegExpExecArray | null;
+
+while ((match = matcher.exec(text)) !== null) {
+  const value = match[0];
+  const href = aliasMap.get(value.toLowerCase());
+
+  if (match.index > cursor) {
+    segments.push({ type: 'text', value: text.slice(cursor, match.index) });
+  }
+
+  if (href && linked < maxLinks && !usedHrefs.has(href)) {
+    segments.push({ type: 'link', value, href });
+    usedHrefs.add(href);
+    linked += 1;
+  } else {
+    segments.push({ type: 'text', value });
+  }
+
+  cursor = match.index + value.length;
+}
+
+if (cursor < text.length) {
+  segments.push({ type: 'text', value: text.slice(cursor) });
+}
+
+if (!segments.length) segments.push({ type: 'text', value: text });
+---
+
+<span class={className}>
+  {segments.map((segment) => (
+    segment.type === 'link' && segment.href
+      ? <a href={withBase(segment.href)} class="font-medium text-brand underline decoration-brand/30 underline-offset-2 transition hover:decoration-brand">{segment.value}</a>
+      : segment.value
+  ))}
+</span>
