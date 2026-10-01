@@ -17,16 +17,16 @@ export const jaistPack = {
 };
 
 export const jaistSections = [
-  { label: '01', title: 'Kenali JAIST' },
-  { label: '02', title: 'Minggu pertama' },
-  { label: '03', title: 'Ke mana harus bertanya' },
-  { label: '04', title: 'Student housing & apartment' },
-  { label: '05', title: 'Transportasi & mobilitas' },
-  { label: '06', title: 'Kesehatan & counseling' },
-  { label: '07', title: 'Bahasa Jepang & daily life' },
-  { label: '08', title: 'Academic, research & career' },
-  { label: '09', title: 'Keluarga' },
-  { label: '10', title: 'FAQ mahasiswa Indonesia' }
+  { id: 'kenali-jaist', label: '01', title: 'Kenali JAIST' },
+  { id: 'minggu-pertama', label: '02', title: 'Minggu pertama' },
+  { id: 'kontak-dukungan', label: '03', title: 'Ke mana harus bertanya' },
+  { id: 'housing', label: '04', title: 'Student housing & apartment' },
+  { id: 'transportasi', label: '05', title: 'Transportasi & mobilitas' },
+  { id: 'kesehatan-counseling', label: '06', title: 'Kesehatan & counseling' },
+  { id: 'bahasa-daily-life', label: '07', title: 'Bahasa Jepang & daily life' },
+  { id: 'akademik-riset-karier', label: '08', title: 'Academic, research & career' },
+  { id: 'keluarga', label: '09', title: 'Keluarga' },
+  { id: 'faq', label: '10', title: 'FAQ mahasiswa Indonesia' }
 ];
 
 export const jaistQuickLinks = [
