@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PageIntro from '../../../components/PageIntro.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import TopicIcon from '../../../components/TopicIcon.astro';
 import InstitutionMark from '../../../components/InstitutionMark.astro';
 import MunicipalityMark from '../../../components/MunicipalityMark.astro';
@@ -74,6 +75,9 @@ const needs = [
   title="Campus Hub · Kampus di Ishikawa"
   description="Campus Hub PPI Ishikawa untuk enam institusi dengan anggota tercatat: perbandingan lokasi, housing, transportasi, international support, dan Campus Pack lengkap."
 >
+  <div class="mx-auto max-w-7xl px-5 pt-10 lg:px-8">
+    <Breadcrumbs items={[{ label: 'Beranda', href: '/' }, { label: 'Komunitas', href: '/community/' }, { label: 'Campus Hub' }]} />
+  </div>
   <PageIntro
     title="Campus Hub"
     description="Kenali kampusmu, pahami area tempat tinggal dan commute, lalu masuk ke Campus Pack yang sesuai. Enam institusi di bawah memiliki anggota PPI Ishikawa tercatat pada sensus September 2026."
