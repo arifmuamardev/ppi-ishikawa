@@ -18,16 +18,16 @@ export const kinjoPack = {
 };
 
 export const kinjoSections = [
-  { label: '01', title: 'Kenali Kinjo' },
-  { label: '02', title: 'Minggu pertama' },
-  { label: '03', title: 'Ke mana harus bertanya' },
-  { label: '04', title: 'International student support' },
-  { label: '05', title: 'Housing' },
-  { label: '06', title: 'Transportasi & dua kampus' },
-  { label: '07', title: 'Kesehatan, counseling & accessibility' },
-  { label: '08', title: 'Studi, career & fasilitas' },
-  { label: '09', title: 'Hakusan & daily life' },
-  { label: '10', title: 'FAQ mahasiswa Indonesia' }
+  { id: 'kenali-kinjo', label: '01', title: 'Kenali Kinjo' },
+  { id: 'minggu-pertama', label: '02', title: 'Minggu pertama' },
+  { id: 'kontak-dukungan', label: '03', title: 'Ke mana harus bertanya' },
+  { id: 'international-support', label: '04', title: 'International student support' },
+  { id: 'housing', label: '05', title: 'Housing' },
+  { id: 'transportasi-dua-kampus', label: '06', title: 'Transportasi & dua kampus' },
+  { id: 'kesehatan-counseling-accessibility', label: '07', title: 'Kesehatan, counseling & accessibility' },
+  { id: 'studi-karier-fasilitas', label: '08', title: 'Studi, career & fasilitas' },
+  { id: 'hakusan-daily-life', label: '09', title: 'Hakusan & daily life' },
+  { id: 'faq', label: '10', title: 'FAQ mahasiswa Indonesia' }
 ];
 
 export const kinjoQuickLinks = [
