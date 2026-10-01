@@ -197,10 +197,18 @@ export interface CampusLandmark {
   url: string;
 }
 
+export interface CampusAcademicHighlight {
+  title: string;
+  category: string;
+  description: string;
+  url: string;
+}
+
 export interface CampusProfileDetail {
   slug: string;
   glance: CampusGlanceItem[];
   landmarks: CampusLandmark[];
+  academicHighlights: CampusAcademicHighlight[];
   history: string;
   academicStructure: string;
   academicCharacter: string;
@@ -227,6 +235,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { name: 'Natural Science and Technology Library', type: 'Belajar & riset', description: 'Perpustakaan khusus di Kakuma South Area yang dekat dengan kompleks natural science dan engineering.', url: 'https://library.kanazawa-u.ac.jp/' },
       { name: 'Kanazawa University Hospital', type: 'Kesehatan & pendidikan', description: 'Rumah sakit universitas di area Takaramachi yang menjadi pusat layanan medis sekaligus pendidikan klinis.', url: 'https://web.hosp.kanazawa-u.ac.jp/' },
       { name: 'Nano Life Science Institute', type: 'Riset', description: 'Salah satu pusat riset unggulan di Kakuma yang mencerminkan kekuatan riset advanced science universitas.', url: 'https://nanolsi.kanazawa-u.ac.jp/en/' }
+    ],
+    academicHighlights: [
+      { title: 'Nano Life Science Institute (WPI-NanoLSI)', category: 'Nano & life science', description: 'World Premier International Research Center yang mengembangkan nano-probe life science dan advanced microscopy untuk mengamati fenomena biologis pada skala nano.', url: 'https://nanolsi.kanazawa-u.ac.jp/en/about/' },
+      { title: 'Cancer Research Institute', category: 'Cancer research', description: 'Salah satu research institute utama universitas yang berfokus pada mekanisme kanker dan pengembangan pendekatan baru untuk diagnosis serta terapi.', url: 'https://www.kanazawa-u.ac.jp/en/research/' },
+      { title: 'Institute of Nature and Environmental Technology', category: 'Environment', description: 'Pusat riset yang mencakup lingkungan, atmospheric science, regional environment, dan isu alam yang relevan dengan kawasan Sea of Japan.', url: 'https://www.kanazawa-u.ac.jp/en/research/' },
+      { title: 'Advanced Mobility & Manufacturing Institutes', category: 'Engineering', description: 'Dua institut yang memperlihatkan arah riset terapan universitas pada mobility, manufacturing, design, dan engineering technologies.', url: 'https://www.kanazawa-u.ac.jp/en/research/' }
     ],
     history: 'Berakar dari Smallpox Vaccination Center Kaga Domain yang didirikan pada 1862; kini Kanazawa University merupakan universitas nasional komprehensif dengan sejarah lebih dari 160 tahun.',
     academicStructure: '4 colleges, 20 schools, dan 7 graduate schools. Spektrumnya mencakup humanities, social sciences, science, engineering, medicine, health sciences, pharmacy, hingga bidang lintas disiplin.',
@@ -262,6 +276,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { name: 'JAIST Library', type: 'Belajar', description: 'Perpustakaan berada di tengah cluster utama kampus dan dekat dengan Institute Hall serta gedung riset.', url: 'https://www.jaist.ac.jp/library/english/' },
       { name: 'JAIST HOUSE & Student Housing', type: 'Kehidupan kampus', description: 'Housing berada di dalam kawasan kampus, sehingga kehidupan sehari-hari sangat terintegrasi dengan lingkungan akademik.', url: 'https://www.jaist.ac.jp/english/top/campusmap/' }
     ],
+    academicHighlights: [
+      { title: 'AI-Driven Social Transformation', category: 'AI & society', description: 'Center baru pada 2026 yang mengembangkan riset AI untuk transformasi sosial dan aplikasi lintas bidang.', url: 'https://www.jaist.ac.jp/english/about/history/' },
+      { title: 'Unlimited Data-Driven Materials Exploration', category: 'Materials informatics', description: 'Center yang dibentuk pada April 2026 untuk eksplorasi material berbasis data dan komputasi.', url: 'https://www.jaist.ac.jp/english/about/history/' },
+      { title: 'AI & Soft Robotics', category: 'Robotics', description: 'Research core yang menghubungkan artificial intelligence, soft robotics, sensing, dan interaksi dengan dunia fisik.', url: 'https://www.jaist.ac.jp/english/about/history/' },
+      { title: 'Quantum Materials & Information Sciences', category: 'Quantum', description: 'Neo Excellent Core untuk riset pada material kuantum dan information sciences yang dibentuk dalam penguatan riset frontier JAIST.', url: 'https://www.jaist.ac.jp/english/about/history/' }
+    ],
     history: 'Didirikan pada 1990 sebagai universitas pascasarjana nasional independen pertama di Jepang tanpa divisi undergraduate.',
     academicStructure: 'Pendidikan berpusat pada graduate study dan riset lanjutan. Area utamanya berkembang dari Knowledge Science, Information Science, dan Materials Science dalam struktur graduate school terpadu.',
     academicCharacter: 'Lingkungan graduate-focused dengan pendidikan berbasis coursework yang sistematis dan riset frontier science and technology. Mahasiswa datang dari latar disiplin yang beragam.',
@@ -295,6 +315,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { name: 'Yatsukaho Research Campus', type: 'Riset', description: 'Research campus di Hakusan yang mendukung aktivitas riset dan proyek tertentu di luar Ohgigaoka.', url: 'https://www.kanazawa-it.ac.jp/ekit/map/yatsukaho.html' },
       { name: 'Library Center', type: 'Belajar', description: 'Salah satu fasilitas inti untuk belajar mandiri dan akses sumber akademik mahasiswa.', url: 'https://www.kanazawa-it.ac.jp/' },
       { name: 'Project Design Facilities', type: 'Project-based learning', description: 'Ruang dan fasilitas pembelajaran yang mendukung problem finding, prototyping, teamwork, dan project implementation.', url: 'https://www.kanazawa-it.ac.jp/about_kit/' }
+    ],
+    academicHighlights: [
+      { title: 'Robotics & Physical AI', category: 'Robotics', description: 'Robotics di KIT menggabungkan AI, machine learning, sensing, control, mechanical design, drones, dan system integration.', url: 'https://www.kanazawa-it.ac.jp/gakubu_daigakuin/c-joho/robo/' },
+      { title: 'Project Design Education', category: 'Project-based learning', description: 'Model pembelajaran problem-finding dan problem-solving yang menghubungkan mahasiswa dengan tema perusahaan dan persoalan nyata.', url: 'https://www.kanazawa-it.ac.jp/about_kit/' },
+      { title: 'Architecture & Design', category: 'Built environment', description: 'Bidang architecture dan design menjadi salah satu kekuatan akademik KIT dengan orientasi pada perancangan, teknologi, dan implementasi.', url: 'https://www.kanazawa-it.ac.jp/' },
+      { title: 'Bioscience & Applied Chemistry', category: 'Bio & chemistry', description: 'KIT juga memiliki jalur bioscience dan applied chemistry yang memperluas spektrum universitas di luar engineering klasik.', url: 'https://www.kanazawa-it.ac.jp/' }
     ],
     history: 'Kanazawa Institute of Technology berkembang sebagai universitas swasta teknologi dengan orientasi kuat pada pendidikan rekayasa, kreativitas, dan hubungan antara pembelajaran dengan penerapan di masyarakat.',
     academicStructure: 'Struktur akademik terkini mencakup enam faculties dan 17 departments, termasuk engineering, information, media/information design, architecture, bioscience/chemistry, serta bidang terkait.',
@@ -330,6 +356,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { name: 'Large Greenhouse & Environmental Facilities', type: 'Eksperimen', description: 'Bagian dari cluster fasilitas eksperimen untuk tanaman, lingkungan, air, dan biosains.', url: 'https://www.ishikawa-pu.ac.jp/access/campusmap/' },
       { name: 'Library & Information Center', type: 'Belajar', description: 'Pusat sumber belajar yang berada di kompleks utama kampus Suematsu.', url: 'https://www.ishikawa-pu.ac.jp/access/campusmap/' }
     ],
+    academicHighlights: [
+      { title: 'Bioproduction Science', category: 'Agriculture & bioresources', description: 'Mengkaji produksi biologis dan pertanian melalui kombinasi ilmu tanaman, biologi, teknologi produksi, dan field-based learning.', url: 'https://www.ishikawa-pu.ac.jp/undergraduate/' },
+      { title: 'Environmental Science', category: 'Environment', description: 'Berfokus pada lingkungan alam, ekosistem, water/environmental systems, dan pengelolaan sumber daya.', url: 'https://www.ishikawa-pu.ac.jp/undergraduate/' },
+      { title: 'Food Science', category: 'Food', description: 'Menghubungkan kimia, mikrobiologi, nutrisi, keamanan, pengolahan, dan pengembangan pangan.', url: 'https://www.ishikawa-pu.ac.jp/undergraduate/' },
+      { title: 'Applied Life Science', category: 'Life science', description: 'Graduate-level research memperdalam bioscience, biotechnology, dan life science dengan fasilitas eksperimen yang kuat.', url: 'https://www.ishikawa-pu.ac.jp/admission/graduate_admission/' }
+    ],
     history: 'Universitas publik yang dikelola oleh Ishikawa Prefectural Public University Corporation dan berakar kuat pada kebutuhan pertanian, lingkungan, pangan, serta biosains di wilayah Ishikawa.',
     academicStructure: 'Faculty of Bioresources and Environmental Sciences mencakup Bioproduction Science, Environmental Science, dan Food Science; graduate study memperdalam bidang bioresources/environment dan applied life science.',
     academicCharacter: 'Kampusnya relatif spesialis dibanding universitas komprehensif: pendidikan dan riset berpusat pada hubungan antara sumber daya hayati, lingkungan, pangan, pertanian, dan life science.',
@@ -364,6 +396,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { name: 'Learning Commons', type: 'Belajar kolaboratif', description: 'Ruang untuk group work dan diskusi yang mendukung pembelajaran aktif mahasiswa.', url: 'https://www.kinjo.ac.jp/ku/campuslife/studentsupport.html' },
       { name: 'Career Support Center', type: 'Karier', description: 'Pusat dengan staf khusus untuk konsultasi individual, mock interview, résumé review, dan informasi kerja.', url: 'https://www.kinjo.ac.jp/ku/job/support.html' }
     ],
+    academicHighlights: [
+      { title: 'Comprehensive Rehabilitation', category: 'Rehabilitation', description: 'Graduate School dan Faculty of Health Sciences memperkuat pendidikan dan riset pada physical therapy, occupational therapy, serta rehabilitation sciences.', url: 'https://www.kinjo.ac.jp/english/about/department.html' },
+      { title: 'Nursing & Public Health', category: 'Nursing', description: 'Nursing dan Advanced Course of Public Health Nursing menekankan clinical learning, community health, dan professional qualification.', url: 'https://www.kinjo.ac.jp/english/about/department.html' },
+      { title: 'Social Welfare & Education', category: 'Welfare & education', description: 'Bidang social welfare, child education, dan human services menjadi salah satu pilar akademik utama Kinjo.', url: 'https://www.kinjo.ac.jp/english/about/department.html' },
+      { title: 'Interdisciplinary Economics', category: 'Economics', description: 'Faculty of Interdisciplinary Economics menghubungkan business, economics, regional society, dan practical problem-solving.', url: 'https://www.kinjo.ac.jp/english/about/department.html' }
+    ],
     history: 'Kinjo University berkembang sebagai universitas swasta di Hakusan dengan pendidikan yang dekat dengan kebutuhan profesi, layanan masyarakat, kesehatan, welfare, pendidikan, dan ekonomi.',
     academicStructure: 'Memiliki faculties pada Interdisciplinary Economics, Human and Social Sciences, Health Sciences, dan Nursing, ditambah Advanced Course of Public Health Nursing serta Graduate School of Comprehensive Rehabilitation.',
     academicCharacter: 'Banyak program diarahkan pada kompetensi profesional dan praktik lapangan. Universitas juga menekankan pendidikan kelompok kecil dan pendampingan mahasiswa dari awal hingga akhir studi.',
@@ -397,6 +435,12 @@ export const campusProfileDetails: CampusProfileDetail[] = [
       { name: 'Kaga Campus', type: 'Kampus', description: 'Kampus di area Daishoji untuk Japanese Language dan International Business.', url: 'https://gakuen.alice-japan.net/access' },
       { name: 'Student Dormitory Network', type: 'Tempat tinggal', description: 'Dormitory menjadi bagian penting pengalaman siswa; Japanese Language students pada prinsipnya tinggal di dorm sesuai ketentuan sekolah.', url: 'https://gakuen.alice-japan.net/entrance-exam/dormitory' },
       { name: 'Employment Support Center', type: 'Karier', description: 'Jalur khusus untuk employment support dan koneksi dengan perusahaan yang menerima international students.', url: 'https://gakuen.alice-japan.net/' }
+    ],
+    academicHighlights: [
+      { title: 'Japanese Language Education', category: 'Language', description: 'Program bahasa Jepang menjadi fondasi untuk studi lanjut, vocational education, dan transisi menuju kehidupan akademik atau kerja di Jepang.', url: 'https://gakuen.alice-japan.net/courses' },
+      { title: 'International Business', category: 'Business', description: 'Program vocational yang menggabungkan bahasa Jepang, business skills, dan persiapan kerja untuk lingkungan internasional di Jepang.', url: 'https://gakuen.alice-japan.net/courses' },
+      { title: 'Care Worker Education', category: 'Care & welfare', description: 'Program care worker mengarah pada kompetensi profesional dan kesiapan bekerja di sektor welfare/care di Jepang.', url: 'https://gakuen.alice-japan.net/courses' },
+      { title: 'Employment & Career Pathway', category: 'Career', description: 'Pendidikan vokasi didukung jalur employment support dan persiapan transisi siswa internasional menuju kerja atau studi berikutnya.', url: 'https://gakuen.alice-japan.net/' }
     ],
     history: 'Alice International Gakuen group was established in 1992 and develops vocational education, Japanese-language education, welfare-related training, and support for international human resources.',
     academicStructure: 'Di Ishikawa, Alice Gakuen memiliki Japanese Language Department, International Business Department, dan Care Worker Department, dengan kegiatan pendidikan di Kanazawa dan Kaga.',
