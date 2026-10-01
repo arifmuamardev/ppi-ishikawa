@@ -216,7 +216,7 @@ import { publicMedia } from '../data/media';
           <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">7 departemen</p>
           <div class="mt-4 flex flex-wrap gap-2">
             {departments.map((dept, i) => (
-              <a href={withBase(`/programs/#departemen-${String(i + 1).padStart(2, '0')}`)} class="rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-amber-200 hover:bg-amber-50 hover:text-brand">
+              <a href={withBase(`/programs/#${dept.slug}`)} class="rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-amber-200 hover:bg-amber-50 hover:text-brand">
                 {String(i + 1).padStart(2, '0')} · {dept.name}
               </a>
             ))}
