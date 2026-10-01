@@ -99,6 +99,42 @@ const visuals = campusProfileMedia[profile.slug] ?? [];
     )}
 
     <section class="mt-7">
+      <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-7">
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-accent-soft">Student Life Snapshot</p>
+            <h3 class="mt-2 text-2xl font-bold tracking-tight">Seperti apa pola hidup sehari-hari di sekitar kampus?</h3>
+          </div>
+          <a href={profile.studentLife.sourceUrl} target="_blank" rel="noreferrer" class="text-xs font-bold text-accent-soft hover:underline">Sumber kehidupan kampus ↗</a>
+        </div>
+
+        <div class="mt-5 grid gap-4 md:grid-cols-2">
+          <article class="rounded-2xl border border-slate-700 bg-slate-900 p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Transportasi harian</p>
+            <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.transport}</p>
+          </article>
+          <article class="rounded-2xl border border-slate-700 bg-slate-900 p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Pola area tinggal</p>
+            <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.livingArea}</p>
+          </article>
+          <article class="rounded-2xl border border-slate-700 bg-slate-900 p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Kebutuhan sehari-hari</p>
+            <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.dailyNeeds}</p>
+          </article>
+          <article class="rounded-2xl border border-slate-700 bg-slate-900 p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Musim dingin</p>
+            <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.winter}</p>
+          </article>
+        </div>
+
+        <div class="mt-4 rounded-2xl border border-slate-700 bg-slate-900 p-5">
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-soft">Koneksi ke komunitas PPI</p>
+          <p class="mt-2 text-sm leading-6 text-slate-300">{profile.studentLife.community}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-7">
       <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-7">
         <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
