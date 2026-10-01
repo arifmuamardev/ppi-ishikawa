@@ -99,6 +99,43 @@ const visuals = campusProfileMedia[profile.slug] ?? [];
     )}
 
     <section class="mt-7">
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-7">
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">International Student Snapshot</p>
+            <h3 class="mt-2 text-2xl font-bold tracking-tight text-slate-950">Hal utama yang perlu dipahami mahasiswa internasional.</h3>
+          </div>
+          <a href={profile.internationalStudent.sourceUrl} target="_blank" rel="noreferrer" class="text-xs font-bold text-brand hover:underline">Sumber internasional resmi ↗</a>
+        </div>
+
+        <div class="mt-5 grid gap-4 md:grid-cols-2">
+          <article class="rounded-2xl bg-slate-50 p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Jalur masuk</p>
+            <p class="mt-2 text-sm leading-6 text-slate-700">{profile.internationalStudent.admission}</p>
+          </article>
+          <article class="rounded-2xl bg-slate-50 p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Bahasa pengantar</p>
+            <p class="mt-2 text-sm leading-6 text-slate-700">{profile.internationalStudent.language}</p>
+          </article>
+          <article class="rounded-2xl bg-slate-50 p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Tempat tinggal</p>
+            <p class="mt-2 text-sm leading-6 text-slate-700">{profile.internationalStudent.housing}</p>
+          </article>
+          <article class="rounded-2xl bg-slate-50 p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Beasiswa & dukungan biaya</p>
+            <p class="mt-2 text-sm leading-6 text-slate-700">{profile.internationalStudent.funding}</p>
+          </article>
+        </div>
+
+        <div class="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-5">
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-dark">First contact</p>
+          <p class="mt-2 text-base font-bold text-slate-950">{profile.internationalStudent.firstContact}</p>
+          <p class="mt-2 text-xs leading-5 text-slate-600">Detail admission, scholarship, eligibility, dan housing dapat berubah setiap intake. Selalu gunakan halaman resmi terbaru sebelum mengambil keputusan.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-7">
       <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Academic & Research Highlights</p>
