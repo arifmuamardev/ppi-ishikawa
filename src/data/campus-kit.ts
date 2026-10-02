@@ -110,6 +110,11 @@ export const kitFaq = [
     a: 'Career Planning and Placement Services menyediakan dukungan seperti career advice, mock interview, résumé review, employer information, dan berbagai program career development. Detail eligibility dan schedule mengikuti informasi kampus.'
   },
   {
+    id: 'cari-apartemen-kit',
+    q: 'Saya calon mahasiswa KIT dan sedang mencari apartemen. Mulai dari mana?',
+    a: 'Untuk long-term students, mulai dari KIT-designated apartments. KIT menyebut banyak unit berada dalam walking atau bicycle distance dari Ohgigaoka dan kisaran rent sekitar ¥30,000–¥80,000 per bulan. Bandingkan total biaya, jarak ke kampus, dan winter commute sebelum memilih.'
+  },
+  {
     id: 'campus-guide-vs-ppi',
     q: 'Apakah informasi PPI menggantikan Campus Guide KIT?',
     a: 'Tidak. Campus Pack membantu mahasiswa Indonesia memahami jalur yang relevan. Aturan akademik, housing, medical assistance, schedule, fee, dan prosedur resmi tetap mengikuti KIT.'
