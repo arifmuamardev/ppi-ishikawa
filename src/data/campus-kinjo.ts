@@ -123,6 +123,11 @@ export const kinjoFaq = [
     a: 'Ya. Peer Supporter program menjalankan aktivitas seperti new-student exchange activities, consultation sessions, study sessions sebelum ujian, dan practicum-related consultation untuk membantu mahasiswa beradaptasi.'
   },
   {
+    id: 'cari-apartemen-kinjo',
+    q: 'Saya calon mahasiswa Kinjo dan sedang mencari apartemen. Mulai dari mana?',
+    a: 'Pastikan dulu aktivitas utama Anda di Kasama atau Matto. Kinjo tidak memiliki foreign-student dormitory dan mencantumkan kisaran rent ordinary apartments sekitar ¥25,000–¥60,000 per bulan. Konsultasikan housing dengan International Exchange Center sebelum menandatangani kontrak.'
+  },
+  {
     id: 'preparation-program-vs-degree',
     q: 'Apakah Preparation Program for Foreign Students sama dengan degree program Kinjo University?',
     a: 'Tidak. Preparation Program for Foreign Students diselenggarakan melalui Kinjo College untuk persiapan bahasa Jepang dan studi sebelum melanjutkan ke program reguler. Mahasiswa degree Kinjo University mengikuti admission route programnya sendiri.'
