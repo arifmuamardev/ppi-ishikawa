@@ -153,6 +153,128 @@ const campusMap = campusMapPoints['kanazawa-university'];
       <a href={withBase('/life-in-ishikawa/tempat-tinggal/')} class="rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white">SG04 · Tempat Tinggal →</a>
     </div>
     <p class="mt-4 text-xs leading-5 text-slate-500">Biaya, eligibility, dan availability dormitory berubah per intake; selalu gunakan halaman housing resmi untuk nilai terbaru.</p>
+
+    <div id="apartemen-kanazawa" class="mt-8 scroll-mt-24 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+      <div class="max-w-3xl">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Panduan cepat · Private apartment</p>
+        <h3 class="mt-3 text-2xl font-bold tracking-tight text-slate-950">Mencari apartemen satu orang untuk mahasiswa Kanazawa University.</h3>
+        <p class="mt-4 leading-7 text-slate-600">
+          Jika Anda belum berada di Kanazawa, mulai dari <strong>lokasi kampus utama Anda</strong>, bukan hanya dari harga sewa.
+          Mahasiswa yang banyak beraktivitas di Kakuma memiliki kebutuhan commute yang berbeda dari mahasiswa di
+          Takaramachi–Tsuruma. Setelah itu bandingkan biaya awal, biaya bulanan, guarantor/guarantee company,
+          furniture, internet, serta akses saat hujan dan musim dingin.
+        </p>
+      </div>
+
+      <div class="mt-7 grid gap-4 md:grid-cols-3">
+        <article class="rounded-2xl bg-slate-50 p-5">
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Kisaran sewa</p>
+          <p class="mt-2 text-2xl font-bold text-slate-950">± ¥30k–¥60k</p>
+          <p class="mt-2 text-sm leading-6 text-slate-600">
+            Halaman resmi KU memberi contoh sekitar ¥30,000–¥50,000 per bulan untuk rent, sementara informasi KUEP
+            mencantumkan sekitar ¥40,000–¥60,000 untuk one-room. Gunakan ini sebagai kisaran orientasi, bukan harga tetap.
+          </p>
+        </article>
+        <article class="rounded-2xl bg-slate-50 p-5">
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Biaya di luar rent</p>
+          <p class="mt-2 text-2xl font-bold text-slate-950">Cek total awal</p>
+          <p class="mt-2 text-sm leading-6 text-slate-600">
+            Selain rent dapat ada common fee, insurance, guarantee-company fee, agency fee, cleaning fee,
+            deposit/key money, utilities, dan biaya lain sesuai properti. Minta breakdown tertulis sebelum setuju.
+          </p>
+        </article>
+        <article class="rounded-2xl bg-slate-50 p-5">
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Utilities</p>
+          <p class="mt-2 text-2xl font-bold text-slate-950">± ¥13k</p>
+          <p class="mt-2 text-sm leading-6 text-slate-600">
+            KU menggunakan sekitar ¥13,000 per bulan sebagai contoh electricity, water, dan gas, dengan catatan
+            jumlah aktual berubah menurut musim dan penggunaan.
+          </p>
+        </article>
+      </div>
+
+      <div class="mt-7 grid gap-5 lg:grid-cols-[1.05fr_.95fr]">
+        <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6">
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-dark">Area awal untuk pencarian</p>
+          <h4 class="mt-2 text-xl font-bold text-slate-950">Untuk Kakuma, mulai dari koridor yang memang banyak digunakan mahasiswa.</h4>
+          <div class="mt-4 grid gap-3 sm:grid-cols-3">
+            {[
+              ['Morinosato', 'Banyak kebutuhan harian dan akses bus menuju arah Kakuma.'],
+              ['Wakamatsu', 'Dekat koridor bus kampus dan area mahasiswa di sisi timur Kanazawa.'],
+              ['Tagami', 'Pilihan housing cukup luas; bandingkan akses bus, bicycle, dan elevasi rute.']
+            ].map(([area, desc]) => (
+              <div class="rounded-2xl bg-white p-4">
+                <p class="font-bold text-slate-950">{area}</p>
+                <p class="mt-1 text-xs leading-5 text-slate-600">{desc}</p>
+              </div>
+            ))}
+          </div>
+          <p class="mt-4 text-xs leading-5 text-slate-600">
+            Jika aktivitas utama Anda di Takaramachi–Tsuruma, jangan otomatis memilih area Kakuma. Prioritaskan rute harian ke campus/hospital area dan cek commute sebelum menandatangani kontrak.
+          </p>
+        </div>
+
+        <div class="rounded-3xl bg-slate-950 p-6 text-white">
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-soft">Cara mulai mencari</p>
+          <ol class="mt-4 space-y-3 text-sm leading-6 text-slate-300">
+            <li class="flex gap-3"><span class="font-bold text-white">1.</span><span>Pastikan kampus/lab utama dan tanggal mulai tinggal.</span></li>
+            <li class="flex gap-3"><span class="font-bold text-white">2.</span><span>Tentukan budget <strong class="text-white">total bulanan</strong>, bukan rent saja.</span></li>
+            <li class="flex gap-3"><span class="font-bold text-white">3.</span><span>Tanyakan apakah unit menerima international student dan guarantee company apa yang digunakan.</span></li>
+            <li class="flex gap-3"><span class="font-bold text-white">4.</span><span>Minta initial-cost estimate tertulis sebelum transfer atau tanda tangan.</span></li>
+            <li class="flex gap-3"><span class="font-bold text-white">5.</span><span>Jika memungkinkan, lakukan viewing langsung/video dan cek rute kampus + supermarket + bus stop.</span></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="mt-7">
+        <p class="text-xs font-bold uppercase tracking-[0.12em] text-brand">Agen & jalur pencarian yang dicantumkan KU</p>
+        <p class="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
+          Ini bukan ranking atau endorsement PPI. Nama di bawah dicantumkan pada halaman resmi Kanazawa University
+          untuk mahasiswa internasional; availability, bahasa layanan, biaya, dan properti dapat berubah.
+        </p>
+        <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <a href="https://www.kanazawa-u.ac.jp/en/students/livelihood/residence" target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-amber-200">
+            <p class="font-bold text-slate-950">Kanazawa University Co-op</p>
+            <p class="mt-1 text-xs leading-5 text-slate-500">KU menyebut Co-op sebagai jalur referral private apartment.</p>
+          </a>
+          <a href="https://chintai.noka.co.jp/foreigner/" target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-amber-200">
+            <p class="font-bold text-slate-950">Noka Real Estate · Morinosato</p>
+            <p class="mt-1 text-xs leading-5 text-slate-500">Dicantumkan KU; tersedia halaman untuk foreign residents.</p>
+          </a>
+          <a href="https://www.apamanshop.com/shop/17028101/" target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-amber-200">
+            <p class="font-bold text-slate-950">Apaman Shop · Kanazawa Morinosato</p>
+            <p class="mt-1 text-xs leading-5 text-slate-500">Salah satu agen yang dicantumkan halaman support KU.</p>
+          </a>
+          <a href="https://mooovin.jp/ja/" target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-amber-200">
+            <p class="font-bold text-slate-950">Mooovin</p>
+            <p class="mt-1 text-xs leading-5 text-slate-500">Dicantumkan pada daftar private-apartment support KU.</p>
+          </a>
+          <a href="https://urbanhome.co.jp/shop/5/" target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-amber-200">
+            <p class="font-bold text-slate-950">Urban Home · Morinosato</p>
+            <p class="mt-1 text-xs leading-5 text-slate-500">Dicantumkan pada halaman housing mahasiswa internasional KU.</p>
+          </a>
+          <a href="https://intl-support.w3.kanazawa-u.ac.jp/campuslife/apartment/index.php" target="_blank" rel="noreferrer" class="rounded-2xl border border-amber-200 bg-amber-50 p-4 transition hover:border-amber-300">
+            <p class="font-bold text-slate-950">Daftar resmi terbaru KU</p>
+            <p class="mt-1 text-xs leading-5 text-slate-600">Gunakan halaman ini untuk mengecek daftar dan kontak yang paling baru.</p>
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-7 rounded-2xl border border-red-200 bg-red-50 p-5">
+        <p class="font-bold text-slate-950">Catatan penting tentang guarantor</p>
+        <p class="mt-2 text-sm leading-6 text-slate-700">
+          Kanazawa University pada prinsipnya telah menghentikan institutional-guarantor scheme untuk kontrak baru sejak November 2023.
+          Untuk kontrak baru, mahasiswa umumnya perlu menggunakan private guarantee system yang ditentukan agen/properti.
+          Jangan meminta supervisor menjadi guarantor; bila bingung, hubungi One-Stop Consultation.
+        </p>
+      </div>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="https://intl-support.w3.kanazawa-u.ac.jp/campuslife/apartment/index.php" target="_blank" rel="noreferrer" class="rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white">Housing internasional KU ↗</a>
+        <a href={withBase('/life-in-ishikawa/tempat-tinggal/')} class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Checklist kontrak & move-in →</a>
+        <a href={withBase('/life-in-ishikawa/transportasi/')} class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Cek transportasi →</a>
+      </div>
+    </div>
   </section>
 
   <section id="transportasi" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
