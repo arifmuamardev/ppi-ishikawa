@@ -4,6 +4,7 @@ import GuideToc from '../../../components/GuideToc.astro';
 import InstitutionMark from '../../../components/InstitutionMark.astro';
 import ContextualText from '../../../components/ContextualText.astro';
 import CampusFaqGuideLinks from '../../../components/CampusFaqGuideLinks.astro';
+import CampusScholarshipGuide from '../../../components/CampusScholarshipGuide.astro';
 import RelatedLinks from '../../../components/RelatedLinks.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import CampusProfile from '../../../components/CampusProfile.astro';
@@ -286,6 +287,8 @@ const campusMap = campusMapPoints['jaist'];
       <a href={withBase('/life-in-ishikawa/family-anak/')} class="rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white">SG08 · Keluarga & Anak →</a>
     </div>
   </section>
+
+  <CampusScholarshipGuide campusSlug="jaist" />
 
   <section id="faq" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
     <span id="bagian-10" class="sr-only" aria-hidden="true"></span>
