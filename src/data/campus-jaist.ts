@@ -112,6 +112,11 @@ export const jaistFaq = [
     a: 'Career Support Office menyediakan seminar, career counseling, internship information, interview preparation, dan dukungan lain. JAIST juga menyediakan informasi khusus international students dan dukungan bahasa Jepang untuk job hunting.'
   },
   {
+    id: 'cari-housing-jaist',
+    q: 'Saya calon mahasiswa JAIST dan sedang mencari tempat tinggal. Mulai dari mana?',
+    a: 'Cek dulu availability Student Housing atau JAIST HOUSE. Jika harus mencari private apartment, bandingkan akses shuttle/Tsurugi/Komatsu, total initial cost, insurance, dan winter commute. Untuk private housing, JAIST Handbook menjelaskan biaya awal dapat cukup besar, jadi jangan melihat monthly rent saja.'
+  },
+  {
     id: 'handbook-vs-ppi',
     q: 'Apakah informasi PPI menggantikan JAIST Handbook?',
     a: 'Tidak. Campus Pack membantu mengarahkan Anda ke jalur yang tepat. Aturan akademik, housing, immigration support, fees, timetable, dan prosedur resmi tetap mengikuti JAIST serta lembaga pemerintah.'
