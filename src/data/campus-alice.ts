@@ -124,6 +124,11 @@ export const aliceFaq = [
     a: 'Program Care Worker berfokus pada knowledge, practical skills, practicum, communication, dan persiapan national examination untuk certified care worker. Program ini juga memiliki scholarship routes tertentu, termasuk skema untuk international students; detail harus dicek pada guideline terbaru.'
   },
   {
+    id: 'cari-housing-alice',
+    q: 'Saya calon siswa Alice dan sedang mencari tempat tinggal. Mulai dari mana?',
+    a: 'Jika Anda masuk Japanese Language Department di Kanazawa atau Kaga, cek aturan dormitory terlebih dahulu karena official guidance menyatakan siswa pada prinsipnya harus tinggal di dorm. Untuk program lain atau rencana private housing, konsultasikan dulu dengan Academic Affairs/life-support staff sebelum membuat kontrak.'
+  },
+  {
     id: 'dukungan-sehari-hari',
     q: 'Siapa yang membantu jika ada masalah sehari-hari?',
     a: 'Alice secara khusus menjelaskan dukungan dari Academic Affairs, life-support staff, course teachers, international/multilingual staff, dan Employment Support Center. Isu seperti dormitory, city procedures, residence renewal, part-time work, illness, accident, study, dan career memiliki jalur dukungan masing-masing.'
