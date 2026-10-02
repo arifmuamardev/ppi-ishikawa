@@ -76,6 +76,11 @@ export const kuFaq = [
     a: 'Gunakan Career Support Office dan program Link KAGAYAKI. Untuk mahasiswa internasional, persiapan job hunting di Jepang sebaiknya dimulai sebelum masa kelulusan dan mengikuti guidance kampus.'
   },
   {
+    id: 'cari-apartemen-kanazawa',
+    q: 'Saya calon mahasiswa KU dan sedang mencari apartemen. Mulai dari mana?',
+    a: 'Mulai dari memastikan kampus utama Anda, lalu tentukan budget total bulanan dan biaya awal. Untuk Kakuma, Morinosato, Wakamatsu, dan Tagami dapat menjadi area awal untuk dibandingkan. Gunakan jalur housing resmi KU atau agen yang dicantumkan KU, lalu cek guarantor/guarantee company, utilities, internet, dan rute saat musim dingin sebelum menandatangani kontrak.'
+  },
+  {
     id: 'informasi-resmi-vs-ppi',
     q: 'Apakah informasi PPI menggantikan informasi kampus?',
     a: 'Tidak. PPI membantu menjelaskan konteks praktis. Aturan, jadwal, biaya, admission, visa support, dan prosedur resmi tetap mengikuti Kanazawa University dan lembaga pemerintah yang berwenang.'
