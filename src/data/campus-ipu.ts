@@ -111,6 +111,11 @@ export const ipuFaq = [
     a: 'Career Center dan Employment Support Office menyediakan consultation, résumé/entry-sheet review, interview guidance, seminar, dan informasi kerja. Setelah laboratory assignment, mahasiswa juga dapat berkonsultasi dengan faculty/lab.'
   },
   {
+    id: 'cari-apartemen-ipu',
+    q: 'Saya calon mahasiswa IPU dan sedang mencari apartemen. Mulai dari mana?',
+    a: 'IPU tidak memiliki dormitory. Hubungi Academic & Student Affairs untuk informasi real estate sekitar kampus, lalu bandingkan area dekat Suematsu/Nonoichi dengan area yang lebih dekat transport hub. IPU tidak mempublikasikan kisaran rent resmi, jadi gunakan quotation aktual dari properti atau agen.'
+  },
+  {
     id: 'admission-vs-campus-pack',
     q: 'Apakah Campus Pack ini menggantikan informasi admission IPU?',
     a: 'Tidak. Admission dates, eligibility, exam route, fees, scholarship/tuition systems, dan foreign-student selection harus selalu dicek pada halaman resmi untuk admission year yang Anda tuju.'
