@@ -20,6 +20,7 @@ export interface Scholarship {
   studyLevels: ScholarshipStudyLevel[];
   stages: ScholarshipStage[];
   campusSlugs: string[];
+  campusScope: 'all-japan' | 'listed' | 'designated-unknown' | 'program-specific';
   campusEligibilityNote: string;
   nationality: string[];
   nationalityNote: string;
@@ -74,6 +75,7 @@ export const scholarships: Scholarship[] = [
     studyLevels: ['R', 'M', 'D'],
     stages: ['before-arrival'],
     campusSlugs: [],
+    campusScope: 'program-specific',
     campusEligibilityNote: 'Host university dan jalur rekomendasi mengikuti ketentuan MEXT serta universitas penerima.',
     nationality: ['All eligible countries/regions'],
     nationalityNote: 'Recruitment target berbeda menurut negara/region.',
@@ -107,6 +109,7 @@ export const scholarships: Scholarship[] = [
       'kanazawa-university','jaist','kanazawa-institute-of-technology',
       'ishikawa-prefectural-university','kinjo-university','alice-gakuen'
     ],
+    campusScope: 'all-japan',
     campusEligibilityNote: 'Ketersediaan nominasi dan kuota berbeda per sekolah; hubungi international/student office.',
     nationality: ['International students'],
     nationalityNote: 'Student visa required; MEXT and foreign-government sponsored students excluded.',
@@ -146,6 +149,7 @@ export const scholarships: Scholarship[] = [
       'kanazawa-university','jaist','kanazawa-institute-of-technology',
       'ishikawa-prefectural-university','kinjo-university','alice-gakuen'
     ],
+    campusScope: 'listed',
     campusEligibilityNote: 'Pamphlet mencantumkan Ishikawa Prefecture sebagai designated school/location; konfirmasi nominasi dan detail tahunan melalui kampus.',
     nationality: ['International students'],
     nationalityNote: 'Privately financed foreign students; detail tahunan perlu dikonfirmasi.',
@@ -175,6 +179,7 @@ export const scholarships: Scholarship[] = [
     studyLevels: ['U', 'M', 'D'],
     stages: ['after-enrollment'],
     campusSlugs: ['kanazawa-university', 'jaist'],
+    campusScope: 'listed',
     campusEligibilityNote: 'Designated schools in the pamphlet: Kanazawa University, University of Fukui, JAIST, University of Toyama.',
     nationality: ['International students'],
     nationalityNote: 'No designated country/region shown in the pamphlet entry.',
@@ -205,6 +210,7 @@ export const scholarships: Scholarship[] = [
     studyLevels: ['U', 'M', 'D'],
     stages: ['after-enrollment'],
     campusSlugs: [],
+    campusScope: 'all-japan',
     campusEligibilityNote: 'Pamphlet tidak menetapkan satu daftar kampus Ishikawa; cek apakah kampus Anda dapat menominasikan.',
     nationality: ['Indonesia', 'Singapore', 'Malaysia', 'Thailand', 'Brunei', 'Cambodia', 'Myanmar', 'Vietnam', 'Philippines', 'Laos', 'Timor-Leste'],
     nationalityNote: 'Indonesia explicitly listed.',
@@ -235,6 +241,7 @@ export const scholarships: Scholarship[] = [
     studyLevels: ['U', 'M', 'D'],
     stages: ['after-enrollment'],
     campusSlugs: [],
+    campusScope: 'all-japan',
     campusEligibilityNote: 'Tidak dibatasi ke kampus Ishikawa pada entry pamphlet; konfirmasi prosedur aplikasi dengan foundation/kampus.',
     nationality: ['Indonesia', 'Singapore', 'Philippines', 'Malaysia', 'Brunei', 'Thailand', 'Vietnam', 'Laos', 'Cambodia', 'Myanmar', 'India', 'Sri Lanka', 'Maldives', 'Pakistan', 'Nepal', 'Bhutan', 'Bangladesh', 'Timor-Leste'],
     nationalityNote: 'Indonesia explicitly listed.',
@@ -270,6 +277,7 @@ export const scholarships: Scholarship[] = [
     studyLevels: ['ST', 'U', 'R', 'M', 'D'],
     stages: ['after-enrollment'],
     campusSlugs: [],
+    campusScope: 'all-japan',
     campusEligibilityNote: 'Tidak ada designated school khusus pada entry; school recommendation required.',
     nationality: ['Indonesia'],
     nationalityNote: 'Indonesia only in the pamphlet entry.',
@@ -307,8 +315,9 @@ export const scholarships: Scholarship[] = [
     summary: 'Graduate scholarship yang mencantumkan Indonesia sebagai salah satu negara target dan menggunakan designated universities.',
     studyLevels: ['M', 'D'],
     stages: ['after-enrollment'],
-    campusSlugs: [],
-    campusEligibilityNote: '28 designated universities; pamphlet meminta mahasiswa berkonsultasi dengan international student adviser.',
+    campusSlugs: ['kanazawa-university'],
+    campusScope: 'listed',
+    campusEligibilityNote: 'Official 2026 designated graduate schools include Kanazawa University. JAIST, KIT, IPU, Kinjo, and Alice are not listed on the current official designated-school list.',
     nationality: ['Thailand', 'Indonesia', 'China', 'Korea', 'Vietnam'],
     nationalityNote: 'Indonesia explicitly listed.',
     fields: ['All / subject to designated-university rules'],
@@ -332,6 +341,7 @@ export const scholarships: Scholarship[] = [
     studyLevels: ['M', 'D'],
     stages: ['after-enrollment'],
     campusSlugs: [],
+    campusScope: 'all-japan',
     campusEligibilityNote: 'No designated school shown in pamphlet entry; direct foundation application.',
     nationality: ['East Asia', 'Southeast Asia'],
     nationalityNote: 'Indonesia falls within Southeast Asia; verify current country list in guidelines.',
@@ -357,6 +367,7 @@ export const scholarships: Scholarship[] = [
     studyLevels: ['U', 'M', 'D'],
     stages: ['after-enrollment'],
     campusSlugs: [],
+    campusScope: 'designated-unknown',
     campusEligibilityNote: 'Application handled through school; check whether your institution participates in the current call.',
     nationality: ['International students'],
     nationalityNote: 'No specific country limitation shown in the pamphlet entry.',
@@ -381,6 +392,7 @@ export const scholarships: Scholarship[] = [
     studyLevels: ['U', 'M'],
     stages: ['after-enrollment'],
     campusSlugs: [],
+    campusScope: 'designated-unknown',
     campusEligibilityNote: 'Designated schools; contact your school.',
     nationality: ['Vietnam', 'Indonesia', 'Thailand', 'Philippines', 'Malaysia', 'Myanmar'],
     nationalityNote: 'Indonesia explicitly listed.',
@@ -405,6 +417,7 @@ export const scholarships: Scholarship[] = [
     studyLevels: ['U', 'M'],
     stages: ['after-enrollment'],
     campusSlugs: [],
+    campusScope: 'designated-unknown',
     campusEligibilityNote: 'Designated schools; contact your school to confirm participation.',
     nationality: ['Indonesia'],
     nationalityNote: 'Indonesia only.',
@@ -432,6 +445,7 @@ export const scholarships: Scholarship[] = [
       'kanazawa-university','jaist','kanazawa-institute-of-technology',
       'ishikawa-prefectural-university','kinjo-university'
     ],
+    campusScope: 'all-japan',
     campusEligibilityNote: 'Foundation menyatakan applicant bebas memilih graduate school di Jepang; tidak memerlukan pre-selection universitas.',
     nationality: ['International students'],
     nationalityNote: 'All non-Japanese nationalities are eligible.',
@@ -471,6 +485,7 @@ export const scholarships: Scholarship[] = [
       'kanazawa-university','jaist','kanazawa-institute-of-technology',
       'ishikawa-prefectural-university','kinjo-university','alice-gakuen'
     ],
+    campusScope: 'program-specific',
     campusEligibilityNote: 'Hanya relevan bila program exchange/short-term Anda merupakan program yang diajukan dan diterima melalui Japanese school/home school.',
     nationality: ['Countries with diplomatic relations with Japan'],
     nationalityNote: 'Applicants from Taiwan and Palestine are also acceptable under JASSO rules.',
@@ -507,6 +522,7 @@ export const scholarships: Scholarship[] = [
       'kanazawa-university','kanazawa-institute-of-technology',
       'ishikawa-prefectural-university','kinjo-university','alice-gakuen'
     ],
+    campusScope: 'program-specific',
     campusEligibilityNote: 'Applicable only to eligible regular-entry programs; graduate school and Japanese-language-institute enrollment are excluded.',
     nationality: ['International students'],
     nationalityNote: 'Eligibility follows EJU and Honors Scholarship rules.',
@@ -545,6 +561,7 @@ export const scholarships: Scholarship[] = [
       'kanazawa-university','jaist','kanazawa-institute-of-technology',
       'ishikawa-prefectural-university','kinjo-university'
     ],
+    campusScope: 'designated-unknown',
     campusEligibilityNote: 'Bukan semua universitas otomatis bisa menominasikan; tanyakan apakah kampus Anda menerima recommendation request dari Mizuho Foundation untuk cycle tersebut.',
     nationality: ['International students'],
     nationalityNote: 'All regions are listed on Study in Japan; Student status required.',
@@ -578,6 +595,7 @@ export const scholarships: Scholarship[] = [
     studyLevels: ['M'],
     stages: ['before-arrival'],
     campusSlugs: [],
+    campusScope: 'all-japan',
     campusEligibilityNote: 'No designated school shown in the pamphlet entry; confirm current foundation route and host-school conditions.',
     nationality: ['China', 'Thailand', 'Indonesia', 'Malaysia', 'Vietnam', 'Myanmar', 'Taiwan'],
     nationalityNote: 'Indonesia explicitly listed.',
