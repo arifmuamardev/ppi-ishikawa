@@ -43,6 +43,7 @@ Nama sistem resmi seperti **National Health Insurance**, **National Pension**, *
 - Paragraf sebaiknya pendek dan nyaman dibaca di mobile.
 - Detail hukum/administratif dipisahkan dari **Catatan praktis PPI**.
 - Jangan menduplikasi detail yang sudah memiliki halaman khusus; gunakan internal link bila perlu.
+- Hindari copy publik yang menjelaskan strategi website atau maintenance, misalnya “halaman ini berfokus…”, “bagian ini hanya…”, “kami tidak menyimpan…”, atau alasan mengapa suatu konten tidak ditampilkan. Tulis kebutuhan, fakta, atau tindakan pengguna secara langsung.
 
 ## Sumber dan freshness
 
