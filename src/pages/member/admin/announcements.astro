@@ -1,0 +1,167 @@
+---
+import MemberLayout from '../../../layouts/MemberLayout.astro';
+---
+
+<MemberLayout title="Kelola Pengumuman" requireAdmin={true}>
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Admin · Pengumuman</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kelola informasi anggota</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Buat pengumuman dan tentukan audiens yang dituju.</p>
+    </section>
+
+    <div id="announcement-admin-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <div class="flex items-center justify-between gap-3">
+        <h2 id="announcement-form-title" class="text-xl font-bold text-slate-950">Tambah pengumuman</h2>
+        <button id="announcement-form-reset" type="button" class="hidden text-sm font-bold text-brand hover:underline">Batal edit</button>
+      </div>
+      <form id="announcement-admin-form" class="mt-6 grid gap-5 md:grid-cols-2">
+        <input name="id" type="hidden" />
+        <label class="md:col-span-2">
+          <span class="text-sm font-bold text-slate-800">Judul</span>
+          <input name="title" type="text" maxlength="160" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Kategori</span>
+          <select name="category" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+            <option>Kegiatan</option><option>Membership</option><option>Kampus</option><option>Akademik</option><option>Karier</option><option>Lainnya</option>
+          </select>
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Audiens</span>
+          <input name="audience" type="text" value="Semua anggota" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+        </label>
+        <label class="md:col-span-2">
+          <span class="text-sm font-bold text-slate-800">Isi pengumuman</span>
+          <textarea name="body" rows="5" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900"></textarea>
+        </label>
+        <label class="md:col-span-2 flex items-start gap-3 rounded-2xl bg-amber-50 p-4">
+          <input name="important" type="checkbox" class="mt-1 size-4" />
+          <span class="text-sm font-semibold text-slate-700">Tandai sebagai pengumuman penting</span>
+        </label>
+        <div class="md:col-span-2 flex justify-end">
+          <button type="submit" class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Simpan pengumuman</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <div class="flex items-end justify-between gap-3">
+        <h2 class="text-xl font-bold text-slate-950">Pengumuman tersedia</h2>
+        <p id="announcement-admin-count" class="text-sm font-semibold text-slate-500">Memuat…</p>
+      </div>
+      <div id="announcement-admin-list" class="mt-6 space-y-3"></div>
+    </section>
+  </div>
+
+  <script>
+    import { deleteAnnouncement, getAnnouncements, saveAnnouncement } from '../../../lib/member-community';
+
+    const form = document.getElementById('announcement-admin-form');
+    const list = document.getElementById('announcement-admin-list');
+    const count = document.getElementById('announcement-admin-count');
+    const message = document.getElementById('announcement-admin-message');
+    const formTitle = document.getElementById('announcement-form-title');
+    const resetButton = document.getElementById('announcement-form-reset');
+    let announcements = [];
+
+    const show = (text, error = false) => {
+      if (!message) return;
+      message.textContent = text;
+      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
+    };
+
+    const resetForm = () => {
+      if (!(form instanceof HTMLFormElement)) return;
+      form.reset();
+      const id = form.elements.namedItem('id');
+      if (id instanceof HTMLInputElement) id.value = '';
+      const audience = form.elements.namedItem('audience');
+      if (audience instanceof HTMLInputElement) audience.value = 'Semua anggota';
+      if (formTitle) formTitle.textContent = 'Tambah pengumuman';
+      resetButton?.classList.add('hidden');
+    };
+
+    const editItem = (item) => {
+      if (!(form instanceof HTMLFormElement)) return;
+      const set = (name, value) => {
+        const input = form.elements.namedItem(name);
+        if (input instanceof HTMLInputElement || input instanceof HTMLSelectElement || input instanceof HTMLTextAreaElement) input.value = value ?? '';
+      };
+      set('id', item.id); set('title', item.title); set('category', item.category); set('audience', item.audience); set('body', item.body);
+      const important = form.elements.namedItem('important');
+      if (important instanceof HTMLInputElement) important.checked = item.important;
+      if (formTitle) formTitle.textContent = 'Edit pengumuman';
+      resetButton?.classList.remove('hidden');
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    const render = () => {
+      if (!list) return;
+      list.replaceChildren();
+      if (count) count.textContent = `${announcements.length} pengumuman`;
+
+      for (const item of announcements) {
+        const card = document.createElement('article');
+        card.className = 'flex flex-col gap-4 rounded-2xl border border-slate-200 p-5 lg:flex-row lg:items-start lg:justify-between';
+        const info = document.createElement('div');
+        const h = document.createElement('h3');
+        h.className = 'font-bold text-slate-950';
+        h.textContent = item.title;
+        const p = document.createElement('p');
+        p.className = 'mt-2 text-sm leading-6 text-slate-600';
+        p.textContent = `${item.category} · ${item.audience}`;
+        info.append(h, p);
+
+        const controls = document.createElement('div');
+        controls.className = 'flex gap-2';
+        const edit = document.createElement('button');
+        edit.type = 'button'; edit.className = 'rounded-xl border border-slate-300 px-4 py-2 text-sm font-bold text-slate-700'; edit.textContent = 'Edit';
+        edit.addEventListener('click', () => editItem(item));
+        const remove = document.createElement('button');
+        remove.type = 'button'; remove.className = 'rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-bold text-red-700'; remove.textContent = 'Hapus';
+        remove.addEventListener('click', async () => {
+          if (!window.confirm('Hapus pengumuman ini?')) return;
+          const { error } = await deleteAnnouncement(item.id);
+          if (error) return show('Pengumuman belum dapat dihapus.', true);
+          show('Pengumuman berhasil dihapus.');
+          await load();
+        });
+        controls.append(edit, remove);
+        card.append(info, controls);
+        list.append(card);
+      }
+    };
+
+    const load = async () => {
+      const { data, error } = await getAnnouncements();
+      if (error) return show('Pengumuman belum dapat dimuat.', true);
+      announcements = data || [];
+      render();
+    };
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!(form instanceof HTMLFormElement)) return;
+      const values = new FormData(form);
+      const { error } = await saveAnnouncement({
+        id: String(values.get('id') || '') || undefined,
+        title: String(values.get('title') || '').trim(),
+        body: String(values.get('body') || '').trim(),
+        category: String(values.get('category') || ''),
+        audience: String(values.get('audience') || '').trim(),
+        published_at: new Date().toISOString(),
+        important: values.get('important') === 'on',
+      });
+      if (error) return show('Pengumuman belum dapat disimpan.', true);
+      show('Pengumuman berhasil disimpan.');
+      resetForm();
+      await load();
+    });
+
+    resetButton?.addEventListener('click', resetForm);
+    load();
+  </script>
+</MemberLayout>
