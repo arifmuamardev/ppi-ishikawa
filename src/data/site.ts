@@ -9,12 +9,11 @@ export const site = {
 };
 
 export const nav = [
-  { label: 'Tentang', href: '/about' },
+  { label: 'Tentang PPI', href: '/about' },
   { label: 'Kampus', href: '/community/kampus' },
   { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa' },
+  { label: 'Beasiswa', href: '/beasiswa' },
   { label: 'Komunitas', href: '/community' },
-  { label: 'Program', href: '/programs' },
-  { label: 'Sumber Daya', href: '/resources' },
 ];
 
 export const departments = departmentData.map((department) => department.name);
