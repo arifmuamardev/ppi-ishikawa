@@ -96,8 +96,7 @@ import { ishikawaCities, studyLevels } from '../../data/membership';
   </div>
 
   <script>
-    import { getCurrentMember } from '../../lib/member';
-    import { isSupabaseConfigured, supabase } from '../../lib/supabase';
+    import { getCurrentMember, updateCurrentMemberProfile } from '../../lib/member';
 
     const form = document.getElementById('member-profile-form');
     const message = document.getElementById('profile-message');
@@ -107,7 +106,7 @@ import { ishikawaCities, studyLevels } from '../../data/membership';
       message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
     };
 
-    if (isSupabaseConfigured && supabase && form instanceof HTMLFormElement) {
+    if (form instanceof HTMLFormElement) {
       const member = await getCurrentMember();
       if (member.user && member.profile) {
         const p = member.profile;
@@ -160,7 +159,7 @@ import { ishikawaCities, studyLevels } from '../../data/membership';
 
           const submit = form.querySelector('button[type="submit"]');
           submit?.setAttribute('disabled', '');
-          const { error } = await supabase.from('profiles').update(payload).eq('user_id', member.user.id);
+          const { error } = await updateCurrentMemberProfile(payload);
           submit?.removeAttribute('disabled');
 
           if (error) {
