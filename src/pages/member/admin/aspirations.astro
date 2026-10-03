@@ -1,0 +1,114 @@
+---
+import MemberLayout from '../../../layouts/MemberLayout.astro';
+---
+
+<MemberLayout title="Kelola Aspirasi" requireAdmin={true}>
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Admin · Aspirasi</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Tindak lanjuti aspirasi anggota</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Aspirasi anonim tetap ditampilkan tanpa identitas pengirim. Perbarui status agar penanganannya dapat dilacak.</p>
+    </section>
+
+    <div id="aspiration-admin-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-5">
+      <div class="grid gap-3 md:grid-cols-2">
+        <label>
+          <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Status</span>
+          <select id="aspiration-status-filter" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-900">
+            <option value="">Semua status</option>
+            <option value="received">Diterima</option>
+            <option value="reviewed">Ditinjau</option>
+            <option value="planned">Direncanakan</option>
+            <option value="completed">Selesai</option>
+          </select>
+        </label>
+        <div class="flex items-end justify-end">
+          <p id="aspiration-admin-count" class="pb-3 text-sm font-semibold text-slate-500">Memuat…</p>
+        </div>
+      </div>
+    </section>
+
+    <div id="aspiration-admin-list" class="space-y-4"></div>
+  </div>
+
+  <script>
+    import { getAdminAspirations, updateAspirationStatus } from '../../../lib/member-community';
+
+    const list = document.getElementById('aspiration-admin-list');
+    const filter = document.getElementById('aspiration-status-filter');
+    const count = document.getElementById('aspiration-admin-count');
+    const message = document.getElementById('aspiration-admin-message');
+    let aspirations = [];
+    const labels = { received: 'Diterima', reviewed: 'Ditinjau', planned: 'Direncanakan', completed: 'Selesai' };
+
+    const show = (text, error = false) => {
+      if (!message) return;
+      message.textContent = text;
+      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
+    };
+
+    const render = () => {
+      if (!list) return;
+      list.replaceChildren();
+      const selected = filter instanceof HTMLSelectElement ? filter.value : '';
+      const items = aspirations.filter((item) => !selected || item.status === selected);
+      if (count) count.textContent = `${items.length} aspirasi`;
+
+      for (const item of items) {
+        const card = document.createElement('article');
+        card.className = 'rounded-3xl border border-slate-200 bg-white p-6';
+
+        const badges = document.createElement('div');
+        badges.className = 'flex flex-wrap gap-2';
+        for (const label of [item.category, item.anonymous ? 'Anonim' : (item.submitter_name || 'Dengan identitas'), labels[item.status]]) {
+          const badge = document.createElement('span');
+          badge.className = 'rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-600';
+          badge.textContent = label;
+          badges.append(badge);
+        }
+
+        const heading = document.createElement('h2');
+        heading.className = 'mt-4 text-xl font-bold text-slate-950';
+        heading.textContent = item.subject;
+        const body = document.createElement('p');
+        body.className = 'mt-3 text-sm leading-7 text-slate-600';
+        body.textContent = item.message;
+
+        const footer = document.createElement('div');
+        footer.className = 'mt-5 flex flex-col gap-3 border-t border-slate-100 pt-4 sm:flex-row sm:items-center sm:justify-between';
+        const date = document.createElement('p');
+        date.className = 'text-xs text-slate-500';
+        date.textContent = new Intl.DateTimeFormat('id-ID', { dateStyle: 'long', timeStyle: 'short' }).format(new Date(item.created_at));
+
+        const select = document.createElement('select');
+        select.className = 'rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800';
+        for (const [value, label] of Object.entries(labels)) {
+          const option = document.createElement('option');
+          option.value = value; option.textContent = label; option.selected = item.status === value; select.append(option);
+        }
+        select.addEventListener('change', async () => {
+          const { error } = await updateAspirationStatus(item.id, select.value);
+          if (error) return show('Status aspirasi belum dapat diperbarui.', true);
+          show('Status aspirasi berhasil diperbarui.');
+          await load();
+        });
+
+        footer.append(date, select);
+        card.append(badges, heading, body, footer);
+        list.append(card);
+      }
+    };
+
+    const load = async () => {
+      const { data, error } = await getAdminAspirations();
+      if (error) return show('Aspirasi belum dapat dimuat.', true);
+      aspirations = data || [];
+      render();
+    };
+
+    filter?.addEventListener('change', render);
+    load();
+  </script>
+</MemberLayout>
