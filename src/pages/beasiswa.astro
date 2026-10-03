@@ -1,0 +1,348 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import TopicIcon from '../components/TopicIcon.astro';
+import InstitutionMark from '../components/InstitutionMark.astro';
+import { withBase } from '../utils/paths';
+import {
+  scholarships,
+  scholarshipStats,
+  scholarshipLevelLabels,
+  scholarshipCampusLabels
+} from '../data/scholarships';
+
+const campusOptions = Object.entries(scholarshipCampusLabels);
+const levelOptions = Object.entries(scholarshipLevelLabels);
+
+const routeLabels = {
+  school: 'Lewat kampus',
+  foundation: 'Apply langsung',
+  embassy: 'Lewat embassy',
+  varies: 'Tergantung jalur'
+};
+
+const fundingLabels = {
+  stipend: 'Stipend',
+  tuition: 'Tuition support',
+  'full-support': 'Full support',
+  mixed: 'Mixed support'
+};
+
+const stageLabels = {
+  'before-arrival': 'Sebelum datang',
+  'after-enrollment': 'Setelah enrollment',
+  both: 'Sebelum & sesudah'
+};
+---
+
+<BaseLayout
+  title="Beasiswa"
+  description="Scholarship Hub PPI Ishikawa untuk membantu pelajar Indonesia menemukan beasiswa berdasarkan kampus, jenjang, dan tahap studi."
+>
+  <PageIntro
+    title="Scholarship Hub"
+    description="Cari jalur beasiswa yang relevan untuk pelajar Indonesia di Ishikawa. Mulai dari status Anda, lalu cek eligibility, jalur aplikasi, dan sumber resmi sebelum mendaftar."
+  />
+
+  <section class="mx-auto max-w-7xl px-5 pb-8 lg:px-8">
+    <div class="grid gap-4 md:grid-cols-3">
+      <a href="#finder" data-stage-jump="before-arrival" class="group rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
+        <TopicIcon name="arrival" class="size-7 text-brand" />
+        <h2 class="mt-4 text-xl font-bold text-slate-950">Saya belum berangkat</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Mulai dari MEXT dan scholarship yang memang menerima aplikasi sebelum Anda tiba di Jepang.</p>
+        <span class="mt-4 inline-flex text-sm font-bold text-brand">Tampilkan opsi →</span>
+      </a>
+
+      <a href="#finder" data-stage-jump="after-enrollment" class="group rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
+        <TopicIcon name="campus" class="size-7 text-brand" />
+        <h2 class="mt-4 text-xl font-bold text-slate-950">Saya sudah kuliah di Ishikawa</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Cari JASSO, Ishikawa Prefectural Scholarship, foundation scholarship, dan jalur nominasi kampus.</p>
+        <span class="mt-4 inline-flex text-sm font-bold text-brand">Tampilkan opsi →</span>
+      </a>
+
+      <a href="#kampus" class="group rounded-3xl border border-amber-200 bg-amber-50 p-6 transition hover:-translate-y-0.5 hover:shadow-sm">
+        <TopicIcon name="scholarship" class="size-7 text-accent-dark" />
+        <h2 class="mt-4 text-xl font-bold text-slate-950">Pilih kampus saya</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-700">Gunakan kampus sebagai titik awal, lalu filter lagi berdasarkan jenjang dan tahap studi.</p>
+        <span class="mt-4 inline-flex text-sm font-bold text-brand">Pilih kampus →</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="rounded-2xl border border-slate-200 bg-white p-5">
+        <p class="text-3xl font-bold text-slate-950">{scholarshipStats.total}</p>
+        <p class="mt-1 text-sm text-slate-600">scholarship pada batch awal</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-5">
+        <p class="text-3xl font-bold text-slate-950">{scholarshipStats.indonesiaSpecific}</p>
+        <p class="mt-1 text-sm text-slate-600">secara eksplisit mencantumkan Indonesia</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-5">
+        <p class="text-3xl font-bold text-slate-950">{scholarshipStats.beforeArrival}</p>
+        <p class="mt-1 text-sm text-slate-600">punya jalur sebelum tiba di Jepang</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-5">
+        <p class="text-3xl font-bold text-slate-950">{scholarshipStats.ishikawaDirect}</p>
+        <p class="mt-1 text-sm text-slate-600">sudah terhubung langsung ke kampus Ishikawa</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
+    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
+      <div class="flex gap-4">
+        <TopicIcon name="info" class="mt-1 size-6 shrink-0 text-brand" />
+        <div>
+          <h2 class="text-xl font-bold text-slate-950">Gunakan hub ini untuk menemukan kandidat, bukan sebagai pengganti guideline resmi.</h2>
+          <p class="mt-3 max-w-4xl text-sm leading-6 text-slate-700">
+            Scholarship dapat berubah berdasarkan intake, kuota, designated school, study year, nationality, visa, bidang studi, dan aturan double funding.
+            Jika sebuah card bertuliskan “cek kampus”, hubungi international/student office sebelum menyiapkan aplikasi.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kampus" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Cari berdasarkan kampus</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Mulai dari institusi Anda.</h2>
+    <p class="mt-3 max-w-3xl leading-7 text-slate-600">Beberapa scholarship memiliki designated schools; lainnya terbuka lebih luas tetapi tetap perlu konfirmasi ke kampus.</p>
+
+    <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {campusOptions.map(([slug, label]) => (
+        <a href="#finder" data-campus-jump={slug} class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-amber-200 hover:bg-amber-50">
+          <InstitutionMark id={slug as any} size="sm" class="shrink-0" />
+          <div>
+            <p class="font-bold text-slate-950">{label}</p>
+            <p class="mt-1 text-xs text-slate-500">Filter scholarship →</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section id="finder" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div>
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Scholarship Finder</p>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Saring yang relevan untuk kondisi Anda.</h2>
+      </div>
+      <p id="scholarship-count" class="text-sm font-semibold text-slate-500">{scholarships.length} scholarship ditampilkan</p>
+    </div>
+
+    <div class="mt-6 grid gap-3 rounded-3xl border border-slate-200 bg-white p-5 sm:grid-cols-2 lg:grid-cols-4">
+      <label class="block">
+        <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Kampus</span>
+        <select id="filter-campus" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+          <option value="">Semua kampus</option>
+          {campusOptions.map(([slug,label]) => <option value={slug}>{label}</option>)}
+        </select>
+      </label>
+
+      <label class="block">
+        <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Jenjang</span>
+        <select id="filter-level" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+          <option value="">Semua jenjang</option>
+          {levelOptions.map(([code,label]) => <option value={code}>{label}</option>)}
+        </select>
+      </label>
+
+      <label class="block">
+        <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Status</span>
+        <select id="filter-stage" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+          <option value="">Semua status</option>
+          <option value="before-arrival">Belum datang ke Jepang</option>
+          <option value="after-enrollment">Sudah enrollment</option>
+        </select>
+      </label>
+
+      <label class="block">
+        <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Khusus Indonesia</span>
+        <select id="filter-indonesia" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+          <option value="">Semua</option>
+          <option value="yes">Mencantumkan Indonesia</option>
+        </select>
+      </label>
+
+      <div class="sm:col-span-2 lg:col-span-4">
+        <button id="filter-reset" type="button" class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50">
+          Reset filter
+        </button>
+      </div>
+    </div>
+
+    <div id="scholarship-empty" class="mt-6 hidden rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+      <p class="font-bold text-slate-950">Belum ada scholarship pada batch database ini yang cocok dengan semua filter.</p>
+      <p class="mt-2 text-sm text-slate-600">Coba longgarkan filter atau cek kembali setelah database diperluas.</p>
+    </div>
+
+    <div id="scholarship-grid" class="mt-6 grid gap-5 lg:grid-cols-2">
+      {scholarships.map((item) => (
+        <article
+          class="scholarship-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+          data-campus={item.campusSlugs.join(',')}
+          data-level={item.studyLevels.join(',')}
+          data-stage={item.stages.join(',')}
+          data-indonesia={item.nationality.includes('Indonesia') ? 'yes' : 'no'}
+        >
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-brand">{item.provider}</p>
+              <h3 class="mt-2 text-xl font-bold leading-snug text-slate-950">{item.name}</h3>
+            </div>
+            {item.featured && <span class="rounded-full bg-amber-100 px-3 py-1 text-[11px] font-bold text-amber-800">Prioritas</span>}
+          </div>
+
+          <p class="mt-4 text-sm leading-6 text-slate-600">{item.summary}</p>
+
+          <div class="mt-4 flex flex-wrap gap-2">
+            {item.studyLevels.map((level) => (
+              <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600">{scholarshipLevelLabels[level]}</span>
+            ))}
+            {item.stages.map((stage) => (
+              <span class="rounded-full bg-blue-50 px-2.5 py-1 text-[11px] font-bold text-blue-700">{stageLabels[stage]}</span>
+            ))}
+            {item.nationality.includes('Indonesia') && (
+              <span class="rounded-full bg-red-50 px-2.5 py-1 text-[11px] font-bold text-red-700">Indonesia</span>
+            )}
+          </div>
+
+          <dl class="mt-5 grid gap-3 sm:grid-cols-2">
+            <div class="rounded-xl bg-slate-50 p-4">
+              <dt class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">Bantuan</dt>
+              <dd class="mt-1 text-sm font-semibold leading-6 text-slate-900">{item.amount}</dd>
+            </div>
+            <div class="rounded-xl bg-slate-50 p-4">
+              <dt class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">Periode aplikasi</dt>
+              <dd class="mt-1 text-sm font-semibold leading-6 text-slate-900">{item.applicationPeriod}</dd>
+            </div>
+            <div class="rounded-xl bg-slate-50 p-4">
+              <dt class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">Cara apply</dt>
+              <dd class="mt-1 text-sm font-semibold leading-6 text-slate-900">{routeLabels[item.applicationRoute]}</dd>
+            </div>
+            <div class="rounded-xl bg-slate-50 p-4">
+              <dt class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">Tipe funding</dt>
+              <dd class="mt-1 text-sm font-semibold leading-6 text-slate-900">{fundingLabels[item.fundingType]}</dd>
+            </div>
+          </dl>
+
+          <details class="mt-5 rounded-2xl border border-slate-200">
+            <summary class="cursor-pointer list-none px-4 py-3 text-sm font-bold text-slate-800">Lihat eligibility & catatan</summary>
+            <div class="border-t border-slate-100 px-4 py-4 text-sm leading-6 text-slate-600">
+              <p><strong class="text-slate-900">Kampus:</strong> {item.campusEligibilityNote}</p>
+              <p class="mt-2"><strong class="text-slate-900">Nationality:</strong> {item.nationalityNote}</p>
+              <p class="mt-2"><strong class="text-slate-900">Bidang:</strong> {item.fields.join(', ')}</p>
+              <p class="mt-2"><strong class="text-slate-900">Durasi:</strong> {item.duration}</p>
+              <p class="mt-2"><strong class="text-slate-900">Double scholarship:</strong> {item.pluralGrants}</p>
+              {item.ageNote && <p class="mt-2"><strong class="text-slate-900">Usia:</strong> {item.ageNote}</p>}
+              {item.visaNote && <p class="mt-2"><strong class="text-slate-900">Visa:</strong> {item.visaNote}</p>}
+              {item.additionalRequirements?.length && (
+                <ul class="mt-3 list-disc space-y-1 pl-5">
+                  {item.additionalRequirements.map((req) => <li>{req}</li>)}
+                </ul>
+              )}
+            </div>
+          </details>
+
+          <div class="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-4">
+            <div>
+              <p class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-400">Sumber</p>
+              <p class="mt-1 text-xs leading-5 text-slate-500">{item.sourceLabel} · diperiksa {item.verified}</p>
+            </div>
+            {item.sourceUrl && (
+              <a href={item.sourceUrl} target="_blank" rel="noreferrer" class="text-sm font-bold text-brand hover:underline">Sumber resmi ↗</a>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 pb-20 pt-6 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-7 text-white sm:p-8">
+      <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-soft">Cara menggunakan data ini</p>
+      <h2 class="mt-2 text-2xl font-bold">Tiga pengecekan sebelum Anda apply.</h2>
+      <div class="mt-5 grid gap-4 md:grid-cols-3">
+        <div class="rounded-2xl bg-white/5 p-5">
+          <p class="font-bold">1 · Eligibility</p>
+          <p class="mt-2 text-sm leading-6 text-slate-300">Jenjang, usia, nationality, field, visa, study year, dan designated school.</p>
+        </div>
+        <div class="rounded-2xl bg-white/5 p-5">
+          <p class="font-bold">2 · Jalur aplikasi</p>
+          <p class="mt-2 text-sm leading-6 text-slate-300">Bedakan apply langsung dengan scholarship yang hanya menerima nominasi dari kampus.</p>
+        </div>
+        <div class="rounded-2xl bg-white/5 p-5">
+          <p class="font-bold">3 · Call terbaru</p>
+          <p class="mt-2 text-sm leading-6 text-slate-300">Gunakan card sebagai discovery; deadline dan kuota final selalu mengikuti announcement terbaru.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    (() => {
+      const campus = document.getElementById('filter-campus');
+      const level = document.getElementById('filter-level');
+      const stage = document.getElementById('filter-stage');
+      const indonesia = document.getElementById('filter-indonesia');
+      const reset = document.getElementById('filter-reset');
+      const cards = [...document.querySelectorAll('.scholarship-card')];
+      const count = document.getElementById('scholarship-count');
+      const empty = document.getElementById('scholarship-empty');
+
+      const matchesList = (raw, value) => !value || raw.split(',').includes(value);
+
+      const apply = () => {
+        let shown = 0;
+        for (const card of cards) {
+          const campusValue = campus?.value || '';
+          const levelValue = level?.value || '';
+          const stageValue = stage?.value || '';
+          const indonesiaValue = indonesia?.value || '';
+
+          const campusRaw = card.dataset.campus || '';
+          const levelRaw = card.dataset.level || '';
+          const stageRaw = card.dataset.stage || '';
+          const indonesiaRaw = card.dataset.indonesia || '';
+
+          const campusOk = !campusValue || matchesList(campusRaw, campusValue) || campusRaw === '';
+          const levelOk = matchesList(levelRaw, levelValue);
+          const stageOk = !stageValue || matchesList(stageRaw, stageValue) || matchesList(stageRaw, 'both');
+          const indonesiaOk = !indonesiaValue || indonesiaRaw === indonesiaValue;
+          const visible = campusOk && levelOk && stageOk && indonesiaOk;
+
+          card.classList.toggle('hidden', !visible);
+          if (visible) shown++;
+        }
+        if (count) count.textContent = `${shown} scholarship ditampilkan`;
+        empty?.classList.toggle('hidden', shown !== 0);
+      };
+
+      [campus, level, stage, indonesia].forEach((el) => el?.addEventListener('change', apply));
+      reset?.addEventListener('click', () => {
+        if (campus) campus.value = '';
+        if (level) level.value = '';
+        if (stage) stage.value = '';
+        if (indonesia) indonesia.value = '';
+        apply();
+      });
+
+      document.querySelectorAll('[data-stage-jump]').forEach((link) => {
+        link.addEventListener('click', () => {
+          if (stage) stage.value = link.dataset.stageJump || '';
+          setTimeout(apply, 0);
+        });
+      });
+      document.querySelectorAll('[data-campus-jump]').forEach((link) => {
+        link.addEventListener('click', () => {
+          if (campus) campus.value = link.dataset.campusJump || '';
+          setTimeout(apply, 0);
+        });
+      });
+
+      apply();
+    })();
+  </script>
+</BaseLayout>
