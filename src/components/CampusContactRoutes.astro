@@ -1,0 +1,29 @@
+---
+interface RouteItem {
+  title: string;
+  topics: string;
+}
+
+interface Props {
+  items: RouteItem[];
+  sourceUrl?: string;
+  sourceLabel?: string;
+}
+
+const { items, sourceUrl, sourceLabel = 'Sumber resmi' } = Astro.props;
+---
+
+<div class="mt-7 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+  {items.map((item, index) => (
+    <div class:list={['grid gap-1 px-5 py-4 sm:grid-cols-[180px_1fr] sm:gap-5', index > 0 && 'border-t border-slate-100']}>
+      <p class="font-bold text-slate-950">{item.title}</p>
+      <p class="text-sm leading-6 text-slate-600">{item.topics}</p>
+    </div>
+  ))}
+</div>
+
+{sourceUrl && (
+  <a href={sourceUrl} target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">
+    {sourceLabel} ↗
+  </a>
+)}
