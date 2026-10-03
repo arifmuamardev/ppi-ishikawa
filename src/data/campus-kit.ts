@@ -116,7 +116,7 @@ export const kitFaq = [
   },
   {
     id: 'campus-guide-vs-ppi',
-    q: 'Apakah informasi PPI menggantikan Campus Guide KIT?',
-    a: 'Tidak. Campus Pack membantu mahasiswa Indonesia memahami jalur yang relevan. Aturan akademik, housing, medical assistance, schedule, fee, dan prosedur resmi tetap mengikuti KIT.'
+    q: 'Di mana saya harus mengecek aturan dan prosedur resmi KIT?',
+    a: 'Gunakan Campus Guide dan halaman resmi KIT untuk aturan akademik, housing, medical assistance, jadwal, biaya, dan prosedur kampus.'
   }
 ];
