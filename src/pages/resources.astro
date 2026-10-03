@@ -1,78 +1,63 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
-import RelatedLinks from '../components/RelatedLinks.astro';
+import TopicIcon from '../components/TopicIcon.astro';
 import { withBase } from '../utils/paths';
-import { generalRelatedContent } from '../data/related-content';
 
-const resources = [
+const directories = [
   {
-    title: 'Scholarship Hub',
-    description: 'Cari beasiswa berdasarkan kampus, jenjang, status sebelum/sesudah datang ke Jepang, dan eligibility untuk mahasiswa internasional.',
-    status: 'Tersedia',
-    href: '/beasiswa/'
-  },
-  {
-    title: 'Campus Hub',
-    description: 'Enam Campus Pack dengan perbandingan lokasi, tempat tinggal, mobilitas, dan dukungan mahasiswa, dan sumber resmi.',
-    status: 'Tersedia',
+    icon: 'campus',
+    title: 'Kampus',
+    description: 'Campus Hub dan enam Campus Pack.',
     href: '/community/kampus/'
   },
   {
-    title: 'Survival Guide',
-    description: 'SG00–SG14: panduan hidup untuk mahasiswa dan keluarga di Ishikawa.',
-    status: 'Tersedia',
+    icon: 'housing',
+    title: 'Hidup di Ishikawa',
+    description: 'Survival Guide untuk kedatangan, kehidupan sehari-hari, dan kepulangan.',
     href: '/life-in-ishikawa/'
   },
   {
-    title: 'Panduan Pemerintah Lokal',
-    description: 'Kanazawa, Nonoichi, Hakusan, Komatsu, Kahoku, dan seluruh 19 kota/town (municipality) di Ishikawa.',
-    status: 'Tersedia',
-    href: '/life-in-ishikawa/municipality-guides/'
+    icon: 'scholarship',
+    title: 'Beasiswa',
+    description: 'Scholarship Hub dan Finder.',
+    href: '/beasiswa/'
   },
   {
-    title: 'Bahasa Jepang & Dukungan',
-    description: 'Kelas bahasa Jepang, IFIE, konsultasi hukum, immigration, kampus, dan dukungan ketenagakerjaan.',
-    status: 'Tersedia',
-    href: '/life-in-ishikawa/japanese-support/'
+    icon: 'collaboration',
+    title: 'Komunitas',
+    description: 'Kegiatan, jejaring kampus, keluarga, dan cara terhubung.',
+    href: '/community/'
   },
   {
-    title: 'Bencana & Darurat',
-    description: 'Nomor darurat, evakuasi, sumber live Ishikawa, JMA, dan kesiapsiagaan bencana.',
-    status: 'Tersedia',
-    href: '/life-in-ishikawa/disaster-emergency/'
-  },
+    icon: 'info',
+    title: 'Tentang PPI',
+    description: 'Profil, arah, struktur, nilai, dan program organisasi.',
+    href: '/about/'
+  }
 ];
 ---
 <BaseLayout title="Sumber Daya">
   <PageIntro
-    title="Sumber daya"
-    description="Panduan, tautan, dan layanan yang dapat digunakan untuk kebutuhan pelajar Indonesia di Ishikawa."
+    title="Direktori"
+    description="Halaman ringkas untuk menuju lima area utama website PPI Ishikawa."
   />
-  <section class="mx-auto max-w-7xl px-5 pb-20 lg:px-8">
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {resources.map((resource) => {
-        const content = (
-          <>
-            <div class="flex items-start justify-between gap-4">
-              <h2 class="font-semibold text-slate-950">{resource.title}</h2>
-              <span class={`rounded-full px-2.5 py-1 text-xs font-bold ${resource.href ? 'bg-green-50 text-green-700' : 'bg-slate-100 text-slate-600'}`}>
-                {resource.status}
-              </span>
-            </div>
-            <p class="mt-3 text-sm leading-6 text-slate-600">{resource.description}</p>
-          </>
-        );
 
-        return resource.href ? (
-          <a href={withBase(resource.href)} class="rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-red-200 hover:shadow-sm">
-            {content}
-          </a>
-        ) : (
-          <div class="rounded-2xl border border-slate-200 bg-white p-6">{content}</div>
-        );
-      })}
+  <section class="mx-auto max-w-7xl px-5 pb-20 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+      <p class="text-sm leading-6 text-slate-600">Untuk penggunaan sehari-hari, Anda tidak perlu melewati halaman ini. Gunakan menu utama atau pilih area yang sesuai di bawah.</p>
+    </div>
+
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      {directories.map((item) => (
+        <a href={withBase(item.href)} class="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
+          <span class="grid size-10 place-items-center rounded-xl bg-amber-50 text-accent-dark">
+            <TopicIcon name={item.icon as any} class="size-5" />
+          </span>
+          <h2 class="mt-4 font-bold text-slate-950 group-hover:text-brand">{item.title}</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
+        </a>
+      ))}
     </div>
   </section>
-  <RelatedLinks items={generalRelatedContent.resources} title="Pilih titik masuk yang paling sesuai" />
 </BaseLayout>
