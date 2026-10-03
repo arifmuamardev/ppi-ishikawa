@@ -47,7 +47,10 @@ const isActive = (href: string) => {
 
     <div class="flex items-center gap-2">
       <ThemeToggle />
-      <a href={withBase('/contact')} class="hidden rounded-full bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand sm:inline-flex">
+      <a href={withBase('/member/')} class="hidden rounded-full border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 transition hover:border-amber-200 hover:text-brand sm:inline-flex">
+        Area Anggota
+      </a>
+      <a href={withBase('/contact')} class="hidden rounded-full bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand xl:inline-flex">
         Hubungi Kami
       </a>
       <details class="relative lg:hidden">
@@ -63,6 +66,13 @@ const isActive = (href: string) => {
             </a>
           ))}
           <div class="my-2 border-t border-slate-100"></div>
+          <a
+            class={`block rounded-xl px-4 py-3 text-sm font-bold ${isActive('/member') ? 'bg-red-50 text-brand' : 'text-slate-900 hover:bg-slate-50 hover:text-brand'}`}
+            href={withBase('/member/')}
+            aria-current={isActive('/member') ? 'page' : undefined}
+          >
+            Area Anggota
+          </a>
           <a
             class={`block rounded-xl px-4 py-3 text-sm font-bold ${isActive('/contact') ? 'bg-red-50 text-brand' : 'text-slate-900 hover:bg-slate-50 hover:text-brand'}`}
             href={withBase('/contact')}
