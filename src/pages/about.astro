@@ -20,9 +20,10 @@ import { generalRelatedContent } from '../data/related-content';
         ['Nilai', '#nilai'],
         ['Cara kerja', '#cara-kerja'],
         ['Struktur', '#struktur-organisasi'],
+        ['Program', '/programs/'],
         ['Sejarah & arsip', '#sejarah-arsip']
       ].map(([label, href]) => (
-        <a href={href} class="rounded-full border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 transition hover:border-amber-200 hover:bg-amber-50 hover:text-brand">{label}</a>
+        <a href={href.startsWith('/') ? withBase(href) : href} class="rounded-full border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 transition hover:border-amber-200 hover:bg-amber-50 hover:text-brand">{label}</a>
       ))}
     </div>
   </nav>
