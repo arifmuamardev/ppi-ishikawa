@@ -5,7 +5,7 @@ export const site = {
   period: '2026/27',
   tagline: 'Rumah digital pelajar Indonesia di Ishikawa.',
   description:
-    'Informasi kampus, kehidupan di Ishikawa, beasiswa, komunitas, dan organisasi untuk pelajar Indonesia di Prefektur Ishikawa, Jepang.',
+    'Informasi kampus, kehidupan di Ishikawa, beasiswa, karier, komunitas, dan organisasi untuk pelajar Indonesia dan alumni di Prefektur Ishikawa, Jepang.',
 };
 
 export const nav = [
@@ -13,6 +13,7 @@ export const nav = [
   { label: 'Kampus', href: '/community/kampus' },
   { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa' },
   { label: 'Beasiswa', href: '/beasiswa' },
+  { label: 'Karier', href: '/career' },
   { label: 'Komunitas', href: '/community' },
 ];
 
