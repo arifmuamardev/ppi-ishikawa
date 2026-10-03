@@ -1,5 +1,6 @@
 import { isSupabaseConfigured, supabase } from './supabase';
 import {
+  demoAdminAspirations,
   demoAnnouncements,
   demoMemberEvents,
   memberInterestOptions,
@@ -48,6 +49,9 @@ export interface MemberAspiration {
 const RSVP_KEY = 'ppi-ishikawa-demo-rsvp';
 const PREFERENCE_KEY = 'ppi-ishikawa-demo-preferences';
 const ASPIRATION_KEY = 'ppi-ishikawa-demo-aspirations';
+const EVENTS_KEY = 'ppi-ishikawa-demo-events';
+const ANNOUNCEMENTS_KEY = 'ppi-ishikawa-demo-announcements';
+const ASPIRATION_STATUS_KEY = 'ppi-ishikawa-demo-aspiration-status';
 
 function readJson<T>(key: string, fallback: T): T {
   try {
@@ -72,7 +76,7 @@ export function getSkillOptions() {
 
 export async function getMemberEvents() {
   if (!isSupabaseConfigured || !supabase) {
-    return { data: demoMemberEvents, error: null };
+    return { data: readJson<MemberEvent[]>(EVENTS_KEY, demoMemberEvents), error: null };
   }
 
   return supabase
@@ -83,7 +87,7 @@ export async function getMemberEvents() {
 
 export async function getAnnouncements() {
   if (!isSupabaseConfigured || !supabase) {
-    return { data: demoAnnouncements, error: null };
+    return { data: readJson<MemberAnnouncement[]>(ANNOUNCEMENTS_KEY, demoAnnouncements), error: null };
   }
 
   return supabase
@@ -219,4 +223,126 @@ export function googleCalendarUrl(event: MemberEvent) {
     location: event.location,
   });
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
+
+
+export async function saveEvent(input: Omit<MemberEvent, 'id'> & { id?: string }) {
+  if (!isSupabaseConfigured || !supabase) {
+    const events = readJson<MemberEvent[]>(EVENTS_KEY, demoMemberEvents);
+    const item: MemberEvent = {
+      ...input,
+      id: input.id || `demo-event-${Date.now()}`,
+    };
+    const next = input.id
+      ? events.map((event) => event.id === input.id ? item : event)
+      : [item, ...events];
+    writeJson(EVENTS_KEY, next);
+    return { data: item, error: null };
+  }
+
+  const { data: userData } = await supabase.auth.getUser();
+  if (!userData.user) return { data: null, error: new Error('Admin belum login.') };
+
+  const payload = {
+    ...input,
+    created_by: userData.user.id,
+    published: true,
+    updated_at: new Date().toISOString(),
+  };
+
+  if (input.id) {
+    return supabase.from('member_events').update(payload).eq('id', input.id).select().single();
+  }
+
+  return supabase.from('member_events').insert(payload).select().single();
+}
+
+export async function deleteEvent(eventId: string) {
+  if (!isSupabaseConfigured || !supabase) {
+    const events = readJson<MemberEvent[]>(EVENTS_KEY, demoMemberEvents);
+    writeJson(EVENTS_KEY, events.filter((event) => event.id !== eventId));
+    return { error: null };
+  }
+
+  return supabase.from('member_events').delete().eq('id', eventId);
+}
+
+export async function saveAnnouncement(input: Omit<MemberAnnouncement, 'id'> & { id?: string }) {
+  if (!isSupabaseConfigured || !supabase) {
+    const items = readJson<MemberAnnouncement[]>(ANNOUNCEMENTS_KEY, demoAnnouncements);
+    const item: MemberAnnouncement = {
+      ...input,
+      id: input.id || `demo-announcement-${Date.now()}`,
+    };
+    const next = input.id
+      ? items.map((announcement) => announcement.id === input.id ? item : announcement)
+      : [item, ...items];
+    writeJson(ANNOUNCEMENTS_KEY, next);
+    return { data: item, error: null };
+  }
+
+  const { data: userData } = await supabase.auth.getUser();
+  if (!userData.user) return { data: null, error: new Error('Admin belum login.') };
+
+  const payload = {
+    ...input,
+    created_by: userData.user.id,
+    published: true,
+    updated_at: new Date().toISOString(),
+  };
+
+  if (input.id) {
+    return supabase.from('member_announcements').update(payload).eq('id', input.id).select().single();
+  }
+
+  return supabase.from('member_announcements').insert(payload).select().single();
+}
+
+export async function deleteAnnouncement(announcementId: string) {
+  if (!isSupabaseConfigured || !supabase) {
+    const items = readJson<MemberAnnouncement[]>(ANNOUNCEMENTS_KEY, demoAnnouncements);
+    writeJson(ANNOUNCEMENTS_KEY, items.filter((item) => item.id !== announcementId));
+    return { error: null };
+  }
+
+  return supabase.from('member_announcements').delete().eq('id', announcementId);
+}
+
+export async function getAdminAspirations() {
+  if (!isSupabaseConfigured || !supabase) {
+    const own = readJson<MemberAspiration[]>(ASPIRATION_KEY, []);
+    const statusOverrides = readJson<Record<string, MemberAspiration['status']>>(ASPIRATION_STATUS_KEY, {});
+    const localItems = own.map((item) => ({
+      ...item,
+      status: statusOverrides[item.id] || item.status,
+      submitter_id: item.anonymous ? null : 'demo-member',
+      submitter_name: item.anonymous ? null : 'Anggota Demo',
+    }));
+    const fixtures = demoAdminAspirations.map((item) => ({
+      ...item,
+      status: statusOverrides[item.id] || item.status,
+    }));
+    return { data: [...localItems, ...fixtures], error: null };
+  }
+
+  return supabase.rpc('get_admin_aspirations');
+}
+
+export async function updateAspirationStatus(aspirationId: string, nextStatus: MemberAspiration['status']) {
+  if (!isSupabaseConfigured || !supabase) {
+    const current = readJson<Record<string, MemberAspiration['status']>>(ASPIRATION_STATUS_KEY, {});
+    current[aspirationId] = nextStatus;
+    writeJson(ASPIRATION_STATUS_KEY, current);
+
+    const own = readJson<MemberAspiration[]>(ASPIRATION_KEY, []);
+    if (own.some((item) => item.id === aspirationId)) {
+      writeJson(ASPIRATION_KEY, own.map((item) => item.id === aspirationId ? { ...item, status: nextStatus } : item));
+    }
+    return { error: null };
+  }
+
+  return supabase.rpc('update_aspiration_status', {
+    aspiration_id: aspirationId,
+    next_status: nextStatus,
+  });
 }
