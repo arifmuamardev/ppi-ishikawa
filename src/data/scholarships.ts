@@ -40,6 +40,8 @@ export interface Scholarship {
   sourceLabel: string;
   sourceUrl?: string;
   verified: string;
+  verifiedDate: string;
+  reviewAfterMonths?: number;
   featured?: boolean;
 }
 
@@ -89,6 +91,8 @@ export const scholarships: Scholarship[] = [
     ageNote: 'Under 35 in the 2026–2027 JASSO pamphlet summary',
     sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
     verified: 'October 2026',
+    verifiedDate: '2026-10-03',
+    reviewAfterMonths: 9,
     featured: true
   },
   {
@@ -126,6 +130,8 @@ export const scholarships: Scholarship[] = [
     sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
     sourceUrl: 'https://www.jasso.go.jp/en/ryugaku/scholarship_j/shoreihi/index.html',
     verified: 'October 2026',
+    verifiedDate: '2026-10-03',
+    reviewAfterMonths: 9,
     featured: true
   },
   {
@@ -156,6 +162,8 @@ export const scholarships: Scholarship[] = [
     pluralGrants: 'unknown',
     sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
     verified: 'October 2026',
+    verifiedDate: '2026-10-03',
+    reviewAfterMonths: 9,
     featured: true
   },
   {
@@ -184,6 +192,8 @@ export const scholarships: Scholarship[] = [
     ageNote: '35 or under',
     sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
     verified: 'October 2026',
+    verifiedDate: '2026-10-03',
+    reviewAfterMonths: 9,
     featured: true
   },
   {
@@ -212,6 +222,8 @@ export const scholarships: Scholarship[] = [
     ageNote: 'Under 27 for listed U category; under 35 for listed M/D categories',
     sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
     verified: 'October 2026',
+    verifiedDate: '2026-10-03',
+    reviewAfterMonths: 9,
     featured: true
   },
   {
@@ -245,6 +257,8 @@ export const scholarships: Scholarship[] = [
     sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
     sourceUrl: 'https://sisf.or.jp/en/scholarship-2/foreign-studies-2/self-supporting/',
     verified: 'October 2026',
+    verifiedDate: '2026-10-03',
+    reviewAfterMonths: 9,
     featured: true
   },
   {
@@ -281,6 +295,8 @@ export const scholarships: Scholarship[] = [
     sourceLabel: 'Hashiya Scholarship Foundation — official 2026 guidelines / JASSO pamphlet',
     sourceUrl: 'https://www.tsukishima.co.jp/zaidan/scholarships.html',
     verified: 'October 2026',
+    verifiedDate: '2026-10-03',
+    reviewAfterMonths: 6,
     featured: true
   },
   {
@@ -439,6 +455,8 @@ export const scholarships: Scholarship[] = [
     sourceLabel: 'Honjo International Scholarship Foundation — official 2027 call',
     sourceUrl: 'https://www.hisf.or.jp/en/scholarship/foreigner/',
     verified: 'October 2026',
+    verifiedDate: '2026-10-03',
+    reviewAfterMonths: 6,
     featured: true
   },
   {
@@ -511,6 +529,8 @@ export const scholarships: Scholarship[] = [
     sourceLabel: 'JASSO — EJU Honors Scholarship Reservation Program',
     sourceUrl: 'https://www.jasso.go.jp/en/ryugaku/scholarship_j/shoreihi/yoyaku_eju/index.html',
     verified: 'October 2026',
+    verifiedDate: '2026-10-03',
+    reviewAfterMonths: 6,
     featured: true
   },
   {
@@ -576,6 +596,8 @@ export const scholarships: Scholarship[] = [
     sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
     sourceUrl: 'https://www.okazakizaidan.or.jp/en/en-info/',
     verified: 'October 2026',
+    verifiedDate: '2026-10-03',
+    reviewAfterMonths: 6,
     featured: true
   }
 ];
