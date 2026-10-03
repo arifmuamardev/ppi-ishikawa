@@ -117,7 +117,7 @@ export const ipuFaq = [
   },
   {
     id: 'admission-vs-campus-pack',
-    q: 'Apakah Campus Pack ini menggantikan informasi admission IPU?',
-    a: 'Tidak. Admission dates, eligibility, exam route, fees, scholarship/tuition systems, dan foreign-student selection harus selalu dicek pada halaman resmi untuk admission year yang Anda tuju.'
+    q: 'Di mana saya harus mengecek admission IPU?',
+    a: 'Cek halaman admission resmi IPU untuk admission dates, eligibility, exam route, fees, scholarship atau tuition systems, dan foreign-student selection pada tahun masuk yang Anda tuju.'
   }
 ];
