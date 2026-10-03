@@ -8,6 +8,7 @@ import CampusScholarshipGuide from '../../../components/CampusScholarshipGuide.a
 import RelatedLinks from '../../../components/RelatedLinks.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import CampusProfile from '../../../components/CampusProfile.astro';
+import CampusGuideBridge from '../../../components/CampusGuideBridge.astro';
 import LicensedPhoto from '../../../components/LicensedPhoto.astro';
 import InteractiveMap from '../../../components/InteractiveMap.astro';
 import { campusRelatedContent } from '../../../data/related-content';
@@ -277,19 +278,18 @@ const campusMap = campusMapPoints['jaist'];
     </div>
   </section>
 
-  <section id="keluarga" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
-    <span id="bagian-09" class="sr-only" aria-hidden="true"></span>
-    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">09 · Keluarga</p>
-    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">JAIST menyediakan opsi family housing; layanan keluarga sehari-hari tetap terkait Nomi dan municipality tempat tinggal.</h2>
-    <p class="mt-4 max-w-3xl leading-7 text-slate-600">Student Housing resmi JAIST mencakup double dan family units selain single rooms. Handbook JAIST juga memasukkan childcare dan pendidikan keluarga dalam daily-living guide. Untuk pregnancy, birth, daycare, school, child medical subsidy, dan administrasi keluarga, gunakan layanan pemerintah setempat sesuai alamat tempat tinggal.</p>
-    <div class="mt-5 flex flex-wrap gap-3">
-      <a href="https://www.jaist.ac.jp/english/studentlife/institution/housing.html" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Family housing ↗</a>
-      <a href={withBase('/life-in-ishikawa/family-anak/')} class="rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white">SG08 · Keluarga & Anak →</a>
-    </div>
-  </section>
-
-  <CampusScholarshipGuide campusSlug="jaist" />
-
+    <CampusGuideBridge
+    id="keluarga"
+    number="09"
+    eyebrow="Keluarga"
+    title="Yang spesifik di JAIST adalah opsi family housing; layanan keluarga lainnya mengikuti municipality."
+    summary="Childcare, sekolah, kesehatan keluarga, dan layanan lokal tidak perlu diulang di Campus Pack. Gunakan panduan keluarga dan Nomi untuk kebutuhan yang bergantung pada alamat tempat tinggal."
+    campusNote="JAIST menyediakan kategori housing untuk pasangan/keluarga, tetapi eligibility dan availability harus dikonfirmasi melalui Student Welfare Section."
+    links={[
+      { label: 'Keluarga & Anak', href: '/life-in-ishikawa/family-anak/', icon: 'family' },
+      { label: 'Panduan Nomi', href: '/life-in-ishikawa/municipality-guides/#nomi', icon: 'city' }
+    ]}
+  />
   <section id="faq" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
     <span id="bagian-10" class="sr-only" aria-hidden="true"></span>
     <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">10 · FAQ mahasiswa Indonesia</p>
