@@ -1,0 +1,65 @@
+---
+import StoryCard from './StoryCard.astro';
+import { stories, type StoryTopic } from '../data/stories';
+import { campuses } from '../data/campuses';
+import { withBase } from '../utils/paths';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  campusSlug?: string;
+  topics?: StoryTopic[];
+  limit?: number;
+  showEmpty?: boolean;
+  emptyText?: string;
+  class?: string;
+}
+
+const {
+  eyebrow = 'Cerita PPI Ishikawa',
+  title,
+  description,
+  campusSlug,
+  topics = [],
+  limit = 3,
+  showEmpty = false,
+  emptyText = 'Cerita akan ditambahkan setelah kisah pertama siap dipublikasikan.',
+  class: className = ''
+} = Astro.props;
+
+const campus = campusSlug ? campuses.find((item) => item.slug === campusSlug) : undefined;
+const filtered = stories
+  .filter((story) => !campusSlug || story.campusSlug === campusSlug)
+  .filter((story) => topics.length === 0 || topics.some((topic) => story.topics.includes(topic)))
+  .slice(0, limit);
+---
+
+{(filtered.length > 0 || showEmpty) && (
+  <section class={`mx-auto max-w-7xl px-5 py-14 lg:px-8 ${className}`}>
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-3xl">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">{eyebrow}</p>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">{title}</h2>
+        {description && <p class="mt-3 leading-7 text-slate-600">{description}</p>}
+      </div>
+      {filtered.length > 0 && (
+        <a href={withBase(campusSlug ? `/stories/?campus=${campusSlug}` : '/stories/')} class="text-sm font-bold text-brand hover:underline">
+          Lihat semua cerita{campus ? ` dari ${campus.shortName}` : ''} →
+        </a>
+      )}
+    </div>
+
+    {filtered.length > 0 ? (
+      <div class="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        {filtered.map((story) => <StoryCard story={story} />)}
+      </div>
+    ) : (
+      <div class="mt-7 rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-7">
+        <p class="font-bold text-slate-950">Segera hadir</p>
+        <p class="mt-2 max-w-3xl text-sm leading-6 text-slate-600">{emptyText}</p>
+        <a href={withBase('/stories/')} class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Lihat Cerita PPI Ishikawa →</a>
+      </div>
+    )}
+  </section>
+)}
