@@ -70,7 +70,7 @@ const stageLabels = {
   </section>
 
   <section class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
       <div class="rounded-2xl border border-slate-200 bg-white p-5">
         <p class="text-3xl font-bold text-slate-950">{scholarshipStats.total}</p>
         <p class="mt-1 text-sm text-slate-600">scholarship pada batch awal</p>
@@ -123,6 +123,32 @@ const stageLabels = {
     </div>
   </section>
 
+  <section class="mx-auto max-w-7xl px-5 py-10 lg:px-8">
+    <div class="rounded-[2rem] border border-amber-200 bg-amber-50 p-6 sm:p-8">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-dark">Paling relevan untuk Ishikawa</p>
+          <h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-950">Mulai dari dua jalur ini sebelum membuka daftar yang lebih luas.</h2>
+        </div>
+        <a href="#finder" class="text-sm font-bold text-brand hover:underline">Lihat semua scholarship →</a>
+      </div>
+      <div class="mt-6 grid gap-4 md:grid-cols-2">
+        {scholarships.filter((item) => ['ishikawa-prefectural-scholarship','mitani-scholarship'].includes(item.slug)).map((item) => (
+          <article class="rounded-2xl bg-white p-5 shadow-sm">
+            <p class="text-xs font-bold uppercase tracking-[0.1em] text-brand">{item.provider}</p>
+            <h3 class="mt-2 text-lg font-bold text-slate-950">{item.name}</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-600">{item.summary}</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {item.studyLevels.map((level) => (
+                <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600">{scholarshipLevelLabels[level]}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <section id="finder" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-10 lg:px-8">
     <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
       <div>
@@ -159,6 +185,16 @@ const stageLabels = {
       </label>
 
       <label class="block">
+        <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Cara apply</span>
+        <select id="filter-route" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+          <option value="">Semua jalur</option>
+          <option value="school">Lewat kampus</option>
+          <option value="foundation">Apply langsung</option>
+          <option value="varies">Tergantung jalur</option>
+        </select>
+      </label>
+
+      <label class="block">
         <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Khusus Indonesia</span>
         <select id="filter-indonesia" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
           <option value="">Semua</option>
@@ -166,7 +202,7 @@ const stageLabels = {
         </select>
       </label>
 
-      <div class="sm:col-span-2 lg:col-span-4">
+      <div class="sm:col-span-2 lg:col-span-5">
         <button id="filter-reset" type="button" class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50">
           Reset filter
         </button>
@@ -186,6 +222,7 @@ const stageLabels = {
           data-level={item.studyLevels.join(',')}
           data-stage={item.stages.join(',')}
           data-indonesia={item.nationality.includes('Indonesia') ? 'yes' : 'no'}
+          data-route={item.applicationRoute}
         >
           <div class="flex flex-wrap items-start justify-between gap-3">
             <div>
@@ -287,6 +324,7 @@ const stageLabels = {
       const level = document.getElementById('filter-level');
       const stage = document.getElementById('filter-stage');
       const indonesia = document.getElementById('filter-indonesia');
+      const route = document.getElementById('filter-route');
       const reset = document.getElementById('filter-reset');
       const cards = [...document.querySelectorAll('.scholarship-card')];
       const count = document.getElementById('scholarship-count');
@@ -301,17 +339,20 @@ const stageLabels = {
           const levelValue = level?.value || '';
           const stageValue = stage?.value || '';
           const indonesiaValue = indonesia?.value || '';
+          const routeValue = route?.value || '';
 
           const campusRaw = card.dataset.campus || '';
           const levelRaw = card.dataset.level || '';
           const stageRaw = card.dataset.stage || '';
           const indonesiaRaw = card.dataset.indonesia || '';
+          const routeRaw = card.dataset.route || '';
 
           const campusOk = !campusValue || matchesList(campusRaw, campusValue) || campusRaw === '';
           const levelOk = matchesList(levelRaw, levelValue);
           const stageOk = !stageValue || matchesList(stageRaw, stageValue) || matchesList(stageRaw, 'both');
           const indonesiaOk = !indonesiaValue || indonesiaRaw === indonesiaValue;
-          const visible = campusOk && levelOk && stageOk && indonesiaOk;
+          const routeOk = !routeValue || routeRaw === routeValue;
+          const visible = campusOk && levelOk && stageOk && indonesiaOk && routeOk;
 
           card.classList.toggle('hidden', !visible);
           if (visible) shown++;
@@ -325,13 +366,15 @@ const stageLabels = {
       if (level && params.get('level')) level.value = params.get('level');
       if (stage && params.get('stage')) stage.value = params.get('stage');
       if (indonesia && params.get('indonesia') === 'yes') indonesia.value = 'yes';
+      if (route && params.get('route')) route.value = params.get('route');
 
-      [campus, level, stage, indonesia].forEach((el) => el?.addEventListener('change', apply));
+      [campus, level, stage, indonesia, route].forEach((el) => el?.addEventListener('change', apply));
       reset?.addEventListener('click', () => {
         if (campus) campus.value = '';
         if (level) level.value = '';
         if (stage) stage.value = '';
         if (indonesia) indonesia.value = '';
+        if (route) route.value = '';
         apply();
       });
 
