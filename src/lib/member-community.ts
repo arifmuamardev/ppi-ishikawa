@@ -52,6 +52,7 @@ const ASPIRATION_KEY = 'ppi-ishikawa-demo-aspirations';
 const EVENTS_KEY = 'ppi-ishikawa-demo-events';
 const ANNOUNCEMENTS_KEY = 'ppi-ishikawa-demo-announcements';
 const ASPIRATION_STATUS_KEY = 'ppi-ishikawa-demo-aspiration-status';
+const ATTENDANCE_KEY = 'ppi-ishikawa-demo-attendance';
 
 function readJson<T>(key: string, fallback: T): T {
   try {
@@ -344,5 +345,49 @@ export async function updateAspirationStatus(aspirationId: string, nextStatus: M
   return supabase.rpc('update_aspiration_status', {
     aspiration_id: aspirationId,
     next_status: nextStatus,
+  });
+}
+
+
+export interface EventAttendanceMember {
+  user_id: string;
+  full_name: string;
+  attending: boolean;
+  checked_in_at: string | null;
+}
+
+export async function getEventAttendance(eventId: string) {
+  if (!isSupabaseConfigured || !supabase) {
+    const overrides = readJson<Record<string, Record<string, string | null>>>(ATTENDANCE_KEY, {});
+    const base: EventAttendanceMember[] = [
+      { user_id: 'demo-directory-01', full_name: 'Contoh Anggota 01', attending: true, checked_in_at: null },
+      { user_id: 'demo-directory-02', full_name: 'Contoh Anggota 02', attending: true, checked_in_at: null },
+      { user_id: 'demo-member', full_name: 'Anggota Demo', attending: true, checked_in_at: null },
+    ];
+    return {
+      data: base.map((item) => ({
+        ...item,
+        checked_in_at: overrides[eventId]?.[item.user_id] ?? item.checked_in_at,
+      })),
+      error: null,
+    };
+  }
+
+  return supabase.rpc('get_event_attendance', { target_event_id: eventId });
+}
+
+export async function setEventCheckin(eventId: string, userId: string, checkedIn: boolean) {
+  if (!isSupabaseConfigured || !supabase) {
+    const current = readJson<Record<string, Record<string, string | null>>>(ATTENDANCE_KEY, {});
+    current[eventId] ||= {};
+    current[eventId][userId] = checkedIn ? new Date().toISOString() : null;
+    writeJson(ATTENDANCE_KEY, current);
+    return { error: null };
+  }
+
+  return supabase.rpc('set_event_checkin', {
+    target_event_id: eventId,
+    target_user_id: userId,
+    checked_in: checkedIn,
   });
 }
