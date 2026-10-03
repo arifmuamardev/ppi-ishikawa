@@ -31,7 +31,7 @@ import { campuses } from '../../../data/campuses';
 
   <script>
     import { campuses } from '../../../data/campuses';
-    import { isSupabaseConfigured, supabase } from '../../../lib/supabase';
+    import { getPendingMembers, reviewMembership } from '../../../lib/member';
 
     const list = document.getElementById('verification-admin-list');
     const count = document.getElementById('verification-admin-count');
@@ -54,12 +54,7 @@ import { campuses } from '../../../data/campuses';
     };
 
     const review = async (userId, decision, nextStatus) => {
-      if (!supabase) return;
-      const { error } = await supabase.rpc('review_membership', {
-        target_user_id: userId,
-        decision,
-        next_status: nextStatus,
-      });
+      const { error } = await reviewMembership(userId, decision, nextStatus);
       if (error) {
         show('Keputusan belum dapat disimpan.', true);
         return;
@@ -106,13 +101,8 @@ import { campuses } from '../../../data/campuses';
     };
 
     const load = async () => {
-      if (!isSupabaseConfigured || !supabase) return;
       if (count) count.textContent = 'Memuat…';
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('user_id,full_name,campus_slug,program,study_level,field_of_study,membership_status,created_at')
-        .eq('verification_status', 'pending')
-        .order('created_at', { ascending: true });
+      const { data, error } = await getPendingMembers();
 
       if (error) {
         show('Antrian verifikasi belum dapat dimuat. Pastikan akun ini memiliki role admin.', true);
