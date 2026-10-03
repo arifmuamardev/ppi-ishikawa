@@ -86,7 +86,7 @@ const municipalityLinks = needsMunicipality ? (municipalityByCampus[campusSlug] 
 const links = [
   ...matched.map((item) => ({ label: item.label, href: item.href, icon: item.icon })),
   ...municipalityLinks.map((item) => ({ ...item, icon: 'map' }))
-].filter((item, index, arr) => arr.findIndex((x) => x.href === item.href) === index).slice(0, 3);
+].filter((item, index, arr) => arr.findIndex((x) => x.href === item.href) === index).slice(0, 2);
 ---
 
 {links.length > 0 && (
