@@ -151,6 +151,23 @@ const stageLabels = {
     </div>
   </section>
 
+  <section class="mx-auto max-w-7xl px-5 py-6 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <div class="flex gap-4">
+        <TopicIcon name="guide" class="mt-1 size-6 shrink-0 text-brand" />
+        <div>
+          <p class="text-sm font-bold uppercase tracking-[0.14em] text-brand">Evergreen by design</p>
+          <h2 class="mt-2 text-2xl font-bold text-slate-950">Yang stabil dipisahkan dari yang berubah setiap siklus.</h2>
+          <p class="mt-3 max-w-4xl text-sm leading-6 text-slate-600">
+            Eligibility dasar, target jenjang, nationality, bidang, dan jalur aplikasi disimpan sebagai informasi inti.
+            Deadline, nominal, kuota, dan designated-school list diperlakukan sebagai snapshot siklus terakhir yang diverifikasi.
+            Karena itu, hub tidak menyimpulkan “open” atau “closed” tanpa call resmi terbaru.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="kampus" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-10 lg:px-8">
     <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Cari berdasarkan kampus</p>
     <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Mulai dari institusi Anda.</h2>
@@ -298,8 +315,8 @@ const stageLabels = {
               <dd class="mt-1 text-sm font-semibold leading-6 text-slate-900">{item.amount}</dd>
             </div>
             <div class="rounded-xl bg-slate-50 p-4">
-              <dt class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">Periode aplikasi</dt>
-              <dd class="mt-1 text-sm font-semibold leading-6 text-slate-900">{item.applicationPeriod}</dd>
+              <dt class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">Pola waktu</dt>
+              <dd class="mt-1 text-sm font-semibold leading-6 text-slate-900">{item.typicalWindow ?? item.applicationPeriod}</dd>
             </div>
             <div class="rounded-xl bg-slate-50 p-4">
               <dt class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">Cara apply</dt>
@@ -318,6 +335,7 @@ const stageLabels = {
               <p class="mt-2"><strong class="text-slate-900">Nationality:</strong> {item.nationalityNote}</p>
               <p class="mt-2"><strong class="text-slate-900">Bidang:</strong> {item.fields.join(', ')}</p>
               <p class="mt-2"><strong class="text-slate-900">Durasi:</strong> {item.duration}</p>
+              <p class="mt-2"><strong class="text-slate-900">Snapshot terakhir:</strong> {item.latestVerifiedCycle ?? item.applicationPeriod}</p>
               <p class="mt-2"><strong class="text-slate-900">Double scholarship:</strong> {item.pluralGrants}</p>
               {item.ageNote && <p class="mt-2"><strong class="text-slate-900">Usia:</strong> {item.ageNote}</p>}
               {item.visaNote && <p class="mt-2"><strong class="text-slate-900">Visa:</strong> {item.visaNote}</p>}
@@ -333,6 +351,7 @@ const stageLabels = {
             <div>
               <p class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-400">Sumber</p>
               <p class="mt-1 text-xs leading-5 text-slate-500">{item.sourceLabel} · diperiksa {item.verified}</p>
+              <p class="mt-1 text-[11px] leading-5 text-slate-400">Deadline/nominal dapat berubah. Cek call terbaru sebelum apply.</p>
             </div>
             {item.sourceUrl && (
               <a href={item.sourceUrl} target="_blank" rel="noreferrer" class="text-sm font-bold text-brand hover:underline">Sumber resmi ↗</a>
