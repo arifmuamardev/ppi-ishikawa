@@ -82,7 +82,7 @@ export const kuFaq = [
   },
   {
     id: 'informasi-resmi-vs-ppi',
-    q: 'Apakah informasi PPI menggantikan informasi kampus?',
-    a: 'Tidak. PPI membantu menjelaskan konteks praktis. Aturan, jadwal, biaya, admission, visa support, dan prosedur resmi tetap mengikuti Kanazawa University dan lembaga pemerintah yang berwenang.'
+    q: 'Di mana saya harus mengecek aturan dan prosedur resmi Kanazawa University?',
+    a: 'Gunakan halaman resmi Kanazawa University untuk aturan, jadwal, biaya, admission, dan layanan kampus. Untuk visa serta administrasi pemerintah, ikuti lembaga pemerintah yang berwenang.'
   }
 ];
