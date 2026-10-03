@@ -1,0 +1,415 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import TopicIcon from '../components/TopicIcon.astro';
+import InstitutionMark from '../components/InstitutionMark.astro';
+import { withBase } from '../utils/paths';
+import { campuses } from '../data/campuses';
+import {
+  careerSources,
+  careerGuides,
+  campusCareerProfiles,
+  careerTypeLabels,
+  careerLocationLabels,
+  careerAudienceLabels
+} from '../data/career';
+
+const campusCareerEntries = campuses
+  .map((campus) => ({ campus, profile: campusCareerProfiles[campus.slug] }))
+  .filter((item) => item.profile);
+---
+
+<BaseLayout
+  title="Karier & Peluang"
+  description="Career Hub PPI Ishikawa untuk mencari sumber lowongan kerja, internship, postdoc, researcher, faculty, fellowship, dan dukungan karier kampus tanpa bergantung pada daftar vacancy yang cepat kedaluwarsa."
+>
+  <PageIntro
+    title="Karier & Peluang"
+    description="Temukan jalur karier, sumber lowongan, peluang akademik dan riset, serta dukungan kampus yang relevan bagi mahasiswa dan alumni PPI Ishikawa."
+  />
+
+  <section class="mx-auto max-w-7xl px-5 pb-6 lg:px-8">
+    <div class="rounded-[2rem] border border-amber-200 bg-amber-50 p-6 sm:p-8">
+      <div class="flex items-start gap-4">
+        <span class="grid size-11 shrink-0 place-items-center rounded-2xl bg-white text-brand">
+          <TopicIcon name="career" class="size-6" />
+        </span>
+        <div>
+          <p class="text-sm font-bold uppercase tracking-[0.14em] text-accent-dark">Cara Career Hub bekerja</p>
+          <h2 class="mt-2 text-2xl font-bold text-slate-950">Cari sumber peluang yang selalu hidup, bukan daftar lowongan statis.</h2>
+          <p class="mt-3 max-w-4xl leading-7 text-slate-700">
+            Lowongan kerja dan postdoc dapat berubah setiap hari. Karena itu PPI Ishikawa tidak menyalin vacancy satu per satu.
+            Halaman ini mengarahkan Anda ke portal resmi, career center, dan sumber pencarian yang memuat peluang terbaru.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="mx-auto max-w-7xl px-5 py-6 lg:px-8" aria-label="Navigasi Career Hub">
+    <div class="flex flex-wrap gap-2">
+      {[
+        ['Cari peluang', '#sources'],
+        ['Bekerja di Jepang', '#japan'],
+        ['Academic & research', '#academic'],
+        ['Persiapan karier', '#preparation'],
+        ['Career center kampus', '#campus-career'],
+        ['Untuk alumni', '#alumni']
+      ].map(([label, href]) => (
+        <a href={href} class="rounded-full border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 transition hover:border-amber-200 hover:bg-amber-50 hover:text-brand">
+          {label}
+        </a>
+      ))}
+    </div>
+  </nav>
+
+  <section class="mx-auto max-w-7xl px-5 py-10 lg:px-8">
+    <div class="max-w-3xl">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Pilih jalur</p>
+      <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Mulai dari tujuan karier Anda.</h2>
+    </div>
+
+    <div class="mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      {[
+        {
+          icon: 'building',
+          title: 'Bekerja di Jepang',
+          description: 'Cari perusahaan, pahami pola recruitment Jepang, dan gunakan dukungan khusus international students.',
+          href: '#japan'
+        },
+        {
+          icon: 'research',
+          title: 'Academic & Research',
+          description: 'Cari postdoc, researcher, faculty position, fellowship, dan research opportunities.',
+          href: '#academic'
+        },
+        {
+          icon: 'collaboration',
+          title: 'Internship & Early Career',
+          description: 'Gunakan internship, career fair, dan campus support sebagai pintu masuk sebelum lulus.',
+          href: '#sources'
+        },
+        {
+          icon: 'documents',
+          title: 'Persiapan Karier',
+          description: 'Siapkan CV, résumé, entry sheet, interview, portfolio, research statement, dan dokumen aplikasi.',
+          href: '#preparation'
+        }
+      ].map((item) => (
+        <a href={item.href} class="group rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
+          <span class="grid size-11 place-items-center rounded-2xl bg-amber-50 text-brand">
+            <TopicIcon name={item.icon as any} class="size-6" />
+          </span>
+          <h3 class="mt-4 text-lg font-bold text-slate-950 group-hover:text-brand">{item.title}</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section id="sources" class="scroll-mt-24 border-y border-slate-200 bg-white">
+    <div class="mx-auto max-w-7xl px-5 py-14 lg:px-8">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div class="max-w-3xl">
+          <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Opportunity Finder</p>
+          <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Temukan tempat yang tepat untuk mencari peluang.</h2>
+          <p class="mt-3 leading-7 text-slate-600">Filter ini menampilkan portal dan layanan pencarian, bukan vacancy individual.</p>
+        </div>
+        <p id="career-count" class="text-sm font-semibold text-slate-500">{careerSources.length} sumber ditampilkan</p>
+      </div>
+
+      <div class="mt-7 grid gap-3 rounded-3xl border border-slate-200 bg-slate-50 p-5 md:grid-cols-3">
+        <label class="block">
+          <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Jenis peluang</span>
+          <select id="career-type" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+            <option value="">Semua jenis</option>
+            {Object.entries(careerTypeLabels).map(([value, label]) => <option value={value}>{label}</option>)}
+          </select>
+        </label>
+        <label class="block">
+          <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Wilayah</span>
+          <select id="career-location" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+            <option value="">Semua wilayah</option>
+            {Object.entries(careerLocationLabels).map(([value, label]) => <option value={value}>{label}</option>)}
+          </select>
+        </label>
+        <label class="block">
+          <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Untuk</span>
+          <select id="career-audience" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+            <option value="">Semua</option>
+            {Object.entries(careerAudienceLabels).map(([value, label]) => <option value={value}>{label}</option>)}
+          </select>
+        </label>
+        <div class="md:col-span-3">
+          <button id="career-reset" type="button" class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-white">
+            Reset filter
+          </button>
+        </div>
+      </div>
+
+      <div id="career-empty" class="mt-6 hidden rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+        <p class="font-bold text-slate-950">Belum ada sumber yang cocok dengan semua filter.</p>
+        <p class="mt-2 text-sm text-slate-600">Coba longgarkan salah satu filter.</p>
+      </div>
+
+      <div id="career-grid" class="mt-7 grid gap-5 lg:grid-cols-2">
+        {careerSources.map((source) => (
+          <article
+            class="career-source rounded-3xl border border-slate-200 bg-white p-6"
+            data-type={source.types.join(',')}
+            data-location={source.locations.join(',')}
+            data-audience={source.audiences.join(',')}
+          >
+            <div class="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.12em] text-brand">{source.provider}</p>
+                <h3 class="mt-2 text-xl font-bold leading-snug text-slate-950">{source.name}</h3>
+              </div>
+              {source.featured && <span class="rounded-full bg-amber-100 px-3 py-1 text-[11px] font-bold text-amber-800">Direkomendasikan mulai di sini</span>}
+            </div>
+
+            <p class="mt-4 text-sm leading-6 text-slate-600">{source.description}</p>
+
+            <div class="mt-4 flex flex-wrap gap-2">
+              {source.types.map((type) => (
+                <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600">{careerTypeLabels[type]}</span>
+              ))}
+              {source.locations.map((location) => (
+                <span class="rounded-full bg-blue-50 px-2.5 py-1 text-[11px] font-bold text-blue-700">{careerLocationLabels[location]}</span>
+              ))}
+            </div>
+
+            {source.note && <p class="mt-4 rounded-xl bg-slate-50 p-4 text-xs leading-5 text-slate-600">{source.note}</p>}
+
+            <div class="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-4">
+              <div>
+                <p class="text-xs font-semibold text-slate-500">{source.language}</p>
+                <p class="mt-1 text-[11px] text-slate-400">Sumber diperiksa {source.verified}</p>
+              </div>
+              <a href={source.url} target="_blank" rel="noreferrer" class="rounded-xl bg-brand px-4 py-2.5 text-sm font-bold text-white">Buka sumber ↗</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="japan" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-14 lg:px-8">
+    <div class="grid gap-6 lg:grid-cols-[.9fr_1.1fr]">
+      <div>
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Bekerja di Jepang</p>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Mulai sebelum tanggal kelulusan.</h2>
+        <p class="mt-4 leading-7 text-slate-600">
+          Recruitment di Jepang memiliki jadwal, dokumen, dan pola seleksi yang berbeda dari banyak negara.
+          Gunakan career center kampus sejak masih berstatus mahasiswa dan jadikan sumber resmi sebagai rujukan untuk aturan employment dan residence status.
+        </p>
+        <div class="mt-6 space-y-3">
+          {careerGuides.map((guide) => (
+            <a href={guide.url} target="_blank" rel="noreferrer" class="block rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-amber-200">
+              <p class="text-xs font-bold uppercase tracking-[0.12em] text-brand">{guide.provider}</p>
+              <h3 class="mt-2 font-bold text-slate-950">{guide.title}</h3>
+              <p class="mt-2 text-sm leading-6 text-slate-600">{guide.description}</p>
+              <p class="mt-3 text-xs font-bold text-brand">{guide.label} ↗</p>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div class="rounded-[2rem] bg-slate-950 p-7 text-white sm:p-9">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-soft">Alur praktis</p>
+        <div class="mt-6 space-y-5">
+          {[
+            ['1', 'Tentukan target', 'Pilih industri, jenis pekerjaan, lokasi, dan apakah Anda mencari new-graduate recruitment atau posisi experienced.'],
+            ['2', 'Gunakan campus support', 'Career center dapat membantu memahami timeline, application documents, interview, internship, dan perusahaan yang relevan.'],
+            ['3', 'Cari dari beberapa sumber', 'Gabungkan portal resmi, career center, employer career page, alumni network, dan sumber khusus international students.'],
+            ['4', 'Periksa syarat bekerja', 'Pastikan pekerjaan dan status tinggal yang diperlukan sesuai dengan situasi Anda melalui sumber pemerintah yang berlaku.']
+          ].map(([number, title, description]) => (
+            <div class="flex gap-4">
+              <span class="grid size-8 shrink-0 place-items-center rounded-full bg-white/10 text-xs font-bold">{number}</span>
+              <div>
+                <h3 class="font-bold">{title}</h3>
+                <p class="mt-1 text-sm leading-6 text-slate-300">{description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="academic" class="scroll-mt-24 border-y border-slate-200 bg-white">
+    <div class="mx-auto max-w-7xl px-5 py-14 lg:px-8">
+      <div class="max-w-3xl">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Academic & Research</p>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Pisahkan posisi kerja, fellowship, dan pencarian host.</h2>
+        <p class="mt-3 leading-7 text-slate-600">Ketiganya dapat menghasilkan jalur post-PhD yang berbeda, sehingga jangan menggunakan satu portal saja.</p>
+      </div>
+
+      <div class="mt-7 grid gap-4 md:grid-cols-3">
+        <article class="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+          <TopicIcon name="research" class="size-6 text-brand" />
+          <h3 class="mt-4 text-lg font-bold text-slate-950">Postdoc / Researcher / Faculty</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-600">Mulai dari JREC-IN untuk Jepang. Baca job description, contract period, required documents, research field, dan deadline di posting asli.</p>
+          <a href="#sources" data-career-jump="postdoc" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Tampilkan sumber postdoc →</a>
+        </article>
+        <article class="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+          <TopicIcon name="academic" class="size-6 text-brand" />
+          <h3 class="mt-4 text-lg font-bold text-slate-950">Fellowship</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-600">Fellowship seperti JSPS memiliki mekanisme, host, eligibility, dan jadwal sendiri. Jangan menganggap fellowship sama dengan employment contract.</p>
+          <a href="#sources" data-career-jump="fellowship" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Tampilkan sumber fellowship →</a>
+        </article>
+        <article class="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+          <TopicIcon name="map" class="size-6 text-brand" />
+          <h3 class="mt-4 text-lg font-bold text-slate-950">Global research career</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-600">Jika tidak membatasi pencarian ke Jepang, gunakan portal internasional dan career pages universitas/research institute secara langsung.</p>
+          <a href="#sources" data-career-location-jump="global" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Tampilkan sumber global →</a>
+        </article>
+      </div>
+
+      <div class="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-5">
+        <p class="font-bold text-slate-950">Dokumen yang sering perlu disiapkan lebih awal</p>
+        <p class="mt-2 text-sm leading-6 text-slate-700">Academic CV, publication list, research statement/proposal, cover letter, degree/transcript documents, dan referees/recommendation letters. Persyaratan final selalu mengikuti call atau vacancy yang dituju.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="preparation" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-14 lg:px-8">
+    <div class="max-w-3xl">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Persiapan karier</p>
+      <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Siapkan bahan yang dapat digunakan berulang kali.</h2>
+      <p class="mt-3 leading-7 text-slate-600">Vacancy berubah cepat; dokumen dasar, profil profesional, dan pemahaman proses recruitment memiliki umur pakai jauh lebih panjang.</p>
+    </div>
+
+    <div class="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {[
+        ['CV & résumé', 'Siapkan master CV lalu adaptasikan untuk posisi. Untuk perusahaan Jepang, pahami juga format résumé/entry sheet yang diminta employer.'],
+        ['Interview', 'Latih penjelasan singkat tentang diri, studi, research, pengalaman, motivasi, dan kontribusi yang relevan untuk posisi.'],
+        ['Professional profile', 'Jaga LinkedIn, portfolio, GitHub, ORCID, Google Scholar, researchmap, atau profil lain sesuai bidang Anda.'],
+        ['References', 'Jaga komunikasi dengan supervisor dan calon referee. Minta izin sebelum mencantumkan seseorang sebagai reference.']
+      ].map(([title, description]) => (
+        <article class="rounded-2xl border border-slate-200 bg-white p-5">
+          <h3 class="font-bold text-slate-950">{title}</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section id="campus-career" class="scroll-mt-24 border-y border-slate-200 bg-white">
+    <div class="mx-auto max-w-7xl px-5 py-14 lg:px-8">
+      <div class="max-w-3xl">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Career center kampus</p>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Gunakan layanan kampus sebelum membuka pencarian yang terlalu luas.</h2>
+        <p class="mt-3 leading-7 text-slate-600">Career center dapat memiliki informasi internal, counseling, employer connections, events, dan resources yang tidak tersedia di portal publik.</p>
+      </div>
+
+      <div class="mt-7 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {campusCareerEntries.map(({ campus, profile }) => (
+          <article id={`campus-${campus.slug}`} class="scroll-mt-24 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+            <div class="flex items-start gap-3">
+              <InstitutionMark id={campus.slug as any} size="sm" class="shrink-0" />
+              <div>
+                <h3 class="font-bold text-slate-950">{campus.shortName}</h3>
+                <p class="mt-1 text-xs text-slate-500">{campus.city}</p>
+              </div>
+            </div>
+            <p class="mt-4 text-sm leading-6 text-slate-600">{profile.description}</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a href={profile.primaryUrl} target="_blank" rel="noreferrer" class="text-xs font-bold text-brand hover:underline">{profile.primaryLabel} ↗</a>
+              {profile.secondaryUrl && profile.secondaryLabel && (
+                <a href={profile.secondaryUrl} target="_blank" rel="noreferrer" class="text-xs font-bold text-brand hover:underline">{profile.secondaryLabel} ↗</a>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="alumni" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-14 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-[1.1fr_.9fr]">
+      <div class="rounded-[2rem] border border-slate-200 bg-white p-7 sm:p-9">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Untuk alumni</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Career Hub tetap berguna setelah Anda meninggalkan kampus.</h2>
+        <p class="mt-3 leading-7 text-slate-600">
+          JREC-IN, JSPS, EURAXESS, Hello Work, dan sumber publik lainnya tidak bergantung pada status mahasiswa PPI Ishikawa.
+          Untuk layanan career center kampus, cek eligibility alumni langsung ke institusi karena akses dapat berbeda menurut layanan dan periode setelah lulus.
+        </p>
+      </div>
+      <div class="rounded-[2rem] bg-slate-950 p-7 text-white sm:p-9">
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-soft">Sebelum lulus</p>
+        <h2 class="mt-3 text-xl font-bold">Simpan yang akan sulit dicari setelah akses kampus berakhir.</h2>
+        <ul class="mt-5 space-y-3 text-sm leading-6 text-slate-300">
+          <li>• Kontak supervisor, lab, career office, dan bagian akademik.</li>
+          <li>• Salinan CV, portfolio, publikasi, dan dokumen aplikasi penting.</li>
+          <li>• Prosedur meminta transcript atau certificate setelah lulus.</li>
+          <li>• Informasi alumni association dan layanan alumni kampus.</li>
+        </ul>
+        <a href={withBase('/life-in-ishikawa/leaving/')} class="mt-5 inline-flex text-sm font-bold text-white hover:underline">Checklist meninggalkan Ishikawa / Jepang →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 pb-20 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6 sm:p-8">
+      <p class="text-sm font-bold text-slate-950">Tentang pembaruan informasi</p>
+      <p class="mt-2 max-w-4xl text-sm leading-6 text-slate-600">
+        PPI Ishikawa memeriksa apakah sumber utama masih aktif, tetapi tidak menyimpan deadline atau jumlah vacancy sebagai data permanen.
+        Gunakan halaman ini untuk menemukan sumber; detail posisi selalu mengikuti portal dan pemberi peluang.
+      </p>
+    </div>
+  </section>
+
+  <script is:inline>
+    (() => {
+      const type = document.getElementById('career-type');
+      const location = document.getElementById('career-location');
+      const audience = document.getElementById('career-audience');
+      const reset = document.getElementById('career-reset');
+      const cards = [...document.querySelectorAll('.career-source')];
+      const count = document.getElementById('career-count');
+      const empty = document.getElementById('career-empty');
+
+      const matches = (raw, value) => !value || raw.split(',').includes(value);
+
+      const apply = () => {
+        let shown = 0;
+        for (const card of cards) {
+          const visible =
+            matches(card.dataset.type || '', type?.value || '') &&
+            matches(card.dataset.location || '', location?.value || '') &&
+            matches(card.dataset.audience || '', audience?.value || '');
+          card.classList.toggle('hidden', !visible);
+          if (visible) shown++;
+        }
+        if (count) count.textContent = `${shown} sumber ditampilkan`;
+        empty?.classList.toggle('hidden', shown !== 0);
+      };
+
+      [type, location, audience].forEach((el) => el?.addEventListener('change', apply));
+
+      reset?.addEventListener('click', () => {
+        if (type) type.value = '';
+        if (location) location.value = '';
+        if (audience) audience.value = '';
+        apply();
+      });
+
+      document.querySelectorAll('[data-career-jump]').forEach((link) => {
+        link.addEventListener('click', () => {
+          if (type) type.value = link.dataset.careerJump || '';
+          setTimeout(apply, 0);
+        });
+      });
+
+      document.querySelectorAll('[data-career-location-jump]').forEach((link) => {
+        link.addEventListener('click', () => {
+          if (location) location.value = link.dataset.careerLocationJump || '';
+          setTimeout(apply, 0);
+        });
+      });
+
+      apply();
+    })();
+  </script>
+</BaseLayout>
