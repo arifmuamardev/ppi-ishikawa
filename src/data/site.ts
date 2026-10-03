@@ -5,7 +5,7 @@ export const site = {
   period: '2026/27',
   tagline: 'Rumah digital pelajar Indonesia di Ishikawa.',
   description:
-    'Portal informasi, komunitas, program, dan panduan hidup untuk pelajar Indonesia di Prefektur Ishikawa, Jepang.',
+    'Informasi kampus, kehidupan di Ishikawa, beasiswa, komunitas, dan organisasi untuk pelajar Indonesia di Prefektur Ishikawa, Jepang.',
 };
 
 export const nav = [
