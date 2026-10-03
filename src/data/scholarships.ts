@@ -115,6 +115,7 @@ export const scholarships: Scholarship[] = [
       'Must follow school application procedure'
     ],
     sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
+    sourceUrl: 'https://www.jasso.go.jp/en/ryugaku/scholarship_j/shoreihi/index.html',
     verified: 'October 2026',
     featured: true
   },
@@ -365,6 +366,139 @@ export const scholarships: Scholarship[] = [
     pluralGrants: 'no',
     sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
     sourceUrl: 'https://www.jees.or.jp/',
+    verified: 'October 2026'
+  },
+  {
+    slug: 'honjo-international',
+    name: 'Honjo International Scholarship Foundation — Scholarship for Foreign Students',
+    provider: 'Honjo International Scholarship Foundation',
+    providerType: 'foundation',
+    summary: 'Graduate scholarship yang dapat dilamar langsung oleh international students. Kandidat yang belum berada di Jepang juga dapat mendaftar bila akan masuk graduate school di Jepang.',
+    studyLevels: ['M', 'D'],
+    stages: ['both'],
+    campusSlugs: [
+      'kanazawa-university','jaist','kanazawa-institute-of-technology',
+      'ishikawa-prefectural-university','kinjo-university'
+    ],
+    campusEligibilityNote: 'Foundation menyatakan applicant bebas memilih graduate school di Jepang; tidak memerlukan pre-selection universitas.',
+    nationality: ['International students'],
+    nationalityNote: 'All non-Japanese nationalities are eligible.',
+    fields: ['All fields'],
+    fundingType: 'stipend',
+    amount: '¥230,000/mo for 1–2 year degree · ¥210,000/mo for 3-year degree · ¥180,000/mo for longer degree',
+    duration: 'Minimum period required to obtain the degree',
+    applicationPeriod: 'Sep 1–Oct 31, 2026 for the 2027 scholarship cycle',
+    applicationRoute: 'foundation',
+    recommendationRequired: false,
+    pluralGrants: 'limited',
+    ageNote: 'Master: course must start by age 30 · Doctoral: by age 35',
+    additionalRequirements: [
+      'Direct online application to the foundation',
+      'Research-plan video required in the 2027 call',
+      'Recipient is expected to contribute internationally and eventually work in their home country'
+    ],
+    sourceLabel: 'Honjo International Scholarship Foundation — official 2027 call',
+    sourceUrl: 'https://www.hisf.or.jp/en/scholarship/foreigner/',
+    verified: 'October 2026',
+    featured: true
+  },
+  {
+    slug: 'jasso-exchange-support',
+    name: 'JASSO Student Exchange Support Program (Scholarship for Study in Japan under Agreement)',
+    provider: 'JASSO',
+    providerType: 'jasso',
+    summary: 'Untuk international students yang datang ke Jepang melalui student-exchange agreement atau arrangement antara home school dan Japanese school, selama 8 hari sampai 1 tahun.',
+    studyLevels: ['ST', 'U', 'M', 'D', 'Exchange'],
+    stages: ['before-arrival'],
+    campusSlugs: [
+      'kanazawa-university','jaist','kanazawa-institute-of-technology',
+      'ishikawa-prefectural-university','kinjo-university','alice-gakuen'
+    ],
+    campusEligibilityNote: 'Hanya relevan bila program exchange/short-term Anda merupakan program yang diajukan dan diterima melalui Japanese school/home school.',
+    nationality: ['Countries with diplomatic relations with Japan'],
+    nationalityNote: 'Applicants from Taiwan and Palestine are also acceptable under JASSO rules.',
+    fields: ['All fields under eligible exchange program'],
+    fundingType: 'stipend',
+    amount: '¥80,000/mo',
+    duration: '8 days–1 year',
+    applicationPeriod: 'Program-specific; contact home school',
+    applicationRoute: 'school',
+    recommendationRequired: true,
+    pluralGrants: 'limited',
+    visaNote: 'Student visa required in principle; special handling may apply for programs of 90 days or less.',
+    additionalRequirements: [
+      'Must participate under an exchange agreement or equivalent arrangement',
+      'Other study-in-Japan scholarships totaling more than ¥80,000/month make the student ineligible',
+      'Students return to complete studies at their home institution'
+    ],
+    sourceLabel: 'JASSO — Student Exchange Support Program',
+    sourceUrl: 'https://www.jasso.go.jp/en/ryugaku/scholarship_j/ukeire.html',
+    verified: 'October 2026'
+  },
+  {
+    slug: 'jasso-eju-reservation',
+    name: 'JASSO Honors Scholarship Reservation Program for EJU High Achievers',
+    provider: 'JASSO',
+    providerType: 'jasso',
+    summary: 'Reservation route for privately financed international students who achieve strong EJU results before entering an eligible undergraduate, junior-college, Kosen, or professional-training program in Japan.',
+    studyLevels: ['ST', 'U'],
+    stages: ['before-arrival'],
+    campusSlugs: [
+      'kanazawa-university','kanazawa-institute-of-technology',
+      'ishikawa-prefectural-university','kinjo-university','alice-gakuen'
+    ],
+    campusEligibilityNote: 'Applicable only to eligible regular-entry programs; graduate school and Japanese-language-institute enrollment are excluded.',
+    nationality: ['International students'],
+    nationalityNote: 'Eligibility follows EJU and Honors Scholarship rules.',
+    fields: ['Depends on EJU subject combination and admitting program'],
+    fundingType: 'stipend',
+    amount: '¥48,000/mo in the current reservation scheme',
+    duration: '6 or 12 months depending on enrollment timing; some overseas-EJU high achievers may qualify for extended support',
+    applicationPeriod: 'Linked to EJU application/exam cycle',
+    applicationRoute: 'varies',
+    recommendationRequired: true,
+    pluralGrants: 'limited',
+    additionalRequirements: [
+      'Must take EJU and be selected as a reservation holder',
+      'Must enroll as a regular student in an eligible program',
+      'Graduate programs and Japanese-language institutes are not eligible'
+    ],
+    sourceLabel: 'JASSO — EJU Honors Scholarship Reservation Program',
+    sourceUrl: 'https://www.jasso.go.jp/en/ryugaku/scholarship_j/shoreihi/yoyaku_eju/index.html',
+    verified: 'October 2026',
+    featured: true
+  },
+  {
+    slug: 'mizuho-international-foundation',
+    name: 'Mizuho International Foundation Scholarship',
+    provider: 'Mizuho International Foundation',
+    providerType: 'foundation',
+    summary: 'Scholarship untuk international students di Jepang dalam social sciences/humanities atau technology. Aplikasi berjalan melalui universitas yang menerima request rekomendasi dari foundation.',
+    studyLevels: ['U', 'R', 'M', 'D'],
+    stages: ['after-enrollment'],
+    campusSlugs: [
+      'kanazawa-university','jaist','kanazawa-institute-of-technology',
+      'ishikawa-prefectural-university','kinjo-university'
+    ],
+    campusEligibilityNote: 'Bukan semua universitas otomatis bisa menominasikan; tanyakan apakah kampus Anda menerima recommendation request dari Mizuho Foundation untuk cycle tersebut.',
+    nationality: ['International students'],
+    nationalityNote: 'All regions are listed on Study in Japan; Student status required.',
+    fields: ['Social Science', 'Humanities', 'Technology'],
+    fundingType: 'stipend',
+    amount: '¥120,000/mo',
+    duration: '2 years',
+    applicationPeriod: '2026 foundation window: Jan 13–May 8; campus internal deadline may be earlier',
+    applicationRoute: 'school',
+    recommendationRequired: true,
+    pluralGrants: 'no',
+    ageNote: '35 or under',
+    additionalRequirements: [
+      'Must remain enrolled at the recommending university during the support period',
+      'University must have been requested by the foundation to recommend candidates',
+      'Foundation selection includes document review and interview'
+    ],
+    sourceLabel: 'Mizuho International Foundation — official / Study in Japan listing',
+    sourceUrl: 'https://mizuhokokusai.la.coocan.jp/report.html',
     verified: 'October 2026'
   },
   {
