@@ -88,10 +88,10 @@ const staleCount = scholarships.filter(needsReview).length;
   </section>
 
   <section class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-7">
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
       <div class="rounded-2xl border border-slate-200 bg-white p-5">
         <p class="text-3xl font-bold text-slate-950">{scholarshipStats.total}</p>
-        <p class="mt-1 text-sm text-slate-600">scholarship pada batch awal</p>
+        <p class="mt-1 text-sm text-slate-600">beasiswa terdata</p>
       </div>
       <div class="rounded-2xl border border-slate-200 bg-white p-5">
         <p class="text-3xl font-bold text-slate-950">{scholarshipStats.indonesiaSpecific}</p>
@@ -238,7 +238,7 @@ const staleCount = scholarships.filter(needsReview).length;
       <p id="scholarship-count" class="text-sm font-semibold text-slate-500">{scholarships.length} scholarship ditampilkan</p>
     </div>
 
-    <div class="mt-6 grid gap-3 rounded-3xl border border-slate-200 bg-white p-5 sm:grid-cols-2 lg:grid-cols-5">
+    <div class="mt-6 grid gap-3 rounded-3xl border border-slate-200 bg-white p-5 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
       <label class="block">
         <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Kampus</span>
         <select id="filter-campus" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
@@ -302,7 +302,7 @@ const staleCount = scholarships.filter(needsReview).length;
         </select>
       </label>
 
-      <div class="sm:col-span-2 lg:col-span-7">
+      <div class="sm:col-span-2 lg:col-span-4 xl:col-span-7">
         <button id="filter-reset" type="button" class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50">
           Reset filter
         </button>
