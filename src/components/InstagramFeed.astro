@@ -1,0 +1,71 @@
+---
+import { social } from '../data/social';
+
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+const instagram = social.instagram;
+const hasFeed = Boolean(instagram.fouitaUkey);
+---
+
+<section class={compact ? '' : 'mx-auto max-w-7xl px-5 py-14 lg:px-8'}>
+  <div class="overflow-hidden rounded-[2rem] border border-slate-200 bg-white">
+    <div class="flex flex-col gap-4 border-b border-slate-100 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <div>
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Instagram</p>
+        <h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-950">Terbaru dari @{instagram.username}</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Kegiatan, informasi, dan keseharian komunitas PPI Ishikawa.</p>
+      </div>
+      <a
+        href={instagram.url}
+        target="_blank"
+        rel="noreferrer"
+        class="inline-flex shrink-0 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-800 transition hover:border-amber-200 hover:text-brand"
+      >
+        Buka Instagram ↗
+      </a>
+    </div>
+
+    {hasFeed ? (
+      <div class="p-3 sm:p-5">
+        <div id="ppi-instagram-feed" data-fouita-key={instagram.fouitaUkey}></div>
+        <script type="module" is:inline>
+          import App from "https://cdn.fouita.com/public/instagram-feed.js";
+          const target = document.getElementById("ppi-instagram-feed");
+          const ukey = target?.dataset.fouitaKey;
+          if (target && ukey) {
+            new App({
+              target,
+              props: {
+                settings: {
+                  layout: "grid",
+                  header: false,
+                  autoplay: false,
+                  zigzag: false,
+                  cols: 3,
+                  cardHeight: 320,
+                  gap: 2,
+                  direction: "down",
+                  height: 0,
+                  bgColor: "",
+                  txtColor: "",
+                  ukey
+                }
+              }
+            });
+          }
+        </script>
+      </div>
+    ) : (
+      <div class="grid min-h-48 place-items-center bg-slate-50 p-8 text-center">
+        <div class="max-w-xl">
+          <p class="font-bold text-slate-950">Feed Instagram sedang disiapkan.</p>
+          <p class="mt-2 text-sm leading-6 text-slate-600">Sementara itu, kunjungi akun resmi PPI Ishikawa untuk melihat unggahan terbaru.</p>
+          <a href={instagram.url} target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">@{instagram.username} ↗</a>
+        </div>
+      </div>
+    )}
+  </div>
+</section>
