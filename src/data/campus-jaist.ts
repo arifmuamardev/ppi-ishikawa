@@ -79,7 +79,7 @@ export const jaistFaq = [
   {
     id: 'komatsu-vs-tsurugi-line',
     q: 'Apa beda Komatsu Line dan Tsurugi Line?',
-    a: 'Pada informasi akses yang berlaku saat halaman ini diverifikasi, JAIST Shuttle Komatsu Line menggunakan reservasi, sedangkan Tsurugi Line menuju Tsurugi Station tidak memerlukan reservasi. Selalu cek halaman Access karena timetable dan cara operasi dapat berubah.'
+    a: 'JAIST Shuttle Komatsu Line menggunakan sistem reservasi, sedangkan Tsurugi Line menuju Tsurugi Station tidak memerlukan reservasi berdasarkan informasi akses JAIST yang tersedia. Cek halaman Access sebelum berangkat karena timetable dan cara operasi dapat berubah.'
   },
   {
     id: 'tinggal-di-luar-nomi',
@@ -118,7 +118,7 @@ export const jaistFaq = [
   },
   {
     id: 'handbook-vs-ppi',
-    q: 'Apakah informasi PPI menggantikan JAIST Handbook?',
-    a: 'Tidak. Campus Pack membantu mengarahkan Anda ke jalur yang tepat. Aturan akademik, housing, immigration support, fees, timetable, dan prosedur resmi tetap mengikuti JAIST serta lembaga pemerintah.'
+    q: 'Sumber mana yang harus dipakai untuk aturan dan prosedur JAIST?',
+    a: 'Gunakan JAIST Handbook dan halaman resmi JAIST untuk aturan akademik, housing, fees, timetable, serta layanan kampus. Untuk immigration dan administrasi pemerintah, ikuti lembaga pemerintah yang berwenang.'
   }
 ];
