@@ -61,6 +61,11 @@ export function memberPath(path = '/member/') {
   return `${base}${clean}`;
 }
 
+export function memberAbsoluteUrl(path = '/member/') {
+  const site = (import.meta.env.SITE || window.location.origin).replace(/\/$/, '');
+  return `${site}${memberPath(path)}`;
+}
+
 function getStoredDemoProfile(): MemberProfile | null {
   try {
     const raw = localStorage.getItem(DEMO_PROFILE_KEY);
