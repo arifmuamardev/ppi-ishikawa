@@ -50,7 +50,7 @@ import { campuses } from '../../data/campuses';
 
   <script>
     import { campuses } from '../../data/campuses';
-    import { isSupabaseConfigured, supabase } from '../../lib/supabase';
+    import { getMemberDirectory } from '../../lib/member';
 
     const grid = document.getElementById('directory-grid');
     const empty = document.getElementById('directory-empty');
@@ -105,14 +105,13 @@ import { campuses } from '../../data/campuses';
     };
 
     const load = async () => {
-      if (!isSupabaseConfigured || !supabase) return;
       if (count) count.textContent = 'Memuat…';
       errorBox?.classList.add('hidden');
 
-      const { data, error } = await supabase.rpc('get_member_directory', {
-        search_query: search instanceof HTMLInputElement ? search.value.trim() : '',
-        campus_filter: campus instanceof HTMLSelectElement ? campus.value : '',
-        status_filter: status instanceof HTMLSelectElement ? status.value : '',
+      const { data, error } = await getMemberDirectory({
+        search: search instanceof HTMLInputElement ? search.value.trim() : '',
+        campus: campus instanceof HTMLSelectElement ? campus.value : '',
+        status: status instanceof HTMLSelectElement ? status.value : '',
       });
 
       if (error) {
