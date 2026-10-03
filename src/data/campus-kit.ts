@@ -21,7 +21,7 @@ export const kitSections = [
   { id: 'housing', label: '04', title: 'Housing' },
   { id: 'transportasi-kampus', label: '05', title: 'Transportasi & kampus' },
   { id: 'kesehatan-counseling', label: '06', title: 'Kesehatan & counseling' },
-  { id: 'bahasa-international-life', label: '07', title: 'Bahasa Jepang & international life' },
+  { id: 'bahasa-international-life', label: '07', title: 'Bahasa Jepang & international support' },
   { id: 'akademik-proyek-karier', label: '08', title: 'Academic, project & career' },
   { id: 'keluarga-daily-life', label: '09', title: 'Keluarga & daily life' },
   { id: 'faq', label: '10', title: 'FAQ mahasiswa Indonesia' }
