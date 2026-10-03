@@ -1,0 +1,403 @@
+export type ScholarshipStudyLevel =
+  | 'JL'
+  | 'ST'
+  | 'U'
+  | 'R'
+  | 'M'
+  | 'D'
+  | 'Exchange';
+
+export type ScholarshipStage = 'before-arrival' | 'after-enrollment' | 'both';
+export type ScholarshipApplicationRoute = 'school' | 'foundation' | 'embassy' | 'varies';
+export type ScholarshipFundingType = 'stipend' | 'tuition' | 'full-support' | 'mixed';
+
+export interface Scholarship {
+  slug: string;
+  name: string;
+  provider: string;
+  providerType: 'government' | 'local-government' | 'jasso' | 'foundation' | 'university';
+  summary: string;
+  studyLevels: ScholarshipStudyLevel[];
+  stages: ScholarshipStage[];
+  campusSlugs: string[];
+  campusEligibilityNote: string;
+  nationality: string[];
+  nationalityNote: string;
+  fields: string[];
+  fundingType: ScholarshipFundingType;
+  amount: string;
+  duration: string;
+  applicationPeriod: string;
+  applicationRoute: ScholarshipApplicationRoute;
+  recommendationRequired: boolean | null;
+  pluralGrants: 'yes' | 'no' | 'limited' | 'unknown';
+  visaNote?: string;
+  ageNote?: string;
+  additionalRequirements?: string[];
+  sourceLabel: string;
+  sourceUrl?: string;
+  verified: string;
+  featured?: boolean;
+}
+
+export const scholarshipLevelLabels: Record<ScholarshipStudyLevel, string> = {
+  JL: 'Japanese Language',
+  ST: 'Specialized Training',
+  U: 'Undergraduate',
+  R: 'Research Student',
+  M: 'Master',
+  D: 'Doctoral',
+  Exchange: 'Exchange'
+};
+
+export const scholarshipCampusLabels: Record<string, string> = {
+  'kanazawa-university': 'Kanazawa University',
+  jaist: 'JAIST',
+  'kanazawa-institute-of-technology': 'KIT',
+  'ishikawa-prefectural-university': 'Ishikawa Prefectural University',
+  'kinjo-university': 'Kinjo University',
+  'alice-gakuen': 'Alice Gakuen'
+};
+
+export const scholarships: Scholarship[] = [
+  {
+    slug: 'mext-research-students',
+    name: 'Japanese Government (MEXT) Scholarship — Research Students',
+    provider: 'MEXT',
+    providerType: 'government',
+    summary: 'Jalur beasiswa pemerintah Jepang untuk graduate-school students dan research students. Aplikasi dapat melalui Japanese embassy/consulate atau university recommendation sesuai kategori dan skema yang tersedia.',
+    studyLevels: ['R', 'M', 'D'],
+    stages: ['before-arrival'],
+    campusSlugs: [],
+    campusEligibilityNote: 'Host university dan jalur rekomendasi mengikuti ketentuan MEXT serta universitas penerima.',
+    nationality: ['All eligible countries/regions'],
+    nationalityNote: 'Recruitment target berbeda menurut negara/region.',
+    fields: ['Related to previous university study or a related field'],
+    fundingType: 'full-support',
+    amount: 'Research/non-degree ¥143,000/mo · Master ¥144,000/mo · Doctoral ¥145,000/mo',
+    duration: 'Standard course period; research-student route may include preparatory period',
+    applicationPeriod: 'Varies by embassy / university route',
+    applicationRoute: 'varies',
+    recommendationRequired: true,
+    pluralGrants: 'limited',
+    ageNote: 'Under 35 in the 2026–2027 JASSO pamphlet summary',
+    sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
+    verified: 'October 2026',
+    featured: true
+  },
+  {
+    slug: 'jasso-honors',
+    name: 'Monbukagakusho Honors Scholarship for Privately-Financed International Students',
+    provider: 'JASSO',
+    providerType: 'jasso',
+    summary: 'Untuk privately financed international students yang memenuhi persyaratan akademik/keuangan. Pengajuan dilakukan melalui sekolah dan memerlukan rekomendasi sekolah.',
+    studyLevels: ['JL', 'ST', 'U', 'R', 'M', 'D'],
+    stages: ['after-enrollment'],
+    campusSlugs: [
+      'kanazawa-university','jaist','kanazawa-institute-of-technology',
+      'ishikawa-prefectural-university','kinjo-university','alice-gakuen'
+    ],
+    campusEligibilityNote: 'Ketersediaan nominasi dan kuota berbeda per sekolah; hubungi international/student office.',
+    nationality: ['International students'],
+    nationalityNote: 'Student visa required; MEXT and foreign-government sponsored students excluded.',
+    fields: ['All / varies'],
+    fundingType: 'stipend',
+    amount: '¥48,000/mo (higher education) · ¥30,000/mo (Japanese language institution), based on FY2025 table',
+    duration: '1 year (Apr–Mar) or 6 months (Oct–Mar)',
+    applicationPeriod: 'Late Mar–early May or late Aug–early Oct; varies by school',
+    applicationRoute: 'school',
+    recommendationRequired: true,
+    pluralGrants: 'limited',
+    visaNote: 'Student visa required',
+    additionalRequirements: [
+      'Grade/language standard',
+      'Family allowance and supporter-income limits apply',
+      'Must follow school application procedure'
+    ],
+    sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
+    verified: 'October 2026',
+    featured: true
+  },
+  {
+    slug: 'ishikawa-prefectural-scholarship',
+    name: 'Ishikawa Prefectural Scholarship for Privately Financed Foreign Students',
+    provider: 'Ishikawa Prefectural Government',
+    providerType: 'local-government',
+    summary: 'Beasiswa lokal yang secara khusus ditujukan untuk privately financed foreign students di Ishikawa. Ini adalah salah satu jalur yang paling relevan untuk anggota PPI Ishikawa.',
+    studyLevels: ['JL', 'ST', 'U', 'R', 'M', 'D'],
+    stages: ['after-enrollment'],
+    campusSlugs: [
+      'kanazawa-university','jaist','kanazawa-institute-of-technology',
+      'ishikawa-prefectural-university','kinjo-university','alice-gakuen'
+    ],
+    campusEligibilityNote: 'Pamphlet mencantumkan Ishikawa Prefecture sebagai designated school/location; konfirmasi nominasi dan detail tahunan melalui kampus.',
+    nationality: ['International students'],
+    nationalityNote: 'Privately financed foreign students; detail tahunan perlu dikonfirmasi.',
+    fields: ['All / not fixed'],
+    fundingType: 'stipend',
+    amount: 'Not fixed in the 2026–2027 pamphlet',
+    duration: '1 year (Apr–Mar)',
+    applicationPeriod: 'June',
+    applicationRoute: 'school',
+    recommendationRequired: true,
+    pluralGrants: 'unknown',
+    sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
+    verified: 'October 2026',
+    featured: true
+  },
+  {
+    slug: 'mitani-scholarship',
+    name: 'Mitani Scholarship',
+    provider: 'Mitani Scholarship Foundation',
+    providerType: 'foundation',
+    summary: 'Private-foundation scholarship yang secara eksplisit mencantumkan Kanazawa University dan JAIST sebagai designated schools.',
+    studyLevels: ['U', 'M', 'D'],
+    stages: ['after-enrollment'],
+    campusSlugs: ['kanazawa-university', 'jaist'],
+    campusEligibilityNote: 'Designated schools in the pamphlet: Kanazawa University, University of Fukui, JAIST, University of Toyama.',
+    nationality: ['International students'],
+    nationalityNote: 'No designated country/region shown in the pamphlet entry.',
+    fields: ['Technology', 'Law', 'Economics', 'Management'],
+    fundingType: 'stipend',
+    amount: '¥53,000/mo',
+    duration: 'Minimum years required for graduation/completion',
+    applicationPeriod: 'April–early May',
+    applicationRoute: 'school',
+    recommendationRequired: true,
+    pluralGrants: 'limited',
+    ageNote: '35 or under',
+    sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
+    verified: 'October 2026',
+    featured: true
+  },
+  {
+    slug: 'sgh-foundation',
+    name: 'SGH Foundation Scholarship',
+    provider: 'SGH Foundation',
+    providerType: 'foundation',
+    summary: 'Foundation scholarship yang secara eksplisit memasukkan Indonesia dalam negara target.',
+    studyLevels: ['U', 'M', 'D'],
+    stages: ['after-enrollment'],
+    campusSlugs: [],
+    campusEligibilityNote: 'Pamphlet tidak menetapkan satu daftar kampus Ishikawa; cek apakah kampus Anda dapat menominasikan.',
+    nationality: ['Indonesia', 'Singapore', 'Malaysia', 'Thailand', 'Brunei', 'Cambodia', 'Myanmar', 'Vietnam', 'Philippines', 'Laos', 'Timor-Leste'],
+    nationalityNote: 'Indonesia explicitly listed.',
+    fields: ['All / not designated in pamphlet entry'],
+    fundingType: 'stipend',
+    amount: '¥120,000/mo for listed undergraduate/master categories · ¥180,000/mo for listed doctoral category',
+    duration: '2–3 years depending on study year/category',
+    applicationPeriod: 'Feb 1–Apr 17',
+    applicationRoute: 'school',
+    recommendationRequired: true,
+    pluralGrants: 'no',
+    ageNote: 'Under 27 for listed U category; under 35 for listed M/D categories',
+    sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
+    verified: 'October 2026',
+    featured: true
+  },
+  {
+    slug: 'sato-yo',
+    name: 'Sato Yo International Scholarship Foundation',
+    provider: 'Sato Yo International Scholarship Foundation',
+    providerType: 'foundation',
+    summary: 'Scholarship untuk mahasiswa dari sejumlah negara Asia termasuk Indonesia, dengan cultural-exchange participation sebagai bagian persyaratan.',
+    studyLevels: ['U', 'M', 'D'],
+    stages: ['after-enrollment'],
+    campusSlugs: [],
+    campusEligibilityNote: 'Tidak dibatasi ke kampus Ishikawa pada entry pamphlet; konfirmasi prosedur aplikasi dengan foundation/kampus.',
+    nationality: ['Indonesia', 'Singapore', 'Philippines', 'Malaysia', 'Brunei', 'Thailand', 'Vietnam', 'Laos', 'Cambodia', 'Myanmar', 'India', 'Sri Lanka', 'Maldives', 'Pakistan', 'Nepal', 'Bhutan', 'Bangladesh', 'Timor-Leste'],
+    nationalityNote: 'Indonesia explicitly listed.',
+    fields: ['All / not designated'],
+    fundingType: 'stipend',
+    amount: 'U ¥180,000/mo · M/D ¥200,000/mo',
+    duration: 'Up to 2 years within one degree course',
+    applicationPeriod: 'May–Aug or Nov–Jan (planned windows shown in pamphlet)',
+    applicationRoute: 'foundation',
+    recommendationRequired: false,
+    pluralGrants: 'no',
+    additionalRequirements: ['Attendance at bimonthly cultural exchange meetings'],
+    sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
+    sourceUrl: 'https://sisf.or.jp/en/scholarship-2/foreign-studies-2/self-supporting/',
+    verified: 'October 2026',
+    featured: true
+  },
+  {
+    slug: 'hashiya',
+    name: 'Hashiya Scholarship Foundation',
+    provider: 'Hashiya Scholarship Foundation',
+    providerType: 'foundation',
+    summary: 'Scholarship yang pada pamphlet ditujukan khusus untuk mahasiswa dari Indonesia dan mencakup banyak jenjang.',
+    studyLevels: ['ST', 'U', 'R', 'M', 'D'],
+    stages: ['after-enrollment'],
+    campusSlugs: [],
+    campusEligibilityNote: 'Tidak ada designated school khusus pada entry; school recommendation required.',
+    nationality: ['Indonesia'],
+    nationalityNote: 'Indonesia only in the pamphlet entry.',
+    fields: ['All / not designated'],
+    fundingType: 'stipend',
+    amount: '¥110,000/mo',
+    duration: 'Minimum years required for graduation/completion',
+    applicationPeriod: 'Mid Nov–Jan',
+    applicationRoute: 'school',
+    recommendationRequired: true,
+    pluralGrants: 'no',
+    sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
+    sourceUrl: 'https://www.tsukishima.co.jp/zaidan/',
+    verified: 'October 2026',
+    featured: true
+  },
+  {
+    slug: 'asahi-glass-foundation',
+    name: 'Asahi Glass Foundation Scholarship',
+    provider: 'The Asahi Glass Foundation',
+    providerType: 'foundation',
+    summary: 'Graduate scholarship yang mencantumkan Indonesia sebagai salah satu negara target dan menggunakan designated universities.',
+    studyLevels: ['M', 'D'],
+    stages: ['after-enrollment'],
+    campusSlugs: [],
+    campusEligibilityNote: '28 designated universities; pamphlet meminta mahasiswa berkonsultasi dengan international student adviser.',
+    nationality: ['Thailand', 'Indonesia', 'China', 'Korea', 'Vietnam'],
+    nationalityNote: 'Indonesia explicitly listed.',
+    fields: ['All / subject to designated-university rules'],
+    fundingType: 'stipend',
+    amount: '¥150,000/mo',
+    duration: 'Maximum 2 years for Master; 3 years for Doctoral',
+    applicationPeriod: 'April–early May',
+    applicationRoute: 'school',
+    recommendationRequired: true,
+    pluralGrants: 'limited',
+    sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
+    sourceUrl: 'https://www.af-info.or.jp/en/scholarship/about.html',
+    verified: 'October 2026'
+  },
+  {
+    slug: 'iwatani-international',
+    name: 'Iwatani International Scholarship',
+    provider: 'Iwatani Naoji Foundation',
+    providerType: 'foundation',
+    summary: 'Graduate scholarship untuk East/Southeast Asia dalam natural sciences tertentu.',
+    studyLevels: ['M', 'D'],
+    stages: ['after-enrollment'],
+    campusSlugs: [],
+    campusEligibilityNote: 'No designated school shown in pamphlet entry; direct foundation application.',
+    nationality: ['East Asia', 'Southeast Asia'],
+    nationalityNote: 'Indonesia falls within Southeast Asia; verify current country list in guidelines.',
+    fields: ['Natural Science excluding medicine and pharmacy'],
+    fundingType: 'stipend',
+    amount: '¥150,000/mo',
+    duration: 'Within 2 years',
+    applicationPeriod: 'December',
+    applicationRoute: 'foundation',
+    recommendationRequired: false,
+    pluralGrants: 'no',
+    ageNote: 'M under 30 · D under 35',
+    sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
+    sourceUrl: 'https://www.iwatani-foundation.or.jp/',
+    verified: 'October 2026'
+  },
+  {
+    slug: 'jees-study-support',
+    name: 'JEES International Scholarship (Study Support)',
+    provider: 'Japan Educational Exchanges and Services (JEES)',
+    providerType: 'foundation',
+    summary: 'Broad study-support scholarship for higher-education students; details depend on the annual application guidelines.',
+    studyLevels: ['U', 'M', 'D'],
+    stages: ['after-enrollment'],
+    campusSlugs: [],
+    campusEligibilityNote: 'Application handled through school; check whether your institution participates in the current call.',
+    nationality: ['International students'],
+    nationalityNote: 'No specific country limitation shown in the pamphlet entry.',
+    fields: ['All / varies'],
+    fundingType: 'stipend',
+    amount: '¥40,000/mo',
+    duration: '2 years',
+    applicationPeriod: 'April–May',
+    applicationRoute: 'school',
+    recommendationRequired: true,
+    pluralGrants: 'limited',
+    sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
+    sourceUrl: 'https://www.jees.or.jp/',
+    verified: 'October 2026'
+  },
+  {
+    slug: 'jees-taisei',
+    name: 'TAISEI Scholarship for International Students',
+    provider: 'JEES / Taisei',
+    providerType: 'foundation',
+    summary: 'Sponsor-crowned JEES scholarship for architecture/civil engineering students from countries including Indonesia.',
+    studyLevels: ['U', 'M'],
+    stages: ['after-enrollment'],
+    campusSlugs: [],
+    campusEligibilityNote: 'Designated schools; contact your school.',
+    nationality: ['Vietnam', 'Indonesia', 'Thailand', 'Philippines', 'Malaysia', 'Myanmar'],
+    nationalityNote: 'Indonesia explicitly listed.',
+    fields: ['Architecture', 'Civil Engineering'],
+    fundingType: 'stipend',
+    amount: '¥150,000/mo',
+    duration: 'Minimum years required for graduation/completion',
+    applicationPeriod: 'Oct–Jan',
+    applicationRoute: 'school',
+    recommendationRequired: true,
+    pluralGrants: 'limited',
+    sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
+    sourceUrl: 'https://www.jees.or.jp/',
+    verified: 'October 2026'
+  },
+  {
+    slug: 'jees-eneos-xplora-indonesia',
+    name: 'JEES・ENEOS Xplora International Scholarship (Indonesia)',
+    provider: 'JEES / ENEOS Xplora',
+    providerType: 'foundation',
+    summary: 'Sponsor-crowned JEES scholarship khusus Indonesia pada entry pamphlet.',
+    studyLevels: ['U', 'M'],
+    stages: ['after-enrollment'],
+    campusSlugs: [],
+    campusEligibilityNote: 'Designated schools; contact your school to confirm participation.',
+    nationality: ['Indonesia'],
+    nationalityNote: 'Indonesia only.',
+    fields: ['All / per current guidelines'],
+    fundingType: 'mixed',
+    amount: '¥80,000/mo + ¥200,000/year',
+    duration: 'Up to 2 years',
+    applicationPeriod: 'Aug–Oct',
+    applicationRoute: 'school',
+    recommendationRequired: true,
+    pluralGrants: 'no',
+    sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
+    sourceUrl: 'https://www.jees.or.jp/',
+    verified: 'October 2026'
+  },
+  {
+    slug: 'okazaki-kaheita',
+    name: 'Okazaki Kaheita International Scholarship',
+    provider: 'Okazaki Kaheita International Scholarship Foundation',
+    providerType: 'foundation',
+    summary: 'Salah satu scholarship dalam section “Applicants Residing Abroad”; Indonesia termasuk negara target dan paket bantuan mencakup stipend serta sejumlah biaya studi/hidup.',
+    studyLevels: ['M'],
+    stages: ['before-arrival'],
+    campusSlugs: [],
+    campusEligibilityNote: 'No designated school shown in the pamphlet entry; confirm current foundation route and host-school conditions.',
+    nationality: ['China', 'Thailand', 'Indonesia', 'Malaysia', 'Vietnam', 'Myanmar', 'Taiwan'],
+    nationalityNote: 'Indonesia explicitly listed.',
+    fields: ['All except medicine, dentistry and veterinary science'],
+    fundingType: 'full-support',
+    amount: 'JL/R ¥110,000/mo · M ¥130,000/mo + entrance/tuition/exam fees, round-trip travel, housing, commuter pass',
+    duration: 'JL/R 1 year · Master 2 years',
+    applicationPeriod: 'Nov–Feb / Jan–Mar depending on stage',
+    applicationRoute: 'foundation',
+    recommendationRequired: false,
+    pluralGrants: 'no',
+    ageNote: 'Under 25',
+    sourceLabel: 'JASSO Scholarship for International Students in Japan 2026–2027',
+    sourceUrl: 'https://www.okazakizaidan.or.jp/en/en-info/',
+    verified: 'October 2026',
+    featured: true
+  }
+];
+
+export const scholarshipStats = {
+  total: scholarships.length,
+  indonesiaSpecific: scholarships.filter((item) => item.nationality.includes('Indonesia')).length,
+  beforeArrival: scholarships.filter((item) => item.stages.includes('before-arrival') || item.stages.includes('both')).length,
+  ishikawaDirect: scholarships.filter((item) => item.campusSlugs.length > 0).length
+};
