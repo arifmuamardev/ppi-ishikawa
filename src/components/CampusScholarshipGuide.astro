@@ -1,6 +1,7 @@
 ---
 import TopicIcon from './TopicIcon.astro';
 import { campusScholarships } from '../data/campus-scholarships';
+import { withBase } from '../utils/paths';
 
 interface Props {
   campusSlug: string;
@@ -71,6 +72,14 @@ const profile = campusScholarships[campusSlug];
           <p class="mt-2 text-sm leading-6 text-slate-700">{profile.caution}</p>
         </div>
       </div>
+    </div>
+
+    <div class="mt-6 flex flex-wrap items-center gap-3">
+      <a href={withBase(`/beasiswa/?campus=${campusSlug}#finder`)} class="inline-flex items-center gap-2 rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white transition hover:opacity-90">
+        <TopicIcon name="scholarship" class="size-4" />
+        Lihat semua beasiswa untuk kampus ini →
+      </a>
+      <p class="text-xs leading-5 text-slate-500">Scholarship Hub menggabungkan sumber kampus, JASSO, pemerintah daerah, dan foundation.</p>
     </div>
 
     <p class="mt-4 text-xs leading-5 text-slate-500">Informasi beasiswa terakhir diperiksa: {profile.lastChecked}. Nominal, kuota, eligibility, dan deadline dapat berubah.</p>
