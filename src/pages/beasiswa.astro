@@ -28,6 +28,13 @@ const fundingLabels = {
   mixed: 'Mixed support'
 };
 
+const campusScopeLabels = {
+  'all-japan': 'Terbuka lintas kampus',
+  listed: 'Kampus terkonfirmasi',
+  'designated-unknown': 'Cek designated school',
+  'program-specific': 'Tergantung program'
+};
+
 const stageLabels = {
   'before-arrival': 'Sebelum datang',
   'after-enrollment': 'Setelah enrollment',
@@ -81,7 +88,7 @@ const staleCount = scholarships.filter(needsReview).length;
   </section>
 
   <section class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-7">
       <div class="rounded-2xl border border-slate-200 bg-white p-5">
         <p class="text-3xl font-bold text-slate-950">{scholarshipStats.total}</p>
         <p class="mt-1 text-sm text-slate-600">scholarship pada batch awal</p>
@@ -282,6 +289,17 @@ const staleCount = scholarships.filter(needsReview).length;
       </label>
 
       <label class="block">
+        <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Kepastian kampus</span>
+        <select id="filter-campus-scope" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+          <option value="">Semua</option>
+          <option value="listed">Kampus terkonfirmasi</option>
+          <option value="all-japan">Terbuka lintas kampus</option>
+          <option value="designated-unknown">Cek designated school</option>
+          <option value="program-specific">Tergantung program</option>
+        </select>
+      </label>
+
+      <label class="block">
         <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Khusus Indonesia</span>
         <select id="filter-indonesia" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
           <option value="">Semua</option>
@@ -289,7 +307,7 @@ const staleCount = scholarships.filter(needsReview).length;
         </select>
       </label>
 
-      <div class="sm:col-span-2 lg:col-span-6">
+      <div class="sm:col-span-2 lg:col-span-7">
         <button id="filter-reset" type="button" class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50">
           Reset filter
         </button>
@@ -306,6 +324,7 @@ const staleCount = scholarships.filter(needsReview).length;
         <article
           class="scholarship-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
           data-campus={item.campusSlugs.join(',')}
+          data-campus-scope={item.campusScope}
           data-level={item.studyLevels.join(',')}
           data-stage={item.stages.join(',')}
           data-indonesia={item.nationality.includes('Indonesia') ? 'yes' : 'no'}
@@ -321,6 +340,9 @@ const staleCount = scholarships.filter(needsReview).length;
               {item.featured && <span class="rounded-full bg-amber-100 px-3 py-1 text-[11px] font-bold text-amber-800">Prioritas</span>}
               <span class={`rounded-full px-3 py-1 text-[11px] font-bold ${needsReview(item) ? 'bg-red-100 text-red-700' : 'bg-green-50 text-green-700'}`}>
                 {needsReview(item) ? 'Perlu verifikasi ulang' : 'Data masih fresh'}
+              </span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-700">
+                {campusScopeLabels[item.campusScope]}
               </span>
             </div>
           </div>
@@ -444,6 +466,7 @@ const staleCount = scholarships.filter(needsReview).length;
       const indonesia = document.getElementById('filter-indonesia');
       const route = document.getElementById('filter-route');
       const freshness = document.getElementById('filter-freshness');
+      const campusScope = document.getElementById('filter-campus-scope');
       const reset = document.getElementById('filter-reset');
       const cards = [...document.querySelectorAll('.scholarship-card')];
       const count = document.getElementById('scholarship-count');
@@ -460,6 +483,7 @@ const staleCount = scholarships.filter(needsReview).length;
           const indonesiaValue = indonesia?.value || '';
           const routeValue = route?.value || '';
           const freshnessValue = freshness?.value || '';
+          const campusScopeValue = campusScope?.value || '';
 
           const campusRaw = card.dataset.campus || '';
           const levelRaw = card.dataset.level || '';
@@ -467,14 +491,19 @@ const staleCount = scholarships.filter(needsReview).length;
           const indonesiaRaw = card.dataset.indonesia || '';
           const routeRaw = card.dataset.route || '';
           const freshnessRaw = card.dataset.freshness || '';
+          const campusScopeRaw = card.dataset.campusScope || '';
 
-          const campusOk = !campusValue || matchesList(campusRaw, campusValue) || campusRaw === '';
+          const campusOk = !campusValue
+            || matchesList(campusRaw, campusValue)
+            || campusScopeRaw === 'all-japan'
+            || campusScopeRaw === 'program-specific';
           const levelOk = matchesList(levelRaw, levelValue);
           const stageOk = !stageValue || matchesList(stageRaw, stageValue) || matchesList(stageRaw, 'both');
           const indonesiaOk = !indonesiaValue || indonesiaRaw === indonesiaValue;
           const routeOk = !routeValue || routeRaw === routeValue;
           const freshnessOk = !freshnessValue || freshnessRaw === freshnessValue;
-          const visible = campusOk && levelOk && stageOk && indonesiaOk && routeOk && freshnessOk;
+          const campusScopeOk = !campusScopeValue || campusScopeRaw === campusScopeValue;
+          const visible = campusOk && levelOk && stageOk && indonesiaOk && routeOk && freshnessOk && campusScopeOk;
 
           card.classList.toggle('hidden', !visible);
           if (visible) shown++;
@@ -490,8 +519,9 @@ const staleCount = scholarships.filter(needsReview).length;
       if (indonesia && params.get('indonesia') === 'yes') indonesia.value = 'yes';
       if (route && params.get('route')) route.value = params.get('route');
       if (freshness && params.get('freshness')) freshness.value = params.get('freshness');
+      if (campusScope && params.get('campusScope')) campusScope.value = params.get('campusScope');
 
-      [campus, level, stage, indonesia, route, freshness].forEach((el) => el?.addEventListener('change', apply));
+      [campus, level, stage, indonesia, route, freshness, campusScope].forEach((el) => el?.addEventListener('change', apply));
       reset?.addEventListener('click', () => {
         if (campus) campus.value = '';
         if (level) level.value = '';
@@ -499,6 +529,7 @@ const staleCount = scholarships.filter(needsReview).length;
         if (indonesia) indonesia.value = '';
         if (route) route.value = '';
         if (freshness) freshness.value = '';
+        if (campusScope) campusScope.value = '';
         apply();
       });
 
