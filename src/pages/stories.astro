@@ -2,6 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
 import TopicIcon from '../components/TopicIcon.astro';
+import StoryCard from '../components/StoryCard.astro';
+import { campuses } from '../data/campuses';
+import { stories, storyTopicLabels } from '../data/stories';
 import { withBase } from '../utils/paths';
 
 const exampleTopics = [
@@ -9,27 +12,33 @@ const exampleTopics = [
     icon: 'research',
     title: 'Perjalanan riset dan studi',
     description: 'Cerita tentang memilih program, bekerja di lab, menghadapi tantangan riset, konferensi, publikasi, atau menyelesaikan studi.',
-    tags: ['Study', 'Research']
+    tags: ['Studi', 'Riset']
   },
   {
     icon: 'career',
     title: 'Dari kampus ke karier',
     description: 'Pengalaman mencari kerja, internship, postdoc, melanjutkan karier akademik, atau membangun jalur profesional setelah lulus.',
-    tags: ['Career', 'Alumni']
+    tags: ['Karier', 'Alumni']
   },
   {
     icon: 'family',
     title: 'Belajar sambil menjalani kehidupan keluarga',
     description: 'Pengalaman tinggal di Ishikawa bersama pasangan atau anak, mengatur studi, keluarga, sekolah, dan kehidupan sehari-hari.',
-    tags: ['Family', 'Daily life']
+    tags: ['Keluarga', 'Kehidupan']
   },
   {
     icon: 'collaboration',
     title: 'Tumbuh melalui komunitas',
     description: 'Cerita tentang pertemanan, kegiatan, kolaborasi, pengalaman lintas kampus, dan hal-hal yang membuat masa studi di Ishikawa berkesan.',
-    tags: ['Community', 'Ishikawa']
+    tags: ['Komunitas', 'Ishikawa']
   }
 ];
+
+const hasStories = stories.length > 0;
+const representedCampuses = campuses.filter((campus) => stories.some((story) => story.campusSlug === campus.slug));
+const representedTopics = Object.entries(storyTopicLabels).filter(([topic]) =>
+  stories.some((story) => story.topics.includes(topic as keyof typeof storyTopicLabels))
+);
 ---
 
 <BaseLayout
@@ -38,49 +47,89 @@ const exampleTopics = [
 >
   <PageIntro
     title="Cerita PPI Ishikawa"
-    description="Pengalaman nyata mahasiswa dan alumni Indonesia tentang belajar, bertumbuh, bekerja, dan menjalani kehidupan di Ishikawa."
+    description="Pengalaman mahasiswa dan alumni Indonesia tentang belajar, bertumbuh, bekerja, dan menjalani kehidupan di Ishikawa."
   />
 
-  <section class="mx-auto max-w-7xl px-5 pb-12 lg:px-8">
-    <div class="rounded-[2rem] border border-amber-200 bg-amber-50 p-7 sm:p-9">
-      <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-        <div class="max-w-3xl">
-          <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-dark">Segera hadir</p>
-          <h2 class="mt-3 text-2xl font-bold text-slate-950">Cerita pertama sedang disiapkan.</h2>
-          <p class="mt-3 leading-7 text-slate-700">Koleksi ini akan memuat pengalaman mahasiswa dan alumni dari berbagai kampus di Ishikawa. Setiap cerita akan diterbitkan setelah narasumber menyetujui isi dan informasi yang ditampilkan.</p>
+  {hasStories ? (
+    <section class="mx-auto max-w-7xl px-5 pb-16 lg:px-8">
+      <div class="grid gap-3 rounded-3xl border border-slate-200 bg-slate-50 p-5 md:grid-cols-2">
+        <label class="block">
+          <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Kampus</span>
+          <select id="story-campus" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+            <option value="">Semua kampus</option>
+            {representedCampuses.map((campus) => <option value={campus.slug}>{campus.shortName}</option>)}
+          </select>
+        </label>
+        <label class="block">
+          <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Topik</span>
+          <select id="story-topic" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+            <option value="">Semua topik</option>
+            {representedTopics.map(([value, label]) => <option value={value}>{label}</option>)}
+          </select>
+        </label>
+        <div class="md:col-span-2 flex flex-wrap items-center justify-between gap-3">
+          <button id="story-reset" type="button" class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">Reset filter</button>
+          <p id="story-count" class="text-sm font-semibold text-slate-500">{stories.length} cerita</p>
         </div>
-        <a href={withBase('/contact/')} class="inline-flex shrink-0 rounded-xl bg-brand px-5 py-3 text-sm font-bold text-white">Usulkan cerita →</a>
       </div>
-    </div>
-  </section>
 
-  <section class="mx-auto max-w-7xl px-5 py-12 lg:px-8">
-    <div class="max-w-3xl">
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Contoh topik</p>
-      <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Cerita yang ingin kami hadirkan.</h2>
-      <p class="mt-3 leading-7 text-slate-600">Topik berikut menggambarkan jenis pengalaman yang dapat dibagikan. Ini bukan artikel atau kisah individu yang sudah diterbitkan.</p>
-    </div>
+      <div id="story-empty" class="mt-7 hidden rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+        <p class="font-bold text-slate-950">Belum ada cerita untuk kombinasi ini.</p>
+        <p class="mt-2 text-sm text-slate-600">Coba pilih kampus atau topik lain.</p>
+      </div>
 
-    <div class="mt-8 grid gap-4 md:grid-cols-2">
-      {exampleTopics.map((item) => (
-        <article class="rounded-3xl border border-slate-200 bg-white p-6">
-          <div class="flex items-start justify-between gap-4">
-            <span class="grid size-11 place-items-center rounded-2xl bg-amber-50 text-brand">
-              <TopicIcon name={item.icon as any} class="size-6" />
-            </span>
-            <span class="rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">Contoh topik</span>
+      <div id="story-grid" class="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        {stories.map((story) => (
+          <div class="story-entry" data-campus={story.campusSlug} data-topics={story.topics.join(',')}>
+            <StoryCard story={story} />
           </div>
-          <h3 class="mt-5 text-xl font-bold text-slate-950">{item.title}</h3>
-          <p class="mt-3 text-sm leading-6 text-slate-600">{item.description}</p>
-          <div class="mt-5 flex flex-wrap gap-2">
-            {item.tags.map((tag) => (
-              <span class="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600">{tag}</span>
-            ))}
+        ))}
+      </div>
+    </section>
+  ) : (
+    <>
+      <section class="mx-auto max-w-7xl px-5 pb-12 lg:px-8">
+        <div class="rounded-[2rem] border border-amber-200 bg-amber-50 p-7 sm:p-9">
+          <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+            <div class="max-w-3xl">
+              <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-dark">Segera hadir</p>
+              <h2 class="mt-3 text-2xl font-bold text-slate-950">Cerita pertama sedang disiapkan.</h2>
+              <p class="mt-3 leading-7 text-slate-700">Koleksi ini akan memuat pengalaman mahasiswa dan alumni dari berbagai kampus di Ishikawa.</p>
+            </div>
+            <a href={withBase('/contact/')} class="inline-flex shrink-0 rounded-xl bg-brand px-5 py-3 text-sm font-bold text-white">Usulkan cerita →</a>
           </div>
-        </article>
-      ))}
-    </div>
-  </section>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-7xl px-5 py-12 lg:px-8">
+        <div class="max-w-3xl">
+          <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Contoh topik</p>
+          <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Cerita yang ingin kami hadirkan.</h2>
+          <p class="mt-3 leading-7 text-slate-600">Topik berikut menunjukkan jenis pengalaman yang dapat dibagikan. Ini bukan kisah individu yang sudah diterbitkan.</p>
+        </div>
+
+        <div class="mt-8 grid gap-4 md:grid-cols-2">
+          {exampleTopics.map((item) => (
+            <article class="rounded-3xl border border-slate-200 bg-white p-6">
+              <div class="flex items-start justify-between gap-4">
+                <span class="grid size-11 place-items-center rounded-2xl bg-amber-50 text-brand">
+                  <TopicIcon name={item.icon as any} class="size-6" />
+                </span>
+                <span class="rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">Contoh topik</span>
+              </div>
+              <h3 class="mt-5 text-xl font-bold text-slate-950">{item.title}</h3>
+              <p class="mt-3 text-sm leading-6 text-slate-600">{item.description}</p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                {item.tags.map((tag) => (
+                  <span class="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600">{tag}</span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    </>
+  )}
 
   <section class="border-y border-slate-200 bg-white">
     <div class="mx-auto max-w-7xl px-5 py-14 lg:px-8">
@@ -103,8 +152,46 @@ const exampleTopics = [
     <div class="rounded-[2rem] border border-slate-200 bg-white p-7 sm:p-9">
       <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Punya cerita atau rekomendasi narasumber?</p>
       <h2 class="mt-3 text-2xl font-bold text-slate-950">Hubungi PPI Ishikawa.</h2>
-      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Anda dapat mengusulkan diri sendiri atau merekomendasikan mahasiswa maupun alumni lain. Publikasi dilakukan dengan persetujuan narasumber.</p>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Anda dapat mengusulkan diri sendiri atau merekomendasikan mahasiswa maupun alumni lain.</p>
       <a href={withBase('/contact/')} class="mt-5 inline-flex rounded-xl bg-brand px-5 py-3 text-sm font-bold text-white">Hubungi PPI Ishikawa →</a>
     </div>
   </section>
+
+  {hasStories && (
+    <script is:inline>
+      (() => {
+        const campus = document.getElementById('story-campus');
+        const topic = document.getElementById('story-topic');
+        const reset = document.getElementById('story-reset');
+        const entries = [...document.querySelectorAll('.story-entry')];
+        const count = document.getElementById('story-count');
+        const empty = document.getElementById('story-empty');
+
+        const apply = () => {
+          let shown = 0;
+          for (const entry of entries) {
+            const campusOk = !campus?.value || entry.dataset.campus === campus.value;
+            const topicOk = !topic?.value || (entry.dataset.topics || '').split(',').includes(topic.value);
+            const visible = campusOk && topicOk;
+            entry.classList.toggle('hidden', !visible);
+            if (visible) shown++;
+          }
+          if (count) count.textContent = `${shown} cerita`;
+          empty?.classList.toggle('hidden', shown !== 0);
+        };
+
+        [campus, topic].forEach((el) => el?.addEventListener('change', apply));
+        reset?.addEventListener('click', () => {
+          if (campus) campus.value = '';
+          if (topic) topic.value = '';
+          apply();
+        });
+
+        const params = new URLSearchParams(window.location.search);
+        const campusParam = params.get('campus');
+        if (campus && campusParam) campus.value = campusParam;
+        apply();
+      })();
+    </script>
+  )}
 </BaseLayout>
