@@ -33,6 +33,17 @@ const stageLabels = {
   'after-enrollment': 'Setelah enrollment',
   both: 'Sebelum & sesudah'
 };
+
+const monthsSince = (isoDate: string) => {
+  const checked = new Date(isoDate);
+  const now = new Date();
+  return (now.getFullYear() - checked.getFullYear()) * 12 + (now.getMonth() - checked.getMonth());
+};
+
+const needsReview = (item: (typeof scholarships)[number]) =>
+  monthsSince(item.verifiedDate) >= (item.reviewAfterMonths ?? 9);
+
+const staleCount = scholarships.filter(needsReview).length;
 ---
 
 <BaseLayout
@@ -70,7 +81,7 @@ const stageLabels = {
   </section>
 
   <section class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
       <div class="rounded-2xl border border-slate-200 bg-white p-5">
         <p class="text-3xl font-bold text-slate-950">{scholarshipStats.total}</p>
         <p class="mt-1 text-sm text-slate-600">scholarship pada batch awal</p>
@@ -86,6 +97,10 @@ const stageLabels = {
       <div class="rounded-2xl border border-slate-200 bg-white p-5">
         <p class="text-3xl font-bold text-slate-950">{scholarshipStats.ishikawaDirect}</p>
         <p class="mt-1 text-sm text-slate-600">sudah terhubung langsung ke kampus Ishikawa</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-5">
+        <p class="text-3xl font-bold text-slate-950">{staleCount}</p>
+        <p class="mt-1 text-sm text-slate-600">perlu verifikasi ulang saat ini</p>
       </div>
     </div>
   </section>
@@ -221,7 +236,7 @@ const stageLabels = {
       <p id="scholarship-count" class="text-sm font-semibold text-slate-500">{scholarships.length} scholarship ditampilkan</p>
     </div>
 
-    <div class="mt-6 grid gap-3 rounded-3xl border border-slate-200 bg-white p-5 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="mt-6 grid gap-3 rounded-3xl border border-slate-200 bg-white p-5 sm:grid-cols-2 lg:grid-cols-5">
       <label class="block">
         <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Kampus</span>
         <select id="filter-campus" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
@@ -258,6 +273,15 @@ const stageLabels = {
       </label>
 
       <label class="block">
+        <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Status data</span>
+        <select id="filter-freshness" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+          <option value="">Semua status</option>
+          <option value="fresh">Masih fresh</option>
+          <option value="stale">Perlu verifikasi ulang</option>
+        </select>
+      </label>
+
+      <label class="block">
         <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Khusus Indonesia</span>
         <select id="filter-indonesia" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
           <option value="">Semua</option>
@@ -265,7 +289,7 @@ const stageLabels = {
         </select>
       </label>
 
-      <div class="sm:col-span-2 lg:col-span-5">
+      <div class="sm:col-span-2 lg:col-span-6">
         <button id="filter-reset" type="button" class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50">
           Reset filter
         </button>
@@ -286,13 +310,19 @@ const stageLabels = {
           data-stage={item.stages.join(',')}
           data-indonesia={item.nationality.includes('Indonesia') ? 'yes' : 'no'}
           data-route={item.applicationRoute}
+          data-freshness={needsReview(item) ? 'stale' : 'fresh'}
         >
           <div class="flex flex-wrap items-start justify-between gap-3">
             <div>
               <p class="text-xs font-bold uppercase tracking-[0.12em] text-brand">{item.provider}</p>
               <h3 class="mt-2 text-xl font-bold leading-snug text-slate-950">{item.name}</h3>
             </div>
-            {item.featured && <span class="rounded-full bg-amber-100 px-3 py-1 text-[11px] font-bold text-amber-800">Prioritas</span>}
+            <div class="flex flex-wrap justify-end gap-2">
+              {item.featured && <span class="rounded-full bg-amber-100 px-3 py-1 text-[11px] font-bold text-amber-800">Prioritas</span>}
+              <span class={`rounded-full px-3 py-1 text-[11px] font-bold ${needsReview(item) ? 'bg-red-100 text-red-700' : 'bg-green-50 text-green-700'}`}>
+                {needsReview(item) ? 'Perlu verifikasi ulang' : 'Data masih fresh'}
+              </span>
+            </div>
           </div>
 
           <p class="mt-4 text-sm leading-6 text-slate-600">{item.summary}</p>
@@ -352,6 +382,7 @@ const stageLabels = {
               <p class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-400">Sumber</p>
               <p class="mt-1 text-xs leading-5 text-slate-500">{item.sourceLabel} · diperiksa {item.verified}</p>
               <p class="mt-1 text-[11px] leading-5 text-slate-400">Deadline/nominal dapat berubah. Cek call terbaru sebelum apply.</p>
+              <p class="mt-1 text-[11px] leading-5 text-slate-400">Review otomatis setelah {item.reviewAfterMonths ?? 9} bulan dari verifikasi terakhir.</p>
             </div>
             {item.sourceUrl && (
               <a href={item.sourceUrl} target="_blank" rel="noreferrer" class="text-sm font-bold text-brand hover:underline">Sumber resmi ↗</a>
@@ -359,6 +390,28 @@ const stageLabels = {
           </div>
         </article>
       ))}
+    </div>
+  </section>
+
+  <section id="maintenance" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-10 lg:px-8">
+    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Maintenance policy</p>
+      <h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-950">Cara menjaga Scholarship Hub tetap relevan lintas kepengurusan.</h2>
+      <div class="mt-6 grid gap-4 md:grid-cols-3">
+        <article class="rounded-2xl bg-slate-50 p-5">
+          <p class="font-bold text-slate-950">1 · Review periodik</p>
+          <p class="mt-2 text-sm leading-6 text-slate-600">Data umum ditinjau maksimal setiap 9 bulan. Scholarship dengan call cepat berubah ditinjau maksimal setiap 6 bulan.</p>
+        </article>
+        <article class="rounded-2xl bg-slate-50 p-5">
+          <p class="font-bold text-slate-950">2 · Verifikasi dari sumber resmi</p>
+          <p class="mt-2 text-sm leading-6 text-slate-600">Saat review, cek foundation/JASSO/kampus terlebih dahulu. Update snapshot siklus tanpa mengubah pola umum jika tidak diperlukan.</p>
+        </article>
+        <article class="rounded-2xl bg-slate-50 p-5">
+          <p class="font-bold text-slate-950">3 · Jangan hapus history tanpa alasan</p>
+          <p class="mt-2 text-sm leading-6 text-slate-600">Jika call sedang tidak tersedia, pertahankan scholarship sebagai referensi dengan label cycle terakhir—kecuali program resmi dihentikan.</p>
+        </article>
+      </div>
+      <p class="mt-5 text-xs leading-5 text-slate-500">Badge freshness dihitung otomatis dari tanggal verifikasi dan interval review pada database.</p>
     </div>
   </section>
 
@@ -390,6 +443,7 @@ const stageLabels = {
       const stage = document.getElementById('filter-stage');
       const indonesia = document.getElementById('filter-indonesia');
       const route = document.getElementById('filter-route');
+      const freshness = document.getElementById('filter-freshness');
       const reset = document.getElementById('filter-reset');
       const cards = [...document.querySelectorAll('.scholarship-card')];
       const count = document.getElementById('scholarship-count');
@@ -405,19 +459,22 @@ const stageLabels = {
           const stageValue = stage?.value || '';
           const indonesiaValue = indonesia?.value || '';
           const routeValue = route?.value || '';
+          const freshnessValue = freshness?.value || '';
 
           const campusRaw = card.dataset.campus || '';
           const levelRaw = card.dataset.level || '';
           const stageRaw = card.dataset.stage || '';
           const indonesiaRaw = card.dataset.indonesia || '';
           const routeRaw = card.dataset.route || '';
+          const freshnessRaw = card.dataset.freshness || '';
 
           const campusOk = !campusValue || matchesList(campusRaw, campusValue) || campusRaw === '';
           const levelOk = matchesList(levelRaw, levelValue);
           const stageOk = !stageValue || matchesList(stageRaw, stageValue) || matchesList(stageRaw, 'both');
           const indonesiaOk = !indonesiaValue || indonesiaRaw === indonesiaValue;
           const routeOk = !routeValue || routeRaw === routeValue;
-          const visible = campusOk && levelOk && stageOk && indonesiaOk && routeOk;
+          const freshnessOk = !freshnessValue || freshnessRaw === freshnessValue;
+          const visible = campusOk && levelOk && stageOk && indonesiaOk && routeOk && freshnessOk;
 
           card.classList.toggle('hidden', !visible);
           if (visible) shown++;
@@ -432,14 +489,16 @@ const stageLabels = {
       if (stage && params.get('stage')) stage.value = params.get('stage');
       if (indonesia && params.get('indonesia') === 'yes') indonesia.value = 'yes';
       if (route && params.get('route')) route.value = params.get('route');
+      if (freshness && params.get('freshness')) freshness.value = params.get('freshness');
 
-      [campus, level, stage, indonesia, route].forEach((el) => el?.addEventListener('change', apply));
+      [campus, level, stage, indonesia, route, freshness].forEach((el) => el?.addEventListener('change', apply));
       reset?.addEventListener('click', () => {
         if (campus) campus.value = '';
         if (level) level.value = '';
         if (stage) stage.value = '';
         if (indonesia) indonesia.value = '';
         if (route) route.value = '';
+        if (freshness) freshness.value = '';
         apply();
       });
 
