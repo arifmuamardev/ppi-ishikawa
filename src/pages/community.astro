@@ -1,100 +1,111 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
-import RelatedLinks from '../components/RelatedLinks.astro';
 import TopicIcon from '../components/TopicIcon.astro';
 import { withBase } from '../utils/paths';
 import { publicMedia } from '../data/media';
-import { generalRelatedContent } from '../data/related-content';
 
-const entryPoints = [
+const communityPaths = [
   {
-    title: 'Pendatang baru',
-    description: 'Mulai dari persiapan kedatangan, administrasi awal, tempat tinggal, transportasi, dan kebutuhan sehari-hari.',
-    href: '/life-in-ishikawa/'
+    icon: 'collaboration',
+    title: 'Kegiatan & kebersamaan',
+    description: 'Temukan ruang untuk bertemu, belajar, berolahraga, berkarya, dan saling mendukung sebagai sesama pelajar Indonesia.',
+    href: '/programs/'
   },
   {
-    title: 'Mahasiswa yang sudah tinggal di Ishikawa',
-    description: 'Akses informasi kesehatan, bantuan, bencana, musim dingin, keuangan, dan layanan lokal.',
-    href: '/life-in-ishikawa/kehidupan-sehari-hari/'
+    icon: 'campus',
+    title: 'Jaringan kampus',
+    description: 'Kenali enam institusi yang saat ini terhubung melalui anggota PPI Ishikawa.',
+    href: '/community/kampus/'
   },
   {
-    title: 'Keluarga',
-    description: 'Panduan untuk pasangan dan anak: pregnancy, childcare, sekolah, kesehatan, dan layanan keluarga.',
+    icon: 'family',
+    title: 'Pelajar & keluarga',
+    description: 'PPI Ishikawa juga menjadi ruang sosial bagi pasangan dan keluarga yang tinggal bersama pelajar Indonesia.',
     href: '/life-in-ishikawa/family-anak/'
   },
   {
-    title: 'Butuh bantuan',
-    description: 'Temukan jalur konsultasi IFIE, dukungan kampus, immigration, labor, dan layanan profesional.',
-    href: '/life-in-ishikawa/japanese-support/'
+    icon: 'support',
+    title: 'Terhubung dengan PPI',
+    description: 'Hubungi PPI Ishikawa untuk bertanya, mengenalkan diri, menyampaikan kebutuhan, atau menawarkan kolaborasi.',
+    href: '/contact/'
   }
 ];
 ---
-<BaseLayout title="Komunitas">
+<BaseLayout
+  title="Komunitas"
+  description="Ruang untuk terhubung dengan pelajar Indonesia, keluarga, kegiatan, kampus, dan jejaring PPI Ishikawa."
+>
   <PageIntro
     title="Komunitas PPI Ishikawa"
-    description="PPI Ishikawa menghubungkan mahasiswa, keluarga, pendatang baru, alumni, serta jejaring Indonesia di Prefektur Ishikawa."
+    description="Ruang untuk saling terhubung sebagai pelajar Indonesia di Ishikawa—lintas kampus, tahap studi, minat, dan kehidupan keluarga."
   />
 
   <section class="mx-auto max-w-7xl px-5 pb-12 lg:px-8">
-    <figure class="mb-8 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
-      <img src={publicMedia.higashiyama.imageUrl} alt={publicMedia.higashiyama.alt} width="1600" height="1067" class="aspect-[16/9] h-auto w-full object-cover" loading="eager" referrerpolicy="no-referrer" />
+    <figure class="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
+      <img
+        src={publicMedia.higashiyama.imageUrl}
+        alt={publicMedia.higashiyama.alt}
+        width="1600"
+        height="1067"
+        class="aspect-[16/9] h-auto w-full object-cover"
+        loading="eager"
+        referrerpolicy="no-referrer"
+      />
       <figcaption class="border-t border-slate-100 bg-slate-50 px-5 py-3 text-xs leading-5 text-slate-500">
         Higashiyama-higashi, Kanazawa · <a href={publicMedia.higashiyama.sourcePage} target="_blank" rel="noreferrer" class="underline">{publicMedia.higashiyama.credit}</a> · {publicMedia.higashiyama.license}
       </figcaption>
     </figure>
+  </section>
 
-    <div class="mb-6 rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:flex sm:items-center sm:justify-between sm:gap-6">
-      <div>
-        <p class="text-sm font-bold uppercase tracking-[0.14em] text-accent-dark">Kampus di Ishikawa</p>
-        <h2 class="mt-2 text-xl font-bold text-slate-950">Kenali jaringan kampus anggota PPI Ishikawa.</h2>
-        <p class="mt-2 text-sm leading-6 text-slate-700">Campus Hub untuk enam institusi dengan Campus Pack lengkap, perbandingan tempat tinggal, mobilitas, dan jalur dukungan, dan sumber resmi.</p>
-      </div>
-      <a href={withBase('/community/kampus/')} class="mt-5 inline-flex shrink-0 rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white sm:mt-0">Buka Campus Hub →</a>
+  <section class="mx-auto max-w-7xl px-5 pb-16 lg:px-8">
+    <div class="max-w-3xl">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Terhubung sebagai komunitas</p>
+      <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Bukan hanya tempat mencari informasi.</h2>
+      <p class="mt-4 leading-7 text-slate-600">Halaman ini berfokus pada orang, kegiatan, dan cara terhubung. Panduan kehidupan sehari-hari tetap berada di Hidup di Ishikawa, sedangkan informasi kampus berada di Campus Hub.</p>
     </div>
-    <div class="grid gap-4 md:grid-cols-2">
-      {entryPoints.map((item, index) => (
-        <a href={withBase(item.href)} class="rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-red-200 hover:shadow-sm">
+
+    <div class="mt-8 grid gap-4 md:grid-cols-2">
+      {communityPaths.map((item) => (
+        <a href={withBase(item.href)} class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
           <span class="grid size-11 place-items-center rounded-2xl bg-amber-50 text-accent-dark">
-            <TopicIcon name={(['arrival','guide','family','support'] as const)[index]} class="size-6" />
+            <TopicIcon name={item.icon as any} class="size-6" />
           </span>
-          <h2 class="mt-4 font-bold text-slate-950">{item.title}</h2>
+          <h3 class="mt-4 text-lg font-bold text-slate-950 group-hover:text-brand">{item.title}</h3>
           <p class="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
         </a>
       ))}
     </div>
   </section>
 
-  <section class="mx-auto max-w-7xl px-5 py-10 lg:px-8">
-    <div class="grid gap-5 md:grid-cols-3">
-      <article class="rounded-3xl border border-slate-200 bg-white p-6">
-        <span class="grid size-10 place-items-center rounded-xl bg-slate-100 text-brand"><TopicIcon name="campus" class="size-5" /></span>
-        <p class="mt-4 text-sm font-bold uppercase tracking-[0.14em] text-brand">Kampus & institusi</p>
-        <h2 class="mt-3 text-xl font-bold text-slate-950">6 Campus Pack tersedia</h2>
-        <p class="mt-3 text-sm leading-6 text-slate-600">Enam institusi dengan anggota tercatat pada sensus September 2026 sudah memiliki panduan khusus. Cakupan PPI tetap terbuka untuk pelajar Indonesia di seluruh Prefektur Ishikawa.</p>
-        <a href={withBase('/community/kampus/')} class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Jelajahi Campus Hub →</a>
-      </article>
-      <article class="rounded-3xl border border-slate-200 bg-white p-6">
-        <span class="grid size-10 place-items-center rounded-xl bg-slate-100 text-brand"><TopicIcon name="documents" class="size-5" /></span>
-        <p class="mt-4 text-sm font-bold uppercase tracking-[0.14em] text-brand">Data anggota</p>
-        <h2 class="mt-3 text-xl font-bold text-slate-950">Privasi anggota tetap dijaga</h2>
-        <p class="mt-3 text-sm leading-6 text-slate-600">Nomor telepon, alamat, dan data pribadi anggota tidak dipublikasikan. Informasi tentang komunitas hanya ditampilkan dalam bentuk yang tidak mengidentifikasi individu.</p>
-      </article>
-      <article class="rounded-3xl border border-slate-200 bg-white p-6">
-        <span class="grid size-10 place-items-center rounded-xl bg-slate-100 text-brand"><TopicIcon name="collaboration" class="size-5" /></span>
-        <p class="mt-4 text-sm font-bold uppercase tracking-[0.14em] text-brand">Bergabung</p>
-        <h2 class="mt-3 text-xl font-bold text-slate-950">Bergabung melalui kanal resmi</h2>
-        <p class="mt-3 text-sm leading-6 text-slate-600">Informasi pendaftaran anggota akan diumumkan melalui kanal resmi PPI Ishikawa ketika tersedia.</p>
-      </article>
+  <section class="border-y border-slate-200 bg-white">
+    <div class="mx-auto max-w-7xl px-5 py-14 lg:px-8 lg:py-16">
+      <div class="grid gap-8 lg:grid-cols-[1fr_.9fr]">
+        <div>
+          <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Cakupan komunitas</p>
+          <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Lintas kampus, tetap satu komunitas.</h2>
+          <p class="mt-4 max-w-2xl leading-7 text-slate-600">Campus Hub mencatat institusi yang saat ini memiliki anggota terhubung, tetapi PPI Ishikawa tetap terbuka bagi pelajar Indonesia di seluruh Prefektur Ishikawa.</p>
+          <a href={withBase('/community/kampus/')} class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">Lihat jaringan kampus →</a>
+        </div>
+        <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+          <p class="text-sm font-bold uppercase tracking-[0.14em] text-accent-soft">Butuh informasi praktis?</p>
+          <p class="mt-3 text-xl font-bold">Gunakan rumah konten yang tepat.</p>
+          <div class="mt-5 space-y-3 text-sm">
+            <a href={withBase('/life-in-ishikawa/')} class="block rounded-xl border border-slate-700 bg-white/5 px-4 py-3 font-bold hover:bg-white/10">Hidup di Ishikawa →</a>
+            <a href={withBase('/beasiswa/')} class="block rounded-xl border border-slate-700 bg-white/5 px-4 py-3 font-bold hover:bg-white/10">Beasiswa →</a>
+            <a href={withBase('/community/kampus/')} class="block rounded-xl border border-slate-700 bg-white/5 px-4 py-3 font-bold hover:bg-white/10">Kampus →</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="mx-auto max-w-7xl px-5 pb-20 pt-10 lg:px-8">
-    <div class="rounded-3xl bg-slate-950 p-7 text-white sm:p-9">
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Prinsip privasi</p>
-      <h2 class="mt-3 text-2xl font-bold">Komunitas tidak harus berarti data pribadi menjadi publik.</h2>
-      <p class="mt-4 max-w-3xl leading-7 text-slate-300">Informasi pribadi anggota hanya digunakan untuk kebutuhan organisasi yang relevan dan tidak dipublikasikan tanpa dasar yang jelas.</p>
+  <section class="mx-auto max-w-7xl px-5 py-16 lg:px-8">
+    <div class="rounded-[2rem] border border-amber-200 bg-amber-50 p-7 sm:p-9">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-dark">Ingin terhubung?</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Mulai dari percakapan.</h2>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-700">Mahasiswa baru, mahasiswa aktif, keluarga, alumni, maupun mitra dapat menghubungi PPI Ishikawa melalui jalur kontak yang tersedia.</p>
+      <a href={withBase('/contact/')} class="mt-5 inline-flex rounded-xl bg-brand px-5 py-3 text-sm font-bold text-white">Hubungi PPI Ishikawa →</a>
     </div>
   </section>
-  <RelatedLinks items={generalRelatedContent.community} title="Jelajahi komunitas lebih lanjut" />
 </BaseLayout>
