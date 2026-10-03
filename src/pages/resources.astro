@@ -24,6 +24,12 @@ const directories = [
     href: '/beasiswa/'
   },
   {
+    icon: 'career',
+    title: 'Karier',
+    description: 'Sumber lowongan, postdoc, research career, internship, dan dukungan career center kampus.',
+    href: '/career/'
+  },
+  {
     icon: 'collaboration',
     title: 'Komunitas',
     description: 'Kegiatan, jejaring kampus, keluarga, dan cara terhubung.',
@@ -40,7 +46,7 @@ const directories = [
 <BaseLayout title="Direktori">
   <PageIntro
     title="Direktori"
-    description="Halaman ringkas untuk menuju lima area utama website PPI Ishikawa."
+    description="Halaman ringkas untuk menuju area utama website PPI Ishikawa."
   />
 
   <section class="mx-auto max-w-7xl px-5 pb-20 lg:px-8">
@@ -48,7 +54,7 @@ const directories = [
       <p class="text-sm leading-6 text-slate-600">Untuk penggunaan sehari-hari, Anda tidak perlu melewati halaman ini. Gunakan menu utama atau pilih area yang sesuai di bawah.</p>
     </div>
 
-    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
       {directories.map((item) => (
         <a href={withBase(item.href)} class="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
           <span class="grid size-10 place-items-center rounded-xl bg-amber-50 text-accent-dark">
