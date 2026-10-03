@@ -23,7 +23,7 @@ const primaryPaths = [
   {
     icon: 'scholarship',
     title: 'Beasiswa',
-    description: 'Cari scholarship berdasarkan kampus, jenjang, status studi, nationality, dan cara apply.',
+    description: 'Cari beasiswa berdasarkan kampus, jenjang, status studi, kewarganegaraan, jalur pendaftaran, dan cakupan kampus.',
     href: '/beasiswa/'
   },
   {
@@ -76,8 +76,8 @@ const primaryPaths = [
   <section class="border-y border-slate-200 bg-white">
     <div class="mx-auto max-w-7xl px-5 py-14 lg:px-8 lg:py-16">
       <div class="max-w-3xl">
-        <p class="text-sm font-bold uppercase tracking-[0.18em] text-brand">Mulai dari kebutuhanmu</p>
-        <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Apa yang sedang kamu cari?</h2>
+        <p class="text-sm font-bold uppercase tracking-[0.18em] text-brand">Mulai dari kebutuhan Anda</p>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Apa yang sedang Anda cari?</h2>
         <p class="mt-3 leading-7 text-slate-600">Pilih satu pintu utama. Informasi rinci tetap tersedia di dalamnya.</p>
       </div>
 
@@ -128,15 +128,15 @@ const primaryPaths = [
               </a>
             ))}
           </div>
-          <a href={withBase('/community/kampus/')} class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">Buka Campus Hub →</a>
+          <a href={withBase('/community/kampus/')} class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">Lihat kampus →</a>
         </div>
 
         <div class="rounded-[2rem] bg-slate-950 p-6 text-white sm:p-8">
           <div class="flex items-start justify-between gap-4">
             <div>
               <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-soft">Beasiswa</p>
-              <h2 class="mt-2 text-2xl font-bold tracking-tight">Cari yang relevan untuk kondisi kamu.</h2>
-              <p class="mt-3 text-sm leading-6 text-slate-300">Filter berdasarkan kampus, jenjang, status studi, nationality, cara apply, dan kepastian kampus.</p>
+              <h2 class="mt-2 text-2xl font-bold tracking-tight">Cari yang relevan untuk kondisi Anda.</h2>
+              <p class="mt-3 text-sm leading-6 text-slate-300">Saring berdasarkan kampus, jenjang, status studi, kewarganegaraan, jalur pendaftaran, dan cakupan kampus.</p>
             </div>
             <TopicIcon name="scholarship" class="size-7 shrink-0 text-accent-soft" />
           </div>
@@ -145,7 +145,7 @@ const primaryPaths = [
               <span class="rounded-full border border-slate-700 bg-white/5 px-3 py-2 text-xs font-bold text-slate-200">{label}</span>
             ))}
           </div>
-          <a href={withBase('/beasiswa/')} class="mt-5 inline-flex rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950">Buka Scholarship Hub →</a>
+          <a href={withBase('/beasiswa/')} class="mt-5 inline-flex rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950">Cari beasiswa →</a>
         </div>
       </div>
     </div>
