@@ -32,7 +32,7 @@ create table if not exists public.profiles (
   membership_status public.membership_status not null default 'incoming',
   verification_status public.verification_status not null default 'pending',
   role public.member_role not null default 'member',
-  directory_visible boolean not null default true,
+  directory_visible boolean not null default false,
   show_instagram boolean not null default false,
   show_linkedin boolean not null default true,
   show_city boolean not null default false,
