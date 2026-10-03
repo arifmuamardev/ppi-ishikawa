@@ -1,0 +1,113 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { withBase } from '../utils/paths';
+
+interface Props {
+  title: string;
+  description?: string;
+  requireApproved?: boolean;
+  requireAdmin?: boolean;
+}
+
+const {
+  title,
+  description = 'Area anggota PPI Ishikawa.',
+  requireApproved = false,
+  requireAdmin = false,
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <section
+    id="member-area"
+    data-require-approved={requireApproved ? '1' : '0'}
+    data-require-admin={requireAdmin ? '1' : '0'}
+    class="mx-auto max-w-7xl px-5 py-10 lg:px-8"
+  >
+    <div class="grid gap-6 lg:grid-cols-[240px_minmax(0,1fr)]">
+      <aside class="h-fit rounded-3xl border border-slate-200 bg-white p-4 lg:sticky lg:top-28">
+        <div class="border-b border-slate-100 px-3 pb-4">
+          <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Area Anggota</p>
+          <p id="member-nav-name" class="mt-2 font-bold text-slate-950">PPI Ishikawa</p>
+          <p id="member-nav-status" class="mt-1 text-xs text-slate-500">Memuat keanggotaan…</p>
+        </div>
+
+        <nav class="mt-3 space-y-1 text-sm" aria-label="Navigasi anggota">
+          <a href={withBase('/member/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Dashboard</a>
+          <a href={withBase('/member/profile/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Profil saya</a>
+          <a href={withBase('/member/directory/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Direktori anggota</a>
+          <a id="member-admin-link" href={withBase('/member/admin/verification/')} class="hidden rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Verifikasi anggota</a>
+        </nav>
+
+        <div class="mt-4 border-t border-slate-100 pt-4">
+          <button id="member-signout" type="button" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-left text-sm font-bold text-slate-700 hover:border-amber-200 hover:text-brand">
+            Keluar
+          </button>
+        </div>
+      </aside>
+
+      <div>
+        <div id="member-loading" class="rounded-3xl border border-slate-200 bg-white p-8">
+          <p class="font-bold text-slate-950">Memuat area anggota…</p>
+          <p class="mt-2 text-sm text-slate-600">Memeriksa sesi dan status keanggotaan Anda.</p>
+        </div>
+
+        <div id="member-unconfigured" class="hidden rounded-3xl border border-amber-200 bg-amber-50 p-8">
+          <p class="text-sm font-bold uppercase tracking-[0.14em] text-accent-dark">Membership belum diaktifkan</p>
+          <h1 class="mt-3 text-2xl font-bold text-slate-950">Backend Supabase belum terhubung.</h1>
+          <p class="mt-3 max-w-2xl leading-7 text-slate-700">Tampilan dan struktur Area Anggota sudah tersedia, tetapi login dan data anggota baru aktif setelah konfigurasi Supabase dipasang pada deployment.</p>
+        </div>
+
+        <div id="member-content" class="hidden">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { isSupabaseConfigured } from '../lib/supabase';
+    import { requireMember, signOutMember } from '../lib/member';
+
+    const area = document.getElementById('member-area');
+    const loading = document.getElementById('member-loading');
+    const unconfigured = document.getElementById('member-unconfigured');
+    const content = document.getElementById('member-content');
+    const name = document.getElementById('member-nav-name');
+    const status = document.getElementById('member-nav-status');
+    const adminLink = document.getElementById('member-admin-link');
+    const signout = document.getElementById('member-signout');
+
+    const statusLabels = {
+      incoming: 'Incoming',
+      active: 'Anggota aktif',
+      alumni: 'Alumni',
+      inactive: 'Tidak aktif',
+    };
+
+    if (!isSupabaseConfigured) {
+      loading?.classList.add('hidden');
+      unconfigured?.classList.remove('hidden');
+    } else {
+      const approved = area?.dataset.requireApproved === '1';
+      const admin = area?.dataset.requireAdmin === '1';
+      const member = await requireMember({ approved, admin });
+
+      if (member?.profile) {
+        if (name) name.textContent = member.profile.full_name || 'Anggota PPI Ishikawa';
+        if (status) {
+          const label = statusLabels[member.profile.membership_status] || member.profile.membership_status;
+          status.textContent = member.profile.verification_status === 'approved'
+            ? label
+            : 'Menunggu verifikasi';
+        }
+        if (member.profile.role === 'admin') adminLink?.classList.remove('hidden');
+
+        loading?.classList.add('hidden');
+        content?.classList.remove('hidden');
+      }
+    }
+
+    signout?.addEventListener('click', signOutMember);
+  </script>
+</BaseLayout>
