@@ -80,7 +80,7 @@ import { withBase } from '../../utils/paths';
 
   <script>
     import { isSupabaseConfigured, supabase } from '../../lib/supabase';
-    import { memberPath } from '../../lib/member';
+    import { demoRegister, isMembershipDemoMode, memberPath } from '../../lib/member';
 
     const form = document.getElementById('member-register-form');
     const message = document.getElementById('register-message');
@@ -91,10 +91,29 @@ import { withBase } from '../../utils/paths';
       message.className = `mt-6 rounded-2xl border p-4 text-sm leading-6 ${type === 'error' ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
     };
 
-    if (!isSupabaseConfigured || !supabase) {
-      showMessage('Membership belum aktif pada deployment ini. Konfigurasi Supabase perlu dipasang terlebih dahulu.');
-      form?.querySelectorAll('input, select, button').forEach((el) => el.setAttribute('disabled', ''));
-    } else {
+    if (isMembershipDemoMode) {
+      showMessage('Mode demo aktif. Data pendaftaran hanya akan disimpan di browser ini dan tidak dikirim ke PPI Ishikawa.');
+      form?.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const values = new FormData(form);
+        const password = String(values.get('password') || '');
+        const confirmation = String(values.get('password_confirm') || '');
+        if (password !== confirmation) {
+          showMessage('Password dan konfirmasi password tidak sama.', 'error');
+          return;
+        }
+        demoRegister({
+          full_name: String(values.get('full_name') || '').trim(),
+          email: String(values.get('email') || '').trim(),
+          campus_slug: String(values.get('campus_slug') || ''),
+          program: String(values.get('program') || '').trim(),
+          study_level: String(values.get('study_level') || ''),
+          field_of_study: String(values.get('field_of_study') || '').trim(),
+          city: String(values.get('city') || ''),
+        });
+        window.location.replace(memberPath('/member/'));
+      });
+    } else if (isSupabaseConfigured && supabase) {
       form?.addEventListener('submit', async (event) => {
         event.preventDefault();
         const values = new FormData(form);
