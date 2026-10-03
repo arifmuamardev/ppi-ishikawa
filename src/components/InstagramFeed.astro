@@ -7,7 +7,6 @@ interface Props {
 
 const { compact = false } = Astro.props;
 const instagram = social.instagram;
-const hasFeed = Boolean(instagram.fouitaUkey);
 ---
 
 <section class={compact ? '' : 'mx-auto max-w-7xl px-5 py-14 lg:px-8'}>
@@ -28,44 +27,36 @@ const hasFeed = Boolean(instagram.fouitaUkey);
       </a>
     </div>
 
-    {hasFeed ? (
-      <div class="p-3 sm:p-5">
-        <div id="ppi-instagram-feed" data-fouita-key={instagram.fouitaUkey}></div>
-        <script type="module" is:inline>
-          import App from "https://cdn.fouita.com/public/instagram-feed.js";
-          const target = document.getElementById("ppi-instagram-feed");
-          const ukey = target?.dataset.fouitaKey;
-          if (target && ukey) {
-            new App({
-              target,
-              props: {
-                settings: {
-                  layout: "grid",
-                  header: false,
-                  autoplay: false,
-                  zigzag: false,
-                  cols: 3,
-                  cardHeight: 320,
-                  gap: 2,
-                  direction: "down",
-                  height: 0,
-                  bgColor: "",
-                  txtColor: "",
-                  ukey
-                }
-              }
-            });
+    <div class="p-3 sm:p-5">
+      <div id="ft-insta-app"></div>
+      <script type="module" is:inline>
+        import App from "https://cdn.fouita.com/public/instagram-feed.js?11";
+        new App({
+          target: document.getElementById("ft-insta-app"),
+          props: {
+            settings: {
+              layout: "carousel",
+              source: "insta",
+              selected: "uname",
+              header: true,
+              autoplay: true,
+              zigzag: false,
+              cols: 4,
+              cardHeight: 300,
+              gap: 0,
+              direction: "down",
+              height: 700,
+              bgColor: "",
+              txtColor: ""
+            }
           }
-        </script>
+        });
+      </script>
+      <div id="ft-insta-brd" class="mt-3 text-center text-[11px] text-slate-400">
+        <a href="https://fouita.com/website-widgets/instagram-feed" target="_blank" rel="noreferrer" class="hover:underline">Embed Instagram Feed</a>
+        <span> · </span>
+        <a href="https://fouita.com" target="_blank" rel="noreferrer" class="hover:underline">with Fouita</a>
       </div>
-    ) : (
-      <div class="grid min-h-48 place-items-center bg-slate-50 p-8 text-center">
-        <div class="max-w-xl">
-          <p class="font-bold text-slate-950">Feed Instagram sedang disiapkan.</p>
-          <p class="mt-2 text-sm leading-6 text-slate-600">Sementara itu, kunjungi akun resmi PPI Ishikawa untuk melihat unggahan terbaru.</p>
-          <a href={instagram.url} target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">@{instagram.username} ↗</a>
-        </div>
-      </div>
-    )}
+    </div>
   </div>
 </section>
