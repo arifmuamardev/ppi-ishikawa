@@ -1,0 +1,176 @@
+---
+import MemberLayout from '../../layouts/MemberLayout.astro';
+import { campuses } from '../../data/campuses';
+import { ishikawaCities, studyLevels } from '../../data/membership';
+---
+
+<MemberLayout title="Profil Saya">
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Profil Saya</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Data membership dan privasi</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Perbarui data akademik dan pilih informasi yang boleh terlihat oleh anggota lain. Email akun tidak ditampilkan di direktori.</p>
+    </section>
+
+    <div id="profile-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+
+    <form id="member-profile-form" class="space-y-6">
+      <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+        <h2 class="text-xl font-bold text-slate-950">Informasi utama</h2>
+        <div class="mt-6 grid gap-5 md:grid-cols-2">
+          <label class="md:col-span-2">
+            <span class="text-sm font-bold text-slate-800">Nama lengkap</span>
+            <input name="full_name" type="text" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          </label>
+          <label>
+            <span class="text-sm font-bold text-slate-800">Email akun</span>
+            <input id="profile-email" type="email" readonly class="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-500" />
+          </label>
+          <label>
+            <span class="text-sm font-bold text-slate-800">Kampus</span>
+            <select name="campus_slug" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+              <option value="">Pilih kampus</option>
+              {campuses.map((campus) => <option value={campus.slug}>{campus.shortName}</option>)}
+            </select>
+          </label>
+          <label>
+            <span class="text-sm font-bold text-slate-800">Program / jurusan</span>
+            <input name="program" type="text" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          </label>
+          <label>
+            <span class="text-sm font-bold text-slate-800">Jenjang / status studi</span>
+            <select name="study_level" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+              <option value="">Pilih jenjang</option>
+              {studyLevels.map((item) => <option value={item.value}>{item.label}</option>)}
+            </select>
+          </label>
+          <label>
+            <span class="text-sm font-bold text-slate-800">Bidang studi</span>
+            <input name="field_of_study" type="text" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          </label>
+          <label>
+            <span class="text-sm font-bold text-slate-800">Kota tempat tinggal</span>
+            <select name="city" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+              <option value="">Tidak diisi</option>
+              {ishikawaCities.map((city) => <option value={city}>{city}</option>)}
+            </select>
+          </label>
+          <label>
+            <span class="text-sm font-bold text-slate-800">Instagram</span>
+            <input name="instagram" type="text" placeholder="@username" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          </label>
+          <label>
+            <span class="text-sm font-bold text-slate-800">LinkedIn</span>
+            <input name="linkedin_url" type="url" placeholder="https://www.linkedin.com/in/..." class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          </label>
+          <label class="md:col-span-2">
+            <span class="text-sm font-bold text-slate-800">Bio singkat</span>
+            <textarea name="bio" rows="4" maxlength="500" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" placeholder="Opsional. Ceritakan bidang studi atau hal yang ingin Anda bagikan kepada anggota lain."></textarea>
+          </label>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.14em] text-brand">Privasi</p>
+        <h2 class="mt-2 text-xl font-bold text-slate-950">Direktori anggota</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Profil tidak muncul di direktori kecuali Anda mengaktifkannya. Pengaturan di bawah menentukan informasi tambahan yang boleh terlihat.</p>
+
+        <div class="mt-6 space-y-3">
+          <label class="flex items-start gap-3 rounded-2xl bg-amber-50 p-4">
+            <input name="directory_visible" type="checkbox" class="mt-1 size-4" />
+            <span><strong class="text-slate-950">Tampilkan profil saya di direktori anggota</strong><span class="mt-1 block text-sm leading-6 text-slate-600">Nama, kampus, program, jenjang, status membership, dan bio dapat terlihat oleh anggota terverifikasi.</span></span>
+          </label>
+          <div class="grid gap-3 md:grid-cols-2">
+            <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4"><input name="show_field_of_study" type="checkbox" class="mt-1 size-4" /><span class="text-sm font-semibold text-slate-700">Tampilkan bidang studi</span></label>
+            <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4"><input name="show_city" type="checkbox" class="mt-1 size-4" /><span class="text-sm font-semibold text-slate-700">Tampilkan kota tempat tinggal</span></label>
+            <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4"><input name="show_instagram" type="checkbox" class="mt-1 size-4" /><span class="text-sm font-semibold text-slate-700">Tampilkan Instagram</span></label>
+            <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4"><input name="show_linkedin" type="checkbox" class="mt-1 size-4" /><span class="text-sm font-semibold text-slate-700">Tampilkan LinkedIn</span></label>
+          </div>
+        </div>
+      </section>
+
+      <div class="flex justify-end">
+        <button type="submit" class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Simpan perubahan</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    import { getCurrentMember } from '../../lib/member';
+    import { isSupabaseConfigured, supabase } from '../../lib/supabase';
+
+    const form = document.getElementById('member-profile-form');
+    const message = document.getElementById('profile-message');
+    const show = (text, error = false) => {
+      if (!message) return;
+      message.textContent = text;
+      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
+    };
+
+    if (isSupabaseConfigured && supabase && form instanceof HTMLFormElement) {
+      const member = await getCurrentMember();
+      if (member.user && member.profile) {
+        const p = member.profile;
+        const setValue = (name, value) => {
+          const input = form.elements.namedItem(name);
+          if (input instanceof HTMLInputElement || input instanceof HTMLSelectElement || input instanceof HTMLTextAreaElement) input.value = value || '';
+        };
+        const setChecked = (name, value) => {
+          const input = form.elements.namedItem(name);
+          if (input instanceof HTMLInputElement) input.checked = Boolean(value);
+        };
+
+        setValue('full_name', p.full_name);
+        setValue('campus_slug', p.campus_slug);
+        setValue('program', p.program);
+        setValue('study_level', p.study_level);
+        setValue('field_of_study', p.field_of_study);
+        setValue('city', p.city);
+        setValue('instagram', p.instagram);
+        setValue('linkedin_url', p.linkedin_url);
+        setValue('bio', p.bio);
+        setChecked('directory_visible', p.directory_visible);
+        setChecked('show_field_of_study', p.show_field_of_study);
+        setChecked('show_city', p.show_city);
+        setChecked('show_instagram', p.show_instagram);
+        setChecked('show_linkedin', p.show_linkedin);
+
+        const email = document.getElementById('profile-email');
+        if (email instanceof HTMLInputElement) email.value = member.user.email || '';
+
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const values = new FormData(form);
+          const payload = {
+            full_name: String(values.get('full_name') || '').trim(),
+            campus_slug: String(values.get('campus_slug') || '') || null,
+            program: String(values.get('program') || '').trim() || null,
+            study_level: String(values.get('study_level') || '') || null,
+            field_of_study: String(values.get('field_of_study') || '').trim() || null,
+            city: String(values.get('city') || '') || null,
+            instagram: String(values.get('instagram') || '').trim() || null,
+            linkedin_url: String(values.get('linkedin_url') || '').trim() || null,
+            bio: String(values.get('bio') || '').trim() || null,
+            directory_visible: values.get('directory_visible') === 'on',
+            show_field_of_study: values.get('show_field_of_study') === 'on',
+            show_city: values.get('show_city') === 'on',
+            show_instagram: values.get('show_instagram') === 'on',
+            show_linkedin: values.get('show_linkedin') === 'on',
+          };
+
+          const submit = form.querySelector('button[type="submit"]');
+          submit?.setAttribute('disabled', '');
+          const { error } = await supabase.from('profiles').update(payload).eq('user_id', member.user.id);
+          submit?.removeAttribute('disabled');
+
+          if (error) {
+            show('Perubahan belum dapat disimpan. Coba lagi atau hubungi pengurus bila masalah berlanjut.', true);
+            return;
+          }
+
+          show('Profil dan pengaturan privasi berhasil disimpan.');
+        });
+      }
+    }
+  </script>
+</MemberLayout>
