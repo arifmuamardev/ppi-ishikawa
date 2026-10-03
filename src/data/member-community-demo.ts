@@ -108,3 +108,28 @@ export const memberSkillOptions = [
   'Event management',
   'Olahraga',
 ];
+
+export const demoAdminAspirations = [
+  {
+    id: 'demo-aspiration-admin-01',
+    subject: 'Demo · Usulan kegiatan olahraga rutin',
+    message: 'Contoh aspirasi anggota agar kegiatan olahraga dapat dijadwalkan secara berkala.',
+    category: 'Olahraga',
+    anonymous: false,
+    status: 'received',
+    created_at: '2026-10-03T10:00:00+09:00',
+    submitter_id: 'demo-directory-01',
+    submitter_name: 'Contoh Anggota 01',
+  },
+  {
+    id: 'demo-aspiration-admin-02',
+    subject: 'Demo · Tambahan informasi untuk mahasiswa baru',
+    message: 'Contoh aspirasi anonim terkait kebutuhan informasi praktis sebelum tiba di Ishikawa.',
+    category: 'Informasi & layanan',
+    anonymous: true,
+    status: 'reviewed',
+    created_at: '2026-10-02T15:00:00+09:00',
+    submitter_id: null,
+    submitter_name: null,
+  },
+];
