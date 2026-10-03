@@ -55,9 +55,8 @@ import { withBase } from '../../utils/paths';
   <script>
     import { campuses } from '../../data/campuses';
     import { getCurrentMember, profileCompletion } from '../../lib/member';
-    import { isSupabaseConfigured } from '../../lib/supabase';
 
-    if (isSupabaseConfigured) {
+    {
       const member = await getCurrentMember();
       const profile = member.profile;
       if (profile) {
