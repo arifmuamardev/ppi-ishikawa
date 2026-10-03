@@ -32,6 +32,23 @@ Status: implemented in the Astro frontend and ready to connect to Supabase.
 - `/member/directory/`
 - `/member/admin/verification/` — admin only
 
+## Demo mode without Supabase
+
+When Supabase environment variables are absent, the member area automatically runs in demo mode.
+
+Available demo flows:
+- Sign in as a verified member
+- Sign in as an administrator
+- Register a local pending member
+- View dashboard and membership status
+- Edit profile and privacy preferences
+- Search/filter the member directory
+- Review the admin verification queue
+
+Demo data is synthetic and stored only in the current browser via localStorage. It is not an official membership record and must not be used for real member administration.
+
+When Supabase is later configured, the same routes and UI automatically use the Supabase-backed service instead of demo storage.
+
 ## Supabase activation
 
 1. Create or connect a Supabase project.
