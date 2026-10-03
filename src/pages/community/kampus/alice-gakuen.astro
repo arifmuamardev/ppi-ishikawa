@@ -8,6 +8,7 @@ import CampusScholarshipGuide from '../../../components/CampusScholarshipGuide.a
 import RelatedLinks from '../../../components/RelatedLinks.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import CampusProfile from '../../../components/CampusProfile.astro';
+import CampusGuideBridge from '../../../components/CampusGuideBridge.astro';
 import InteractiveMap from '../../../components/InteractiveMap.astro';
 import { campusRelatedContent } from '../../../data/related-content';
 import { campusProfileBySlug } from '../../../data/campuses';
@@ -291,30 +292,18 @@ const campusMap = campusMapPoints['alice-gakuen'];
     <a href="https://gakuen.alice-japan.net/entrance-exam/calendar" target="_blank" rel="noreferrer" class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">Annual calendar ↗</a>
   </section>
 
-  <section id="part-time-biaya-hidup" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
-    <span id="bagian-08" class="sr-only" aria-hidden="true"></span>
-    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">08 · Part-time work & biaya hidup</p>
-    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Part-time work boleh membantu biaya hidup, tetapi bukan pengganti rencana keuangan.</h2>
-
-    <div class="mt-7 grid gap-5 md:grid-cols-2">
-      <article class="rounded-3xl border border-slate-200 bg-white p-6">
-        <h3 class="text-xl font-bold text-slate-950">Aturan dasar</h3>
-        <p class="mt-3 text-sm leading-6 text-slate-600">Student status memerlukan 資格外活動許可 untuk part-time work. Batas umum adalah total maksimum 28 jam per minggu selama masa kuliah dan maksimum 8 jam per hari pada long vacation resmi. Multiple jobs dihitung bersama.</p>
-      </article>
-      <article class="rounded-3xl border border-slate-200 bg-white p-6">
-        <h3 class="text-xl font-bold text-slate-950">Support Alice</h3>
-        <p class="mt-3 text-sm leading-6 text-slate-600">Alice mencantumkan consultation part-time work sebagai bagian dari life support dan aktif bekerja dengan perusahaan yang menerima international students. Gunakan support ini bila jadwal kerja, kontrak, workplace, atau komunikasi menjadi masalah.</p>
-      </article>
-    </div>
-
-    <div class="mt-5 rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-soft">Budget rule</p>
-      <h3 class="mt-2 text-2xl font-bold">Jangan membuat budget dengan asumsi selalu bekerja 28 jam.</h3>
-      <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-300">Official Alice page menyediakan contoh living cost dan part-time income untuk Kanazawa/Kaga, tetapi angka itu hanya illustration. Jam kerja aktual bergantung pada study load, attendance, employer, health, season, dan izin. Siapkan dana yang cukup agar study tetap menjadi aktivitas utama.</p>
-      <a href="https://gakuen.alice-japan.net/entrance-exam/living-cost" target="_blank" rel="noreferrer" class="mt-5 inline-flex text-sm font-bold text-accent-soft hover:underline">Living-cost example ↗</a>
-    </div>
-  </section>
-
+    <CampusGuideBridge
+    id="part-time-biaya-hidup"
+    number="08"
+    eyebrow="Part-time work & biaya hidup"
+    title="Alice dapat membantu pada jalur part-time; aturan kerja dan budgeting tetap lintas kampus."
+    summary="Campus Pack cukup menjelaskan support Alice. Batas kerja, izin aktivitas di luar status tinggal, serta perencanaan biaya hidup adalah aturan dan kebutuhan umum yang sebaiknya dirujuk ke panduan utama."
+    campusNote="Life-support staff Alice menangani konsultasi part-time work dan sekolah memiliki koneksi dengan perusahaan yang menerima international students. Tetap utamakan attendance dan study progress."
+    links={[
+      { label: 'Kehidupan Sehari-hari', href: '/life-in-ishikawa/kehidupan-sehari-hari/', icon: 'guide' },
+      { label: 'Bank & Keuangan', href: '/life-in-ishikawa/bank-money/', icon: 'money' }
+    ]}
+  />
   <section id="karier-setelah-lulus" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
     <span id="bagian-09" class="sr-only" aria-hidden="true"></span>
     <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">09 · Career & langkah setelah lulus</p>
