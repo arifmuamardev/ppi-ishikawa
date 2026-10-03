@@ -1,0 +1,97 @@
+---
+import MemberLayout from '../../layouts/MemberLayout.astro';
+import { memberInterestOptions, memberSkillOptions } from '../../data/member-community-demo';
+---
+
+<MemberLayout title="Minat & Skills" requireApproved={true}>
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Minat & Skills</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Apa yang Anda minati dan bisa kontribusikan?</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Informasi ini dapat membantu PPI Ishikawa menemukan anggota yang relevan ketika ada kegiatan, volunteer, atau kolaborasi. Memilih minat tidak berarti Anda wajib menjadi pengurus atau panitia.</p>
+    </section>
+
+    <div id="interest-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+
+    <form id="interest-form" class="space-y-6">
+      <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Ketertarikan</p>
+        <h2 class="mt-2 text-xl font-bold text-slate-950">Topik yang ingin Anda ikuti</h2>
+        <div class="mt-6 grid gap-3 sm:grid-cols-2">
+          {memberInterestOptions.map((item) => (
+            <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
+              <input name="interests" value={item} type="checkbox" class="mt-1 size-4" />
+              <span class="text-sm font-semibold leading-6 text-slate-700">{item}</span>
+            </label>
+          ))}
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Keterampilan</p>
+        <h2 class="mt-2 text-xl font-bold text-slate-950">Hal yang bersedia Anda kontribusikan</h2>
+        <div class="mt-6 grid gap-3 sm:grid-cols-2">
+          {memberSkillOptions.map((item) => (
+            <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
+              <input name="skills" value={item} type="checkbox" class="mt-1 size-4" />
+              <span class="text-sm font-semibold leading-6 text-slate-700">{item}</span>
+            </label>
+          ))}
+        </div>
+
+        <label class="mt-6 flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-4">
+          <input name="volunteer_available" type="checkbox" class="mt-1 size-4" />
+          <span>
+            <strong class="text-slate-950">Saya terbuka untuk dihubungi terkait kesempatan volunteer</strong>
+            <span class="mt-1 block text-sm leading-6 text-slate-600">Pengurus dapat menghubungi Anda ketika ada kebutuhan yang sesuai dengan minat atau skills yang dipilih.</span>
+          </span>
+        </label>
+      </section>
+
+      <div class="flex justify-end">
+        <button type="submit" class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Simpan minat & skills</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    import { getMemberPreferences, saveMemberPreferences } from '../../lib/member-community';
+
+    const form = document.getElementById('interest-form');
+    const message = document.getElementById('interest-message');
+
+    const show = (text, error = false) => {
+      if (!message) return;
+      message.textContent = text;
+      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
+    };
+
+    if (form instanceof HTMLFormElement) {
+      const preferences = await getMemberPreferences();
+
+      for (const input of form.querySelectorAll('input[name="interests"]')) {
+        if (input instanceof HTMLInputElement) input.checked = preferences.interests.includes(input.value);
+      }
+      for (const input of form.querySelectorAll('input[name="skills"]')) {
+        if (input instanceof HTMLInputElement) input.checked = preferences.skills.includes(input.value);
+      }
+      const volunteer = form.elements.namedItem('volunteer_available');
+      if (volunteer instanceof HTMLInputElement) volunteer.checked = preferences.volunteer_available;
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const interests = [...form.querySelectorAll('input[name="interests"]:checked')].map((input) => input.value);
+        const skills = [...form.querySelectorAll('input[name="skills"]:checked')].map((input) => input.value);
+        const volunteerInput = form.elements.namedItem('volunteer_available');
+
+        const { error } = await saveMemberPreferences({
+          interests,
+          skills,
+          volunteer_available: volunteerInput instanceof HTMLInputElement && volunteerInput.checked,
+        });
+
+        show(error ? 'Data belum dapat disimpan.' : 'Minat, skills, dan preferensi volunteer berhasil disimpan.', Boolean(error));
+      });
+    }
+  </script>
+</MemberLayout>
