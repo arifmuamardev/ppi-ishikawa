@@ -160,7 +160,7 @@ const staleCount = scholarships.filter(needsReview).length;
                 ))}
               </div>
               <div class="mt-4 border-t border-slate-100 pt-4">
-                <p class="text-xs text-slate-500">Cara apply</p>
+                <p class="text-xs text-slate-500">Cara mendaftar</p>
                 <p class="mt-1 text-sm font-bold text-slate-900">{routeLabels[item.applicationRoute]}</p>
               </div>
             </article>
@@ -178,8 +178,8 @@ const staleCount = scholarships.filter(needsReview).length;
       <div class="flex gap-3">
         <TopicIcon name="info" class="mt-0.5 size-5 shrink-0 text-brand" />
         <div>
-          <p class="font-bold text-slate-950">Perhatikan cycle dan tanggal verifikasi.</p>
-          <p class="mt-2 max-w-4xl text-sm leading-6 text-slate-600">Eligibility dasar biasanya lebih stabil, tetapi deadline, nominal, kuota, dan designated-school list dapat berubah. Gunakan informasi di sini untuk menemukan opsi, lalu cek call resmi terbaru sebelum apply.</p>
+          <p class="font-bold text-slate-950">Perhatikan periode beasiswa dan tanggal verifikasi.</p>
+          <p class="mt-2 max-w-4xl text-sm leading-6 text-slate-600">Persyaratan dasar biasanya lebih stabil, tetapi tenggat, nominal, kuota, dan daftar kampus yang memenuhi syarat dapat berubah. Gunakan informasi di sini untuk menemukan opsi, lalu cek pengumuman resmi terbaru sebelum mendaftar.</p>
         </div>
       </div>
     </div>
@@ -188,7 +188,7 @@ const staleCount = scholarships.filter(needsReview).length;
   <section id="kampus" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-10 lg:px-8">
     <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Cari berdasarkan kampus</p>
     <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Mulai dari institusi Anda.</h2>
-    <p class="mt-3 max-w-3xl leading-7 text-slate-600">Beberapa scholarship memiliki designated schools; lainnya terbuka lebih luas tetapi tetap perlu konfirmasi ke kampus.</p>
+    <p class="mt-3 max-w-3xl leading-7 text-slate-600">Beberapa beasiswa hanya tersedia melalui kampus tertentu; lainnya terbuka lebih luas tetapi tetap perlu dikonfirmasi ke kampus.</p>
 
     <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
       {campusOptions.map(([slug, label]) => (
@@ -196,7 +196,7 @@ const staleCount = scholarships.filter(needsReview).length;
           <InstitutionMark id={slug as any} size="sm" class="shrink-0" />
           <div>
             <p class="font-bold text-slate-950">{label}</p>
-            <p class="mt-1 text-xs text-slate-500">Filter scholarship →</p>
+            <p class="mt-1 text-xs text-slate-500">Saring beasiswa →</p>
           </div>
         </a>
       ))}
@@ -210,7 +210,7 @@ const staleCount = scholarships.filter(needsReview).length;
           <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-dark">Paling relevan untuk Ishikawa</p>
           <h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-950">Mulai dari dua jalur ini sebelum membuka daftar yang lebih luas.</h2>
         </div>
-        <a href="#finder" class="text-sm font-bold text-brand hover:underline">Lihat semua scholarship →</a>
+        <a href="#finder" class="text-sm font-bold text-brand hover:underline">Lihat semua beasiswa →</a>
       </div>
       <div class="mt-6 grid gap-4 md:grid-cols-2">
         {scholarships.filter((item) => ['ishikawa-prefectural-scholarship','mitani-scholarship'].includes(item.slug)).map((item) => (
@@ -232,10 +232,10 @@ const staleCount = scholarships.filter(needsReview).length;
   <section id="finder" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-10 lg:px-8">
     <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
       <div>
-        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Scholarship Finder</p>
+        <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Pencarian Beasiswa</p>
         <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Saring yang relevan untuk kondisi Anda.</h2>
       </div>
-      <p id="scholarship-count" class="text-sm font-semibold text-slate-500">{scholarships.length} scholarship ditampilkan</p>
+      <p id="scholarship-count" class="text-sm font-semibold text-slate-500">{scholarships.length} beasiswa ditampilkan</p>
     </div>
 
     <div class="mt-6 grid gap-3 rounded-3xl border border-slate-200 bg-white p-5 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
@@ -260,12 +260,12 @@ const staleCount = scholarships.filter(needsReview).length;
         <select id="filter-stage" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
           <option value="">Semua status</option>
           <option value="before-arrival">Belum datang ke Jepang</option>
-          <option value="after-enrollment">Sudah enrollment</option>
+          <option value="after-enrollment">Sudah terdaftar sebagai mahasiswa</option>
         </select>
       </label>
 
       <label class="block">
-        <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Cara apply</span>
+        <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Cara mendaftar</span>
         <select id="filter-route" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
           <option value="">Semua jalur</option>
           <option value="school">Lewat kampus</option>
@@ -278,7 +278,7 @@ const staleCount = scholarships.filter(needsReview).length;
         <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Status data</span>
         <select id="filter-freshness" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
           <option value="">Semua status</option>
-          <option value="fresh">Masih fresh</option>
+          <option value="fresh">Terverifikasi</option>
           <option value="stale">Perlu verifikasi ulang</option>
         </select>
       </label>
@@ -310,8 +310,8 @@ const staleCount = scholarships.filter(needsReview).length;
     </div>
 
     <div id="scholarship-empty" class="mt-6 hidden rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
-      <p class="font-bold text-slate-950">Belum ada scholarship pada batch database ini yang cocok dengan semua filter.</p>
-      <p class="mt-2 text-sm text-slate-600">Coba longgarkan filter atau cek kembali setelah database diperluas.</p>
+      <p class="font-bold text-slate-950">Belum ada beasiswa dalam daftar saat ini yang cocok dengan semua filter.</p>
+      <p class="mt-2 text-sm text-slate-600">Coba longgarkan filter atau periksa kembali setelah informasi diperbarui.</p>
     </div>
 
     <div id="scholarship-grid" class="mt-6 grid gap-5 lg:grid-cols-2">
@@ -334,7 +334,7 @@ const staleCount = scholarships.filter(needsReview).length;
             <div class="flex flex-wrap justify-end gap-2">
               {item.featured && <span class="rounded-full bg-amber-100 px-3 py-1 text-[11px] font-bold text-amber-800">Prioritas</span>}
               <span class={`rounded-full px-3 py-1 text-[11px] font-bold ${needsReview(item) ? 'bg-red-100 text-red-700' : 'bg-green-50 text-green-700'}`}>
-                {needsReview(item) ? 'Perlu verifikasi ulang' : 'Data masih fresh'}
+                {needsReview(item) ? 'Perlu verifikasi ulang' : 'Terverifikasi'}
               </span>
               <span class="rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-700">
                 {campusScopeLabels[item.campusScope]}
@@ -366,24 +366,24 @@ const staleCount = scholarships.filter(needsReview).length;
               <dd class="mt-1 text-sm font-semibold leading-6 text-slate-900">{item.typicalWindow ?? item.applicationPeriod}</dd>
             </div>
             <div class="rounded-xl bg-slate-50 p-4">
-              <dt class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">Cara apply</dt>
+              <dt class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">Cara mendaftar</dt>
               <dd class="mt-1 text-sm font-semibold leading-6 text-slate-900">{routeLabels[item.applicationRoute]}</dd>
             </div>
             <div class="rounded-xl bg-slate-50 p-4">
-              <dt class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">Tipe funding</dt>
+              <dt class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">Jenis pendanaan</dt>
               <dd class="mt-1 text-sm font-semibold leading-6 text-slate-900">{fundingLabels[item.fundingType]}</dd>
             </div>
           </dl>
 
           <details class="mt-5 rounded-2xl border border-slate-200">
-            <summary class="cursor-pointer list-none px-4 py-3 text-sm font-bold text-slate-800">Lihat eligibility & catatan</summary>
+            <summary class="cursor-pointer list-none px-4 py-3 text-sm font-bold text-slate-800">Lihat syarat & catatan</summary>
             <div class="border-t border-slate-100 px-4 py-4 text-sm leading-6 text-slate-600">
               <p><strong class="text-slate-900">Kampus:</strong> {item.campusEligibilityNote}</p>
-              <p class="mt-2"><strong class="text-slate-900">Nationality:</strong> {item.nationalityNote}</p>
+              <p class="mt-2"><strong class="text-slate-900">Kewarganegaraan:</strong> {item.nationalityNote}</p>
               <p class="mt-2"><strong class="text-slate-900">Bidang:</strong> {item.fields.join(', ')}</p>
               <p class="mt-2"><strong class="text-slate-900">Durasi:</strong> {item.duration}</p>
-              <p class="mt-2"><strong class="text-slate-900">Snapshot terakhir:</strong> {item.latestVerifiedCycle ?? item.applicationPeriod}</p>
-              <p class="mt-2"><strong class="text-slate-900">Double scholarship:</strong> {item.pluralGrants}</p>
+              <p class="mt-2"><strong class="text-slate-900">Periode yang diverifikasi:</strong> {item.latestVerifiedCycle ?? item.applicationPeriod}</p>
+              <p class="mt-2"><strong class="text-slate-900">Beasiswa ganda:</strong> {item.pluralGrants}</p>
               {item.ageNote && <p class="mt-2"><strong class="text-slate-900">Usia:</strong> {item.ageNote}</p>}
               {item.visaNote && <p class="mt-2"><strong class="text-slate-900">Visa:</strong> {item.visaNote}</p>}
               {item.additionalRequirements?.length && (
@@ -398,7 +398,7 @@ const staleCount = scholarships.filter(needsReview).length;
             <div>
               <p class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-400">Sumber</p>
               <p class="mt-1 text-xs leading-5 text-slate-500">{item.sourceLabel} · diperiksa {item.verified}</p>
-              <p class="mt-1 text-[11px] leading-5 text-slate-400">Deadline/nominal dapat berubah. Cek call terbaru sebelum apply.</p>
+              <p class="mt-1 text-[11px] leading-5 text-slate-400">Tenggat dan nominal dapat berubah. Cek pengumuman resmi terbaru sebelum mendaftar.</p>
               <p class="mt-1 text-[11px] leading-5 text-slate-400">Status data dihitung dari tanggal verifikasi terakhir.</p>
             </div>
             {item.sourceUrl && (
@@ -413,26 +413,26 @@ const staleCount = scholarships.filter(needsReview).length;
   <section class="mx-auto max-w-7xl px-5 py-6 lg:px-8">
     <details class="rounded-2xl border border-slate-200 bg-white p-5">
       <summary class="cursor-pointer font-bold text-slate-950">Tentang pembaruan data</summary>
-      <p class="mt-3 max-w-4xl text-sm leading-6 text-slate-600">Setiap card menampilkan tanggal verifikasi dan status freshness. Data yang sudah melewati interval review ditandai untuk diperiksa ulang; sumber resmi tetap menjadi rujukan akhir untuk cycle terbaru.</p>
+      <p class="mt-3 max-w-4xl text-sm leading-6 text-slate-600">Setiap kartu menampilkan tanggal verifikasi. Informasi yang sudah cukup lama sejak pemeriksaan terakhir ditandai untuk diverifikasi ulang; sumber resmi tetap menjadi rujukan akhir untuk periode beasiswa terbaru.</p>
     </details>
   </section>
 
   <section class="mx-auto max-w-7xl px-5 pb-20 pt-6 lg:px-8">
     <div class="rounded-3xl bg-slate-950 p-7 text-white sm:p-8">
       <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-soft">Cara menggunakan data ini</p>
-      <h2 class="mt-2 text-2xl font-bold">Tiga pengecekan sebelum Anda apply.</h2>
+      <h2 class="mt-2 text-2xl font-bold">Tiga pengecekan sebelum mendaftar.</h2>
       <div class="mt-5 grid gap-4 md:grid-cols-3">
         <div class="rounded-2xl bg-white/5 p-5">
-          <p class="font-bold">1 · Eligibility</p>
-          <p class="mt-2 text-sm leading-6 text-slate-300">Jenjang, usia, nationality, field, visa, study year, dan designated school.</p>
+          <p class="font-bold">1 · Persyaratan</p>
+          <p class="mt-2 text-sm leading-6 text-slate-300">Periksa jenjang, usia, kewarganegaraan, bidang studi, visa, tahun studi, dan ketentuan kampus.</p>
         </div>
         <div class="rounded-2xl bg-white/5 p-5">
           <p class="font-bold">2 · Jalur aplikasi</p>
-          <p class="mt-2 text-sm leading-6 text-slate-300">Bedakan apply langsung dengan scholarship yang hanya menerima nominasi dari kampus.</p>
+          <p class="mt-2 text-sm leading-6 text-slate-300">Bedakan pendaftaran langsung dengan beasiswa yang hanya menerima nominasi dari kampus.</p>
         </div>
         <div class="rounded-2xl bg-white/5 p-5">
-          <p class="font-bold">3 · Call terbaru</p>
-          <p class="mt-2 text-sm leading-6 text-slate-300">Gunakan card sebagai discovery; deadline dan kuota final selalu mengikuti announcement terbaru.</p>
+          <p class="font-bold">3 · Pengumuman terbaru</p>
+          <p class="mt-2 text-sm leading-6 text-slate-300">Gunakan daftar ini untuk menemukan opsi; tenggat dan kuota final selalu mengikuti pengumuman resmi terbaru.</p>
         </div>
       </div>
     </div>
@@ -488,7 +488,7 @@ const staleCount = scholarships.filter(needsReview).length;
           card.classList.toggle('hidden', !visible);
           if (visible) shown++;
         }
-        if (count) count.textContent = `${shown} scholarship ditampilkan`;
+        if (count) count.textContent = `${shown} beasiswa ditampilkan`;
         empty?.classList.toggle('hidden', shown !== 0);
       };
 
