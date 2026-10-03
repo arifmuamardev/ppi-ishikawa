@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
 import TopicIcon from '../components/TopicIcon.astro';
 import InstitutionMark from '../components/InstitutionMark.astro';
+import StoriesSection from '../components/StoriesSection.astro';
 import { withBase } from '../utils/paths';
 import { campuses } from '../data/campuses';
 import {
@@ -54,6 +55,7 @@ const campusCareerEntries = campuses.flatMap((campus) => {
         ['Academic & research', '#academic'],
         ['Persiapan karier', '#preparation'],
         ['Career center kampus', '#campus-career'],
+        ['Cerita karier', '#career-stories'],
         ['Untuk alumni', '#alumni']
       ].map(([label, href]) => (
         <a href={href} class="rounded-full border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 transition hover:border-amber-200 hover:bg-amber-50 hover:text-brand">
@@ -325,6 +327,17 @@ const campusCareerEntries = campuses.flatMap((campus) => {
       </div>
     </div>
   </section>
+
+  <div id="career-stories" class="scroll-mt-24 border-y border-slate-200 bg-white">
+    <StoriesSection
+      eyebrow="Cerita karier"
+      title="Pengalaman membangun karier setelah dan selama studi"
+      description="Cerita mahasiswa dan alumni tentang job hunting, internship, postdoc, riset, dan transisi setelah lulus."
+      topics={['career']}
+      showEmpty={true}
+      emptyText="Cerita karier pertama akan ditampilkan di sini setelah siap dipublikasikan."
+    />
+  </div>
 
   <section id="alumni" class="mx-auto max-w-7xl scroll-mt-24 px-5 py-14 lg:px-8">
     <div class="grid gap-5 lg:grid-cols-[1.1fr_.9fr]">
