@@ -80,7 +80,7 @@ import { withBase } from '../../utils/paths';
 
   <script>
     import { isSupabaseConfigured, supabase } from '../../lib/supabase';
-    import { demoRegister, isMembershipDemoMode, memberPath } from '../../lib/member';
+    import { demoRegister, isMembershipDemoMode, memberAbsoluteUrl, memberPath } from '../../lib/member';
 
     const form = document.getElementById('member-register-form');
     const message = document.getElementById('register-message');
@@ -129,7 +129,7 @@ import { withBase } from '../../utils/paths';
         submit?.setAttribute('disabled', '');
         if (submit) submit.textContent = 'Mendaftarkan…';
 
-        const redirectTo = new URL(memberPath('/member/login/?confirmed=1'), window.location.origin).toString();
+        const redirectTo = memberAbsoluteUrl('/member/login/?confirmed=1');
         const { data, error } = await supabase.auth.signUp({
           email: String(values.get('email') || '').trim(),
           password,
