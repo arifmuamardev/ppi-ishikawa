@@ -9,7 +9,7 @@ export const relatedSurvivalContent: Record<string, RelatedContentItem[]> = {
   SG01: [
     { title: 'Hari Pertama di Ishikawa', description: 'Lanjutkan dari persiapan keberangkatan ke urutan tindakan setelah tiba.', href: '/life-in-ishikawa/hari-pertama/', icon: 'arrival' },
     { title: 'Tempat Tinggal', description: 'Pahami kontrak, biaya awal, aturan unit, dan hal yang perlu dicek sebelum memilih housing.', href: '/life-in-ishikawa/tempat-tinggal/', icon: 'housing' },
-    { title: 'Campus Hub', description: 'Buka panduan kampus untuk akses, housing, support, dan kebutuhan spesifik institusimu.', href: '/community/kampus/', icon: 'campus' }
+    { title: 'Kampus', description: 'Buka panduan kampus untuk akses, tempat tinggal, dukungan, dan kebutuhan spesifik institusi Anda.', href: '/community/kampus/', icon: 'campus' }
   ],
   SG02: [
     { title: 'Administrasi', description: 'Resident registration, insurance, pension, My Number, dan prosedur awal lainnya.', href: '/life-in-ishikawa/administrasi/', icon: 'documents' },
@@ -34,7 +34,7 @@ export const relatedSurvivalContent: Record<string, RelatedContentItem[]> = {
   SG06: [
     { title: 'Tempat Tinggal', description: 'Commute yang baik dimulai dari pilihan lokasi housing yang tepat.', href: '/life-in-ishikawa/tempat-tinggal/', icon: 'housing' },
     { title: 'Musim Dingin', description: 'Pelajari backup transport dan keselamatan ketika snow atau ice mengubah perjalanan.', href: '/life-in-ishikawa/winter/', icon: 'winter' },
-    { title: 'Campus Hub', description: 'Bandingkan lokasi kampus dan pola mobilitas tiap institusi.', href: '/community/kampus/', icon: 'campus' }
+    { title: 'Kampus', description: 'Bandingkan lokasi kampus dan pola mobilitas tiap institusi.', href: '/community/kampus/', icon: 'campus' }
   ],
   SG07: [
     { title: 'Bahasa Jepang & Dukungan', description: 'Gunakan jalur support ketika bahasa menjadi hambatan saat mencari layanan medis.', href: '/life-in-ishikawa/japanese-support/', icon: 'language' },
@@ -116,21 +116,21 @@ export const generalRelatedContent: Record<string, RelatedContentItem[]> = {
   about: [
     { title: 'Program & kegiatan', description: 'Lihat fokus kerja tujuh departemen dan bidang layanan yang ditangani periode 2026/27.', href: '/programs/', icon: 'guide' },
     { title: 'Komunitas', description: 'Lihat kegiatan, jaringan kampus, keluarga, dan cara terhubung dengan PPI Ishikawa.', href: '/community/', icon: 'support' },
-    { title: 'Hubungi PPI', description: 'Gunakan jalur bantuan atau kontak organisasi sesuai kebutuhanmu.', href: '/contact/', icon: 'collaboration' }
+    { title: 'Hubungi PPI', description: 'Gunakan jalur bantuan atau kontak organisasi sesuai kebutuhan Anda.', href: '/contact/', icon: 'collaboration' }
   ],
   community: [
-    { title: 'Campus Hub', description: 'Temukan panduan enam institusi dan bandingkan housing, mobility, serta support.', href: '/community/kampus/', icon: 'campus' },
-    { title: 'Survival Guide', description: 'Gunakan panduan hidup di Ishikawa untuk administrasi, kesehatan, transportasi, dan kebutuhan sehari-hari.', href: '/life-in-ishikawa/', icon: 'guide' },
+    { title: 'Kampus', description: 'Temukan panduan enam institusi dan bandingkan tempat tinggal, mobilitas, serta dukungan.', href: '/community/kampus/', icon: 'campus' },
+    { title: 'Hidup di Ishikawa', description: 'Gunakan panduan hidup di Ishikawa untuk administrasi, kesehatan, transportasi, dan kebutuhan sehari-hari.', href: '/life-in-ishikawa/', icon: 'guide' },
     { title: 'Bahasa & dukungan', description: 'Cari IFIE, dukungan kampus, immigration, labor support, dan jalur konsultasi lainnya.', href: '/life-in-ishikawa/japanese-support/', icon: 'support' }
   ],
   resources: [
-    { title: 'Campus Hub', description: 'Mulai dari institusimu jika kebutuhanmu spesifik pada kampus.', href: '/community/kampus/', icon: 'campus' },
-    { title: 'Survival Guide', description: 'Mulai dari kebutuhan hidup jika topikmu lintas kampus dan municipality.', href: '/life-in-ishikawa/', icon: 'guide' },
+    { title: 'Kampus', description: 'Mulai dari institusi Anda jika kebutuhan Anda spesifik pada kampus.', href: '/community/kampus/', icon: 'campus' },
+    { title: 'Hidup di Ishikawa', description: 'Mulai dari kebutuhan hidup jika topik Anda lintas kampus dan wilayah tempat tinggal.', href: '/life-in-ishikawa/', icon: 'guide' },
     { title: 'Hubungi PPI', description: 'Gunakan jalur bantuan ketika informasi yang tersedia belum menjawab kebutuhanmu.', href: '/contact/', icon: 'support' }
   ],
   contact: [
-    { title: 'Survival Guide', description: 'Banyak kebutuhan praktis dapat dijawab langsung melalui panduan yang sudah tersedia.', href: '/life-in-ishikawa/', icon: 'guide' },
-    { title: 'Campus Hub', description: 'Gunakan panduan kampus jika pertanyaanmu terkait institusi tertentu.', href: '/community/kampus/', icon: 'campus' },
+    { title: 'Hidup di Ishikawa', description: 'Banyak kebutuhan praktis dapat dijawab langsung melalui panduan yang sudah tersedia.', href: '/life-in-ishikawa/', icon: 'guide' },
+    { title: 'Kampus', description: 'Gunakan panduan kampus jika pertanyaan Anda terkait institusi tertentu.', href: '/community/kampus/', icon: 'campus' },
     { title: 'Komunitas', description: 'Kenali ruang komunitas dan jalur keterlibatan anggota PPI Ishikawa.', href: '/community/', icon: 'support' }
   ],
   programs: [
