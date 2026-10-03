@@ -42,7 +42,14 @@ const {
           <a href={withBase('/member/announcements/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Pengumuman</a>
           <a href={withBase('/member/interests/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Minat & skills</a>
           <a href={withBase('/member/aspirations/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Aspirasi</a>
-          <a id="member-admin-link" href={withBase('/member/admin/verification/')} class="hidden rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Verifikasi anggota</a>
+          <div id="member-admin-tools" class="hidden">
+            <div class="my-3 border-t border-slate-100"></div>
+            <p class="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Admin</p>
+            <a href={withBase('/member/admin/verification/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Verifikasi anggota</a>
+            <a href={withBase('/member/admin/events/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kelola agenda</a>
+            <a href={withBase('/member/admin/announcements/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kelola pengumuman</a>
+            <a href={withBase('/member/admin/aspirations/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kelola aspirasi</a>
+          </div>
         </nav>
 
         <div class="mt-4 border-t border-slate-100 pt-4">
@@ -78,7 +85,7 @@ const {
     const content = document.getElementById('member-content');
     const name = document.getElementById('member-nav-name');
     const status = document.getElementById('member-nav-status');
-    const adminLink = document.getElementById('member-admin-link');
+    const adminTools = document.getElementById('member-admin-tools');
     const signout = document.getElementById('member-signout');
 
     const statusLabels = {
@@ -100,7 +107,7 @@ const {
           ? label
           : 'Menunggu verifikasi';
       }
-      if (member.profile.role === 'admin') adminLink?.classList.remove('hidden');
+      if (member.profile.role === 'admin') adminTools?.classList.remove('hidden');
       if (isMembershipDemoMode) demoBanner?.classList.remove('hidden');
 
       loading?.classList.add('hidden');
