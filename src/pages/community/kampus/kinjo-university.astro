@@ -93,30 +93,18 @@ const campusMap = campusMapPoints['kinjo-university'];
     </div>
   </section>
 
-  <section id="minggu-pertama" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
-    <span id="bagian-02" class="sr-only" aria-hidden="true"></span>
-    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">02 · Minggu pertama</p>
-    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kenali support route dan uji commute sebelum jadwal mulai padat.</h2>
-    <div class="mt-7 grid gap-3">
-      {[
-        ['1', 'Pastikan program dan campus', 'Cek apakah kegiatan utama Anda berlangsung di Kasama Campus, Matto Campus, atau keduanya—terutama untuk nursing, practicum, dan kegiatan lintas kampus.'],
-        ['2', 'Hubungi International Exchange Center', 'Untuk mahasiswa internasional, simpan support route untuk residence status, housing, medical matters, daily life, study, dan scholarship.'],
-        ['3', 'Selesaikan private housing', 'Kinjo tidak memiliki foreign-student dormitory. Pastikan apartment, kontrak, guarantor/co-signer arrangement, utilities, dan akses ke kampus sudah jelas.'],
-        ['4', 'Uji rute Kaga-Kasama / Matto', 'Coba commute aktual dari tempat tinggal pada jam yang akan Anda gunakan. Timetable kereta, bus, dan shuttle harus dicek dari sumber live.'],
-        ['5', 'Kenali advisor dan support desk', 'Simpan kontak academic/study advisor, Health Room, Counseling Room, Disability Support Center, Career Support Center, dan International Exchange Center.'],
-        ['6', 'Pahami practicum dan professional pathway', 'Banyak program Kinjo berorientasi praktik dan professional qualification. Cek dress code, insurance, transport, required documents, serta schedule practicum sejak awal.']
-      ].map(([n,title,desc]) => (
-        <div class="grid gap-3 rounded-2xl border border-slate-200 bg-white p-5 sm:grid-cols-[44px_1fr]">
-          <span class="grid size-10 place-items-center rounded-full bg-amber-50 text-sm font-bold text-accent-dark">{n}</span>
-          <div>
-            <h3 class="font-bold text-slate-950">{title}</h3>
-            <p class="mt-1 text-sm leading-6 text-slate-600">{desc}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
-
+  <CampusGuideBridge
+    id="minggu-pertama"
+    number="02"
+    eyebrow="Minggu pertama"
+    title="Minggu pertama di Kinjo: pastikan Kasama atau Matto dan kenali support route."
+    summary="Checklist kedatangan yang berlaku umum—resident registration, health insurance, pension, komunikasi, pembayaran, dan kebutuhan hari pertama—tidak diulang di Campus Pack. Gunakan Survival Guide sebagai checklist utama."
+    campusNote="Lokasi studi memengaruhi housing dan commute. International Exchange Center adalah titik awal untuk banyak kebutuhan international student, sedangkan kebutuhan akademik mengikuti faculty/advisor."
+    links={[
+      { label: 'Hari Pertama di Ishikawa', href: '/life-in-ishikawa/hari-pertama/', icon: 'arrival' },
+      { label: 'Administrasi', href: '/life-in-ishikawa/administrasi/', icon: 'documents' }
+    ]}
+  />
   <section id="kontak-dukungan" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
     <span id="bagian-03" class="sr-only" aria-hidden="true"></span>
     <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">03 · Ke mana harus bertanya</p>
