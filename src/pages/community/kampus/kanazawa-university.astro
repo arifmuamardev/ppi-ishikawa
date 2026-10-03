@@ -146,22 +146,28 @@ const campusMap = campusMapPoints['kanazawa-university'];
   <section id="transportasi" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
     <span id="bagian-05" class="sr-only" aria-hidden="true"></span>
     <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">05 · Transportasi</p>
-    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kenali rute sebelum bergantung pada satu moda.</h2>
-    <div class="mt-7 grid gap-5 md:grid-cols-2">
-      <article class="rounded-3xl border border-slate-200 bg-white p-6">
-        <h3 class="font-bold text-slate-950">Dari Kanazawa Station</h3>
-        <p class="mt-3 text-sm leading-6 text-slate-600">KU menyediakan halaman akses resmi yang menunjuk bus menuju Kakuma maupun Takaramachi–Tsuruma. Nomor rute dan timetable dapat berubah, jadi cek langsung sebelum perjalanan.</p>
-        <a href="https://www.kanazawa-u.ac.jp/university/campus-guidance/access/" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Akses resmi ↗</a>
+    <h2 class="mt-3 text-2xl font-bold tracking-tight text-slate-950">Yang penting di KU adalah membedakan Kakuma dan Takaramachi–Tsuruma.</h2>
+    <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-600">Campus Pack hanya menyimpan pola akses yang khas kampus. Fare, timetable, bicycle rules, IC card, winter safety, dan transport umum tetap dirujuk ke Survival Guide.</p>
+    <div class="mt-6 grid gap-4 md:grid-cols-3">
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-950">Kakuma</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Gunakan access page resmi KU untuk rute menuju Kakuma. Jika housing Anda di area timur Kanazawa, uji commute aktual sebelum mengandalkan satu moda.</p>
       </article>
-      <article class="rounded-3xl border border-slate-200 bg-white p-6">
-        <h3 class="font-bold text-slate-950">KU shuttle antar-kampus</h3>
-        <p class="mt-3 text-sm leading-6 text-slate-600">Shuttle gratis menghubungkan Kakuma dan Takaramachi–Tsuruma pada hari operasional universitas. Student/staff ID perlu dibawa. Gunakan timetable resmi untuk jadwal terbaru.</p>
-        <a href="https://www.kanazawa-u.ac.jp/students/livelihood/shuttle_bus/?wovn=en" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Shuttle bus ↗</a>
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-950">Takaramachi–Tsuruma</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Medicine dan health-science activities dapat berpusat di area ini, sehingga housing dan commute tidak boleh diasumsikan sama dengan Kakuma.</p>
+      </article>
+      <article class="rounded-2xl border border-slate-200 bg-white p-5">
+        <h3 class="font-bold text-slate-950">Shuttle antar-kampus</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">KU menyediakan shuttle gratis antara Kakuma dan Takaramachi–Tsuruma pada hari operasional tertentu. Gunakan timetable resmi terbaru.</p>
       </article>
     </div>
-    <a href={withBase('/life-in-ishikawa/transportasi/')} class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">SG06 · Transportasi →</a>
+    <div class="mt-5 flex flex-wrap gap-3">
+      <a href="https://www.kanazawa-u.ac.jp/university/campus-guidance/access/" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Akses resmi KU ↗</a>
+      <a href="https://www.kanazawa-u.ac.jp/students/livelihood/shuttle_bus/?wovn=en" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">KU shuttle ↗</a>
+      <a href={withBase('/life-in-ishikawa/transportasi/')} class="rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white">Panduan Transportasi →</a>
+    </div>
   </section>
-
   <section id="kesehatan-dukungan" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
     <span id="bagian-06" class="sr-only" aria-hidden="true"></span>
     <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">06 · Kesehatan & dukungan</p>
