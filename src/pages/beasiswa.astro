@@ -320,6 +320,12 @@ const stageLabels = {
         empty?.classList.toggle('hidden', shown !== 0);
       };
 
+      const params = new URLSearchParams(window.location.search);
+      if (campus && params.get('campus')) campus.value = params.get('campus');
+      if (level && params.get('level')) level.value = params.get('level');
+      if (stage && params.get('stage')) stage.value = params.get('stage');
+      if (indonesia && params.get('indonesia') === 'yes') indonesia.value = 'yes';
+
       [campus, level, stage, indonesia].forEach((el) => el?.addEventListener('change', apply));
       reset?.addEventListener('click', () => {
         if (campus) campus.value = '';
