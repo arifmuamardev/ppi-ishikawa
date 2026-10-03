@@ -1,0 +1,145 @@
+---
+import MemberLayout from '../../layouts/MemberLayout.astro';
+import { campuses } from '../../data/campuses';
+---
+
+<MemberLayout title="Direktori Anggota" requireApproved={true}>
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Direktori Anggota</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Temukan anggota PPI Ishikawa</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Direktori hanya menampilkan anggota terverifikasi yang memilih untuk menampilkan profilnya.</p>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-5">
+      <div class="grid gap-3 md:grid-cols-3">
+        <label>
+          <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Cari</span>
+          <input id="directory-search" type="search" placeholder="Nama, program, bidang…" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-900" />
+        </label>
+        <label>
+          <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Kampus</span>
+          <select id="directory-campus" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-900">
+            <option value="">Semua kampus</option>
+            {campuses.map((campus) => <option value={campus.slug}>{campus.shortName}</option>)}
+          </select>
+        </label>
+        <label>
+          <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Status</span>
+          <select id="directory-status" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-900">
+            <option value="">Semua status</option>
+            <option value="incoming">Incoming</option>
+            <option value="active">Anggota aktif</option>
+            <option value="alumni">Alumni</option>
+          </select>
+        </label>
+      </div>
+      <div class="mt-4 flex items-center justify-between gap-3">
+        <button id="directory-reset" type="button" class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">Reset</button>
+        <p id="directory-count" class="text-sm font-semibold text-slate-500">Memuat…</p>
+      </div>
+    </section>
+
+    <div id="directory-error" class="hidden rounded-2xl border border-red-200 bg-red-50 p-5 text-sm leading-6 text-red-800"></div>
+    <div id="directory-empty" class="hidden rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+      <p class="font-bold text-slate-950">Belum ada profil yang cocok.</p>
+      <p class="mt-2 text-sm text-slate-600">Coba ubah kata kunci atau filter.</p>
+    </div>
+    <section id="directory-grid" class="grid gap-5 md:grid-cols-2 xl:grid-cols-3"></section>
+  </div>
+
+  <script>
+    import { campuses } from '../../data/campuses';
+    import { isSupabaseConfigured, supabase } from '../../lib/supabase';
+
+    const grid = document.getElementById('directory-grid');
+    const empty = document.getElementById('directory-empty');
+    const errorBox = document.getElementById('directory-error');
+    const count = document.getElementById('directory-count');
+    const search = document.getElementById('directory-search');
+    const campus = document.getElementById('directory-campus');
+    const status = document.getElementById('directory-status');
+    const reset = document.getElementById('directory-reset');
+    const campusMap = new Map(campuses.map((item) => [item.slug, item.shortName]));
+    const statusMap = { incoming: 'Incoming', active: 'Anggota aktif', alumni: 'Alumni' };
+
+    const node = (tag, className, text) => {
+      const el = document.createElement(tag);
+      if (className) el.className = className;
+      if (text !== undefined && text !== null) el.textContent = text;
+      return el;
+    };
+
+    const render = (members) => {
+      if (!grid) return;
+      grid.replaceChildren();
+      empty?.classList.toggle('hidden', members.length !== 0);
+      if (count) count.textContent = `${members.length} anggota`;
+
+      for (const member of members) {
+        const card = node('article', 'rounded-3xl border border-slate-200 bg-white p-6');
+        const top = node('div', 'flex flex-wrap gap-2');
+        top.append(node('span', 'rounded-full bg-amber-50 px-3 py-1 text-[11px] font-bold text-accent-dark', campusMap.get(member.campus_slug) || 'Kampus'));
+        top.append(node('span', 'rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-600', statusMap[member.membership_status] || member.membership_status));
+        card.append(top);
+
+        card.append(node('h2', 'mt-4 text-xl font-bold text-slate-950', member.full_name));
+        const detail = [member.program, member.study_level, member.field_of_study].filter(Boolean).join(' · ');
+        if (detail) card.append(node('p', 'mt-2 text-sm leading-6 text-slate-600', detail));
+        if (member.city) card.append(node('p', 'mt-2 text-xs font-semibold text-slate-500', member.city));
+        if (member.bio) card.append(node('p', 'mt-4 text-sm leading-6 text-slate-600', member.bio));
+
+        const links = node('div', 'mt-5 flex flex-wrap gap-3 border-t border-slate-100 pt-4');
+        if (member.instagram) {
+          const a = node('a', 'text-sm font-bold text-brand hover:underline', 'Instagram ↗');
+          a.href = member.instagram.startsWith('http') ? member.instagram : `https://www.instagram.com/${member.instagram.replace('@', '')}/`;
+          a.target = '_blank'; a.rel = 'noreferrer'; links.append(a);
+        }
+        if (member.linkedin_url) {
+          const a = node('a', 'text-sm font-bold text-brand hover:underline', 'LinkedIn ↗');
+          a.href = member.linkedin_url; a.target = '_blank'; a.rel = 'noreferrer'; links.append(a);
+        }
+        if (links.childElementCount) card.append(links);
+        grid.append(card);
+      }
+    };
+
+    const load = async () => {
+      if (!isSupabaseConfigured || !supabase) return;
+      if (count) count.textContent = 'Memuat…';
+      errorBox?.classList.add('hidden');
+
+      const { data, error } = await supabase.rpc('get_member_directory', {
+        search_query: search instanceof HTMLInputElement ? search.value.trim() : '',
+        campus_filter: campus instanceof HTMLSelectElement ? campus.value : '',
+        status_filter: status instanceof HTMLSelectElement ? status.value : '',
+      });
+
+      if (error) {
+        if (errorBox) {
+          errorBox.textContent = 'Direktori belum dapat dimuat. Pastikan membership Anda sudah terverifikasi.';
+          errorBox.classList.remove('hidden');
+        }
+        if (count) count.textContent = '—';
+        return;
+      }
+      render(data || []);
+    };
+
+    let timer;
+    search?.addEventListener('input', () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(load, 250);
+    });
+    campus?.addEventListener('change', load);
+    status?.addEventListener('change', load);
+    reset?.addEventListener('click', () => {
+      if (search instanceof HTMLInputElement) search.value = '';
+      if (campus instanceof HTMLSelectElement) campus.value = '';
+      if (status instanceof HTMLSelectElement) status.value = '';
+      load();
+    });
+
+    load();
+  </script>
+</MemberLayout>
