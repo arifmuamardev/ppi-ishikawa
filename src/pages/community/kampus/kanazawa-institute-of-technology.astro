@@ -21,6 +21,8 @@ import { kitPack, kitSections, kitQuickLinks, kitContactMap, kitFaq } from '../.
 
 const campusPhoto = campusMedia['kanazawa-institute-of-technology']!;
 const campusMap = campusMapPoints['kanazawa-institute-of-technology'];
+
+const priorityFaq = kitFaq.filter((item) => ["international-community-house","bantuan-medis-multibahasa","campus-guide-vs-ppi"].includes(item.id));
 ---
 
 <BaseLayout
@@ -241,9 +243,10 @@ const campusMap = campusMapPoints['kanazawa-institute-of-technology'];
   <section id="faq" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
     <span id="bagian-10" class="sr-only" aria-hidden="true"></span>
     <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">10 · FAQ mahasiswa Indonesia</p>
-    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Jawaban cepat untuk incoming dan daily life.</h2>
-    <div class="mt-7 space-y-3">
-      {kitFaq.map((item, index) => (
+    <h2 class="mt-3 text-2xl font-bold tracking-tight text-slate-950">Pertanyaan tambahan yang perlu konteks khusus KIT.</h2>
+    <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-600">FAQ hanya menyimpan pertanyaan yang tidak sudah dijelaskan pada housing, transport, support, academic, atau section kampus lainnya.</p>
+    <div class="mt-6 space-y-3">
+      {priorityFaq.map((item, index) => (
         <details id={`faq-${item.id}`} class="scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-5">
           <span id={`faq-${String(index + 1).padStart(2, '0')}`} class="sr-only" aria-hidden="true"></span>
           <summary class="cursor-pointer font-bold text-slate-950">{item.q}</summary>
