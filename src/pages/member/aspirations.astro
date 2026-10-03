@@ -1,0 +1,147 @@
+---
+import MemberLayout from '../../layouts/MemberLayout.astro';
+---
+
+<MemberLayout title="Aspirasi Anggota" requireApproved={true}>
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Aspirasi</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Sampaikan kebutuhan atau usulan</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Gunakan kanal ini untuk menyampaikan ide kegiatan, kebutuhan anggota, masukan layanan, atau hal lain yang perlu diketahui pengurus.</p>
+    </section>
+
+    <div id="aspiration-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <h2 class="text-xl font-bold text-slate-950">Kirim aspirasi</h2>
+      <form id="aspiration-form" class="mt-6 grid gap-5 md:grid-cols-2">
+        <label>
+          <span class="text-sm font-bold text-slate-800">Kategori</span>
+          <select name="category" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+            <option value="">Pilih kategori</option>
+            <option>Kegiatan</option>
+            <option>Akademik</option>
+            <option>Karier</option>
+            <option>Olahraga</option>
+            <option>Kekeluargaan</option>
+            <option>Informasi & layanan</option>
+            <option>Lainnya</option>
+          </select>
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Judul singkat</span>
+          <input name="subject" type="text" maxlength="120" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" placeholder="Contoh: Usulan kegiatan badminton" />
+        </label>
+        <label class="md:col-span-2">
+          <span class="text-sm font-bold text-slate-800">Pesan</span>
+          <textarea name="message" rows="6" maxlength="1500" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" placeholder="Jelaskan kebutuhan, ide, atau masukan Anda."></textarea>
+        </label>
+        <label class="md:col-span-2 flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
+          <input name="anonymous" type="checkbox" class="mt-1 size-4" />
+          <span>
+            <strong class="text-slate-950">Kirim secara anonim kepada pengurus</strong>
+            <span class="mt-1 block text-sm leading-6 text-slate-600">Identitas tidak perlu ditampilkan dalam penanganan aspirasi. Pada mode demo, tidak ada data yang dikirim keluar browser.</span>
+          </span>
+        </label>
+        <div class="md:col-span-2 flex justify-end">
+          <button type="submit" class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Kirim aspirasi</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Riwayat</p>
+          <h2 class="mt-2 text-xl font-bold text-slate-950">Aspirasi saya</h2>
+        </div>
+        <p id="aspiration-count" class="text-sm font-semibold text-slate-500">0 aspirasi</p>
+      </div>
+      <div id="aspiration-empty" class="mt-6 rounded-2xl bg-slate-50 p-6 text-center text-sm text-slate-600">Belum ada aspirasi yang dikirim.</div>
+      <div id="aspiration-list" class="mt-6 space-y-3"></div>
+    </section>
+  </div>
+
+  <script>
+    import { getMyAspirations, submitAspiration } from '../../lib/member-community';
+
+    const form = document.getElementById('aspiration-form');
+    const list = document.getElementById('aspiration-list');
+    const empty = document.getElementById('aspiration-empty');
+    const count = document.getElementById('aspiration-count');
+    const messageBox = document.getElementById('aspiration-message');
+
+    const statusLabels = {
+      received: 'Diterima',
+      reviewed: 'Ditinjau',
+      planned: 'Direncanakan',
+      completed: 'Selesai',
+    };
+
+    const show = (text, error = false) => {
+      if (!messageBox) return;
+      messageBox.textContent = text;
+      messageBox.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
+    };
+
+    const render = async () => {
+      const aspirations = await getMyAspirations();
+      if (count) count.textContent = `${aspirations.length} aspirasi`;
+      empty?.classList.toggle('hidden', aspirations.length !== 0);
+      if (!list) return;
+      list.replaceChildren();
+
+      for (const item of aspirations) {
+        const card = document.createElement('article');
+        card.className = 'rounded-2xl border border-slate-200 p-5';
+
+        const meta = document.createElement('div');
+        meta.className = 'flex flex-wrap gap-2';
+        for (const text of [item.category, statusLabels[item.status], item.anonymous ? 'Anonim' : 'Dengan identitas']) {
+          const badge = document.createElement('span');
+          badge.className = 'rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-600';
+          badge.textContent = text;
+          meta.append(badge);
+        }
+
+        const heading = document.createElement('h3');
+        heading.className = 'mt-3 font-bold text-slate-950';
+        heading.textContent = item.subject;
+
+        const body = document.createElement('p');
+        body.className = 'mt-2 text-sm leading-6 text-slate-600';
+        body.textContent = item.message;
+
+        const date = document.createElement('p');
+        date.className = 'mt-3 text-xs text-slate-500';
+        date.textContent = new Intl.DateTimeFormat('id-ID', { dateStyle: 'long', timeStyle: 'short' }).format(new Date(item.created_at));
+
+        card.append(meta, heading, body, date);
+        list.append(card);
+      }
+    };
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!(form instanceof HTMLFormElement)) return;
+      const values = new FormData(form);
+      const { error } = await submitAspiration({
+        subject: String(values.get('subject') || '').trim(),
+        message: String(values.get('message') || '').trim(),
+        category: String(values.get('category') || ''),
+        anonymous: values.get('anonymous') === 'on',
+      });
+
+      if (error) {
+        show('Aspirasi belum dapat dikirim.', true);
+        return;
+      }
+
+      form.reset();
+      show('Aspirasi berhasil disimpan.');
+      await render();
+    });
+
+    render();
+  </script>
+</MemberLayout>
