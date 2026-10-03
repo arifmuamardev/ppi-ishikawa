@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageIntro from '../components/PageIntro.astro';
 import TopicIcon from '../components/TopicIcon.astro';
+import InstagramFeed from '../components/InstagramFeed.astro';
 import { withBase } from '../utils/paths';
 import { publicMedia } from '../data/media';
 
@@ -83,6 +84,8 @@ const communityPaths = [
       ))}
     </div>
   </section>
+
+  <InstagramFeed />
 
   <section class="border-y border-slate-200 bg-white">
     <div class="mx-auto max-w-7xl px-5 py-14 lg:px-8 lg:py-16">
