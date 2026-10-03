@@ -64,7 +64,7 @@ export const relatedSurvivalContent: Record<string, RelatedContentItem[]> = {
   SG12: [
     { title: 'Kesehatan', description: 'Dukungan bahasa sangat penting ketika mencari clinic, hospital, atau counseling.', href: '/life-in-ishikawa/kesehatan/', icon: 'health' },
     { title: 'Administrasi', description: 'Gunakan support resmi ketika residence, insurance, pension, atau dokumen sulit dipahami.', href: '/life-in-ishikawa/administrasi/', icon: 'documents' },
-    { title: 'Community', description: 'Temukan jalur komunitas PPI ketika yang dibutuhkan adalah pengalaman dan koneksi antarmahasiswa.', href: '/community/', icon: 'support' }
+    { title: 'Komunitas', description: 'Terhubung dengan pelajar Indonesia ketika yang dibutuhkan adalah pengalaman, kegiatan, atau koneksi antarmahasiswa.', href: '/community/', icon: 'support' }
   ],
   SG13: [
     { title: 'Administrasi', description: 'Pastikan moving-out, insurance, pension, residence, dan dokumen selesai sebelum pergi.', href: '/life-in-ishikawa/administrasi/', icon: 'documents' },
@@ -115,7 +115,7 @@ export const campusRelatedContent: Record<string, RelatedContentItem[]> = {
 export const generalRelatedContent: Record<string, RelatedContentItem[]> = {
   about: [
     { title: 'Program & kegiatan', description: 'Lihat fokus kerja tujuh departemen dan bidang layanan yang ditangani periode 2026/27.', href: '/programs/', icon: 'guide' },
-    { title: 'Komunitas', description: 'Lihat jalur anggota, keluarga, pendatang baru, dan dukungan yang tersedia.', href: '/community/', icon: 'support' },
+    { title: 'Komunitas', description: 'Lihat kegiatan, jaringan kampus, keluarga, dan cara terhubung dengan PPI Ishikawa.', href: '/community/', icon: 'support' },
     { title: 'Hubungi PPI', description: 'Gunakan jalur bantuan atau kontak organisasi sesuai kebutuhanmu.', href: '/contact/', icon: 'collaboration' }
   ],
   community: [
