@@ -245,14 +245,110 @@ revoke all on table public.member_preferences from anon, authenticated;
 revoke all on table public.member_aspirations from anon, authenticated;
 
 grant select, insert, update, delete on public.member_events to authenticated;
-grant select, insert, update, delete on public.event_rsvps to authenticated;
+grant select, delete on public.event_rsvps to authenticated;
+grant insert (event_id, user_id, attending, updated_at) on public.event_rsvps to authenticated;
+grant update (attending, updated_at) on public.event_rsvps to authenticated;
 grant select, insert, update, delete on public.member_announcements to authenticated;
 grant select, insert, update, delete on public.member_preferences to authenticated;
 grant select, insert on public.member_aspirations to authenticated;
 
+create or replace function private.get_event_attendance_impl(target_event_id uuid)
+returns table (
+  user_id uuid,
+  full_name text,
+  attending boolean,
+  checked_in_at timestamptz
+)
+language plpgsql
+stable
+security definer
+set search_path = ''
+as $
+begin
+  if not private.is_admin() then
+    raise exception 'Admin access required';
+  end if;
+
+  return query
+  select
+    r.user_id,
+    p.full_name,
+    r.attending,
+    r.checked_in_at
+  from public.event_rsvps r
+  join public.profiles p on p.user_id = r.user_id
+  where r.event_id = target_event_id
+  order by p.full_name;
+end;
+$;
+
+create or replace function public.get_event_attendance(target_event_id uuid)
+returns table (
+  user_id uuid,
+  full_name text,
+  attending boolean,
+  checked_in_at timestamptz
+)
+language sql
+stable
+security invoker
+set search_path = ''
+as $
+  select * from private.get_event_attendance_impl(target_event_id);
+$;
+
+create or replace function private.set_event_checkin_impl(
+  target_event_id uuid,
+  target_user_id uuid,
+  checked_in boolean
+)
+returns boolean
+language plpgsql
+security definer
+set search_path = ''
+as $
+begin
+  if not private.is_admin() then
+    raise exception 'Admin access required';
+  end if;
+
+  update public.event_rsvps
+  set checked_in_at = case when checked_in then now() else null end,
+      updated_at = now()
+  where event_id = target_event_id
+    and user_id = target_user_id
+    and attending = true;
+
+  if not found then
+    raise exception 'RSVP not found';
+  end if;
+
+  return true;
+end;
+$;
+
+create or replace function public.set_event_checkin(
+  target_event_id uuid,
+  target_user_id uuid,
+  checked_in boolean
+)
+returns boolean
+language sql
+security invoker
+set search_path = ''
+as $
+  select private.set_event_checkin_impl(target_event_id, target_user_id, checked_in);
+$;
+
 revoke all on function public.get_admin_aspirations() from public;
 revoke all on function public.update_aspiration_status(uuid, text) from public;
+revoke all on function public.get_event_attendance(uuid) from public;
+revoke all on function public.set_event_checkin(uuid, uuid, boolean) from public;
 grant execute on function private.get_admin_aspirations_impl() to authenticated;
 grant execute on function private.update_aspiration_status_impl(uuid, text) to authenticated;
+grant execute on function private.get_event_attendance_impl(uuid) to authenticated;
+grant execute on function private.set_event_checkin_impl(uuid, uuid, boolean) to authenticated;
 grant execute on function public.get_admin_aspirations() to authenticated;
 grant execute on function public.update_aspiration_status(uuid, text) to authenticated;
+grant execute on function public.get_event_attendance(uuid) to authenticated;
+grant execute on function public.set_event_checkin(uuid, uuid, boolean) to authenticated;
