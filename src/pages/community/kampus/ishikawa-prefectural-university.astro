@@ -8,6 +8,7 @@ import CampusScholarshipGuide from '../../../components/CampusScholarshipGuide.a
 import RelatedLinks from '../../../components/RelatedLinks.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import CampusProfile from '../../../components/CampusProfile.astro';
+import CampusGuideBridge from '../../../components/CampusGuideBridge.astro';
 import LicensedPhoto from '../../../components/LicensedPhoto.astro';
 import InteractiveMap from '../../../components/InteractiveMap.astro';
 import { campusRelatedContent } from '../../../data/related-content';
@@ -280,20 +281,18 @@ const campusMap = campusMapPoints['ishikawa-prefectural-university'];
     </div>
   </section>
 
-  <section id="keluarga-daily-life" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
-    <span id="bagian-09" class="sr-only" aria-hidden="true"></span>
-    <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">09 · Keluarga & daily life</p>
-    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Untuk daily life, Nonoichi menjadi bagian dari pengalaman kampus.</h2>
-    <p class="mt-4 max-w-3xl leading-7 text-slate-600">IPU menyediakan guide sekitar kampus yang menunjuk city hall, library/civic center, shopping, community bus, dan fasilitas lain di Nonoichi. Untuk family administration, childcare, school, garbage, dan health subsidy, gunakan municipality sesuai alamat tempat tinggal.</p>
-    <div class="mt-5 flex flex-wrap gap-3">
-      <a href="https://www.ishikawa-pu.ac.jp/campus/guide/" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Around campus ↗</a>
-      <a href={withBase('/life-in-ishikawa/family-anak/')} class="rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white">SG08 · Keluarga & Anak →</a>
-      <a href={withBase('/life-in-ishikawa/municipality-guides/')} class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800">Municipality guides →</a>
-    </div>
-  </section>
-
-  <CampusScholarshipGuide campusSlug="ishikawa-prefectural-university" />
-
+    <CampusGuideBridge
+    id="keluarga-daily-life"
+    number="09"
+    eyebrow="Keluarga & daily life"
+    title="Untuk daily life, gunakan Nonoichi sebagai konteks utama di luar urusan kampus."
+    summary="Shopping, garbage, childcare, sekolah, layanan keluarga, dan prosedur lokal lebih tepat dirujuk ke municipality dan Survival Guide daripada diulang pada Campus Pack."
+    campusNote="IPU dapat membantu pada urusan student support dan academic administration. Untuk layanan publik sehari-hari, gunakan informasi Nonoichi atau municipality tempat alamat Anda terdaftar."
+    links={[
+      { label: 'Kehidupan Sehari-hari', href: '/life-in-ishikawa/kehidupan-sehari-hari/', icon: 'guide' },
+      { label: 'Panduan Nonoichi', href: '/life-in-ishikawa/municipality-guides/#nonoichi', icon: 'city' }
+    ]}
+  />
   <section id="faq" class="mx-auto max-w-5xl scroll-mt-24 px-5 py-10 lg:px-8">
     <span id="bagian-10" class="sr-only" aria-hidden="true"></span>
     <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">10 · FAQ mahasiswa Indonesia</p>
