@@ -23,7 +23,7 @@ export const jaistSections = [
   { id: 'housing', label: '04', title: 'Student housing & apartment' },
   { id: 'transportasi', label: '05', title: 'Transportasi & mobilitas' },
   { id: 'kesehatan-counseling', label: '06', title: 'Kesehatan & counseling' },
-  { id: 'bahasa-daily-life', label: '07', title: 'Bahasa Jepang & daily life' },
+  { id: 'bahasa-daily-life', label: '07', title: 'Bahasa Jepang & fasilitas kampus' },
   { id: 'akademik-riset-karier', label: '08', title: 'Academic, research & career' },
   { id: 'keluarga', label: '09', title: 'Keluarga' },
   { id: 'faq', label: '10', title: 'FAQ mahasiswa Indonesia' }
