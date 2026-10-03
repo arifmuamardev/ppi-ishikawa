@@ -263,7 +263,7 @@ language plpgsql
 stable
 security definer
 set search_path = ''
-as $
+as $$
 begin
   if not private.is_admin() then
     raise exception 'Admin access required';
@@ -280,7 +280,7 @@ begin
   where r.event_id = target_event_id
   order by p.full_name;
 end;
-$;
+$$;
 
 create or replace function public.get_event_attendance(target_event_id uuid)
 returns table (
@@ -293,9 +293,9 @@ language sql
 stable
 security invoker
 set search_path = ''
-as $
+as $$
   select * from private.get_event_attendance_impl(target_event_id);
-$;
+$$;
 
 create or replace function private.set_event_checkin_impl(
   target_event_id uuid,
@@ -306,7 +306,7 @@ returns boolean
 language plpgsql
 security definer
 set search_path = ''
-as $
+as $$
 begin
   if not private.is_admin() then
     raise exception 'Admin access required';
@@ -325,7 +325,7 @@ begin
 
   return true;
 end;
-$;
+$$;
 
 create or replace function public.set_event_checkin(
   target_event_id uuid,
@@ -336,9 +336,9 @@ returns boolean
 language sql
 security invoker
 set search_path = ''
-as $
+as $$
   select private.set_event_checkin_impl(target_event_id, target_user_id, checked_in);
-$;
+$$;
 
 revoke all on function public.get_admin_aspirations() from public;
 revoke all on function public.update_aspiration_status(uuid, text) from public;
