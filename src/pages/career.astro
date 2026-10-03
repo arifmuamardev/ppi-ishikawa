@@ -14,9 +14,10 @@ import {
   careerAudienceLabels
 } from '../data/career';
 
-const campusCareerEntries = campuses
-  .map((campus) => ({ campus, profile: campusCareerProfiles[campus.slug] }))
-  .filter((item) => item.profile);
+const campusCareerEntries = campuses.flatMap((campus) => {
+  const profile = campusCareerProfiles[campus.slug];
+  return profile ? [{ campus, profile }] : [];
+});
 ---
 
 <BaseLayout
