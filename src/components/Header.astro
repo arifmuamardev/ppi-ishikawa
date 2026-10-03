@@ -6,6 +6,15 @@ import ThemeToggle from './ThemeToggle.astro';
 const currentPath = Astro.url.pathname.replace(/\/$/, '');
 const isActive = (href: string) => {
   const target = withBase(href).replace(/\/$/, '');
+  const campusTarget = withBase('/community/kampus').replace(/\/$/, '');
+
+  // Campus is a top-level information domain even though its legacy URL
+  // still lives under /community/kampus.
+  if (href === '/community') {
+    return (currentPath === target || currentPath.startsWith(`${target}/`))
+      && !(currentPath === campusTarget || currentPath.startsWith(`${campusTarget}/`));
+  }
+
   return currentPath === target || currentPath.startsWith(`${target}/`);
 };
 ---
