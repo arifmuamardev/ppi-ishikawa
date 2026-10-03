@@ -157,7 +157,7 @@ const campusMap = campusMapPoints['alice-gakuen'];
       {aliceContactMap.map((item) => (
         <article class="rounded-2xl border border-slate-200 bg-white p-5">
           <h3 class="font-bold text-slate-950">{item.title}</h3>
-          <p class="mt-2 text-sm leading-6 text-slate-600"><ContextualText text={item.topics} maxLinks={2} /></p>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{item.topics}</p>
         </article>
       ))}
     </div>
