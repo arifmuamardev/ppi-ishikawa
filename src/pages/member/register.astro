@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { campuses } from '../../data/campuses';
+import { ishikawaCities, studyLevels } from '../../data/membership';
+import { withBase } from '../../utils/paths';
+---
+
+<BaseLayout title="Daftar Anggota" description="Pendaftaran membership PPI Ishikawa.">
+  <section class="mx-auto max-w-3xl px-5 py-14 lg:px-8">
+    <div class="rounded-[2rem] border border-slate-200 bg-white p-7 sm:p-9">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Membership PPI Ishikawa</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Daftar sebagai anggota</h1>
+      <p class="mt-3 max-w-2xl leading-7 text-slate-600">Setelah email dikonfirmasi, pendaftaran akan berstatus menunggu verifikasi pengurus. Data yang Anda isi digunakan untuk administrasi keanggotaan dan tidak otomatis ditampilkan di direktori.</p>
+
+      <div id="register-message" class="mt-6 hidden rounded-2xl border p-4 text-sm leading-6"></div>
+
+      <form id="member-register-form" class="mt-8 grid gap-5 md:grid-cols-2">
+        <label class="md:col-span-2">
+          <span class="text-sm font-bold text-slate-800">Nama lengkap</span>
+          <input name="full_name" type="text" autocomplete="name" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+        </label>
+
+        <label>
+          <span class="text-sm font-bold text-slate-800">Email</span>
+          <input name="email" type="email" autocomplete="email" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Kampus</span>
+          <select name="campus_slug" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+            <option value="">Pilih kampus</option>
+            {campuses.map((campus) => <option value={campus.slug}>{campus.shortName}</option>)}
+          </select>
+        </label>
+
+        <label>
+          <span class="text-sm font-bold text-slate-800">Program / jurusan</span>
+          <input name="program" type="text" required placeholder="Contoh: Information Science" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Jenjang / status studi</span>
+          <select name="study_level" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+            <option value="">Pilih jenjang</option>
+            {studyLevels.map((item) => <option value={item.value}>{item.label}</option>)}
+          </select>
+        </label>
+
+        <label>
+          <span class="text-sm font-bold text-slate-800">Bidang studi</span>
+          <input name="field_of_study" type="text" placeholder="Contoh: Artificial Intelligence" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Kota tempat tinggal</span>
+          <select name="city" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+            <option value="">Tidak diisi</option>
+            {ishikawaCities.map((city) => <option value={city}>{city}</option>)}
+          </select>
+        </label>
+
+        <label>
+          <span class="text-sm font-bold text-slate-800">Password</span>
+          <input name="password" type="password" minlength="8" autocomplete="new-password" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Ulangi password</span>
+          <input name="password_confirm" type="password" minlength="8" autocomplete="new-password" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+        </label>
+
+        <label class="md:col-span-2 flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
+          <input name="consent" type="checkbox" required class="mt-1 size-4" />
+          <span class="text-sm leading-6 text-slate-600">Saya memahami bahwa data ini digunakan untuk verifikasi dan pengelolaan membership PPI Ishikawa. Saya dapat mengatur sendiri apakah profil saya tampil di direktori anggota.</span>
+        </label>
+
+        <div class="md:col-span-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <a href={withBase('/member/login/')} class="text-sm font-bold text-brand hover:underline">← Sudah punya akun</a>
+          <button type="submit" class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Daftar</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    import { isSupabaseConfigured, supabase } from '../../lib/supabase';
+    import { memberPath } from '../../lib/member';
+
+    const form = document.getElementById('member-register-form');
+    const message = document.getElementById('register-message');
+
+    const showMessage = (text, type = 'info') => {
+      if (!message) return;
+      message.textContent = text;
+      message.className = `mt-6 rounded-2xl border p-4 text-sm leading-6 ${type === 'error' ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
+    };
+
+    if (!isSupabaseConfigured || !supabase) {
+      showMessage('Membership belum aktif pada deployment ini. Konfigurasi Supabase perlu dipasang terlebih dahulu.');
+      form?.querySelectorAll('input, select, button').forEach((el) => el.setAttribute('disabled', ''));
+    } else {
+      form?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const values = new FormData(form);
+        const password = String(values.get('password') || '');
+        const confirmation = String(values.get('password_confirm') || '');
+
+        if (password !== confirmation) {
+          showMessage('Password dan konfirmasi password tidak sama.', 'error');
+          return;
+        }
+
+        const submit = form.querySelector('button[type="submit"]');
+        submit?.setAttribute('disabled', '');
+        if (submit) submit.textContent = 'Mendaftarkan…';
+
+        const redirectTo = new URL(memberPath('/member/login/?confirmed=1'), window.location.origin).toString();
+        const { data, error } = await supabase.auth.signUp({
+          email: String(values.get('email') || '').trim(),
+          password,
+          options: {
+            emailRedirectTo: redirectTo,
+            data: {
+              full_name: String(values.get('full_name') || '').trim(),
+              campus_slug: String(values.get('campus_slug') || ''),
+              program: String(values.get('program') || '').trim(),
+              study_level: String(values.get('study_level') || ''),
+              field_of_study: String(values.get('field_of_study') || '').trim(),
+              city: String(values.get('city') || ''),
+            },
+          },
+        });
+
+        if (error) {
+          showMessage('Pendaftaran belum dapat diproses. Periksa email, password, dan data yang Anda isi.', 'error');
+          submit?.removeAttribute('disabled');
+          if (submit) submit.textContent = 'Daftar';
+          return;
+        }
+
+        form.reset();
+        if (data.session) {
+          window.location.replace(memberPath('/member/'));
+        } else {
+          showMessage('Pendaftaran diterima. Periksa email Anda untuk konfirmasi, lalu masuk. Setelah itu status membership akan menunggu verifikasi pengurus.');
+          submit?.removeAttribute('disabled');
+          if (submit) submit.textContent = 'Daftar';
+        }
+      });
+    }
+  </script>
+</BaseLayout>
