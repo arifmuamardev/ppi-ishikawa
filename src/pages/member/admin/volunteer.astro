@@ -1,0 +1,304 @@
+---
+import MemberLayout from '../../../layouts/MemberLayout.astro';
+---
+
+<MemberLayout title="Kelola Volunteer" requireAdmin={true}>
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Admin · Volunteer</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kelola kebutuhan volunteer</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Buka kesempatan kontribusi berdasarkan kebutuhan program, lalu tinjau anggota yang menyatakan minat.</p>
+    </section>
+
+    <div id="volunteer-admin-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <div class="flex items-center justify-between gap-3">
+        <h2 id="volunteer-form-title" class="text-xl font-bold text-slate-950">Tambah kesempatan volunteer</h2>
+        <button id="volunteer-form-reset" type="button" class="hidden text-sm font-bold text-brand hover:underline">Batal edit</button>
+      </div>
+
+      <form id="volunteer-admin-form" class="mt-6 grid gap-5 md:grid-cols-2">
+        <input name="id" type="hidden" />
+        <label>
+          <span class="text-sm font-bold text-slate-800">Unit</span>
+          <select name="unit_id" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3"></select>
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Program terkait</span>
+          <select name="program_id" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3">
+            <option value="">Tidak terkait program tertentu</option>
+          </select>
+        </label>
+        <label class="md:col-span-2">
+          <span class="text-sm font-bold text-slate-800">Judul kebutuhan</span>
+          <input name="title" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+        <label class="md:col-span-2">
+          <span class="text-sm font-bold text-slate-800">Deskripsi</span>
+          <textarea name="description" rows="4" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3"></textarea>
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Minat relevan</span>
+          <input name="interests" placeholder="Pisahkan dengan koma" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Skills relevan</span>
+          <input name="skills" placeholder="Pisahkan dengan koma" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Jumlah slot</span>
+          <input name="slots" type="number" min="1" placeholder="Kosong = fleksibel" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Batas waktu</span>
+          <input name="deadline" type="datetime-local" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Status</span>
+          <select name="status" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3">
+            <option value="draft">Draft</option>
+            <option value="open" selected>Terbuka</option>
+            <option value="closed">Ditutup</option>
+            <option value="filled">Terpenuhi</option>
+          </select>
+        </label>
+        <div class="flex items-end justify-end">
+          <button class="w-full rounded-xl bg-brand px-6 py-3 font-bold text-white">Simpan opportunity</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="volunteer-admin-list" class="space-y-5"></section>
+  </div>
+
+  <script>
+    import {
+      deleteVolunteerOpportunity,
+      getCurrentTerm,
+      getOrganizationUnits,
+      getPrograms,
+      getVolunteerApplications,
+      getVolunteerOpportunities,
+      saveVolunteerOpportunity,
+      updateVolunteerApplicationStatus,
+    } from '../../../lib/member-organization';
+
+    const form = document.getElementById('volunteer-admin-form');
+    const list = document.getElementById('volunteer-admin-list');
+    const message = document.getElementById('volunteer-admin-message');
+    const formTitle = document.getElementById('volunteer-form-title');
+    const resetButton = document.getElementById('volunteer-form-reset');
+    let term = null;
+    let units = [];
+    let programs = [];
+    let opportunities = [];
+
+    const show = (text, error = false) => {
+      if (!message) return;
+      message.textContent = text;
+      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
+    };
+
+    const toLocalInput = (value) => {
+      if (!value) return '';
+      const date = new Date(value);
+      const shifted = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+      return shifted.toISOString().slice(0, 16);
+    };
+
+    const resetForm = () => {
+      if (!(form instanceof HTMLFormElement)) return;
+      form.reset();
+      const id = form.elements.namedItem('id');
+      if (id instanceof HTMLInputElement) id.value = '';
+      if (formTitle) formTitle.textContent = 'Tambah kesempatan volunteer';
+      resetButton?.classList.add('hidden');
+    };
+
+    const editOpportunity = (item) => {
+      if (!(form instanceof HTMLFormElement)) return;
+      const set = (name, value) => {
+        const input = form.elements.namedItem(name);
+        if (input instanceof HTMLInputElement || input instanceof HTMLSelectElement || input instanceof HTMLTextAreaElement) input.value = value ?? '';
+      };
+      set('id', item.id);
+      set('unit_id', item.unit_id);
+      set('program_id', item.program_id || '');
+      set('title', item.title);
+      set('description', item.description);
+      set('interests', (item.interests || []).join(', '));
+      set('skills', (item.skills || []).join(', '));
+      set('slots', item.slots || '');
+      set('deadline', toLocalInput(item.deadline));
+      set('status', item.status);
+      if (formTitle) formTitle.textContent = 'Edit kesempatan volunteer';
+      resetButton?.classList.remove('hidden');
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    const renderApplications = async (item, target) => {
+      const { data, error } = await getVolunteerApplications(item.id);
+      if (error) {
+        target.textContent = 'Pelamar belum dapat dimuat.';
+        return;
+      }
+
+      const applicants = data || [];
+      target.replaceChildren();
+      if (!applicants.length) {
+        target.textContent = 'Belum ada anggota yang menyatakan minat.';
+        return;
+      }
+
+      for (const applicant of applicants) {
+        const row = document.createElement('div');
+        row.className = 'flex flex-col gap-3 rounded-2xl bg-slate-50 p-4 sm:flex-row sm:items-center sm:justify-between';
+
+        const info = document.createElement('div');
+        const name = document.createElement('p');
+        name.className = 'font-bold text-slate-900';
+        name.textContent = applicant.full_name;
+        const note = document.createElement('p');
+        note.className = 'mt-1 text-sm leading-6 text-slate-600';
+        note.textContent = applicant.message || 'Tanpa pesan tambahan.';
+        info.append(name, note);
+
+        const select = document.createElement('select');
+        select.className = 'rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm';
+        for (const [value, label] of [
+          ['interested','Tertarik'],
+          ['selected','Dipilih'],
+          ['not_selected','Belum dipilih'],
+          ['withdrawn','Dibatalkan'],
+        ]) {
+          const option = document.createElement('option');
+          option.value = value; option.textContent = label; option.selected = applicant.status === value; select.append(option);
+        }
+        select.addEventListener('change', async () => {
+          const { error } = await updateVolunteerApplicationStatus(item.id, applicant.user_id, select.value);
+          if (error) return show('Status volunteer belum dapat diperbarui.', true);
+          show('Status volunteer diperbarui.');
+        });
+
+        row.append(info, select);
+        target.append(row);
+      }
+    };
+
+    const render = async () => {
+      if (!list) return;
+      list.replaceChildren();
+
+      for (const item of opportunities) {
+        const card = document.createElement('article');
+        card.className = 'rounded-3xl border border-slate-200 bg-white p-6';
+
+        const head = document.createElement('div');
+        head.className = 'flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between';
+
+        const info = document.createElement('div');
+        const meta = document.createElement('p');
+        meta.className = 'text-xs font-bold uppercase tracking-[0.1em] text-slate-500';
+        meta.textContent = `${item.organization_units?.name || 'Unit'} · ${item.status} · ${item.slots ? item.slots + ' slot' : 'slot fleksibel'}`;
+        const heading = document.createElement('h2');
+        heading.className = 'mt-2 text-xl font-bold text-slate-950';
+        heading.textContent = item.title;
+        const description = document.createElement('p');
+        description.className = 'mt-2 text-sm leading-6 text-slate-600';
+        description.textContent = item.description;
+        info.append(meta, heading, description);
+
+        const controls = document.createElement('div');
+        controls.className = 'flex gap-2';
+        const edit = document.createElement('button');
+        edit.type = 'button'; edit.className = 'rounded-xl border border-slate-300 px-4 py-2 text-sm font-bold text-slate-700'; edit.textContent = 'Edit';
+        edit.addEventListener('click', () => editOpportunity(item));
+        const remove = document.createElement('button');
+        remove.type = 'button'; remove.className = 'rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-bold text-red-700'; remove.textContent = 'Hapus';
+        remove.addEventListener('click', async () => {
+          if (!window.confirm('Hapus kesempatan volunteer ini?')) return;
+          const { error } = await deleteVolunteerOpportunity(item.id);
+          if (error) return show('Opportunity belum dapat dihapus.', true);
+          show('Opportunity dihapus.');
+          await load();
+        });
+        controls.append(edit, remove);
+        head.append(info, controls);
+
+        const applicants = document.createElement('div');
+        applicants.className = 'mt-5 border-t border-slate-100 pt-5 text-sm text-slate-600';
+        applicants.textContent = 'Memuat pelamar…';
+        card.append(head, applicants);
+        list.append(card);
+
+        await renderApplications(item, applicants);
+      }
+    };
+
+    const load = async () => {
+      const [termResult, unitResult] = await Promise.all([
+        getCurrentTerm(),
+        getOrganizationUnits(),
+      ]);
+      term = termResult.data;
+      units = (unitResult.data || []).filter((item) => item.term_id === term?.id);
+
+      const programResult = await getPrograms({ termId: term?.id });
+      programs = programResult.data || [];
+
+      if (form instanceof HTMLFormElement) {
+        const unitSelect = form.elements.namedItem('unit_id');
+        if (unitSelect instanceof HTMLSelectElement) {
+          unitSelect.replaceChildren();
+          for (const unit of units) {
+            const option = document.createElement('option'); option.value = unit.id; option.textContent = unit.name; unitSelect.append(option);
+          }
+        }
+        const programSelect = form.elements.namedItem('program_id');
+        if (programSelect instanceof HTMLSelectElement) {
+          programSelect.replaceChildren();
+          const none = document.createElement('option'); none.value = ''; none.textContent = 'Tidak terkait program tertentu'; programSelect.append(none);
+          for (const program of programs) {
+            const option = document.createElement('option'); option.value = program.id; option.textContent = program.title; programSelect.append(option);
+          }
+        }
+      }
+
+      const oppResult = await getVolunteerOpportunities({ termId: term?.id });
+      opportunities = oppResult.data || [];
+      await render();
+    };
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!(form instanceof HTMLFormElement) || !term) return;
+      const values = new FormData(form);
+      const parseTags = (value) => String(value || '').split(',').map((item) => item.trim()).filter(Boolean);
+      const deadline = String(values.get('deadline') || '');
+      const slots = String(values.get('slots') || '');
+
+      const { error } = await saveVolunteerOpportunity({
+        id: String(values.get('id') || '') || undefined,
+        term_id: term.id,
+        unit_id: String(values.get('unit_id') || ''),
+        program_id: String(values.get('program_id') || '') || null,
+        title: String(values.get('title') || '').trim(),
+        description: String(values.get('description') || '').trim(),
+        interests: parseTags(values.get('interests')),
+        skills: parseTags(values.get('skills')),
+        slots: slots ? Number(slots) : null,
+        deadline: deadline ? new Date(deadline).toISOString() : null,
+        status: String(values.get('status') || 'open'),
+      });
+
+      if (error) return show('Opportunity belum dapat disimpan.', true);
+      show('Opportunity berhasil disimpan.');
+      resetForm();
+      await load();
+    });
+
+    resetButton?.addEventListener('click', resetForm);
+    load();
+  </script>
+</MemberLayout>
