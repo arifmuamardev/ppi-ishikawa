@@ -1,0 +1,118 @@
+---
+import MemberLayout from '../../layouts/MemberLayout.astro';
+---
+
+<MemberLayout title="Organisasi" requireApproved={true}>
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Organisasi</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Struktur kepengurusan</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Lihat periode aktif, unit organisasi, posisi, dan pengurus yang ditetapkan untuk periode berjalan.</p>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Periode aktif</p>
+          <h2 id="organization-term" class="mt-2 text-2xl font-bold text-slate-950">Memuat…</h2>
+        </div>
+        <p id="organization-unit-count" class="text-sm font-semibold text-slate-500">—</p>
+      </div>
+    </section>
+
+    <div id="organization-error" class="hidden rounded-2xl border border-red-200 bg-red-50 p-5 text-sm text-red-800"></div>
+    <section id="organization-grid" class="grid gap-5 xl:grid-cols-2"></section>
+  </div>
+
+  <script>
+    import { getOrganizationStructure } from '../../lib/member-organization';
+
+    const grid = document.getElementById('organization-grid');
+    const term = document.getElementById('organization-term');
+    const count = document.getElementById('organization-unit-count');
+    const errorBox = document.getElementById('organization-error');
+
+    const { data, error } = await getOrganizationStructure();
+
+    if (error) {
+      if (errorBox) {
+        errorBox.textContent = 'Struktur organisasi belum dapat dimuat.';
+        errorBox.classList.remove('hidden');
+      }
+    } else {
+      const rows = data || [];
+      if (term) term.textContent = rows[0]?.term_label || '—';
+
+      const units = new Map();
+      for (const row of rows) {
+        if (!units.has(row.unit_id)) {
+          units.set(row.unit_id, {
+            id: row.unit_id,
+            name: row.unit_name,
+            type: row.unit_type,
+            sort: row.unit_sort_order,
+            positions: new Map(),
+          });
+        }
+        const unit = units.get(row.unit_id);
+        if (row.position_id) {
+          if (!unit.positions.has(row.position_id)) {
+            unit.positions.set(row.position_id, {
+              id: row.position_id,
+              title: row.position_title,
+              sort: row.position_sort_order,
+              people: [],
+            });
+          }
+          if (row.user_id) {
+            unit.positions.get(row.position_id).people.push({
+              name: row.full_name,
+              can_manage: row.can_manage,
+            });
+          }
+        }
+      }
+
+      const unitList = [...units.values()].sort((a,b) => a.sort - b.sort);
+      if (count) count.textContent = `${unitList.length} unit`;
+
+      for (const unit of unitList) {
+        const card = document.createElement('article');
+        card.className = 'rounded-3xl border border-slate-200 bg-white p-6';
+
+        const badge = document.createElement('span');
+        badge.className = 'rounded-full bg-amber-50 px-3 py-1 text-[11px] font-bold text-accent-dark';
+        badge.textContent = unit.type === 'leadership' ? 'Pengurus Inti' : 'Departemen';
+
+        const heading = document.createElement('h2');
+        heading.className = 'mt-4 text-xl font-bold text-slate-950';
+        heading.textContent = unit.name;
+
+        const positions = document.createElement('div');
+        positions.className = 'mt-5 space-y-3';
+
+        const positionList = [...unit.positions.values()].sort((a,b) => (a.sort || 0) - (b.sort || 0));
+        for (const position of positionList) {
+          const row = document.createElement('div');
+          row.className = 'rounded-2xl bg-slate-50 p-4';
+
+          const titleEl = document.createElement('p');
+          titleEl.className = 'text-xs font-bold uppercase tracking-[0.1em] text-slate-500';
+          titleEl.textContent = position.title;
+
+          const people = document.createElement('p');
+          people.className = 'mt-2 font-semibold text-slate-900';
+          people.textContent = position.people.length
+            ? position.people.map((person) => person.name).join(', ')
+            : 'Belum ditetapkan';
+
+          row.append(titleEl, people);
+          positions.append(row);
+        }
+
+        card.append(badge, heading, positions);
+        grid?.append(card);
+      }
+    }
+  </script>
+</MemberLayout>
