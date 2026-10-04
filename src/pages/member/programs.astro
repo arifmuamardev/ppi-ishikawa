@@ -1,0 +1,136 @@
+---
+import MemberLayout from '../../layouts/MemberLayout.astro';
+---
+
+<MemberLayout title="Program Kerja" requireApproved={true}>
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Program Kerja</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Program periode berjalan</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Pantau program yang direncanakan, sedang berjalan, ditunda, atau sudah selesai beserta PIC dan progresnya.</p>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-5">
+      <div class="grid gap-3 md:grid-cols-2">
+        <label>
+          <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Departemen</span>
+          <select id="program-unit-filter" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-900">
+            <option value="">Semua departemen</option>
+          </select>
+        </label>
+        <label>
+          <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Status</span>
+          <select id="program-status-filter" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-900">
+            <option value="">Semua status</option>
+            <option value="planned">Direncanakan</option>
+            <option value="active">Berjalan</option>
+            <option value="on_hold">Ditunda</option>
+            <option value="completed">Selesai</option>
+            <option value="cancelled">Dibatalkan</option>
+          </select>
+        </label>
+      </div>
+      <p id="program-count" class="mt-4 text-right text-sm font-semibold text-slate-500">Memuat…</p>
+    </section>
+
+    <div id="program-empty" class="hidden rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-sm text-slate-600">Belum ada program untuk filter ini.</div>
+    <section id="program-grid" class="grid gap-5 lg:grid-cols-2"></section>
+  </div>
+
+  <script>
+    import { getOrganizationUnits, getProgramPeople, getPrograms } from '../../lib/member-organization';
+
+    const grid = document.getElementById('program-grid');
+    const unitFilter = document.getElementById('program-unit-filter');
+    const statusFilter = document.getElementById('program-status-filter');
+    const count = document.getElementById('program-count');
+    const empty = document.getElementById('program-empty');
+
+    const statusLabels = {
+      planned: 'Direncanakan',
+      active: 'Berjalan',
+      on_hold: 'Ditunda',
+      completed: 'Selesai',
+      cancelled: 'Dibatalkan',
+    };
+
+    let programs = [];
+
+    const unitResult = await getOrganizationUnits();
+    for (const unit of unitResult.data || []) {
+      if (unit.unit_type !== 'department') continue;
+      const option = document.createElement('option');
+      option.value = unit.id;
+      option.textContent = unit.name;
+      unitFilter?.append(option);
+    }
+
+    const render = async () => {
+      if (!grid) return;
+      grid.replaceChildren();
+
+      const unitValue = unitFilter instanceof HTMLSelectElement ? unitFilter.value : '';
+      const statusValue = statusFilter instanceof HTMLSelectElement ? statusFilter.value : '';
+      const items = programs.filter((item) =>
+        (!unitValue || item.unit_id === unitValue) &&
+        (!statusValue || item.status === statusValue)
+      );
+
+      if (count) count.textContent = `${items.length} program`;
+      empty?.classList.toggle('hidden', items.length !== 0);
+
+      for (const program of items) {
+        const card = document.createElement('article');
+        card.className = 'rounded-3xl border border-slate-200 bg-white p-6';
+
+        const top = document.createElement('div');
+        top.className = 'flex flex-wrap gap-2';
+        for (const label of [program.organization_units?.name || 'Unit', statusLabels[program.status] || program.status]) {
+          const badge = document.createElement('span');
+          badge.className = 'rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-600';
+          badge.textContent = label;
+          top.append(badge);
+        }
+
+        const heading = document.createElement('h2');
+        heading.className = 'mt-4 text-xl font-bold text-slate-950';
+        heading.textContent = program.title;
+
+        const summary = document.createElement('p');
+        summary.className = 'mt-2 text-sm leading-6 text-slate-600';
+        summary.textContent = program.summary || program.objective || 'Belum ada ringkasan.';
+
+        const progress = document.createElement('div');
+        progress.className = 'mt-5';
+        const progressLabel = document.createElement('div');
+        progressLabel.className = 'flex items-center justify-between text-xs font-bold text-slate-500';
+        progressLabel.innerHTML = `<span>Progress</span><span>${program.progress_percent}%</span>`;
+        const bar = document.createElement('div');
+        bar.className = 'mt-2 h-2 overflow-hidden rounded-full bg-slate-100';
+        const fill = document.createElement('div');
+        fill.className = 'h-full rounded-full bg-brand';
+        fill.style.width = `${program.progress_percent}%`;
+        bar.append(fill);
+        progress.append(progressLabel, bar);
+
+        const peopleResult = await getProgramPeople(program.id);
+        const people = peopleResult.data || [];
+        const peopleBox = document.createElement('div');
+        peopleBox.className = 'mt-5 border-t border-slate-100 pt-4 text-sm text-slate-600';
+        const labels = { lead: 'Lead', pic: 'PIC', contributor: 'Kontributor' };
+        peopleBox.textContent = people.length
+          ? people.map((person) => `${labels[person.role] || person.role}: ${person.full_name}`).join(' · ')
+          : 'PIC belum ditetapkan.';
+
+        card.append(top, heading, summary, progress, peopleBox);
+        grid.append(card);
+      }
+    };
+
+    const programResult = await getPrograms();
+    programs = programResult.data || [];
+    unitFilter?.addEventListener('change', render);
+    statusFilter?.addEventListener('change', render);
+    render();
+  </script>
+</MemberLayout>
