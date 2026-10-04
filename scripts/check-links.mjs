@@ -52,7 +52,18 @@ async function check(url) {
   }
 }
 
-const queue = [...refs.keys()];
+const queue = [...refs.keys()].filter((url) => {
+  try {
+    const hostname = new URL(url).hostname;
+    if (hostname.endsWith('.supabase.co')) {
+      console.log(`SKIP   API endpoint ${url}`);
+      return false;
+    }
+  } catch {
+    // Keep malformed/static matches in the queue so the checker can report them.
+  }
+  return true;
+});
 const workers = Array.from({ length: 6 }, async () => {
   while (queue.length) {
     const url = queue.shift();
