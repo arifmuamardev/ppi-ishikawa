@@ -1,0 +1,326 @@
+---
+import MemberLayout from '../../../layouts/MemberLayout.astro';
+---
+
+<MemberLayout title="Kelola Organisasi" requireAdmin={true}>
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Admin · Organisasi</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Periode, struktur, dan pengurus</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Kelola periode kepengurusan, unit, posisi, dan penugasan pengurus tanpa mengubah source code.</p>
+    </section>
+
+    <div id="org-admin-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+
+    <section class="grid gap-5 xl:grid-cols-2">
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h2 class="text-xl font-bold text-slate-950">Periode kepengurusan</h2>
+        <form id="term-form" class="mt-5 grid gap-4 sm:grid-cols-2">
+          <label class="sm:col-span-2">
+            <span class="text-sm font-bold text-slate-800">Label periode</span>
+            <input name="label" required placeholder="Contoh: 2027/28" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          </label>
+          <label>
+            <span class="text-sm font-bold text-slate-800">Mulai</span>
+            <input name="starts_on" type="date" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          </label>
+          <label>
+            <span class="text-sm font-bold text-slate-800">Selesai</span>
+            <input name="ends_on" type="date" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          </label>
+          <label class="sm:col-span-2 flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
+            <input name="is_current" type="checkbox" class="mt-1 size-4" />
+            <span class="text-sm font-semibold text-slate-700">Jadikan periode aktif</span>
+          </label>
+          <div class="sm:col-span-2 flex justify-end">
+            <button class="rounded-xl bg-brand px-5 py-2.5 text-sm font-bold text-white">Tambah periode</button>
+          </div>
+        </form>
+      </article>
+
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Konteks pengelolaan</p>
+        <h2 class="mt-2 text-xl font-bold text-slate-950">Pilih periode</h2>
+        <select id="term-selector" class="mt-5 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900"></select>
+        <p id="term-meta" class="mt-3 text-sm leading-6 text-slate-600">—</p>
+      </article>
+    </section>
+
+    <section class="grid gap-5 xl:grid-cols-2">
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h2 class="text-xl font-bold text-slate-950">Tambah unit</h2>
+        <form id="unit-form" class="mt-5 space-y-4">
+          <label class="block">
+            <span class="text-sm font-bold text-slate-800">Nama unit</span>
+            <input name="name" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          </label>
+          <label class="block">
+            <span class="text-sm font-bold text-slate-800">Slug</span>
+            <input name="slug" required placeholder="contoh-unit" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          </label>
+          <label class="block">
+            <span class="text-sm font-bold text-slate-800">Jenis</span>
+            <select name="unit_type" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3">
+              <option value="department">Departemen</option>
+              <option value="leadership">Pengurus inti</option>
+              <option value="committee">Panitia</option>
+              <option value="other">Lainnya</option>
+            </select>
+          </label>
+          <label class="block">
+            <span class="text-sm font-bold text-slate-800">Deskripsi</span>
+            <textarea name="description" rows="3" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3"></textarea>
+          </label>
+          <button class="rounded-xl bg-brand px-5 py-2.5 text-sm font-bold text-white">Tambah unit</button>
+        </form>
+      </article>
+
+      <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <h2 class="text-xl font-bold text-slate-950">Tambah posisi</h2>
+        <form id="position-form" class="mt-5 space-y-4">
+          <label class="block">
+            <span class="text-sm font-bold text-slate-800">Unit</span>
+            <select name="unit_id" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3"></select>
+          </label>
+          <label class="block">
+            <span class="text-sm font-bold text-slate-800">Nama posisi</span>
+            <input name="title" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          </label>
+          <label class="block">
+            <span class="text-sm font-bold text-slate-800">Slug</span>
+            <input name="slug" required placeholder="nama-posisi" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          </label>
+          <button class="rounded-xl bg-brand px-5 py-2.5 text-sm font-bold text-white">Tambah posisi</button>
+        </form>
+      </article>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Penugasan</p>
+          <h2 class="mt-2 text-xl font-bold text-slate-950">Tetapkan pengurus</h2>
+        </div>
+        <p id="assignment-count" class="text-sm font-semibold text-slate-500">—</p>
+      </div>
+
+      <form id="assignment-form" class="mt-6 grid gap-4 md:grid-cols-[1fr_1fr_auto] md:items-end">
+        <label>
+          <span class="text-sm font-bold text-slate-800">Posisi</span>
+          <select name="position_id" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3"></select>
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Anggota</span>
+          <select name="user_id" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3"></select>
+        </label>
+        <div class="space-y-2">
+          <label class="flex items-center gap-2 text-sm font-semibold text-slate-700">
+            <input name="can_manage" type="checkbox" class="size-4" />
+            Dapat mengelola unit
+          </label>
+          <button class="w-full rounded-xl bg-brand px-5 py-2.5 text-sm font-bold text-white">Tetapkan</button>
+        </div>
+      </form>
+
+      <div id="assignment-list" class="mt-6 space-y-3"></div>
+    </section>
+  </div>
+
+  <script>
+    import {
+      getAssignableMembers,
+      getOrganizationAssignments,
+      getOrganizationPositions,
+      getOrganizationTerms,
+      getOrganizationUnits,
+      removeOrganizationAssignment,
+      saveOrganizationAssignment,
+      saveOrganizationPosition,
+      saveOrganizationTerm,
+      saveOrganizationUnit,
+    } from '../../../lib/member-organization';
+
+    const message = document.getElementById('org-admin-message');
+    const termSelector = document.getElementById('term-selector');
+    const termMeta = document.getElementById('term-meta');
+    const unitForm = document.getElementById('unit-form');
+    const positionForm = document.getElementById('position-form');
+    const assignmentForm = document.getElementById('assignment-form');
+    const assignmentList = document.getElementById('assignment-list');
+    const assignmentCount = document.getElementById('assignment-count');
+    let terms = [];
+    let units = [];
+    let positions = [];
+    let members = [];
+    let assignments = [];
+
+    const show = (text, error = false) => {
+      if (!message) return;
+      message.textContent = text;
+      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
+    };
+
+    const selectedTermId = () => termSelector instanceof HTMLSelectElement ? termSelector.value : '';
+
+    const fillSelect = (select, items, labelFn) => {
+      if (!(select instanceof HTMLSelectElement)) return;
+      select.replaceChildren();
+      for (const item of items) {
+        const option = document.createElement('option');
+        option.value = item.id;
+        option.textContent = labelFn(item);
+        select.append(option);
+      }
+    };
+
+    const renderAssignments = () => {
+      if (!assignmentList) return;
+      assignmentList.replaceChildren();
+      if (assignmentCount) assignmentCount.textContent = `${assignments.length} penugasan`;
+
+      for (const assignment of assignments) {
+        const position = positions.find((item) => item.id === assignment.position_id);
+        const unit = units.find((item) => item.id === position?.unit_id);
+        const member = members.find((item) => item.user_id === assignment.user_id);
+
+        const row = document.createElement('article');
+        row.className = 'flex flex-col gap-3 rounded-2xl border border-slate-200 p-5 sm:flex-row sm:items-center sm:justify-between';
+        const info = document.createElement('div');
+        const heading = document.createElement('h3');
+        heading.className = 'font-bold text-slate-950';
+        heading.textContent = member?.full_name || 'Anggota';
+        const meta = document.createElement('p');
+        meta.className = 'mt-1 text-sm text-slate-600';
+        meta.textContent = `${position?.title || 'Posisi'} · ${unit?.name || 'Unit'}${assignment.can_manage ? ' · Dapat mengelola unit' : ''}`;
+        info.append(heading, meta);
+
+        const remove = document.createElement('button');
+        remove.type = 'button';
+        remove.className = 'rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-bold text-red-700';
+        remove.textContent = 'Hapus';
+        remove.addEventListener('click', async () => {
+          const { error } = await removeOrganizationAssignment(assignment.id);
+          if (error) return show('Penugasan belum dapat dihapus.', true);
+          show('Penugasan dihapus.');
+          await loadContext();
+        });
+        row.append(info, remove);
+        assignmentList.append(row);
+      }
+    };
+
+    const loadContext = async () => {
+      const termId = selectedTermId();
+      if (!termId) return;
+      const term = terms.find((item) => item.id === termId);
+      if (termMeta && term) termMeta.textContent = `${term.starts_on} – ${term.ends_on}${term.is_current ? ' · Periode aktif' : ''}`;
+
+      const [unitResult, positionResult, assignmentResult, memberResult] = await Promise.all([
+        getOrganizationUnits(termId),
+        getOrganizationPositions(termId),
+        getOrganizationAssignments(termId),
+        getAssignableMembers(),
+      ]);
+
+      units = unitResult.data || [];
+      positions = positionResult.data || [];
+      assignments = assignmentResult.data || [];
+      members = memberResult.data || [];
+
+      fillSelect(positionForm?.querySelector('select[name="unit_id"]'), units, (item) => item.name);
+      fillSelect(assignmentForm?.querySelector('select[name="position_id"]'), positions, (item) => {
+        const unit = units.find((u) => u.id === item.unit_id);
+        return `${unit?.name || 'Unit'} · ${item.title}`;
+      });
+      fillSelect(assignmentForm?.querySelector('select[name="user_id"]'), members, (item) => item.full_name);
+      renderAssignments();
+    };
+
+    const loadTerms = async () => {
+      const { data, error } = await getOrganizationTerms();
+      if (error) return show('Periode belum dapat dimuat.', true);
+      terms = data || [];
+      if (!(termSelector instanceof HTMLSelectElement)) return;
+      termSelector.replaceChildren();
+      for (const term of terms) {
+        const option = document.createElement('option');
+        option.value = term.id;
+        option.textContent = `${term.label}${term.is_current ? ' · aktif' : ''}`;
+        option.selected = term.is_current;
+        termSelector.append(option);
+      }
+      await loadContext();
+    };
+
+    document.getElementById('term-form')?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (!(form instanceof HTMLFormElement)) return;
+      const values = new FormData(form);
+      const starts = String(values.get('starts_on') || '');
+      const ends = String(values.get('ends_on') || '');
+      if (ends < starts) return show('Tanggal selesai harus setelah tanggal mulai.', true);
+      const { error } = await saveOrganizationTerm({
+        label: String(values.get('label') || '').trim(),
+        starts_on: starts,
+        ends_on: ends,
+        is_current: values.get('is_current') === 'on',
+      });
+      if (error) return show('Periode belum dapat disimpan.', true);
+      form.reset();
+      show('Periode berhasil ditambahkan.');
+      await loadTerms();
+    });
+
+    unitForm?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!(unitForm instanceof HTMLFormElement)) return;
+      const values = new FormData(unitForm);
+      const { error } = await saveOrganizationUnit({
+        term_id: selectedTermId(),
+        name: String(values.get('name') || '').trim(),
+        slug: String(values.get('slug') || '').trim(),
+        description: String(values.get('description') || '').trim(),
+        unit_type: String(values.get('unit_type') || 'department'),
+      });
+      if (error) return show('Unit belum dapat ditambahkan.', true);
+      unitForm.reset();
+      show('Unit berhasil ditambahkan.');
+      await loadContext();
+    });
+
+    positionForm?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!(positionForm instanceof HTMLFormElement)) return;
+      const values = new FormData(positionForm);
+      const { error } = await saveOrganizationPosition({
+        term_id: selectedTermId(),
+        unit_id: String(values.get('unit_id') || ''),
+        title: String(values.get('title') || '').trim(),
+        slug: String(values.get('slug') || '').trim(),
+      });
+      if (error) return show('Posisi belum dapat ditambahkan.', true);
+      positionForm.reset();
+      show('Posisi berhasil ditambahkan.');
+      await loadContext();
+    });
+
+    assignmentForm?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!(assignmentForm instanceof HTMLFormElement)) return;
+      const values = new FormData(assignmentForm);
+      const { error } = await saveOrganizationAssignment({
+        term_id: selectedTermId(),
+        position_id: String(values.get('position_id') || ''),
+        user_id: String(values.get('user_id') || ''),
+        can_manage: values.get('can_manage') === 'on',
+      });
+      if (error) return show('Penugasan belum dapat disimpan.', true);
+      show('Pengurus berhasil ditetapkan.');
+      await loadContext();
+    });
+
+    termSelector?.addEventListener('change', loadContext);
+    loadTerms();
+  </script>
+</MemberLayout>
