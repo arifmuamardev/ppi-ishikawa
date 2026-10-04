@@ -1,0 +1,327 @@
+---
+import MemberLayout from '../../../layouts/MemberLayout.astro';
+---
+
+<MemberLayout title="Kelola Program" requireAdmin={true}>
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Admin · Program</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kelola program kerja</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Buat program, tetapkan lead/PIC, dan catat progress tanpa memisahkan data ke spreadsheet lain.</p>
+    </section>
+
+    <div id="program-admin-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <div class="flex items-center justify-between gap-3">
+        <h2 id="program-form-title" class="text-xl font-bold text-slate-950">Tambah program</h2>
+        <button id="program-form-reset" type="button" class="hidden text-sm font-bold text-brand hover:underline">Batal edit</button>
+      </div>
+
+      <form id="program-admin-form" class="mt-6 grid gap-5 md:grid-cols-2">
+        <input name="id" type="hidden" />
+        <label>
+          <span class="text-sm font-bold text-slate-800">Unit</span>
+          <select name="unit_id" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3"></select>
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Status</span>
+          <select name="status" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3">
+            <option value="planned">Direncanakan</option>
+            <option value="active">Berjalan</option>
+            <option value="on_hold">Ditunda</option>
+            <option value="completed">Selesai</option>
+            <option value="cancelled">Dibatalkan</option>
+          </select>
+        </label>
+        <label class="md:col-span-2">
+          <span class="text-sm font-bold text-slate-800">Nama program</span>
+          <input name="title" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+        <label class="md:col-span-2">
+          <span class="text-sm font-bold text-slate-800">Ringkasan</span>
+          <textarea name="summary" rows="3" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3"></textarea>
+        </label>
+        <label class="md:col-span-2">
+          <span class="text-sm font-bold text-slate-800">Tujuan</span>
+          <textarea name="objective" rows="3" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3"></textarea>
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Mulai</span>
+          <input name="starts_on" type="date" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Selesai</span>
+          <input name="ends_on" type="date" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Progress (%)</span>
+          <input name="progress_percent" type="number" min="0" max="100" value="0" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Visibilitas</span>
+          <select name="visibility" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3">
+            <option value="members">Semua anggota</option>
+            <option value="internal">Pengelola program</option>
+          </select>
+        </label>
+        <div class="md:col-span-2 flex justify-end">
+          <button class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Simpan program</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="program-admin-list" class="space-y-5"></section>
+  </div>
+
+  <script>
+    import {
+      addProgramUpdate,
+      deleteProgram,
+      getAssignableMembers,
+      getCurrentTerm,
+      getOrganizationUnits,
+      getProgramPeople,
+      getPrograms,
+      removeProgramPerson,
+      saveProgram,
+      saveProgramPerson,
+    } from '../../../lib/member-organization';
+
+    const form = document.getElementById('program-admin-form');
+    const list = document.getElementById('program-admin-list');
+    const message = document.getElementById('program-admin-message');
+    const formTitle = document.getElementById('program-form-title');
+    const resetButton = document.getElementById('program-form-reset');
+    let term = null;
+    let units = [];
+    let members = [];
+    let programs = [];
+
+    const labels = {
+      planned: 'Direncanakan',
+      active: 'Berjalan',
+      on_hold: 'Ditunda',
+      completed: 'Selesai',
+      cancelled: 'Dibatalkan',
+    };
+
+    const show = (text, error = false) => {
+      if (!message) return;
+      message.textContent = text;
+      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
+    };
+
+    const fillProgramForm = (program) => {
+      if (!(form instanceof HTMLFormElement)) return;
+      const set = (name, value) => {
+        const input = form.elements.namedItem(name);
+        if (input instanceof HTMLInputElement || input instanceof HTMLSelectElement || input instanceof HTMLTextAreaElement) input.value = value ?? '';
+      };
+      set('id', program.id);
+      set('unit_id', program.unit_id);
+      set('status', program.status);
+      set('title', program.title);
+      set('summary', program.summary);
+      set('objective', program.objective);
+      set('starts_on', program.starts_on);
+      set('ends_on', program.ends_on);
+      set('progress_percent', program.progress_percent);
+      set('visibility', program.visibility);
+      if (formTitle) formTitle.textContent = 'Edit program';
+      resetButton?.classList.remove('hidden');
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    const resetForm = () => {
+      if (!(form instanceof HTMLFormElement)) return;
+      form.reset();
+      const id = form.elements.namedItem('id');
+      if (id instanceof HTMLInputElement) id.value = '';
+      const progress = form.elements.namedItem('progress_percent');
+      if (progress instanceof HTMLInputElement) progress.value = '0';
+      if (formTitle) formTitle.textContent = 'Tambah program';
+      resetButton?.classList.add('hidden');
+    };
+
+    const renderProgram = async (program) => {
+      const peopleResult = await getProgramPeople(program.id);
+      const people = peopleResult.data || [];
+
+      const card = document.createElement('article');
+      card.className = 'rounded-3xl border border-slate-200 bg-white p-6';
+
+      const head = document.createElement('div');
+      head.className = 'flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between';
+
+      const info = document.createElement('div');
+      const meta = document.createElement('p');
+      meta.className = 'text-xs font-bold uppercase tracking-[0.1em] text-slate-500';
+      meta.textContent = `${program.organization_units?.name || 'Unit'} · ${labels[program.status] || program.status} · ${program.progress_percent}%`;
+      const heading = document.createElement('h2');
+      heading.className = 'mt-2 text-xl font-bold text-slate-950';
+      heading.textContent = program.title;
+      const summary = document.createElement('p');
+      summary.className = 'mt-2 text-sm leading-6 text-slate-600';
+      summary.textContent = program.summary || program.objective || 'Belum ada ringkasan.';
+      info.append(meta, heading, summary);
+
+      const controls = document.createElement('div');
+      controls.className = 'flex gap-2';
+      const edit = document.createElement('button');
+      edit.type = 'button'; edit.className = 'rounded-xl border border-slate-300 px-4 py-2 text-sm font-bold text-slate-700'; edit.textContent = 'Edit';
+      edit.addEventListener('click', () => fillProgramForm(program));
+      const remove = document.createElement('button');
+      remove.type = 'button'; remove.className = 'rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-bold text-red-700'; remove.textContent = 'Hapus';
+      remove.addEventListener('click', async () => {
+        if (!window.confirm('Hapus program ini?')) return;
+        const { error } = await deleteProgram(program.id);
+        if (error) return show('Program belum dapat dihapus.', true);
+        show('Program dihapus.');
+        await load();
+      });
+      controls.append(edit, remove);
+      head.append(info, controls);
+
+      const peopleSection = document.createElement('div');
+      peopleSection.className = 'mt-5 border-t border-slate-100 pt-5';
+      const peopleTitle = document.createElement('p');
+      peopleTitle.className = 'text-sm font-bold text-slate-900';
+      peopleTitle.textContent = 'Lead / PIC / kontributor';
+      const peopleList = document.createElement('div');
+      peopleList.className = 'mt-3 flex flex-wrap gap-2';
+      for (const person of people) {
+        const chip = document.createElement('span');
+        chip.className = 'inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-700';
+        chip.textContent = `${person.role.toUpperCase()} · ${person.full_name}`;
+        const x = document.createElement('button');
+        x.type = 'button'; x.textContent = '×'; x.className = 'text-red-600';
+        x.addEventListener('click', async () => {
+          const { error } = await removeProgramPerson(program.id, person.user_id);
+          if (error) return show('Penugasan program belum dapat dihapus.', true);
+          await load();
+        });
+        chip.append(x);
+        peopleList.append(chip);
+      }
+
+      const personForm = document.createElement('div');
+      personForm.className = 'mt-3 grid gap-2 sm:grid-cols-[1fr_160px_auto]';
+      const memberSelect = document.createElement('select');
+      memberSelect.className = 'rounded-xl border border-slate-300 px-3 py-2.5 text-sm';
+      for (const member of members) {
+        const option = document.createElement('option');
+        option.value = member.user_id; option.textContent = member.full_name; memberSelect.append(option);
+      }
+      const roleSelect = document.createElement('select');
+      roleSelect.className = 'rounded-xl border border-slate-300 px-3 py-2.5 text-sm';
+      for (const [value, text] of [['lead','Lead'],['pic','PIC'],['contributor','Kontributor']]) {
+        const option = document.createElement('option'); option.value = value; option.textContent = text; roleSelect.append(option);
+      }
+      const add = document.createElement('button');
+      add.type = 'button'; add.className = 'rounded-xl bg-slate-950 px-4 py-2.5 text-sm font-bold text-white'; add.textContent = 'Tambahkan';
+      add.addEventListener('click', async () => {
+        const { error } = await saveProgramPerson(program.id, memberSelect.value, roleSelect.value);
+        if (error) return show('PIC/kontributor belum dapat ditambahkan.', true);
+        show('Penugasan program disimpan.');
+        await load();
+      });
+      personForm.append(memberSelect, roleSelect, add);
+      peopleSection.append(peopleTitle, peopleList, personForm);
+
+      const updateSection = document.createElement('div');
+      updateSection.className = 'mt-5 border-t border-slate-100 pt-5';
+      const updateTitle = document.createElement('p');
+      updateTitle.className = 'text-sm font-bold text-slate-900';
+      updateTitle.textContent = 'Catat progress';
+      const updateForm = document.createElement('div');
+      updateForm.className = 'mt-3 grid gap-2 md:grid-cols-[100px_160px_1fr_auto]';
+      const progressInput = document.createElement('input');
+      progressInput.type = 'number'; progressInput.min = '0'; progressInput.max = '100'; progressInput.value = String(program.progress_percent); progressInput.className = 'rounded-xl border border-slate-300 px-3 py-2.5 text-sm';
+      const statusSelect = document.createElement('select');
+      statusSelect.className = 'rounded-xl border border-slate-300 px-3 py-2.5 text-sm';
+      for (const [value, text] of Object.entries(labels)) {
+        const option = document.createElement('option'); option.value = value; option.textContent = text; option.selected = program.status === value; statusSelect.append(option);
+      }
+      const note = document.createElement('input');
+      note.placeholder = 'Catatan singkat'; note.className = 'rounded-xl border border-slate-300 px-3 py-2.5 text-sm';
+      const saveUpdate = document.createElement('button');
+      saveUpdate.type = 'button'; saveUpdate.className = 'rounded-xl bg-brand px-4 py-2.5 text-sm font-bold text-white'; saveUpdate.textContent = 'Simpan';
+      saveUpdate.addEventListener('click', async () => {
+        const { error } = await addProgramUpdate({
+          program_id: program.id,
+          progress_percent: Number(progressInput.value),
+          status: statusSelect.value,
+          note: note.value.trim(),
+        });
+        if (error) return show('Progress belum dapat disimpan.', true);
+        show('Progress program diperbarui.');
+        await load();
+      });
+      updateForm.append(progressInput, statusSelect, note, saveUpdate);
+      updateSection.append(updateTitle, updateForm);
+
+      card.append(head, peopleSection, updateSection);
+      return card;
+    };
+
+    const render = async () => {
+      if (!list) return;
+      list.replaceChildren();
+      for (const program of programs) {
+        list.append(await renderProgram(program));
+      }
+    };
+
+    const load = async () => {
+      const [termResult, unitResult, memberResult] = await Promise.all([
+        getCurrentTerm(),
+        getOrganizationUnits(),
+        getAssignableMembers(),
+      ]);
+      term = termResult.data;
+      units = (unitResult.data || []).filter((item) => item.term_id === term?.id);
+      members = memberResult.data || [];
+
+      if (form instanceof HTMLFormElement) {
+        const select = form.elements.namedItem('unit_id');
+        if (select instanceof HTMLSelectElement) {
+          select.replaceChildren();
+          for (const unit of units) {
+            const option = document.createElement('option'); option.value = unit.id; option.textContent = unit.name; select.append(option);
+          }
+        }
+      }
+
+      const programResult = await getPrograms({ termId: term?.id });
+      programs = programResult.data || [];
+      await render();
+    };
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!(form instanceof HTMLFormElement) || !term) return;
+      const values = new FormData(form);
+      const { error } = await saveProgram({
+        id: String(values.get('id') || '') || undefined,
+        term_id: term.id,
+        unit_id: String(values.get('unit_id') || ''),
+        title: String(values.get('title') || '').trim(),
+        summary: String(values.get('summary') || '').trim(),
+        objective: String(values.get('objective') || '').trim(),
+        status: String(values.get('status') || 'planned'),
+        starts_on: String(values.get('starts_on') || '') || null,
+        ends_on: String(values.get('ends_on') || '') || null,
+        visibility: String(values.get('visibility') || 'members'),
+        progress_percent: Number(values.get('progress_percent') || 0),
+      });
+      if (error) return show('Program belum dapat disimpan.', true);
+      show('Program berhasil disimpan.');
+      resetForm();
+      await load();
+    });
+
+    resetButton?.addEventListener('click', resetForm);
+    load();
+  </script>
+</MemberLayout>
