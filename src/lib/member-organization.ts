@@ -127,6 +127,107 @@ export async function getOrganizationTerms() {
     .order('starts_on', { ascending: false });
 }
 
+export async function saveOrganizationTerm(input: Partial<OrganizationTerm> & {
+  label: string;
+  starts_on: string;
+  ends_on: string;
+  is_current: boolean;
+}) {
+  if (!supabase) return unavailable();
+
+  if (input.is_current) {
+    const reset = await supabase
+      .from('organization_terms')
+      .update({ is_current: false })
+      .neq('id', input.id || '00000000-0000-0000-0000-000000000000');
+    if (reset.error) return reset;
+  }
+
+  const payload = {
+    label: input.label,
+    starts_on: input.starts_on,
+    ends_on: input.ends_on,
+    is_current: input.is_current,
+  };
+
+  if (input.id) {
+    return supabase
+      .from('organization_terms')
+      .update(payload)
+      .eq('id', input.id)
+      .select()
+      .single();
+  }
+
+  return supabase
+    .from('organization_terms')
+    .insert(payload)
+    .select()
+    .single();
+}
+
+export async function saveOrganizationUnit(input: Partial<OrganizationUnit> & {
+  term_id: string;
+  slug: string;
+  name: string;
+}) {
+  if (!supabase) return unavailable();
+  const payload = {
+    term_id: input.term_id,
+    slug: input.slug,
+    name: input.name,
+    description: input.description || '',
+    unit_type: input.unit_type || 'department',
+    sort_order: input.sort_order ?? 100,
+  };
+
+  if (input.id) {
+    return supabase
+      .from('organization_units')
+      .update(payload)
+      .eq('id', input.id)
+      .select()
+      .single();
+  }
+
+  return supabase
+    .from('organization_units')
+    .insert(payload)
+    .select()
+    .single();
+}
+
+export async function saveOrganizationPosition(input: Partial<OrganizationPosition> & {
+  term_id: string;
+  unit_id: string;
+  slug: string;
+  title: string;
+}) {
+  if (!supabase) return unavailable();
+  const payload = {
+    term_id: input.term_id,
+    unit_id: input.unit_id,
+    slug: input.slug,
+    title: input.title,
+    sort_order: input.sort_order ?? 100,
+  };
+
+  if (input.id) {
+    return supabase
+      .from('organization_positions')
+      .update(payload)
+      .eq('id', input.id)
+      .select()
+      .single();
+  }
+
+  return supabase
+    .from('organization_positions')
+    .insert(payload)
+    .select()
+    .single();
+}
+
 export async function getOrganizationUnits(termId?: string) {
   if (!supabase) return unavailable();
   let query = supabase
