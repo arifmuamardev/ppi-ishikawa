@@ -1,0 +1,158 @@
+---
+import MemberLayout from '../../layouts/MemberLayout.astro';
+import { withBase } from '../../utils/paths';
+---
+
+<MemberLayout title="Berbagi Cerita" requireApproved={true}>
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Cerita PPI Ishikawa</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Bagikan pengalaman yang bisa berguna bagi anggota lain</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Mengirim minat tidak langsung mempublikasikan cerita. Pengurus akan menghubungi Anda untuk proses editorial dan persetujuan sebelum publikasi.</p>
+      <a href={withBase('/stories/')} class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Lihat Cerita PPI Ishikawa →</a>
+    </section>
+
+    <div id="story-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <form id="story-interest-form">
+        <label class="flex items-start gap-3 rounded-2xl bg-amber-50 p-4">
+          <input name="story_willing" type="checkbox" class="mt-1 size-4" />
+          <span><strong class="text-slate-950">Saya bersedia dihubungi untuk berbagi cerita</strong><span class="mt-1 block text-sm leading-6 text-slate-600">Preference ini membantu pengurus mengetahui anggota yang terbuka untuk berbagi pengalaman.</span></span>
+        </label>
+
+        <p class="mt-6 text-sm font-bold text-slate-800">Topik yang bersedia saya bagikan</p>
+        <div id="story-topic-options" class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"></div>
+
+        <label class="mt-6 block">
+          <span class="text-sm font-bold text-slate-800">Catatan untuk editor</span>
+          <textarea name="note" rows="5" maxlength="1500" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" placeholder="Contoh: pengalaman mencari beasiswa, adaptasi awal di Kanazawa, atau transisi ke pekerjaan setelah lulus."></textarea>
+        </label>
+
+        <div class="mt-6 flex justify-end">
+          <button class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Simpan & kirim minat</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Pipeline saya</p>
+      <h2 class="mt-2 text-xl font-bold text-slate-950">Status kontribusi cerita</h2>
+      <div id="story-submission-empty" class="mt-6 rounded-2xl bg-slate-50 p-6 text-center text-sm text-slate-600">Belum ada minat cerita yang dikirim.</div>
+      <div id="story-submission-list" class="mt-6 space-y-3"></div>
+    </section>
+  </div>
+
+  <script>
+    import {
+      getGrowthPreferences,
+      getMyStorySubmissions,
+      saveGrowthPreferences,
+      storyTopicOptions,
+      submitStoryInterest,
+    } from '../../lib/member-growth';
+
+    const form = document.getElementById('story-interest-form');
+    const message = document.getElementById('story-message');
+    const options = document.getElementById('story-topic-options');
+    const list = document.getElementById('story-submission-list');
+    const empty = document.getElementById('story-submission-empty');
+
+    const show = (text, error = false) => {
+      if (!message) return;
+      message.textContent = text;
+      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
+    };
+
+    for (const item of storyTopicOptions) {
+      const label = document.createElement('label');
+      label.className = 'flex items-start gap-3 rounded-2xl bg-slate-50 p-4';
+      const input = document.createElement('input');
+      input.type = 'checkbox'; input.name = 'story_topics'; input.value = item.value; input.className = 'mt-1 size-4';
+      const text = document.createElement('span');
+      text.className = 'text-sm font-semibold text-slate-700'; text.textContent = item.label;
+      label.append(input, text); options?.append(label);
+    }
+
+    const prefResult = await getGrowthPreferences();
+    const preferences = prefResult.data || {
+      career_interests: [],
+      mentor_available: false,
+      mentor_topics: [],
+      seeking_mentor: false,
+      mentee_topics: [],
+      story_willing: false,
+      story_topics: [],
+    };
+
+    if (form instanceof HTMLFormElement) {
+      const willing = form.elements.namedItem('story_willing');
+      if (willing instanceof HTMLInputElement) willing.checked = preferences.story_willing;
+    }
+    for (const input of document.querySelectorAll('input[name="story_topics"]')) {
+      if (input instanceof HTMLInputElement) input.checked = (preferences.story_topics || []).includes(input.value);
+    }
+
+    const labels = {
+      proposed: 'Diajukan',
+      contacted: 'Sudah dihubungi',
+      draft: 'Dalam penyusunan',
+      published: 'Sudah dipublikasikan',
+      declined: 'Tidak dilanjutkan',
+    };
+
+    const load = async () => {
+      const { data, error } = await getMyStorySubmissions();
+      if (error) return;
+      const items = data || [];
+      empty?.classList.toggle('hidden', items.length !== 0);
+      if (!list) return;
+      list.replaceChildren();
+
+      for (const item of items) {
+        const card = document.createElement('article');
+        card.className = 'rounded-2xl border border-slate-200 p-5';
+        const meta = document.createElement('p');
+        meta.className = 'text-xs font-bold uppercase tracking-[0.1em] text-slate-500';
+        meta.textContent = labels[item.status] || item.status;
+        const topics = document.createElement('p');
+        topics.className = 'mt-2 font-semibold text-slate-900';
+        topics.textContent = (item.topics || []).map((topic) => storyTopicOptions.find((x) => x.value === topic)?.label || topic).join(' · ');
+        const note = document.createElement('p');
+        note.className = 'mt-2 text-sm leading-6 text-slate-600';
+        note.textContent = item.note || 'Tanpa catatan.';
+        card.append(meta, topics, note); list.append(card);
+      }
+    };
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!(form instanceof HTMLFormElement)) return;
+      const values = new FormData(form);
+      const topics = [...document.querySelectorAll('input[name="story_topics"]:checked')].map((input) => input.value);
+      const willing = values.get('story_willing') === 'on';
+
+      const prefSave = await saveGrowthPreferences({
+        ...preferences,
+        story_willing: willing,
+        story_topics: topics,
+      });
+      if (prefSave.error) return show('Preference cerita belum dapat disimpan.', true);
+
+      Object.assign(preferences, { story_willing: willing, story_topics: topics });
+
+      if (willing && topics.length) {
+        const submission = await submitStoryInterest(topics, String(values.get('note') || '').trim());
+        if (submission.error) return show('Minat cerita belum dapat dikirim.', true);
+        const note = form.elements.namedItem('note');
+        if (note instanceof HTMLTextAreaElement) note.value = '';
+        show('Minat berbagi cerita berhasil dikirim. Pengurus dapat menindaklanjutinya dari pipeline editorial.');
+        await load();
+      } else {
+        show('Preference cerita berhasil disimpan.');
+      }
+    });
+
+    load();
+  </script>
+</MemberLayout>
