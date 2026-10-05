@@ -1,0 +1,68 @@
+---
+import MemberLayout from '../../layouts/MemberLayout.astro';
+---
+
+<MemberLayout title="Check-in Kegiatan" requireApproved={true}>
+  <div class="mx-auto max-w-2xl space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">QR Check-in</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Check-in kegiatan</h1>
+      <p class="mt-3 leading-7 text-slate-600">QR check-in hanya bekerja untuk anggota terverifikasi yang sudah RSVP hadir pada kegiatan terkait.</p>
+    </section>
+
+    <div id="checkin-state" class="rounded-3xl border border-slate-200 bg-white p-7">
+      <p id="checkin-title" class="text-xl font-bold text-slate-950">Token check-in siap diperiksa.</p>
+      <p id="checkin-copy" class="mt-3 text-sm leading-6 text-slate-600">Tekan tombol di bawah untuk melakukan check-in.</p>
+      <button id="checkin-button" type="button" class="mt-5 rounded-xl bg-brand px-5 py-3 font-bold text-white">Check-in sekarang</button>
+    </div>
+  </div>
+
+  <script>
+    import { checkInWithEventToken } from '../../lib/member-advanced';
+
+    const token = new URLSearchParams(window.location.search).get('token') || '';
+    const button = document.getElementById('checkin-button');
+    const title = document.getElementById('checkin-title');
+    const copy = document.getElementById('checkin-copy');
+    const state = document.getElementById('checkin-state');
+
+    if (!token) {
+      if (title) title.textContent = 'Token check-in tidak ditemukan.';
+      if (copy) copy.textContent = 'Pindai QR check-in yang ditampilkan pengurus pada kegiatan.';
+      button?.classList.add('hidden');
+    }
+
+    button?.addEventListener('click', async () => {
+      if (!token) return;
+      if (button instanceof HTMLButtonElement) {
+        button.disabled = true;
+        button.textContent = 'Memproses…';
+      }
+
+      const { data, error } = await checkInWithEventToken(token);
+      const checked = data?.[0];
+
+      if (error || !checked) {
+        state?.classList.add('border-red-200', 'bg-red-50');
+        if (title) title.textContent = 'Check-in belum berhasil.';
+        if (copy) {
+          const message = error?.message || '';
+          copy.textContent = message.includes('RSVP')
+            ? 'Anda belum RSVP hadir untuk kegiatan ini.'
+            : 'Session QR mungkin belum aktif, sudah ditutup, atau token tidak valid.';
+        }
+        if (button instanceof HTMLButtonElement) {
+          button.disabled = false;
+          button.textContent = 'Coba lagi';
+        }
+        return;
+      }
+
+      state?.classList.remove('border-red-200', 'bg-red-50');
+      state?.classList.add('border-emerald-200', 'bg-emerald-50');
+      if (title) title.textContent = 'Check-in berhasil.';
+      if (copy) copy.textContent = `${checked.event_title} · ${new Intl.DateTimeFormat('id-ID', { dateStyle: 'long', timeStyle: 'short', timeZone: 'Asia/Tokyo' }).format(new Date(checked.checked_in_at))}`;
+      button?.classList.add('hidden');
+    });
+  </script>
+</MemberLayout>
