@@ -1,0 +1,197 @@
+---
+import MemberLayout from '../../layouts/MemberLayout.astro';
+---
+
+<MemberLayout title="Alumni Network" requireApproved={true}>
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Alumni Network</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Tetap terhubung setelah lulus</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Profil alumni bersifat opt-in. Hanya informasi yang Anda setujui yang ditampilkan kepada anggota terverifikasi.</p>
+    </section>
+
+    <div id="alumni-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+
+    <section id="alumni-status-note" class="hidden rounded-3xl border border-amber-200 bg-amber-50 p-6">
+      <p class="font-bold text-slate-950">Status membership Anda belum Alumni.</p>
+      <p class="mt-2 text-sm leading-6 text-slate-700">Anda tetap dapat menyiapkan profil ini. Profil baru akan muncul di Alumni Network setelah status membership diubah menjadi Alumni dan visibilitas direktori diaktifkan.</p>
+    </section>
+
+    <form id="alumni-profile-form" class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <h2 class="text-xl font-bold text-slate-950">Profil alumni saya</h2>
+      <div class="mt-6 grid gap-5 md:grid-cols-2">
+        <label>
+          <span class="text-sm font-bold text-slate-800">Tahun lulus</span>
+          <input name="graduation_year" type="number" min="2000" max="2100" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Negara saat ini</span>
+          <input name="current_country" type="text" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Kota saat ini</span>
+          <input name="current_city" type="text" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Organisasi / perusahaan</span>
+          <input name="organization" type="text" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Peran / jabatan</span>
+          <input name="role_title" type="text" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Bidang / sektor</span>
+          <input name="sector" type="text" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+      </div>
+
+      <div class="mt-6 space-y-3">
+        <label class="flex items-start gap-3 rounded-2xl bg-amber-50 p-4">
+          <input name="directory_visible" type="checkbox" class="mt-1 size-4" />
+          <span><strong class="text-slate-950">Tampilkan saya di Alumni Network</strong><span class="mt-1 block text-sm leading-6 text-slate-600">Hanya berlaku setelah status membership Anda Alumni.</span></span>
+        </label>
+        <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
+          <input name="willing_to_be_contacted" type="checkbox" class="mt-1 size-4" />
+          <span class="text-sm font-semibold text-slate-700">Saya terbuka untuk dihubungi oleh anggota melalui jalur yang tersedia.</span>
+        </label>
+        <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
+          <input name="speaking_available" type="checkbox" class="mt-1 size-4" />
+          <span class="text-sm font-semibold text-slate-700">Saya terbuka untuk diundang berbagi pengalaman / menjadi pembicara.</span>
+        </label>
+      </div>
+
+      <div class="mt-6 flex justify-end">
+        <button class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Simpan profil alumni</button>
+      </div>
+    </form>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Direktori</p>
+          <h2 class="mt-2 text-xl font-bold text-slate-950">Alumni yang memilih untuk terhubung</h2>
+        </div>
+        <p id="alumni-count" class="text-sm font-semibold text-slate-500">Memuat…</p>
+      </div>
+      <div id="alumni-empty" class="mt-6 hidden rounded-2xl bg-slate-50 p-6 text-center text-sm text-slate-600">Belum ada profil alumni yang ditampilkan.</div>
+      <div id="alumni-grid" class="mt-6 grid gap-4 lg:grid-cols-2"></div>
+    </section>
+  </div>
+
+  <script>
+    import { getCurrentMember } from '../../lib/member';
+    import { getAlumniDirectory, getAlumniProfile, saveAlumniProfile } from '../../lib/member-growth';
+
+    const form = document.getElementById('alumni-profile-form');
+    const message = document.getElementById('alumni-message');
+    const note = document.getElementById('alumni-status-note');
+    const grid = document.getElementById('alumni-grid');
+    const empty = document.getElementById('alumni-empty');
+    const count = document.getElementById('alumni-count');
+
+    const show = (text, error = false) => {
+      if (!message) return;
+      message.textContent = text;
+      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
+    };
+
+    const setValue = (name, value) => {
+      if (!(form instanceof HTMLFormElement)) return;
+      const input = form.elements.namedItem(name);
+      if (input instanceof HTMLInputElement) input.value = value ?? '';
+    };
+
+    const setChecked = (name, value) => {
+      if (!(form instanceof HTMLFormElement)) return;
+      const input = form.elements.namedItem(name);
+      if (input instanceof HTMLInputElement) input.checked = Boolean(value);
+    };
+
+    const member = await getCurrentMember();
+    if (member.profile?.membership_status !== 'alumni') note?.classList.remove('hidden');
+
+    const ownResult = await getAlumniProfile();
+    if (ownResult.data) {
+      const profile = ownResult.data;
+      setValue('graduation_year', profile.graduation_year);
+      setValue('current_country', profile.current_country);
+      setValue('current_city', profile.current_city);
+      setValue('organization', profile.organization);
+      setValue('role_title', profile.role_title);
+      setValue('sector', profile.sector);
+      setChecked('directory_visible', profile.directory_visible);
+      setChecked('willing_to_be_contacted', profile.willing_to_be_contacted);
+      setChecked('speaking_available', profile.speaking_available);
+    }
+
+    const loadDirectory = async () => {
+      const { data, error } = await getAlumniDirectory();
+      if (error) {
+        if (count) count.textContent = '—';
+        return;
+      }
+
+      const items = data || [];
+      if (count) count.textContent = `${items.length} alumni`;
+      empty?.classList.toggle('hidden', items.length !== 0);
+      if (!grid) return;
+      grid.replaceChildren();
+
+      for (const item of items) {
+        const card = document.createElement('article');
+        card.className = 'rounded-2xl border border-slate-200 p-5';
+        const h = document.createElement('h3');
+        h.className = 'text-lg font-bold text-slate-950';
+        h.textContent = item.full_name;
+        const role = document.createElement('p');
+        role.className = 'mt-2 text-sm font-semibold text-slate-700';
+        role.textContent = [item.role_title, item.organization].filter(Boolean).join(' · ') || 'Alumni PPI Ishikawa';
+        const meta = document.createElement('p');
+        meta.className = 'mt-2 text-sm leading-6 text-slate-600';
+        meta.textContent = [
+          item.program,
+          item.graduation_year ? `Lulus ${item.graduation_year}` : null,
+          item.current_city,
+          item.current_country,
+          item.sector,
+        ].filter(Boolean).join(' · ');
+        card.append(h, role, meta);
+
+        if (item.linkedin_url) {
+          const link = document.createElement('a');
+          link.href = item.linkedin_url;
+          link.target = '_blank';
+          link.rel = 'noreferrer';
+          link.className = 'mt-4 inline-flex text-sm font-bold text-brand hover:underline';
+          link.textContent = 'LinkedIn ↗';
+          card.append(link);
+        }
+        grid.append(card);
+      }
+    };
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!(form instanceof HTMLFormElement)) return;
+      const values = new FormData(form);
+      const year = String(values.get('graduation_year') || '');
+      const { error } = await saveAlumniProfile({
+        graduation_year: year ? Number(year) : null,
+        current_country: String(values.get('current_country') || '').trim() || null,
+        current_city: String(values.get('current_city') || '').trim() || null,
+        organization: String(values.get('organization') || '').trim() || null,
+        role_title: String(values.get('role_title') || '').trim() || null,
+        sector: String(values.get('sector') || '').trim() || null,
+        directory_visible: values.get('directory_visible') === 'on',
+        willing_to_be_contacted: values.get('willing_to_be_contacted') === 'on',
+        speaking_available: values.get('speaking_available') === 'on',
+      });
+      if (error) return show('Profil alumni belum dapat disimpan.', true);
+      show('Profil alumni berhasil disimpan.');
+      await loadDirectory();
+    });
+
+    loadDirectory();
+  </script>
+</MemberLayout>
