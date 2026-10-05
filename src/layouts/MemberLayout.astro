@@ -32,31 +32,49 @@ const {
           <p id="member-nav-status" class="mt-1 text-xs text-slate-500">Memuat keanggotaan…</p>
         </div>
 
-        <nav class="mt-3 space-y-1 text-sm" aria-label="Navigasi anggota">
-          <a href={withBase('/member/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Dashboard</a>
-          <a href={withBase('/member/profile/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Profil saya</a>
-          <a href={withBase('/member/directory/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Direktori anggota</a>
-          <div class="my-3 border-t border-slate-100"></div>
-          <a href={withBase('/member/events/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Agenda & RSVP</a>
-          <a href={withBase('/member/calendar/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kalender</a>
-          <a href={withBase('/member/announcements/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Pengumuman</a>
-          <a href={withBase('/member/interests/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Minat & skills</a>
-          <a href={withBase('/member/aspirations/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Aspirasi</a>
-          <div class="my-3 border-t border-slate-100"></div>
-          <a href={withBase('/member/organization/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Organisasi</a>
-          <a href={withBase('/member/programs/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Program kerja</a>
-          <a href={withBase('/member/volunteer/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Volunteer</a>
-          <div id="member-admin-tools" class="hidden">
-            <div class="my-3 border-t border-slate-100"></div>
+        <nav class="mt-3 max-h-[70vh] space-y-4 overflow-y-auto pr-1 text-sm" aria-label="Navigasi anggota">
+          <div>
+            <p class="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Akun</p>
+            <a href={withBase('/member/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Dashboard</a>
+            <a href={withBase('/member/profile/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Profil saya</a>
+            <a href={withBase('/member/directory/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Direktori anggota</a>
+          </div>
+
+          <div class="border-t border-slate-100 pt-3">
+            <p class="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Komunitas</p>
+            <a href={withBase('/member/events/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Agenda & RSVP</a>
+            <a href={withBase('/member/calendar/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kalender</a>
+            <a href={withBase('/member/announcements/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Pengumuman</a>
+            <a href={withBase('/member/interests/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Minat & skills</a>
+            <a href={withBase('/member/aspirations/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Aspirasi</a>
+          </div>
+
+          <div class="border-t border-slate-100 pt-3">
+            <p class="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Organisasi</p>
+            <a href={withBase('/member/organization/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Struktur</a>
+            <a href={withBase('/member/programs/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Program kerja</a>
+            <a href={withBase('/member/volunteer/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Volunteer</a>
+          </div>
+
+          <div class="border-t border-slate-100 pt-3">
+            <p class="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Pengembangan</p>
+            <a href={withBase('/member/opportunities/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Untuk Anda</a>
+            <a href={withBase('/member/mentoring/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Mentoring</a>
+            <a href={withBase('/member/alumni/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Alumni Network</a>
+            <a href={withBase('/member/stories/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Berbagi cerita</a>
+          </div>
+
+          <div id="member-admin-tools" class="hidden border-t border-slate-100 pt-3">
             <p class="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Admin</p>
-            <a href={withBase('/member/admin/verification/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Verifikasi anggota</a>
-            <a href={withBase('/member/admin/events/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kelola agenda</a>
-            <a href={withBase('/member/admin/attendance/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Attendance kegiatan</a>
-            <a href={withBase('/member/admin/announcements/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kelola pengumuman</a>
-            <a href={withBase('/member/admin/aspirations/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kelola aspirasi</a>
-            <a href={withBase('/member/admin/organization/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kelola organisasi</a>
-            <a href={withBase('/member/admin/programs/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kelola program</a>
-            <a href={withBase('/member/admin/volunteer/')} class="block rounded-xl px-3 py-2.5 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kelola volunteer</a>
+            <a href={withBase('/member/admin/verification/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Verifikasi anggota</a>
+            <a href={withBase('/member/admin/events/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kelola agenda</a>
+            <a href={withBase('/member/admin/attendance/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Attendance kegiatan</a>
+            <a href={withBase('/member/admin/announcements/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kelola pengumuman</a>
+            <a href={withBase('/member/admin/aspirations/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kelola aspirasi</a>
+            <a href={withBase('/member/admin/organization/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kelola organisasi</a>
+            <a href={withBase('/member/admin/programs/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kelola program</a>
+            <a href={withBase('/member/admin/volunteer/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kelola volunteer</a>
+            <a href={withBase('/member/admin/growth/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Alumni & stories</a>
           </div>
         </nav>
 
