@@ -363,3 +363,36 @@ export async function getPersonalizedOpportunities() {
     reasons,
   };
 }
+
+
+export async function getGrowthAdminSummary() {
+  if (!supabase) return {
+    alumniProfiles: 0,
+    mentors: 0,
+    seekingMentors: 0,
+    storyWilling: 0,
+    storySubmissions: 0,
+  };
+
+  const [
+    alumni,
+    mentors,
+    seekers,
+    storyWilling,
+    submissions,
+  ] = await Promise.all([
+    supabase.from('alumni_profiles').select('*', { count: 'exact', head: true }),
+    supabase.from('member_growth_preferences').select('*', { count: 'exact', head: true }).eq('mentor_available', true),
+    supabase.from('member_growth_preferences').select('*', { count: 'exact', head: true }).eq('seeking_mentor', true),
+    supabase.from('member_growth_preferences').select('*', { count: 'exact', head: true }).eq('story_willing', true),
+    supabase.from('story_submissions').select('*', { count: 'exact', head: true }),
+  ]);
+
+  return {
+    alumniProfiles: alumni.count || 0,
+    mentors: mentors.count || 0,
+    seekingMentors: seekers.count || 0,
+    storyWilling: storyWilling.count || 0,
+    storySubmissions: submissions.count || 0,
+  };
+}
