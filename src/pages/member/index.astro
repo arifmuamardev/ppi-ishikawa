@@ -84,6 +84,24 @@ import { withBase } from '../../utils/paths';
       </a>
     </section>
 
+    <section class="grid gap-4 lg:grid-cols-3">
+      <a href={withBase('/member/card/')} class="rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
+        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Digital ID</p>
+        <h2 class="mt-2 text-xl font-bold text-slate-950">Kartu anggota</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Kartu digital dengan QR verifikasi publik dan token yang dapat diganti.</p>
+      </a>
+      <a href={withBase('/member/certificates/')} class="rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
+        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Credential</p>
+        <h2 class="mt-2 text-xl font-bold text-slate-950">Sertifikat saya</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Akses sertifikat yang diterbitkan PPI Ishikawa dan QR verifikasinya.</p>
+      </a>
+      <a href={withBase('/member/documents/')} class="rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
+        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Private access</p>
+        <h2 class="mt-2 text-xl font-bold text-slate-950">Dokumen anggota</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Dokumen internal dengan akses berdasarkan audiens dan signed URL sementara.</p>
+      </a>
+    </section>
+
     <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
       <p class="text-sm font-bold uppercase tracking-[0.14em] text-brand">Akses cepat</p>
       <div class="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
