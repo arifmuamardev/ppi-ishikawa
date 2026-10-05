@@ -1,0 +1,123 @@
+---
+import MemberLayout from '../../layouts/MemberLayout.astro';
+---
+
+<MemberLayout title="Kartu Anggota" requireApproved={true}>
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Digital Membership Card</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kartu anggota PPI Ishikawa</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">QR pada kartu ini membuka halaman verifikasi publik dengan informasi minimum: nama, kampus, status membership, dan validitas kartu.</p>
+    </section>
+
+    <div id="card-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+
+    <section id="membership-card" class="mx-auto max-w-xl overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-950 text-white shadow-sm">
+      <div class="p-7 sm:p-8">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.18em] text-amber-300">PPI Ishikawa</p>
+            <h2 class="mt-2 text-2xl font-bold">Kartu Anggota Digital</h2>
+          </div>
+          <span id="card-status-badge" class="rounded-full bg-white/10 px-3 py-1.5 text-xs font-bold">Memuat…</span>
+        </div>
+
+        <div class="mt-8 grid gap-6 sm:grid-cols-[1fr_180px] sm:items-end">
+          <div>
+            <p class="text-xs uppercase tracking-[0.12em] text-slate-400">Nama</p>
+            <p id="card-name" class="mt-1 text-xl font-bold">—</p>
+            <p class="mt-5 text-xs uppercase tracking-[0.12em] text-slate-400">Kampus</p>
+            <p id="card-campus" class="mt-1 font-semibold text-slate-200">—</p>
+            <p class="mt-5 text-xs uppercase tracking-[0.12em] text-slate-400">Nomor kartu</p>
+            <p id="card-number" class="mt-1 font-mono text-lg font-bold tracking-wider">—</p>
+            <p id="card-issued" class="mt-3 text-xs text-slate-400">—</p>
+          </div>
+          <div class="rounded-2xl bg-white p-3">
+            <canvas id="card-qr" class="mx-auto block max-w-full"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-white/10 bg-white/5 px-7 py-4 text-xs leading-5 text-slate-300">
+        Pindai QR untuk memeriksa validitas kartu. Kartu dapat menjadi tidak valid bila membership dinonaktifkan atau token diganti.
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-xl rounded-3xl border border-slate-200 bg-white p-6">
+      <h2 class="font-bold text-slate-950">Keamanan kartu</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-600">Jika QR pernah dibagikan ke pihak yang tidak diinginkan, ganti token kartu. QR lama akan langsung tidak dapat diverifikasi.</p>
+      <div class="mt-4 flex flex-wrap gap-3">
+        <button id="card-rotate" type="button" class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">Ganti token kartu</button>
+        <button id="card-print" type="button" class="rounded-xl bg-brand px-4 py-2.5 text-sm font-bold text-white">Cetak kartu</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    import QRCode from 'qrcode';
+    import { campuses } from '../../data/campuses';
+    import { getCurrentMember, memberAbsoluteUrl } from '../../lib/member';
+    import { ensureMembershipCard, rotateMembershipCard } from '../../lib/member-advanced';
+
+    const message = document.getElementById('card-message');
+    const canvas = document.getElementById('card-qr');
+
+    const show = (text, error = false) => {
+      if (!message) return;
+      message.textContent = text;
+      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
+    };
+
+    const render = async (card) => {
+      const member = await getCurrentMember();
+      const campus = campuses.find((item) => item.slug === member.profile?.campus_slug);
+
+      const name = document.getElementById('card-name');
+      const campusEl = document.getElementById('card-campus');
+      const number = document.getElementById('card-number');
+      const issued = document.getElementById('card-issued');
+      const badge = document.getElementById('card-status-badge');
+
+      if (name) name.textContent = member.profile?.full_name || 'Anggota PPI Ishikawa';
+      if (campusEl) campusEl.textContent = campus?.shortName || campus?.name || 'Kampus belum diisi';
+      if (number) number.textContent = card.card_number;
+      if (issued) issued.textContent = `Terbit ${new Intl.DateTimeFormat('id-ID', { dateStyle: 'long' }).format(new Date(card.issued_at))}`;
+      if (badge) badge.textContent = member.profile?.membership_status === 'alumni' ? 'Alumni' : 'Aktif';
+
+      const verificationUrl = memberAbsoluteUrl(`/verify/member/?token=${encodeURIComponent(card.verification_token)}`);
+      if (canvas instanceof HTMLCanvasElement) {
+        await QRCode.toCanvas(canvas, verificationUrl, {
+          width: 170,
+          margin: 1,
+          errorCorrectionLevel: 'M',
+        });
+      }
+    };
+
+    const load = async () => {
+      const { data, error } = await ensureMembershipCard();
+      const card = data?.[0];
+      if (error || !card) return show('Kartu anggota belum dapat dibuat.', true);
+      await render(card);
+    };
+
+    document.getElementById('card-rotate')?.addEventListener('click', async () => {
+      if (!window.confirm('Ganti token kartu? QR lama tidak akan valid lagi.')) return;
+      const { data, error } = await rotateMembershipCard();
+      const card = data?.[0];
+      if (error || !card) return show('Token kartu belum dapat diganti.', true);
+      show('Token kartu berhasil diganti. QR lama sudah tidak valid.');
+      await render(card);
+    });
+
+    document.getElementById('card-print')?.addEventListener('click', () => window.print());
+    load();
+  </script>
+
+  <style is:global>
+    @media print {
+      body * { visibility: hidden !important; }
+      #membership-card, #membership-card * { visibility: visible !important; }
+      #membership-card { position: fixed; inset: 20mm auto auto 20mm; width: 150mm; }
+    }
+  </style>
+</MemberLayout>
