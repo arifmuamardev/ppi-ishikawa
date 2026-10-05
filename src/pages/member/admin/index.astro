@@ -1,0 +1,167 @@
+---
+import MemberLayout from '../../../layouts/MemberLayout.astro';
+import { withBase } from '../../../utils/paths';
+
+const groups = [
+  {
+    title: 'Membership',
+    description: 'Kelola data anggota dan status verifikasi.',
+    links: [
+      ['Verifikasi anggota', '/member/admin/verification/'],
+      ['Membership analytics', '/member/admin/analytics/'],
+    ],
+  },
+  {
+    title: 'Komunitas',
+    description: 'Agenda, pengumuman, aspirasi, dan kehadiran.',
+    links: [
+      ['Kelola agenda', '/member/admin/events/'],
+      ['QR check-in', '/member/admin/checkin-qr/'],
+      ['Attendance kegiatan', '/member/admin/attendance/'],
+      ['Kelola pengumuman', '/member/admin/announcements/'],
+      ['Kelola aspirasi', '/member/admin/aspirations/'],
+    ],
+  },
+  {
+    title: 'Organisasi',
+    description: 'Struktur kepengurusan, program kerja, dan volunteer.',
+    links: [
+      ['Kelola organisasi', '/member/admin/organization/'],
+      ['Kelola program', '/member/admin/programs/'],
+      ['Kelola volunteer', '/member/admin/volunteer/'],
+    ],
+  },
+  {
+    title: 'Layanan anggota',
+    description: 'Sertifikat, dokumen privat, alumni, mentoring, dan cerita.',
+    links: [
+      ['Kelola sertifikat', '/member/admin/certificates/'],
+      ['Kelola dokumen', '/member/admin/documents/'],
+      ['Alumni & stories', '/member/admin/growth/'],
+    ],
+  },
+];
+---
+
+<MemberLayout title="Admin Center" requireAdmin={true}>
+  <div class="space-y-7">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Admin Center</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kelola Area Anggota dari satu tempat</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Gunakan halaman ini sebagai pintu utama administrasi. Status kesiapan di bawah membantu melihat apa yang masih perlu disiapkan sebelum Area Anggota diumumkan secara luas.</p>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Production readiness</p>
+          <h2 class="mt-2 text-xl font-bold text-slate-950">Kesiapan peluncuran</h2>
+        </div>
+        <p id="readiness-summary" class="text-sm font-semibold text-slate-500">Memeriksa…</p>
+      </div>
+      <div id="readiness-grid" class="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-3"></div>
+    </section>
+
+    <section class="grid gap-5 lg:grid-cols-2">
+      {groups.map((group) => (
+        <article class="rounded-3xl border border-slate-200 bg-white p-6">
+          <h2 class="text-xl font-bold text-slate-950">{group.title}</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-600">{group.description}</p>
+          <div class="mt-5 grid gap-2">
+            {group.links.map(([label, href]) => (
+              <a href={withBase(href)} class="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-800 hover:bg-amber-50 hover:text-brand">
+                <span>{label}</span><span aria-hidden="true">→</span>
+              </a>
+            ))}
+          </div>
+        </article>
+      ))}
+    </section>
+
+    <section class="rounded-3xl border border-amber-200 bg-amber-50 p-6">
+      <h2 class="font-bold text-slate-950">Catatan peluncuran</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-700">Tidak semua indikator harus terisi untuk membuka Area Anggota. Yang wajib sebelum publikasi luas adalah admin aktif, periode aktif, alur login/verifikasi yang sehat, dan kebijakan siapa yang berhak mengakses data anggota. Agenda, program, pengumuman, dan dokumen dapat diisi bertahap.</p>
+    </section>
+  </div>
+
+  <script>
+    import { supabase } from '../../../lib/supabase';
+
+    const grid = document.getElementById('readiness-grid');
+    const summary = document.getElementById('readiness-summary');
+
+    const count = async (table, configure) => {
+      if (!supabase) return 0;
+      let query = supabase.from(table).select('*', { count: 'exact', head: true });
+      if (configure) query = configure(query);
+      const { count, error } = await query;
+      return error ? 0 : (count || 0);
+    };
+
+    if (supabase) {
+      const [
+        admins,
+        currentTerms,
+        assignments,
+        events,
+        announcements,
+        programs,
+        documents,
+      ] = await Promise.all([
+        count('profiles', (q) => q.eq('role', 'admin').eq('verification_status', 'approved')),
+        count('organization_terms', (q) => q.eq('is_current', true)),
+        count('organization_assignments'),
+        count('member_events', (q) => q.eq('published', true)),
+        count('member_announcements', (q) => q.eq('published', true)),
+        count('organization_programs'),
+        count('member_documents', (q) => q.eq('published', true)),
+      ]);
+
+      const items = [
+        { label: 'Admin aktif', value: admins, ready: admins >= 1, required: true, hint: 'Minimal satu admin terverifikasi.' },
+        { label: 'Periode aktif', value: currentTerms, ready: currentTerms === 1, required: true, hint: 'Tepat satu periode kepengurusan aktif.' },
+        { label: 'Pengurus ditetapkan', value: assignments, ready: assignments > 0, required: false, hint: 'Isi saat susunan 2026/27 sudah final.' },
+        { label: 'Agenda dipublikasikan', value: events, ready: events > 0, required: false, hint: 'Bisa ditambahkan saat agenda pertama siap.' },
+        { label: 'Pengumuman', value: announcements, ready: announcements > 0, required: false, hint: 'Berguna untuk pesan sambutan/panduan awal.' },
+        { label: 'Program kerja', value: programs, ready: programs > 0, required: false, hint: 'Masukkan program setelah struktur final.' },
+        { label: 'Dokumen anggota', value: documents, ready: documents > 0, required: false, hint: 'Opsional; upload hanya dokumen yang memang perlu dibatasi.' },
+      ];
+
+      const requiredReady = items.filter((x) => x.required && x.ready).length;
+      const requiredTotal = items.filter((x) => x.required).length;
+      if (summary) summary.textContent = requiredReady === requiredTotal ? 'Core siap' : `${requiredReady}/${requiredTotal} core siap`;
+
+      for (const item of items) {
+        const card = document.createElement('article');
+        card.className = item.ready
+          ? 'rounded-2xl border border-emerald-200 bg-emerald-50 p-4'
+          : 'rounded-2xl border border-slate-200 bg-slate-50 p-4';
+
+        const top = document.createElement('div');
+        top.className = 'flex items-center justify-between gap-3';
+        const label = document.createElement('p');
+        label.className = 'font-bold text-slate-900';
+        label.textContent = item.label;
+        const badge = document.createElement('span');
+        badge.className = item.ready
+          ? 'rounded-full bg-white px-2.5 py-1 text-[11px] font-bold text-emerald-700'
+          : 'rounded-full bg-white px-2.5 py-1 text-[11px] font-bold text-slate-600';
+        badge.textContent = item.ready ? 'Siap' : (item.required ? 'Perlu disiapkan' : 'Belum diisi');
+        top.append(label, badge);
+
+        const value = document.createElement('p');
+        value.className = 'mt-3 text-2xl font-bold text-slate-950';
+        value.textContent = String(item.value);
+
+        const hint = document.createElement('p');
+        hint.className = 'mt-2 text-xs leading-5 text-slate-600';
+        hint.textContent = item.hint;
+
+        card.append(top, value, hint);
+        grid?.append(card);
+      }
+    } else if (summary) {
+      summary.textContent = 'Backend tidak tersedia';
+    }
+  </script>
+</MemberLayout>
