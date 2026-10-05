@@ -1,0 +1,143 @@
+---
+import MemberLayout from '../../../layouts/MemberLayout.astro';
+---
+
+<MemberLayout title="Kelola Dokumen" requireAdmin={true}>
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Admin · Dokumen</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Dokumen privat anggota</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">File disimpan di private Supabase Storage dan hanya dapat diunduh oleh audiens yang diizinkan melalui signed URL sementara.</p>
+    </section>
+
+    <div id="document-admin-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <form id="document-upload-form" class="grid gap-5 md:grid-cols-2">
+        <label>
+          <span class="text-sm font-bold text-slate-800">Judul</span>
+          <input name="title" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Audiens</span>
+          <select name="audience" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3">
+            <option value="verified">Semua anggota terverifikasi</option>
+            <option value="officers">Pengurus</option>
+            <option value="alumni">Alumni</option>
+          </select>
+        </label>
+        <label class="md:col-span-2">
+          <span class="text-sm font-bold text-slate-800">Deskripsi</span>
+          <textarea name="description" rows="3" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3"></textarea>
+        </label>
+        <label class="md:col-span-2">
+          <span class="text-sm font-bold text-slate-800">File</span>
+          <input name="file" type="file" required class="mt-2 block w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm" />
+          <span class="mt-2 block text-xs text-slate-500">Batas antarmuka: 10 MB per file.</span>
+        </label>
+        <div class="md:col-span-2 flex justify-end">
+          <button class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Upload dokumen</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="document-admin-list" class="grid gap-4 lg:grid-cols-2"></section>
+  </div>
+
+  <script>
+    import {
+      deleteMemberDocument,
+      getMemberDocuments,
+      uploadMemberDocument,
+    } from '../../../lib/member-advanced';
+
+    const form = document.getElementById('document-upload-form');
+    const list = document.getElementById('document-admin-list');
+    const message = document.getElementById('document-admin-message');
+
+    const show = (text, error = false) => {
+      if (!message) return;
+      message.textContent = text;
+      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
+    };
+
+    const labels = {
+      verified: 'Semua anggota terverifikasi',
+      officers: 'Pengurus',
+      alumni: 'Alumni',
+    };
+
+    const load = async () => {
+      const { data, error } = await getMemberDocuments();
+      if (error) return show('Daftar dokumen belum dapat dimuat.', true);
+      if (!list) return;
+      list.replaceChildren();
+
+      for (const document of data || []) {
+        const card = document.createElement('article');
+        card.className = 'rounded-3xl border border-slate-200 bg-white p-6';
+
+        const badge = document.createElement('span');
+        badge.className = 'rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-600';
+        badge.textContent = labels[document.audience] || document.audience;
+
+        const h = document.createElement('h2');
+        h.className = 'mt-4 text-xl font-bold text-slate-950';
+        h.textContent = document.title;
+
+        const p = document.createElement('p');
+        p.className = 'mt-2 text-sm leading-6 text-slate-600';
+        p.textContent = document.description || document.storage_path;
+
+        const remove = document.createElement('button');
+        remove.type = 'button';
+        remove.className = 'mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-bold text-red-700';
+        remove.textContent = 'Hapus';
+        remove.addEventListener('click', async () => {
+          if (!window.confirm('Hapus file dan metadata dokumen ini?')) return;
+          const { error } = await deleteMemberDocument(document);
+          if (error) return show('Dokumen belum dapat dihapus.', true);
+          show('Dokumen berhasil dihapus.');
+          await load();
+        });
+
+        card.append(badge, h, p, remove);
+        list.append(card);
+      }
+    };
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!(form instanceof HTMLFormElement)) return;
+      const values = new FormData(form);
+      const file = values.get('file');
+      if (!(file instanceof File) || file.size === 0) return show('Pilih file terlebih dahulu.', true);
+      if (file.size > 10 * 1024 * 1024) return show('Ukuran file melebihi batas 10 MB.', true);
+
+      const submit = form.querySelector('button[type="submit"]');
+      if (submit instanceof HTMLButtonElement) {
+        submit.disabled = true;
+        submit.textContent = 'Mengunggah…';
+      }
+
+      const { error } = await uploadMemberDocument({
+        file,
+        title: String(values.get('title') || '').trim(),
+        description: String(values.get('description') || '').trim(),
+        audience: String(values.get('audience') || 'verified'),
+      });
+
+      if (submit instanceof HTMLButtonElement) {
+        submit.disabled = false;
+        submit.textContent = 'Upload dokumen';
+      }
+
+      if (error) return show('Dokumen belum dapat diunggah.', true);
+      form.reset();
+      show('Dokumen berhasil diunggah.');
+      await load();
+    });
+
+    load();
+  </script>
+</MemberLayout>
