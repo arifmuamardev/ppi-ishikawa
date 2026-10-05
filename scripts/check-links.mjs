@@ -53,6 +53,11 @@ async function check(url) {
 }
 
 const queue = [...refs.keys()].filter((url) => {
+  if (url.includes('${') || url.includes('{') || url.includes('...')) {
+    console.log(`SKIP   placeholder/template ${url}`);
+    return false;
+  }
+
   try {
     const hostname = new URL(url).hostname;
     if (hostname.endsWith('.supabase.co')) {
