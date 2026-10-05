@@ -1,0 +1,176 @@
+---
+import MemberLayout from '../../../layouts/MemberLayout.astro';
+---
+
+<MemberLayout title="Kelola Sertifikat" requireAdmin={true}>
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Admin · Sertifikat</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Terbitkan sertifikat kegiatan</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Daftar penerima diambil dari peserta yang benar-benar check-in. Setiap anggota hanya dapat memiliki satu sertifikat untuk event yang sama.</p>
+    </section>
+
+    <div id="certificate-admin-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <div class="grid gap-5 md:grid-cols-2">
+        <label class="md:col-span-2">
+          <span class="text-sm font-bold text-slate-800">Kegiatan</span>
+          <select id="certificate-event" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3">
+            <option value="">Pilih kegiatan</option>
+          </select>
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Judul sertifikat</span>
+          <input id="certificate-title" type="text" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+        <label>
+          <span class="text-sm font-bold text-slate-800">Deskripsi</span>
+          <input id="certificate-description" type="text" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+        </label>
+      </div>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Eligible recipients</p>
+          <h2 id="certificate-recipient-title" class="mt-2 text-xl font-bold text-slate-950">Pilih kegiatan terlebih dahulu</h2>
+        </div>
+        <p id="certificate-recipient-count" class="text-sm font-semibold text-slate-500">—</p>
+      </div>
+      <div id="certificate-recipient-list" class="mt-6 space-y-3"></div>
+    </section>
+  </div>
+
+  <script>
+    import { getEventAttendance, getMemberEvents } from '../../../lib/member-community';
+    import {
+      getAllCertificates,
+      issueCertificate,
+      setCertificateRevoked,
+    } from '../../../lib/member-advanced';
+
+    const eventSelect = document.getElementById('certificate-event');
+    const titleInput = document.getElementById('certificate-title');
+    const descriptionInput = document.getElementById('certificate-description');
+    const recipientTitle = document.getElementById('certificate-recipient-title');
+    const recipientCount = document.getElementById('certificate-recipient-count');
+    const list = document.getElementById('certificate-recipient-list');
+    const message = document.getElementById('certificate-admin-message');
+    let events = [];
+    let certificates = [];
+
+    const show = (text, error = false) => {
+      if (!message) return;
+      message.textContent = text;
+      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
+    };
+
+    const loadCertificates = async () => {
+      const result = await getAllCertificates();
+      certificates = result.data || [];
+    };
+
+    const renderRecipients = async () => {
+      if (!(eventSelect instanceof HTMLSelectElement) || !eventSelect.value) {
+        if (list) list.replaceChildren();
+        if (recipientTitle) recipientTitle.textContent = 'Pilih kegiatan terlebih dahulu';
+        if (recipientCount) recipientCount.textContent = '—';
+        return;
+      }
+
+      const event = events.find((item) => item.id === eventSelect.value);
+      if (recipientTitle) recipientTitle.textContent = event?.title || 'Peserta';
+      if (titleInput instanceof HTMLInputElement && !titleInput.value) titleInput.value = `Sertifikat Partisipasi — ${event?.title || 'Kegiatan'}`;
+      if (descriptionInput instanceof HTMLInputElement && !descriptionInput.value) descriptionInput.value = event ? `Diberikan atas partisipasi dalam ${event.title}.` : '';
+
+      const attendanceResult = await getEventAttendance(eventSelect.value);
+      const attendees = (attendanceResult.data || []).filter((item) => item.attending && item.checked_in_at);
+      if (recipientCount) recipientCount.textContent = `${attendees.length} peserta check-in`;
+      if (!list) return;
+      list.replaceChildren();
+
+      for (const attendee of attendees) {
+        const existing = certificates.find((item) => item.event_id === eventSelect.value && item.user_id === attendee.user_id);
+
+        const row = document.createElement('article');
+        row.className = 'flex flex-col gap-3 rounded-2xl border border-slate-200 p-5 sm:flex-row sm:items-center sm:justify-between';
+
+        const info = document.createElement('div');
+        const name = document.createElement('h3');
+        name.className = 'font-bold text-slate-950';
+        name.textContent = attendee.full_name;
+        const meta = document.createElement('p');
+        meta.className = 'mt-1 text-sm text-slate-500';
+        meta.textContent = `Check-in ${new Intl.DateTimeFormat('id-ID', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Tokyo' }).format(new Date(attendee.checked_in_at))}`;
+        info.append(name, meta);
+
+        const button = document.createElement('button');
+        button.type = 'button';
+
+        if (!existing) {
+          button.className = 'rounded-xl bg-brand px-4 py-2.5 text-sm font-bold text-white';
+          button.textContent = 'Terbitkan';
+          button.addEventListener('click', async () => {
+            const title = titleInput instanceof HTMLInputElement ? titleInput.value.trim() : '';
+            const description = descriptionInput instanceof HTMLInputElement ? descriptionInput.value.trim() : '';
+            if (!title) return show('Judul sertifikat harus diisi.', true);
+            const { error } = await issueCertificate({
+              user_id: attendee.user_id,
+              event_id: eventSelect.value,
+              title,
+              description,
+            });
+            if (error) return show('Sertifikat belum dapat diterbitkan.', true);
+            show('Sertifikat berhasil diterbitkan.');
+            await loadCertificates();
+            await renderRecipients();
+          });
+        } else if (existing.revoked_at) {
+          button.className = 'rounded-xl border border-slate-300 px-4 py-2.5 text-sm font-bold text-slate-700';
+          button.textContent = 'Aktifkan kembali';
+          button.addEventListener('click', async () => {
+            const { error } = await setCertificateRevoked(existing.id, false);
+            if (error) return show('Sertifikat belum dapat diaktifkan.', true);
+            show('Sertifikat diaktifkan kembali.');
+            await loadCertificates();
+            await renderRecipients();
+          });
+        } else {
+          button.className = 'rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-bold text-red-700';
+          button.textContent = 'Cabut sertifikat';
+          button.addEventListener('click', async () => {
+            if (!window.confirm('Cabut validitas sertifikat ini?')) return;
+            const { error } = await setCertificateRevoked(existing.id, true);
+            if (error) return show('Sertifikat belum dapat dicabut.', true);
+            show('Validitas sertifikat dicabut.');
+            await loadCertificates();
+            await renderRecipients();
+          });
+        }
+
+        row.append(info, button);
+        list.append(row);
+      }
+    };
+
+    const eventResult = await getMemberEvents();
+    events = eventResult.data || [];
+    if (eventSelect instanceof HTMLSelectElement) {
+      for (const event of events) {
+        const option = document.createElement('option');
+        option.value = event.id;
+        option.textContent = `${event.title} · ${new Intl.DateTimeFormat('id-ID', { dateStyle: 'medium', timeZone: 'Asia/Tokyo' }).format(new Date(event.starts_at))}`;
+        eventSelect.append(option);
+      }
+    }
+
+    await loadCertificates();
+    eventSelect?.addEventListener('change', () => {
+      if (titleInput instanceof HTMLInputElement) titleInput.value = '';
+      if (descriptionInput instanceof HTMLInputElement) descriptionInput.value = '';
+      renderRecipients();
+    });
+  </script>
+</MemberLayout>
