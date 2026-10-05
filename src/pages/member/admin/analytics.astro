@@ -1,0 +1,113 @@
+---
+import MemberLayout from '../../../layouts/MemberLayout.astro';
+---
+
+<MemberLayout title="Membership Analytics" requireAdmin={true}>
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Admin · Analytics</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Ringkasan membership & engagement</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Dashboard ini memakai agregat operasional. Tidak menampilkan ranking anggota atau skor individual.</p>
+    </section>
+
+    <div id="analytics-error" class="hidden rounded-2xl border border-red-200 bg-red-50 p-5 text-sm text-red-800"></div>
+
+    <section id="analytics-kpis" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"></section>
+
+    <section class="grid gap-5 lg:grid-cols-2">
+      <article class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Membership</p>
+        <h2 class="mt-2 text-xl font-bold text-slate-950">Status anggota</h2>
+        <div id="membership-status-bars" class="mt-6 space-y-4"></div>
+      </article>
+
+      <article class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Campus distribution</p>
+        <h2 class="mt-2 text-xl font-bold text-slate-950">Anggota terverifikasi per kampus</h2>
+        <div id="campus-bars" class="mt-6 space-y-4"></div>
+      </article>
+    </section>
+  </div>
+
+  <script>
+    import { campuses } from '../../../data/campuses';
+    import { getMembershipAnalytics } from '../../../lib/member-advanced';
+
+    const kpis = document.getElementById('analytics-kpis');
+    const statusBars = document.getElementById('membership-status-bars');
+    const campusBars = document.getElementById('campus-bars');
+    const errorBox = document.getElementById('analytics-error');
+
+    const { data, error } = await getMembershipAnalytics();
+    const analytics = data;
+
+    if (error || !analytics) {
+      errorBox?.classList.remove('hidden');
+      if (errorBox) errorBox.textContent = 'Analytics belum dapat dimuat.';
+    } else {
+      const cards = [
+        ['Anggota terverifikasi', analytics.verified_members],
+        ['Event', analytics.events],
+        ['RSVP hadir', analytics.rsvp_attending],
+        ['Check-in aktual', analytics.attendance_checked_in],
+        ['Program kerja', analytics.programs],
+        ['Volunteer terbuka', analytics.volunteer_open],
+        ['Mentor tersedia', analytics.mentor_available],
+        ['Sertifikat aktif', analytics.certificates],
+      ];
+
+      for (const [label, value] of cards) {
+        const card = document.createElement('article');
+        card.className = 'rounded-2xl border border-slate-200 bg-white p-5';
+        const number = document.createElement('p');
+        number.className = 'text-3xl font-bold text-slate-950'; number.textContent = String(value);
+        const text = document.createElement('p');
+        text.className = 'mt-1 text-sm text-slate-600'; text.textContent = label;
+        card.append(number, text); kpis?.append(card);
+      }
+
+      const maxMembership = Math.max(1, analytics.members_total);
+      const statusRows = [
+        ['Incoming', analytics.incoming_members],
+        ['Aktif', analytics.active_members],
+        ['Alumni', analytics.alumni],
+        ['Pending verifikasi', analytics.pending_members],
+      ];
+
+      for (const [label, value] of statusRows) {
+        const row = document.createElement('div');
+        const header = document.createElement('div');
+        header.className = 'flex justify-between gap-3 text-sm';
+        header.innerHTML = `<span class="font-semibold text-slate-700">${label}</span><span class="font-bold text-slate-950">${value}</span>`;
+        const bar = document.createElement('div');
+        bar.className = 'mt-2 h-2 overflow-hidden rounded-full bg-slate-100';
+        const fill = document.createElement('div');
+        fill.className = 'h-full rounded-full bg-brand';
+        fill.style.width = `${Math.min(100, Number(value) / maxMembership * 100)}%`;
+        bar.append(fill); row.append(header, bar); statusBars?.append(row);
+      }
+
+      const campusEntries = Object.entries(analytics.campuses || {}).sort((a,b) => Number(b[1]) - Number(a[1]));
+      const maxCampus = Math.max(1, ...campusEntries.map(([,value]) => Number(value)));
+
+      for (const [slug, value] of campusEntries) {
+        const campus = campuses.find((item) => item.slug === slug);
+        const row = document.createElement('div');
+        const header = document.createElement('div');
+        header.className = 'flex justify-between gap-3 text-sm';
+        header.innerHTML = `<span class="font-semibold text-slate-700">${campus?.shortName || campus?.name || slug}</span><span class="font-bold text-slate-950">${value}</span>`;
+        const bar = document.createElement('div');
+        bar.className = 'mt-2 h-2 overflow-hidden rounded-full bg-slate-100';
+        const fill = document.createElement('div');
+        fill.className = 'h-full rounded-full bg-brand';
+        fill.style.width = `${Number(value) / maxCampus * 100}%`;
+        bar.append(fill); row.append(header, bar); campusBars?.append(row);
+      }
+
+      if (!campusEntries.length && campusBars) {
+        campusBars.textContent = 'Belum ada distribusi kampus yang dapat ditampilkan.';
+        campusBars.className = 'mt-6 text-sm text-slate-600';
+      }
+    }
+  </script>
+</MemberLayout>
