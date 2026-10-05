@@ -1,0 +1,191 @@
+---
+import MemberLayout from '../../layouts/MemberLayout.astro';
+import { withBase } from '../../utils/paths';
+---
+
+<MemberLayout title="Untuk Anda" requireApproved={true}>
+  <div class="space-y-6">
+    <section>
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Untuk Anda</p>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Karier & beasiswa yang mungkin relevan</h1>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Rekomendasi menggunakan kampus, jenjang, status membership, dan minat karier Anda. Ini bukan keputusan eligibility; selalu periksa persyaratan pada sumber resmi.</p>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Minat karier</p>
+      <h2 class="mt-2 text-xl font-bold text-slate-950">Sesuaikan rekomendasi</h2>
+      <form id="career-interest-form" class="mt-5">
+        <div id="career-interest-options" class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"></div>
+        <div class="mt-5 flex justify-end">
+          <button class="rounded-xl bg-brand px-5 py-2.5 text-sm font-bold text-white">Simpan minat</button>
+        </div>
+      </form>
+    </section>
+
+    <div id="opportunity-reason" class="rounded-2xl bg-slate-50 p-4 text-sm leading-6 text-slate-600">Memuat rekomendasi…</div>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Career</p>
+          <h2 class="mt-2 text-xl font-bold text-slate-950">Sumber peluang yang mungkin relevan</h2>
+        </div>
+        <a href={withBase('/career/')} class="text-sm font-bold text-brand hover:underline">Buka Career Hub →</a>
+      </div>
+      <div id="career-recommendations" class="mt-6 grid gap-4 lg:grid-cols-2"></div>
+    </section>
+
+    <section id="campus-career-card" class="hidden rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+      <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-dark">Dukungan kampus</p>
+      <h2 id="campus-career-title" class="mt-2 text-xl font-bold text-slate-950"></h2>
+      <p id="campus-career-description" class="mt-3 max-w-3xl text-sm leading-7 text-slate-700"></p>
+      <a id="campus-career-link" target="_blank" rel="noreferrer" class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Buka layanan resmi ↗</a>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Scholarship</p>
+          <h2 class="mt-2 text-xl font-bold text-slate-950">Kandidat beasiswa untuk diperiksa</h2>
+        </div>
+        <a href={withBase('/beasiswa/')} class="text-sm font-bold text-brand hover:underline">Buka Scholarship Hub →</a>
+      </div>
+      <div id="scholarship-recommendations" class="mt-6 grid gap-4 lg:grid-cols-2"></div>
+      <div id="scholarship-empty" class="mt-6 hidden rounded-2xl bg-slate-50 p-6 text-center text-sm text-slate-600">Tidak ada kandidat yang kuat dari profil saat ini. Gunakan Scholarship Hub untuk pencarian lebih luas.</div>
+    </section>
+  </div>
+
+  <script>
+    import {
+      careerInterestOptions,
+      getGrowthPreferences,
+      getPersonalizedOpportunities,
+      saveGrowthPreferences,
+    } from '../../lib/member-growth';
+
+    const form = document.getElementById('career-interest-form');
+    const optionsBox = document.getElementById('career-interest-options');
+    const reason = document.getElementById('opportunity-reason');
+    const careerGrid = document.getElementById('career-recommendations');
+    const scholarshipGrid = document.getElementById('scholarship-recommendations');
+    const scholarshipEmpty = document.getElementById('scholarship-empty');
+
+    for (const item of careerInterestOptions) {
+      const label = document.createElement('label');
+      label.className = 'flex items-start gap-3 rounded-2xl bg-slate-50 p-4';
+      const input = document.createElement('input');
+      input.type = 'checkbox';
+      input.name = 'career_interests';
+      input.value = item.value;
+      input.className = 'mt-1 size-4';
+      const text = document.createElement('span');
+      text.className = 'text-sm font-semibold text-slate-700';
+      text.textContent = item.label;
+      label.append(input, text);
+      optionsBox?.append(label);
+    }
+
+    const prefResult = await getGrowthPreferences();
+    const preferences = prefResult.data || {
+      career_interests: [],
+      mentor_available: false,
+      mentor_topics: [],
+      seeking_mentor: false,
+      mentee_topics: [],
+      story_willing: false,
+      story_topics: [],
+    };
+
+    for (const input of document.querySelectorAll('input[name="career_interests"]')) {
+      if (input instanceof HTMLInputElement) input.checked = (preferences.career_interests || []).includes(input.value);
+    }
+
+    const render = async () => {
+      const result = await getPersonalizedOpportunities();
+      if (reason) {
+        reason.textContent = result.reasons.length
+          ? `Rekomendasi disusun dari: ${result.reasons.join(', ')}. Tetap verifikasi persyaratan resmi sebelum mengambil keputusan.`
+          : 'Lengkapi profil dan minat karier untuk mendapatkan rekomendasi yang lebih terarah.';
+      }
+
+      if (careerGrid) {
+        careerGrid.replaceChildren();
+        for (const item of result.career) {
+          const card = document.createElement('article');
+          card.className = 'rounded-2xl border border-slate-200 p-5';
+          const provider = document.createElement('p');
+          provider.className = 'text-xs font-bold uppercase tracking-[0.1em] text-slate-500';
+          provider.textContent = item.provider;
+          const h = document.createElement('h3');
+          h.className = 'mt-2 font-bold text-slate-950';
+          h.textContent = item.name;
+          const p = document.createElement('p');
+          p.className = 'mt-2 text-sm leading-6 text-slate-600';
+          p.textContent = item.description;
+          const a = document.createElement('a');
+          a.href = item.url; a.target = '_blank'; a.rel = 'noreferrer';
+          a.className = 'mt-4 inline-flex text-sm font-bold text-brand hover:underline';
+          a.textContent = 'Buka sumber ↗';
+          card.append(provider, h, p, a);
+          careerGrid.append(card);
+        }
+      }
+
+      const campusCard = document.getElementById('campus-career-card');
+      if (result.campusCareer) {
+        campusCard?.classList.remove('hidden');
+        const title = document.getElementById('campus-career-title');
+        const description = document.getElementById('campus-career-description');
+        const link = document.getElementById('campus-career-link');
+        if (title) title.textContent = result.campusCareer.heading;
+        if (description) description.textContent = result.campusCareer.description;
+        if (link instanceof HTMLAnchorElement) link.href = result.campusCareer.primaryUrl;
+      }
+
+      if (scholarshipGrid) {
+        scholarshipGrid.replaceChildren();
+        scholarshipEmpty?.classList.toggle('hidden', result.scholarships.length !== 0);
+        for (const item of result.scholarships) {
+          const card = document.createElement('article');
+          card.className = 'rounded-2xl border border-slate-200 p-5';
+          const provider = document.createElement('p');
+          provider.className = 'text-xs font-bold uppercase tracking-[0.1em] text-slate-500';
+          provider.textContent = item.provider;
+          const h = document.createElement('h3');
+          h.className = 'mt-2 font-bold text-slate-950';
+          h.textContent = item.name;
+          const p = document.createElement('p');
+          p.className = 'mt-2 text-sm leading-6 text-slate-600';
+          p.textContent = item.summary;
+          const note = document.createElement('p');
+          note.className = 'mt-3 text-xs leading-5 text-slate-500';
+          note.textContent = item.campusEligibilityNote;
+          card.append(provider, h, p, note);
+          if (item.sourceUrl) {
+            const a = document.createElement('a');
+            a.href = item.sourceUrl; a.target = '_blank'; a.rel = 'noreferrer';
+            a.className = 'mt-4 inline-flex text-sm font-bold text-brand hover:underline';
+            a.textContent = 'Periksa sumber resmi ↗';
+            card.append(a);
+          }
+          scholarshipGrid.append(card);
+        }
+      }
+    };
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const selected = [...document.querySelectorAll('input[name="career_interests"]:checked')].map((input) => input.value);
+      const { error } = await saveGrowthPreferences({
+        ...preferences,
+        career_interests: selected,
+      });
+      if (!error) {
+        preferences.career_interests = selected;
+        await render();
+      }
+    });
+
+    render();
+  </script>
+</MemberLayout>
