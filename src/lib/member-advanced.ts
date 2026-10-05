@@ -265,16 +265,25 @@ export async function uploadMemberDocument(input: {
 export async function deleteMemberDocument(document: MemberDocument) {
   if (!supabase) return unavailable();
 
+  const metadataResult = await supabase
+    .from('member_documents')
+    .delete()
+    .eq('id', document.id);
+
+  if (metadataResult.error) return { data: null, error: metadataResult.error };
+
   const storageResult = await supabase.storage
     .from('member-documents')
     .remove([document.storage_path]);
 
-  if (storageResult.error) return { data: null, error: storageResult.error };
+  if (storageResult.error) {
+    return {
+      data: null,
+      error: new Error('Metadata terhapus, tetapi file storage perlu dibersihkan manual oleh admin.'),
+    };
+  }
 
-  return supabase
-    .from('member_documents')
-    .delete()
-    .eq('id', document.id);
+  return metadataResult;
 }
 
 export async function getDocumentDownloadUrl(storagePath: string) {
