@@ -186,8 +186,8 @@ const sourceLinks = [
   </section>
 
   <section class="mx-auto max-w-6xl px-5 pb-10 lg:px-8">
-    <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
-      <p class="text-sm font-bold uppercase tracking-[0.14em] text-amber-800">Cara menggunakan</p>
+    <div class="rounded-3xl border border-accent/35 bg-accent/10 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.14em] text-secondary-dark">Cara menggunakan</p>
       <div class="mt-4 grid gap-4 md:grid-cols-3">
         <div>
           <p class="font-bold text-slate-950">1 · Cari fase Anda</p>
@@ -236,7 +236,7 @@ const sourceLinks = [
               ))}
             </ol>
 
-            {phase.note && <p class="mt-5 rounded-2xl bg-amber-50 p-4 text-xs leading-6 text-amber-950">{phase.note}</p>}
+            {phase.note && <p class="mt-5 rounded-2xl bg-accent/10 p-4 text-xs leading-6 text-ink">{phase.note}</p>}
 
             <div class="mt-6 flex flex-wrap gap-2">
               {phase.links.map(([label, href]) => (
