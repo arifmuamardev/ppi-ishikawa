@@ -323,7 +323,7 @@ html.dark .brand-gold-rule {
   text-transform: uppercase;
 }
 
- .type-hero {
+.type-hero {
   font-size: 3rem;
   line-height: 1.04;
   font-weight: 700;
@@ -366,6 +366,17 @@ html.dark .brand-gold-rule {
   font-size: 0.75rem;
   line-height: 1.25rem;
   font-weight: 500;
+}
+
+.type-hero,
+.type-display,
+.type-section,
+.type-card-title {
+  text-wrap: balance;
+}
+
+.type-lead {
+  text-wrap: pretty;
 }
 
 @media (min-width: 640px) {
