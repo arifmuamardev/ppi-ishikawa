@@ -54,12 +54,10 @@ const themeStyle = [
         const themeColor = document.querySelector('meta[name="theme-color"]');
         if (themeColor) {
           const root = document.documentElement;
-          themeColor.setAttribute(
-            'content',
-            theme === 'dark'
-              ? (root.dataset.themeColorDark || '#23282A')
-              : (root.dataset.themeColorLight || '#F7FAF9')
-          );
+          const nextThemeColor = theme === 'dark'
+            ? root.dataset.themeColorDark
+            : root.dataset.themeColorLight;
+          if (nextThemeColor) themeColor.setAttribute('content', nextThemeColor);
         }
       })();
     </script>
