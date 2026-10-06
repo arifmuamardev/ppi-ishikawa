@@ -1,0 +1,71 @@
+---
+import FamilyGuidePage from '../../../components/FamilyGuidePage.astro';
+
+const sections = [
+  {
+    title: 'Apakah pasangan mahasiswa bisa ikut tinggal di Jepang?',
+    intro: 'Bisa dalam kondisi yang sesuai, tetapi status tinggal pasangan/anak harus diproses tersendiri. Dependent / 家族滞在 dapat relevan untuk pasangan dan anak yang menjadi tanggungan pemegang status Student.',
+    note: 'Gunakan Immigration Services Agency untuk memastikan kategori, dokumen, dan proses terbaru.'
+  },
+  {
+    title: 'Apakah pasangan dengan Dependent boleh bekerja?',
+    intro: 'Tidak otomatis. Aktivitas kerja memerlukan permission yang sesuai dan tetap mengikuti batasan izin yang diberikan.',
+    note: 'Jangan mulai bekerja sebelum memastikan izin aktivitas di luar status tinggal.'
+  },
+  {
+    title: 'Apakah anak foreign resident bisa masuk public school?',
+    intro: 'Ya, proses dilakukan melalui municipality/Board of Education. Alamat biasanya menentukan school district dan dukungan bahasa Jepang dapat tersedia sesuai kebutuhan.',
+    note: 'Hubungi Board of Education sebelum atau segera setelah pindah agar enrollment tidak terlambat.'
+  },
+  {
+    title: 'Apakah ada bantuan biaya untuk anak?',
+    intro: 'Ada berbagai skema seperti child allowance dan child medical fee subsidy, tetapi eligibility, cakupan, dan nominal harus dicek berdasarkan municipality dan kondisi keluarga.',
+    note: 'Gunakan halaman resmi terbaru, bukan nominal dari posting lama.'
+  },
+  {
+    title: 'Saya belum lancar bahasa Jepang. Bisa minta bantuan?',
+    intro: 'Kanazawa menyediakan multilingual telephone interpretation untuk berbagai layanan City Hall, termasuk Bahasa Indonesia dan section yang menangani anak, nursery, health, insurance, serta education.',
+    note: 'Untuk municipality selain Kanazawa, cek language support setempat atau konsultasikan melalui IFIE.'
+  },
+  {
+    title: 'Bisa daftar nursery sebelum bayi lahir?',
+    intro: 'Di Kanazawa, untuk penggunaan yang dimulai pada April, aplikasi sebelum kelahiran dapat dimungkinkan karena periode aplikasi berlangsung sebelumnya. Usia minimum penerimaan fasilitas tetap harus dipenuhi.',
+    note: 'Untuk mulai Mei atau setelahnya, Kanazawa menjelaskan bahwa aplikasi dilakukan setelah kelahiran.'
+  },
+  {
+    title: 'Saya tinggal di Nonoichi/Hakusan/Komatsu, apakah aturan Kanazawa berlaku?',
+    intro: 'Tidak selalu. Immigration dan beberapa sistem nasional sama, tetapi childcare, school process, subsidy, garbage, dan banyak layanan keluarga dikelola municipality.',
+    note: 'Gunakan Family Hub untuk memahami konsepnya, lalu cek halaman resmi kota tempat Anda terdaftar.'
+  }
+];
+
+const sources = [
+  {
+    owner: 'Kanazawa City',
+    title: 'Children & Family — Foreign Residents',
+    note: 'Ringkasan family procedures dan layanan dalam bahasa Inggris.',
+    url: 'https://www4.city.kanazawa.lg.jp/kurashi_tetsuzuki/gaikokujimmuke/9990.html'
+  },
+  {
+    owner: 'Kanazawa City',
+    title: 'Language Support',
+    note: 'Multilingual telephone interpretation termasuk Bahasa Indonesia.',
+    url: 'https://www4.city.kanazawa.lg.jp/kurashi_tetsuzuki/gaikokujimmuke/9989.html'
+  },
+  {
+    owner: 'IFIE',
+    title: 'Foreign Residents Life Support',
+    note: 'Informasi dan consultation support untuk foreign residents di Ishikawa.',
+    url: 'https://www.ifie.or.jp/foreigners_life/'
+  }
+];
+---
+
+<FamilyGuidePage
+  title="FAQ keluarga di Ishikawa"
+  kicker="Family · F07"
+  description="FAQ untuk mahasiswa Indonesia yang tinggal di Ishikawa bersama pasangan atau anak."
+  intro="Jawaban singkat berikut membantu menentukan ke mana harus mencari informasi berikutnya. Untuk keputusan administratif, selalu cek sumber resmi yang sesuai dengan municipality dan status tinggal Anda."
+  sections={sections}
+  sources={sources}
+/>
