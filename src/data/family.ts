@@ -55,6 +55,13 @@ export const familyHubItems: FamilyHubItem[] = [
     description: 'Jawaban singkat untuk pertanyaan yang sering muncul saat tinggal di Ishikawa bersama keluarga.',
     href: '/life-in-ishikawa/family/faq/',
     icon: 'info'
+  },
+  {
+    code: 'F08',
+    title: 'Family by Municipality',
+    description: 'Shortcut childcare, benefit, medical support, school, dan consultation berdasarkan kota tempat tinggal.',
+    href: '/life-in-ishikawa/family/municipality/',
+    icon: 'city'
   }
 ];
 
