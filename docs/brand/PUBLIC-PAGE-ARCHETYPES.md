@@ -1,0 +1,288 @@
+# Public Page Archetypes & Element Rules
+
+Date: 2026-10-06  
+Scope: all 43 public routes in `src/pages` (Member, Admin, Verify, and 404 excluded)
+
+This document turns the current sitemap into a small set of page archetypes so UI/UX decisions are made by page type rather than page-by-page preference.
+
+## Why this exists
+
+The public site has grown into a strong information base, but page shells evolved unevenly. The problem is not simply that some pages have breadcrumbs and others do not. The deeper issue is that page type has not been explicit, so the same route can accidentally mix landing-page, guide, finder, and sequential-navigation patterns.
+
+The goal is **consistency without forcing every page to contain the same elements**.
+
+## Naming rule: stop exposing “Hub” as a page type
+
+“Hub” should be an internal concept, not a required user-facing label.
+
+Preferred visible names:
+
+- Campus Hub → **Kampus**
+- Family Hub → **Keluarga**
+- Scholarship Hub → **Beasiswa**
+- Career Hub → **Karier**
+
+A page can function as a domain landing without calling itself a “Hub”.
+
+## Canonical archetypes
+
+### 1. Landing
+
+Purpose: introduce a top-level domain and route users toward a small number of meaningful next steps.
+
+Standard structure:
+
+```
+LandingHeader
+Primary choices / key orientation
+Major sections
+Optional compact next-step block
+```
+
+Do not add breadcrumb to level-1 landing pages.
+
+### 2. Nested Landing
+
+Purpose: introduce a sub-domain such as Kampus or Keluarga.
+
+Standard structure:
+
+```
+Breadcrumb
+LandingHeader
+Primary child choices
+Supporting orientation
+Sources if factual
+```
+
+Child choices already serve as navigation, so a second generic “Baca lagi” block is normally unnecessary.
+
+### 3. Guide / Article
+
+Purpose: explain one topic in depth.
+
+Standard structure:
+
+```
+Breadcrumb
+GuideHeader
+GuideMeta where applicable
+TOC when the page is long enough
+Article sections
+Official sources where factual
+ONE end-navigation pattern
+```
+
+End-navigation rule:
+- linear Survival Guide sequence → **Pager**
+- non-linear guide/article → **Related**
+- never show both merely because both components exist
+
+### 4. Finder / Directory
+
+Purpose: help users locate or filter an answer/resource.
+
+Standard structure:
+
+```
+Breadcrumb when level 2+
+FinderHeader
+Filters / search / primary selectors
+Results
+Method/source note
+```
+
+Do not append generic RelatedLinks or Pager. The finder itself is the task.
+
+### 5. Application
+
+Purpose: task-based authenticated or transactional UI.
+
+This archetype is reserved for Member/Admin/Verify work and is outside this 43-page public audit. It uses app navigation rather than editorial breadcrumb/related conventions.
+
+## Element rules
+
+| Element | Rule |
+| --- | --- |
+| Breadcrumb | Required on public level 2+ pages; omitted on Home and level-1 destinations |
+| Header/intro | Every non-Home page gets exactly one standardized header variant: LandingHeader, GuideHeader, or FinderHeader |
+| GuideMeta | Guide-only; not a badge to add to landing pages |
+| TOC | Conditional for guides; use when there are roughly 4+ meaningful sections or scanning cost is high |
+| Official sources | Required for factual service, campus, scholarship, career, life, family, and directory information |
+| Related | For non-linear guides/articles or selected institutional landings only |
+| Pager | Only for a genuinely linear sequence |
+| Related + Pager | **Never together by default** |
+| “Baca lagi” | Not a universal page footer; treat it as the Related end-navigation mode |
+| Child-card navigation | Counts as next-step navigation on nested landings; do not duplicate it at the bottom |
+
+Legend: ✓ required, — not part of the standard shell, C conditional.
+
+## 43-route target matrix
+
+| Route | Archetype | Level | Breadcrumb | Header / Intro | TOC | Sources | Related | Pager | Audit note |
+| --- | --- | ---: | :---: | --- | :---: | :---: | :---: | :---: | --- |
+| / | Landing | 0 | — | Hero | — | — | — | — | Home is a unique entry page; do not force editorial elements. |
+| /about/ | Landing | 1 | — | LandingHeader | — | — | ✓ | — | Mostly aligned; keep one compact next-step block. |
+| /beasiswa/ | Finder / Directory | 1 | — | FinderHeader | — | ✓ | — | — | Currently mixes landing + finder and uses “Scholarship Hub”; standardize as Beasiswa finder. |
+| /career/ | Finder / Directory | 1 | — | FinderHeader | — | ✓ | — | — | Currently mixes landing + finder; repeated result actions already being simplified. |
+| /community/ | Landing | 1 | — | LandingHeader | — | — | ✓ | — | Use one compact next-step block, not another card grid. |
+| /community/kampus/ | Nested Landing | 2 | ✓ | LandingHeader | — | ✓ | — | — | Good domain landing; child campus choices are already the next steps. |
+| /community/kampus/alice-gakuen/ | Guide / Article | 3 | ✓ | GuideHeader | ✓ | ✓ | ✓ | — | Campus detail family is already one of the most consistent page groups. |
+| /community/kampus/ishikawa-prefectural-university/ | Guide / Article | 3 | ✓ | GuideHeader | ✓ | ✓ | ✓ | — | Keep same campus-detail shell. |
+| /community/kampus/jaist/ | Guide / Article | 3 | ✓ | GuideHeader | ✓ | ✓ | ✓ | — | Keep same campus-detail shell. |
+| /community/kampus/kanazawa-institute-of-technology/ | Guide / Article | 3 | ✓ | GuideHeader | ✓ | ✓ | ✓ | — | Keep same campus-detail shell. |
+| /community/kampus/kanazawa-university/ | Guide / Article | 3 | ✓ | GuideHeader | ✓ | ✓ | ✓ | — | Keep same campus-detail shell. |
+| /community/kampus/kinjo-university/ | Guide / Article | 3 | ✓ | GuideHeader | ✓ | ✓ | ✓ | — | Keep same campus-detail shell. |
+| /contact/ | Landing | 1 | — | LandingHeader | — | — | — | — | Contact methods are the task; generic related navigation is unnecessary. |
+| /life-in-ishikawa/ | Landing | 1 | — | LandingHeader | — | ✓ | — | — | Currently behaves partly like a guide via GuideMeta; simplify to domain landing. |
+| /life-in-ishikawa/administrasi/ | Guide / Article | 2 | ✓ | GuideHeader | ✓ | ✓ | — | ✓ | Currently has RelatedLinks + Pager; keep Pager only. |
+| /life-in-ishikawa/bank-money/ | Guide / Article | 2 | ✓ | GuideHeader | ✓ | ✓ | — | ✓ | Currently has RelatedLinks + Pager; keep Pager only. |
+| /life-in-ishikawa/disaster-emergency/ | Guide / Article | 2 | ✓ | GuideHeader | ✓ | ✓ | — | ✓ | Currently has RelatedLinks + Pager; keep Pager only. |
+| /life-in-ishikawa/family-anak/ | Nested Landing | 2 | ✓ | LandingHeader | — | ✓ | — | — | Currently mixes landing, GuideMeta, RelatedLinks and Pager; simplify heavily. |
+| /life-in-ishikawa/family/aktivitas/ | Finder / Directory | 3 | ✓ | FinderHeader | — | ✓ | — | — | Keep filters/results as the primary interaction. |
+| /life-in-ishikawa/family/benefit-kesehatan/ | Guide / Article | 3 | ✓ | GuideHeader | C | ✓ | ✓ | — | Shared FamilyGuidePage; add consistent guide header/end navigation. |
+| /life-in-ishikawa/family/childcare/ | Guide / Article | 3 | ✓ | GuideHeader | C | ✓ | ✓ | — | Shared FamilyGuidePage; add TOC only if long enough. |
+| /life-in-ishikawa/family/datang-bersama-keluarga/ | Guide / Article | 3 | ✓ | GuideHeader | C | ✓ | ✓ | — | Shared FamilyGuidePage; family branch is non-linear, so Related rather than Pager. |
+| /life-in-ishikawa/family/faq/ | Guide / Article | 3 | ✓ | GuideHeader | C | ✓ | ✓ | — | Use guide shell; do not add sequential pager. |
+| /life-in-ishikawa/family/kehamilan-kelahiran/ | Guide / Article | 3 | ✓ | GuideHeader | C | ✓ | ✓ | — | Shared FamilyGuidePage; standardize header and footer. |
+| /life-in-ishikawa/family/municipality/ | Finder / Directory | 3 | ✓ | FinderHeader | — | ✓ | — | — | This is a service selector, not a guide. |
+| /life-in-ishikawa/family/sekolah-anak/ | Guide / Article | 3 | ✓ | GuideHeader | C | ✓ | ✓ | — | Shared FamilyGuidePage; add TOC only when it improves scanning. |
+| /life-in-ishikawa/family/starter-pack/ | Guide / Article | 3 | ✓ | GuideHeader | C | ✓ | ✓ | — | Currently custom long page with no common guide meta/end pattern. |
+| /life-in-ishikawa/family/timeline/ | Guide / Article | 3 | ✓ | GuideHeader | C | ✓ | ✓ | — | Timeline is non-linear reference content; Related, not Pager. |
+| /life-in-ishikawa/hari-pertama/ | Guide / Article | 2 | ✓ | GuideHeader | ✓ | ✓ | — | ✓ | Currently has RelatedLinks + Pager; keep Pager only. |
+| /life-in-ishikawa/japanese-support/ | Guide / Article | 2 | ✓ | GuideHeader | ✓ | ✓ | — | ✓ | Currently has RelatedLinks + Pager; keep Pager only. |
+| /life-in-ishikawa/kehidupan-sehari-hari/ | Guide / Article | 2 | ✓ | GuideHeader | ✓ | ✓ | — | ✓ | Currently has RelatedLinks + Pager; keep Pager only. |
+| /life-in-ishikawa/kesehatan/ | Guide / Article | 2 | ✓ | GuideHeader | ✓ | ✓ | — | ✓ | Currently has RelatedLinks + Pager; keep Pager only. |
+| /life-in-ishikawa/leaving/ | Guide / Article | 2 | ✓ | GuideHeader | ✓ | ✓ | — | ✓ | Currently has RelatedLinks + Pager; keep Pager only. |
+| /life-in-ishikawa/municipality-guides/ | Finder / Directory | 2 | ✓ | FinderHeader | — | ✓ | — | — | Currently styled as a sequential guide; reclassify as municipality directory. |
+| /life-in-ishikawa/places/ | Finder / Directory | 2 | ✓ | FinderHeader | — | ✓ | — | — | Already task-oriented; standardize header only. |
+| /life-in-ishikawa/sebelum-berangkat/ | Guide / Article | 2 | ✓ | GuideHeader | ✓ | ✓ | — | ✓ | Currently has RelatedLinks + Pager; keep Pager only. |
+| /life-in-ishikawa/tempat-tinggal/ | Guide / Article | 2 | ✓ | GuideHeader | ✓ | ✓ | — | ✓ | Currently has RelatedLinks + Pager; keep Pager only. |
+| /life-in-ishikawa/transportasi/ | Guide / Article | 2 | ✓ | GuideHeader | ✓ | ✓ | — | ✓ | Currently has RelatedLinks + Pager; keep Pager only. |
+| /life-in-ishikawa/winter/ | Guide / Article | 2 | ✓ | GuideHeader | ✓ | ✓ | — | ✓ | Currently has RelatedLinks + Pager; keep Pager only. |
+| /programs/ | Landing | 1 | — | LandingHeader | — | — | ✓ | — | Mostly aligned; keep compact relationship to About/Contact. |
+| /resources/ | Finder / Directory | 1 | — | FinderHeader | — | C | — | — | Resource index should stay task-oriented; no generic Baca lagi. |
+| /stories/ | Finder / Directory | 1 | — | FinderHeader | — | — | — | — | Listing/filter experience; no generic footer navigation needed. |
+| /stories/[slug]/ | Guide / Article | 2 | ✓ | GuideHeader | — | — | ✓ | — | Current custom related-stories block already fits the target pattern. |
+
+## What the current audit shows
+
+### Breadcrumbs are less inconsistent than they look
+
+Effective breadcrumbs are already present across nearly all level-2+ content, including pages that receive them indirectly through shared templates. Top-level destinations such as About, Beasiswa, Karier, Community, Contact, Programs, Resources, and Stories correctly do not need breadcrumbs.
+
+The real inconsistency is the **page shell around the breadcrumb**, not breadcrumb presence itself.
+
+### The biggest duplication is at the end of Survival Guide pages
+
+Twelve core Survival Guide articles currently use the combination:
+
+```
+GuideMeta
+GuideToc
+...
+Official/source content
+RelatedLinks
+GuidePager
+```
+
+This is redundant. They are already a linear guide series, so the target is:
+
+```
+GuideHeader + GuideMeta
+GuideToc
+...
+Official sources
+GuidePager
+```
+
+Remove generic RelatedLinks from those sequential pages.
+
+### Keluarga is currently the most mixed branch
+
+The Family landing currently combines landing behavior with guide behavior: custom hero, GuideMeta, source content, RelatedLinks, and GuidePager.
+
+Its child pages then split into three unrelated shell styles:
+- six pages via `FamilyGuidePage`
+- custom long-form Starter Pack / Timeline
+- custom finder pages for Activity / Municipality
+
+The target is to make the branch explicit:
+
+```
+Keluarga                      → Nested Landing
+├── Starter Pack              → Guide
+├── Datang bersama keluarga   → Guide
+├── Kehamilan & kelahiran     → Guide
+├── Childcare                 → Guide
+├── Sekolah anak              → Guide
+├── Benefit & kesehatan       → Guide
+├── FAQ                       → Guide
+├── Timeline                  → Guide
+├── Aktivitas                 → Finder
+└── Municipality              → Finder
+```
+
+### Campus pages are comparatively healthy
+
+The six campus-detail pages already share a strong pattern: breadcrumb, structured profile/content, TOC, official sources, and related navigation without a sequential pager.
+
+They should be used as a reference for how one route family can feel consistently related without making every page visually identical.
+
+### Beasiswa and Karier are finders, not “hubs”
+
+Both pages have introductory/landing content but their main user job is to locate relevant opportunities. Treating them as Finder pages clarifies priorities:
+- concise header
+- primary selector/filter
+- results
+- official source/method note
+
+This also removes the need for “Hub” terminology.
+
+### Municipality Guides should behave like a directory
+
+`/life-in-ishikawa/municipality-guides/` currently carries sequential-guide mechanics even though the user task is to select a municipality/reference. It should move to Finder / Directory and lose generic Related + Pager treatment.
+
+## Information-density guardrails
+
+The site can keep a large information base without exposing all information at once.
+
+1. **Home:** show only major domains and immediate high-value entry points.
+2. **Landing:** show grouped routes, not every descendant.
+3. **Nested Landing:** expose direct children only; deeper details belong one level down.
+4. **Guide:** focus on one topic; sibling discovery belongs at the end.
+5. **Finder:** filters and results dominate; explanatory material is supporting.
+6. **End of page:** exactly one navigation pattern.
+7. **Repeated cards:** do not use cards merely to make all links visible.
+8. **Navigation:** the sitemap may be large; the global menu should not mirror it.
+
+## Proposed reusable shells
+
+Implementation should converge toward these building blocks:
+
+- `PageHeader.astro`
+  - variants: `landing`, `finder`
+  - optional breadcrumb slot for nested pages
+- `GuideHeader.astro`
+  - breadcrumb
+  - title / description
+  - meta / verification
+- `PageEndNav.astro`
+  - mode: `related` | `pager` | `none`
+  - prevents Related + Pager duplication
+- `OfficialSources.astro`
+  - one visual language for source blocks
+- `FinderShell.astro`
+  - consistent filter/result layout without forcing content into cards
+
+Do not build all of these at once. Standardize one archetype at a time and migrate representative pages before bulk migration.
+
+## Recommended migration order
+
+1. **Guide / Article:** standard Survival Guide pages first because they are already structurally similar and expose the Related + Pager duplication.
+2. **Nested Landing:** Keluarga, then Kampus.
+3. **Finder / Directory:** Beasiswa, Karier, Places, Municipality, Activities, Resources, Stories.
+4. **Landing:** Life in Ishikawa, Community, About, Programs, Contact.
+5. **Application:** Member/Admin in a separate pass.
+
+This order reduces inconsistency while minimizing simultaneous redesign risk.

@@ -156,3 +156,14 @@ Implemented in this follow-up:
 - aligned custom Survival Guide and Family Hub page titles with the standard display-title role
 
 Remaining: dedicated responsive stress test, accessibility audit, then polish.
+
+
+## Page archetype follow-up
+
+The public information architecture has now been classified across all 43 public routes.
+
+See `docs/brand/PUBLIC-PAGE-ARCHETYPES.md` for:
+- the canonical page archetypes
+- breadcrumb/header/TOC/source/end-navigation rules
+- the 43-route target matrix
+- the migration order for standardizing shells without reducing useful information
