@@ -1,0 +1,73 @@
+---
+import FamilyGuidePage from '../../../components/FamilyGuidePage.astro';
+
+const sections = [
+  {
+    title: 'Kenali jenis layanan childcare',
+    points: [
+      'Hoikusho berfokus pada childcare bagi keluarga yang memenuhi kebutuhan pengasuhan tertentu.',
+      'Certified kodomo-en menggabungkan fungsi pendidikan dan childcare.',
+      'Kindergarten berfokus pada early childhood education dengan pola waktu dan proses penerimaan yang dapat berbeda.',
+      'Jangan memilih hanya dari jarak; periksa usia penerimaan, jam layanan, hari buka, makanan, transport, dan kebutuhan keluarga.'
+    ]
+  },
+  {
+    title: 'Mulai aplikasi lebih awal',
+    intro: 'Untuk entry April, proses pendaftaran biasanya dimulai pada musim gugur tahun sebelumnya. Kanazawa menerbitkan panduan dan formulir per tahun.',
+    points: [
+      'Gunakan application guide untuk tahun entry yang benar.',
+      'Siapkan dokumen sesuai certification category dan kondisi orang tua.',
+      'Pilihan fasilitas tidak menjamin slot; siapkan beberapa alternatif.',
+      'Jika pindah municipality, konfirmasi ulang karena proses dan availability mengikuti pemerintah setempat.'
+    ]
+  },
+  {
+    title: 'Jika bayi belum lahir saat periode aplikasi',
+    points: [
+      'Kanazawa memungkinkan aplikasi sebelum lahir untuk penggunaan yang dimulai pada April, karena application period berada pada tahun sebelumnya.',
+      'Usia minimum penerimaan tetap berbeda antar fasilitas; cek apakah bayi akan mencapai usia yang diterima pada saat mulai.',
+      'Untuk start Mei atau setelahnya, aplikasi umumnya dilakukan setelah bayi lahir.',
+      'Konfirmasi kasus spesifik ke Nursery School and Kindergarten Section atau fasilitas pilihan.'
+    ]
+  },
+  {
+    title: 'Alternatif selain full-time childcare',
+    points: [
+      'Gunakan parenting plazas dan child-rearing support centers untuk bermain, konsultasi, dan membangun koneksi sosial.',
+      'Beberapa fasilitas menyediakan temporary childcare atau short-term care dengan aturan dan biaya masing-masing.',
+      'Untuk kebutuhan mendadak, jangan berasumsi semua fasilitas menerima walk-in; cek reservasi dan usia.',
+      'Portal Kanazawa Child-Rearing mengumpulkan event, support, dan informasi fasilitas yang diperbarui.'
+    ]
+  }
+];
+
+const sources = [
+  {
+    owner: 'Kanazawa City',
+    title: 'Childcare Facilities Application Documents',
+    note: 'Formulir 2026/2027, periode aplikasi, dan prosedur penggunaan hoikusho/kodomo-en.',
+    url: 'https://www4.city.kanazawa.lg.jp/news/27637.html'
+  },
+  {
+    owner: 'Kanazawa City',
+    title: 'Children & Family — Foreign Residents',
+    note: 'Tersedia application guideline childcare dalam bahasa Inggris.',
+    url: 'https://www4.city.kanazawa.lg.jp/kurashi_tetsuzuki/gaikokujimmuke/9990.html'
+  },
+  {
+    owner: 'Kanazawa Child-Rearing Portal',
+    title: 'Nobinobi Be-no',
+    note: 'Portal aktif untuk childcare, event, support center, dan parenting information di Kanazawa.',
+    url: 'https://www.kanazawa-kosodate.net/'
+  }
+];
+---
+
+<FamilyGuidePage
+  title="Childcare, daycare & kindergarten"
+  kicker="Family · F03"
+  description="Panduan childcare untuk keluarga mahasiswa di Ishikawa: hoikusho, kodomo-en, kindergarten, waktu aplikasi, dan support center."
+  intro="Jika childcare dibutuhkan pada tanggal tertentu, jangan menunggu keluarga tiba. Pelajari pilihan fasilitas dan jadwal aplikasi sedini mungkin."
+  sections={sections}
+  sources={sources}
+/>
