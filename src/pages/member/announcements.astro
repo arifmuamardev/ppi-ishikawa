@@ -27,7 +27,7 @@ import MemberLayout from '../../layouts/MemberLayout.astro';
     for (const item of data || []) {
       const article = document.createElement('article');
       article.className = item.important
-        ? 'rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-7'
+        ? 'rounded-3xl border border-accent/35 bg-accent/10 p-6 sm:p-7'
         : 'rounded-3xl border border-slate-200 bg-white p-6 sm:p-7';
 
       const meta = document.createElement('div');
