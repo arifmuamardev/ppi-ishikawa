@@ -169,6 +169,9 @@ const googleMapsUrl = (address: string) =>
 
     const params = new URLSearchParams(window.location.search);
     let activeCategory = params.get('category') || '';
+    const validCategories = categoryButtons.map((button) => button.dataset.category || '');
+    if (!validCategories.includes(activeCategory)) activeCategory = '';
+
     const initialCity = params.get('city') || '';
     const initialQuery = params.get('q') || '';
 
