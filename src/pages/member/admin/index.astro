@@ -69,7 +69,7 @@ const groups = [
           <p class="mt-2 text-sm leading-6 text-slate-600">{group.description}</p>
           <div class="mt-5 grid gap-2">
             {group.links.map(([label, href]) => (
-              <a href={withBase(href)} class="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-800 hover:bg-amber-50 hover:text-brand">
+              <a href={withBase(href)} class="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3 text-sm font-bold text-slate-800 hover:bg-accent/10 hover:text-brand">
                 <span>{label}</span><span aria-hidden="true">→</span>
               </a>
             ))}
@@ -78,7 +78,7 @@ const groups = [
       ))}
     </section>
 
-    <section class="rounded-3xl border border-amber-200 bg-amber-50 p-6">
+    <section class="rounded-3xl border border-accent/35 bg-accent/10 p-6">
       <h2 class="font-bold text-slate-950">Catatan peluncuran</h2>
       <p class="mt-2 text-sm leading-6 text-slate-700">Tidak semua indikator harus terisi untuk membuka Area Anggota. Yang wajib sebelum publikasi luas adalah admin aktif, periode aktif, alur login/verifikasi yang sehat, dan kebijakan siapa yang berhak mengakses data anggota. Agenda, program, pengumuman, dan dokumen dapat diisi bertahap.</p>
     </section>
