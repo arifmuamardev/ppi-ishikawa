@@ -1,0 +1,72 @@
+---
+import FamilyGuidePage from '../../../components/FamilyGuidePage.astro';
+
+const sections = [
+  {
+    title: 'Mulai dari ruang bermain publik',
+    points: [
+      'Kanazawa Education Plaza memiliki parenting plazas untuk anak prasekolah dan ruang khusus bayi/toddler.',
+      'Kanazawa Station Kodomo Land dan child plazas di Health and Welfare Centers menjadi opsi lain untuk indoor play.',
+      'Omicho Exchange Plaza memiliki play space untuk usia 0 sampai sebelum sekolah serta fasilitas nursing/diaper change.',
+      'Jam buka, hari libur, reservation, dan kapasitas dapat berubah; cek halaman resmi sebelum berangkat.'
+    ]
+  },
+  {
+    title: 'Perpustakaan sebagai family space',
+    points: [
+      'Kanazawa City libraries memiliki area anak dan sebagian menyediakan foreign-language picture books.',
+      'Tamagawa Children’s Library, Umimirai Library, dan Izumino Library memiliki children-oriented spaces.',
+      'Periksa story time, parenting program, atau childcare-supported reading events pada kalender perpustakaan.',
+      'Library card dan eligibility program tertentu dapat memiliki syarat resident/user registration.'
+    ]
+  },
+  {
+    title: 'Outdoor dan akhir pekan',
+    points: [
+      'Gunakan parks dan open spaces untuk aktivitas murah, terutama pada spring dan autumn.',
+      'Pada summer, prioritaskan heat safety, hydration, dan shade; pada winter, pertimbangkan salju, jalan licin, dan perubahan transport.',
+      'Untuk museum, zoo, atau attraction berbayar, cek family tickets, stroller access, nursing room, dan closing day sebelum berangkat.',
+      'Jangan membuat itinerary terlalu padat untuk keluarga baru; satu aktivitas sederhana sering lebih realistis daripada berpindah banyak lokasi.'
+    ]
+  },
+  {
+    title: 'Cari event yang aktual',
+    points: [
+      'Kanazawa Child-Rearing Portal mengumpulkan event, parenting class, support center, dan informasi musiman.',
+      'Gunakan event resmi sebagai sumber tanggal; website PPI sebaiknya tidak menyalin kalender harian yang cepat kedaluwarsa.',
+      'Family gathering PPI dapat melengkapi layanan kota dengan ruang sosial berbahasa Indonesia.',
+      'Untuk keluarga baru, aktivitas komunitas bisa sekaligus menjadi cara bertukar informasi childcare, sekolah, barang anak, dan kehidupan sehari-hari.'
+    ]
+  }
+];
+
+const sources = [
+  {
+    owner: 'Kanazawa City',
+    title: 'Places for Parents and Pre-school Children',
+    note: 'Daftar ruang bermain publik dan child-rearing support spaces di Kanazawa.',
+    url: 'https://www4.city.kanazawa.lg.jp/kosodate_kyoiku/ikuji_mishugakuji/hoikujo_kodomoen_yochien/10644.html'
+  },
+  {
+    owner: 'Kanazawa City',
+    title: 'Kanazawa Education Plaza',
+    note: 'Parenting plazas, consultation, dan fasilitas keluarga.',
+    url: 'https://www4.city.kanazawa.lg.jp/kosodate_kyoiku/kosodate_kyoikushisetsu/kyoikuplaza/9588.html'
+  },
+  {
+    owner: 'Kanazawa Child-Rearing Portal',
+    title: 'Nobinobi Be-no',
+    note: 'Event dan informasi parenting yang terus diperbarui.',
+    url: 'https://www.kanazawa-kosodate.net/'
+  }
+];
+---
+
+<FamilyGuidePage
+  title="Aktivitas keluarga di Ishikawa"
+  kicker="Family · F06"
+  description="Ide aktivitas keluarga di Kanazawa dan Ishikawa: ruang bermain, perpustakaan, indoor play, outdoor, event, dan parenting support."
+  intro="Untuk aktivitas keluarga, website PPI sebaiknya membantu memilih jenis tempat dan sumber update—bukan menyalin jadwal event yang cepat kedaluwarsa."
+  sections={sections}
+  sources={sources}
+/>
