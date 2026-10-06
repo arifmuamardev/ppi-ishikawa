@@ -70,3 +70,15 @@ rather than branding, for example red for errors and green for success.
 Dark-mode brand colors are derived automatically from the same five source
 colors. Theme-color metadata is also sourced from `brand.ts`, so no duplicate
 hex values are required in the layout or theme toggle.
+
+
+## Automated guard
+
+Run `npm run check:theme` before merging theme-related changes. CI runs the same check.
+
+The guard rejects:
+- the active period string hardcoded anywhere under `src/` outside `src/data/brand.ts`
+- any of the five active palette hex values hardcoded outside `brand.ts`
+- legacy Tailwind `amber-*` utilities used as decorative brand colors
+
+Use `site.period`, `brandTheme.period`, and semantic tokens such as `brand`, `secondary`, `accent`, `ink`, and `paper` instead.
