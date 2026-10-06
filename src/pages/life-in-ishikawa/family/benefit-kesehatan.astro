@@ -1,0 +1,75 @@
+---
+import FamilyGuidePage from '../../../components/FamilyGuidePage.astro';
+
+const sections = [
+  {
+    title: 'Child allowance',
+    intro: 'Kanazawa menerbitkan panduan child allowance 2026. Eligibility dan jumlah mengikuti usia/urutan anak serta kondisi pengasuhan.',
+    points: [
+      'Pastikan resident registration dan informasi rekening penerima sesuai persyaratan.',
+      'Ajukan perubahan ketika lahir anak, pindah masuk/keluar, atau kondisi rumah tangga berubah.',
+      'Jangan mengandalkan nominal lama dari media sosial; gunakan halaman resmi untuk tahun berjalan.',
+      'Mahasiswa asing tidak seharusnya menganggap otomatis eligible atau tidak eligible hanya berdasarkan status mahasiswa—konfirmasi kondisi keluarga Anda.'
+    ]
+  },
+  {
+    title: 'Child medical fee subsidy',
+    intro: 'Kanazawa memberikan subsidi biaya medis anak dengan cakupan berbeda untuk inpatient dan outpatient.',
+    points: [
+      'Anak harus terdaftar pada health insurance untuk skema yang mensyaratkannya.',
+      'Simpan child medical certificate/card dan tunjukkan sesuai prosedur ketika berobat.',
+      'Mulai Januari 2027, Kanazawa telah mengumumkan perluasan dukungan outpatient sampai usia setara akhir SMA.',
+      'Biaya non-insurance seperti sebagian checkup, vaccination tertentu, document fee, dan private-room charges dapat berada di luar subsidi.'
+    ]
+  },
+  {
+    title: 'Health checkups & vaccination',
+    points: [
+      'Gunakan Mother and Child Health Handbook sebagai record utama perkembangan dan vaccination.',
+      'Kanazawa mengirim informasi infant health checkups sesuai usia.',
+      'Jika baru pindah dari luar Jepang, bawa vaccination record anak dan tanyakan bagaimana jadwal Jepang dipetakan terhadap vaksin yang sudah diterima.',
+      'Untuk kondisi akut, gunakan panduan layanan malam/hari libur dan emergency sesuai tingkat urgensi.'
+    ]
+  },
+  {
+    title: 'Dukungan keluarga lainnya',
+    points: [
+      'Kanazawa menyediakan informasi SMILE/RAINBOW coupons dan berbagai child-rearing support melalui portal resmi.',
+      'Eligibility beberapa dukungan terkait usia, alamat, kondisi keluarga, atau periode aplikasi.',
+      'Jika bahasa menjadi hambatan, City Hall menyediakan multilingual telephone interpretation termasuk Bahasa Indonesia untuk child-rearing, nursery, health, insurance, dan education sections.',
+      'Untuk kasus yang tidak jelas, minta petugas mengarahkan ke section yang tepat daripada menebak benefit yang berlaku.'
+    ]
+  }
+];
+
+const sources = [
+  {
+    owner: 'Kanazawa City',
+    title: 'Child Allowance System',
+    note: 'Nominal, jadwal pembayaran, dan ketentuan child allowance terbaru.',
+    url: 'https://www4.city.kanazawa.lg.jp/soshikikarasagasu/kosodateshienka/gyomuannai/2/1/9397.html'
+  },
+  {
+    owner: 'Kanazawa City',
+    title: 'Child Medical Fee Subsidy',
+    note: 'Cakupan subsidi saat ini dan perubahan yang sudah diumumkan untuk Januari 2027.',
+    url: 'https://www4.city.kanazawa.lg.jp/hojokin_joseikin/1/17585.html'
+  },
+  {
+    owner: 'Kanazawa City',
+    title: 'Language Support',
+    note: 'Multilingual telephone interpretation termasuk Bahasa Indonesia untuk berbagai section layanan keluarga.',
+    url: 'https://www4.city.kanazawa.lg.jp/kurashi_tetsuzuki/gaikokujimmuke/9989.html'
+  }
+];
+---
+
+<FamilyGuidePage
+  title="Benefit & kesehatan anak"
+  kicker="Family · F05"
+  description="Panduan child allowance, child medical subsidy, insurance, vaccination, health checkups, dan family support di Ishikawa."
+  intro="Benefit keluarga dan layanan kesehatan adalah area yang mudah berubah. Gunakan halaman ini untuk memahami jenis dukungan, lalu cek eligibility dan nominal terbaru pada sumber resmi."
+  currentNote="Kanazawa sudah mengumumkan bahwa mulai Januari 2027 cakupan outpatient pada child medical fee subsidy akan diperluas sampai usia setara akhir SMA. Untuk layanan sebelum tanggal itu, gunakan ketentuan yang masih berlaku saat menerima perawatan."
+  sections={sections}
+  sources={sources}
+/>
