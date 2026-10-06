@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import TopicIcon from './TopicIcon.astro';
+import { withBase } from '../utils/paths';
+import { familyHubItems, familyLastVerified } from '../data/family';
+
+interface Section {
+  title: string;
+  intro?: string;
+  points?: string[];
+  note?: string;
+}
+
+interface Source {
+  owner: string;
+  title: string;
+  note: string;
+  url: string;
+}
+
+interface Props {
+  title: string;
+  kicker: string;
+  description: string;
+  intro: string;
+  sections: Section[];
+  sources: Source[];
+  currentNote?: string;
+}
+
+const { title, kicker, description, intro, sections, sources, currentNote } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <Breadcrumbs items={[
+      { label: 'Beranda', href: '/' },
+      { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' },
+      { label: 'Family', href: '/life-in-ishikawa/family-anak/' },
+      { label: title }
+    ]} />
+    <p class="mt-8 text-sm font-bold uppercase tracking-[0.18em] text-brand">{kicker}</p>
+    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">{title}</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">{intro}</p>
+    <p class="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-slate-400">Terakhir diverifikasi · {familyLastVerified}</p>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
+    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      {familyHubItems.map((item) => (
+        <a href={withBase(item.href)} class="group rounded-2xl border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
+          <span class="grid size-9 place-items-center rounded-xl bg-amber-50 text-brand"><TopicIcon name={item.icon} class="size-5" /></span>
+          <p class="mt-3 text-xs font-bold uppercase tracking-[0.12em] text-slate-400">{item.code}</p>
+          <p class="mt-1 text-sm font-bold leading-5 text-slate-900 group-hover:text-brand">{item.title}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  {currentNote && (
+    <section class="mx-auto max-w-5xl px-5 pb-8 lg:px-8">
+      <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6">
+        <p class="text-sm font-bold uppercase tracking-[0.14em] text-amber-800">Catatan saat ini</p>
+        <p class="mt-3 text-sm leading-7 text-slate-700">{currentNote}</p>
+      </div>
+    </section>
+  )}
+
+  <section class="mx-auto max-w-5xl px-5 py-8 lg:px-8">
+    <div class="space-y-5">
+      {sections.map((section, index) => (
+        <article class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="flex gap-4">
+            <span class="grid size-10 shrink-0 place-items-center rounded-2xl bg-slate-100 text-xs font-bold text-slate-600">{String(index + 1).padStart(2, '0')}</span>
+            <div class="min-w-0 flex-1">
+              <h2 class="text-2xl font-bold tracking-tight text-slate-950">{section.title}</h2>
+              {section.intro && <p class="mt-3 leading-7 text-slate-600">{section.intro}</p>}
+              {section.points && (
+                <ul class="mt-5 space-y-3">
+                  {section.points.map((point) => (
+                    <li class="flex gap-3 text-sm leading-6 text-slate-700">
+                      <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {section.note && <p class="mt-5 rounded-2xl bg-slate-50 p-4 text-xs leading-6 text-slate-600">{section.note}</p>}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Sumber resmi</p>
+      <h2 class="mt-3 text-2xl font-bold">Gunakan sumber asli untuk syarat, nominal, dan jadwal terbaru.</h2>
+      <div class="mt-7 grid gap-4 sm:grid-cols-2">
+        {sources.map((source) => (
+          <a href={source.url} target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800">
+            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">{source.owner}</p>
+            <h3 class="mt-2 font-bold text-white">{source.title} ↗</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-400">{source.note}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
+    <a href={withBase('/life-in-ishikawa/family-anak/')} class="inline-flex rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800 hover:bg-slate-50">← Kembali ke Family Hub</a>
+  </section>
+</BaseLayout>
