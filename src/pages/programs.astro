@@ -15,8 +15,8 @@ import { site } from '../data/site';
 
   <section class="mx-auto max-w-7xl px-5 pb-10 lg:px-8">
     <div class="rounded-3xl border border-accent/35 bg-accent/10 p-6 sm:p-8">
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-secondary-dark">Status {site.period}</p>
-      <h2 class="mt-3 text-2xl font-bold text-slate-950">Kenali fokus kerja setiap departemen.</h2>
+      <p class="type-eyebrow text-secondary-dark">Status {site.period}</p>
+      <h2 class="type-section mt-3 text-slate-950">Kenali fokus kerja setiap departemen.</h2>
       <p class="mt-3 max-w-3xl leading-7 text-slate-700">Lihat bidang tanggung jawab masing-masing departemen. Program dan jadwal resmi akan ditampilkan ketika sudah ditetapkan.</p>
       <a href={withBase('/about/#struktur-organisasi')} class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Lihat struktur organisasi →</a>
     </div>
@@ -44,7 +44,7 @@ import { site } from '../data/site';
           <div class="flex items-start justify-between gap-4">
             <div>
               <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Departemen {String(index + 1).padStart(2, '0')}</p>
-              <h2 class="mt-2 text-xl font-semibold text-slate-950">{department.name}</h2>
+              <h2 class="type-card-title mt-2 text-slate-950">{department.name}</h2>
             </div>
           </div>
           <p class="mt-4 text-sm leading-6 text-slate-600">{department.description}</p>

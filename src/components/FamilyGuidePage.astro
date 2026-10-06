@@ -40,9 +40,9 @@ const { title, kicker, description, intro, sections, sources, currentNote } = As
       { label: 'Family', href: '/life-in-ishikawa/family-anak/' },
       { label: title }
     ]} />
-    <p class="mt-8 text-sm font-bold uppercase tracking-[0.18em] text-brand">{kicker}</p>
-    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">{title}</h1>
-    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">{intro}</p>
+    <p class="type-eyebrow mt-8 text-brand">{kicker}</p>
+    <h1 class="type-display mt-4 text-slate-950">{title}</h1>
+    <p class="type-lead mt-5 max-w-3xl text-slate-600">{intro}</p>
     <p class="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-slate-400">Terakhir diverifikasi · {familyLastVerified}</p>
   </section>
 
@@ -61,7 +61,7 @@ const { title, kicker, description, intro, sections, sources, currentNote } = As
   {currentNote && (
     <section class="mx-auto max-w-5xl px-5 pb-8 lg:px-8">
       <div class="rounded-3xl border border-accent/35 bg-accent/10 p-6">
-        <p class="text-sm font-bold uppercase tracking-[0.14em] text-secondary-dark">Catatan saat ini</p>
+        <p class="type-eyebrow text-secondary-dark">Catatan saat ini</p>
         <p class="mt-3 text-sm leading-7 text-slate-700">{currentNote}</p>
       </div>
     </section>
@@ -74,7 +74,7 @@ const { title, kicker, description, intro, sections, sources, currentNote } = As
           <div class="flex gap-4">
             <span class="grid size-10 shrink-0 place-items-center rounded-2xl bg-slate-100 text-xs font-bold text-slate-600">{String(index + 1).padStart(2, '0')}</span>
             <div class="min-w-0 flex-1">
-              <h2 class="text-2xl font-bold tracking-tight text-slate-950">{section.title}</h2>
+              <h2 class="type-section text-slate-950">{section.title}</h2>
               {section.intro && <p class="mt-3 leading-7 text-slate-600">{section.intro}</p>}
               {section.points && (
                 <ul class="mt-5 space-y-3">
@@ -106,7 +106,7 @@ const { title, kicker, description, intro, sections, sources, currentNote } = As
 
   <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
     <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Sumber resmi</p>
+      <p class="type-eyebrow text-red-300">Sumber resmi</p>
       <h2 class="mt-3 text-2xl font-bold">Gunakan sumber asli untuk syarat, nominal, dan jadwal terbaru.</h2>
       <div class="mt-7 grid gap-4 sm:grid-cols-2">
         {sources.map((source) => (
