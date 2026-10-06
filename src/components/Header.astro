@@ -33,7 +33,7 @@ const isActive = (href: string) => {
       <span class="hidden text-xs font-semibold text-secondary xl:block">Periode {site.period}</span>
     </a>
 
-    <nav class="hidden items-center gap-5 text-sm font-medium text-slate-600 lg:flex" aria-label="Navigasi utama">
+    <nav class="type-ui hidden items-center gap-5 text-slate-600 lg:flex" aria-label="Navigasi utama">
       {nav.map((item) => (
         <a
           class={`transition hover:text-brand ${isActive(item.href) ? 'font-bold text-brand' : ''}`}
@@ -47,14 +47,14 @@ const isActive = (href: string) => {
 
     <div class="flex items-center gap-2">
       <ThemeToggle />
-      <a href={withBase('/member/')} class="hidden rounded-full border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 transition hover:border-accent/50 hover:text-brand sm:inline-flex">
+      <a href={withBase('/member/')} class="type-ui hidden rounded-full border border-slate-300 bg-white px-4 py-2.5 text-slate-800 transition hover:border-accent/50 hover:text-brand sm:inline-flex">
         Area Anggota
       </a>
-      <a href={withBase('/contact')} class="hidden rounded-full bg-ink px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand xl:inline-flex">
+      <a href={withBase('/contact')} class="type-ui hidden rounded-full bg-ink px-4 py-2.5 text-white transition hover:bg-brand xl:inline-flex">
         Hubungi Kami
       </a>
       <details class="relative lg:hidden">
-        <summary class="cursor-pointer list-none rounded-full border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800">Menu</summary>
+        <summary class="type-ui cursor-pointer list-none rounded-full border border-slate-300 bg-white px-4 py-2.5 text-slate-800">Menu</summary>
         <div class="absolute right-0 mt-3 w-64 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl">
           {nav.map((item) => (
             <a
