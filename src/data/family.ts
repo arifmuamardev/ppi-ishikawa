@@ -69,6 +69,13 @@ export const familyHubItems: FamilyHubItem[] = [
     description: 'Checklist berdasarkan waktu: sebelum datang, 14 hari pertama, bulan pertama, school/daycare, kelahiran, dan pindah.',
     href: '/life-in-ishikawa/family/timeline/',
     icon: 'guide'
+  },
+  {
+    code: 'F10',
+    title: 'Family Starter Pack',
+    description: 'Checklist ringkas dan print-friendly untuk keluarga baru: sebelum datang, 14 hari pertama, anak, kesehatan, emergency, dan pindah.',
+    href: '/life-in-ishikawa/family/starter-pack/',
+    icon: 'documents'
   }
 ];
 
