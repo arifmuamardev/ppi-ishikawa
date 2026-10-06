@@ -1,38 +1,90 @@
 @import "tailwindcss";
 
-@theme {
+@theme inline {
   --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --color-ink: #1f1b1b;
-  --color-paper: #faf8f4;
-  --color-brand: #8f080e;
-  --color-brand-dark: #6f050a;
-  --color-brand-soft: #b92b31;
-  --color-accent: #a0823c;
-  --color-accent-dark: #765f2c;
-  --color-accent-soft: #d2b66a;
+
+  /* Semantic brand utilities. The five source colors are injected by BaseLayout
+     from src/data/brand.ts, so a new period never requires editing components. */
+  --color-brand: var(--ppi-primary);
+  --color-brand-dark: var(--ppi-primary-strong);
+  --color-brand-soft: var(--ppi-primary-soft);
+
+  --color-secondary: var(--ppi-secondary);
+  --color-secondary-dark: var(--ppi-secondary-strong);
+  --color-secondary-soft: var(--ppi-secondary-soft);
+
+  --color-accent: var(--ppi-accent);
+  --color-accent-dark: var(--ppi-accent-strong);
+  --color-accent-soft: var(--ppi-accent-soft);
+
+  --color-ink: var(--ppi-ink);
+  --color-paper: var(--ppi-surface);
+
+  /* Existing neutral utilities inherit the period's neutral pair. */
+  --color-slate-950: var(--ppi-ink);
+  --color-slate-900: var(--ppi-neutral-900);
+  --color-slate-800: var(--ppi-neutral-800);
+  --color-slate-700: var(--ppi-neutral-700);
+  --color-slate-600: var(--ppi-neutral-600);
+  --color-slate-500: var(--ppi-neutral-500);
+  --color-slate-400: var(--ppi-neutral-400);
+  --color-slate-300: var(--ppi-neutral-300);
+  --color-slate-200: var(--ppi-neutral-200);
+  --color-slate-100: var(--ppi-neutral-100);
+  --color-slate-50: var(--ppi-neutral-50);
+}
+
+:root {
+  color-scheme: light;
+
+  --ppi-primary: var(--theme-primary);
+  --ppi-secondary: var(--theme-secondary);
+  --ppi-accent: var(--theme-accent);
+  --ppi-surface: var(--theme-surface);
+  --ppi-ink: var(--theme-ink);
+
+  --ppi-primary-strong: color-mix(in srgb, var(--ppi-primary) 82%, black);
+  --ppi-primary-soft: color-mix(in srgb, var(--ppi-primary) 48%, white);
+
+  --ppi-secondary-strong: color-mix(in srgb, var(--ppi-secondary) 82%, black);
+  --ppi-secondary-soft: color-mix(in srgb, var(--ppi-secondary) 45%, white);
+
+  --ppi-accent-strong: color-mix(in srgb, var(--ppi-accent) 74%, black);
+  --ppi-accent-soft: color-mix(in srgb, var(--ppi-accent) 42%, white);
+
+  --ppi-neutral-900: color-mix(in srgb, var(--ppi-ink) 92%, white);
+  --ppi-neutral-800: color-mix(in srgb, var(--ppi-ink) 82%, white);
+  --ppi-neutral-700: color-mix(in srgb, var(--ppi-ink) 70%, white);
+  --ppi-neutral-600: color-mix(in srgb, var(--ppi-ink) 58%, white);
+  --ppi-neutral-500: color-mix(in srgb, var(--ppi-ink) 46%, white);
+  --ppi-neutral-400: color-mix(in srgb, var(--ppi-ink) 34%, white);
+  --ppi-neutral-300: color-mix(in srgb, var(--ppi-ink) 22%, white);
+  --ppi-neutral-200: color-mix(in srgb, var(--ppi-ink) 13%, white);
+  --ppi-neutral-100: color-mix(in srgb, var(--ppi-ink) 7%, white);
+  --ppi-neutral-50: color-mix(in srgb, var(--ppi-surface) 94%, white);
 }
 
 html {
   scroll-behavior: smooth;
-  background: var(--color-paper);
+  background: var(--ppi-surface);
 }
 
 body {
   margin: 0;
-  color: var(--color-ink);
+  color: var(--ppi-ink);
   background:
-    radial-gradient(circle at top left, rgba(143, 8, 14, 0.07), transparent 30rem),
-    radial-gradient(circle at 85% 10%, rgba(160, 130, 60, 0.06), transparent 24rem),
-    linear-gradient(#fffdfa, #faf8f4 42rem);
+    radial-gradient(circle at top left, color-mix(in srgb, var(--ppi-primary) 7%, transparent), transparent 30rem),
+    radial-gradient(circle at 85% 10%, color-mix(in srgb, var(--ppi-secondary) 6%, transparent), transparent 24rem),
+    linear-gradient(color-mix(in srgb, var(--ppi-surface) 88%, white), var(--ppi-surface) 42rem);
 }
 
 ::selection {
-  background: #dccb9a;
-  color: #6f050a;
+  background: color-mix(in srgb, var(--ppi-accent) 45%, white);
+  color: var(--ppi-ink);
 }
 
 :where(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
-  outline: 3px solid var(--color-accent);
+  outline: 3px solid var(--ppi-accent);
   outline-offset: 3px;
 }
 
@@ -54,41 +106,46 @@ body {
 
 /* Light / dark theme ------------------------------------------------------- */
 
-:root {
-  color-scheme: light;
-}
-
 html.dark {
   color-scheme: dark;
-  --color-ink: #f5f5f4;
-  --color-paper: #111113;
-  --color-brand: #ef646b;
-  --color-brand-dark: #d94b53;
-  --color-brand-soft: #f28a90;
-  --color-accent: #d5b869;
-  --color-accent-dark: #b89b51;
-  --color-accent-soft: #ead79b;
+
+  --ppi-primary: color-mix(in srgb, var(--theme-primary) 66%, white);
+  --ppi-secondary: color-mix(in srgb, var(--theme-secondary) 64%, white);
+  --ppi-accent: color-mix(in srgb, var(--theme-accent) 68%, white);
+  --ppi-surface: color-mix(in srgb, var(--theme-ink) 90%, black);
+  --ppi-ink: color-mix(in srgb, var(--theme-surface) 97%, white);
+
+  --ppi-neutral-900: color-mix(in srgb, var(--ppi-ink) 92%, black);
+  --ppi-neutral-800: color-mix(in srgb, var(--ppi-ink) 82%, black);
+  --ppi-neutral-700: color-mix(in srgb, var(--ppi-ink) 70%, black);
+  --ppi-neutral-600: color-mix(in srgb, var(--ppi-ink) 58%, black);
+  --ppi-neutral-500: color-mix(in srgb, var(--ppi-ink) 46%, black);
+  --ppi-neutral-400: color-mix(in srgb, var(--ppi-ink) 34%, black);
+  --ppi-neutral-300: color-mix(in srgb, var(--ppi-ink) 24%, black);
+  --ppi-neutral-200: color-mix(in srgb, var(--ppi-ink) 16%, black);
+  --ppi-neutral-100: color-mix(in srgb, var(--ppi-ink) 10%, black);
+  --ppi-neutral-50: color-mix(in srgb, var(--theme-ink) 84%, black);
 }
 
 html.dark {
-  background: #111113;
+  background: var(--ppi-surface);
 }
 
 html.dark body {
-  color: #e7e5e4;
+  color: color-mix(in srgb, var(--ppi-ink) 92%, transparent);
   background:
-    radial-gradient(circle at top left, rgba(143, 8, 14, 0.18), transparent 32rem),
-    radial-gradient(circle at 82% 8%, rgba(160, 130, 60, 0.11), transparent 26rem),
-    linear-gradient(#111113, #18181b 44rem);
+    radial-gradient(circle at top left, color-mix(in srgb, var(--theme-primary) 18%, transparent), transparent 32rem),
+    radial-gradient(circle at 82% 8%, color-mix(in srgb, var(--theme-secondary) 14%, transparent), transparent 26rem),
+    linear-gradient(var(--ppi-surface), color-mix(in srgb, var(--theme-ink) 82%, black) 44rem);
 }
 
 /* Surfaces */
 html.dark .bg-white {
-  background-color: #18181b;
+  background-color: color-mix(in srgb, var(--theme-ink) 86%, black);
 }
 
 html.dark .bg-white\/90 {
-  background-color: rgb(24 24 27 / 0.94);
+  background-color: color-mix(in srgb, var(--theme-ink) 86%, black 14%);
 }
 
 html.dark .bg-white\/5 {
@@ -96,31 +153,24 @@ html.dark .bg-white\/5 {
 }
 
 html.dark .bg-slate-50 {
-  background-color: #202023;
+  background-color: color-mix(in srgb, var(--theme-ink) 82%, black);
 }
 
-html.dark .bg-slate-100 {
-  background-color: #29292d;
-}
-
+html.dark .bg-slate-100,
 html.dark .bg-slate-800 {
-  background-color: #29292d;
+  background-color: color-mix(in srgb, var(--theme-ink) 72%, black);
 }
 
 html.dark .bg-slate-900 {
-  background-color: #18181b;
+  background-color: color-mix(in srgb, var(--theme-ink) 84%, black);
 }
 
 html.dark .bg-slate-950 {
-  background-color: #111113;
+  background-color: var(--theme-ink);
 }
 
 html.dark .bg-red-50 {
-  background-color: rgb(127 29 29 / 0.22);
-}
-
-html.dark .bg-amber-50 {
-  background-color: rgb(120 53 15 / 0.24);
+  background-color: color-mix(in srgb, var(--theme-primary) 25%, transparent);
 }
 
 html.dark .bg-green-50 {
@@ -130,26 +180,22 @@ html.dark .bg-green-50 {
 /* Text */
 html.dark .text-slate-950,
 html.dark .text-slate-900 {
-  color: #fafaf9;
+  color: var(--ppi-ink);
 }
 
 html.dark .text-slate-800,
 html.dark .text-slate-700 {
-  color: #e7e5e4;
+  color: color-mix(in srgb, var(--ppi-ink) 91%, transparent);
 }
 
 html.dark .text-slate-600,
 html.dark .text-slate-300 {
-  color: #d6d3d1;
+  color: color-mix(in srgb, var(--ppi-ink) 82%, transparent);
 }
 
 html.dark .text-slate-500,
 html.dark .text-slate-400 {
-  color: #a8a29e;
-}
-
-html.dark .text-amber-800 {
-  color: #fbbf24;
+  color: color-mix(in srgb, var(--ppi-ink) 63%, transparent);
 }
 
 html.dark .text-green-700 {
@@ -158,60 +204,50 @@ html.dark .text-green-700 {
 
 /* Borders */
 html.dark .border-slate-100 {
-  border-color: #29292d;
+  border-color: color-mix(in srgb, var(--ppi-ink) 13%, transparent);
 }
 
 html.dark .border-slate-200,
 html.dark .border-slate-200\/80 {
-  border-color: #3f3f46;
+  border-color: color-mix(in srgb, var(--ppi-ink) 20%, transparent);
 }
 
-html.dark .border-slate-300 {
-  border-color: #52525b;
-}
-
+html.dark .border-slate-300,
 html.dark .border-slate-500,
 html.dark .border-slate-600,
 html.dark .border-slate-700 {
-  border-color: #52525b;
+  border-color: color-mix(in srgb, var(--ppi-ink) 30%, transparent);
 }
 
 html.dark .border-red-200 {
-  border-color: #7f1d1d;
-}
-
-html.dark .border-amber-200 {
-  border-color: #92400e;
+  border-color: color-mix(in srgb, var(--theme-primary) 58%, transparent);
 }
 
 /* Interaction states */
 html.dark .hover\:bg-slate-50:hover {
-  background-color: #29292d;
+  background-color: color-mix(in srgb, var(--theme-ink) 72%, black);
 }
 
-html.dark .hover\:bg-slate-100:hover {
-  background-color: #3f3f46;
-}
-
+html.dark .hover\:bg-slate-100:hover,
 html.dark .hover\:bg-slate-700:hover {
-  background-color: #3f3f46;
+  background-color: color-mix(in srgb, var(--theme-ink) 64%, black);
 }
 
 html.dark .hover\:bg-slate-800:hover {
-  background-color: #29292d;
+  background-color: color-mix(in srgb, var(--theme-ink) 72%, black);
 }
 
 html.dark .hover\:border-slate-400:hover,
 html.dark .hover\:border-slate-500:hover {
-  border-color: #64748b;
+  border-color: color-mix(in srgb, var(--ppi-ink) 42%, transparent);
 }
 
 html.dark .hover\:border-red-200:hover {
-  border-color: #b91c1c;
+  border-color: var(--ppi-primary);
 }
 
 html.dark .focus-visible\:ring-offset-2:focus-visible {
-  --tw-ring-offset-color: #111113;
+  --tw-ring-offset-color: var(--ppi-surface);
 }
 
 /* Theme-toggle icon state */
@@ -228,8 +264,8 @@ html.dark [data-theme-icon="moon"] {
 }
 
 html.dark ::selection {
-  background: #7f1d1d;
-  color: #fee2e2;
+  background: color-mix(in srgb, var(--ppi-accent) 55%, var(--ppi-surface));
+  color: var(--ppi-ink);
 }
 
 /* Slightly stronger shadows on dark surfaces */
@@ -244,29 +280,30 @@ html.dark .shadow-xl {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgb(160 130 60 / 0.24);
-  background: #fffdfa;
-  box-shadow: 0 1px 2px rgb(31 27 27 / 0.05);
+  border: 1px solid color-mix(in srgb, var(--ppi-accent) 30%, transparent);
+  background: var(--theme-surface);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--theme-ink) 8%, transparent);
 }
 
 .brand-logo-panel {
-  border: 1px solid rgb(160 130 60 / 0.24);
+  border: 1px solid color-mix(in srgb, var(--ppi-accent) 30%, transparent);
   background:
-    radial-gradient(circle at 75% 15%, rgb(160 130 60 / 0.09), transparent 35%),
-    #fffdfa;
+    radial-gradient(circle at 75% 15%, color-mix(in srgb, var(--ppi-accent) 11%, transparent), transparent 35%),
+    var(--theme-surface);
 }
 
 html.dark .brand-logo-shell,
 html.dark .brand-logo-panel {
-  background: #fffdfa;
-  border-color: rgb(213 184 105 / 0.42);
+  background: var(--theme-surface);
+  border-color: color-mix(in srgb, var(--ppi-accent) 48%, transparent);
 }
 
+/* Kept for backwards compatibility; no longer tied to a gold palette. */
 .brand-gold-rule {
   height: 2px;
-  background: linear-gradient(90deg, transparent, #a0823c 18%, #a0823c 82%, transparent);
+  background: linear-gradient(90deg, transparent, var(--ppi-accent) 18%, var(--ppi-secondary) 82%, transparent);
 }
 
 html.dark .brand-gold-rule {
-  background: linear-gradient(90deg, transparent, #d5b869 18%, #d5b869 82%, transparent);
+  background: linear-gradient(90deg, transparent, var(--ppi-accent) 18%, var(--ppi-secondary) 82%, transparent);
 }

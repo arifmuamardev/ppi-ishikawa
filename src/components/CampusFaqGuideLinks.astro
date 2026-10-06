@@ -93,7 +93,7 @@ const links = [
   <div class="mt-4 flex flex-wrap items-center gap-2 border-t border-slate-100 pt-4">
     <span class="mr-1 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-400">Panduan terkait</span>
     {links.map((item) => (
-      <a href={withBase(item.href)} class="inline-flex items-center gap-1.5 rounded-lg bg-slate-50 px-2.5 py-1.5 text-xs font-bold text-slate-600 transition hover:bg-amber-50 hover:text-brand">
+      <a href={withBase(item.href)} class="inline-flex items-center gap-1.5 rounded-lg bg-slate-50 px-2.5 py-1.5 text-xs font-bold text-slate-600 transition hover:bg-accent/10 hover:text-brand">
         <TopicIcon name={item.icon as any} class="size-3.5" />
         {item.label} →
       </a>

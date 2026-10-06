@@ -79,7 +79,7 @@ import { campuses } from '../../data/campuses';
       for (const member of members) {
         const card = node('article', 'rounded-3xl border border-slate-200 bg-white p-6');
         const top = node('div', 'flex flex-wrap gap-2');
-        top.append(node('span', 'rounded-full bg-amber-50 px-3 py-1 text-[11px] font-bold text-accent-dark', campusMap.get(member.campus_slug) || 'Kampus'));
+        top.append(node('span', 'rounded-full bg-accent/10 px-3 py-1 text-[11px] font-bold text-accent-dark', campusMap.get(member.campus_slug) || 'Kampus'));
         top.append(node('span', 'rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-600', statusMap[member.membership_status] || member.membership_status));
         card.append(top);
 

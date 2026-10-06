@@ -1,7 +1,7 @@
 <button
   type="button"
   data-theme-toggle
-  class="grid size-10 shrink-0 place-items-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+  class="grid size-10 shrink-0 place-items-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-accent/50 hover:bg-accent/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
   aria-label="Gunakan mode gelap"
   title="Gunakan mode gelap"
   aria-pressed="false"
@@ -30,7 +30,14 @@
     toggle.setAttribute('aria-label', nextLabel);
     toggle.setAttribute('title', nextLabel);
     toggle.setAttribute('aria-pressed', String(dark));
-    if (themeMeta) themeMeta.content = dark ? '#111113' : '#fffdfa';
+
+    if (themeMeta) {
+      const root = document.documentElement;
+      const nextThemeColor = dark
+        ? root.dataset.themeColorDark
+        : root.dataset.themeColorLight;
+      if (nextThemeColor) themeMeta.content = nextThemeColor;
+    }
   };
 
   const setTheme = (theme: 'light' | 'dark', persist = true) => {

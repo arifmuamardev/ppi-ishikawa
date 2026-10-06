@@ -31,7 +31,7 @@ const campusCareerEntries = campuses.flatMap((campus) => {
   />
 
   <section class="mx-auto max-w-7xl px-5 pb-6 lg:px-8">
-    <div class="rounded-[2rem] border border-amber-200 bg-amber-50 p-6 sm:p-8">
+    <div class="rounded-[2rem] border border-accent/35 bg-accent/10 p-6 sm:p-8">
       <div class="flex items-start gap-4">
         <span class="grid size-11 shrink-0 place-items-center rounded-2xl bg-white text-brand">
           <TopicIcon name="career" class="size-6" />
@@ -58,7 +58,7 @@ const campusCareerEntries = campuses.flatMap((campus) => {
         ['Cerita karier', '#career-stories'],
         ['Untuk alumni', '#alumni']
       ].map(([label, href]) => (
-        <a href={href} class="rounded-full border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 transition hover:border-amber-200 hover:bg-amber-50 hover:text-brand">
+        <a href={href} class="rounded-full border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 transition hover:border-accent/35 hover:bg-accent/10 hover:text-brand">
           {label}
         </a>
       ))}
@@ -98,8 +98,8 @@ const campusCareerEntries = campuses.flatMap((campus) => {
           href: '#preparation'
         }
       ].map((item) => (
-        <a href={item.href} class="group rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
-          <span class="grid size-11 place-items-center rounded-2xl bg-amber-50 text-brand">
+        <a href={item.href} class="group rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-accent/35 hover:shadow-sm">
+          <span class="grid size-11 place-items-center rounded-2xl bg-accent/10 text-brand">
             <TopicIcon name={item.icon as any} class="size-6" />
           </span>
           <h3 class="mt-4 text-lg font-bold text-slate-950 group-hover:text-brand">{item.title}</h3>
@@ -167,7 +167,7 @@ const campusCareerEntries = campuses.flatMap((campus) => {
                 <p class="text-xs font-bold uppercase tracking-[0.12em] text-brand">{source.provider}</p>
                 <h3 class="mt-2 text-xl font-bold leading-snug text-slate-950">{source.name}</h3>
               </div>
-              {source.featured && <span class="rounded-full bg-amber-100 px-3 py-1 text-[11px] font-bold text-amber-800">Direkomendasikan mulai di sini</span>}
+              {source.featured && <span class="rounded-full bg-accent/20 px-3 py-1 text-[11px] font-bold text-secondary-dark">Direkomendasikan mulai di sini</span>}
             </div>
 
             <p class="mt-4 text-sm leading-6 text-slate-600">{source.description}</p>
@@ -207,7 +207,7 @@ const campusCareerEntries = campuses.flatMap((campus) => {
         </p>
         <div class="mt-6 space-y-3">
           {careerGuides.map((guide) => (
-            <a href={guide.url} target="_blank" rel="noreferrer" class="block rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-amber-200">
+            <a href={guide.url} target="_blank" rel="noreferrer" class="block rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-accent/35">
               <p class="text-xs font-bold uppercase tracking-[0.12em] text-brand">{guide.provider}</p>
               <h3 class="mt-2 font-bold text-slate-950">{guide.title}</h3>
               <p class="mt-2 text-sm leading-6 text-slate-600">{guide.description}</p>
@@ -268,7 +268,7 @@ const campusCareerEntries = campuses.flatMap((campus) => {
         </article>
       </div>
 
-      <div class="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-5">
+      <div class="mt-6 rounded-2xl border border-accent/35 bg-accent/10 p-5">
         <p class="font-bold text-slate-950">Dokumen yang sering perlu disiapkan lebih awal</p>
         <p class="mt-2 text-sm leading-6 text-slate-700">Academic CV, publication list, research statement/proposal, cover letter, degree/transcript documents, dan referees/recommendation letters. Persyaratan final selalu mengikuti call atau vacancy yang dituju.</p>
       </div>

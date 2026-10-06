@@ -64,21 +64,21 @@ const staleCount = scholarships.filter(needsReview).length;
 
   <section class="mx-auto max-w-7xl px-5 pb-8 lg:px-8">
     <div class="grid gap-4 md:grid-cols-3">
-      <a href="#finder" data-stage-jump="before-arrival" class="group rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
+      <a href="#finder" data-stage-jump="before-arrival" class="group rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-accent/35 hover:shadow-sm">
         <TopicIcon name="arrival" class="size-7 text-brand" />
         <h2 class="mt-4 text-xl font-bold text-slate-950">Saya belum berangkat</h2>
         <p class="mt-2 text-sm leading-6 text-slate-600">Mulai dari MEXT dan scholarship yang memang menerima aplikasi sebelum Anda tiba di Jepang.</p>
         <span class="mt-4 inline-flex text-sm font-bold text-brand">Tampilkan opsi →</span>
       </a>
 
-      <a href="#finder" data-stage-jump="after-enrollment" class="group rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
+      <a href="#finder" data-stage-jump="after-enrollment" class="group rounded-3xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-accent/35 hover:shadow-sm">
         <TopicIcon name="campus" class="size-7 text-brand" />
         <h2 class="mt-4 text-xl font-bold text-slate-950">Saya sudah kuliah di Ishikawa</h2>
         <p class="mt-2 text-sm leading-6 text-slate-600">Cari JASSO, Ishikawa Prefectural Scholarship, foundation scholarship, dan jalur nominasi kampus.</p>
         <span class="mt-4 inline-flex text-sm font-bold text-brand">Tampilkan opsi →</span>
       </a>
 
-      <a href="#kampus" class="group rounded-3xl border border-amber-200 bg-amber-50 p-6 transition hover:-translate-y-0.5 hover:shadow-sm">
+      <a href="#kampus" class="group rounded-3xl border border-accent/35 bg-accent/10 p-6 transition hover:-translate-y-0.5 hover:shadow-sm">
         <TopicIcon name="scholarship" class="size-7 text-accent-dark" />
         <h2 class="mt-4 text-xl font-bold text-slate-950">Pilih kampus saya</h2>
         <p class="mt-2 text-sm leading-6 text-slate-700">Gunakan kampus sebagai titik awal, lalu filter lagi berdasarkan jenjang dan tahap studi.</p>
@@ -192,7 +192,7 @@ const staleCount = scholarships.filter(needsReview).length;
 
     <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
       {campusOptions.map(([slug, label]) => (
-        <a href="#finder" data-campus-jump={slug} class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-amber-200 hover:bg-amber-50">
+        <a href="#finder" data-campus-jump={slug} class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-accent/35 hover:bg-accent/10">
           <InstitutionMark id={slug as any} size="sm" class="shrink-0" />
           <div>
             <p class="font-bold text-slate-950">{label}</p>
@@ -204,7 +204,7 @@ const staleCount = scholarships.filter(needsReview).length;
   </section>
 
   <section class="mx-auto max-w-7xl px-5 py-10 lg:px-8">
-    <div class="rounded-[2rem] border border-amber-200 bg-amber-50 p-6 sm:p-8">
+    <div class="rounded-[2rem] border border-accent/35 bg-accent/10 p-6 sm:p-8">
       <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <p class="text-sm font-bold uppercase tracking-[0.16em] text-accent-dark">Paling relevan untuk Ishikawa</p>
@@ -332,7 +332,7 @@ const staleCount = scholarships.filter(needsReview).length;
               <h3 class="mt-2 text-xl font-bold leading-snug text-slate-950">{item.name}</h3>
             </div>
             <div class="flex flex-wrap justify-end gap-2">
-              {item.featured && <span class="rounded-full bg-amber-100 px-3 py-1 text-[11px] font-bold text-amber-800">Prioritas</span>}
+              {item.featured && <span class="rounded-full bg-accent/20 px-3 py-1 text-[11px] font-bold text-secondary-dark">Prioritas</span>}
               <span class={`rounded-full px-3 py-1 text-[11px] font-bold ${needsReview(item) ? 'bg-red-100 text-red-700' : 'bg-green-50 text-green-700'}`}>
                 {needsReview(item) ? 'Perlu verifikasi ulang' : 'Terverifikasi'}
               </span>

@@ -1,8 +1,9 @@
 import { departments as departmentData } from './organization';
+import { brandTheme } from './brand';
 
 export const site = {
   name: 'PPI Ishikawa',
-  period: '2026/27',
+  period: brandTheme.period,
   tagline: 'Rumah digital pelajar Indonesia di Ishikawa.',
   description:
     'Informasi kampus, kehidupan di Ishikawa, beasiswa, karier, komunitas, dan organisasi untuk pelajar Indonesia dan alumni di Prefektur Ishikawa, Jepang.',

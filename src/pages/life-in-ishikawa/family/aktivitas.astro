@@ -40,7 +40,7 @@ const tagLabels: Record<string, string> = {
   </section>
 
   <section class="mx-auto max-w-7xl px-5 pb-8 lg:px-8">
-    <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+    <div class="rounded-3xl border border-accent/35 bg-accent/10 p-6 sm:p-8">
       <div class="grid gap-5 md:grid-cols-3">
         <div>
           <p class="text-sm font-bold text-slate-950">Saat hujan / salju</p>
@@ -67,7 +67,7 @@ const tagLabels: Record<string, string> = {
             'activity-filter rounded-full border px-4 py-2 text-sm font-bold transition',
             filter.id === 'all'
               ? 'border-slate-950 bg-slate-950 text-white'
-              : 'border-slate-300 bg-white text-slate-700 hover:border-amber-300 hover:bg-amber-50'
+              : 'border-slate-300 bg-white text-slate-700 hover:border-accent/50 hover:bg-accent/10'
           ]}
           data-filter={filter.id}
           aria-pressed={filter.id === 'all' ? 'true' : 'false'}
@@ -97,7 +97,7 @@ const tagLabels: Record<string, string> = {
 
           <div class="mt-4 flex flex-wrap gap-1.5">
             {place.tags.map((tag) => (
-              <span class="rounded-full bg-amber-50 px-2.5 py-1 text-[11px] font-bold text-amber-900">{tagLabels[tag]}</span>
+              <span class="rounded-full bg-accent/10 px-2.5 py-1 text-[11px] font-bold text-secondary-dark">{tagLabels[tag]}</span>
             ))}
           </div>
 

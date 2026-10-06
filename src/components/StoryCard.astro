@@ -12,7 +12,7 @@ const { story } = Astro.props;
 const campus = campuses.find((item) => item.slug === story.campusSlug);
 ---
 
-<article class="group overflow-hidden rounded-3xl border border-slate-200 bg-white transition hover:-translate-y-0.5 hover:border-amber-200 hover:shadow-sm">
+<article class="group overflow-hidden rounded-3xl border border-slate-200 bg-white transition hover:-translate-y-0.5 hover:border-accent/35 hover:shadow-sm">
   {story.imageUrl ? (
     <img
       src={story.imageUrl}
@@ -28,7 +28,7 @@ const campus = campuses.find((item) => item.slug === story.campusSlug);
 
   <div class="p-6">
     <div class="flex flex-wrap gap-2">
-      {campus && <span class="rounded-full bg-amber-50 px-3 py-1 text-[11px] font-bold text-accent-dark">{campus.shortName}</span>}
+      {campus && <span class="rounded-full bg-accent/10 px-3 py-1 text-[11px] font-bold text-accent-dark">{campus.shortName}</span>}
       <span class="rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-600">{story.status}</span>
       {story.topics.slice(0, 2).map((topic) => (
         <span class="rounded-full border border-slate-200 px-3 py-1 text-[11px] font-semibold text-slate-500">{storyTopicLabels[topic]}</span>

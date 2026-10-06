@@ -81,7 +81,7 @@ import MemberLayout from '../../layouts/MemberLayout.astro';
         card.className = 'rounded-3xl border border-slate-200 bg-white p-6';
 
         const badge = document.createElement('span');
-        badge.className = 'rounded-full bg-amber-50 px-3 py-1 text-[11px] font-bold text-accent-dark';
+        badge.className = 'rounded-full bg-accent/10 px-3 py-1 text-[11px] font-bold text-accent-dark';
         badge.textContent = unit.type === 'leadership' ? 'Pengurus Inti' : 'Divisi';
 
         const heading = document.createElement('h2');

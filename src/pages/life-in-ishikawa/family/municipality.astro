@@ -43,7 +43,7 @@ import { familyLastVerified } from '../../../data/family';
   <section class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
     <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
       {familyMunicipalities.map((city) => (
-        <a href={'#' + city.id} class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-amber-200 hover:bg-amber-50">
+        <a href={'#' + city.id} class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-accent/35 hover:bg-accent/10">
           <MunicipalityMark id={city.id} size="sm" class="shrink-0" />
           <div>
             <p class="font-bold text-slate-900">{city.name}</p>
@@ -70,8 +70,8 @@ import { familyLastVerified } from '../../../data/family';
 
               <p class="mt-5 text-sm leading-6 text-slate-600">{city.context}</p>
 
-              <div class="mt-5 rounded-2xl bg-amber-50 p-4">
-                <p class="text-xs font-bold uppercase tracking-[0.12em] text-amber-800">Mulai dari mana?</p>
+              <div class="mt-5 rounded-2xl bg-accent/10 p-4">
+                <p class="text-xs font-bold uppercase tracking-[0.12em] text-secondary-dark">Mulai dari mana?</p>
                 <p class="mt-2 text-sm leading-6 text-slate-700">{city.startingPoint}</p>
               </div>
 
@@ -80,7 +80,7 @@ import { familyLastVerified } from '../../../data/family';
 
             <div class="grid gap-3 md:grid-cols-2">
               {city.links.map((link) => (
-                <a href={link.url} target="_blank" rel="noreferrer" class="group rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-amber-200 hover:bg-amber-50">
+                <a href={link.url} target="_blank" rel="noreferrer" class="group rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-accent/35 hover:bg-accent/10">
                   <h3 class="font-bold text-slate-900 group-hover:text-brand">{link.label} ↗</h3>
                   <p class="mt-2 text-xs leading-5 text-slate-600">{link.description}</p>
                 </a>

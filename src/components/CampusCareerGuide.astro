@@ -17,7 +17,7 @@ const profile = campusCareerProfiles[campusSlug];
       <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
         <div class="max-w-3xl">
           <div class="flex items-center gap-2">
-            <span class="grid size-9 place-items-center rounded-xl bg-amber-50 text-brand">
+            <span class="grid size-9 place-items-center rounded-xl bg-accent/10 text-brand">
               <TopicIcon name="career" class="size-5" />
             </span>
             <p class="text-sm font-bold uppercase tracking-[0.14em] text-brand">Karier</p>
@@ -27,11 +27,11 @@ const profile = campusCareerProfiles[campusSlug];
           {profile.note && <p class="mt-3 text-xs leading-5 text-slate-500">{profile.note}</p>}
 
           <div class="mt-4 flex flex-wrap gap-2">
-            <a href={profile.primaryUrl} target="_blank" rel="noreferrer" class="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-700 hover:border-amber-200 hover:bg-amber-50 hover:text-brand">
+            <a href={profile.primaryUrl} target="_blank" rel="noreferrer" class="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-700 hover:border-accent/35 hover:bg-accent/10 hover:text-brand">
               {profile.primaryLabel} ↗
             </a>
             {profile.secondaryUrl && profile.secondaryLabel && (
-              <a href={profile.secondaryUrl} target="_blank" rel="noreferrer" class="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-700 hover:border-amber-200 hover:bg-amber-50 hover:text-brand">
+              <a href={profile.secondaryUrl} target="_blank" rel="noreferrer" class="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold text-slate-700 hover:border-accent/35 hover:bg-accent/10 hover:text-brand">
                 {profile.secondaryLabel} ↗
               </a>
             )}

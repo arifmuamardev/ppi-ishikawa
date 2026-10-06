@@ -42,7 +42,7 @@ const glanceIcon = (label: string) => {
 
     <div class="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
       {profile.glance.map((item) => (
-        <a href={item.sourceUrl} target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-amber-200 hover:bg-amber-50">
+        <a href={item.sourceUrl} target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-accent/35 hover:bg-accent/10">
           <div class="flex items-center gap-2">
             <span class="grid size-9 place-items-center rounded-xl bg-white text-brand">
               <TopicIcon name={glanceIcon(item.label) as any} class="size-5" />
@@ -55,7 +55,7 @@ const glanceIcon = (label: string) => {
       ))}
     </div>
 
-    <div class="mt-5 rounded-3xl border border-amber-200 bg-amber-50 p-5 sm:p-6">
+    <div class="mt-5 rounded-3xl border border-accent/35 bg-accent/10 p-5 sm:p-6">
       <div class="flex items-center gap-2">
         <span class="grid size-9 place-items-center rounded-xl bg-white text-accent-dark">
           <TopicIcon name="guide" class="size-5" />
@@ -118,7 +118,7 @@ const glanceIcon = (label: string) => {
         </div>
         <div class="flex flex-wrap gap-2">
           {quickLinks.map((item) => (
-            <a href={item.url} target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 transition hover:border-amber-200 hover:text-brand">
+            <a href={item.url} target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 transition hover:border-accent/35 hover:text-brand">
               <TopicIcon name={item.icon} class="size-4" />
               <span>{item.label}</span>
             </a>
