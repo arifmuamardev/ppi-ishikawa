@@ -8,6 +8,7 @@ import { campuses } from '../data/campuses';
 import { withBase } from '../utils/paths';
 import { publicMedia } from '../data/media';
 import { stories } from '../data/stories';
+import { site } from '../data/site';
 
 const primaryPaths = [
   {
@@ -50,12 +51,12 @@ const primaryPaths = [
 ---
 <BaseLayout
   title="Beranda"
-  description="Rumah digital PPI Ishikawa 2026/27 untuk kampus, kehidupan di Ishikawa, beasiswa, karier, komunitas, dan informasi organisasi."
+  description={`Rumah digital PPI Ishikawa ${site.period} untuk kampus, kehidupan di Ishikawa, beasiswa, karier, komunitas, dan informasi organisasi.`}
 >
   <section class="mx-auto max-w-7xl px-5 pb-14 pt-16 lg:px-8 lg:pb-20 lg:pt-24">
     <div class="grid items-center gap-12 lg:grid-cols-[1.2fr_.8fr]">
       <div>
-        <p class="inline-flex rounded-full border border-accent/35 bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-accent-dark">PPI Ishikawa · 2026/27</p>
+        <p class="inline-flex rounded-full border border-accent/35 bg-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-accent-dark">PPI Ishikawa · {site.period}</p>
         <h1 class="mt-6 max-w-5xl text-5xl font-bold leading-[1.03] tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">{vision.headline}</h1>
         <p class="mt-6 text-xl font-semibold text-slate-800 sm:text-2xl">{vision.subheadline}</p>
         <p class="mt-4 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">{vision.supporting}</p>
