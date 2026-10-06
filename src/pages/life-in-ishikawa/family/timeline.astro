@@ -1,0 +1,289 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import TopicIcon from '../../../components/TopicIcon.astro';
+import { withBase } from '../../../utils/paths';
+import { familyLastVerified } from '../../../data/family';
+
+const phases = [
+  {
+    code: 'T-30',
+    timing: 'Sebelum keluarga datang',
+    title: 'Siapkan status tinggal, housing, dan dokumen keluarga.',
+    icon: 'documents',
+    actions: [
+      'Pastikan residence status/visa setiap anggota keluarga sesuai dengan kondisi masing-masing; Dependent dapat relevan untuk pasangan atau anak yang menjadi tanggungan pemegang status Student.',
+      'Cek apakah kontrak tempat tinggal mengizinkan jumlah penghuni yang akan tinggal bersama.',
+      'Siapkan marriage/birth certificate dan dokumen hubungan keluarga; simpan versi digital dan terjemahan bila diminta.',
+      'Jika anak usia sekolah, identifikasi municipality dan Board of Education berdasarkan alamat yang akan digunakan.',
+      'Jika membutuhkan nursery/kodomo-en, cek periode aplikasi sebelum tanggal kedatangan karena entry April biasanya diproses sejak musim gugur tahun sebelumnya.',
+      'Bawa vaccination record, medical record penting, prescription, dan school record anak.'
+    ],
+    links: [
+      ['Datang bersama keluarga', '/life-in-ishikawa/family/datang-bersama-keluarga/'],
+      ['Family by Municipality', '/life-in-ishikawa/family/municipality/']
+    ]
+  },
+  {
+    code: 'D0–14',
+    timing: 'Hari pertama sampai 14 hari',
+    title: 'Tetapkan alamat dan selesaikan administrasi dasar.',
+    icon: 'arrival',
+    highlight: 'Mid-to-long-term residents perlu melaporkan alamat ke municipality dalam 14 hari setelah menetapkan tempat tinggal.',
+    actions: [
+      'Lakukan moving-in/address notification untuk setiap anggota keluarga yang relevan.',
+      'Bawa residence card atau passport bila residence card akan diterbitkan kemudian; jika tinggal bersama keluarga, dokumen hubungan keluarga dapat diperlukan.',
+      'Periksa enrollment National Health Insurance atau skema health insurance yang berlaku bagi setiap anggota keluarga.',
+      'Cek My Number dan dokumen resident registration yang dibutuhkan untuk layanan berikutnya.',
+      'Simpan alamat City Hall, emergency contacts, kampus, sekolah/daycare, dan kontak PPI/IFIE.'
+    ],
+    links: [
+      ['Administrasi umum', '/life-in-ishikawa/administrasi/'],
+      ['Family by Municipality', '/life-in-ishikawa/family/municipality/']
+    ]
+  },
+  {
+    code: 'W1–4',
+    timing: 'Minggu pertama sampai bulan pertama',
+    title: 'Aktifkan layanan anak dan bangun rutinitas keluarga.',
+    icon: 'family',
+    actions: [
+      'Ajukan atau konfirmasi child allowance, child medical support, dan family benefits yang mungkin berlaku di municipality Anda.',
+      'Untuk bayi/anak, cocokkan vaccination record Indonesia dengan jadwal dan health-check system setempat.',
+      'Jika anak sekolah, selesaikan enrollment/transfer dan sampaikan kebutuhan Japanese-language support.',
+      'Jika membutuhkan childcare, pastikan application, certification category, start date, dan alternatif fasilitas.',
+      'Kenali pediatric clinic, after-hours care, emergency route, supermarket, playground/library, serta transport harian.',
+      'Pastikan pasangan memahami aturan bekerja bila residence status-nya Dependent; kerja part-time tidak otomatis diperbolehkan tanpa izin yang sesuai.'
+    ],
+    links: [
+      ['Benefit & kesehatan', '/life-in-ishikawa/family/benefit-kesehatan/'],
+      ['Sekolah anak', '/life-in-ishikawa/family/sekolah-anak/'],
+      ['Childcare', '/life-in-ishikawa/family/childcare/']
+    ]
+  },
+  {
+    code: 'ROUTINE',
+    timing: 'Setelah mulai stabil',
+    title: 'Bangun sistem keluarga yang mudah dipelihara.',
+    icon: 'guide',
+    actions: [
+      'Simpan folder keluarga berisi residence, insurance, school, childcare, health, vaccination, dan allowance documents.',
+      'Tambahkan renewal dates, school calendar, nursery application period, dan health-check schedule ke kalender keluarga.',
+      'Simpan bookmark municipality Anda untuk childcare, school, medical support, dan disaster information.',
+      'Siapkan emergency bag keluarga dan rencana saat heavy snow, earthquake, atau transport disruption.',
+      'Gunakan aktivitas komunitas dan public facilities untuk membangun support network, terutama jika pasangan/anak baru beradaptasi.'
+    ],
+    links: [
+      ['Aktivitas keluarga', '/life-in-ishikawa/family/aktivitas/'],
+      ['Bencana & darurat', '/life-in-ishikawa/disaster-emergency/'],
+      ['Winter', '/life-in-ishikawa/winter/']
+    ]
+  },
+  {
+    code: 'SCHOOL',
+    timing: 'Saat daycare / sekolah akan dimulai',
+    title: 'Mulai lebih awal daripada tanggal masuk.',
+    icon: 'academic',
+    actions: [
+      'Untuk childcare entry April, cek application window pada musim gugur tahun sebelumnya; jangan menunggu sampai Maret.',
+      'Untuk public elementary/junior high, hubungi municipality/Board of Education sebelum atau segera setelah pindah.',
+      'Tanyakan school district, dokumen transfer, school lunch, perlengkapan, health check, dan kebutuhan dukungan bahasa.',
+      'Jika high school mulai mendekat, mulai pathway planning lebih awal karena proses penerimaan berbeda dari compulsory school.'
+    ],
+    note: 'Contoh aktual: Kanazawa membuka first-round application untuk childcare mulai April 2027 pada 1–22 Oktober 2026. Gunakan ini hanya sebagai contoh pola waktu; cek jadwal municipality dan tahun entry Anda.',
+    links: [
+      ['Childcare', '/life-in-ishikawa/family/childcare/'],
+      ['Sekolah anak', '/life-in-ishikawa/family/sekolah-anak/']
+    ]
+  },
+  {
+    code: 'BIRTH',
+    timing: 'Jika hamil / bayi lahir di Jepang',
+    title: 'Jalankan health, municipality, dan immigration sebagai tiga alur paralel.',
+    icon: 'health',
+    highlight: 'Jika bayi foreign national akan tinggal di Jepang lebih dari 60 hari, acquisition of status of residence perlu diajukan dalam 30 hari sejak lahir.',
+    actions: [
+      'Setelah kehamilan terkonfirmasi, lakukan pregnancy notification dan terima Mother and Child Health Handbook melalui municipality.',
+      'Ikuti prenatal checkup dan siapkan fasilitas persalinan, transport, serta emergency contact.',
+      'Setelah kelahiran, lakukan birth notification melalui municipality; di Jepang batas umumnya 14 hari sejak kelahiran.',
+      'Urus passport/nationality melalui embassy/consulate yang relevan.',
+      'Lanjutkan dengan residence status bayi, health insurance, resident registration, child allowance, dan child medical support.'
+    ],
+    links: [
+      ['Kehamilan & kelahiran', '/life-in-ishikawa/family/kehamilan-kelahiran/'],
+      ['Benefit & kesehatan', '/life-in-ishikawa/family/benefit-kesehatan/']
+    ]
+  },
+  {
+    code: 'MOVE',
+    timing: 'Saat pindah municipality atau meninggalkan Jepang',
+    title: 'Jangan hanya mengurus alamat—pindahkan juga layanan keluarga.',
+    icon: 'city',
+    highlight: 'Jika pindah ke municipality lain, lakukan moving-out di municipality lama dan moving-in di municipality baru dalam 14 hari setelah pindah.',
+    actions: [
+      'Beri tahu school/nursery sebelum pindah dan minta transfer documents bila diperlukan.',
+      'Periksa penghentian atau pemindahan child allowance, medical subsidy, insurance, dan health records.',
+      'Lakukan moving-out notification sebelum meninggalkan municipality/Jepang sesuai aturan setempat.',
+      'Setelah pindah, aktifkan ulang layanan lokal yang tidak otomatis berpindah.',
+      'Jika meninggalkan Jepang, cek residence status, insurance, pension, bank, utilities, school, dan childcare secara terpisah.'
+    ],
+    links: [
+      ['Family by Municipality', '/life-in-ishikawa/family/municipality/'],
+      ['Meninggalkan Ishikawa / Jepang', '/life-in-ishikawa/leaving/']
+    ]
+  }
+];
+
+const sourceLinks = [
+  {
+    owner: 'Immigration Services Agency of Japan',
+    title: 'Procedures at Municipal Offices',
+    note: 'Address notification dan prosedur pindah untuk foreign residents.',
+    url: 'https://www.moj.go.jp/isa/content/001450969.pdf'
+  },
+  {
+    owner: 'Immigration Services Agency of Japan',
+    title: 'Acquisition of Status of Residence after Birth',
+    note: 'Bayi foreign national yang tinggal lebih dari 60 hari: application dalam 30 hari sejak lahir.',
+    url: 'https://www.moj.go.jp/isa/applications/procedures/16-10.html'
+  },
+  {
+    owner: 'Kanazawa City',
+    title: 'A Guide to Living in Kanazawa 2026',
+    note: 'Moving procedures dan layanan dasar untuk foreign residents.',
+    url: 'https://www4.city.kanazawa.lg.jp/material/files/group/6/seikatsu_guide_2026_en.pdf'
+  },
+  {
+    owner: 'Kanazawa City',
+    title: 'Childcare Application Documents',
+    note: 'Contoh current application timeline untuk April 2027.',
+    url: 'https://www4.city.kanazawa.lg.jp/news/27637.html'
+  }
+];
+---
+
+<BaseLayout
+  title="Family Timeline — Dari Sebelum Datang sampai Pindah"
+  description="Timeline keluarga PPI Ishikawa: checklist sebelum keluarga datang, 14 hari pertama, bulan pertama, childcare/sekolah, kelahiran, dan pindah."
+>
+  <section class="mx-auto max-w-6xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <Breadcrumbs items={[
+      { label: 'Beranda', href: '/' },
+      { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' },
+      { label: 'Family', href: '/life-in-ishikawa/family-anak/' },
+      { label: 'Family Timeline' }
+    ]} />
+
+    <div class="mt-8 max-w-4xl">
+      <p class="text-sm font-bold uppercase tracking-[0.18em] text-brand">Family · F09</p>
+      <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Apa yang perlu dilakukan—dan kapan.</h1>
+      <p class="mt-5 text-lg leading-8 text-slate-600">
+        Gunakan timeline ini sebagai checklist orientasi keluarga. Deadline tegas hanya ditampilkan jika punya dasar resmi;
+        layanan lain diarahkan ke municipality karena timing, eligibility, dan formulir dapat berbeda.
+      </p>
+      <p class="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-slate-400">Terakhir diverifikasi · {familyLastVerified}</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 pb-10 lg:px-8">
+    <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.14em] text-amber-800">Cara menggunakan</p>
+      <div class="mt-4 grid gap-4 md:grid-cols-3">
+        <div>
+          <p class="font-bold text-slate-950">1 · Cari fase Anda</p>
+          <p class="mt-2 text-sm leading-6 text-slate-700">Tidak perlu membaca dari awal jika keluarga sudah berada di Jepang.</p>
+        </div>
+        <div>
+          <p class="font-bold text-slate-950">2 · Ikuti checklist</p>
+          <p class="mt-2 text-sm leading-6 text-slate-700">Gunakan poin sebagai pengingat, bukan pengganti instruksi resmi.</p>
+        </div>
+        <div>
+          <p class="font-bold text-slate-950">3 · Pilih municipality</p>
+          <p class="mt-2 text-sm leading-6 text-slate-700">Untuk childcare, school, benefit, dan health support, pindah ke sumber kota Anda.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 py-8 lg:px-8">
+    <div class="relative space-y-6 before:absolute before:left-[1.22rem] before:top-4 before:bottom-4 before:w-px before:bg-slate-200 sm:before:left-[1.47rem]">
+      {phases.map((phase) => (
+        <article class="relative pl-14 sm:pl-16">
+          <span class="absolute left-0 top-1 grid size-10 place-items-center rounded-2xl border border-slate-200 bg-white text-brand shadow-sm sm:size-12">
+            <TopicIcon name={phase.icon as any} class="size-5 sm:size-6" />
+          </span>
+
+          <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="rounded-full bg-slate-950 px-3 py-1 text-xs font-bold text-white">{phase.code}</span>
+              <p class="text-sm font-bold uppercase tracking-[0.12em] text-brand">{phase.timing}</p>
+            </div>
+
+            <h2 class="mt-4 text-2xl font-bold tracking-tight text-slate-950">{phase.title}</h2>
+
+            {phase.highlight && (
+              <div class="mt-5 rounded-2xl border border-red-200 bg-red-50 p-4">
+                <p class="text-sm font-bold leading-6 text-red-900">{phase.highlight}</p>
+              </div>
+            )}
+
+            <ol class="mt-6 space-y-3">
+              {phase.actions.map((action, index) => (
+                <li class="flex gap-3 text-sm leading-6 text-slate-700">
+                  <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-600">{index + 1}</span>
+                  <span>{action}</span>
+                </li>
+              ))}
+            </ol>
+
+            {phase.note && <p class="mt-5 rounded-2xl bg-amber-50 p-4 text-xs leading-6 text-amber-950">{phase.note}</p>}
+
+            <div class="mt-6 flex flex-wrap gap-2">
+              {phase.links.map(([label, href]) => (
+                <a href={withBase(href)} class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-800 hover:bg-slate-50">{label} →</a>
+              ))}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 py-10 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.14em] text-red-300">Shortcut</p>
+        <h2 class="mt-3 text-2xl font-bold">Sudah tinggal di Ishikawa?</h2>
+        <p class="mt-4 text-sm leading-7 text-slate-300">Lewati fase sebelum datang dan mulai dari D0–14 atau W1–4. Untuk layanan keluarga, buka municipality tempat resident registration Anda tercatat.</p>
+        <a href={withBase('/life-in-ishikawa/family/municipality/')} class="mt-5 inline-flex rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950">Pilih municipality →</a>
+      </div>
+
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.14em] text-brand">Tidak perlu sempurna di minggu pertama</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Prioritaskan legal status, health access, dan rutinitas anak.</h2>
+        <p class="mt-4 text-sm leading-7 text-slate-600">
+          Setelah tiga hal itu aman, baru optimalkan fasilitas, aktivitas keluarga, community network, dan hal-hal kenyamanan lainnya.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 py-10 lg:px-8">
+    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.14em] text-red-300">Sumber resmi</p>
+      <div class="mt-6 grid gap-4 md:grid-cols-2">
+        {sourceLinks.map((source) => (
+          <a href={source.url} target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800">
+            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">{source.owner}</p>
+            <h3 class="mt-2 font-bold text-white">{source.title} ↗</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-400">{source.note}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 pb-24 pt-4 lg:px-8">
+    <a href={withBase('/life-in-ishikawa/family-anak/')} class="inline-flex rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800 hover:bg-slate-50">← Kembali ke Family Hub</a>
+  </section>
+</BaseLayout>
