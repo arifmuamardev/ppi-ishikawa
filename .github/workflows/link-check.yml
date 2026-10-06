@@ -8,6 +8,10 @@ on:
       - 'src/pages/**'
       - 'src/components/**'
       - 'src/data/**'
+      - 'src/layouts/**'
+      - 'src/styles/**'
+      - 'package.json'
+      - 'scripts/check-brand-theme.mjs'
       - 'scripts/check-links.mjs'
       - 'scripts/check-internal-links.mjs'
       - '.github/workflows/link-check.yml'
@@ -19,6 +23,10 @@ on:
       - 'src/pages/**'
       - 'src/components/**'
       - 'src/data/**'
+      - 'src/layouts/**'
+      - 'src/styles/**'
+      - 'package.json'
+      - 'scripts/check-brand-theme.mjs'
       - 'scripts/check-links.mjs'
       - 'scripts/check-internal-links.mjs'
       - '.github/workflows/link-check.yml'
@@ -41,6 +49,8 @@ jobs:
           node-version: 24
       - name: Install dependencies
         run: npm install --no-package-lock
+      - name: Check theme source of truth
+        run: npm run check:theme
       - name: Build site
         run: npm run build
       - name: Check internal links
