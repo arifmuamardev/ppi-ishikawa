@@ -64,6 +64,16 @@ const googleMapsUrl = (address: string) =>
         </div>
 
         <div>
+          <label for="place-search" class="mb-2 block text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Cari tempat atau kebutuhan</label>
+          <input
+            id="place-search"
+            type="search"
+            placeholder="Contoh: anak, konsultasi, city hall, Kanazawa..."
+            class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-slate-400"
+          />
+        </div>
+
+        <div>
           <p class="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Kategori</p>
           <div class="flex flex-wrap gap-2" data-category-filters>
             <button type="button" data-category="" class="place-filter rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white">Semua</button>
@@ -96,6 +106,7 @@ const googleMapsUrl = (address: string) =>
           class="place-card flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"
           data-category={place.category}
           data-city={place.city}
+          data-search={[place.name, place.shortName, place.city, place.address, place.description, ...place.tags].join(' ').toLowerCase()}
         >
           <div class="flex items-start justify-between gap-3">
             <span class="rounded-full bg-red-50 px-3 py-1 text-xs font-bold text-brand">{placeCategoryLabels[place.category]}</span>
@@ -152,19 +163,39 @@ const googleMapsUrl = (address: string) =>
     const cards = Array.from(document.querySelectorAll('.place-card'));
     const categoryButtons = Array.from(document.querySelectorAll('[data-category-filters] [data-category]'));
     const citySelect = document.querySelector('#place-city');
+    const searchInput = document.querySelector('#place-search');
     const count = document.querySelector('#place-count');
     const empty = document.querySelector('#places-empty');
 
-    let activeCategory = '';
+    const params = new URLSearchParams(window.location.search);
+    let activeCategory = params.get('category') || '';
+    const initialCity = params.get('city') || '';
+    const initialQuery = params.get('q') || '';
+
+    if (citySelect && initialCity) citySelect.value = initialCity;
+    if (searchInput && initialQuery) searchInput.value = initialQuery;
+
+    const setActiveButton = () => {
+      categoryButtons.forEach((candidate) => {
+        const active = (candidate.dataset.category || '') === activeCategory;
+        candidate.classList.toggle('bg-slate-900', active);
+        candidate.classList.toggle('text-white', active);
+        candidate.classList.toggle('border-slate-200', !active);
+        candidate.classList.toggle('bg-white', !active);
+        candidate.classList.toggle('text-slate-700', !active);
+      });
+    };
 
     const update = () => {
       const city = citySelect?.value || '';
+      const query = (searchInput?.value || '').trim().toLowerCase();
       let visible = 0;
 
       cards.forEach((card) => {
         const matchesCategory = !activeCategory || card.dataset.category === activeCategory;
         const matchesCity = !city || card.dataset.city === city;
-        const show = matchesCategory && matchesCity;
+        const matchesQuery = !query || (card.dataset.search || '').includes(query);
+        const show = matchesCategory && matchesCity && matchesQuery;
         card.classList.toggle('hidden', !show);
         if (show) visible += 1;
       });
@@ -177,19 +208,15 @@ const googleMapsUrl = (address: string) =>
       button.addEventListener('click', () => {
         activeCategory = button.dataset.category || '';
 
-        categoryButtons.forEach((candidate) => {
-          const active = candidate === button;
-          candidate.classList.toggle('bg-slate-900', active);
-          candidate.classList.toggle('text-white', active);
-          candidate.classList.toggle('border-slate-200', !active);
-          candidate.classList.toggle('bg-white', !active);
-          candidate.classList.toggle('text-slate-700', !active);
-        });
-
+        setActiveButton();
         update();
       });
     });
 
     citySelect?.addEventListener('change', update);
+    searchInput?.addEventListener('input', update);
+
+    setActiveButton();
+    update();
   })();
 </script>
