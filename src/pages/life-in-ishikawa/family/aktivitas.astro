@@ -181,7 +181,18 @@ const tagLabels: Record<string, string> = {
     };
 
     for (const button of buttons) {
-      button.addEventListener('click', () => applyFilter(button.dataset.filter || 'all'));
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter || 'all';
+        applyFilter(filter);
+        const url = new URL(window.location.href);
+        if (filter === 'all') url.searchParams.delete('filter');
+        else url.searchParams.set('filter', filter);
+        window.history.replaceState({}, '', url);
+      });
     }
+
+    const requestedFilter = new URLSearchParams(window.location.search).get('filter') || 'all';
+    const validFilters = buttons.map((button) => button.dataset.filter || 'all');
+    applyFilter(validFilters.includes(requestedFilter) ? requestedFilter : 'all');
   </script>
 </BaseLayout>
