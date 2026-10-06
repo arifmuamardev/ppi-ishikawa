@@ -16,7 +16,7 @@ import MemberLayout from '../../layouts/MemberLayout.astro';
       <h2 class="text-xl font-bold text-slate-950">Preferensi mentoring saya</h2>
       <form id="mentoring-preference-form" class="mt-6 space-y-6">
         <div>
-          <label class="flex items-start gap-3 rounded-2xl bg-amber-50 p-4">
+          <label class="flex items-start gap-3 rounded-2xl bg-accent/10 p-4">
             <input name="mentor_available" type="checkbox" class="mt-1 size-4" />
             <span><strong class="text-slate-950">Saya bersedia menjadi mentor</strong><span class="mt-1 block text-sm leading-6 text-slate-600">Profil Anda dapat muncul di daftar mentor untuk topik yang dipilih.</span></span>
           </label>
@@ -150,7 +150,7 @@ import MemberLayout from '../../layouts/MemberLayout.astro';
         tags.className = 'mt-4 flex flex-wrap gap-2';
         for (const topic of mentor.mentor_topics || []) {
           const tag = document.createElement('span');
-          tag.className = 'rounded-full bg-amber-50 px-3 py-1 text-[11px] font-bold text-accent-dark';
+          tag.className = 'rounded-full bg-accent/10 px-3 py-1 text-[11px] font-bold text-accent-dark';
           tag.textContent = topic; tags.append(tag);
         }
 
