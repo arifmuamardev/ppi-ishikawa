@@ -36,6 +36,15 @@ export const publicMedia: Record<string, PublicMedia> = {
     license: 'CC BY-SA 2.0',
     alt: 'Kereta Hokuriku Shinkansen W7 di Kanazawa Station'
   },
+  kanazawaCentralPark: {
+    id: 'kanazawa-central-park',
+    title: 'Central Park, Kanazawa',
+    imageUrl: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Kanazawa-C-3228.jpg?width=1500',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Kanazawa-C-3228.jpg',
+    credit: 'Daderot / Wikimedia Commons',
+    license: 'Public Domain',
+    alt: 'Area hijau di Central Park Kanazawa yang cocok untuk aktivitas keluarga'
+  },
   kanazawaCastle: {
     id: 'kanazawa-castle',
     title: 'Kanazawa Castle',
