@@ -1,4 +1,5 @@
 export interface CampusMapPoint {
+  id?: string;
   name: string;
   shortName: string;
   city: string;

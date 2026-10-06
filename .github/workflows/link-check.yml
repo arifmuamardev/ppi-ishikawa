@@ -2,6 +2,15 @@ name: Check site links
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/pages/**'
+      - 'src/components/**'
+      - 'src/data/**'
+      - 'scripts/check-links.mjs'
+      - 'scripts/check-internal-links.mjs'
+      - '.github/workflows/link-check.yml'
   schedule:
     - cron: '17 0 * * 1'
   push:

@@ -6,13 +6,15 @@ interface Props {
   heightClass?: string;
   showLegend?: boolean;
   class?: string;
+  ariaLabel?: string;
 }
 
 const {
   points,
   heightClass = 'h-[360px] sm:h-[430px]',
   showLegend = true,
-  class: className = ''
+  class: className = '',
+  ariaLabel = 'Peta lokasi kampus'
 } = Astro.props;
 
 const dataPoints = JSON.stringify(points);
@@ -22,7 +24,7 @@ const dataPoints = JSON.stringify(points);
   <div
     class={`ppi-leaflet-map w-full bg-slate-100 ${heightClass}`}
     data-points={dataPoints}
-    aria-label="Peta lokasi kampus"
+    aria-label={ariaLabel}
   ></div>
 
   {showLegend && (
@@ -47,10 +49,8 @@ const dataPoints = JSON.stringify(points);
   )}
 </div>
 
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
 <script is:inline>
   (() => {
     const escapeHtml = (value) =>
@@ -87,9 +87,11 @@ const dataPoints = JSON.stringify(points);
           attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
 
-        const bounds = [];
-        points.forEach((point) => {
-          const marker = window.L.marker([point.lat, point.lng]).addTo(map);
+        const markers = new Map();
+
+        points.forEach((point, index) => {
+          const id = String(point.id || point.shortName || index);
+          const marker = window.L.marker([point.lat, point.lng]);
           const approx = point.approximate
             ? '<div style="margin-top:4px;font-size:11px;color:#92400e">Area alamat resmi · posisi marker bersifat perkiraan.</div>'
             : '';
@@ -102,16 +104,49 @@ const dataPoints = JSON.stringify(points);
             '</div>';
 
           marker.bindPopup(popup);
-          bounds.push([point.lat, point.lng]);
+          markers.set(id, { marker, point });
         });
 
-        if (bounds.length === 1) {
-          map.setView(bounds[0], 15);
-        } else {
-          map.fitBounds(bounds, { padding: [28, 28], maxZoom: 13 });
+        const applyVisibleIds = (ids) => {
+          const hasFilter = Array.isArray(ids);
+          const visibleSet = hasFilter ? new Set(ids.map(String)) : null;
+          const bounds = [];
+
+          markers.forEach(({ marker, point }, id) => {
+            const show = !visibleSet || visibleSet.has(id);
+            if (show) {
+              if (!map.hasLayer(marker)) marker.addTo(map);
+              bounds.push([point.lat, point.lng]);
+            } else if (map.hasLayer(marker)) {
+              map.removeLayer(marker);
+            }
+          });
+
+          if (bounds.length === 1) {
+            map.setView(bounds[0], 15);
+          } else if (bounds.length > 1) {
+            map.fitBounds(bounds, { padding: [28, 28], maxZoom: 13 });
+          }
+
+          setTimeout(() => map.invalidateSize(), 30);
+        };
+
+        let initialIds = null;
+        if (element.dataset.visibleIds) {
+          try {
+            initialIds = JSON.parse(element.dataset.visibleIds);
+          } catch {
+            initialIds = null;
+          }
         }
 
-        setTimeout(() => map.invalidateSize(), 50);
+        applyVisibleIds(initialIds);
+
+        element.addEventListener('ppi-map-filter', (event) => {
+          const ids = event.detail?.ids;
+          element.dataset.visibleIds = JSON.stringify(Array.isArray(ids) ? ids : []);
+          applyVisibleIds(Array.isArray(ids) ? ids : null);
+        });
       });
     };
 
