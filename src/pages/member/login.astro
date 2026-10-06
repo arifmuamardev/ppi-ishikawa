@@ -12,7 +12,7 @@ import { withBase } from '../../utils/paths';
 
       <div id="login-message" class="mt-6 hidden rounded-2xl border p-4 text-sm leading-6"></div>
 
-      <div id="demo-login" class="mt-7 hidden rounded-2xl border border-amber-200 bg-amber-50 p-5">
+      <div id="demo-login" class="mt-7 hidden rounded-2xl border border-accent/35 bg-accent/10 p-5">
         <p class="font-bold text-slate-950">Coba Area Anggota dalam mode demo</p>
         <p class="mt-2 text-sm leading-6 text-slate-600">Tidak ada data yang dikirim ke server. Pilih peran untuk mencoba alur anggota atau admin.</p>
         <div class="mt-4 grid gap-3 sm:grid-cols-2">
@@ -50,7 +50,7 @@ import { withBase } from '../../utils/paths';
     const showMessage = (text, type = 'info') => {
       if (!message) return;
       message.textContent = text;
-      message.className = `mt-6 rounded-2xl border p-4 text-sm leading-6 ${type === 'error' ? 'border-red-200 bg-red-50 text-red-800' : 'border-amber-200 bg-amber-50 text-slate-700'}`;
+      message.className = `mt-6 rounded-2xl border p-4 text-sm leading-6 ${type === 'error' ? 'border-red-200 bg-red-50 text-red-800' : 'border-accent/35 bg-accent/10 text-slate-700'}`;
     };
 
     if (isMembershipDemoMode) {
