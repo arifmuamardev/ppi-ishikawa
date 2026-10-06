@@ -82,3 +82,10 @@ The guard rejects:
 - legacy Tailwind `amber-*` utilities used as decorative brand colors
 
 Use `site.period`, `brandTheme.period`, and semantic tokens such as `brand`, `secondary`, `accent`, `ink`, and `paper` instead.
+
+
+## Typography is separate from the period theme
+
+The active-period palette lives here, but typography is treated as a longer-lived part of the PPI Ishikawa visual identity.
+
+See `docs/brand/TYPOGRAPHY.md` for the font family, Japanese fallbacks, and semantic typography tokens.
