@@ -1,3 +1,4 @@
+import { brandTheme } from './brand';
 export interface RelatedContentItem {
   title: string;
   description: string;
@@ -114,7 +115,7 @@ export const campusRelatedContent: Record<string, RelatedContentItem[]> = {
 
 export const generalRelatedContent: Record<string, RelatedContentItem[]> = {
   about: [
-    { title: 'Program & kegiatan', description: 'Lihat fokus kerja tujuh departemen dan bidang layanan yang ditangani periode 2026/27.', href: '/programs/', icon: 'guide' },
+    { title: 'Program & kegiatan', description: `Lihat fokus kerja tujuh departemen dan bidang layanan yang ditangani periode ${brandTheme.period}.`, href: '/programs/', icon: 'guide' },
     { title: 'Komunitas', description: 'Lihat kegiatan, jaringan kampus, keluarga, dan cara terhubung dengan PPI Ishikawa.', href: '/community/', icon: 'support' },
     { title: 'Hubungi PPI', description: 'Gunakan jalur bantuan atau kontak organisasi sesuai kebutuhan Anda.', href: '/contact/', icon: 'collaboration' }
   ],
