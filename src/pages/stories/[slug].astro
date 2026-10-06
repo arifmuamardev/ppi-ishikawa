@@ -38,7 +38,7 @@ const relatedStories = stories
       ]} />
 
       <div class="mt-8 flex flex-wrap gap-2">
-        {campus && <a href={withBase(`/community/kampus/${campus.slug}/`)} class="rounded-full bg-amber-50 px-3 py-1.5 text-xs font-bold text-accent-dark">{campus.shortName}</a>}
+        {campus && <a href={withBase(`/community/kampus/${campus.slug}/`)} class="rounded-full bg-accent/10 px-3 py-1.5 text-xs font-bold text-accent-dark">{campus.shortName}</a>}
         <span class="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600">{story.status}</span>
         {story.topics.map((topic) => (
           <span class="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-500">{storyTopicLabels[topic]}</span>
@@ -82,7 +82,7 @@ const relatedStories = stories
 
     <div class="mx-auto max-w-3xl px-5 py-12 lg:px-8">
       {story.quote && (
-        <blockquote class="mb-10 border-l-4 border-amber-300 pl-6 text-2xl font-semibold leading-9 text-slate-800">
+        <blockquote class="mb-10 border-l-4 border-accent/50 pl-6 text-2xl font-semibold leading-9 text-slate-800">
           “{story.quote}”
         </blockquote>
       )}
