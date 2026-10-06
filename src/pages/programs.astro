@@ -13,8 +13,8 @@ import { generalRelatedContent } from '../data/related-content';
   />
 
   <section class="mx-auto max-w-7xl px-5 pb-10 lg:px-8">
-    <div class="rounded-3xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-amber-800">Status 2026/27</p>
+    <div class="rounded-3xl border border-accent/35 bg-accent/10 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.16em] text-secondary-dark">Status 2026/27</p>
       <h2 class="mt-3 text-2xl font-bold text-slate-950">Kenali fokus kerja setiap departemen.</h2>
       <p class="mt-3 max-w-3xl leading-7 text-slate-700">Lihat bidang tanggung jawab masing-masing departemen. Program dan jadwal resmi akan ditampilkan ketika sudah ditetapkan.</p>
       <a href={withBase('/about/#struktur-organisasi')} class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Lihat struktur organisasi →</a>
@@ -27,7 +27,7 @@ import { generalRelatedContent } from '../data/related-content';
       {departments.map((department, index) => (
         <a
           href={`#${department.slug}`}
-          class="rounded-full border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 transition hover:border-amber-200 hover:bg-amber-50 hover:text-brand"
+          class="rounded-full border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 transition hover:border-accent/35 hover:bg-accent/10 hover:text-brand"
         >
           {department.name}
         </a>
