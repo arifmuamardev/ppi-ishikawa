@@ -86,6 +86,7 @@ const groups = [
 
   <script>
     import { supabase } from '../../../lib/supabase';
+    import { brandTheme } from '../../../data/brand';
 
     const grid = document.getElementById('readiness-grid');
     const summary = document.getElementById('readiness-summary');
@@ -120,7 +121,7 @@ const groups = [
       const items = [
         { label: 'Admin aktif', value: admins, ready: admins >= 1, required: true, hint: 'Minimal satu admin terverifikasi.' },
         { label: 'Periode aktif', value: currentTerms, ready: currentTerms === 1, required: true, hint: 'Tepat satu periode kepengurusan aktif.' },
-        { label: 'Pengurus ditetapkan', value: assignments, ready: assignments > 0, required: false, hint: 'Isi saat susunan 2026/27 sudah final.' },
+        { label: 'Pengurus ditetapkan', value: assignments, ready: assignments > 0, required: false, hint: `Isi saat susunan ${brandTheme.period} sudah final.` },
         { label: 'Agenda dipublikasikan', value: events, ready: events > 0, required: false, hint: 'Bisa ditambahkan saat agenda pertama siap.' },
         { label: 'Pengumuman', value: announcements, ready: announcements > 0, required: false, hint: 'Berguna untuk pesan sambutan/panduan awal.' },
         { label: 'Program kerja', value: programs, ready: programs > 0, required: false, hint: 'Masukkan program setelah struktur final.' },
