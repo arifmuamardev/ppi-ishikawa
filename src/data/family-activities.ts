@@ -129,6 +129,45 @@ export const familyActivityPlaces: FamilyActivityPlace[] = [
     note: 'Area air bukan kolam renang; ikuti aturan keselamatan dan informasi musim panas terbaru.'
   },
   {
+    id: 'nonoichi-mitte',
+    name: 'Nonoichi Childcare Support Center Mitte',
+    area: 'Nonoichi',
+    address: '3-2-22 Honmachi, Nonoichi · Nonoichi Kosodate Station',
+    summary: 'Childcare support center untuk orang tua dan anak dengan open-space hours, konsultasi, serta layanan temporary childcare dan post-illness childcare.',
+    bestFor: 'Bayi–preschool · keluarga sekitar KIT/IPU · parenting support',
+    costLabel: 'Ruang support publik',
+    tags: ['indoor', 'free', 'baby', 'preschool', 'winter'],
+    sourceUrl: 'https://www.city.nonoichi.lg.jp/site/kosodate-biyori/981.html',
+    sourceLabel: 'Nonoichi City',
+    note: 'Layanan penitipan memiliki aturan/biaya tersendiri; cek detail terbaru sebelum menggunakan.'
+  },
+  {
+    id: 'matto-childrens-center',
+    name: "Matto Children's Center",
+    area: 'Hakusan · Matto',
+    address: '305 Furushiro-machi, Hakusan · Matto Learning Center',
+    summary: 'Salah satu jaringan children’s center Hakusan untuk bermain, membaca, kegiatan bulanan, dan interaksi lintas usia dari anak kecil hingga remaja.',
+    bestFor: 'Preschool–anak sekolah · keluarga sekitar Hakusan/Kinjo',
+    costLabel: 'Fasilitas publik',
+    tags: ['indoor', 'free', 'preschool', 'school', 'winter'],
+    sourceUrl: 'https://www.city.hakusan.lg.jp/kosodate/1012911/1001896/index.html',
+    sourceLabel: 'Hakusan City',
+    note: 'Anak sebelum usia sekolah perlu didampingi orang tua. Jadwal event diperbarui terpisah.'
+  },
+  {
+    id: 'nomi-childcare-support-center',
+    name: 'Nomi Childcare Support Center',
+    area: 'Nomi · Terai',
+    address: '8-1 Terai-machi, Nomi',
+    summary: 'Pusat dukungan pengasuhan dengan ruang untuk keluarga, program bulanan, dan koneksi ke Family Support Center Nomi.',
+    bestFor: 'Bayi–preschool · keluarga sekitar JAIST/Nomi · parenting support',
+    costLabel: 'Fasilitas publik',
+    tags: ['indoor', 'free', 'baby', 'preschool', 'winter'],
+    sourceUrl: 'https://www.city.nomi.ishikawa.jp/docs/194.html',
+    sourceLabel: 'Nomi City',
+    note: 'Program bulanan berubah; gunakan schedule terbaru dari situs resmi.'
+  },
+  {
     id: 'ishikawa-zoo',
     name: 'Ishikawa Zoo',
     area: 'Nomi',
