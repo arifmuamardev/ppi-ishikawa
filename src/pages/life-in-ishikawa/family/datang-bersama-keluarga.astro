@@ -1,0 +1,74 @@
+---
+import FamilyGuidePage from '../../../components/FamilyGuidePage.astro';
+
+const sections = [
+  {
+    title: 'Tentukan status tinggal setiap anggota keluarga',
+    intro: 'Untuk keluarga mahasiswa, status Dependent / 家族滞在 dapat relevan bagi pasangan dan anak yang menjadi tanggungan pemegang status Student. Status tinggal harus ditentukan sesuai kondisi masing-masing anggota keluarga.',
+    points: [
+      'Jangan menganggap visa/status mahasiswa otomatis mencakup pasangan atau anak.',
+      'Periksa kebutuhan Certificate of Eligibility (COE), visa, paspor, dan dokumen hubungan keluarga melalui Immigration Services Agency dan perwakilan Jepang.',
+      'Simpan dokumen hubungan keluarga dan bukti dukungan finansial yang mungkin diminta dalam proses aplikasi.',
+      'Jika situasi keluarga tidak cocok dengan kategori Dependent, minta konfirmasi resmi sebelum mengajukan.'
+    ]
+  },
+  {
+    title: 'Rencanakan urutan kedatangan keluarga',
+    intro: 'Keluarga tidak harus selalu datang bersamaan. Banyak keluarga memilih mahasiswa utama menyiapkan tempat tinggal dan administrasi awal terlebih dahulu.',
+    points: [
+      'Pastikan kontrak tempat tinggal memang mengizinkan jumlah penghuni yang direncanakan.',
+      'Cek kebutuhan furniture, tempat tidur, heating/cooling, dan akses transportasi untuk pasangan/anak.',
+      'Jika anak usia sekolah, pertimbangkan timing tahun ajaran dan komunikasi dengan municipality/board of education.',
+      'Jika membutuhkan childcare, mulai riset sebelum keluarga tiba karena slot dan periode aplikasi dapat terbatas.'
+    ]
+  },
+  {
+    title: 'Setelah tiba: selesaikan administrasi dasar',
+    points: [
+      'Daftarkan alamat/residence sesuai prosedur municipality tempat tinggal.',
+      'Periksa health insurance setiap anggota keluarga dan kebutuhan My Number.',
+      'Untuk anak, cek vaccination record, health-check record, dan dokumen sekolah dari Indonesia.',
+      'Untuk pasangan/anak yang membutuhkan layanan kota, gunakan desk municipality dan layanan multibahasa bila tersedia.'
+    ]
+  },
+  {
+    title: 'Bekerja dengan status Dependent',
+    intro: 'Status Dependent pada dasarnya untuk aktivitas sehari-hari sebagai anggota keluarga yang ditanggung. Bekerja tidak otomatis diizinkan.',
+    points: [
+      'Jika pasangan ingin bekerja part-time, periksa kebutuhan Permission to Engage in Activity Other Than That Permitted under the Status of Residence.',
+      'Jangan mulai bekerja hanya berdasarkan asumsi bahwa pekerjaan part-time selalu diperbolehkan.',
+      'Periksa batasan dan jenis pekerjaan yang berlaku pada izin yang diberikan.'
+    ]
+  }
+];
+
+const sources = [
+  {
+    owner: 'Immigration Services Agency of Japan',
+    title: 'Status of Residence — Dependent',
+    note: 'Definisi dan konteks status Dependent bagi pasangan/anak yang menjadi tanggungan.',
+    url: 'https://www.moj.go.jp/isa/applications/status/dependent'
+  },
+  {
+    owner: 'Immigration Services Agency of Japan',
+    title: 'Application for Certificate of Eligibility',
+    note: 'Pintu resmi untuk dokumen dan prosedur COE sesuai status tinggal.',
+    url: 'https://www.moj.go.jp/isa/applications/procedures/16-1'
+  },
+  {
+    owner: 'Kanazawa City',
+    title: 'For Foreign Residents',
+    note: 'Administrasi kota, language support, health, children & family, dan panduan hidup.',
+    url: 'https://www4.city.kanazawa.lg.jp/kurashi_tetsuzuki/gaikokujimmuke/30421.html'
+  }
+];
+---
+
+<FamilyGuidePage
+  title="Datang ke Ishikawa bersama pasangan & anak"
+  kicker="Family · F01"
+  description="Panduan awal membawa pasangan dan anak ke Ishikawa: residence status, dokumen, housing, registrasi, insurance, sekolah, dan childcare."
+  intro="Mulai dari status tinggal dan dokumen setiap anggota keluarga, lalu rencanakan housing, administrasi, sekolah, dan childcare sebelum tanggal kedatangan."
+  sections={sections}
+  sources={sources}
+/>
