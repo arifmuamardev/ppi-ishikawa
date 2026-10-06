@@ -93,7 +93,7 @@ import MemberLayout from '../../layouts/MemberLayout.astro';
         const header = node('div', 'flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between');
         const info = node('div', 'max-w-3xl');
         const badges = node('div', 'flex flex-wrap gap-2');
-        badges.append(node('span', 'rounded-full bg-amber-50 px-3 py-1 text-[11px] font-bold text-accent-dark', event.category));
+        badges.append(node('span', 'rounded-full bg-accent/10 px-3 py-1 text-[11px] font-bold text-accent-dark', event.category));
         badges.append(node('span', 'rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-600', event.mode === 'onsite' ? 'Onsite' : event.mode === 'online' ? 'Online' : 'Hybrid'));
         if (rsvps[event.id] === true) badges.append(node('span', 'rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold text-emerald-700', 'RSVP: Hadir'));
         info.append(badges);
