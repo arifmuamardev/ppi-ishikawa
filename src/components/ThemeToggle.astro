@@ -33,9 +33,10 @@
 
     if (themeMeta) {
       const root = document.documentElement;
-      themeMeta.content = dark
-        ? (root.dataset.themeColorDark || '#23282A')
-        : (root.dataset.themeColorLight || '#F7FAF9');
+      const nextThemeColor = dark
+        ? root.dataset.themeColorDark
+        : root.dataset.themeColorLight;
+      if (nextThemeColor) themeMeta.content = nextThemeColor;
     }
   };
 
