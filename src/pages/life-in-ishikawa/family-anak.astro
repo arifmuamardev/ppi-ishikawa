@@ -17,7 +17,8 @@ const quickNeeds = [
   ['Anak saya akan masuk sekolah', '/life-in-ishikawa/family/sekolah-anak/'],
   ['Saya ingin tahu benefit atau biaya medis', '/life-in-ishikawa/family/benefit-kesehatan/'],
   ['Saya mencari tempat bermain bersama anak', '/life-in-ishikawa/family/aktivitas/'],
-  ['Saya ingin info sesuai kota tempat tinggal', '/life-in-ishikawa/family/municipality/']
+  ['Saya ingin info sesuai kota tempat tinggal', '/life-in-ishikawa/family/municipality/'],
+  ['Saya ingin tahu apa yang harus dilakukan dan kapan', '/life-in-ishikawa/family/timeline/']
 ];
 
 const officialSources = [
@@ -106,6 +107,14 @@ const officialSources = [
         <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Quick picks</p>
         <h2 class="mt-3 text-2xl font-bold tracking-tight text-slate-950">Kalau hanya ingin tahu “ke mana hari ini?”</h2>
         <p class="mt-3 text-sm leading-6 text-slate-600">Buka direktori aktivitas dengan filter yang paling sesuai dengan situasi keluarga.</p>
+      </div>
+      <div class="mt-6 rounded-2xl bg-slate-950 p-5 text-white sm:flex sm:items-center sm:justify-between">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-red-200">Family Timeline</p>
+          <p class="mt-1 font-bold">Lebih suka checklist berdasarkan waktu?</p>
+          <p class="mt-1 text-xs leading-5 text-slate-300">Sebelum datang → 14 hari pertama → bulan pertama → school/daycare → lahir → pindah.</p>
+        </div>
+        <a href={withBase('/life-in-ishikawa/family/timeline/')} class="mt-4 inline-flex rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950 sm:mt-0">Buka timeline →</a>
       </div>
       <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <a href={withBase('/life-in-ishikawa/family/aktivitas/?filter=winter')} class="rounded-2xl bg-slate-50 p-4 transition hover:bg-amber-50">
