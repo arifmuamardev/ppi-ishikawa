@@ -1,0 +1,72 @@
+---
+import FamilyGuidePage from '../../../components/FamilyGuidePage.astro';
+
+const sections = [
+  {
+    title: 'Mulai dari municipality / Board of Education',
+    points: [
+      'Anak foreign resident dapat mengakses public elementary dan junior high school melalui proses pemerintah lokal.',
+      'Sekolah biasanya mengikuti school district berdasarkan alamat tempat tinggal.',
+      'Hubungi Board of Education ketika baru pindah, akan pindah, atau membutuhkan school enrollment.',
+      'Bawa dokumen pendidikan sebelumnya, vaccination/health records yang relevan, dan informasi kebutuhan khusus bila ada.'
+    ]
+  },
+  {
+    title: 'Dukungan bahasa Jepang',
+    points: [
+      'Sampaikan kemampuan bahasa Jepang anak sejak awal agar sekolah memahami kebutuhan dukungan.',
+      'Kanazawa menjalankan Japanese coaching classrooms dan dapat mengirim private cooperating instructors untuk membantu adaptation.',
+      'IFIE menyediakan informasi tambahan tentang Japanese-language dan learning support di Ishikawa.',
+      'Jika anak sudah cukup komunikatif tetapi kesulitan mengikuti pelajaran, tanyakan dukungan academic Japanese, bukan hanya conversation Japanese.'
+    ]
+  },
+  {
+    title: 'School district dan pindah sekolah',
+    points: [
+      'Alamat biasanya menentukan public elementary/junior high school yang ditunjuk.',
+      'Kanazawa memiliki mekanisme perubahan sekolah untuk alasan tertentu, tetapi tidak otomatis disetujui.',
+      'Jika pindah rumah, beri tahu sekolah dan municipality sebelum tanggal pindah agar dokumen transfer siap.',
+      'Jangan memilih housing hanya berdasarkan jarak kampus orang tua; pertimbangkan juga perjalanan sekolah anak.'
+    ]
+  },
+  {
+    title: 'Menuju high school',
+    points: [
+      'High school tidak sama dengan compulsory elementary/junior high, sehingga jalur penerimaan perlu direncanakan lebih awal.',
+      'Ishikawa memiliki informasi special admission/special measures untuk sebagian siswa dengan latar belakang internasional dan kebutuhan bahasa Jepang.',
+      'Gunakan informasi tahun penerimaan yang benar karena sekolah, syarat, dan kebijakan dapat berubah.',
+      'Diskusikan pathway dengan school, Board of Education, dan support organization sebelum tahun terakhir junior high.'
+    ]
+  }
+];
+
+const sources = [
+  {
+    owner: 'Kanazawa City Board of Education',
+    title: 'Education for Foreign Children',
+    note: 'Japanese coaching classroom dan cooperating instructors untuk foreign/returnee students.',
+    url: 'https://www4.city.kanazawa.lg.jp/kosodate_kyoiku/kyoikuiinkai/gakkokyoiku/12405.html'
+  },
+  {
+    owner: 'IFIE',
+    title: 'Education for Children',
+    note: 'Japanese/learning support, education assistance, dan pathway untuk anak dengan latar belakang asing di Ishikawa.',
+    url: 'https://www.ifie.or.jp/foreigners_life/kyoiku/'
+  },
+  {
+    owner: 'Kanazawa City',
+    title: 'A Guide to Living in Kanazawa 2026',
+    note: 'Panduan 2026 memuat elementary/junior high school dan Japanese coaching classroom.',
+    url: 'https://www4.city.kanazawa.lg.jp/material/files/group/6/seikatsu_guide_2026_en.pdf'
+  }
+];
+---
+
+<FamilyGuidePage
+  title="Sekolah anak di Ishikawa"
+  kicker="Family · F04"
+  description="Panduan sekolah anak untuk keluarga Indonesia di Ishikawa: public school, school district, Japanese support, transfer, dan high-school pathway."
+  intro="Untuk anak usia sekolah, alamat tempat tinggal, timing perpindahan, dan kemampuan bahasa Jepang sama pentingnya dengan pilihan sekolah."
+  sections={sections}
+  sources={sources}
+/>
