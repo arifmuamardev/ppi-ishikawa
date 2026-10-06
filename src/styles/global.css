@@ -323,6 +323,13 @@ html.dark .brand-gold-rule {
   text-transform: uppercase;
 }
 
+ .type-hero {
+  font-size: 3rem;
+  line-height: 1.04;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+}
+
 .type-display {
   font-size: 2.25rem;
   line-height: 1.1;
@@ -362,6 +369,10 @@ html.dark .brand-gold-rule {
 }
 
 @media (min-width: 640px) {
+  .type-hero {
+    font-size: 3.75rem;
+  }
+
   .type-display {
     font-size: 3rem;
   }
@@ -373,5 +384,11 @@ html.dark .brand-gold-rule {
   .type-lead {
     font-size: 1.125rem;
     line-height: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .type-hero {
+    font-size: 4.5rem;
   }
 }
