@@ -136,3 +136,23 @@ After the surface/action refactor, perform a dedicated responsive pass for:
 4. Run responsive pass.
 5. Run accessibility pass.
 6. Polish only after the above are stable.
+
+
+## Implementation status
+
+### Pass 1 — Surface hierarchy
+Implemented in PR #6:
+- standard repeated cards use calmer radii and hover feedback
+- routine card shadows/lift were substantially reduced
+- Family Guide content sections were consolidated into one grouped surface
+- repeated Career result actions were demoted from primary-filled treatment
+- Member Dashboard surface competition was reduced
+
+### Pass 2 — Layout rhythm
+Implemented in this follow-up:
+- added fluid `ui-section-space-compact`, `ui-section-space`, and `ui-section-space-major` utilities
+- normalized vertical rhythm across Scholarship, Career, Campus Hub, Family Hub, and Survival Guide
+- normalized section-level eyebrow labels to the semantic `type-eyebrow` role
+- aligned custom Survival Guide and Family Hub page titles with the standard display-title role
+
+Remaining: dedicated responsive stress test, accessibility audit, then polish.
