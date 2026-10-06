@@ -1,0 +1,72 @@
+---
+import FamilyGuidePage from '../../../components/FamilyGuidePage.astro';
+
+const sections = [
+  {
+    title: 'Setelah kehamilan terkonfirmasi',
+    points: [
+      'Lakukan pregnancy notification ke municipality secepatnya setelah diagnosis kehamilan.',
+      'Di Kanazawa, Mother and Child Health Handbook diberikan setelah pregnancy notification; tersedia juga edisi bahasa asing.',
+      'Simpan handbook dan dokumen pendamping karena dipakai untuk catatan kesehatan ibu-anak, checkup, dan vaccination.',
+      'Tanyakan Health and Welfare Center jika membutuhkan penjelasan tentang layanan prenatal atau dukungan setelah melahirkan.'
+    ]
+  },
+  {
+    title: 'Prenatal care dan persiapan melahirkan',
+    points: [
+      'Pilih obstetrics/gynecology facility dan ikuti jadwal antenatal checkup dari tenaga kesehatan.',
+      'Pastikan rumah sakit memahami kebutuhan bahasa, riwayat medis, alergi, obat, dan rencana persalinan Anda.',
+      'Cek dukungan biaya dan insurance melalui municipality/health insurance karena detail dapat berbeda menurut skema.',
+      'Siapkan emergency contact dan rute transportasi ke fasilitas kesehatan, terutama untuk malam hari atau winter.'
+    ]
+  },
+  {
+    title: 'Ketika bayi lahir',
+    points: [
+      'Birth notification di Kanazawa diajukan dalam 14 hari sejak kelahiran.',
+      'Untuk bayi berkewarganegaraan asing yang akan tinggal di Jepang lebih dari 60 hari, periksa aplikasi acquisition of status of residence dalam 30 hari sejak lahir.',
+      'Hubungi embassy/consulate negara kewarganegaraan anak untuk passport dan urusan kewarganegaraan.',
+      'Lanjutkan dengan resident registration, health insurance, child allowance, dan child medical support sesuai eligibility.'
+    ]
+  },
+  {
+    title: 'Setelah pulang dari rumah sakit',
+    points: [
+      'Kanazawa menyediakan Healthy Baby Home Visits serta infant health checkups pada tahap usia tertentu.',
+      'Periksa vaccination schedule dan simpan seluruh record dalam Mother and Child Health Handbook.',
+      'Gunakan parenting/health consultation bila ada kekhawatiran terkait feeding, growth, recovery ibu, atau perkembangan bayi.',
+      'Jangan menunggu sampai masalah menjadi berat untuk menghubungi Health and Welfare Center.'
+    ]
+  }
+];
+
+const sources = [
+  {
+    owner: 'Kanazawa City',
+    title: 'Mother and Child Health Handbook',
+    note: 'Pregnancy notification, penerbitan handbook, dan titik layanan di Kanazawa.',
+    url: 'https://www4.city.kanazawa.lg.jp/kosodate_kyoiku/ninshin_shussan/tetsuzuki_todokede_ninshin_shussan/12232.html'
+  },
+  {
+    owner: 'Kanazawa City',
+    title: 'Children & Family — Foreign Residents',
+    note: 'Ringkasan berbahasa Inggris tentang pregnancy, childbirth, home visits, checkups, dan childcare.',
+    url: 'https://www4.city.kanazawa.lg.jp/kurashi_tetsuzuki/gaikokujimmuke/9990.html'
+  },
+  {
+    owner: 'Immigration Services Agency of Japan',
+    title: 'Acquisition of Status of Residence',
+    note: 'Prosedur residence status untuk anak foreign national yang lahir di Jepang.',
+    url: 'https://www.moj.go.jp/isa/applications/procedures/16-10.html'
+  }
+];
+---
+
+<FamilyGuidePage
+  title="Kehamilan & kelahiran di Ishikawa"
+  kicker="Family · F02"
+  description="Panduan pregnancy dan childbirth untuk keluarga mahasiswa di Ishikawa: pregnancy notification, Mother and Child Health Handbook, birth notification, dan residence status bayi."
+  intro="Municipality dan fasilitas kesehatan menjadi dua pintu utama selama kehamilan dan setelah kelahiran. Simpan dokumen dan timeline dengan rapi karena beberapa prosedur berjalan paralel."
+  sections={sections}
+  sources={sources}
+/>
