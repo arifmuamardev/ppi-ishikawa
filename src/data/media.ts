@@ -41,9 +41,9 @@ export const publicMedia: Record<string, PublicMedia> = {
     title: 'Central Park, Kanazawa',
     imageUrl: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Kanazawa-C-3228.jpg?width=1500',
     sourcePage: 'https://commons.wikimedia.org/wiki/File:Kanazawa-C-3228.jpg',
-    credit: 'Daderot / Wikimedia Commons',
+    credit: 'Fg2 / Wikimedia Commons',
     license: 'Public Domain',
-    alt: 'Area hijau di Central Park Kanazawa yang cocok untuk aktivitas keluarga'
+    alt: 'Area hijau dan air terjun di Central Park Kanazawa'
   },
   kanazawaCastle: {
     id: 'kanazawa-castle',
