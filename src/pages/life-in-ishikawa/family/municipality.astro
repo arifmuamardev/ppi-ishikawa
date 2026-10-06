@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import MunicipalityMark from '../../../components/MunicipalityMark.astro';
+import { withBase } from '../../../utils/paths';
+import { familyMunicipalities } from '../../../data/family-municipalities';
+import { familyLastVerified } from '../../../data/family';
+---
+
+<BaseLayout
+  title="Family by Municipality"
+  description="Shortcut layanan keluarga resmi untuk Kanazawa, Nonoichi, Hakusan, Nomi, dan Komatsu: childcare, allowance, medical support, school, dan consultation."
+>
+  <section class="mx-auto max-w-7xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+    <Breadcrumbs items={[
+      { label: 'Beranda', href: '/' },
+      { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' },
+      { label: 'Family', href: '/life-in-ishikawa/family-anak/' },
+      { label: 'Family by Municipality' }
+    ]} />
+    <div class="mt-8 max-w-4xl">
+      <p class="text-sm font-bold uppercase tracking-[0.18em] text-brand">Family · F08</p>
+      <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Cari layanan keluarga berdasarkan alamat Anda.</h1>
+      <p class="mt-5 text-lg leading-8 text-slate-600">
+        Childcare, school, child allowance, medical subsidy, dan banyak layanan keluarga dikelola municipality.
+        Pilih kota tempat resident registration Anda tercatat—bukan kota kampus atau kota yang paling dekat.
+      </p>
+      <p class="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-slate-400">Terakhir diverifikasi · {familyLastVerified}</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 pb-8 lg:px-8">
+    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
+      <p class="text-sm font-bold uppercase tracking-[0.14em] text-brand">Aturan sederhana</p>
+      <h2 class="mt-3 text-2xl font-bold text-slate-950">Alamat di residence registration menentukan pintu layanan lokal.</h2>
+      <p class="mt-4 max-w-4xl leading-7 text-slate-700">
+        Tinggal dekat Kanazawa tidak berarti Anda mengurus childcare di Kanazawa City Hall. Jika alamat Anda Nonoichi, Hakusan,
+        Nomi, atau Komatsu, gunakan pemerintah kota tersebut. Untuk immigration/residence status, gunakan sumber nasional terpisah.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
+    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      {familyMunicipalities.map((city) => (
+        <a href={'#' + city.id} class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-amber-200 hover:bg-amber-50">
+          <MunicipalityMark id={city.id} size="sm" class="shrink-0" />
+          <div>
+            <p class="font-bold text-slate-900">{city.name}</p>
+            <p class="text-xs text-slate-500">{city.jp}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
+    <div class="space-y-6">
+      {familyMunicipalities.map((city) => (
+        <article id={city.id} class="scroll-mt-28 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="grid gap-7 xl:grid-cols-[.72fr_1.28fr]">
+            <div>
+              <div class="flex items-start gap-4">
+                <MunicipalityMark id={city.id} size="md" class="shrink-0" />
+                <div>
+                  <p class="text-xs font-bold uppercase tracking-[0.13em] text-brand">Family services</p>
+                  <h2 class="mt-1 text-2xl font-bold text-slate-950">{city.name} <span class="font-medium text-slate-400">{city.jp}</span></h2>
+                </div>
+              </div>
+
+              <p class="mt-5 text-sm leading-6 text-slate-600">{city.context}</p>
+
+              <div class="mt-5 rounded-2xl bg-amber-50 p-4">
+                <p class="text-xs font-bold uppercase tracking-[0.12em] text-amber-800">Mulai dari mana?</p>
+                <p class="mt-2 text-sm leading-6 text-slate-700">{city.startingPoint}</p>
+              </div>
+
+              <p class="mt-4 text-xs leading-5 text-slate-500">{city.caution}</p>
+            </div>
+
+            <div class="grid gap-3 md:grid-cols-2">
+              {city.links.map((link) => (
+                <a href={link.url} target="_blank" rel="noreferrer" class="group rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:border-amber-200 hover:bg-amber-50">
+                  <h3 class="font-bold text-slate-900 group-hover:text-brand">{link.label} ↗</h3>
+                  <p class="mt-2 text-xs leading-5 text-slate-600">{link.description}</p>
+                </a>
+              ))}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 py-10 lg:px-8">
+    <div class="grid gap-5 lg:grid-cols-2">
+      <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.14em] text-red-300">Tidak menemukan kota Anda?</p>
+        <h2 class="mt-3 text-2xl font-bold">Gunakan SG14 untuk seluruh 19 municipality.</h2>
+        <p class="mt-4 text-sm leading-7 text-slate-300">
+          Family by Municipality memprioritaskan lima kota yang paling relevan dengan sebaran mahasiswa saat ini.
+          Untuk Kahoku, Kaga, Nanao, dan municipality lain, buka direktori pemerintah lokal lengkap.
+        </p>
+        <a href={withBase('/life-in-ishikawa/municipality-guides/')} class="mt-5 inline-flex rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950">Buka SG14 →</a>
+      </div>
+
+      <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+        <p class="text-sm font-bold uppercase tracking-[0.14em] text-brand">Saran praktis</p>
+        <h2 class="mt-3 text-2xl font-bold text-slate-950">Simpan satu bookmark folder per keluarga.</h2>
+        <p class="mt-4 text-sm leading-7 text-slate-600">
+          Simpan link municipality Anda untuk childcare, school, allowance/medical, vaccination, dan emergency.
+          Ini lebih aman daripada mencari ulang lewat hasil pencarian setiap kali aturan atau formulir berubah.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 pb-24 pt-4 lg:px-8">
+    <a href={withBase('/life-in-ishikawa/family-anak/')} class="inline-flex rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800 hover:bg-slate-50">← Kembali ke Family Hub</a>
+  </section>
+</BaseLayout>
