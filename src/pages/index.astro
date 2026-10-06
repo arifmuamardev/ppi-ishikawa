@@ -108,7 +108,7 @@ const primaryPaths = [
 
       <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
         {primaryPaths.map((item) => (
-          <a href={withBase(item.href)} class="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-accent/35 hover:shadow-sm">
+          <a href={withBase(item.href)} class="group rounded-2xl border border-slate-200 bg-white p-5 transition-colors hover:border-accent/35 hover:bg-accent/5">
             <span class="grid size-11 place-items-center rounded-2xl bg-accent/10 text-accent-dark">
               <TopicIcon name={item.icon as any} class="size-6" />
             </span>
