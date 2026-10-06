@@ -3,7 +3,7 @@ export interface FamilyHubItem {
   title: string;
   description: string;
   href: string;
-  icon: 'documents' | 'health' | 'family' | 'academic' | 'money' | 'city' | 'info';
+  icon: 'documents' | 'health' | 'family' | 'academic' | 'money' | 'city' | 'info' | 'guide';
 }
 
 export const familyHubItems: FamilyHubItem[] = [
@@ -62,6 +62,13 @@ export const familyHubItems: FamilyHubItem[] = [
     description: 'Shortcut childcare, benefit, medical support, school, dan consultation berdasarkan kota tempat tinggal.',
     href: '/life-in-ishikawa/family/municipality/',
     icon: 'city'
+  },
+  {
+    code: 'F09',
+    title: 'Family Timeline',
+    description: 'Checklist berdasarkan waktu: sebelum datang, 14 hari pertama, bulan pertama, school/daycare, kelahiran, dan pindah.',
+    href: '/life-in-ishikawa/family/timeline/',
+    icon: 'guide'
   }
 ];
 
