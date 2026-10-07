@@ -1,18 +1,19 @@
 ---
 import MemberLayout from '../../../layouts/MemberLayout.astro';
+import AppPageHeader from '../../../components/AppPageHeader.astro';
 ---
 
 <MemberLayout title="Kelola Pengumuman" requireAdmin={true}>
   <div class="space-y-6">
-    <section>
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Admin · Pengumuman</p>
-      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kelola informasi anggota</h1>
-      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Buat pengumuman dan tentukan audiens yang dituju.</p>
-    </section>
+    <AppPageHeader
+      eyebrow="Admin · Pengumuman"
+      title="Kelola informasi anggota"
+      description="Buat pengumuman dan tentukan audiens yang dituju."
+    />
 
     <div id="announcement-admin-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
 
-    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+    <section class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
       <div class="flex items-center justify-between gap-3">
         <h2 id="announcement-form-title" class="text-xl font-bold text-slate-950">Tambah pengumuman</h2>
         <button id="announcement-form-reset" type="button" class="hidden text-sm font-bold text-brand hover:underline">Batal edit</button>
@@ -47,10 +48,10 @@ import MemberLayout from '../../../layouts/MemberLayout.astro';
       </form>
     </section>
 
-    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+    <section class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
       <div class="flex items-end justify-between gap-3">
         <h2 class="text-xl font-bold text-slate-950">Pengumuman tersedia</h2>
-        <p id="announcement-admin-count" class="text-sm font-semibold text-slate-500">Memuat…</p>
+        <p id="announcement-admin-count" class="text-sm font-semibold text-slate-500" aria-live="polite" aria-atomic="true">Memuat…</p>
       </div>
       <div id="announcement-admin-list" class="mt-6 space-y-3"></div>
     </section>

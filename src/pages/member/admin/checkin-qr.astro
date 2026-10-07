@@ -1,18 +1,19 @@
 ---
 import MemberLayout from '../../../layouts/MemberLayout.astro';
+import AppPageHeader from '../../../components/AppPageHeader.astro';
 ---
 
 <MemberLayout title="QR Check-in" requireAdmin={true}>
   <div class="space-y-6">
-    <section>
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Admin · QR Check-in</p>
-      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Buat QR check-in kegiatan</h1>
-      <p class="mt-3 max-w-3xl leading-7 text-slate-600">QR hanya valid pada window yang ditentukan. Anggota tetap harus login dan sudah RSVP hadir sebelum check-in.</p>
-    </section>
+    <AppPageHeader
+      eyebrow="Admin · QR Check-in"
+      title="Buat QR check-in kegiatan"
+      description="QR hanya valid pada window yang ditentukan. Anggota tetap harus login dan sudah RSVP hadir sebelum check-in."
+    />
 
     <div id="qr-admin-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
 
-    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+    <section class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
       <h2 class="text-xl font-bold text-slate-950">Session baru</h2>
       <form id="qr-session-form" class="mt-6 grid gap-5 md:grid-cols-3">
         <label class="md:col-span-3">
@@ -80,7 +81,7 @@ import MemberLayout from '../../../layouts/MemberLayout.astro';
 
       for (const session of data || []) {
         const card = document.createElement('article');
-        card.className = 'rounded-3xl border border-slate-200 bg-white p-6';
+        card.className = 'rounded-2xl border border-slate-200 bg-white p-6';
 
         const layout = document.createElement('div');
         layout.className = 'grid gap-6 lg:grid-cols-[1fr_190px] lg:items-center';

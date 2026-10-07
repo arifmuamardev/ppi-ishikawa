@@ -1,5 +1,6 @@
 ---
 import MemberLayout from '../../../layouts/MemberLayout.astro';
+import AppPageHeader from '../../../components/AppPageHeader.astro';
 import { withBase } from '../../../utils/paths';
 
 const groups = [
@@ -45,26 +46,26 @@ const groups = [
 
 <MemberLayout title="Admin Center" requireAdmin={true}>
   <div class="space-y-7">
-    <section>
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Admin Center</p>
-      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kelola Area Anggota dari satu tempat</h1>
-      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Gunakan halaman ini sebagai pintu utama administrasi. Status kesiapan di bawah membantu melihat apa yang masih perlu disiapkan sebelum Area Anggota diumumkan secara luas.</p>
-    </section>
+    <AppPageHeader
+      eyebrow="Admin Center"
+      title="Kelola Area Anggota dari satu tempat"
+      description="Gunakan halaman ini sebagai pintu utama administrasi. Status kesiapan di bawah membantu melihat apa yang masih perlu disiapkan sebelum Area Anggota diumumkan secara luas."
+    />
 
-    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+    <section class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
       <div class="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Production readiness</p>
           <h2 class="mt-2 text-xl font-bold text-slate-950">Kesiapan peluncuran</h2>
         </div>
-        <p id="readiness-summary" class="text-sm font-semibold text-slate-500">Memeriksa…</p>
+        <p id="readiness-summary" class="text-sm font-semibold text-slate-500" aria-live="polite" aria-atomic="true">Memeriksa…</p>
       </div>
       <div id="readiness-grid" class="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-3"></div>
     </section>
 
     <section class="grid gap-5 lg:grid-cols-2">
       {groups.map((group) => (
-        <article class="rounded-3xl border border-slate-200 bg-white p-6">
+        <article class="rounded-2xl border border-slate-200 bg-white p-6">
           <h2 class="text-xl font-bold text-slate-950">{group.title}</h2>
           <p class="mt-2 text-sm leading-6 text-slate-600">{group.description}</p>
           <div class="mt-5 grid gap-2">
@@ -78,7 +79,7 @@ const groups = [
       ))}
     </section>
 
-    <section class="rounded-3xl border border-accent/35 bg-accent/10 p-6">
+    <section class="rounded-2xl border border-accent/35 bg-accent/10 p-6">
       <h2 class="font-bold text-slate-950">Catatan peluncuran</h2>
       <p class="mt-2 text-sm leading-6 text-slate-700">Tidak semua indikator harus terisi untuk membuka Area Anggota. Yang wajib sebelum publikasi luas adalah admin aktif, periode aktif, alur login/verifikasi yang sehat, dan kebijakan siapa yang berhak mengakses data anggota. Agenda, program, pengumuman, dan dokumen dapat diisi bertahap.</p>
     </section>

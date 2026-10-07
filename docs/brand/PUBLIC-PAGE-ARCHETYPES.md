@@ -98,7 +98,33 @@ Do not append generic RelatedLinks or Pager. The finder itself is the task.
 
 Purpose: task-based authenticated or transactional UI.
 
-This archetype is reserved for Member/Admin/Verify work and is outside this 43-page public audit. It uses app navigation rather than editorial breadcrumb/related conventions.
+Application pages use app navigation rather than editorial breadcrumb/related conventions.
+
+Canonical shell:
+
+```
+MemberLayout
+├── desktop grouped sidebar
+├── compact mobile menu
+└── AppPageHeader
+    └── task content
+```
+
+The member dashboard is the deliberate exception: its greeting/status summary acts as the dashboard header.
+
+Auth entry pages use a separate compact `AuthShell`:
+- login
+- registration
+- forgot password
+- reset password
+
+Application rules:
+- no editorial breadcrumb, RelatedLinks, or guide pager
+- mobile navigation is collapsed by default
+- current route is visibly marked in app navigation
+- page title/description use `AppPageHeader`
+- ordinary form/data surfaces use standard `2xl` radius
+- dynamic counts/statuses should expose live status semantics where useful
 
 ## Element rules
 
@@ -445,3 +471,18 @@ Key decisions:
 - routine hover lift/shadow was removed from Community and Contact navigation cards
 
 Home remains its own entry-page archetype rather than being forced into the standard Landing shell.
+
+
+### Application shell — implemented
+
+The Member/Admin application layer now has a consistent shell:
+- desktop grouped sidebar remains visible and sticky
+- mobile no longer renders the full sidebar before page content; navigation is collapsed into a compact disclosure menu
+- active navigation items expose the current page
+- member/admin navigation now shares one data-driven source inside `MemberLayout`
+- repeated member/admin pages use `AppPageHeader`
+- redundant dashboard navigation blocks were removed because the sidebar already provides those destinations
+- Auth pages share `AuthShell`
+- application result counts and empty states received the same interaction/accessibility treatment used by public finders
+
+The member dashboard intentionally remains a summary dashboard rather than a standard task-page header.

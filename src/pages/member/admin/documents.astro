@@ -1,18 +1,19 @@
 ---
 import MemberLayout from '../../../layouts/MemberLayout.astro';
+import AppPageHeader from '../../../components/AppPageHeader.astro';
 ---
 
 <MemberLayout title="Kelola Dokumen" requireAdmin={true}>
   <div class="space-y-6">
-    <section>
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Admin · Dokumen</p>
-      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Dokumen privat anggota</h1>
-      <p class="mt-3 max-w-3xl leading-7 text-slate-600">File disimpan di private Supabase Storage dan hanya dapat diunduh oleh audiens yang diizinkan melalui signed URL sementara.</p>
-    </section>
+    <AppPageHeader
+      eyebrow="Admin · Dokumen"
+      title="Dokumen privat anggota"
+      description="File disimpan di private Supabase Storage dan hanya dapat diunduh oleh audiens yang diizinkan melalui signed URL sementara."
+    />
 
     <div id="document-admin-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
 
-    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+    <section class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
       <form id="document-upload-form" class="grid gap-5 md:grid-cols-2">
         <label>
           <span class="text-sm font-bold text-slate-800">Judul</span>
@@ -75,7 +76,7 @@ import MemberLayout from '../../../layouts/MemberLayout.astro';
 
       for (const document of data || []) {
         const card = document.createElement('article');
-        card.className = 'rounded-3xl border border-slate-200 bg-white p-6';
+        card.className = 'rounded-2xl border border-slate-200 bg-white p-6';
 
         const badge = document.createElement('span');
         badge.className = 'rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-600';

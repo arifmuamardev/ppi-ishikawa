@@ -14,7 +14,7 @@ import { withBase } from '../../utils/paths';
     <section id="verification-card" class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
       <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Status membership</p>
+          <p class="type-meta uppercase tracking-[0.12em] text-slate-500">Status membership</p>
           <h2 id="verification-title" class="mt-2 text-xl font-bold text-slate-950">Memeriksa status…</h2>
           <p id="verification-copy" class="mt-2 max-w-2xl text-sm leading-6 text-slate-600"></p>
         </div>
@@ -24,19 +24,19 @@ import { withBase } from '../../utils/paths';
 
     <section class="grid gap-4 md:grid-cols-3">
       <article class="rounded-2xl border border-slate-200 bg-white p-6">
-        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Profil</p>
+        <p class="type-meta uppercase tracking-[0.12em] text-slate-500">Profil</p>
         <p class="mt-3 text-3xl font-bold text-slate-950"><span id="profile-completion">0</span>%</p>
         <p class="mt-2 text-sm leading-6 text-slate-600">Lengkapi profil agar data membership lebih akurat.</p>
         <a href={withBase('/member/profile/')} class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Kelola profil →</a>
       </article>
       <article class="rounded-2xl border border-slate-200 bg-white p-6">
-        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Direktori</p>
+        <p class="type-meta uppercase tracking-[0.12em] text-slate-500">Direktori</p>
         <p id="directory-state" class="mt-3 text-xl font-bold text-slate-950">—</p>
         <p class="mt-2 text-sm leading-6 text-slate-600">Anda mengontrol apakah profil dapat ditemukan anggota lain.</p>
         <a href={withBase('/member/directory/')} class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Buka direktori →</a>
       </article>
       <article class="rounded-2xl border border-slate-200 bg-white p-6">
-        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Kampus</p>
+        <p class="type-meta uppercase tracking-[0.12em] text-slate-500">Kampus</p>
         <p id="dashboard-campus" class="mt-3 text-xl font-bold text-slate-950">—</p>
         <p id="dashboard-program" class="mt-2 text-sm leading-6 text-slate-600">—</p>
       </article>
@@ -46,7 +46,7 @@ import { withBase } from '../../utils/paths';
       <article class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
         <div class="flex items-end justify-between gap-3">
           <div>
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Agenda berikutnya</p>
+            <p class="type-meta uppercase tracking-[0.12em] text-slate-500">Agenda berikutnya</p>
             <h2 id="dashboard-event-title" class="mt-2 text-xl font-bold text-slate-950">Memuat agenda…</h2>
           </div>
           <a href={withBase('/member/events/')} class="text-sm font-bold text-brand hover:underline">Semua agenda →</a>
@@ -57,7 +57,7 @@ import { withBase } from '../../utils/paths';
       <article class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
         <div class="flex items-end justify-between gap-3">
           <div>
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Pengumuman terbaru</p>
+            <p class="type-meta uppercase tracking-[0.12em] text-slate-500">Pengumuman terbaru</p>
             <h2 id="dashboard-announcement-title" class="mt-2 text-xl font-bold text-slate-950">Memuat pengumuman…</h2>
           </div>
           <a href={withBase('/member/announcements/')} class="text-sm font-bold text-brand hover:underline">Lihat semua →</a>
@@ -68,54 +68,23 @@ import { withBase } from '../../utils/paths';
 
     <section class="grid gap-4 lg:grid-cols-3">
       <a href={withBase('/member/opportunities/')} class="rounded-2xl border border-accent/35 bg-accent/10 p-6 transition-colors hover:border-accent/50 hover:bg-accent/15">
-        <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-dark">Untuk Anda</p>
+        <p class="type-meta uppercase tracking-[0.12em] text-accent-dark">Untuk Anda</p>
         <h2 class="mt-2 text-xl font-bold text-slate-950">Karier & beasiswa</h2>
         <p class="mt-2 text-sm leading-6 text-slate-700">Lihat sumber peluang dan kandidat beasiswa berdasarkan profil serta minat Anda.</p>
       </a>
       <a href={withBase('/member/mentoring/')} class="rounded-2xl border border-slate-200 bg-white p-6 transition-colors hover:border-accent/35 hover:bg-accent/5">
-        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Mentoring</p>
+        <p class="type-meta uppercase tracking-[0.12em] text-slate-500">Mentoring</p>
         <h2 class="mt-2 text-xl font-bold text-slate-950">Cari atau jadi mentor</h2>
         <p class="mt-2 text-sm leading-6 text-slate-600">Temukan anggota dan alumni yang bersedia berbagi pengalaman.</p>
       </a>
       <a href={withBase('/member/alumni/')} class="rounded-2xl border border-slate-200 bg-white p-6 transition-colors hover:border-accent/35 hover:bg-accent/5">
-        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Alumni Network</p>
+        <p class="type-meta uppercase tracking-[0.12em] text-slate-500">Alumni Network</p>
         <h2 class="mt-2 text-xl font-bold text-slate-950">Tetap terhubung</h2>
         <p class="mt-2 text-sm leading-6 text-slate-600">Profil alumni, jalur kontak opt-in, dan peluang berbagi pengalaman.</p>
       </a>
     </section>
 
-    <section class="grid gap-4 lg:grid-cols-3">
-      <a href={withBase('/member/card/')} class="rounded-2xl border border-slate-200 bg-white p-6 transition-colors hover:border-accent/35 hover:bg-accent/5">
-        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Digital ID</p>
-        <h2 class="mt-2 text-xl font-bold text-slate-950">Kartu anggota</h2>
-        <p class="mt-2 text-sm leading-6 text-slate-600">Kartu digital dengan QR verifikasi publik dan token yang dapat diganti.</p>
-      </a>
-      <a href={withBase('/member/certificates/')} class="rounded-2xl border border-slate-200 bg-white p-6 transition-colors hover:border-accent/35 hover:bg-accent/5">
-        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Credential</p>
-        <h2 class="mt-2 text-xl font-bold text-slate-950">Sertifikat saya</h2>
-        <p class="mt-2 text-sm leading-6 text-slate-600">Akses sertifikat yang diterbitkan PPI Ishikawa dan QR verifikasinya.</p>
-      </a>
-      <a href={withBase('/member/documents/')} class="rounded-2xl border border-slate-200 bg-white p-6 transition-colors hover:border-accent/35 hover:bg-accent/5">
-        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Private access</p>
-        <h2 class="mt-2 text-xl font-bold text-slate-950">Dokumen anggota</h2>
-        <p class="mt-2 text-sm leading-6 text-slate-600">Dokumen internal dengan akses berdasarkan audiens dan signed URL sementara.</p>
-      </a>
-    </section>
 
-    <section class="border-t border-slate-200 pt-7">
-      <p class="type-eyebrow text-brand">Akses cepat</p>
-      <div class="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        <a href={withBase('/member/events/')} class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-900 hover:bg-accent/10 hover:text-brand">Agenda & RSVP →</a>
-        <a href={withBase('/member/interests/')} class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-900 hover:bg-accent/10 hover:text-brand">Minat & skills →</a>
-        <a href={withBase('/member/aspirations/')} class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-900 hover:bg-accent/10 hover:text-brand">Sampaikan aspirasi →</a>
-        <a href={withBase('/member/programs/')} class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-900 hover:bg-accent/10 hover:text-brand">Program kerja →</a>
-        <a href={withBase('/member/volunteer/')} class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-900 hover:bg-accent/10 hover:text-brand">Volunteer →</a>
-        <a href={withBase('/member/organization/')} class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-900 hover:bg-accent/10 hover:text-brand">Struktur organisasi →</a>
-        <a href={withBase('/member/profile/')} class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-900 hover:bg-accent/10 hover:text-brand">Profil & privasi →</a>
-        <a href={withBase('/member/directory/')} class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-900 hover:bg-accent/10 hover:text-brand">Direktori anggota →</a>
-        <a href={withBase('/community/kampus/')} class="rounded-2xl bg-slate-50 p-5 font-bold text-slate-900 hover:bg-accent/10 hover:text-brand">Campus Hub →</a>
-      </div>
-    </section>
   </div>
 
   <script>
