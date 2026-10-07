@@ -224,3 +224,15 @@ Implemented on the most visible public surfaces:
 - preserved content, information architecture, and interaction behavior
 
 This completes the public polish stage without introducing new design tokens or decorative effects.
+
+
+### Pass 8 — Application shell
+Implemented across Member/Admin/Auth:
+- replaced the always-open mobile member sidebar with a compact disclosure menu
+- retained grouped sticky desktop navigation
+- added active-route treatment in application navigation
+- added shared `AppPageHeader` for authenticated task pages
+- added shared `AuthShell` for login/register/recovery/reset flows
+- removed dashboard navigation blocks that duplicated the application sidebar
+- reduced routine application cards/forms to standard `2xl` radius
+- extended live status semantics and touch-target improvements to member/admin filters and counters
