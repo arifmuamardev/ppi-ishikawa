@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageIntro from '../components/PageIntro.astro';
+import LandingHeader from '../components/LandingHeader.astro';
 import TopicIcon from '../components/TopicIcon.astro';
 import InstagramFeed from '../components/InstagramFeed.astro';
 import { withBase } from '../utils/paths';
@@ -43,7 +43,7 @@ const communityPaths = [
   title="Komunitas"
   description="Ruang untuk terhubung dengan pelajar Indonesia, keluarga, kegiatan, kampus, dan jejaring PPI Ishikawa."
 >
-  <PageIntro
+  <LandingHeader
     title="Komunitas PPI Ishikawa"
     description="Ruang untuk saling terhubung sebagai pelajar Indonesia di Ishikawa—lintas kampus, tahap studi, minat, dan kehidupan keluarga."
   />
@@ -74,7 +74,7 @@ const communityPaths = [
 
     <div class="mt-8 grid gap-4 md:grid-cols-2">
       {communityPaths.map((item) => (
-        <a href={withBase(item.href)} class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-accent/35 hover:shadow-sm">
+        <a href={withBase(item.href)} class="group rounded-2xl border border-slate-200 bg-white p-6 transition-colors hover:border-accent/35 hover:bg-accent/5">
           <span class="grid size-11 place-items-center rounded-2xl bg-accent/10 text-accent-dark">
             <TopicIcon name={item.icon as any} class="size-6" />
           </span>
