@@ -63,7 +63,7 @@ const googleMapsUrl = (address: string) =>
         Peta mengikuti filter yang aktif dan hanya menampilkan lokasi dengan koordinat yang sudah tersedia. Tempat lain tetap dapat dibuka melalui Google Maps berdasarkan alamat resmi.
       </p>
     </div>
-    <div id="places-map-empty" class="hidden rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-7 text-center">
+    <div id="places-map-empty" role="status" aria-live="polite" class="hidden rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-7 text-center">
       <p class="font-bold text-slate-900">Belum ada koordinat terverifikasi untuk hasil filter ini.</p>
       <p class="mt-2 text-sm text-slate-500">Daftar tempat di bawah tetap dapat digunakan dan setiap kartu memiliki link navigasi berdasarkan alamat resmi.</p>
     </div>
@@ -89,10 +89,10 @@ const googleMapsUrl = (address: string) =>
 
         <div>
           <p class="mb-2 text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Kategori</p>
-          <div class="flex flex-wrap gap-2" data-category-filters>
-            <button type="button" data-category="" class="place-filter rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white">Semua</button>
+          <div class="flex flex-wrap gap-2" data-category-filters role="group" aria-label="Filter kategori tempat">
+            <button type="button" data-category="" aria-pressed="true" class="place-filter min-h-11 rounded-full bg-slate-900 px-4 text-sm font-semibold text-white">Semua</button>
             {categories.map(([key, label]) => (
-              <button type="button" data-category={key} class="place-filter rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">{label}</button>
+              <button type="button" data-category={key} aria-pressed="false" class="place-filter min-h-11 rounded-full border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">{label}</button>
             ))}
           </div>
         </div>
@@ -110,7 +110,7 @@ const googleMapsUrl = (address: string) =>
 
   <section class="mx-auto max-w-7xl px-5 pb-24 lg:px-8">
     <div class="mb-4 flex items-center justify-between gap-4">
-      <p class="text-sm text-slate-500"><span id="place-count" class="font-bold text-slate-900">{ishikawaPlaces.length}</span> tempat ditampilkan</p>
+      <p class="text-sm text-slate-500" aria-live="polite" aria-atomic="true"><span id="place-count" class="font-bold text-slate-900">{ishikawaPlaces.length}</span> tempat ditampilkan</p>
       <a href={withBase('/life-in-ishikawa/municipality-guides/')} class="text-sm font-bold text-brand hover:underline">Panduan municipality →</a>
     </div>
 
@@ -167,7 +167,7 @@ const googleMapsUrl = (address: string) =>
       ))}
     </div>
 
-    <div id="places-empty" class="hidden rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+    <div id="places-empty" role="status" aria-live="polite" class="hidden rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
       <p class="font-bold text-slate-900">Belum ada tempat untuk kombinasi filter ini.</p>
       <p class="mt-2 text-sm text-slate-500">Pilih kategori atau kota lain.</p>
     </div>
