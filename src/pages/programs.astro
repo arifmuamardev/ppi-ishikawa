@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageIntro from '../components/PageIntro.astro';
+import LandingHeader from '../components/LandingHeader.astro';
 import RelatedLinks from '../components/RelatedLinks.astro';
 import { departments } from '../data/organization';
 import { withBase } from '../utils/paths';
@@ -8,13 +8,13 @@ import { generalRelatedContent } from '../data/related-content';
 import { site } from '../data/site';
 ---
 <BaseLayout title="Program & Kegiatan">
-  <PageIntro
+  <LandingHeader
     title="Program & kegiatan"
     description={`Kenali fokus kerja tujuh departemen PPI Ishikawa dan bidang layanan yang ditangani pada periode ${site.period}.`}
   />
 
   <section class="mx-auto max-w-7xl px-5 pb-10 lg:px-8">
-    <div class="rounded-3xl border border-accent/35 bg-accent/10 p-6 sm:p-8">
+    <div class="border-y border-accent/35 bg-accent/10 px-6 py-5 sm:px-8">
       <p class="type-eyebrow text-secondary-dark">Status {site.period}</p>
       <h2 class="type-section mt-3 text-slate-950">Kenali fokus kerja setiap departemen.</h2>
       <p class="mt-3 max-w-3xl leading-7 text-slate-700">Lihat bidang tanggung jawab masing-masing departemen. Program dan jadwal resmi akan ditampilkan ketika sudah ditetapkan.</p>
