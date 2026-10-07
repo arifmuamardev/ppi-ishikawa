@@ -1,0 +1,24 @@
+---
+import { withBase } from '../utils/paths';
+
+interface Props {
+  items: Array<[string, string]>;
+  ariaLabel: string;
+}
+
+const { items, ariaLabel } = Astro.props;
+---
+<nav class="mx-auto max-w-7xl px-5 lg:px-8" aria-label={ariaLabel}>
+  <div class="-mx-5 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:mx-0 lg:px-0">
+    <div class="flex min-w-max gap-2">
+      {items.map(([label, href]) => (
+        <a
+          href={href.startsWith('/') ? withBase(href) : href}
+          class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 transition-colors hover:border-accent/35 hover:bg-accent/10 hover:text-brand"
+        >
+          {label}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>
