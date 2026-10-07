@@ -187,3 +187,16 @@ Implemented on the two densest public finders:
 - long-form career guidance remains below the finder for users who need it
 
 This uses progressive disclosure through page order rather than deleting information.
+
+
+### Pass 5 — Public responsive stress pass
+Implemented for the public UI shell:
+- added `ScrollPillNav.astro` for long section-jump navigation
+- About, Programs, and Career jump navigation now stay on one horizontally scrollable row on narrow screens
+- section-nav targets use a minimum 44 px height
+- Family activity filters use the same single-row mobile scrolling behavior
+- the Theme toggle was increased to a 44 px touch target
+- the mobile Header menu now has a viewport-aware maximum height and its own scrolling area
+- ordinary Family activity result cards no longer carry default shadow/elevated treatment
+
+This pass focuses on 360–430 px behavior without changing content or desktop information architecture.
