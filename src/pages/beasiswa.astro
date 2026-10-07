@@ -87,149 +87,7 @@ const staleCount = scholarships.filter(needsReview).length;
     </div>
   </section>
 
-  <section class="mx-auto max-w-7xl px-5 ui-section-space-compact lg:px-8">
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-      <div class="rounded-2xl border border-slate-200 bg-white p-5">
-        <p class="text-3xl font-bold text-slate-950">{scholarshipStats.total}</p>
-        <p class="mt-1 text-sm text-slate-600">beasiswa terdata</p>
-      </div>
-      <div class="rounded-2xl border border-slate-200 bg-white p-5">
-        <p class="text-3xl font-bold text-slate-950">{scholarshipStats.indonesiaSpecific}</p>
-        <p class="mt-1 text-sm text-slate-600">secara eksplisit mencantumkan Indonesia</p>
-      </div>
-      <div class="rounded-2xl border border-slate-200 bg-white p-5">
-        <p class="text-3xl font-bold text-slate-950">{scholarshipStats.beforeArrival}</p>
-        <p class="mt-1 text-sm text-slate-600">punya jalur sebelum tiba di Jepang</p>
-      </div>
-      <div class="rounded-2xl border border-slate-200 bg-white p-5">
-        <p class="text-3xl font-bold text-slate-950">{scholarshipStats.ishikawaDirect}</p>
-        <p class="mt-1 text-sm text-slate-600">sudah terhubung langsung ke kampus Ishikawa</p>
-      </div>
-      <div class="rounded-2xl border border-slate-200 bg-white p-5">
-        <p class="text-3xl font-bold text-slate-950">{staleCount}</p>
-        <p class="mt-1 text-sm text-slate-600">perlu verifikasi ulang saat ini</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-7xl px-5 ui-section-space-compact lg:px-8">
-    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
-      <div class="flex gap-4">
-        <TopicIcon name="info" class="mt-1 size-6 shrink-0 text-brand" />
-        <div>
-          <h2 class="text-xl font-bold text-slate-950">Gunakan hub ini untuk menemukan kandidat, bukan sebagai pengganti guideline resmi.</h2>
-          <p class="mt-3 max-w-4xl text-sm leading-6 text-slate-700">
-            Scholarship dapat berubah berdasarkan intake, kuota, designated school, study year, nationality, visa, bidang studi, dan aturan double funding.
-            Jika sebuah card bertuliskan “cek kampus”, hubungi international/student office sebelum menyiapkan aplikasi.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="indonesia" class="mx-auto max-w-7xl scroll-mt-24 px-5 ui-section-space lg:px-8">
-    <div class="rounded-[2rem] border border-red-200 bg-red-50 p-6 sm:p-8">
-      <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <p class="type-eyebrow text-brand">Khusus mahasiswa Indonesia</p>
-          <h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-950">Scholarship yang secara eksplisit mencantumkan Indonesia.</h2>
-          <p class="mt-3 max-w-3xl leading-7 text-slate-700">
-            Prioritaskan daftar ini jika nationality adalah filter utama Anda. Tetap cek kampus, jenjang, bidang, study year, bahasa Jepang, dan jalur rekomendasi sebelum menyiapkan dokumen.
-          </p>
-        </div>
-        <a href="#finder" data-indonesia-jump="yes" class="inline-flex rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white">Tampilkan semuanya di Finder →</a>
-      </div>
-
-      <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {scholarships
-          .filter((item) => item.nationality.includes('Indonesia'))
-          .slice(0, 6)
-          .map((item) => (
-            <article class="rounded-2xl border border-slate-200 bg-white p-5">
-              <div class="flex items-start justify-between gap-3">
-                <div>
-                  <p class="text-xs font-bold uppercase tracking-[0.1em] text-brand">{item.provider}</p>
-                  <h3 class="mt-2 font-bold leading-snug text-slate-950">{item.name}</h3>
-                </div>
-                <span class="rounded-full bg-red-50 px-2.5 py-1 text-[11px] font-bold text-red-700">Indonesia</span>
-              </div>
-              <p class="mt-3 text-sm leading-6 text-slate-600">{item.summary}</p>
-              <div class="mt-4 flex flex-wrap gap-2">
-                {item.studyLevels.map((level) => (
-                  <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600">{scholarshipLevelLabels[level]}</span>
-                ))}
-              </div>
-              <div class="mt-4 border-t border-slate-100 pt-4">
-                <p class="text-xs text-slate-500">Cara mendaftar</p>
-                <p class="mt-1 text-sm font-bold text-slate-900">{routeLabels[item.applicationRoute]}</p>
-              </div>
-            </article>
-          ))}
-      </div>
-
-      <p class="mt-5 text-xs leading-5 text-slate-600">
-        Daftar Indonesia bukan berarti otomatis eligible untuk semua mahasiswa Indonesia. Beberapa foundation mensyaratkan designated school, study year tertentu, bidang studi tertentu, atau nominasi kampus.
-      </p>
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-7xl px-5 ui-section-space-compact lg:px-8">
-    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
-      <div class="flex gap-3">
-        <TopicIcon name="info" class="mt-0.5 size-5 shrink-0 text-brand" />
-        <div>
-          <p class="font-bold text-slate-950">Perhatikan periode beasiswa dan tanggal verifikasi.</p>
-          <p class="mt-2 max-w-4xl text-sm leading-6 text-slate-600">Sebelum mendaftar, cek pengumuman resmi terbaru untuk memastikan tenggat, nominal, kuota, eligibility, dan daftar kampus yang memenuhi syarat.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="kampus" class="mx-auto max-w-7xl scroll-mt-24 px-5 ui-section-space lg:px-8">
-    <p class="type-eyebrow text-brand">Cari berdasarkan kampus</p>
-    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Mulai dari institusi Anda.</h2>
-    <p class="mt-3 max-w-3xl leading-7 text-slate-600">Beberapa beasiswa hanya tersedia melalui kampus tertentu; lainnya terbuka lebih luas tetapi tetap perlu dikonfirmasi ke kampus.</p>
-
-    <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-      {campusOptions.map(([slug, label]) => (
-        <a href="#finder" data-campus-jump={slug} class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-accent/35 hover:bg-accent/10">
-          <InstitutionMark id={slug as any} size="sm" class="shrink-0" />
-          <div>
-            <p class="font-bold text-slate-950">{label}</p>
-            <p class="mt-1 text-xs text-slate-500">Saring beasiswa →</p>
-          </div>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-7xl px-5 ui-section-space lg:px-8">
-    <div class="rounded-[2rem] border border-accent/35 bg-accent/10 p-6 sm:p-8">
-      <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <p class="type-eyebrow text-accent-dark">Paling relevan untuk Ishikawa</p>
-          <h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-950">Mulai dari dua jalur ini sebelum membuka daftar yang lebih luas.</h2>
-        </div>
-        <a href="#finder" class="text-sm font-bold text-brand hover:underline">Lihat semua beasiswa →</a>
-      </div>
-      <div class="mt-6 grid gap-4 md:grid-cols-2">
-        {scholarships.filter((item) => ['ishikawa-prefectural-scholarship','mitani-scholarship'].includes(item.slug)).map((item) => (
-          <article class="rounded-2xl border border-slate-200 bg-white p-5">
-            <p class="text-xs font-bold uppercase tracking-[0.1em] text-brand">{item.provider}</p>
-            <h3 class="mt-2 text-lg font-bold text-slate-950">{item.name}</h3>
-            <p class="mt-2 text-sm leading-6 text-slate-600">{item.summary}</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-              {item.studyLevels.map((level) => (
-                <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600">{scholarshipLevelLabels[level]}</span>
-              ))}
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section id="finder" class="mx-auto max-w-7xl scroll-mt-24 px-5 ui-section-space lg:px-8">
+<section id="finder" class="mx-auto max-w-7xl scroll-mt-24 px-5 ui-section-space lg:px-8">
     <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
       <div>
         <p class="type-eyebrow text-brand">Pencarian Beasiswa</p>
@@ -409,6 +267,150 @@ const staleCount = scholarships.filter(needsReview).length;
       ))}
     </div>
   </section>
+
+  <section class="mx-auto max-w-7xl px-5 ui-section-space-compact lg:px-8">
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <div class="rounded-2xl border border-slate-200 bg-white p-5">
+        <p class="text-3xl font-bold text-slate-950">{scholarshipStats.total}</p>
+        <p class="mt-1 text-sm text-slate-600">beasiswa terdata</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-5">
+        <p class="text-3xl font-bold text-slate-950">{scholarshipStats.indonesiaSpecific}</p>
+        <p class="mt-1 text-sm text-slate-600">secara eksplisit mencantumkan Indonesia</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-5">
+        <p class="text-3xl font-bold text-slate-950">{scholarshipStats.beforeArrival}</p>
+        <p class="mt-1 text-sm text-slate-600">punya jalur sebelum tiba di Jepang</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-5">
+        <p class="text-3xl font-bold text-slate-950">{scholarshipStats.ishikawaDirect}</p>
+        <p class="mt-1 text-sm text-slate-600">sudah terhubung langsung ke kampus Ishikawa</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-5">
+        <p class="text-3xl font-bold text-slate-950">{staleCount}</p>
+        <p class="mt-1 text-sm text-slate-600">perlu verifikasi ulang saat ini</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 ui-section-space-compact lg:px-8">
+    <div class="rounded-3xl border border-red-200 bg-red-50 p-6 sm:p-8">
+      <div class="flex gap-4">
+        <TopicIcon name="info" class="mt-1 size-6 shrink-0 text-brand" />
+        <div>
+          <h2 class="text-xl font-bold text-slate-950">Gunakan finder ini untuk menemukan kandidat, bukan sebagai pengganti guideline resmi.</h2>
+          <p class="mt-3 max-w-4xl text-sm leading-6 text-slate-700">
+            Scholarship dapat berubah berdasarkan intake, kuota, designated school, study year, nationality, visa, bidang studi, dan aturan double funding.
+            Jika sebuah card bertuliskan “cek kampus”, hubungi international/student office sebelum menyiapkan aplikasi.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="indonesia" class="mx-auto max-w-7xl scroll-mt-24 px-5 ui-section-space lg:px-8">
+    <div class="rounded-[2rem] border border-red-200 bg-red-50 p-6 sm:p-8">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p class="type-eyebrow text-brand">Khusus mahasiswa Indonesia</p>
+          <h2 class="mt-2 text-3xl font-bold tracking-tight text-slate-950">Scholarship yang secara eksplisit mencantumkan Indonesia.</h2>
+          <p class="mt-3 max-w-3xl leading-7 text-slate-700">
+            Prioritaskan daftar ini jika nationality adalah filter utama Anda. Tetap cek kampus, jenjang, bidang, study year, bahasa Jepang, dan jalur rekomendasi sebelum menyiapkan dokumen.
+          </p>
+        </div>
+        <a href="#finder" data-indonesia-jump="yes" class="inline-flex rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white">Tampilkan semuanya di Finder →</a>
+      </div>
+
+      <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {scholarships
+          .filter((item) => item.nationality.includes('Indonesia'))
+          .slice(0, 6)
+          .map((item) => (
+            <article class="rounded-2xl border border-slate-200 bg-white p-5">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <p class="text-xs font-bold uppercase tracking-[0.1em] text-brand">{item.provider}</p>
+                  <h3 class="mt-2 font-bold leading-snug text-slate-950">{item.name}</h3>
+                </div>
+                <span class="rounded-full bg-red-50 px-2.5 py-1 text-[11px] font-bold text-red-700">Indonesia</span>
+              </div>
+              <p class="mt-3 text-sm leading-6 text-slate-600">{item.summary}</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                {item.studyLevels.map((level) => (
+                  <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600">{scholarshipLevelLabels[level]}</span>
+                ))}
+              </div>
+              <div class="mt-4 border-t border-slate-100 pt-4">
+                <p class="text-xs text-slate-500">Cara mendaftar</p>
+                <p class="mt-1 text-sm font-bold text-slate-900">{routeLabels[item.applicationRoute]}</p>
+              </div>
+            </article>
+          ))}
+      </div>
+
+      <p class="mt-5 text-xs leading-5 text-slate-600">
+        Daftar Indonesia bukan berarti otomatis eligible untuk semua mahasiswa Indonesia. Beberapa foundation mensyaratkan designated school, study year tertentu, bidang studi tertentu, atau nominasi kampus.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 ui-section-space-compact lg:px-8">
+    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+      <div class="flex gap-3">
+        <TopicIcon name="info" class="mt-0.5 size-5 shrink-0 text-brand" />
+        <div>
+          <p class="font-bold text-slate-950">Perhatikan periode beasiswa dan tanggal verifikasi.</p>
+          <p class="mt-2 max-w-4xl text-sm leading-6 text-slate-600">Sebelum mendaftar, cek pengumuman resmi terbaru untuk memastikan tenggat, nominal, kuota, eligibility, dan daftar kampus yang memenuhi syarat.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kampus" class="mx-auto max-w-7xl scroll-mt-24 px-5 ui-section-space lg:px-8">
+    <p class="type-eyebrow text-brand">Cari berdasarkan kampus</p>
+    <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Mulai dari institusi Anda.</h2>
+    <p class="mt-3 max-w-3xl leading-7 text-slate-600">Beberapa beasiswa hanya tersedia melalui kampus tertentu; lainnya terbuka lebih luas tetapi tetap perlu dikonfirmasi ke kampus.</p>
+
+    <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {campusOptions.map(([slug, label]) => (
+        <a href="#finder" data-campus-jump={slug} class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 transition hover:border-accent/35 hover:bg-accent/10">
+          <InstitutionMark id={slug as any} size="sm" class="shrink-0" />
+          <div>
+            <p class="font-bold text-slate-950">{label}</p>
+            <p class="mt-1 text-xs text-slate-500">Saring beasiswa →</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 ui-section-space lg:px-8">
+    <div class="rounded-[2rem] border border-accent/35 bg-accent/10 p-6 sm:p-8">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p class="type-eyebrow text-accent-dark">Paling relevan untuk Ishikawa</p>
+          <h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-950">Mulai dari dua jalur ini sebelum membuka daftar yang lebih luas.</h2>
+        </div>
+        <a href="#finder" class="text-sm font-bold text-brand hover:underline">Lihat semua beasiswa →</a>
+      </div>
+      <div class="mt-6 grid gap-4 md:grid-cols-2">
+        {scholarships.filter((item) => ['ishikawa-prefectural-scholarship','mitani-scholarship'].includes(item.slug)).map((item) => (
+          <article class="rounded-2xl border border-slate-200 bg-white p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.1em] text-brand">{item.provider}</p>
+            <h3 class="mt-2 text-lg font-bold text-slate-950">{item.name}</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-600">{item.summary}</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {item.studyLevels.map((level) => (
+                <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600">{scholarshipLevelLabels[level]}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  
 
   <section class="mx-auto max-w-7xl px-5 ui-section-space-compact lg:px-8">
     <details class="rounded-2xl border border-slate-200 bg-white p-5">
