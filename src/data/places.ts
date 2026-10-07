@@ -41,7 +41,7 @@ const campusPlaces: IshikawaPlace[] = campusOverviewPoints.map((point) => ({
   category: 'campus',
   city: point.city,
   address: point.address,
-  description: 'Kampus yang tercakup dalam Campus Hub PPI Ishikawa. Gunakan halaman kampus untuk panduan mahasiswa yang lebih lengkap.',
+  description: 'Kampus yang tercakup dalam informasi PPI Ishikawa. Gunakan halaman Kampus untuk panduan mahasiswa yang lebih lengkap.',
   officialUrl: point.officialUrl,
   tags: ['kampus', 'mahasiswa', point.city.toLowerCase()],
   lat: point.lat,
