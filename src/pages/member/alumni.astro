@@ -1,23 +1,24 @@
 ---
 import MemberLayout from '../../layouts/MemberLayout.astro';
+import AppPageHeader from '../../components/AppPageHeader.astro';
 ---
 
 <MemberLayout title="Alumni Network" requireApproved={true}>
   <div class="space-y-6">
-    <section>
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Alumni Network</p>
-      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Tetap terhubung setelah lulus</h1>
-      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Profil alumni bersifat opt-in. Hanya informasi yang Anda setujui yang ditampilkan kepada anggota terverifikasi.</p>
-    </section>
+    <AppPageHeader
+      eyebrow="Alumni Network"
+      title="Tetap terhubung setelah lulus"
+      description="Profil alumni bersifat opt-in. Hanya informasi yang Anda setujui yang ditampilkan kepada anggota terverifikasi."
+    />
 
     <div id="alumni-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
 
-    <section id="alumni-status-note" class="hidden rounded-3xl border border-accent/35 bg-accent/10 p-6">
+    <section id="alumni-status-note" class="hidden rounded-2xl border border-accent/35 bg-accent/10 p-6">
       <p class="font-bold text-slate-950">Status membership Anda belum Alumni.</p>
       <p class="mt-2 text-sm leading-6 text-slate-700">Anda tetap dapat menyiapkan profil ini. Profil baru akan muncul di Alumni Network setelah status membership diubah menjadi Alumni dan visibilitas direktori diaktifkan.</p>
     </section>
 
-    <form id="alumni-profile-form" class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+    <form id="alumni-profile-form" class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
       <h2 class="text-xl font-bold text-slate-950">Profil alumni saya</h2>
       <div class="mt-6 grid gap-5 md:grid-cols-2">
         <label>
@@ -66,7 +67,7 @@ import MemberLayout from '../../layouts/MemberLayout.astro';
       </div>
     </form>
 
-    <section class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+    <section class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
       <div class="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Direktori</p>
