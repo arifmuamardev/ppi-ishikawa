@@ -359,3 +359,29 @@ Key changes:
 - added reusable `NestedLandingHeader.astro` for later use by Kampus and other nested destinations
 
 Next Nested Landing migration: **Kampus**.
+
+
+### Nested Landing — Kampus implemented
+
+`/community/kampus/` now shares the same `NestedLandingHeader` used by Keluarga.
+
+The visible task flow is:
+
+```
+Breadcrumb
+NestedLandingHeader
+Campus summary
+Choose institution
+Understand area
+Compare if needed
+Supporting cross-domain links
+```
+
+Key changes:
+- removed the separate breadcrumb + PageIntro combination
+- standardized the visible parent path as Komunitas → Kampus
+- replaced “Campus Pack” wording on the landing with the simpler “panduan kampus”
+- reduced the summary block from a bordered card to a lighter metadata strip
+- retained all institution, map, regional, and comparison information
+
+Both public Nested Landing archetypes are now on a shared shell. Next migration: **Finder / Directory**.
