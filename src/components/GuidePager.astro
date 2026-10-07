@@ -7,38 +7,61 @@ interface Props {
 }
 
 const { code } = Astro.props;
-const index = survivalGuides.findIndex((guide) => guide.code === code);
-if (index < 0) throw new Error(`Unknown Survival Guide code: ${code}`);
 
-const previous = index > 1 ? survivalGuides[index - 1] : undefined;
-const next = index < survivalGuides.length - 1 ? survivalGuides[index + 1] : undefined;
+const linearCodes = [
+  'SG01',
+  'SG02',
+  'SG03',
+  'SG04',
+  'SG05',
+  'SG06',
+  'SG07',
+  'SG09',
+  'SG10',
+  'SG11',
+  'SG12',
+  'SG13'
+] as const;
+
+const linearGuides = linearCodes
+  .map((guideCode) => survivalGuides.find((guide) => guide.code === guideCode))
+  .filter((guide): guide is NonNullable<typeof guide> => Boolean(guide));
+
+const index = linearGuides.findIndex((guide) => guide.code === code);
+if (index < 0) throw new Error(`GuidePager only supports linear Survival Guide articles. Received: ${code}`);
+
+const previous = index > 0 ? linearGuides[index - 1] : undefined;
+const nextGuide = index < linearGuides.length - 1 ? linearGuides[index + 1] : undefined;
 ---
-<nav class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8" aria-label="Navigasi Survival Guide">
-  <div class="grid gap-3 rounded-3xl border border-slate-200 bg-white p-5 sm:grid-cols-3 sm:p-6">
-    <div>
-      {previous ? (
-        <a href={withBase(previous.href)} class="flex h-full flex-col rounded-2xl bg-slate-50 p-4 transition hover:bg-slate-100">
-          <span class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">← Sebelumnya</span>
-          <span class="mt-2 font-bold text-slate-950">{previous.code} · {previous.title}</span>
-        </a>
-      ) : <span />}
-    </div>
-    <a href={withBase('/life-in-ishikawa/')} class="flex h-full flex-col items-center justify-center rounded-2xl border border-slate-200 p-4 text-center transition hover:bg-slate-50">
-      <span class="text-xs font-bold uppercase tracking-[0.12em] text-brand">Start Here</span>
-      <span class="mt-2 font-bold text-slate-950">Semua panduan</span>
-    </a>
-    <div>
-      {next ? (
-        <a href={withBase(next.href)} class="flex h-full flex-col rounded-2xl bg-slate-900 p-4 text-white transition hover:bg-slate-700 sm:text-right">
-          <span class="text-xs font-bold uppercase tracking-[0.12em] text-slate-300">Berikutnya →</span>
-          <span class="mt-2 font-bold">{next.code} · {next.title}</span>
-        </a>
-      ) : (
-        <a href={withBase('/life-in-ishikawa/')} class="flex h-full flex-col rounded-2xl bg-slate-900 p-4 text-white transition hover:bg-slate-700 sm:text-right">
-          <span class="text-xs font-bold uppercase tracking-[0.12em] text-slate-300">Selesai</span>
-          <span class="mt-2 font-bold">Kembali ke Start Here →</span>
-        </a>
-      )}
+<nav class="mx-auto max-w-5xl px-5 pb-24 pt-8 lg:px-8" aria-label="Navigasi Survival Guide">
+  <div class="border-t border-slate-200 pt-6">
+    <div class="grid gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-stretch">
+      <div>
+        {previous ? (
+          <a href={withBase(previous.href)} class="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-4 transition-colors hover:border-accent/35 hover:bg-accent/5">
+            <span class="type-meta text-slate-500">← Sebelumnya</span>
+            <span class="mt-2 font-bold text-slate-950">{previous.code} · {previous.title}</span>
+          </a>
+        ) : <span />}
+      </div>
+
+      <a href={withBase('/life-in-ishikawa/')} class="flex h-full items-center justify-center rounded-2xl px-4 py-3 text-center text-sm font-semibold text-brand transition-colors hover:bg-accent/10">
+        Semua panduan
+      </a>
+
+      <div>
+        {nextGuide ? (
+          <a href={withBase(nextGuide.href)} class="flex h-full flex-col rounded-2xl border border-accent/35 bg-accent/10 p-4 transition-colors hover:border-accent/60 hover:bg-accent/15 sm:text-right">
+            <span class="type-meta text-accent-dark">Berikutnya →</span>
+            <span class="mt-2 font-bold text-slate-950">{nextGuide.code} · {nextGuide.title}</span>
+          </a>
+        ) : (
+          <a href={withBase('/life-in-ishikawa/')} class="flex h-full flex-col rounded-2xl border border-accent/35 bg-accent/10 p-4 transition-colors hover:border-accent/60 hover:bg-accent/15 sm:text-right">
+            <span class="type-meta text-accent-dark">Selesai</span>
+            <span class="mt-2 font-bold text-slate-950">Kembali ke Hidup di Ishikawa →</span>
+          </a>
+        )}
+      </div>
     </div>
   </div>
 </nav>
