@@ -414,3 +414,34 @@ Method / source context where needed
 The Municipality Guides route no longer presents itself as a Survival Guide chapter via GuideMeta.
 
 Next Finder work: reduce pre-filter information density on **Beasiswa** and **Karier**, the two heaviest finder pages.
+
+
+### Landing shell — implemented
+
+The five non-Home public Landing routes now use `LandingHeader.astro`:
+
+- Hidup di Ishikawa
+- Komunitas
+- Tentang PPI Ishikawa
+- Program & kegiatan
+- Kontak
+
+The Landing contract is now:
+
+```
+LandingHeader
+Primary orientation / choices
+Major sections
+Optional compact related block
+```
+
+Key decisions:
+- top-level landings do not use breadcrumbs
+- `Hidup di Ishikawa` no longer uses GuideMeta as if it were a guide article
+- journey priority steps on `Hidup di Ishikawa` use progressive disclosure
+- the complete guide list remains available but is collapsed by default
+- Contact uses its task routes as navigation and no longer appends generic RelatedLinks
+- About and Programs retain compact RelatedLinks because they add a distinct organizational next step
+- routine hover lift/shadow was removed from Community and Contact navigation cards
+
+Home remains its own entry-page archetype rather than being forced into the standard Landing shell.
