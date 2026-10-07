@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import FinderHeader from '../../../components/FinderHeader.astro';
 import TopicIcon from '../../../components/TopicIcon.astro';
 import { withBase } from '../../../utils/paths';
 import { familyActivityFilters, familyActivityPlaces } from '../../../data/family-activities';
@@ -21,23 +21,18 @@ const tagLabels: Record<string, string> = {
   title="Aktivitas keluarga di Ishikawa"
   description="Direktori aktivitas keluarga PPI Ishikawa: indoor, outdoor, gratis, bayi, preschool, anak sekolah, dan pilihan saat hujan atau winter."
 >
-  <section class="mx-auto max-w-7xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
-    <Breadcrumbs items={[
+  <FinderHeader
+    breadcrumbs={[
       { label: 'Beranda', href: '/' },
       { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' },
-      { label: 'Family', href: '/life-in-ishikawa/family-anak/' },
-      { label: 'Aktivitas keluarga' }
-    ]} />
-    <div class="mt-8 max-w-4xl">
-      <p class="text-sm font-bold uppercase tracking-[0.18em] text-brand">Family · F06</p>
-      <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Cari aktivitas sesuai kondisi keluarga.</h1>
-      <p class="mt-5 text-lg leading-8 text-slate-600">
-        Tidak semua keluarga membutuhkan tempat yang sama. Pilih berdasarkan cuaca, usia anak, energi yang ingin dikeluarkan, dan biaya.
-        Direktori awal ini memprioritaskan fasilitas publik atau tempat dengan sumber resmi yang mudah diverifikasi.
-      </p>
-      <p class="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-slate-400">Terakhir diverifikasi · {familyLastVerified}</p>
-    </div>
-  </section>
+      { label: 'Keluarga', href: '/life-in-ishikawa/family-anak/' },
+      { label: 'Aktivitas' }
+    ]}
+    eyebrow="Keluarga · F06"
+    title="Cari aktivitas sesuai kondisi keluarga."
+    description="Pilih berdasarkan cuaca, usia anak, energi yang ingin dikeluarkan, dan biaya. Direktori memprioritaskan fasilitas publik atau tempat dengan sumber resmi yang mudah diverifikasi."
+    lastVerified={familyLastVerified}
+  />
 
   <section class="mx-auto max-w-7xl px-5 pb-8 lg:px-8">
     <div class="rounded-3xl border border-accent/35 bg-accent/10 p-6 sm:p-8">

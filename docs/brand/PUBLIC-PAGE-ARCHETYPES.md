@@ -385,3 +385,32 @@ Key changes:
 - retained all institution, map, regional, and comparison information
 
 Both public Nested Landing archetypes are now on a shared shell. Next migration: **Finder / Directory**.
+
+
+### Finder / Directory shell — implemented
+
+All eight public Finder / Directory routes now use `FinderHeader.astro`:
+
+- Beasiswa
+- Karier & Peluang
+- Direktori Tempat
+- Pemerintah Lokal
+- Aktivitas Keluarga
+- Layanan Keluarga berdasarkan Municipality
+- Direktori
+- Cerita PPI Ishikawa
+
+`FinderHeader` supports both top-level finders and nested finders with breadcrumb context.
+
+The effective shell is now:
+
+```
+FinderHeader
+Filters / selectors / task entry
+Results
+Method / source context where needed
+```
+
+The Municipality Guides route no longer presents itself as a Survival Guide chapter via GuideMeta.
+
+Next Finder work: reduce pre-filter information density on **Beasiswa** and **Karier**, the two heaviest finder pages.

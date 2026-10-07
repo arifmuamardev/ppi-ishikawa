@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageIntro from '../components/PageIntro.astro';
+import FinderHeader from '../components/FinderHeader.astro';
 import TopicIcon from '../components/TopicIcon.astro';
 import StoryCard from '../components/StoryCard.astro';
 import { campuses } from '../data/campuses';
@@ -45,7 +45,7 @@ const representedTopics = Object.entries(storyTopicLabels).filter(([topic]) =>
   title="Cerita PPI Ishikawa"
   description="Kisah mahasiswa dan alumni Indonesia tentang studi, riset, karier, keluarga, dan kehidupan di Ishikawa."
 >
-  <PageIntro
+  <FinderHeader
     title="Cerita PPI Ishikawa"
     description="Pengalaman mahasiswa dan alumni Indonesia tentang belajar, bertumbuh, bekerja, dan menjalani kehidupan di Ishikawa."
   />
