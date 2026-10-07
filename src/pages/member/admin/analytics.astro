@@ -1,28 +1,29 @@
 ---
 import MemberLayout from '../../../layouts/MemberLayout.astro';
+import AppPageHeader from '../../../components/AppPageHeader.astro';
 ---
 
 <MemberLayout title="Membership Analytics" requireAdmin={true}>
   <div class="space-y-6">
-    <section>
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Admin · Analytics</p>
-      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Ringkasan membership & engagement</h1>
-      <p class="mt-3 max-w-3xl leading-7 text-slate-600">Dashboard ini memakai agregat operasional. Tidak menampilkan ranking anggota atau skor individual.</p>
-    </section>
+    <AppPageHeader
+      eyebrow="Admin · Analytics"
+      title="Ringkasan membership & engagement"
+      description="Dashboard ini memakai agregat operasional. Tidak menampilkan ranking anggota atau skor individual."
+    />
 
     <div id="analytics-error" class="hidden rounded-2xl border border-red-200 bg-red-50 p-5 text-sm text-red-800"></div>
 
     <section id="analytics-kpis" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"></section>
 
     <section class="grid gap-5 lg:grid-cols-2">
-      <article class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
-        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Membership</p>
+      <article class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
+        <p class="type-meta uppercase tracking-[0.12em] text-slate-500">Membership</p>
         <h2 class="mt-2 text-xl font-bold text-slate-950">Status anggota</h2>
         <div id="membership-status-bars" class="mt-6 space-y-4"></div>
       </article>
 
-      <article class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
-        <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Campus distribution</p>
+      <article class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
+        <p class="type-meta uppercase tracking-[0.12em] text-slate-500">Campus distribution</p>
         <h2 class="mt-2 text-xl font-bold text-slate-950">Anggota terverifikasi per kampus</h2>
         <div id="campus-bars" class="mt-6 space-y-4"></div>
       </article>
