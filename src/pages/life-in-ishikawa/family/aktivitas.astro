@@ -72,7 +72,7 @@ const tagLabels: Record<string, string> = {
       ))}
     </div>
 
-    <p id="activity-count" class="mt-5 text-sm font-semibold text-slate-500">{familyActivityPlaces.length} tempat ditampilkan</p>
+    <p id="activity-count" aria-live="polite" aria-atomic="true" class="mt-5 text-sm font-semibold text-slate-500">{familyActivityPlaces.length} tempat ditampilkan</p>
 
     <div id="activity-grid" class="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
       {familyActivityPlaces.map((place) => (
