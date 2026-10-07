@@ -1,0 +1,34 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+import GuideMeta from './GuideMeta.astro';
+import { getGuide } from '../data/survival';
+
+interface Props {
+  code: string;
+  headline: string;
+  intro: string;
+}
+
+const { code, headline, intro } = Astro.props;
+const guide = getGuide(code);
+
+if (!guide) {
+  throw new Error(`Unknown Survival Guide code: ${code}`);
+}
+---
+<section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+  <Breadcrumbs
+    items={[
+      { label: 'Beranda', href: '/' },
+      { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' },
+      { label: guide.title }
+    ]}
+  />
+
+  <p class="type-eyebrow mt-8 text-brand">{guide.code} · {guide.title}</p>
+  <h1 class="type-display mt-4 max-w-4xl text-slate-950">{headline}</h1>
+  <p class="type-lead mt-5 max-w-3xl text-slate-600">{intro}</p>
+
+  <GuideMeta code={code} />
+  <slot />
+</section>
