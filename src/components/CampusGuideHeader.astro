@@ -2,6 +2,7 @@
 import Breadcrumbs from './Breadcrumbs.astro';
 import InstitutionMark from './InstitutionMark.astro';
 import { withBase } from '../utils/paths';
+import { institutionLogos } from '../data/institution-logos';
 
 interface MunicipalityLink {
   label: string;
@@ -9,7 +10,7 @@ interface MunicipalityLink {
 }
 
 interface Props {
-  campusId: string;
+  campusId: keyof typeof institutionLogos;
   breadcrumbLabel: string;
   title: string;
   subtitle: string;
