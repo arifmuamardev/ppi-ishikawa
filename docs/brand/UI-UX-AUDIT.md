@@ -176,3 +176,12 @@ Implemented in the shared Survival Guide shell:
 - centralized official-source treatment
 - removed duplicate Related + Pager end navigation
 - limited sequential pager to actual linear guide articles
+
+
+### Pass 4 — Nested Landing
+Implemented:
+- canonical `PageHeader` for landing/finder/nested-landing title systems
+- Campus breadcrumb and title merged into one shell
+- Family guide-style header replaced with nested-landing header
+- Family verification metadata simplified
+- public-facing “Hub” naming normalized to Keluarga, Kampus, Beasiswa, and Karier
