@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageIntro from '../components/PageIntro.astro';
+import LandingHeader from '../components/LandingHeader.astro';
 import RelatedLinks from '../components/RelatedLinks.astro';
 import { leadership, departments, vision, values, kaizen } from '../data/organization';
 import { withBase } from '../utils/paths';
@@ -8,7 +8,7 @@ import { generalRelatedContent } from '../data/related-content';
 import { site } from '../data/site';
 ---
 <BaseLayout title="Tentang">
-  <PageIntro
+  <LandingHeader
     title="Tentang PPI Ishikawa"
     description="Ruang bersama pelajar Indonesia di Prefektur Ishikawa untuk saling mendukung, berkembang, terhubung, dan menjaga kesinambungan komunitas."
   />
@@ -141,7 +141,7 @@ import { site } from '../data/site';
         <p class="mb-4 text-center text-xs font-bold uppercase tracking-[0.14em] text-slate-500">7 departemen</p>
         <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {departments.map((department, index) => (
-            <a href={withBase(`/programs/#${department.slug}`)} class="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-accent/35 hover:shadow-sm">
+            <a href={withBase(`/programs/#${department.slug}`)} class="group rounded-2xl border border-slate-200 bg-white p-5 transition-colors hover:border-accent/35 hover:bg-accent/5">
               <h3 class="font-bold text-slate-950 group-hover:text-brand">{department.name}</h3>
               <p class="mt-2 text-xs leading-5 text-slate-500">{department.description}</p>
               <p class="mt-3 text-xs font-bold text-brand">Lihat fokus kerja →</p>
