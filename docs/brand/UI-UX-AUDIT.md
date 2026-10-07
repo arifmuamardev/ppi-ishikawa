@@ -167,3 +167,12 @@ See `docs/brand/PUBLIC-PAGE-ARCHETYPES.md` for:
 - breadcrumb/header/TOC/source/end-navigation rules
 - the 43-route target matrix
 - the migration order for standardizing shells without reducing useful information
+
+
+### Pass 3 — Guide archetype
+Implemented in the shared Survival Guide shell:
+- centralized guide header, breadcrumb, and metadata
+- reduced metadata pill density through progressive disclosure
+- centralized official-source treatment
+- removed duplicate Related + Pager end navigation
+- limited sequential pager to actual linear guide articles
