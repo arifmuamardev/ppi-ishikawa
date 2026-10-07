@@ -332,3 +332,30 @@ Changes implemented:
 - SG08 Keluarga and SG14 Municipality Guides are no longer treated as sequential chapters
 
 Next archetype migration: **Nested Landing**, starting with Keluarga.
+
+
+### Nested Landing — Keluarga implemented
+
+`/life-in-ishikawa/family-anak/` now follows the Nested Landing archetype:
+
+```
+Breadcrumb
+NestedLandingHeader
+Primary starting point
+Primary child guides
+Compact tools / shortcuts
+Support routes
+OfficialSources
+```
+
+Key changes:
+- removed GuideMeta behavior from the landing page
+- removed repeated navigation patterns; each Family destination is exposed once
+- reduced the landing from eight visual sections to five
+- grouped F01–F05 as primary guides
+- grouped Activities, FAQ, Municipality, and Timeline as compact tools
+- kept Starter Pack as the single high-emphasis starting point
+- standardized visible naming to “Keluarga” / “Keluarga & Anak”; “Family Hub” remains only an internal/historical term where appropriate
+- added reusable `NestedLandingHeader.astro` for later use by Kampus and other nested destinations
+
+Next Nested Landing migration: **Kampus**.
