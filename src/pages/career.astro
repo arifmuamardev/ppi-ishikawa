@@ -39,7 +39,7 @@ const campusCareerEntries = campuses.flatMap((campus) => {
           <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Temukan tempat yang tepat untuk mencari peluang.</h2>
           <p class="mt-3 leading-7 text-slate-600">Pilih jenis peluang, wilayah, dan tahap karier untuk mempersempit sumber yang relevan.</p>
         </div>
-        <p id="career-count" class="text-sm font-semibold text-slate-500">{careerSources.length} sumber ditampilkan</p>
+        <p id="career-count" class="text-sm font-semibold text-slate-500" aria-live="polite" aria-atomic="true">{careerSources.length} sumber ditampilkan</p>
       </div>
 
       <div class="mt-7 grid gap-3 rounded-3xl border border-slate-200 bg-slate-50 p-5 md:grid-cols-3">
@@ -65,13 +65,13 @@ const campusCareerEntries = campuses.flatMap((campus) => {
           </select>
         </label>
         <div class="md:col-span-3">
-          <button id="career-reset" type="button" class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-white">
+          <button id="career-reset" type="button" class="min-h-11 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-white">
             Reset filter
           </button>
         </div>
       </div>
 
-      <div id="career-empty" class="mt-6 hidden rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+      <div id="career-empty" role="status" aria-live="polite" class="mt-6 hidden rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
         <p class="font-bold text-slate-950">Belum ada sumber yang cocok dengan semua filter.</p>
         <p class="mt-2 text-sm text-slate-600">Coba longgarkan salah satu filter.</p>
       </div>
