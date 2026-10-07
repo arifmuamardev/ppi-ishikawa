@@ -15,6 +15,63 @@ const {
   requireApproved = false,
   requireAdmin = false,
 } = Astro.props;
+
+const navGroups = [
+  {
+    label: 'Akun',
+    items: [
+      ['Dashboard', '/member/'],
+      ['Profil saya', '/member/profile/'],
+      ['Direktori anggota', '/member/directory/'],
+    ],
+  },
+  {
+    label: 'Layanan',
+    items: [
+      ['Kartu anggota', '/member/card/'],
+      ['Sertifikat', '/member/certificates/'],
+      ['Dokumen anggota', '/member/documents/'],
+    ],
+  },
+  {
+    label: 'Komunitas',
+    items: [
+      ['Agenda & RSVP', '/member/events/'],
+      ['Kalender', '/member/calendar/'],
+      ['Pengumuman', '/member/announcements/'],
+      ['Minat & skills', '/member/interests/'],
+      ['Aspirasi', '/member/aspirations/'],
+    ],
+  },
+  {
+    label: 'Organisasi',
+    items: [
+      ['Struktur', '/member/organization/'],
+      ['Program kerja', '/member/programs/'],
+      ['Volunteer', '/member/volunteer/'],
+    ],
+  },
+  {
+    label: 'Pengembangan',
+    items: [
+      ['Untuk Anda', '/member/opportunities/'],
+      ['Mentoring', '/member/mentoring/'],
+      ['Alumni Network', '/member/alumni/'],
+      ['Berbagi cerita', '/member/stories/'],
+    ],
+  },
+] as const;
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '');
+const isActive = (href: string) => {
+  const target = withBase(href).replace(/\/$/, '');
+  return currentPath === target || (target !== withBase('/member').replace(/\/$/, '') && currentPath.startsWith(`${target}/`));
+};
+
+const navLinkClass = (href: string) =>
+  `block min-h-11 rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors ${isActive(href)
+    ? 'bg-brand/10 text-brand'
+    : 'text-slate-700 hover:bg-accent/10 hover:text-brand'}`;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -22,70 +79,110 @@ const {
     id="member-area"
     data-require-approved={requireApproved ? '1' : '0'}
     data-require-admin={requireAdmin ? '1' : '0'}
-    class="mx-auto max-w-7xl px-5 py-10 lg:px-8"
+    class="mx-auto max-w-7xl px-5 py-8 lg:px-8 lg:py-10"
   >
+    <details class="mb-5 rounded-2xl border border-slate-200 bg-white lg:hidden">
+      <summary class="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 px-4 py-3">
+        <div class="min-w-0">
+          <p class="type-eyebrow text-brand">Area Anggota</p>
+          <p data-member-nav-name class="mt-1 truncate font-bold text-slate-950">PPI Ishikawa</p>
+          <p data-member-nav-status class="mt-0.5 text-xs text-slate-500">Memuat keanggotaan…</p>
+        </div>
+        <span class="shrink-0 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700">Menu ↓</span>
+      </summary>
+
+      <div class="max-h-[65dvh] overflow-y-auto border-t border-slate-100 p-3">
+        <nav class="space-y-4" aria-label="Navigasi anggota mobile">
+          {navGroups.map((group) => (
+            <div>
+              <p class="px-3 pb-1 type-meta uppercase tracking-[0.12em] text-slate-400">{group.label}</p>
+              <div class="space-y-1">
+                {group.items.map(([label, href]) => (
+                  <a
+                    href={withBase(href)}
+                    class={navLinkClass(href)}
+                    aria-current={isActive(href) ? 'page' : undefined}
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <div data-member-admin-tools class="hidden border-t border-slate-100 pt-3">
+            <p class="px-3 pb-1 type-meta uppercase tracking-[0.12em] text-slate-400">Admin</p>
+            <a
+              href={withBase('/member/admin/')}
+              class={navLinkClass('/member/admin/')}
+              aria-current={isActive('/member/admin/') ? 'page' : undefined}
+            >
+              Admin Center
+            </a>
+          </div>
+        </nav>
+
+        <button
+          data-member-signout
+          type="button"
+          class="mt-4 min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-left text-sm font-bold text-slate-700 hover:border-accent/35 hover:text-brand"
+        >
+          Keluar
+        </button>
+      </div>
+    </details>
+
     <div class="grid gap-6 lg:grid-cols-[240px_minmax(0,1fr)]">
-      <aside class="h-fit rounded-3xl border border-slate-200 bg-white p-4 lg:sticky lg:top-28">
+      <aside class="hidden h-fit rounded-2xl border border-slate-200 bg-white p-4 lg:sticky lg:top-28 lg:block">
         <div class="border-b border-slate-100 px-3 pb-4">
-          <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Area Anggota</p>
-          <p id="member-nav-name" class="mt-2 font-bold text-slate-950">PPI Ishikawa</p>
-          <p id="member-nav-status" class="mt-1 text-xs text-slate-500">Memuat keanggotaan…</p>
+          <p class="type-eyebrow text-brand">Area Anggota</p>
+          <p data-member-nav-name class="mt-2 font-bold text-slate-950">PPI Ishikawa</p>
+          <p data-member-nav-status class="mt-1 text-xs text-slate-500">Memuat keanggotaan…</p>
         </div>
 
-        <nav class="mt-3 max-h-[70vh] space-y-4 overflow-y-auto pr-1 text-sm" aria-label="Navigasi anggota">
-          <div>
-            <p class="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Akun</p>
-            <a href={withBase('/member/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Dashboard</a>
-            <a href={withBase('/member/profile/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Profil saya</a>
-            <a href={withBase('/member/directory/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Direktori anggota</a>
-          </div>
+        <nav class="mt-3 max-h-[68vh] space-y-4 overflow-y-auto pr-1" aria-label="Navigasi anggota">
+          {navGroups.map((group) => (
+            <div>
+              <p class="px-3 pb-1 type-meta uppercase tracking-[0.12em] text-slate-400">{group.label}</p>
+              <div class="space-y-1">
+                {group.items.map(([label, href]) => (
+                  <a
+                    href={withBase(href)}
+                    class={navLinkClass(href)}
+                    aria-current={isActive(href) ? 'page' : undefined}
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
 
-          <div class="border-t border-slate-100 pt-3">
-            <p class="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Layanan</p>
-            <a href={withBase('/member/card/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kartu anggota</a>
-            <a href={withBase('/member/certificates/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Sertifikat</a>
-            <a href={withBase('/member/documents/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Dokumen anggota</a>
-          </div>
-
-          <div class="border-t border-slate-100 pt-3">
-            <p class="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Komunitas</p>
-            <a href={withBase('/member/events/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Agenda & RSVP</a>
-            <a href={withBase('/member/calendar/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Kalender</a>
-            <a href={withBase('/member/announcements/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Pengumuman</a>
-            <a href={withBase('/member/interests/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Minat & skills</a>
-            <a href={withBase('/member/aspirations/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Aspirasi</a>
-          </div>
-
-          <div class="border-t border-slate-100 pt-3">
-            <p class="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Organisasi</p>
-            <a href={withBase('/member/organization/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Struktur</a>
-            <a href={withBase('/member/programs/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Program kerja</a>
-            <a href={withBase('/member/volunteer/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Volunteer</a>
-          </div>
-
-          <div class="border-t border-slate-100 pt-3">
-            <p class="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Pengembangan</p>
-            <a href={withBase('/member/opportunities/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Untuk Anda</a>
-            <a href={withBase('/member/mentoring/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Mentoring</a>
-            <a href={withBase('/member/alumni/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Alumni Network</a>
-            <a href={withBase('/member/stories/')} class="block rounded-xl px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand">Berbagi cerita</a>
-          </div>
-
-          <div id="member-admin-tools" class="hidden border-t border-slate-100 pt-3">
-            <p class="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Admin</p>
-            <a href={withBase('/member/admin/')} class="block rounded-xl bg-slate-950 px-3 py-2.5 font-semibold text-white hover:bg-brand">Admin Center</a>
+          <div data-member-admin-tools class="hidden border-t border-slate-100 pt-3">
+            <p class="px-3 pb-1 type-meta uppercase tracking-[0.12em] text-slate-400">Admin</p>
+            <a
+              href={withBase('/member/admin/')}
+              class={navLinkClass('/member/admin/')}
+              aria-current={isActive('/member/admin/') ? 'page' : undefined}
+            >
+              Admin Center
+            </a>
           </div>
         </nav>
 
         <div class="mt-4 border-t border-slate-100 pt-4">
-          <button id="member-signout" type="button" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-left text-sm font-bold text-slate-700 hover:border-accent/35 hover:text-brand">
+          <button
+            data-member-signout
+            type="button"
+            class="min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-left text-sm font-bold text-slate-700 hover:border-accent/35 hover:text-brand"
+          >
             Keluar
           </button>
         </div>
       </aside>
 
-      <div>
-        <div id="member-loading" class="rounded-3xl border border-slate-200 bg-white p-8">
+      <div class="min-w-0">
+        <div id="member-loading" class="rounded-2xl border border-slate-200 bg-white p-8" role="status" aria-live="polite">
           <p class="font-bold text-slate-950">Memuat area anggota…</p>
           <p class="mt-2 text-sm text-slate-600">Memeriksa sesi dan status keanggotaan Anda.</p>
         </div>
@@ -108,10 +205,10 @@ const {
     const loading = document.getElementById('member-loading');
     const demoBanner = document.getElementById('member-demo-banner');
     const content = document.getElementById('member-content');
-    const name = document.getElementById('member-nav-name');
-    const status = document.getElementById('member-nav-status');
-    const adminTools = document.getElementById('member-admin-tools');
-    const signout = document.getElementById('member-signout');
+    const names = document.querySelectorAll('[data-member-nav-name]');
+    const statuses = document.querySelectorAll('[data-member-nav-status]');
+    const adminTools = document.querySelectorAll('[data-member-admin-tools]');
+    const signoutButtons = document.querySelectorAll('[data-member-signout]');
 
     const statusLabels = {
       incoming: 'Incoming',
@@ -125,20 +222,25 @@ const {
     const member = await requireMember({ approved, admin });
 
     if (member?.profile) {
-      if (name) name.textContent = member.profile.full_name || 'Anggota PPI Ishikawa';
-      if (status) {
-        const label = statusLabels[member.profile.membership_status] || member.profile.membership_status;
-        status.textContent = member.profile.verification_status === 'approved'
-          ? label
-          : 'Menunggu verifikasi';
+      const displayName = member.profile.full_name || 'Anggota PPI Ishikawa';
+      names.forEach((node) => { node.textContent = displayName; });
+
+      const membershipLabel = member.profile.verification_status === 'approved'
+        ? (statusLabels[member.profile.membership_status] || member.profile.membership_status)
+        : 'Menunggu verifikasi';
+      statuses.forEach((node) => { node.textContent = membershipLabel; });
+
+      if (member.profile.role === 'admin') {
+        adminTools.forEach((node) => node.classList.remove('hidden'));
       }
-      if (member.profile.role === 'admin') adminTools?.classList.remove('hidden');
       if (isMembershipDemoMode) demoBanner?.classList.remove('hidden');
 
       loading?.classList.add('hidden');
       content?.classList.remove('hidden');
     }
 
-    signout?.addEventListener('click', signOutMember);
+    signoutButtons.forEach((button) => {
+      button.addEventListener('click', signOutMember);
+    });
   </script>
 </BaseLayout>
