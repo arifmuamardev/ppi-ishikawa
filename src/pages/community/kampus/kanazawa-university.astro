@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import GuideToc from '../../../components/GuideToc.astro';
-import InstitutionMark from '../../../components/InstitutionMark.astro';
+import CampusGuideHeader from '../../../components/CampusGuideHeader.astro';
 import ContextualText from '../../../components/ContextualText.astro';
 import CampusFaqGuideLinks from '../../../components/CampusFaqGuideLinks.astro';
 import CampusScholarshipGuide from '../../../components/CampusScholarshipGuide.astro';
@@ -9,7 +9,6 @@ import CampusCareerGuide from '../../../components/CampusCareerGuide.astro';
 import StoriesSection from '../../../components/StoriesSection.astro';
 import CampusOfficialSources from '../../../components/CampusOfficialSources.astro';
 import RelatedLinks from '../../../components/RelatedLinks.astro';
-import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import CampusProfile from '../../../components/CampusProfile.astro';
 import CampusGuideBridge from '../../../components/CampusGuideBridge.astro';
 import LicensedPhoto from '../../../components/LicensedPhoto.astro';
@@ -31,33 +30,20 @@ const priorityFaq = kuFaq.filter((item) => ["kakuma-vs-takaramachi-tsuruma","inf
   title="Kanazawa University · Panduan Kampus"
   description="Panduan praktis mahasiswa Indonesia di Kanazawa University: kampus, minggu pertama, housing, transportasi, dukungan internasional, bahasa Jepang, prayer room, career, keluarga, dan FAQ."
 >
-  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
-    <Breadcrumbs items={[{ label: 'Beranda', href: '/' }, { label: 'Kampus', href: '/community/kampus/' }, { label: 'Kanazawa University' }]} />
-    <p class="mt-8 text-sm font-bold uppercase tracking-[0.18em] text-accent-dark">PPI Ishikawa · Panduan Kampus</p>
-    <div class="mt-4 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-      <InstitutionMark id="kanazawa-university" size="lg" class="shrink-0" />
-      <h1 class="text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Kanazawa University</h1>
-    </div>
-    <p class="mt-2 text-lg text-slate-500">金沢大学 · Kanazawa</p>
-    <p class="mt-6 max-w-3xl text-lg leading-8 text-slate-600">
-      Panduan praktis untuk mahasiswa Indonesia di Kanazawa University. Informasi resmi kampus tetap menjadi sumber utama; PPI membantu menyusun urutan, konteks, dan hal yang paling sering dibutuhkan mahasiswa baru maupun mahasiswa yang sudah tinggal di Ishikawa.
-    </p>
-
-    <div class="mt-7 flex flex-wrap gap-3 text-sm">
-      <span class="rounded-full bg-slate-900 px-4 py-2 font-semibold text-white">National university</span>
-      <span class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-slate-700">Kakuma + Takaramachi–Tsuruma</span>
-      <span class="rounded-full border border-accent/35 bg-accent/10 px-4 py-2 font-semibold text-accent-dark">Terakhir diverifikasi: {kanazawaUniversityPack.lastVerified}</span>
-      <a href={withBase('/life-in-ishikawa/municipality-guides/#kanazawa')} class="rounded-full border border-slate-200 bg-white px-4 py-2 font-semibold text-brand transition hover:border-accent/35 hover:bg-accent/10">Panduan Kanazawa →</a>
-    </div>
-
-    <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-      {kuQuickLinks.map(([label, url]) => (
-        <a href={url} target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-200 bg-white p-4 text-sm font-bold text-slate-800 transition hover:border-accent/35 hover:shadow-sm">
-          {label} ↗
-        </a>
-      ))}
-    </div>
-  </section>
+  <CampusGuideHeader
+    campusId="kanazawa-university"
+    breadcrumbLabel="Kanazawa University"
+    title="Kanazawa University"
+    subtitle="金沢大学 · Kanazawa"
+    description="Panduan praktis untuk mahasiswa Indonesia di Kanazawa University. Informasi resmi kampus tetap menjadi sumber utama; PPI membantu menyusun urutan, konteks, dan hal yang paling sering dibutuhkan mahasiswa baru maupun mahasiswa yang sudah tinggal di Ishikawa."
+    institutionType="National university"
+    areaLabel="Kakuma + Takaramachi–Tsuruma"
+    lastVerified={kanazawaUniversityPack.lastVerified}
+    municipalityLinks={[
+      { label: "Panduan Kanazawa", href: "/life-in-ishikawa/municipality-guides/#kanazawa" }
+    ]}
+    quickLinks={kuQuickLinks}
+  />
 
   <CampusProfile profile={campusProfileBySlug['kanazawa-university']} />
 
