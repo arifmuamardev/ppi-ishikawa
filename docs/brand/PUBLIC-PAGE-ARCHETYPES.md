@@ -332,3 +332,24 @@ Changes implemented:
 - SG08 Keluarga and SG14 Municipality Guides are no longer treated as sequential chapters
 
 Next archetype migration: **Nested Landing**, starting with Keluarga.
+
+
+### Nested Landing shell — implemented
+
+The nested-landing header pattern is now centralized through `PageHeader.astro`.
+
+Implemented on:
+- **Kampus**
+- **Keluarga**
+
+`PageIntro.astro` now delegates to the same canonical `PageHeader`, so level-1 Landing/Finder pages and nested landings share one title/lead system instead of maintaining separate header markup.
+
+Naming cleanup implemented:
+- Family Hub → **Keluarga**
+- Scholarship Hub → **Beasiswa**
+- Campus Hub → **Kampus**
+- Career Hub → **Karier**
+
+“Hub” remains acceptable as an internal architectural idea or external-source term, but it is no longer the product name exposed by PPI Ishikawa navigation and page titles.
+
+Keluarga also no longer uses `GuideMeta`; verification is shown as compact landing-page metadata rather than article metadata.
