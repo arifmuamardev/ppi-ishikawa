@@ -2,15 +2,12 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import GuideMeta from '../../components/GuideMeta.astro';
 import GuideToc from '../../components/GuideToc.astro';
-import GuidePager from '../../components/GuidePager.astro';
-import RelatedLinks from '../../components/RelatedLinks.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import MunicipalityMark from '../../components/MunicipalityMark.astro';
 import OfficialBrand from '../../components/OfficialBrand.astro';
 import InstitutionMark from '../../components/InstitutionMark.astro';
 import LicensedPhoto from '../../components/LicensedPhoto.astro';
 import { withBase } from '../../utils/paths';
-import { relatedSurvivalContent } from '../../data/related-content';
 import { officialBrands } from '../../data/official-brands';
 import { publicMedia } from '../../data/media';
 
@@ -387,8 +384,4 @@ const sources = [
       </div>
     </div>
   </section>
-
-  <RelatedLinks items={relatedSurvivalContent.SG14} />
-
-  <GuidePager code="SG14" />
 </BaseLayout>
