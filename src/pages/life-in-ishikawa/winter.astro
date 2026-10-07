@@ -1,14 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import GuideMeta from '../../components/GuideMeta.astro';
+import GuideHeader from '../../components/GuideHeader.astro';
 import GuideToc from '../../components/GuideToc.astro';
 import GuidePager from '../../components/GuidePager.astro';
-import RelatedLinks from '../../components/RelatedLinks.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import ContextualText from '../../components/ContextualText.astro';
 import LicensedPhoto from '../../components/LicensedPhoto.astro';
 import { withBase } from '../../utils/paths';
-import { relatedSurvivalContent } from '../../data/related-content';
 import { publicMedia } from '../../data/media';
 
 const sections = [
@@ -199,17 +196,7 @@ const sources = [
   title="Musim Dingin di Ishikawa"
   description="Panduan musim dingin untuk pelajar Indonesia di Ishikawa: salju, pakaian, heating, frozen pipes, jalan kaki, bicycle, driving, dan winter travel."
 >
-  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
-    <Breadcrumbs items={[{ label: 'Beranda', href: '/' }, { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' }, { label: 'Musim Dingin' }]} />
-    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG11 · Musim Dingin di Ishikawa</p>
-    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Menghadapi musim dingin di Ishikawa.</h1>
-    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
-      Winter di Ishikawa memengaruhi lebih dari sekadar pakaian: jalan menjadi licin, waktu perjalanan berubah,
-      transportasi dapat terganggu, dan rumah perlu dipersiapkan menghadapi suhu rendah.
-    </p>
-
-    <GuideMeta code="SG11" />
-  </section>
+  <GuideHeader code="SG11" headline={"Menghadapi musim dingin di Ishikawa."} intro={"Winter di Ishikawa memengaruhi lebih dari sekadar pakaian: jalan menjadi licin, waktu perjalanan berubah, transportasi dapat terganggu, dan rumah perlu dipersiapkan menghadapi suhu rendah."} />
 
   <section class="mx-auto max-w-5xl px-5 pb-8 lg:px-8">
     <div class="mb-4">
@@ -323,8 +310,6 @@ const sources = [
       </div>
     </div>
   </section>
-
-  <RelatedLinks items={relatedSurvivalContent.SG11} />
 
   <GuidePager code="SG11" />
 </BaseLayout>
