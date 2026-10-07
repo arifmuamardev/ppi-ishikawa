@@ -1,13 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import GuideMeta from '../../components/GuideMeta.astro';
+import GuideHeader from '../../components/GuideHeader.astro';
 import GuideToc from '../../components/GuideToc.astro';
 import GuidePager from '../../components/GuidePager.astro';
-import RelatedLinks from '../../components/RelatedLinks.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import ContextualText from '../../components/ContextualText.astro';
 import { withBase } from '../../utils/paths';
-import { relatedSurvivalContent } from '../../data/related-content';
 
 const sections = [
   {
@@ -147,16 +144,7 @@ const sources = [
   title="Bank & Keuangan di Jepang"
   description="Panduan bank dan pembayaran untuk pelajar Indonesia di Ishikawa: membuka rekening, ATM, transfer, remittance, update data, keamanan, dan persiapan keuangan."
 >
-  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
-    <Breadcrumbs items={[{ label: 'Beranda', href: '/' }, { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' }, { label: 'Bank & Keuangan' }]} />
-    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG09 · Bank & Keuangan</p>
-    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Mengelola uang dan rekening selama tinggal di Jepang.</h1>
-    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
-      Rekening bank sering dibutuhkan untuk scholarship, salary, rent, utilities, dan pembayaran lain. Bandingkan persyaratan pembukaan, biaya, transfer, kartu, ATM, dan dukungan bahasa langsung pada bank yang Anda pertimbangkan.
-    </p>
-
-    <GuideMeta code="SG09" />
-  </section>
+  <GuideHeader code="SG09" headline={"Mengelola uang dan rekening selama tinggal di Jepang."} intro={"Rekening bank sering dibutuhkan untuk scholarship, salary, rent, utilities, dan pembayaran lain. Bandingkan persyaratan pembukaan, biaya, transfer, kartu, ATM, dan dukungan bahasa langsung pada bank yang Anda pertimbangkan."} />
 
   <GuideToc sections={sections} />
 
@@ -260,8 +248,6 @@ const sources = [
       </div>
     </div>
   </section>
-
-  <RelatedLinks items={relatedSurvivalContent.SG09} />
 
   <GuidePager code="SG09" />
 </BaseLayout>
