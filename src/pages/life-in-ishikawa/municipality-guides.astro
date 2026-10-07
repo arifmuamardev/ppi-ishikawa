@@ -1,8 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import GuideMeta from '../../components/GuideMeta.astro';
-import GuideToc from '../../components/GuideToc.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import FinderHeader from '../../components/FinderHeader.astro';
 import MunicipalityMark from '../../components/MunicipalityMark.astro';
 import OfficialBrand from '../../components/OfficialBrand.astro';
 import InstitutionMark from '../../components/InstitutionMark.astro';
@@ -222,25 +220,24 @@ const sources = [
   title="Panduan Pemerintah Lokal di Ishikawa"
   description="Direktori municipality untuk pelajar Indonesia di Ishikawa: Kanazawa, Nonoichi, Hakusan, Komatsu, Kahoku, dan seluruh 19 cities/towns."
 >
-  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
-    <Breadcrumbs items={[{ label: 'Beranda', href: '/' }, { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' }, { label: 'Panduan Pemerintah Lokal' }]} />
-    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG14 · Panduan Pemerintah Lokal</p>
-    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Gunakan panduan yang sesuai dengan alamat Anda.</h1>
-    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
-      Banyak prosedur kehidupan di Jepang ditangani oleh municipality: alamat, National Health Insurance, garbage,
-      childcare, tax, water, dan layanan lokal lainnya. Karena itu, “tinggal di Ishikawa” belum cukup—Anda harus tahu
-      city atau town tempat alamat Anda terdaftar.
-    </p>
-
-    <GuideMeta code="SG14" />
-    <div class="mt-7 flex flex-wrap items-center gap-4">
-      <InstitutionMark id="ishikawa" size="lg" />
+  <FinderHeader
+    breadcrumbs={[
+      { label: 'Beranda', href: '/' },
+      { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' },
+      { label: 'Pemerintah Lokal' }
+    ]}
+    eyebrow="Pemerintah lokal"
+    title="Gunakan panduan yang sesuai dengan alamat Anda."
+    description="Banyak prosedur kehidupan di Jepang ditangani oleh municipality. Mulai dari city atau town tempat alamat Anda terdaftar, lalu buka sumber resmi yang sesuai."
+  >
+    <div slot="meta" class="flex items-center gap-4">
+      <InstitutionMark id="ishikawa" size="md" />
       <div>
         <p class="text-sm font-bold text-slate-900">Ishikawa Prefecture</p>
-        <p class="mt-1 text-xs leading-5 text-slate-500">Panduan municipality dan layanan lokal di seluruh prefektur.</p>
+        <p class="mt-1 text-xs leading-5 text-slate-500">Direktori layanan lokal untuk seluruh prefektur.</p>
       </div>
     </div>
-  </section>
+  </FinderHeader>
 
   <section class="mx-auto max-w-5xl px-5 pb-8 lg:px-8">
     <div class="mb-4">
