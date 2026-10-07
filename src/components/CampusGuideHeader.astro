@@ -1,0 +1,84 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+import InstitutionMark from './InstitutionMark.astro';
+import { withBase } from '../utils/paths';
+
+interface MunicipalityLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  campusId: string;
+  breadcrumbLabel: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  institutionType: string;
+  areaLabel: string;
+  lastVerified: string;
+  municipalityLinks?: MunicipalityLink[];
+  quickLinks?: Array<[string, string]>;
+}
+
+const {
+  campusId,
+  breadcrumbLabel,
+  title,
+  subtitle,
+  description,
+  institutionType,
+  areaLabel,
+  lastVerified,
+  municipalityLinks = [],
+  quickLinks = []
+} = Astro.props;
+---
+<section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+  <Breadcrumbs
+    items={[
+      { label: 'Beranda', href: '/' },
+      { label: 'Kampus', href: '/community/kampus/' },
+      { label: breadcrumbLabel }
+    ]}
+  />
+
+  <p class="type-eyebrow mt-8 text-accent-dark">PPI Ishikawa · Panduan Kampus</p>
+
+  <div class="mt-4 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+    <InstitutionMark id={campusId} size="lg" class="shrink-0" />
+    <h1 class="type-display text-slate-950">{title}</h1>
+  </div>
+
+  <p class="mt-2 text-lg text-slate-500">{subtitle}</p>
+  <p class="type-lead mt-5 max-w-3xl text-slate-600">{description}</p>
+
+  <div class="mt-7 flex flex-wrap gap-2 text-sm">
+    <span class="inline-flex min-h-10 items-center rounded-full bg-slate-900 px-4 font-semibold text-white">{institutionType}</span>
+    <span class="inline-flex min-h-10 items-center rounded-full border border-slate-200 bg-white px-4 font-semibold text-slate-700">{areaLabel}</span>
+    <span class="inline-flex min-h-10 items-center rounded-full border border-accent/35 bg-accent/10 px-4 font-semibold text-accent-dark">Diverifikasi: {lastVerified}</span>
+    {municipalityLinks.map((item) => (
+      <a
+        href={withBase(item.href)}
+        class="inline-flex min-h-10 items-center rounded-full border border-slate-200 bg-white px-4 font-semibold text-brand transition-colors hover:border-accent/35 hover:bg-accent/10"
+      >
+        {item.label} →
+      </a>
+    ))}
+  </div>
+
+  {quickLinks.length > 0 && (
+    <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {quickLinks.map(([label, url]) => (
+        <a
+          href={url}
+          target="_blank"
+          rel="noreferrer"
+          class="inline-flex min-h-14 items-center rounded-2xl border border-slate-200 bg-white p-4 text-sm font-bold text-slate-800 transition-colors hover:border-accent/35 hover:bg-accent/5"
+        >
+          {label} ↗
+        </a>
+      ))}
+    </div>
+  )}
+</section>
