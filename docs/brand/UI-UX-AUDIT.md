@@ -200,3 +200,15 @@ Implemented for the public UI shell:
 - ordinary Family activity result cards no longer carry default shadow/elevated treatment
 
 This pass focuses on 360–430 px behavior without changing content or desktop information architecture.
+
+
+### Pass 6 — Public accessibility interactions
+Implemented across the public finder/navigation layer:
+- dynamic result counts on Beasiswa, Karier, Stories, Places, and Family Activities now use polite live announcements
+- empty-result states expose status semantics when shown
+- Places category filters expose an explicit button group and pressed state
+- filter reset buttons use larger touch targets
+- Guide TOC links and RelatedLinks use larger interaction targets
+- existing global skip navigation, focus-visible treatment, reduced-motion handling, form labels, and main landmark remain the accessibility foundation
+
+This pass improves interaction semantics without changing content or filtering behavior.
