@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import PageIntro from '../../../components/PageIntro.astro';
-import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import PageHeader from '../../../components/PageHeader.astro';
 import TopicIcon from '../../../components/TopicIcon.astro';
 import InstitutionMark from '../../../components/InstitutionMark.astro';
 import MunicipalityMark from '../../../components/MunicipalityMark.astro';
@@ -50,13 +49,14 @@ const areaGroups = [
   title="Kampus di Ishikawa"
   description="Panduan kampus PPI Ishikawa untuk enam institusi dengan anggota tercatat: lokasi, housing, mobilitas, dukungan mahasiswa, dan Campus Pack."
 >
-  <div class="mx-auto max-w-7xl px-5 pt-10 lg:px-8">
-    <Breadcrumbs items={[{ label: 'Beranda', href: '/' }, { label: 'Kampus' }]} />
-  </div>
-
-  <PageIntro
+  <PageHeader
+    eyebrow="Kampus"
     title="Kampus di Ishikawa"
     description="Pilih kampus Anda, pahami wilayahnya, lalu gunakan perbandingan hanya bila diperlukan."
+    breadcrumbs={[
+      { label: 'Beranda', href: '/' },
+      { label: 'Kampus' }
+    ]}
   />
 
   <section class="mx-auto max-w-7xl px-5 pb-6 lg:px-8">

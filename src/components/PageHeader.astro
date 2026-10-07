@@ -1,0 +1,39 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const { eyebrow, title, description, breadcrumbs } = Astro.props;
+const hasMedia = Astro.slots.has('media');
+---
+<section class="mx-auto max-w-7xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+  {breadcrumbs && breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}
+
+  <div class:list={[
+    breadcrumbs && breadcrumbs.length > 0 ? 'mt-8' : '',
+    hasMedia ? 'grid items-center gap-10 lg:grid-cols-[1.05fr_.95fr]' : ''
+  ]}>
+    <div>
+      <p class="type-eyebrow text-brand">{eyebrow}</p>
+      <h1 class="type-display mt-4 max-w-4xl text-slate-950">{title}</h1>
+      <p class="type-lead mt-5 max-w-3xl text-slate-600">{description}</p>
+      <slot name="meta" />
+    </div>
+
+    {hasMedia && (
+      <div>
+        <slot name="media" />
+      </div>
+    )}
+  </div>
+</section>
