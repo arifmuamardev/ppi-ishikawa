@@ -212,3 +212,15 @@ Implemented across the public finder/navigation layer:
 - existing global skip navigation, focus-visible treatment, reduced-motion handling, form labels, and main landmark remain the accessibility foundation
 
 This pass improves interaction semantics without changing content or filtering behavior.
+
+
+### Pass 7 — Public visual polish
+Implemented on the most visible public surfaces:
+- Stories, Community, Contact, Places, Family Activities, Family Municipality, About, and Hidup di Ishikawa
+- replaced repeated raw heading/eyebrow typography with semantic type roles
+- reduced standard-card radius from feature-level `3xl` to `2xl` where appropriate
+- removed default shadow from ordinary directory/result cards
+- retained stronger radius/surface treatment for actual feature panels and dark emphasis blocks
+- preserved content, information architecture, and interaction behavior
+
+This completes the public polish stage without introducing new design tokens or decorative effects.
