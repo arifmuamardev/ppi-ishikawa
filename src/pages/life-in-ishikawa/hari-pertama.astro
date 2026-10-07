@@ -1,12 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import GuideMeta from '../../components/GuideMeta.astro';
+import GuideHeader from '../../components/GuideHeader.astro';
 import GuideToc from '../../components/GuideToc.astro';
 import GuidePager from '../../components/GuidePager.astro';
-import RelatedLinks from '../../components/RelatedLinks.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import OfficialSources from '../../components/OfficialSources.astro';
 import { withBase } from '../../utils/paths';
-import { relatedSurvivalContent } from '../../data/related-content';
 
 const priorities = [
   {
@@ -158,17 +156,7 @@ const sources = [
   title="Hari Pertama di Ishikawa"
   description="Urutan praktis untuk hari-hari pertama setelah tiba dan menetapkan tempat tinggal di Ishikawa."
 >
-  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
-    <Breadcrumbs items={[{ label: 'Beranda', href: '/' }, { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' }, { label: 'Hari Pertama' }]} />
-    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG02 · Hari Pertama di Ishikawa</p>
-    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Sudah tiba. Apa yang harus dilakukan dulu?</h1>
-    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
-      “Hari pertama” di sini berarti beberapa hari awal setelah Anda benar-benar menetapkan tempat tinggal.
-      Tidak semua urusan harus selesai dalam satu hari. Prioritaskan yang mempunyai tenggat atau menjadi prasyarat bagi proses lain.
-    </p>
-
-    <GuideMeta code="SG02" />
-  </section>
+  <GuideHeader code="SG02" headline={"Sudah tiba. Apa yang harus dilakukan dulu?"} intro={"“Hari pertama” di sini berarti beberapa hari awal setelah Anda benar-benar menetapkan tempat tinggal. Tidak semua urusan harus selesai dalam satu hari. Prioritaskan yang mempunyai tenggat atau menjadi prasyarat bagi proses lain."} />
 
   <GuideToc sections={priorities} />
 
@@ -276,28 +264,7 @@ const sources = [
     </div>
   </section>
 
-  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
-    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Sumber resmi</p>
-      <h2 class="mt-3 text-2xl font-bold">Gunakan sumber berikut untuk persyaratan terbaru.</h2>
-      <div class="mt-7 grid gap-4">
-        {sources.map((source) => (
-          <a
-            href={source.url}
-            target="_blank"
-            rel="noreferrer"
-            class="group rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800"
-          >
-            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{source.owner}</p>
-            <h3 class="mt-2 font-bold text-white group-hover:text-accent-soft">{source.title} ↗</h3>
-            <p class="mt-2 text-sm leading-6 text-slate-400">{source.description}</p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <RelatedLinks items={relatedSurvivalContent.SG02} />
+  <OfficialSources sources={sources} title={"Gunakan sumber berikut untuk persyaratan terbaru."} />
 
   <GuidePager code="SG02" />
 </BaseLayout>

@@ -286,3 +286,49 @@ Do not build all of these at once. Standardize one archetype at a time and migra
 5. **Application:** Member/Admin in a separate pass.
 
 This order reduces inconsistency while minimizing simultaneous redesign risk.
+
+
+## Implementation status
+
+### Guide shell migration — implemented
+
+The 12 linear Survival Guide articles now use one shared shell:
+
+```
+GuideHeader
+  ├── Breadcrumb
+  ├── SG identity
+  ├── display title
+  ├── lead
+  └── progressive-disclosure GuideMeta
+
+GuideToc
+Article content
+OfficialSources
+GuidePager
+```
+
+Migrated routes:
+
+- SG01 Sebelum Berangkat
+- SG02 Hari Pertama
+- SG03 Administrasi
+- SG04 Tempat Tinggal
+- SG05 Kehidupan Sehari-hari
+- SG06 Transportasi
+- SG07 Kesehatan
+- SG09 Bank & Keuangan
+- SG10 Bencana & Darurat
+- SG11 Musim Dingin
+- SG12 Bahasa Jepang & Dukungan
+- SG13 Meninggalkan Ishikawa / Jepang
+
+Changes implemented:
+- breadcrumb/title/meta markup moved into `GuideHeader.astro`
+- metadata was simplified visually; registry/change detail remains available via disclosure
+- official-source rendering moved into `OfficialSources.astro`
+- generic `RelatedLinks` was removed from the 12 linear guides
+- `GuidePager` now moves only through the 12 actual linear articles
+- SG08 Keluarga and SG14 Municipality Guides are no longer treated as sequential chapters
+
+Next archetype migration: **Nested Landing**, starting with Keluarga.

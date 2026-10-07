@@ -1,12 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import GuideMeta from '../../components/GuideMeta.astro';
-import GuidePager from '../../components/GuidePager.astro';
-import RelatedLinks from '../../components/RelatedLinks.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import TopicIcon from '../../components/TopicIcon.astro';
 import { withBase } from '../../utils/paths';
-import { relatedSurvivalContent } from '../../data/related-content';
 import { familyHubItems, familyLastVerified } from '../../data/family';
 import { publicMedia } from '../../data/media';
 
@@ -205,7 +202,4 @@ const officialSources = [
       </div>
     </div>
   </section>
-
-  <RelatedLinks items={relatedSurvivalContent.SG08} />
-  <GuidePager code="SG08" />
 </BaseLayout>

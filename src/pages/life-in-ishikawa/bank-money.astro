@@ -1,13 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import GuideMeta from '../../components/GuideMeta.astro';
+import GuideHeader from '../../components/GuideHeader.astro';
 import GuideToc from '../../components/GuideToc.astro';
 import GuidePager from '../../components/GuidePager.astro';
-import RelatedLinks from '../../components/RelatedLinks.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import OfficialSources from '../../components/OfficialSources.astro';
 import ContextualText from '../../components/ContextualText.astro';
 import { withBase } from '../../utils/paths';
-import { relatedSurvivalContent } from '../../data/related-content';
 
 const sections = [
   {
@@ -147,16 +145,7 @@ const sources = [
   title="Bank & Keuangan di Jepang"
   description="Panduan bank dan pembayaran untuk pelajar Indonesia di Ishikawa: membuka rekening, ATM, transfer, remittance, update data, keamanan, dan persiapan keuangan."
 >
-  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
-    <Breadcrumbs items={[{ label: 'Beranda', href: '/' }, { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' }, { label: 'Bank & Keuangan' }]} />
-    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG09 · Bank & Keuangan</p>
-    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Mengelola uang dan rekening selama tinggal di Jepang.</h1>
-    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
-      Rekening bank sering dibutuhkan untuk scholarship, salary, rent, utilities, dan pembayaran lain. Bandingkan persyaratan pembukaan, biaya, transfer, kartu, ATM, dan dukungan bahasa langsung pada bank yang Anda pertimbangkan.
-    </p>
-
-    <GuideMeta code="SG09" />
-  </section>
+  <GuideHeader code="SG09" headline={"Mengelola uang dan rekening selama tinggal di Jepang."} intro={"Rekening bank sering dibutuhkan untuk scholarship, salary, rent, utilities, dan pembayaran lain. Bandingkan persyaratan pembukaan, biaya, transfer, kartu, ATM, dan dukungan bahasa langsung pada bank yang Anda pertimbangkan."} />
 
   <GuideToc sections={sections} />
 
@@ -245,23 +234,7 @@ const sources = [
     </div>
   </section>
 
-  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
-    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-red-300">Sumber resmi</p>
-      <h2 class="mt-3 text-2xl font-bold">Gunakan regulator untuk prinsip, bank untuk detail produknya.</h2>
-      <div class="mt-7 grid gap-4">
-        {sources.map((source) => (
-          <a href={source.url} target="_blank" rel="noreferrer" class="group rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800">
-            <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{source.owner}</p>
-            <h3 class="mt-2 font-bold text-white group-hover:text-accent-soft">{source.title} ↗</h3>
-            <p class="mt-2 text-sm leading-6 text-slate-400">{source.description}</p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <RelatedLinks items={relatedSurvivalContent.SG09} />
+  <OfficialSources sources={sources} title={"Gunakan regulator untuk prinsip, bank untuk detail produknya."} />
 
   <GuidePager code="SG09" />
 </BaseLayout>

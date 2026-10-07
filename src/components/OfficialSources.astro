@@ -1,0 +1,36 @@
+---
+interface Source {
+  owner: string;
+  title: string;
+  description: string;
+  url: string;
+}
+
+interface Props {
+  sources: Source[];
+  title: string;
+}
+
+const { sources, title } = Astro.props;
+---
+<section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
+  <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
+    <p class="type-eyebrow text-accent-soft">Sumber resmi</p>
+    <h2 class="type-section mt-3 max-w-3xl">{title}</h2>
+
+    <div class="mt-7 grid gap-3">
+      {sources.map((source) => (
+        <a
+          href={source.url}
+          target="_blank"
+          rel="noreferrer"
+          class="group rounded-2xl border border-slate-700 bg-white/5 p-5 transition-colors hover:border-slate-500 hover:bg-white/10"
+        >
+          <p class="type-meta text-slate-400">{source.owner}</p>
+          <h3 class="mt-2 font-bold text-white group-hover:text-accent-soft">{source.title} ↗</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-400">{source.description}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
