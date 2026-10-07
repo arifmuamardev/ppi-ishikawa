@@ -176,3 +176,14 @@ Implemented in the shared Survival Guide shell:
 - centralized official-source treatment
 - removed duplicate Related + Pager end navigation
 - limited sequential pager to actual linear guide articles
+
+
+### Pass 4 — Finder task priority
+Implemented on the two densest public finders:
+- Beasiswa now exposes stage choices first and the actual scholarship finder immediately after
+- statistics, Indonesia-specific curation, campus shortcuts, and methodology remain available below the primary search task
+- Karier now opens directly into the Opportunity Finder
+- the duplicate introductory Career panel was removed
+- long-form career guidance remains below the finder for users who need it
+
+This uses progressive disclosure through page order rather than deleting information.
