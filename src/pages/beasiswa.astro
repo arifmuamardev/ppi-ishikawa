@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageIntro from '../components/PageIntro.astro';
+import FinderHeader from '../components/FinderHeader.astro';
 import TopicIcon from '../components/TopicIcon.astro';
 import InstitutionMark from '../components/InstitutionMark.astro';
 import { withBase } from '../utils/paths';
@@ -57,8 +57,8 @@ const staleCount = scholarships.filter(needsReview).length;
   title="Beasiswa"
   description="Informasi dan pencarian beasiswa untuk pelajar Indonesia di Ishikawa berdasarkan kampus, jenjang, dan tahap studi."
 >
-  <PageIntro
-    title="Scholarship Hub"
+  <FinderHeader
+    title="Beasiswa"
     description="Cari jalur beasiswa yang relevan untuk pelajar Indonesia di Ishikawa. Mulai dari status Anda, lalu cek eligibility, jalur aplikasi, dan sumber resmi sebelum mendaftar."
   />
 
