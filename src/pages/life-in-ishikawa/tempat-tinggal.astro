@@ -1,13 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import GuideMeta from '../../components/GuideMeta.astro';
+import GuideHeader from '../../components/GuideHeader.astro';
 import GuideToc from '../../components/GuideToc.astro';
 import GuidePager from '../../components/GuidePager.astro';
-import RelatedLinks from '../../components/RelatedLinks.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import ContextualText from '../../components/ContextualText.astro';
 import { withBase } from '../../utils/paths';
-import { relatedSurvivalContent } from '../../data/related-content';
 
 const sections = [
   {
@@ -144,16 +141,7 @@ const sources = [
   title="Tempat Tinggal di Ishikawa"
   description="Panduan housing untuk pelajar Indonesia di Ishikawa: memilih tempat tinggal, memahami biaya dan kontrak, move-in, utilities, serta move-out."
 >
-  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
-    <Breadcrumbs items={[{ label: 'Beranda', href: '/' }, { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' }, { label: 'Tempat Tinggal' }]} />
-    <p class="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">SG04 · Tempat Tinggal</p>
-    <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Mencari dan menempati rumah di Ishikawa.</h1>
-    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
-      Saat memilih housing, periksa total biaya, kontrak, guarantor, kondisi unit, utilities, aturan penggunaan, dan biaya saat keluar. Konfirmasikan detail penting kepada landlord, management company, universitas, atau sumber resmi sebelum menandatangani kontrak.
-    </p>
-
-    <GuideMeta code="SG04" />
-  </section>
+  <GuideHeader code="SG04" headline={"Mencari dan menempati rumah di Ishikawa."} intro={"Saat memilih housing, periksa total biaya, kontrak, guarantor, kondisi unit, utilities, aturan penggunaan, dan biaya saat keluar. Konfirmasikan detail penting kepada landlord, management company, universitas, atau sumber resmi sebelum menandatangani kontrak."} />
 
   <GuideToc sections={sections} />
 
@@ -270,8 +258,6 @@ const sources = [
       </div>
     </div>
   </section>
-
-  <RelatedLinks items={relatedSurvivalContent.SG04} />
 
   <GuidePager code="SG04" />
 </BaseLayout>
