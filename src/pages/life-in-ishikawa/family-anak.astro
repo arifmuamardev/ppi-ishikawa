@@ -1,205 +1,217 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import GuideMeta from '../../components/GuideMeta.astro';
-import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import NestedLandingHeader from '../../components/NestedLandingHeader.astro';
+import OfficialSources from '../../components/OfficialSources.astro';
 import TopicIcon from '../../components/TopicIcon.astro';
 import { withBase } from '../../utils/paths';
 import { familyHubItems, familyLastVerified } from '../../data/family';
 import { publicMedia } from '../../data/media';
 
-const quickNeeds = [
-  ['Saya akan membawa pasangan/anak ke Jepang', '/life-in-ishikawa/family/datang-bersama-keluarga/'],
-  ['Saya sedang hamil / akan melahirkan', '/life-in-ishikawa/family/kehamilan-kelahiran/'],
-  ['Saya mencari daycare atau nursery', '/life-in-ishikawa/family/childcare/'],
-  ['Anak saya akan masuk sekolah', '/life-in-ishikawa/family/sekolah-anak/'],
-  ['Saya ingin tahu benefit atau biaya medis', '/life-in-ishikawa/family/benefit-kesehatan/'],
-  ['Saya mencari tempat bermain bersama anak', '/life-in-ishikawa/family/aktivitas/'],
-  ['Saya ingin info sesuai kota tempat tinggal', '/life-in-ishikawa/family/municipality/'],
-  ['Saya ingin tahu apa yang harus dilakukan dan kapan', '/life-in-ishikawa/family/timeline/'],
-  ['Saya baru datang dan ingin checklist ringkas', '/life-in-ishikawa/family/starter-pack/']
-];
+const starterPack = familyHubItems.find((item) => item.code === 'F10');
+const primaryGuides = familyHubItems.filter((item) =>
+  ['F01', 'F02', 'F03', 'F04', 'F05'].includes(item.code)
+);
+const familyTools = familyHubItems.filter((item) =>
+  ['F06', 'F07', 'F08', 'F09'].includes(item.code)
+);
 
 const officialSources = [
   {
     owner: 'Kanazawa City',
     title: 'Children & Family — Foreign Residents',
-    note: 'Pregnancy, childbirth, childcare, allowance, medical subsidy, dan education untuk foreign residents.',
+    description: 'Pregnancy, childbirth, childcare, allowance, medical subsidy, dan education untuk foreign residents.',
     url: 'https://www4.city.kanazawa.lg.jp/kurashi_tetsuzuki/gaikokujimmuke/9990.html'
   },
   {
     owner: 'IFIE',
     title: 'Education for Children',
-    note: 'Japanese/learning support dan informasi pendidikan untuk anak dengan latar belakang asing di Ishikawa.',
+    description: 'Japanese/learning support dan informasi pendidikan untuk anak dengan latar belakang asing di Ishikawa.',
     url: 'https://www.ifie.or.jp/foreigners_life/kyoiku/'
   },
   {
     owner: 'Immigration Services Agency',
     title: 'Residence Procedures',
-    note: 'Residence status untuk pasangan/anak serta prosedur immigration nasional.',
+    description: 'Residence status untuk pasangan/anak serta prosedur immigration nasional.',
     url: 'https://www.moj.go.jp/isa/'
   },
   {
     owner: 'Kanazawa Child-Rearing Portal',
     title: 'Nobinobi Be-no',
-    note: 'Portal aktif untuk childcare, support center, parenting information, dan event keluarga.',
+    description: 'Portal aktif untuk childcare, support center, parenting information, dan event keluarga.',
     url: 'https://www.kanazawa-kosodate.net/'
+  }
+];
+
+const supportRoutes = [
+  {
+    eyebrow: 'Bahasa',
+    title: 'Tidak harus menyelesaikan semuanya dalam bahasa Jepang.',
+    description: 'Kanazawa menyediakan multilingual telephone interpretation termasuk Bahasa Indonesia untuk banyak layanan City Hall, termasuk childcare, health, insurance, dan education.',
+    label: 'Language support ↗',
+    href: 'https://www4.city.kanazawa.lg.jp/kurashi_tetsuzuki/gaikokujimmuke/9989.html',
+    external: true
+  },
+  {
+    eyebrow: 'Konsultasi',
+    title: 'Jika tidak tahu harus mulai dari mana.',
+    description: 'IFIE menyediakan consultation support untuk foreign residents di Ishikawa dan dapat membantu menemukan jalur yang sesuai untuk masalah anak, school, health, atau administration.',
+    label: 'IFIE consultation ↗',
+    href: 'https://www.ifie.or.jp/foreigners_life/soudan/',
+    external: true
+  },
+  {
+    eyebrow: 'Komunitas',
+    title: 'Informasi resmi + pengalaman keluarga Indonesia.',
+    description: 'PPI Ishikawa dapat membantu memberi konteks pengalaman komunitas tanpa menggantikan sumber pemerintah.',
+    label: 'Hubungi PPI Ishikawa →',
+    href: '/contact/',
+    external: false
   }
 ];
 ---
 
 <BaseLayout
-  title="Family Hub — Keluarga & Anak di Ishikawa"
-  description="Family Hub PPI Ishikawa untuk mahasiswa yang tinggal bersama pasangan atau anak: residence, pregnancy, childcare, school, benefit, health, dan aktivitas keluarga."
+  title="Keluarga & Anak di Ishikawa"
+  description="Panduan PPI Ishikawa untuk mahasiswa yang tinggal bersama pasangan atau anak: residence, pregnancy, childcare, school, benefit, health, dan aktivitas keluarga."
 >
-  <section class="mx-auto max-w-7xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
-    <Breadcrumbs items={[{ label: 'Beranda', href: '/' }, { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' }, { label: 'Family' }]} />
-    <div class="mt-8 grid items-center gap-10 lg:grid-cols-[1.05fr_.95fr]">
-      <div>
-        <p class="type-eyebrow text-brand">SG08 · Family Hub</p>
-        <h1 class="type-display mt-4 text-slate-950">Tinggal di Ishikawa bersama keluarga.</h1>
-        <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
-          Panduan praktis untuk mahasiswa yang datang bersama pasangan atau anak—mulai dari residence status, pregnancy dan childbirth,
-          childcare, sekolah, kesehatan, benefit, sampai kehidupan keluarga sehari-hari.
-        </p>
-        <p class="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-slate-400">Terakhir diverifikasi · {familyLastVerified}</p>
-        <GuideMeta code="SG08" />
-      </div>
+  <NestedLandingHeader
+    parentLabel="Hidup di Ishikawa"
+    parentHref="/life-in-ishikawa/"
+    eyebrow="Keluarga di Ishikawa"
+    title="Keluarga & Anak"
+    description="Panduan praktis untuk mahasiswa yang datang bersama pasangan atau anak—mulai dari residence status, pregnancy dan childbirth, childcare, sekolah, kesehatan, benefit, sampai kehidupan keluarga sehari-hari."
+    lastVerified={familyLastVerified}
+  >
+    <figure slot="visual" class="overflow-hidden rounded-3xl border border-slate-200 bg-white">
+      <img
+        src={publicMedia.kanazawaCentralPark.imageUrl}
+        alt={publicMedia.kanazawaCentralPark.alt}
+        width="1500"
+        height="1155"
+        class="aspect-[4/3] h-auto w-full object-cover"
+        loading="eager"
+        referrerpolicy="no-referrer"
+      />
+      <figcaption class="border-t border-slate-100 bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-500">
+        {publicMedia.kanazawaCentralPark.title} ·
+        <a href={publicMedia.kanazawaCentralPark.sourcePage} target="_blank" rel="noreferrer" class="underline">
+          {publicMedia.kanazawaCentralPark.credit}
+        </a>
+        · {publicMedia.kanazawaCentralPark.license}
+      </figcaption>
+    </figure>
+  </NestedLandingHeader>
 
-      <figure class="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
-        <img src={publicMedia.kanazawaCentralPark.imageUrl} alt={publicMedia.kanazawaCentralPark.alt} width="1500" height="1155" class="aspect-[4/3] h-auto w-full object-cover" loading="eager" referrerpolicy="no-referrer" />
-        <figcaption class="border-t border-slate-100 bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-500">
-          {publicMedia.kanazawaCentralPark.title} · <a href={publicMedia.kanazawaCentralPark.sourcePage} target="_blank" rel="noreferrer" class="underline">{publicMedia.kanazawaCentralPark.credit}</a> · {publicMedia.kanazawaCentralPark.license}
-        </figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-7xl px-5 pb-10 lg:px-8">
-    <div class="rounded-[2rem] bg-slate-950 p-7 text-white sm:p-9">
-      <div class="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
-        <div class="max-w-3xl">
-          <p class="type-eyebrow text-accent-soft">Mulai di sini</p>
-          <h2 class="mt-3 text-3xl font-bold tracking-tight">Baru membawa keluarga ke Ishikawa?</h2>
-          <p class="mt-3 leading-7 text-slate-300">Buka Family Starter Pack untuk checklist ringkas sebelum datang, 14 hari pertama, layanan anak, kesehatan, emergency, dan pindah. Progress tersimpan hanya di browser Anda.</p>
+  {starterPack && (
+    <section class="mx-auto max-w-7xl px-5 pb-10 lg:px-8">
+      <div class="rounded-3xl bg-slate-950 p-7 text-white sm:p-9">
+        <div class="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div class="max-w-3xl">
+            <p class="type-eyebrow text-accent-soft">Mulai di sini</p>
+            <h2 class="type-section mt-3">Baru membawa keluarga ke Ishikawa?</h2>
+            <p class="mt-3 leading-7 text-slate-300">{starterPack.description}</p>
+          </div>
+          <a href={withBase(starterPack.href)} class="type-ui inline-flex rounded-xl bg-white px-5 py-3 text-slate-950 transition-colors hover:bg-slate-100">
+            Buka Starter Pack →
+          </a>
         </div>
-        <a href={withBase('/life-in-ishikawa/family/starter-pack/')} class="inline-flex rounded-xl bg-white px-5 py-3 text-sm font-bold text-slate-950">Buka Starter Pack →</a>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 
-  <section class="mx-auto max-w-7xl px-5 pb-10 lg:px-8">
-    <div class="rounded-3xl border border-accent/35 bg-accent/10 p-6 sm:p-8">
-      <p class="type-eyebrow text-secondary-dark">Prinsip utama</p>
-      <h2 class="mt-3 text-2xl font-bold text-slate-950">Sistem nasional memberi kerangka; municipality menentukan banyak layanan keluarga sehari-hari.</h2>
-      <p class="mt-4 max-w-4xl leading-7 text-slate-700">
+  <section class="mx-auto max-w-7xl px-5 pb-6 lg:px-8">
+    <div class="max-w-4xl border-l-2 border-accent pl-5 sm:pl-6">
+      <p class="type-eyebrow text-secondary-dark">Perlu diketahui</p>
+      <h2 class="type-card-title mt-2 text-slate-950">Banyak layanan keluarga mengikuti municipality tempat alamat Anda terdaftar.</h2>
+      <p class="mt-3 leading-7 text-slate-600">
         Immigration berlaku nasional, tetapi pregnancy services, childcare, public school process, medical subsidy, dan berbagai family support mengikuti pemerintah setempat.
-        Karena itu, informasi Kanazawa berguna sebagai contoh konkret, tetapi keluarga di Nonoichi, Hakusan, Komatsu, Nomi, atau municipality lain harus memeriksa sumber kotanya sendiri.
+        Informasi Kanazawa berguna sebagai contoh konkret, tetapi keluarga di municipality lain tetap perlu memeriksa sumber kotanya sendiri.
       </p>
     </div>
   </section>
 
   <section class="mx-auto max-w-7xl px-5 ui-section-space lg:px-8">
     <div class="max-w-3xl">
-      <p class="type-eyebrow text-brand">Mulai dari kebutuhan Anda</p>
-      <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Apa yang sedang Anda cari?</h2>
+      <p class="type-eyebrow text-brand">Panduan utama</p>
+      <h2 class="type-section mt-3 text-slate-950">Mulai dari kebutuhan keluarga Anda.</h2>
     </div>
-    <div class="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-      {quickNeeds.map(([label, href]) => (
-        <a href={withBase(href)} class="flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-5 font-bold text-slate-900 transition-colors hover:border-accent/35 hover:bg-accent/5 hover:text-brand">
-          <span>{label}</span><span aria-hidden="true">→</span>
-        </a>
-      ))}
-    </div>
-  </section>
 
-  <section class="mx-auto max-w-7xl px-5 ui-section-space lg:px-8">
-    <div class="rounded-[2rem] border border-slate-200 bg-white p-6 sm:p-8">
-      <div class="max-w-3xl">
-        <p class="type-eyebrow text-brand">Quick picks</p>
-        <h2 class="mt-3 text-2xl font-bold tracking-tight text-slate-950">Kalau hanya ingin tahu “ke mana hari ini?”</h2>
-        <p class="mt-3 text-sm leading-6 text-slate-600">Buka direktori aktivitas dengan filter yang paling sesuai dengan situasi keluarga.</p>
-      </div>
-      <div class="mt-6 rounded-2xl bg-slate-950 p-5 text-white sm:flex sm:items-center sm:justify-between">
-        <div>
-          <p class="text-xs font-bold uppercase tracking-[0.12em] text-accent-soft">Family Timeline</p>
-          <p class="mt-1 font-bold">Lebih suka checklist berdasarkan waktu?</p>
-          <p class="mt-1 text-xs leading-5 text-slate-300">Sebelum datang → 14 hari pertama → bulan pertama → school/daycare → lahir → pindah.</p>
-        </div>
-        <a href={withBase('/life-in-ishikawa/family/timeline/')} class="mt-4 inline-flex rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950 sm:mt-0">Buka timeline →</a>
-      </div>
-      <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <a href={withBase('/life-in-ishikawa/family/aktivitas/?filter=winter')} class="rounded-2xl bg-slate-50 p-4 transition hover:bg-accent/10">
-          <p class="text-sm font-bold text-slate-950">Hujan / salju</p>
-          <p class="mt-1 text-xs leading-5 text-slate-500">Pilihan indoor dan winter-friendly →</p>
-        </a>
-        <a href={withBase('/life-in-ishikawa/family/aktivitas/?filter=baby')} class="rounded-2xl bg-slate-50 p-4 transition hover:bg-accent/10">
-          <p class="text-sm font-bold text-slate-950">Punya bayi</p>
-          <p class="mt-1 text-xs leading-5 text-slate-500">Tempat yang cocok untuk outing pendek →</p>
-        </a>
-        <a href={withBase('/life-in-ishikawa/family/aktivitas/?filter=free')} class="rounded-2xl bg-slate-50 p-4 transition hover:bg-accent/10">
-          <p class="text-sm font-bold text-slate-950">Ingin gratis</p>
-          <p class="mt-1 text-xs leading-5 text-slate-500">Ruang publik tanpa admission fee →</p>
-        </a>
-        <a href={withBase('/life-in-ishikawa/family/aktivitas/?filter=school')} class="rounded-2xl bg-slate-50 p-4 transition hover:bg-accent/10">
-          <p class="text-sm font-bold text-slate-950">Anak sekolah</p>
-          <p class="mt-1 text-xs leading-5 text-slate-500">Aktivitas dengan ruang gerak atau edukasi →</p>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-7xl px-5 ui-section-space lg:px-8">
-    <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-      {familyHubItems.map((item) => (
-        <a href={withBase(item.href)} class="group rounded-2xl border border-slate-200 bg-white p-6 transition-colors hover:border-accent/35 hover:bg-accent/5">
-          <span class="grid size-11 place-items-center rounded-2xl bg-accent/10 text-brand"><TopicIcon name={item.icon} class="size-6" /></span>
-          <p class="mt-5 text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{item.code}</p>
-          <h2 class="mt-2 text-xl font-bold text-slate-950 group-hover:text-brand">{item.title}</h2>
+    <div class="mt-7 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+      {primaryGuides.map((item) => (
+        <a
+          href={withBase(item.href)}
+          class="group rounded-2xl border border-slate-200 bg-white p-5 transition-colors hover:border-accent/35 hover:bg-accent/5"
+        >
+          <span class="grid size-10 place-items-center rounded-xl bg-accent/10 text-brand">
+            <TopicIcon name={item.icon} class="size-5" />
+          </span>
+          <p class="type-meta mt-4 text-slate-400">{item.code}</p>
+          <h3 class="type-card-title mt-1 text-slate-950 group-hover:text-brand">{item.title}</h3>
           <p class="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
-          <span class="mt-4 inline-flex text-sm font-bold text-brand">Buka panduan →</span>
         </a>
       ))}
     </div>
   </section>
 
-  <section class="mx-auto max-w-7xl px-5 ui-section-space lg:px-8">
-    <div class="grid gap-5 lg:grid-cols-3">
-      <article class="rounded-3xl bg-slate-950 p-6 text-white">
-        <p class="type-eyebrow text-red-300">Bahasa</p>
-        <h2 class="mt-3 text-xl font-bold">Tidak harus menyelesaikan semuanya dalam bahasa Jepang.</h2>
-        <p class="mt-3 text-sm leading-6 text-slate-300">Kanazawa menyediakan multilingual telephone interpretation termasuk Bahasa Indonesia untuk banyak layanan City Hall, termasuk childcare, health, insurance, dan education.</p>
-        <a href="https://www4.city.kanazawa.lg.jp/kurashi_tetsuzuki/gaikokujimmuke/9989.html" target="_blank" rel="noreferrer" class="mt-5 inline-flex text-sm font-bold text-accent-soft hover:underline">Language support ↗</a>
-      </article>
+  <section class="border-y border-slate-200 bg-slate-50">
+    <div class="mx-auto max-w-7xl px-5 ui-section-space lg:px-8">
+      <div class="max-w-3xl">
+        <p class="type-eyebrow text-brand">Cari & rencanakan</p>
+        <h2 class="type-section mt-3 text-slate-950">Gunakan alat sesuai situasi Anda.</h2>
+      </div>
 
-      <article class="rounded-2xl border border-slate-200 bg-white p-6">
-        <p class="type-eyebrow text-brand">Konsultasi</p>
-        <h2 class="mt-3 text-xl font-bold text-slate-950">Jika tidak tahu harus mulai dari mana.</h2>
-        <p class="mt-3 text-sm leading-6 text-slate-600">IFIE menyediakan consultation support untuk foreign residents di Ishikawa. Untuk masalah yang spesifik pada anak, school, health, atau administration, mereka dapat membantu menemukan jalur yang sesuai.</p>
-        <a href="https://www.ifie.or.jp/foreigners_life/soudan/" target="_blank" rel="noreferrer" class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">IFIE consultation ↗</a>
-      </article>
-
-      <article class="rounded-2xl border border-slate-200 bg-white p-6">
-        <p class="type-eyebrow text-brand">Komunitas</p>
-        <h2 class="mt-3 text-xl font-bold text-slate-950">Informasi resmi + pengalaman keluarga Indonesia.</h2>
-        <p class="mt-3 text-sm leading-6 text-slate-600">Family Hub membedakan ketentuan resmi dari pengalaman praktis. Ke depan, tips komunitas dapat ditambahkan tanpa menggantikan sumber pemerintah.</p>
-        <a href={withBase('/contact/')} class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">Hubungi PPI Ishikawa →</a>
-      </article>
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-7xl px-5 ui-section-space lg:px-8">
-    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
-      <p class="type-eyebrow text-red-300">Sumber utama</p>
-      <h2 class="mt-3 text-2xl font-bold">Gunakan halaman PPI untuk orientasi; gunakan sumber asli untuk keputusan.</h2>
-      <div class="mt-7 grid gap-4 md:grid-cols-2">
-        {officialSources.map((source) => (
-          <a href={source.url} target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800">
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">{source.owner}</p>
-            <h3 class="mt-2 font-bold text-white">{source.title} ↗</h3>
-            <p class="mt-2 text-sm leading-6 text-slate-400">{source.note}</p>
+      <div class="mt-7 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+        {familyTools.map((item) => (
+          <a
+            href={withBase(item.href)}
+            class="group flex items-start gap-4 border-b border-slate-200 py-4 transition-colors hover:border-accent/40"
+          >
+            <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-white text-brand">
+              <TopicIcon name={item.icon} class="size-5" />
+            </span>
+            <span class="min-w-0">
+              <span class="font-bold text-slate-950 group-hover:text-brand">{item.title} →</span>
+              <span class="mt-1 block text-sm leading-6 text-slate-600">{item.description}</span>
+            </span>
           </a>
         ))}
       </div>
     </div>
   </section>
+
+  <section class="mx-auto max-w-7xl px-5 ui-section-space lg:px-8">
+    <div class="grid gap-8 lg:grid-cols-[.7fr_1.3fr]">
+      <div>
+        <p class="type-eyebrow text-brand">Butuh bantuan?</p>
+        <h2 class="type-section mt-3 text-slate-950">Pilih jalur bantuan yang sesuai.</h2>
+        <p class="mt-3 max-w-xl leading-7 text-slate-600">
+          Gunakan layanan resmi untuk keputusan administratif; gunakan PPI untuk konteks dan pengalaman komunitas.
+        </p>
+      </div>
+
+      <div class="divide-y divide-slate-200 border-y border-slate-200">
+        {supportRoutes.map((item) => (
+          <article class="py-5">
+            <p class="type-eyebrow text-slate-500">{item.eyebrow}</p>
+            <h3 class="type-card-title mt-2 text-slate-950">{item.title}</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
+            {item.external ? (
+              <a href={item.href} target="_blank" rel="noreferrer" class="mt-3 inline-flex text-sm font-bold text-brand hover:underline">
+                {item.label}
+              </a>
+            ) : (
+              <a href={withBase(item.href)} class="mt-3 inline-flex text-sm font-bold text-brand hover:underline">
+                {item.label}
+              </a>
+            )}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <OfficialSources
+    sources={officialSources}
+    title="Gunakan halaman PPI untuk orientasi; gunakan sumber asli untuk keputusan."
+  />
 </BaseLayout>
