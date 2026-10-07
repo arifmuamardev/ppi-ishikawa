@@ -70,10 +70,10 @@ const googleMapsUrl = (address: string) =>
   </section>
 
   <section class="mx-auto max-w-7xl px-5 pb-6 lg:px-8">
-    <div class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+    <div class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
       <div class="flex flex-col gap-5">
         <div>
-          <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Filter</p>
+          <p class="type-eyebrow text-brand">Filter</p>
           <p class="mt-2 text-sm leading-6 text-slate-600">Pilih kategori atau kota. Filter bekerja langsung di browser tanpa layanan peta eksternal.</p>
         </div>
 
@@ -117,7 +117,7 @@ const googleMapsUrl = (address: string) =>
     <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3" id="places-grid">
       {ishikawaPlaces.map((place) => (
         <article
-          class="place-card flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"
+          class="place-card flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5"
           data-place-id={place.id}
           data-mappable={typeof place.lat === 'number' && typeof place.lng === 'number' ? 'true' : 'false'}
           data-category={place.category}
