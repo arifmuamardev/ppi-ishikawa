@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FinderHeader from '../components/FinderHeader.astro';
+import FinderControls from '../components/FinderControls.astro';
 import TopicIcon from '../components/TopicIcon.astro';
 import InstitutionMark from '../components/InstitutionMark.astro';
 import { withBase } from '../utils/paths';
@@ -62,30 +63,6 @@ const staleCount = scholarships.filter(needsReview).length;
     description="Cari jalur beasiswa yang relevan untuk pelajar Indonesia di Ishikawa. Mulai dari status Anda, lalu cek eligibility, jalur aplikasi, dan sumber resmi sebelum mendaftar."
   />
 
-  <section class="mx-auto max-w-7xl px-5 pb-8 lg:px-8">
-    <div class="grid gap-4 md:grid-cols-3">
-      <a href="#finder" data-stage-jump="before-arrival" class="group rounded-2xl border border-slate-200 bg-white p-6 transition-colors hover:border-accent/35 hover:bg-accent/5">
-        <TopicIcon name="arrival" class="size-7 text-brand" />
-        <h2 class="mt-4 text-xl font-bold text-slate-950">Saya belum berangkat</h2>
-        <p class="mt-2 text-sm leading-6 text-slate-600">Mulai dari MEXT dan scholarship yang memang menerima aplikasi sebelum Anda tiba di Jepang.</p>
-        <span class="mt-4 inline-flex text-sm font-bold text-brand">Tampilkan opsi →</span>
-      </a>
-
-      <a href="#finder" data-stage-jump="after-enrollment" class="group rounded-2xl border border-slate-200 bg-white p-6 transition-colors hover:border-accent/35 hover:bg-accent/5">
-        <TopicIcon name="campus" class="size-7 text-brand" />
-        <h2 class="mt-4 text-xl font-bold text-slate-950">Saya sudah kuliah di Ishikawa</h2>
-        <p class="mt-2 text-sm leading-6 text-slate-600">Cari JASSO, Ishikawa Prefectural Scholarship, foundation scholarship, dan jalur nominasi kampus.</p>
-        <span class="mt-4 inline-flex text-sm font-bold text-brand">Tampilkan opsi →</span>
-      </a>
-
-      <a href="#kampus" class="group rounded-2xl border border-accent/35 bg-accent/10 p-6 transition-colors hover:border-accent/60 hover:bg-accent/15">
-        <TopicIcon name="scholarship" class="size-7 text-accent-dark" />
-        <h2 class="mt-4 text-xl font-bold text-slate-950">Pilih kampus saya</h2>
-        <p class="mt-2 text-sm leading-6 text-slate-700">Gunakan kampus sebagai titik awal, lalu filter lagi berdasarkan jenjang dan tahap studi.</p>
-        <span class="mt-4 inline-flex text-sm font-bold text-brand">Pilih kampus →</span>
-      </a>
-    </div>
-  </section>
 
 <section id="finder" class="mx-auto max-w-7xl scroll-mt-24 px-5 ui-section-space lg:px-8">
     <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
@@ -96,7 +73,7 @@ const staleCount = scholarships.filter(needsReview).length;
       <p id="scholarship-count" class="text-sm font-semibold text-slate-500" aria-live="polite" aria-atomic="true">{scholarships.length} beasiswa ditampilkan</p>
     </div>
 
-    <div class="mt-6 grid gap-3 rounded-2xl border border-slate-200 bg-white p-5 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
+    <FinderControls columns="seven">
       <label class="block">
         <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Kampus</span>
         <select id="filter-campus" class="ui-field mt-2">
@@ -165,7 +142,36 @@ const staleCount = scholarships.filter(needsReview).length;
           Reset filter
         </button>
       </div>
-    </div>
+    </FinderControls>
+
+    <nav aria-label="Pintasan pencarian beasiswa" class="mt-5">
+      <div class="grid gap-3 md:grid-cols-3">
+        <a href="#finder" data-stage-jump="before-arrival" class="group flex min-h-11 items-start gap-3 rounded-xl border border-slate-200 bg-white p-4 transition-colors hover:border-accent/35 hover:bg-accent/5">
+          <TopicIcon name="arrival" class="mt-0.5 size-5 shrink-0 text-brand" />
+          <span class="min-w-0">
+            <span class="block text-sm font-bold text-slate-950">Saya belum berangkat</span>
+            <span class="mt-1 block text-xs leading-5 text-slate-600">Mulai dari MEXT dan scholarship yang memang menerima aplikasi sebelum Anda tiba di Jepang.</span>
+            <span class="mt-2 block text-xs font-bold text-brand">Tampilkan opsi →</span>
+          </span>
+        </a>
+        <a href="#finder" data-stage-jump="after-enrollment" class="group flex min-h-11 items-start gap-3 rounded-xl border border-slate-200 bg-white p-4 transition-colors hover:border-accent/35 hover:bg-accent/5">
+          <TopicIcon name="campus" class="mt-0.5 size-5 shrink-0 text-brand" />
+          <span class="min-w-0">
+            <span class="block text-sm font-bold text-slate-950">Saya sudah kuliah di Ishikawa</span>
+            <span class="mt-1 block text-xs leading-5 text-slate-600">Cari JASSO, Ishikawa Prefectural Scholarship, foundation scholarship, dan jalur nominasi kampus.</span>
+            <span class="mt-2 block text-xs font-bold text-brand">Tampilkan opsi →</span>
+          </span>
+        </a>
+        <a href="#kampus" class="group flex min-h-11 items-start gap-3 rounded-xl border border-accent/35 bg-accent/10 p-4 transition-colors hover:border-accent/60 hover:bg-accent/15">
+          <TopicIcon name="scholarship" class="mt-0.5 size-5 shrink-0 text-accent-dark" />
+          <span class="min-w-0">
+            <span class="block text-sm font-bold text-slate-950">Pilih kampus saya</span>
+            <span class="mt-1 block text-xs leading-5 text-slate-700">Gunakan kampus sebagai titik awal, lalu filter lagi berdasarkan jenjang dan tahap studi.</span>
+            <span class="mt-2 block text-xs font-bold text-brand">Pilih kampus →</span>
+          </span>
+        </a>
+      </div>
+    </nav>
 
     <div id="scholarship-empty" role="status" aria-live="polite" class="mt-6 hidden rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
       <p class="font-bold text-slate-950">Belum ada beasiswa dalam daftar saat ini yang cocok dengan semua filter.</p>
