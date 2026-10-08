@@ -99,7 +99,7 @@ const staleCount = scholarships.filter(needsReview).length;
     <div class="mt-6 grid gap-3 rounded-2xl border border-slate-200 bg-white p-5 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
       <label class="block">
         <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Kampus</span>
-        <select id="filter-campus" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+        <select id="filter-campus" class="ui-field mt-2">
           <option value="">Semua kampus</option>
           {campusOptions.map(([slug,label]) => <option value={slug}>{label}</option>)}
         </select>
@@ -107,7 +107,7 @@ const staleCount = scholarships.filter(needsReview).length;
 
       <label class="block">
         <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Jenjang</span>
-        <select id="filter-level" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+        <select id="filter-level" class="ui-field mt-2">
           <option value="">Semua jenjang</option>
           {levelOptions.map(([code,label]) => <option value={code}>{label}</option>)}
         </select>
@@ -115,7 +115,7 @@ const staleCount = scholarships.filter(needsReview).length;
 
       <label class="block">
         <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Status</span>
-        <select id="filter-stage" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+        <select id="filter-stage" class="ui-field mt-2">
           <option value="">Semua status</option>
           <option value="before-arrival">Belum datang ke Jepang</option>
           <option value="after-enrollment">Sudah terdaftar sebagai mahasiswa</option>
@@ -124,7 +124,7 @@ const staleCount = scholarships.filter(needsReview).length;
 
       <label class="block">
         <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Cara mendaftar</span>
-        <select id="filter-route" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+        <select id="filter-route" class="ui-field mt-2">
           <option value="">Semua jalur</option>
           <option value="school">Lewat kampus</option>
           <option value="foundation">Apply langsung</option>
@@ -134,7 +134,7 @@ const staleCount = scholarships.filter(needsReview).length;
 
       <label class="block">
         <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Status data</span>
-        <select id="filter-freshness" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+        <select id="filter-freshness" class="ui-field mt-2">
           <option value="">Semua status</option>
           <option value="fresh">Terverifikasi</option>
           <option value="stale">Perlu verifikasi ulang</option>
@@ -143,7 +143,7 @@ const staleCount = scholarships.filter(needsReview).length;
 
       <label class="block">
         <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Kepastian kampus</span>
-        <select id="filter-campus-scope" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+        <select id="filter-campus-scope" class="ui-field mt-2">
           <option value="">Semua</option>
           <option value="listed">Kampus terkonfirmasi</option>
           <option value="all-japan">Terbuka lintas kampus</option>
@@ -154,14 +154,14 @@ const staleCount = scholarships.filter(needsReview).length;
 
       <label class="block">
         <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Khusus Indonesia</span>
-        <select id="filter-indonesia" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+        <select id="filter-indonesia" class="ui-field mt-2">
           <option value="">Semua</option>
           <option value="yes">Mencantumkan Indonesia</option>
         </select>
       </label>
 
       <div class="sm:col-span-2 lg:col-span-4 xl:col-span-7">
-        <button id="filter-reset" type="button" class="min-h-11 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50">
+        <button id="filter-reset" type="button" class="ui-action-secondary">
           Reset filter
         </button>
       </div>
