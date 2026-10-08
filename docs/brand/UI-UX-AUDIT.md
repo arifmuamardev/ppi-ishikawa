@@ -265,3 +265,14 @@ Key changes:
 - reduced Footer logo dominance and aligned footer labels/tap targets with the global UI system
 
 This pass changes presentation only; Home destinations and global navigation content are unchanged.
+
+
+### Pass 11 — Utility & verification shell
+Implemented on the remaining public edge-case routes:
+- added shared `VerificationShell` for member-card and certificate verification
+- added live status / alert semantics to loading and invalid verification states
+- aligned verification metadata typography and standard card radius
+- updated 404 actions to the global touch-target/radius language
+- updated 404 terminology to “Hidup di Ishikawa”
+- aligned Story detail metadata, media radius, and mobile quote sizing with the public UI system
+- added `check:ui` enforcement for verification pages

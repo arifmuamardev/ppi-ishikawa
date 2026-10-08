@@ -50,24 +50,24 @@ const relatedStories = stories
 
       <div class="mt-7 flex flex-wrap gap-x-8 gap-y-3 border-t border-slate-200 pt-6 text-sm">
         <div>
-          <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Narasumber</p>
+          <p class="type-meta uppercase tracking-[0.12em] text-slate-400">Narasumber</p>
           <p class="mt-1 font-bold text-slate-950">{story.personName}</p>
         </div>
         {story.program && (
           <div>
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Program</p>
+            <p class="type-meta uppercase tracking-[0.12em] text-slate-400">Program</p>
             <p class="mt-1 font-semibold text-slate-700">{story.program}</p>
           </div>
         )}
         {story.period && (
           <div>
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Periode di Ishikawa</p>
+            <p class="type-meta uppercase tracking-[0.12em] text-slate-400">Periode di Ishikawa</p>
             <p class="mt-1 font-semibold text-slate-700">{story.period}</p>
           </div>
         )}
         {story.currentActivity && (
           <div>
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Sekarang</p>
+            <p class="type-meta uppercase tracking-[0.12em] text-slate-400">Sekarang</p>
             <p class="mt-1 font-semibold text-slate-700">{story.currentActivity}</p>
           </div>
         )}
@@ -76,13 +76,13 @@ const relatedStories = stories
 
     {story.imageUrl && (
       <figure class="mx-auto max-w-6xl px-5 lg:px-8">
-        <img src={story.imageUrl} alt={story.imageAlt || story.title} class="aspect-[16/9] w-full rounded-[2rem] object-cover" />
+        <img src={story.imageUrl} alt={story.imageAlt || story.title} class="aspect-[16/9] w-full rounded-3xl object-cover" />
       </figure>
     )}
 
     <div class="mx-auto max-w-3xl px-5 py-12 lg:px-8">
       {story.quote && (
-        <blockquote class="mb-10 border-l-4 border-accent/50 pl-6 text-2xl font-semibold leading-9 text-slate-800">
+        <blockquote class="mb-10 border-l-4 border-accent/50 pl-5 text-xl font-semibold leading-8 text-slate-800 sm:pl-6 sm:text-2xl sm:leading-9">
           “{story.quote}”
         </blockquote>
       )}

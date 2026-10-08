@@ -518,3 +518,20 @@ Key changes:
 - Starter Pack and Timeline use the same header/TOC/source language while preserving their specialized interactions
 - removed the nested `<main>` landmark from Starter Pack
 - ordinary guide cards use calmer standard-card surfaces rather than feature-level elevation
+
+
+### Utility / verification shell — implemented
+
+Utility routes that are not part of the 43-page public content matrix now follow explicit rules.
+
+Verification pages:
+- `/verify/member/`
+- `/verify/certificate/`
+
+Both use `VerificationShell` for a shared compact verification layout, consistent typography, standard card radius, and predictable loading/invalid/result states.
+
+Additional edge-case rules:
+- 404 remains a unique utility page but uses standard typography, control radius, and 44 px touch targets.
+- Story detail remains an article page with its own content structure; its metadata and media treatment follow the shared typography/radius system.
+
+These utility routes are intentionally not promoted into the global navigation.

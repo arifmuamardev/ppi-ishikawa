@@ -6,10 +6,10 @@ import { withBase } from '../utils/paths';
   <section class="mx-auto max-w-3xl px-5 py-24 text-center lg:px-8">
     <p class="type-eyebrow text-brand">404</p>
     <h1 class="type-display mt-4 text-slate-950">Halaman tidak ditemukan.</h1>
-    <p class="mt-5 leading-7 text-slate-600">Link mungkin berubah atau halaman belum tersedia. Kembali ke beranda atau buka Ishikawa Survival Guide.</p>
+    <p class="mt-5 leading-7 text-slate-600">Link mungkin berubah atau halaman belum tersedia. Kembali ke beranda atau buka panduan Hidup di Ishikawa.</p>
     <div class="mt-8 flex flex-wrap justify-center gap-3">
-      <a href={withBase('/')} class="rounded-xl bg-slate-900 px-5 py-3 text-sm font-bold text-white">Beranda</a>
-      <a href={withBase('/life-in-ishikawa/')} class="rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800">Survival Guide</a>
+      <a href={withBase('/')} class="inline-flex min-h-11 items-center rounded-xl bg-slate-900 px-5 text-sm font-bold text-white transition-colors hover:bg-slate-800">Beranda</a>
+      <a href={withBase('/life-in-ishikawa/')} class="inline-flex min-h-11 items-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-bold text-slate-800 transition-colors hover:border-accent/35 hover:bg-accent/5">Hidup di Ishikawa</a>
     </div>
   </section>
 </BaseLayout>
