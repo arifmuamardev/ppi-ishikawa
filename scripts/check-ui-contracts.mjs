@@ -296,6 +296,13 @@ for (const relativePath of [
   });
 }
 
+forbidText(
+  'src/pages/community/kampus/index.astro',
+  await read('src/pages/community/kampus/index.astro'),
+  'eyebrow="Kampus"',
+  'a level-1 page eyebrow must not duplicate the page title'
+);
+
 // A nested route can still be a top-level menu destination.
 // Keep the nested Landing shell based on navigation semantics, not URL depth.
 await checkFile('src/components/NestedLandingHeader.astro', {
