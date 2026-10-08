@@ -8,6 +8,11 @@ import { chromium } from 'playwright';
 const baseURL = (process.env.RESPONSIVE_BASE_URL || 'http://127.0.0.1:4321/ppi-ishikawa').replace(/\/$/, '');
 const routes = [
   ['home', '/'],
+  ['about', '/about/'],
+  ['community', '/community/'],
+  ['life-in-ishikawa', '/life-in-ishikawa/'],
+  ['contact', '/contact/'],
+  ['member', '/member/'],
   ['family', '/life-in-ishikawa/family-anak/'],
   ['family-starter', '/life-in-ishikawa/family/starter-pack/'],
   ['family-timeline', '/life-in-ishikawa/family/timeline/'],
@@ -17,7 +22,7 @@ const routes = [
   ['career', '/career/'],
   ['family-activities', '/life-in-ishikawa/family/aktivitas/']
 ];
-const widths = [360, 390, 430, 768];
+const widths = [360, 390, 430, 768, 1280];
 const outputDir = 'responsive-audit';
 const screenshotDir = path.join(outputDir, 'screenshots');
 await mkdir(screenshotDir, { recursive: true });
