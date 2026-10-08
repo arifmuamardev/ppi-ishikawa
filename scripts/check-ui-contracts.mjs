@@ -270,6 +270,20 @@ for (const [relativePath, sectionId, resultId, secondary] of [
   }
 }
 
+// A nested route can still be a top-level menu destination.
+// Keep the nested Landing shell based on navigation semantics, not URL depth.
+await checkFile('src/components/NestedLandingHeader.astro', {
+  required: [
+    ['<PublicPageHeader', 'nested landings share the common Page Intro geometry'],
+    ['isPrimaryNavigation', 'top-level menu destinations override URL nesting'],
+    ['nav.some', 'primary menu is the source of truth'],
+  ],
+  forbidden: [
+    ['<Breadcrumbs', 'breadcrumb rendering belongs in PublicPageHeader'],
+    ['<h1', 'heading rendering belongs in PublicPageHeader'],
+  ],
+});
+
 const legacyControlSignatures = [
   'mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900',
   'mt-2 w-full rounded-xl border border-slate-300 px-4 py-3',
