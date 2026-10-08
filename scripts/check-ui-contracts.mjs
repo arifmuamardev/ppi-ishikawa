@@ -277,7 +277,7 @@ await checkFile('src/pages/beasiswa.astro', {
     ['id="scholarship-show-more"', 'accessible progressive result action'],
     ['aria-controls="scholarship-grid"', 'show-more button controls the result grid'],
     ['const PAGE_SIZE = 4', 'bounded initial result density'],
-    ['const matched =', 'count of all matching scholarship records'],
+    ['let matched = 0', 'count of all matching scholarship records'],
     ['visibleLimit += PAGE_SIZE', 'users can reveal remaining matching records'],
     ['apply(true)', 'filters reset the number of visible results'],
   ],
