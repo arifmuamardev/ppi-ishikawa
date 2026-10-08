@@ -215,6 +215,22 @@ for (const relativePath of verificationPages) {
   });
 }
 
+// For task-first Landing pages, photography remains contextual and must not
+// precede the primary destination choices users came to find.
+for (const [relativePath, choiceMarker] of [
+  ['src/pages/life-in-ishikawa.astro', 'journeys.map'],
+  ['src/pages/community.astro', 'communityPaths.map'],
+]) {
+  const source = await read(relativePath);
+  const header = source.indexOf('<LandingHeader');
+  const choices = source.indexOf(choiceMarker, header);
+  const photo = source.indexOf('<figure', header);
+  assertions += 1;
+  if (header < 0 || choices < 0 || photo < 0 || choices > photo) {
+    errors.push(relativePath + ': Landing must show primary destination choices before supporting photography');
+  }
+}
+
 // Landing and Finder share one visual geometry; wrappers may supply route-specific data
 // but must not independently duplicate title, intro or section layout markup.
 for (const relativePath of ['src/components/LandingHeader.astro', 'src/components/FinderHeader.astro']) {
