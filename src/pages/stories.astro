@@ -55,14 +55,14 @@ const representedTopics = Object.entries(storyTopicLabels).filter(([topic]) =>
       <div class="grid gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-5 md:grid-cols-2">
         <label class="block">
           <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Kampus</span>
-          <select id="story-campus" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+          <select id="story-campus" class="ui-field mt-2">
             <option value="">Semua kampus</option>
             {representedCampuses.map((campus) => <option value={campus.slug}>{campus.shortName}</option>)}
           </select>
         </label>
         <label class="block">
           <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Topik</span>
-          <select id="story-topic" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+          <select id="story-topic" class="ui-field mt-2">
             <option value="">Semua topik</option>
             {representedTopics.map(([value, label]) => <option value={value}>{label}</option>)}
           </select>
