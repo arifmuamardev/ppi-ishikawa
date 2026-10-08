@@ -1,5 +1,5 @@
 ---
-import Breadcrumbs from './Breadcrumbs.astro';
+import PublicPageHeader from './PublicPageHeader.astro';
 
 interface BreadcrumbItem {
   label: string;
@@ -14,24 +14,14 @@ interface Props {
   lastVerified?: string;
 }
 
-const {
-  title,
-  description,
-  eyebrow,
-  breadcrumbs,
-  lastVerified
-} = Astro.props;
-
-const hasMeta = Astro.slots.has('meta');
+const { title, description, eyebrow, breadcrumbs, lastVerified } = Astro.props;
 ---
-<section class="mx-auto max-w-7xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
-  {breadcrumbs && breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}
-
-  <div class:list={['max-w-4xl', breadcrumbs && breadcrumbs.length > 0 ? 'mt-8' : '']}>
-    {eyebrow && <p class="type-eyebrow text-brand">{eyebrow}</p>}
-    <h1 class:list={['type-display text-slate-950', eyebrow ? 'mt-4' : '']}>{title}</h1>
-    <p class="type-lead mt-5 max-w-3xl text-slate-600">{description}</p>
-    {lastVerified && <p class="type-meta mt-4 text-slate-500">Diverifikasi · {lastVerified}</p>}
-    {hasMeta && <div class="mt-6"><slot name="meta" /></div>}
-  </div>
-</section>
+<PublicPageHeader
+  title={title}
+  description={description}
+  eyebrow={eyebrow}
+  breadcrumbs={breadcrumbs}
+  lastVerified={lastVerified}
+>
+  {Astro.slots.has('meta') && <Fragment slot="meta"><slot name="meta" /></Fragment>}
+</PublicPageHeader>

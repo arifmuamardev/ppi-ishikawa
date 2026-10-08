@@ -215,6 +215,26 @@ for (const relativePath of verificationPages) {
   });
 }
 
+// Landing and Finder share one visual geometry; wrappers may supply route-specific data
+// but must not independently duplicate title, intro or section layout markup.
+for (const relativePath of ['src/components/LandingHeader.astro', 'src/components/FinderHeader.astro']) {
+  await checkFile(relativePath, {
+    required: [['<PublicPageHeader', 'canonical public Page Intro shell']],
+    forbidden: [
+      ['<section', 'wrapper must not own independent Page Intro layout'],
+      ['<h1', 'wrapper must not duplicate the canonical h1'],
+    ],
+  });
+}
+await checkFile('src/components/PublicPageHeader.astro', {
+  required: [
+    ['<h1', 'shared primary heading'],
+    ['type-display', 'standard display typography'],
+    ['type-lead', 'standard lead typography'],
+    ['max-w-7xl', 'standard public page content width'],
+  ],
+});
+
 const legacyControlSignatures = [
   'mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900',
   'mt-2 w-full rounded-xl border border-slate-300 px-4 py-3',
