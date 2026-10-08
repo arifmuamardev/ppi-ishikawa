@@ -12,17 +12,47 @@ interface Props {
 }
 
 const { items, class: className = '' } = Astro.props;
+const mobileStartIndex = Math.max(0, items.length - 2);
 ---
 
-<nav class={`flex items-center gap-x-2 overflow-x-auto whitespace-nowrap pb-1 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap sm:gap-y-1 sm:overflow-visible sm:whitespace-normal sm:pb-0 ${className}`} aria-label="Breadcrumb">
-  {items.map((item, index) => (
-    <>
-      {index > 0 && <span class="shrink-0 text-slate-300" aria-hidden="true">/</span>}
-      {item.href ? (
-        <a href={withBase(item.href)} class="shrink-0 font-semibold text-slate-500 transition hover:text-brand hover:underline sm:shrink">{item.label}</a>
-      ) : (
-        <span class="shrink-0 font-semibold text-slate-700 sm:shrink" aria-current="page">{item.label}</span>
-      )}
-    </>
-  ))}
+<nav class={`min-w-0 ${className}`} aria-label="Breadcrumb">
+  <ol class="flex min-w-0 items-center gap-x-2 text-sm">
+    {items.map((item, index) => (
+      <li
+        class:list={[
+          'min-w-0 items-center gap-x-2',
+          index < mobileStartIndex ? 'hidden sm:flex' : 'flex'
+        ]}
+      >
+        {index > 0 && (
+          <span
+            class:list={[
+              'shrink-0 text-slate-300',
+              index === mobileStartIndex ? 'hidden sm:inline' : ''
+            ]}
+            aria-hidden="true"
+          >
+            /
+          </span>
+        )}
+
+        {item.href ? (
+          <a
+            href={withBase(item.href)}
+            class="shrink-0 font-semibold text-slate-500 transition hover:text-brand hover:underline sm:shrink"
+          >
+            {item.label}
+          </a>
+        ) : (
+          <span
+            class="max-w-[68vw] truncate font-semibold text-slate-700 sm:max-w-none sm:overflow-visible sm:text-clip"
+            aria-current="page"
+            title={item.label}
+          >
+            {item.label}
+          </span>
+        )}
+      </li>
+    ))}
+  </ol>
 </nav>
