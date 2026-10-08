@@ -107,6 +107,54 @@ try {
           path: path.join(outputDir, check.screenshot),
           type: 'jpeg', quality: 65, fullPage: true, animations: 'disabled', timeout: 30000
         });
+        // Exercise the real Finder interactions once at a representative phone width.
+        // These assertions supplement the screenshot/overflow checks, rather than
+        // treating a successful static render as proof the filters still work.
+        if (width === 390 && key === 'scholarships') {
+          const initial = await page.locator('.scholarship-card').count();
+          await page.locator('[data-stage-jump="before-arrival"]').click();
+          await page.waitForFunction(() => {
+            const input = document.querySelector('#filter-stage');
+            const visible = [...document.querySelectorAll('.scholarship-card')]
+              .filter((card) => !card.classList.contains('hidden'));
+            return input?.value === 'before-arrival'
+              && visible.every((card) => ['before-arrival', 'both'].some((stage) =>
+                (card.dataset.stage || '').split(',').includes(stage)))
+              && document.querySelector('#scholarship-count')?.textContent?.trim() ===
+                visible.length + ' beasiswa ditampilkan';
+          }, null, { timeout: 4000 });
+          await page.locator('#filter-reset').click();
+          await page.waitForFunction((total) =>
+            document.querySelector('#filter-stage')?.value === ''
+            && [...document.querySelectorAll('.scholarship-card')]
+              .filter((card) => !card.classList.contains('hidden')).length === total,
+          initial, { timeout: 4000 });
+          check.finderInteractions = 'scholarship stage shortcut + reset passed';
+        }
+        if (width === 390 && key === 'career') {
+          const navigationBeforeResults = await page.evaluate(() => {
+            const nav = document.querySelector('nav[aria-label="Navigasi Karier"]');
+            const grid = document.querySelector('#career-grid');
+            return Boolean(nav && grid && (nav.compareDocumentPosition(grid) & Node.DOCUMENT_POSITION_FOLLOWING));
+          });
+          if (!navigationBeforeResults) check.errors.push('Career section nav must precede result list');
+          const initial = await page.locator('.career-source').count();
+          const selected = await page.locator('#career-type').selectOption({ index: 1 });
+          await page.waitForFunction((type) => {
+            const visible = [...document.querySelectorAll('.career-source')]
+              .filter((card) => !card.classList.contains('hidden'));
+            return visible.every((card) => (card.dataset.type || '').split(',').includes(type))
+              && document.querySelector('#career-count')?.textContent?.trim() ===
+                visible.length + ' sumber ditampilkan';
+          }, selected[0], { timeout: 4000 });
+          await page.locator('#career-reset').click();
+          await page.waitForFunction((total) =>
+            document.querySelector('#career-type')?.value === ''
+            && [...document.querySelectorAll('.career-source')]
+              .filter((card) => !card.classList.contains('hidden')).length === total,
+          initial, { timeout: 4000 });
+          check.finderInteractions = 'career filter + reset passed';
+        }
         if (check.default.smallTargets.length) {
           check.warnings.push(check.default.smallTargets.length + ' header/footer targets below 40px; inspect report');
         }

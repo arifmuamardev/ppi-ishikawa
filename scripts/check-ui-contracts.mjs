@@ -251,6 +251,25 @@ await checkFile('src/components/PublicPageHeader.astro', {
   ],
 });
 
+// Finder archetype: controls are the first primary task after Page Intro.
+// Optional shortcuts/section navigation follow controls, not the full result list.
+for (const [relativePath, sectionId, resultId, secondary] of [
+  ['src/pages/beasiswa.astro', 'finder', 'scholarship-grid', 'Pintasan pencarian beasiswa'],
+  ['src/pages/career.astro', 'sources', 'career-grid', 'Navigasi Karier'],
+]) {
+  const source = await read(relativePath);
+  const start = source.indexOf('id="' + sectionId + '"');
+  const controls = source.indexOf('<FinderControls', start);
+  const controlsEnd = source.indexOf('</FinderControls>', controls);
+  const result = source.indexOf('id="' + resultId + '"', start);
+  const next = source.indexOf(secondary, start);
+  assertions += 1;
+  if ([start, controls, controlsEnd, next, result].some((point) => point < 0)
+      || !(start < controls && controls < controlsEnd && controlsEnd < next && next < result)) {
+    errors.push(relativePath + ': Finder must show shared controls, secondary navigation, and results in that order');
+  }
+}
+
 const legacyControlSignatures = [
   'mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900',
   'mt-2 w-full rounded-xl border border-slate-300 px-4 py-3',
