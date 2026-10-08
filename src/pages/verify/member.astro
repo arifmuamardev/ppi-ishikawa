@@ -1,44 +1,44 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import VerificationShell from '../../components/VerificationShell.astro';
 ---
 
 <BaseLayout title="Verifikasi Kartu Anggota" description="Verifikasi kartu anggota digital PPI Ishikawa.">
-  <section class="mx-auto max-w-2xl px-5 py-16 lg:px-8">
-    <div class="rounded-[2rem] border border-slate-200 bg-white p-7 sm:p-9">
-      <p class="text-sm font-bold uppercase tracking-[0.16em] text-brand">Verifikasi</p>
-      <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Kartu Anggota PPI Ishikawa</h1>
-      <div id="verify-loading" class="mt-8 rounded-2xl bg-slate-50 p-6 text-sm text-slate-600">Memeriksa token kartu…</div>
-      <div id="verify-invalid" class="mt-8 hidden rounded-2xl border border-red-200 bg-red-50 p-6">
+  <VerificationShell
+    title="Kartu Anggota PPI Ishikawa"
+    description="Periksa keaslian dan status kartu anggota digital PPI Ishikawa."
+  >
+    <div id="verify-loading" role="status" aria-live="polite" class="mt-8 rounded-2xl bg-slate-50 p-6 text-sm text-slate-600">Memeriksa token kartu…</div>
+    <div id="verify-invalid" role="alert" class="mt-8 hidden rounded-2xl border border-red-200 bg-red-50 p-6">
         <p class="font-bold text-red-900">Kartu tidak dapat diverifikasi.</p>
         <p class="mt-2 text-sm leading-6 text-red-800">Token tidak ditemukan, sudah diganti, atau kartu tidak lagi valid.</p>
       </div>
-      <div id="verify-result" class="mt-8 hidden">
+    <div id="verify-result" aria-live="polite" class="mt-8 hidden">
         <div class="flex items-center justify-between gap-3">
           <p id="verify-name" class="text-2xl font-bold text-slate-950">—</p>
           <span id="verify-badge" class="rounded-full px-3 py-1.5 text-xs font-bold">—</span>
         </div>
         <dl class="mt-6 grid gap-4 sm:grid-cols-2">
           <div class="rounded-2xl bg-slate-50 p-4">
-            <dt class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Nomor kartu</dt>
+            <dt class="type-meta uppercase tracking-[0.1em] text-slate-500">Nomor kartu</dt>
             <dd id="verify-number" class="mt-2 font-mono font-bold text-slate-900">—</dd>
           </div>
           <div class="rounded-2xl bg-slate-50 p-4">
-            <dt class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Kampus</dt>
+            <dt class="type-meta uppercase tracking-[0.1em] text-slate-500">Kampus</dt>
             <dd id="verify-campus" class="mt-2 font-bold text-slate-900">—</dd>
           </div>
           <div class="rounded-2xl bg-slate-50 p-4">
-            <dt class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Status</dt>
+            <dt class="type-meta uppercase tracking-[0.1em] text-slate-500">Status</dt>
             <dd id="verify-status" class="mt-2 font-bold text-slate-900">—</dd>
           </div>
           <div class="rounded-2xl bg-slate-50 p-4">
-            <dt class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Terbit</dt>
+            <dt class="type-meta uppercase tracking-[0.1em] text-slate-500">Terbit</dt>
             <dd id="verify-issued" class="mt-2 font-bold text-slate-900">—</dd>
           </div>
         </dl>
         <p class="mt-6 text-xs leading-5 text-slate-500">Halaman ini hanya memverifikasi status kartu. Informasi kontak dan data pribadi lain tidak ditampilkan.</p>
-      </div>
     </div>
-  </section>
+  </VerificationShell>
 
   <script>
     import { campuses } from '../../data/campuses';
