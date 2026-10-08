@@ -486,3 +486,35 @@ The Member/Admin application layer now has a consistent shell:
 - application result counts and empty states received the same interaction/accessibility treatment used by public finders
 
 The member dashboard intentionally remains a summary dashboard rather than a standard task-page header.
+
+
+### Family Guide shell — implemented
+
+The eight Family guide/reference pages now share one consistent guide contract:
+
+```
+FamilyGuideHeader
+GuideToc when useful
+Guide content
+OfficialSources
+One return path to Keluarga
+```
+
+Implemented routes:
+- F01 Datang bersama keluarga
+- F02 Kehamilan & kelahiran
+- F03 Childcare
+- F04 Sekolah anak
+- F05 Benefit & kesehatan
+- F07 FAQ
+- F09 Timeline
+- F10 Starter Pack
+
+Key changes:
+- removed the repeated ten-item Family navigation grid from child guides
+- standardized breadcrumb naming to **Keluarga**
+- added shared `FamilyGuideHeader.astro`
+- `FamilyGuidePage.astro` now owns the shared header, conditional TOC, source treatment, and return navigation for F01–F05/F07
+- Starter Pack and Timeline use the same header/TOC/source language while preserving their specialized interactions
+- removed the nested `<main>` landmark from Starter Pack
+- ordinary guide cards use calmer standard-card surfaces rather than feature-level elevation

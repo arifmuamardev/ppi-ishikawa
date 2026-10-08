@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import FamilyGuideHeader from '../../../components/FamilyGuideHeader.astro';
+import GuideToc from '../../../components/GuideToc.astro';
+import OfficialSources from '../../../components/OfficialSources.astro';
 import TopicIcon from '../../../components/TopicIcon.astro';
 import { withBase } from '../../../utils/paths';
-import { familyLastVerified } from '../../../data/family';
 
 const phases = [
   {
@@ -21,7 +22,7 @@ const phases = [
     ],
     links: [
       ['Datang bersama keluarga', '/life-in-ishikawa/family/datang-bersama-keluarga/'],
-      ['Family by Municipality', '/life-in-ishikawa/family/municipality/']
+      ['Layanan keluarga per municipality', '/life-in-ishikawa/family/municipality/']
     ]
   },
   {
@@ -39,7 +40,7 @@ const phases = [
     ],
     links: [
       ['Administrasi umum', '/life-in-ishikawa/administrasi/'],
-      ['Family by Municipality', '/life-in-ishikawa/family/municipality/']
+      ['Layanan keluarga per municipality', '/life-in-ishikawa/family/municipality/']
     ]
   },
   {
@@ -128,7 +129,7 @@ const phases = [
       'Jika meninggalkan Jepang, cek residence status, insurance, pension, bank, utilities, school, dan childcare secara terpisah.'
     ],
     links: [
-      ['Family by Municipality', '/life-in-ishikawa/family/municipality/'],
+      ['Layanan keluarga per municipality', '/life-in-ishikawa/family/municipality/'],
       ['Meninggalkan Ishikawa / Jepang', '/life-in-ishikawa/leaving/']
     ]
   }
@@ -160,34 +161,36 @@ const sourceLinks = [
     url: 'https://www4.city.kanazawa.lg.jp/news/27637.html'
   }
 ];
+
+const tocSections = phases.map((phase) => ({
+  id: `timeline-${phase.code.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+  label: phase.code,
+  title: phase.timing
+}));
+
+const officialSources = sourceLinks.map((source) => ({
+  owner: source.owner,
+  title: source.title,
+  description: source.note,
+  url: source.url
+}));
 ---
 
 <BaseLayout
   title="Family Timeline — Dari Sebelum Datang sampai Pindah"
   description="Timeline keluarga PPI Ishikawa: checklist sebelum keluarga datang, 14 hari pertama, bulan pertama, childcare/sekolah, kelahiran, dan pindah."
 >
-  <section class="mx-auto max-w-6xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
-    <Breadcrumbs items={[
-      { label: 'Beranda', href: '/' },
-      { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' },
-      { label: 'Family', href: '/life-in-ishikawa/family-anak/' },
-      { label: 'Family Timeline' }
-    ]} />
+  <FamilyGuideHeader
+    code="F09"
+    title="Apa yang perlu dilakukan—dan kapan."
+    intro="Gunakan timeline ini sebagai checklist orientasi keluarga. Deadline tegas hanya ditampilkan jika punya dasar resmi; layanan lain diarahkan ke municipality karena timing, eligibility, dan formulir dapat berbeda."
+  />
 
-    <div class="mt-8 max-w-4xl">
-      <p class="text-sm font-bold uppercase tracking-[0.18em] text-brand">Family · F09</p>
-      <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Apa yang perlu dilakukan—dan kapan.</h1>
-      <p class="mt-5 text-lg leading-8 text-slate-600">
-        Gunakan timeline ini sebagai checklist orientasi keluarga. Deadline tegas hanya ditampilkan jika punya dasar resmi;
-        layanan lain diarahkan ke municipality karena timing, eligibility, dan formulir dapat berbeda.
-      </p>
-      <p class="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-slate-400">Terakhir diverifikasi · {familyLastVerified}</p>
-    </div>
-  </section>
+  <GuideToc sections={tocSections} />
 
   <section class="mx-auto max-w-6xl px-5 pb-10 lg:px-8">
-    <div class="rounded-3xl border border-accent/35 bg-accent/10 p-6 sm:p-8">
-      <p class="text-sm font-bold uppercase tracking-[0.14em] text-secondary-dark">Cara menggunakan</p>
+    <div class="rounded-2xl border border-accent/35 bg-accent/10 p-6 sm:p-8">
+      <p class="type-eyebrow text-secondary-dark">Cara menggunakan</p>
       <div class="mt-4 grid gap-4 md:grid-cols-3">
         <div>
           <p class="font-bold text-slate-950">1 · Cari fase Anda</p>
@@ -208,18 +211,18 @@ const sourceLinks = [
   <section class="mx-auto max-w-6xl px-5 py-8 lg:px-8">
     <div class="relative space-y-6 before:absolute before:left-[1.22rem] before:top-4 before:bottom-4 before:w-px before:bg-slate-200 sm:before:left-[1.47rem]">
       {phases.map((phase) => (
-        <article class="relative pl-14 sm:pl-16">
-          <span class="absolute left-0 top-1 grid size-10 place-items-center rounded-2xl border border-slate-200 bg-white text-brand shadow-sm sm:size-12">
+        <article id={`timeline-${phase.code.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} class="relative scroll-mt-24 pl-14 sm:pl-16">
+          <span class="absolute left-0 top-1 grid size-10 place-items-center rounded-2xl border border-slate-200 bg-white text-brand sm:size-12">
             <TopicIcon name={phase.icon as any} class="size-5 sm:size-6" />
           </span>
 
-          <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
             <div class="flex flex-wrap items-center gap-3">
               <span class="rounded-full bg-slate-950 px-3 py-1 text-xs font-bold text-white">{phase.code}</span>
-              <p class="text-sm font-bold uppercase tracking-[0.12em] text-brand">{phase.timing}</p>
+              <p class="type-eyebrow text-brand">{phase.timing}</p>
             </div>
 
-            <h2 class="mt-4 text-2xl font-bold tracking-tight text-slate-950">{phase.title}</h2>
+            <h2 class="mt-4 type-section text-slate-950">{phase.title}</h2>
 
             {phase.highlight && (
               <div class="mt-5 rounded-2xl border border-red-200 bg-red-50 p-4">
@@ -240,7 +243,7 @@ const sourceLinks = [
 
             <div class="mt-6 flex flex-wrap gap-2">
               {phase.links.map(([label, href]) => (
-                <a href={withBase(href)} class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-800 hover:bg-slate-50">{label} →</a>
+                <a href={withBase(href)} class="inline-flex min-h-11 items-center rounded-xl border border-slate-300 bg-white px-4 text-sm font-bold text-slate-800 transition-colors hover:border-accent/35 hover:bg-accent/5">{label} →</a>
               ))}
             </div>
           </div>
@@ -252,15 +255,15 @@ const sourceLinks = [
   <section class="mx-auto max-w-6xl px-5 py-10 lg:px-8">
     <div class="grid gap-5 lg:grid-cols-2">
       <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
-        <p class="text-sm font-bold uppercase tracking-[0.14em] text-red-300">Shortcut</p>
+        <p class="type-eyebrow text-red-300">Shortcut</p>
         <h2 class="mt-3 text-2xl font-bold">Sudah tinggal di Ishikawa?</h2>
         <p class="mt-4 text-sm leading-7 text-slate-300">Lewati fase sebelum datang dan mulai dari D0–14 atau W1–4. Untuk layanan keluarga, buka municipality tempat resident registration Anda tercatat.</p>
         <a href={withBase('/life-in-ishikawa/family/municipality/')} class="mt-5 inline-flex rounded-xl bg-white px-4 py-3 text-sm font-bold text-slate-950">Pilih municipality →</a>
       </div>
 
-      <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
-        <p class="text-sm font-bold uppercase tracking-[0.14em] text-brand">Tidak perlu sempurna di minggu pertama</p>
-        <h2 class="mt-3 text-2xl font-bold text-slate-950">Prioritaskan legal status, health access, dan rutinitas anak.</h2>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
+        <p class="type-eyebrow text-brand">Tidak perlu sempurna di minggu pertama</p>
+        <h2 class="mt-3 type-section text-slate-950">Prioritaskan legal status, health access, dan rutinitas anak.</h2>
         <p class="mt-4 text-sm leading-7 text-slate-600">
           Setelah tiga hal itu aman, baru optimalkan fasilitas, aktivitas keluarga, community network, dan hal-hal kenyamanan lainnya.
         </p>
@@ -268,22 +271,12 @@ const sourceLinks = [
     </div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-5 py-10 lg:px-8">
-    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
-      <p class="text-sm font-bold uppercase tracking-[0.14em] text-red-300">Sumber resmi</p>
-      <div class="mt-6 grid gap-4 md:grid-cols-2">
-        {sourceLinks.map((source) => (
-          <a href={source.url} target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800">
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">{source.owner}</p>
-            <h3 class="mt-2 font-bold text-white">{source.title} ↗</h3>
-            <p class="mt-2 text-sm leading-6 text-slate-400">{source.note}</p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
+  <OfficialSources
+    sources={officialSources}
+    title="Gunakan sumber asli untuk deadline dan prosedur yang berlaku."
+  />
 
-  <section class="mx-auto max-w-6xl px-5 pb-24 pt-4 lg:px-8">
-    <a href={withBase('/life-in-ishikawa/family-anak/')} class="inline-flex rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800 hover:bg-slate-50">← Kembali ke Keluarga</a>
+  <section class="mx-auto max-w-5xl px-5 pb-24 pt-4 lg:px-8">
+    <a href={withBase('/life-in-ishikawa/family-anak/')} class="type-ui inline-flex min-h-11 items-center rounded-xl border border-slate-300 bg-white px-5 text-slate-800 transition-colors hover:border-accent/35 hover:bg-accent/5">← Kembali ke Keluarga</a>
   </section>
 </BaseLayout>

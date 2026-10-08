@@ -1,0 +1,34 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+import { familyLastVerified } from '../data/family';
+
+interface Props {
+  code: string;
+  title: string;
+  intro: string;
+}
+
+const { code, title, intro } = Astro.props;
+const hasActions = Astro.slots.has('actions');
+---
+<section class="family-guide-header mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
+  <Breadcrumbs
+    items={[
+      { label: 'Beranda', href: '/' },
+      { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' },
+      { label: 'Keluarga', href: '/life-in-ishikawa/family-anak/' },
+      { label: title }
+    ]}
+  />
+
+  <div class="mt-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+    <div class="min-w-0 max-w-4xl">
+      <p class="type-eyebrow text-brand">Keluarga · {code}</p>
+      <h1 class="type-display mt-4 text-slate-950">{title}</h1>
+      <p class="type-lead mt-5 max-w-3xl text-slate-600">{intro}</p>
+      <p class="type-meta mt-4 uppercase tracking-[0.12em] text-slate-400">Terakhir diverifikasi · {familyLastVerified}</p>
+    </div>
+
+    {hasActions && <div class="shrink-0"><slot name="actions" /></div>}
+  </div>
+</section>

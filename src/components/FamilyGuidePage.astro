@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Breadcrumbs from './Breadcrumbs.astro';
-import TopicIcon from './TopicIcon.astro';
+import FamilyGuideHeader from './FamilyGuideHeader.astro';
+import GuideToc from './GuideToc.astro';
+import OfficialSources from './OfficialSources.astro';
 import { withBase } from '../utils/paths';
-import { familyHubItems, familyLastVerified } from '../data/family';
 
 interface Section {
   title: string;
@@ -21,7 +21,7 @@ interface Source {
 
 interface Props {
   title: string;
-  kicker: string;
+  code: string;
   description: string;
   intro: string;
   sections: Section[];
@@ -29,38 +29,38 @@ interface Props {
   currentNote?: string;
 }
 
-const { title, kicker, description, intro, sections, sources, currentNote } = Astro.props;
+const { title, code, description, intro, sections, sources, currentNote } = Astro.props;
+
+const sectionItems = sections.map((section, index) => ({
+  ...section,
+  id: `bagian-${index + 1}`,
+  label: String(index + 1).padStart(2, '0')
+}));
+
+const officialSources = sources.map((source) => ({
+  owner: source.owner,
+  title: source.title,
+  description: source.note,
+  url: source.url
+}));
 ---
 
 <BaseLayout title={title} description={description}>
-  <section class="mx-auto max-w-5xl px-5 pb-10 pt-16 lg:px-8 lg:pt-24">
-    <Breadcrumbs items={[
-      { label: 'Beranda', href: '/' },
-      { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' },
-      { label: 'Family', href: '/life-in-ishikawa/family-anak/' },
-      { label: title }
-    ]} />
-    <p class="type-eyebrow mt-8 text-brand">{kicker}</p>
-    <h1 class="type-display mt-4 text-slate-950">{title}</h1>
-    <p class="type-lead mt-5 max-w-3xl text-slate-600">{intro}</p>
-    <p class="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-slate-400">Terakhir diverifikasi · {familyLastVerified}</p>
-  </section>
+  <FamilyGuideHeader code={code} title={title} intro={intro} />
 
-  <section class="mx-auto max-w-5xl px-5 pb-10 lg:px-8">
-    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-      {familyHubItems.map((item) => (
-        <a href={withBase(item.href)} class="group rounded-2xl border border-slate-200 bg-white p-4 transition-colors hover:border-accent/35 hover:bg-accent/5">
-          <span class="grid size-9 place-items-center rounded-xl bg-accent/10 text-brand"><TopicIcon name={item.icon} class="size-5" /></span>
-          <p class="mt-3 text-xs font-bold uppercase tracking-[0.12em] text-slate-400">{item.code}</p>
-          <p class="mt-1 text-sm font-bold leading-5 text-slate-900 group-hover:text-brand">{item.title}</p>
-        </a>
-      ))}
-    </div>
-  </section>
+  {sectionItems.length >= 4 && (
+    <GuideToc
+      sections={sectionItems.map((section) => ({
+        id: section.id,
+        label: section.label,
+        title: section.title
+      }))}
+    />
+  )}
 
   {currentNote && (
-    <section class="mx-auto max-w-5xl px-5 pb-8 lg:px-8">
-      <div class="rounded-3xl border border-accent/35 bg-accent/10 p-6">
+    <section class="mx-auto max-w-5xl px-5 pb-8 pt-6 lg:px-8">
+      <div class="rounded-2xl border border-accent/35 bg-accent/10 p-6">
         <p class="type-eyebrow text-secondary-dark">Catatan saat ini</p>
         <p class="mt-3 text-sm leading-7 text-slate-700">{currentNote}</p>
       </div>
@@ -68,11 +68,11 @@ const { title, kicker, description, intro, sections, sources, currentNote } = As
   )}
 
   <section class="mx-auto max-w-5xl px-5 py-8 lg:px-8">
-    <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white divide-y divide-slate-200">
-      {sections.map((section, index) => (
-        <article class="p-6 sm:p-8">
+    <div class="divide-y divide-slate-200 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+      {sectionItems.map((section) => (
+        <article id={section.id} class="scroll-mt-24 p-6 sm:p-8">
           <div class="flex gap-4">
-            <span class="grid size-10 shrink-0 place-items-center rounded-2xl bg-slate-100 text-xs font-bold text-slate-600">{String(index + 1).padStart(2, '0')}</span>
+            <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-slate-100 text-xs font-bold text-slate-600">{section.label}</span>
             <div class="min-w-0 flex-1">
               <h2 class="type-section text-slate-950">{section.title}</h2>
               {section.intro && <p class="mt-3 leading-7 text-slate-600">{section.intro}</p>}
@@ -95,32 +95,21 @@ const { title, kicker, description, intro, sections, sources, currentNote } = As
   </section>
 
   <section class="mx-auto max-w-5xl px-5 pt-6 lg:px-8">
-    <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
+    <div class="flex flex-col gap-4 border-y border-slate-200 py-5 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <p class="text-xs font-bold uppercase tracking-[0.12em] text-brand">Layanan lokal</p>
+        <p class="type-eyebrow text-brand">Layanan lokal</p>
         <p class="mt-1 text-sm leading-6 text-slate-600">Childcare, school, allowance, medical support, dan consultation mengikuti municipality tempat alamat Anda terdaftar.</p>
       </div>
-      <a href={withBase('/life-in-ishikawa/family/municipality/')} class="shrink-0 rounded-xl bg-slate-950 px-4 py-3 text-sm font-bold text-white">Pilih municipality →</a>
+      <a href={withBase('/life-in-ishikawa/family/municipality/')} class="type-ui inline-flex min-h-11 shrink-0 items-center rounded-xl bg-slate-950 px-4 text-white transition-colors hover:bg-slate-800">Pilih municipality →</a>
     </div>
   </section>
 
-  <section class="mx-auto max-w-5xl px-5 py-10 lg:px-8">
-    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
-      <p class="type-eyebrow text-red-300">Sumber resmi</p>
-      <h2 class="mt-3 text-2xl font-bold">Gunakan sumber asli untuk syarat, nominal, dan jadwal terbaru.</h2>
-      <div class="mt-7 grid gap-4 sm:grid-cols-2">
-        {sources.map((source) => (
-          <a href={source.url} target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800">
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">{source.owner}</p>
-            <h3 class="mt-2 font-bold text-white">{source.title} ↗</h3>
-            <p class="mt-2 text-sm leading-6 text-slate-400">{source.note}</p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
+  <OfficialSources
+    sources={officialSources}
+    title="Gunakan sumber asli untuk syarat, nominal, dan jadwal terbaru."
+  />
 
-  <section class="mx-auto max-w-5xl px-5 pb-24 pt-6 lg:px-8">
-    <a href={withBase('/life-in-ishikawa/family-anak/')} class="inline-flex rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800 hover:bg-slate-50">← Kembali ke Keluarga</a>
+  <section class="mx-auto max-w-5xl px-5 pb-24 pt-4 lg:px-8">
+    <a href={withBase('/life-in-ishikawa/family-anak/')} class="type-ui inline-flex min-h-11 items-center rounded-xl border border-slate-300 bg-white px-5 text-slate-800 transition-colors hover:border-accent/35 hover:bg-accent/5">← Kembali ke Keluarga</a>
   </section>
 </BaseLayout>

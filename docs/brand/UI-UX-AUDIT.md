@@ -236,3 +236,14 @@ Implemented across Member/Admin/Auth:
 - removed dashboard navigation blocks that duplicated the application sidebar
 - reduced routine application cards/forms to standard `2xl` radius
 - extended live status semantics and touch-target improvements to member/admin filters and counters
+
+
+### Pass 9 — Family guide shell
+Implemented across the Family detail branch:
+- removed repeated child-navigation grids from guide pages
+- standardized Family guide header/breadcrumb/meta treatment
+- added conditional TOC behavior
+- reused the shared OfficialSources treatment
+- migrated Starter Pack and Timeline to the same shell language
+- removed nested main-landmark markup from Starter Pack
+- preserved specialized checklist, print, progress, and timeline interactions
