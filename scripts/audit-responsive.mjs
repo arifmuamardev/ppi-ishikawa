@@ -146,7 +146,7 @@ try {
             return visible.every((card) => (card.dataset.type || '').split(',').includes(type))
               && document.querySelector('#career-count')?.textContent?.trim() ===
                 visible.length + ' sumber ditampilkan';
-          }, selected, { timeout: 4000 });
+          }, selected[0], { timeout: 4000 });
           await page.locator('#career-reset').click();
           await page.waitForFunction((total) =>
             document.querySelector('#career-type')?.value === ''
