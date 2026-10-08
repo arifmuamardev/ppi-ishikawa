@@ -270,6 +270,19 @@ for (const [relativePath, sectionId, resultId, secondary] of [
   }
 }
 
+// Finder result density must be progressive, without truncating the dataset
+// or applying filtering only to the initially rendered cards.
+await checkFile('src/pages/beasiswa.astro', {
+  required: [
+    ['id="scholarship-show-more"', 'accessible progressive result action'],
+    ['aria-controls="scholarship-grid"', 'show-more button controls the result grid'],
+    ['const PAGE_SIZE = 4', 'bounded initial result density'],
+    ['const matched =', 'count of all matching scholarship records'],
+    ['visibleLimit += PAGE_SIZE', 'users can reveal remaining matching records'],
+    ['apply(true)', 'filters reset the number of visible results'],
+  ],
+});
+
 // A nested route can still be a top-level menu destination.
 // Keep the nested Landing shell based on navigation semantics, not URL depth.
 await checkFile('src/components/NestedLandingHeader.astro', {
