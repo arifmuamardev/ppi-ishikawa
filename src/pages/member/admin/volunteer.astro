@@ -23,41 +23,41 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
         <input name="id" type="hidden" />
         <label>
           <span class="text-sm font-bold text-slate-800">Unit</span>
-          <select name="unit_id" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3"></select>
+          <select name="unit_id" required class="ui-field mt-2"></select>
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Program terkait</span>
-          <select name="program_id" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3">
+          <select name="program_id" class="ui-field mt-2">
             <option value="">Tidak terkait program tertentu</option>
           </select>
         </label>
         <label class="md:col-span-2">
           <span class="text-sm font-bold text-slate-800">Judul kebutuhan</span>
-          <input name="title" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="title" required class="ui-field mt-2" />
         </label>
         <label class="md:col-span-2">
           <span class="text-sm font-bold text-slate-800">Deskripsi</span>
-          <textarea name="description" rows="4" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3"></textarea>
+          <textarea name="description" rows="4" class="ui-field mt-2"></textarea>
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Minat relevan</span>
-          <input name="interests" placeholder="Pisahkan dengan koma" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="interests" placeholder="Pisahkan dengan koma" class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Skills relevan</span>
-          <input name="skills" placeholder="Pisahkan dengan koma" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="skills" placeholder="Pisahkan dengan koma" class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Jumlah slot</span>
-          <input name="slots" type="number" min="1" placeholder="Kosong = fleksibel" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="slots" type="number" min="1" placeholder="Kosong = fleksibel" class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Batas waktu</span>
-          <input name="deadline" type="datetime-local" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="deadline" type="datetime-local" class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Status</span>
-          <select name="status" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3">
+          <select name="status" class="ui-field mt-2">
             <option value="draft">Draft</option>
             <option value="open" selected>Terbuka</option>
             <option value="closed">Ditutup</option>
@@ -65,7 +65,7 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
           </select>
         </label>
         <div class="flex items-end justify-end">
-          <button class="w-full rounded-xl bg-brand px-6 py-3 font-bold text-white">Simpan opportunity</button>
+          <button class="w-full ui-action-primary">Simpan opportunity</button>
         </div>
       </form>
     </section>
