@@ -70,7 +70,7 @@ const staleCount = scholarships.filter(needsReview).length;
         <p class="type-eyebrow text-brand">Pencarian Beasiswa</p>
         <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-950">Saring yang relevan untuk kondisi Anda.</h2>
       </div>
-      <p id="scholarship-count" class="text-sm font-semibold text-slate-500" aria-live="polite" aria-atomic="true">{scholarships.length} beasiswa ditampilkan</p>
+      <p id="scholarship-count" class="text-sm font-semibold text-slate-500" aria-live="polite" aria-atomic="true">{scholarships.length} beasiswa tersedia</p>
     </div>
 
     <FinderControls columns="seven">
@@ -272,6 +272,17 @@ const staleCount = scholarships.filter(needsReview).length;
         </article>
       ))}
     </div>
+
+    <div id="scholarship-more" class="mt-7 hidden flex-col items-center gap-3">
+      <button
+        id="scholarship-show-more"
+        type="button"
+        aria-controls="scholarship-grid"
+        class="ui-action-secondary w-full sm:w-auto"
+      >
+        Tampilkan 4 beasiswa lagi
+      </button>
+    </div>
   </section>
 
   <section class="mx-auto max-w-7xl px-5 ui-section-space-compact lg:px-8">
@@ -459,11 +470,17 @@ const staleCount = scholarships.filter(needsReview).length;
       const cards = [...document.querySelectorAll('.scholarship-card')];
       const count = document.getElementById('scholarship-count');
       const empty = document.getElementById('scholarship-empty');
+      const more = document.getElementById('scholarship-more');
+      const showMore = document.getElementById('scholarship-show-more');
+      const PAGE_SIZE = 4;
+      let visibleLimit = PAGE_SIZE;
 
       const matchesList = (raw, value) => !value || raw.split(',').includes(value);
 
-      const apply = () => {
-        let shown = 0;
+      const apply = (resetLimit = false) => {
+        if (resetLimit) visibleLimit = PAGE_SIZE;
+        let matched = 0;
+        let displayed = 0;
         for (const card of cards) {
           const campusValue = campus?.value || '';
           const levelValue = level?.value || '';
@@ -493,11 +510,20 @@ const staleCount = scholarships.filter(needsReview).length;
           const campusScopeOk = !campusScopeValue || campusScopeRaw === campusScopeValue;
           const visible = campusOk && levelOk && stageOk && indonesiaOk && routeOk && freshnessOk && campusScopeOk;
 
-          card.classList.toggle('hidden', !visible);
-          if (visible) shown++;
+          if (visible) {
+            matched++;
+            if (displayed < visibleLimit) displayed++;
+          }
+          card.classList.toggle('hidden', !visible || matched > visibleLimit);
         }
-        if (count) count.textContent = `${shown} beasiswa ditampilkan`;
-        empty?.classList.toggle('hidden', shown !== 0);
+        if (count) count.textContent = `Menampilkan ${displayed} dari ${matched} beasiswa`;
+        empty?.classList.toggle('hidden', matched !== 0);
+        const remaining = matched - displayed;
+        more?.classList.toggle('hidden', remaining === 0);
+        more?.classList.toggle('flex', remaining > 0);
+        if (showMore && remaining > 0) {
+          showMore.textContent = `Tampilkan ${Math.min(PAGE_SIZE, remaining)} beasiswa lagi`;
+        }
       };
 
       const params = new URLSearchParams(window.location.search);
@@ -509,7 +535,7 @@ const staleCount = scholarships.filter(needsReview).length;
       if (freshness && params.get('freshness')) freshness.value = params.get('freshness');
       if (campusScope && params.get('campusScope')) campusScope.value = params.get('campusScope');
 
-      [campus, level, stage, indonesia, route, freshness, campusScope].forEach((el) => el?.addEventListener('change', apply));
+      [campus, level, stage, indonesia, route, freshness, campusScope].forEach((el) => el?.addEventListener('change', () => apply(true)));
       reset?.addEventListener('click', () => {
         if (campus) campus.value = '';
         if (level) level.value = '';
@@ -518,26 +544,31 @@ const staleCount = scholarships.filter(needsReview).length;
         if (route) route.value = '';
         if (freshness) freshness.value = '';
         if (campusScope) campusScope.value = '';
+        apply(true);
+      });
+
+      showMore?.addEventListener('click', () => {
+        visibleLimit += PAGE_SIZE;
         apply();
       });
 
       document.querySelectorAll('[data-stage-jump]').forEach((link) => {
         link.addEventListener('click', () => {
           if (stage) stage.value = link.dataset.stageJump || '';
-          setTimeout(apply, 0);
+          setTimeout(() => apply(true), 0);
         });
       });
       document.querySelectorAll('[data-campus-jump]').forEach((link) => {
         link.addEventListener('click', () => {
           if (campus) campus.value = link.dataset.campusJump || '';
-          setTimeout(apply, 0);
+          setTimeout(() => apply(true), 0);
         });
       });
 
       document.querySelectorAll('[data-indonesia-jump]').forEach((link) => {
         link.addEventListener('click', () => {
           if (indonesia) indonesia.value = 'yes';
-          setTimeout(apply, 0);
+          setTimeout(() => apply(true), 0);
         });
       });
 

@@ -124,25 +124,78 @@ try {
         // These assertions supplement the screenshot/overflow checks, rather than
         // treating a successful static render as proof the filters still work.
         if (width === 390 && key === 'scholarships') {
-          const initial = await page.locator('.scholarship-card').count();
+          const snapshot = () => page.evaluate(() => {
+            const cards = [...document.querySelectorAll('.scholarship-card')];
+            const shown = cards.filter((card) => !card.classList.contains('hidden'));
+            const stage = document.querySelector('#filter-stage')?.value || '';
+            const route = document.querySelector('#filter-route')?.value || '';
+            const matched = cards.filter((card) =>
+              (!stage || (card.dataset.stage || '').split(',').some((value) => value === stage || value === 'both'))
+              && (!route || card.dataset.route === route)
+            );
+            const countText = document.querySelector('#scholarship-count')?.textContent?.trim() || '';
+            const emptyShown = !document.querySelector('#scholarship-empty')?.classList.contains('hidden');
+            const moreShown = !document.querySelector('#scholarship-more')?.classList.contains('hidden');
+            return {
+              total: cards.length, shown: shown.length, stage, route, matched: matched.length,
+              countText, emptyShown, moreShown,
+              invalidShown: shown.some((card) => !matched.includes(card))
+            };
+          });
+          const verify = (state, expectedShown, expectedMatched, label) => {
+            if (state.shown !== expectedShown || state.countText !==
+                'Menampilkan ' + expectedShown + ' dari ' + expectedMatched + ' beasiswa') {
+              check.errors.push(label + ': displayed count does not match pagination/filter state');
+            }
+            if (state.invalidShown) check.errors.push(label + ': non-matching scholarship was displayed');
+            if (state.moreShown !== (expectedMatched > expectedShown)) {
+              check.errors.push(label + ': show-more visibility does not match remaining results');
+            }
+            if (state.emptyShown !== (expectedMatched === 0)) {
+              check.errors.push(label + ': empty-state visibility mismatch');
+            }
+          };
+
+          const initial = await snapshot();
+          verify(initial, Math.min(4, initial.total), initial.total, 'default');
+          if (initial.total > 4) {
+            await page.locator('#scholarship-show-more').click();
+            verify(await snapshot(), Math.min(8, initial.total), initial.total, 'show-more');
+          }
+
           await page.locator('[data-stage-jump="before-arrival"]').click();
           await page.waitForFunction(() => {
-            const input = document.querySelector('#filter-stage');
-            const visible = [...document.querySelectorAll('.scholarship-card')]
-              .filter((card) => !card.classList.contains('hidden'));
-            return input?.value === 'before-arrival'
-              && visible.every((card) => ['before-arrival', 'both'].some((stage) =>
-                (card.dataset.stage || '').split(',').includes(stage)))
+            const cards = [...document.querySelectorAll('.scholarship-card')];
+            const relevant = cards.filter((card) =>
+              (card.dataset.stage || '').split(',').some((value) => value === 'before-arrival' || value === 'both')
+            ).length;
+            const shown = cards.filter((card) => !card.classList.contains('hidden')).length;
+            return document.querySelector('#filter-stage')?.value === 'before-arrival'
+              && shown === Math.min(4, relevant)
               && document.querySelector('#scholarship-count')?.textContent?.trim() ===
-                visible.length + ' beasiswa ditampilkan';
+                'Menampilkan ' + shown + ' dari ' + relevant + ' beasiswa';
           }, null, { timeout: 4000 });
+          const filtered = await snapshot();
+          if (filtered.stage !== 'before-arrival') check.errors.push('stage shortcut did not update filter');
+          verify(filtered, Math.min(4, filtered.matched), filtered.matched, 'stage shortcut');
+          if (filtered.matched > 4) {
+            await page.locator('#scholarship-show-more').click();
+            verify(await snapshot(), Math.min(8, filtered.matched), filtered.matched, 'filtered show-more');
+          }
+
+          // A synthetic unmatched select option validates the empty-state and reset
+          // without relying on any particular scholarship dataset composition.
+          await page.locator('#filter-route').evaluate((select) => {
+            select.add(new Option('Tidak ada hasil (tes)', '__no_match__'));
+          });
+          await page.locator('#filter-route').selectOption('__no_match__');
+          const noMatches = await snapshot();
+          verify(noMatches, 0, 0, 'no matches');
           await page.locator('#filter-reset').click();
-          await page.waitForFunction((total) =>
-            document.querySelector('#filter-stage')?.value === ''
-            && [...document.querySelectorAll('.scholarship-card')]
-              .filter((card) => !card.classList.contains('hidden')).length === total,
-          initial, { timeout: 4000 });
-          check.finderInteractions = 'scholarship stage shortcut + reset passed';
+          const reset = await snapshot();
+          if (reset.stage || reset.route) check.errors.push('Reset did not clear scholarship filters');
+          verify(reset, Math.min(4, initial.total), initial.total, 'reset');
+          check.finderInteractions = 'scholarship pagination, shortcut, empty state and reset passed';
         }
         if (width === 390 && key === 'career') {
           const navigationBeforeResults = await page.evaluate(() => {
