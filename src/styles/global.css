@@ -418,3 +418,118 @@ html.dark .brand-gold-rule {
 .ui-section-space-major {
   padding-block: clamp(3.5rem, 6vw, 5rem);
 }
+
+
+/* Form controls ------------------------------------------------------------ */
+
+.ui-field {
+  display: block;
+  width: 100%;
+  min-height: 2.75rem;
+  border: 1px solid var(--ppi-neutral-300);
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--ppi-surface) 94%, white);
+  padding: 0.7rem 1rem;
+  color: var(--ppi-neutral-900);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.ui-field:hover {
+  border-color: color-mix(in srgb, var(--ppi-accent) 55%, var(--ppi-neutral-300));
+}
+
+.ui-field::placeholder {
+  color: var(--ppi-neutral-500);
+}
+
+.ui-field:disabled,
+.ui-field[readonly] {
+  cursor: not-allowed;
+  background: var(--ppi-neutral-50);
+  color: var(--ppi-neutral-500);
+}
+
+textarea.ui-field {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+select.ui-field {
+  cursor: pointer;
+}
+
+.ui-field-inline {
+  width: auto;
+  min-width: 10rem;
+}
+
+input[type='file'].ui-field {
+  padding: 0.45rem 0.6rem;
+}
+
+input[type='file'].ui-field::file-selector-button {
+  margin-right: 0.75rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: var(--ppi-neutral-100);
+  padding: 0.5rem 0.75rem;
+  color: var(--ppi-neutral-800);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ui-check {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+  accent-color: var(--ppi-primary);
+}
+
+.ui-action-primary,
+.ui-action-secondary {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  padding-inline: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
+}
+
+.ui-action-primary {
+  border: 1px solid transparent;
+  background: var(--ppi-primary);
+  color: white;
+}
+
+.ui-action-primary:hover {
+  background: var(--ppi-primary-strong);
+}
+
+.ui-action-secondary {
+  border: 1px solid var(--ppi-neutral-300);
+  background: color-mix(in srgb, var(--ppi-surface) 94%, white);
+  color: var(--ppi-neutral-700);
+}
+
+.ui-action-secondary:hover {
+  border-color: color-mix(in srgb, var(--ppi-accent) 55%, var(--ppi-neutral-300));
+  background: color-mix(in srgb, var(--ppi-accent) 10%, var(--ppi-surface));
+  color: var(--ppi-primary);
+}
+
+html.dark .ui-action-primary {
+  color: var(--theme-ink);
+}

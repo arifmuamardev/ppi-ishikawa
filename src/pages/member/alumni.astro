@@ -23,47 +23,47 @@ import AppPageHeader from '../../components/AppPageHeader.astro';
       <div class="mt-6 grid gap-5 md:grid-cols-2">
         <label>
           <span class="text-sm font-bold text-slate-800">Tahun lulus</span>
-          <input name="graduation_year" type="number" min="2000" max="2100" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="graduation_year" type="number" min="2000" max="2100" class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Negara saat ini</span>
-          <input name="current_country" type="text" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="current_country" type="text" class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Kota saat ini</span>
-          <input name="current_city" type="text" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="current_city" type="text" class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Organisasi / perusahaan</span>
-          <input name="organization" type="text" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="organization" type="text" class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Peran / jabatan</span>
-          <input name="role_title" type="text" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="role_title" type="text" class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Bidang / sektor</span>
-          <input name="sector" type="text" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="sector" type="text" class="ui-field mt-2" />
         </label>
       </div>
 
       <div class="mt-6 space-y-3">
         <label class="flex items-start gap-3 rounded-2xl bg-accent/10 p-4">
-          <input name="directory_visible" type="checkbox" class="mt-1 size-4" />
+          <input name="directory_visible" type="checkbox" class="ui-check mt-0.5" />
           <span><strong class="text-slate-950">Tampilkan saya di Alumni Network</strong><span class="mt-1 block text-sm leading-6 text-slate-600">Hanya berlaku setelah status membership Anda Alumni.</span></span>
         </label>
         <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
-          <input name="willing_to_be_contacted" type="checkbox" class="mt-1 size-4" />
+          <input name="willing_to_be_contacted" type="checkbox" class="ui-check mt-0.5" />
           <span class="text-sm font-semibold text-slate-700">Saya terbuka untuk dihubungi oleh anggota melalui jalur yang tersedia.</span>
         </label>
         <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
-          <input name="speaking_available" type="checkbox" class="mt-1 size-4" />
+          <input name="speaking_available" type="checkbox" class="ui-check mt-0.5" />
           <span class="text-sm font-semibold text-slate-700">Saya terbuka untuk diundang berbagi pengalaman / menjadi pembicara.</span>
         </label>
       </div>
 
       <div class="mt-6 flex justify-end">
-        <button class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Simpan profil alumni</button>
+        <button class="ui-action-primary">Simpan profil alumni</button>
       </div>
     </form>
 

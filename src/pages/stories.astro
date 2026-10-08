@@ -55,20 +55,20 @@ const representedTopics = Object.entries(storyTopicLabels).filter(([topic]) =>
       <div class="grid gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-5 md:grid-cols-2">
         <label class="block">
           <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Kampus</span>
-          <select id="story-campus" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+          <select id="story-campus" class="ui-field mt-2">
             <option value="">Semua kampus</option>
             {representedCampuses.map((campus) => <option value={campus.slug}>{campus.shortName}</option>)}
           </select>
         </label>
         <label class="block">
           <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Topik</span>
-          <select id="story-topic" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800">
+          <select id="story-topic" class="ui-field mt-2">
             <option value="">Semua topik</option>
             {representedTopics.map(([value, label]) => <option value={value}>{label}</option>)}
           </select>
         </label>
         <div class="md:col-span-2 flex flex-wrap items-center justify-between gap-3">
-          <button id="story-reset" type="button" class="min-h-11 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">Reset filter</button>
+          <button id="story-reset" type="button" class="ui-action-secondary">Reset filter</button>
           <p id="story-count" class="text-sm font-semibold text-slate-500" aria-live="polite" aria-atomic="true">{stories.length} cerita</p>
         </div>
       </div>

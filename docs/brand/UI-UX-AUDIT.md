@@ -276,3 +276,12 @@ Implemented on the remaining public edge-case routes:
 - updated 404 terminology to “Hidup di Ishikawa”
 - aligned Story detail metadata, media radius, and mobile quote sizing with the public UI system
 - added `check:ui` enforcement for verification pages
+
+
+### Pass 12 — Semantic form controls
+Implemented across public finders, Auth, Member, and Admin forms:
+- added shared `ui-field`, `ui-field-inline`, and `ui-check` control styles
+- added shared `ui-action-primary` and `ui-action-secondary` actions
+- standardized 44 px minimum interaction height, radius, border, background, hover, readonly, placeholder, file-input, and dark-mode behavior
+- migrated the most common input/select/textarea/submit/reset patterns away from repeated page-specific Tailwind class strings
+- added `check:ui` guards for the legacy form-control signatures so old patterns cannot silently return

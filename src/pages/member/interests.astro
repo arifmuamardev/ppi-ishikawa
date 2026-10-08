@@ -21,7 +21,7 @@ import { memberInterestOptions, memberSkillOptions } from '../../data/member-com
         <div class="mt-6 grid gap-3 sm:grid-cols-2">
           {memberInterestOptions.map((item) => (
             <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
-              <input name="interests" value={item} type="checkbox" class="mt-1 size-4" />
+              <input name="interests" value={item} type="checkbox" class="ui-check mt-0.5" />
               <span class="text-sm font-semibold leading-6 text-slate-700">{item}</span>
             </label>
           ))}
@@ -34,14 +34,14 @@ import { memberInterestOptions, memberSkillOptions } from '../../data/member-com
         <div class="mt-6 grid gap-3 sm:grid-cols-2">
           {memberSkillOptions.map((item) => (
             <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
-              <input name="skills" value={item} type="checkbox" class="mt-1 size-4" />
+              <input name="skills" value={item} type="checkbox" class="ui-check mt-0.5" />
               <span class="text-sm font-semibold leading-6 text-slate-700">{item}</span>
             </label>
           ))}
         </div>
 
         <label class="mt-6 flex items-start gap-3 rounded-2xl border border-accent/35 bg-accent/10 p-4">
-          <input name="volunteer_available" type="checkbox" class="mt-1 size-4" />
+          <input name="volunteer_available" type="checkbox" class="ui-check mt-0.5" />
           <span>
             <strong class="text-slate-950">Saya terbuka untuk dihubungi terkait kesempatan volunteer</strong>
             <span class="mt-1 block text-sm leading-6 text-slate-600">Pengurus dapat menghubungi Anda ketika ada kebutuhan yang sesuai dengan minat atau skills yang dipilih.</span>
@@ -50,7 +50,7 @@ import { memberInterestOptions, memberSkillOptions } from '../../data/member-com
       </section>
 
       <div class="flex justify-end">
-        <button type="submit" class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Simpan minat & skills</button>
+        <button type="submit" class="ui-action-primary">Simpan minat & skills</button>
       </div>
     </form>
   </div>

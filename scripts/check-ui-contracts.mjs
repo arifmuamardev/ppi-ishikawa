@@ -215,6 +215,15 @@ for (const relativePath of verificationPages) {
   });
 }
 
+const legacyControlSignatures = [
+  'mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900',
+  'mt-2 w-full rounded-xl border border-slate-300 px-4 py-3',
+  'mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-800',
+  'rounded-xl bg-brand px-6 py-3 font-bold text-white',
+  'min-h-11 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700',
+  'class="mt-1 size-4"',
+];
+
 const pageFiles = (await walk('src/pages')).filter((file) => file.endsWith('.astro'));
 
 for (const relativePath of pageFiles) {
@@ -233,6 +242,13 @@ for (const relativePath of pageFiles) {
   assertions += 1;
   if (source.includes('<PageIntro')) {
     errors.push(`${relativePath}: legacy PageIntro usage is not allowed`);
+  }
+
+  for (const signature of legacyControlSignatures) {
+    assertions += 1;
+    if (source.includes(signature)) {
+      errors.push(`${relativePath}: legacy form-control signature must use semantic ui-field/ui-action/ui-check classes (${signature})`);
+    }
   }
 
   if (relativePath.startsWith('src/pages/member/') && source.includes('<MemberLayout')) {

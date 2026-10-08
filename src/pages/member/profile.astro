@@ -21,52 +21,52 @@ import { ishikawaCities, studyLevels } from '../../data/membership';
         <div class="mt-6 grid gap-5 md:grid-cols-2">
           <label class="md:col-span-2">
             <span class="text-sm font-bold text-slate-800">Nama lengkap</span>
-            <input name="full_name" type="text" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+            <input name="full_name" type="text" required class="ui-field mt-2" />
           </label>
           <label>
             <span class="text-sm font-bold text-slate-800">Email akun</span>
-            <input id="profile-email" type="email" readonly class="mt-2 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-500" />
+            <input id="profile-email" type="email" readonly class="ui-field mt-2" />
           </label>
           <label>
             <span class="text-sm font-bold text-slate-800">Kampus</span>
-            <select name="campus_slug" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+            <select name="campus_slug" class="ui-field mt-2">
               <option value="">Pilih kampus</option>
               {campuses.map((campus) => <option value={campus.slug}>{campus.shortName}</option>)}
             </select>
           </label>
           <label>
             <span class="text-sm font-bold text-slate-800">Program / jurusan</span>
-            <input name="program" type="text" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+            <input name="program" type="text" class="ui-field mt-2" />
           </label>
           <label>
             <span class="text-sm font-bold text-slate-800">Jenjang / status studi</span>
-            <select name="study_level" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+            <select name="study_level" class="ui-field mt-2">
               <option value="">Pilih jenjang</option>
               {studyLevels.map((item) => <option value={item.value}>{item.label}</option>)}
             </select>
           </label>
           <label>
             <span class="text-sm font-bold text-slate-800">Bidang studi</span>
-            <input name="field_of_study" type="text" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+            <input name="field_of_study" type="text" class="ui-field mt-2" />
           </label>
           <label>
             <span class="text-sm font-bold text-slate-800">Kota tempat tinggal</span>
-            <select name="city" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+            <select name="city" class="ui-field mt-2">
               <option value="">Tidak diisi</option>
               {ishikawaCities.map((city) => <option value={city}>{city}</option>)}
             </select>
           </label>
           <label>
             <span class="text-sm font-bold text-slate-800">Instagram</span>
-            <input name="instagram" type="text" placeholder="@username" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+            <input name="instagram" type="text" placeholder="@username" class="ui-field mt-2" />
           </label>
           <label>
             <span class="text-sm font-bold text-slate-800">LinkedIn</span>
-            <input name="linkedin_url" type="url" placeholder="https://www.linkedin.com/in/..." class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+            <input name="linkedin_url" type="url" placeholder="https://www.linkedin.com/in/..." class="ui-field mt-2" />
           </label>
           <label class="md:col-span-2">
             <span class="text-sm font-bold text-slate-800">Bio singkat</span>
-            <textarea name="bio" rows="4" maxlength="500" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" placeholder="Opsional. Ceritakan bidang studi atau hal yang ingin Anda bagikan kepada anggota lain."></textarea>
+            <textarea name="bio" rows="4" maxlength="500" class="ui-field mt-2" placeholder="Opsional. Ceritakan bidang studi atau hal yang ingin Anda bagikan kepada anggota lain."></textarea>
           </label>
         </div>
       </section>
@@ -78,20 +78,20 @@ import { ishikawaCities, studyLevels } from '../../data/membership';
 
         <div class="mt-6 space-y-3">
           <label class="flex items-start gap-3 rounded-2xl bg-accent/10 p-4">
-            <input name="directory_visible" type="checkbox" class="mt-1 size-4" />
+            <input name="directory_visible" type="checkbox" class="ui-check mt-0.5" />
             <span><strong class="text-slate-950">Tampilkan profil saya di direktori anggota</strong><span class="mt-1 block text-sm leading-6 text-slate-600">Nama, kampus, program, jenjang, status membership, dan bio dapat terlihat oleh anggota terverifikasi.</span></span>
           </label>
           <div class="grid gap-3 md:grid-cols-2">
-            <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4"><input name="show_field_of_study" type="checkbox" class="mt-1 size-4" /><span class="text-sm font-semibold text-slate-700">Tampilkan bidang studi</span></label>
-            <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4"><input name="show_city" type="checkbox" class="mt-1 size-4" /><span class="text-sm font-semibold text-slate-700">Tampilkan kota tempat tinggal</span></label>
-            <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4"><input name="show_instagram" type="checkbox" class="mt-1 size-4" /><span class="text-sm font-semibold text-slate-700">Tampilkan Instagram</span></label>
-            <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4"><input name="show_linkedin" type="checkbox" class="mt-1 size-4" /><span class="text-sm font-semibold text-slate-700">Tampilkan LinkedIn</span></label>
+            <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4"><input name="show_field_of_study" type="checkbox" class="ui-check mt-0.5" /><span class="text-sm font-semibold text-slate-700">Tampilkan bidang studi</span></label>
+            <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4"><input name="show_city" type="checkbox" class="ui-check mt-0.5" /><span class="text-sm font-semibold text-slate-700">Tampilkan kota tempat tinggal</span></label>
+            <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4"><input name="show_instagram" type="checkbox" class="ui-check mt-0.5" /><span class="text-sm font-semibold text-slate-700">Tampilkan Instagram</span></label>
+            <label class="flex items-start gap-3 rounded-2xl bg-slate-50 p-4"><input name="show_linkedin" type="checkbox" class="ui-check mt-0.5" /><span class="text-sm font-semibold text-slate-700">Tampilkan LinkedIn</span></label>
           </div>
         </div>
       </section>
 
       <div class="flex justify-end">
-        <button type="submit" class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Simpan perubahan</button>
+        <button type="submit" class="ui-action-primary">Simpan perubahan</button>
       </div>
     </form>
   </div>

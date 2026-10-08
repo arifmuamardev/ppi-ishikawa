@@ -19,16 +19,16 @@ import { withBase } from '../../utils/paths';
       <form id="member-register-form" class="mt-8 grid gap-5 md:grid-cols-2">
         <label class="md:col-span-2">
           <span class="text-sm font-bold text-slate-800">Nama lengkap</span>
-          <input name="full_name" type="text" autocomplete="name" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          <input name="full_name" type="text" autocomplete="name" required class="ui-field mt-2" />
         </label>
 
         <label>
           <span class="text-sm font-bold text-slate-800">Email</span>
-          <input name="email" type="email" autocomplete="email" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          <input name="email" type="email" autocomplete="email" required class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Kampus</span>
-          <select name="campus_slug" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+          <select name="campus_slug" required class="ui-field mt-2">
             <option value="">Pilih kampus</option>
             {campuses.map((campus) => <option value={campus.slug}>{campus.shortName}</option>)}
           </select>
@@ -36,11 +36,11 @@ import { withBase } from '../../utils/paths';
 
         <label>
           <span class="text-sm font-bold text-slate-800">Program / jurusan</span>
-          <input name="program" type="text" required placeholder="Contoh: Information Science" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          <input name="program" type="text" required placeholder="Contoh: Information Science" class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Jenjang / status studi</span>
-          <select name="study_level" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+          <select name="study_level" required class="ui-field mt-2">
             <option value="">Pilih jenjang</option>
             {studyLevels.map((item) => <option value={item.value}>{item.label}</option>)}
           </select>
@@ -48,11 +48,11 @@ import { withBase } from '../../utils/paths';
 
         <label>
           <span class="text-sm font-bold text-slate-800">Bidang studi</span>
-          <input name="field_of_study" type="text" placeholder="Contoh: Artificial Intelligence" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          <input name="field_of_study" type="text" placeholder="Contoh: Artificial Intelligence" class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Kota tempat tinggal</span>
-          <select name="city" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+          <select name="city" class="ui-field mt-2">
             <option value="">Tidak diisi</option>
             {ishikawaCities.map((city) => <option value={city}>{city}</option>)}
           </select>
@@ -60,21 +60,21 @@ import { withBase } from '../../utils/paths';
 
         <label>
           <span class="text-sm font-bold text-slate-800">Password</span>
-          <input name="password" type="password" minlength="8" autocomplete="new-password" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          <input name="password" type="password" minlength="8" autocomplete="new-password" required class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Ulangi password</span>
-          <input name="password_confirm" type="password" minlength="8" autocomplete="new-password" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          <input name="password_confirm" type="password" minlength="8" autocomplete="new-password" required class="ui-field mt-2" />
         </label>
 
         <label class="md:col-span-2 flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
-          <input name="consent" type="checkbox" required class="mt-1 size-4" />
+          <input name="consent" type="checkbox" required class="ui-check mt-0.5" />
           <span class="text-sm leading-6 text-slate-600">Saya memahami bahwa data ini digunakan untuk verifikasi dan pengelolaan membership PPI Ishikawa. Saya dapat mengatur sendiri apakah profil saya tampil di direktori anggota.</span>
         </label>
 
         <div class="md:col-span-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <a href={withBase('/member/login/')} class="text-sm font-bold text-brand hover:underline">← Sudah punya akun</a>
-          <button type="submit" class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Daftar</button>
+          <button type="submit" class="ui-action-primary">Daftar</button>
         </div>
       </form>
   </AuthShell>

@@ -20,7 +20,7 @@ import { campuses } from '../../../data/campuses';
           <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Antrian</p>
           <p id="verification-admin-count" class="mt-1 text-xl font-bold text-slate-950" aria-live="polite" aria-atomic="true">Memuat…</p>
         </div>
-        <button id="verification-refresh" type="button" class="min-h-11 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">Muat ulang</button>
+        <button id="verification-refresh" type="button" class="ui-action-secondary">Muat ulang</button>
       </div>
     </section>
 
@@ -80,7 +80,7 @@ import { campuses } from '../../../data/campuses';
 
         const controls = node('div', 'flex flex-col gap-2 sm:flex-row');
         const select = document.createElement('select');
-        select.className = 'rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800';
+        select.className = 'ui-field ui-field-inline';
         for (const [value, label] of [['incoming','Incoming'],['active','Anggota aktif'],['alumni','Alumni'],['inactive','Tidak aktif']]) {
           const option = document.createElement('option');
           option.value = value; option.textContent = label; option.selected = member.membership_status === value; select.append(option);

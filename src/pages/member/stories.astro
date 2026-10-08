@@ -19,7 +19,7 @@ import { withBase } from '../../utils/paths';
     <section class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
       <form id="story-interest-form">
         <label class="flex items-start gap-3 rounded-2xl bg-accent/10 p-4">
-          <input name="story_willing" type="checkbox" class="mt-1 size-4" />
+          <input name="story_willing" type="checkbox" class="ui-check mt-0.5" />
           <span><strong class="text-slate-950">Saya bersedia dihubungi untuk berbagi cerita</strong><span class="mt-1 block text-sm leading-6 text-slate-600">Preference ini membantu pengurus mengetahui anggota yang terbuka untuk berbagi pengalaman.</span></span>
         </label>
 
@@ -28,11 +28,11 @@ import { withBase } from '../../utils/paths';
 
         <label class="mt-6 block">
           <span class="text-sm font-bold text-slate-800">Catatan untuk editor</span>
-          <textarea name="note" rows="5" maxlength="1500" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" placeholder="Contoh: pengalaman mencari beasiswa, adaptasi awal di Kanazawa, atau transisi ke pekerjaan setelah lulus."></textarea>
+          <textarea name="note" rows="5" maxlength="1500" class="ui-field mt-2" placeholder="Contoh: pengalaman mencari beasiswa, adaptasi awal di Kanazawa, atau transisi ke pekerjaan setelah lulus."></textarea>
         </label>
 
         <div class="mt-6 flex justify-end">
-          <button class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Simpan & kirim minat</button>
+          <button class="ui-action-primary">Simpan & kirim minat</button>
         </div>
       </form>
     </section>

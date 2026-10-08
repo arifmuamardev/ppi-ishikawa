@@ -17,7 +17,7 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
       <div class="grid gap-3 md:grid-cols-2">
         <label>
           <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Status</span>
-          <select id="aspiration-status-filter" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm text-slate-900">
+          <select id="aspiration-status-filter" class="ui-field mt-2">
             <option value="">Semua status</option>
             <option value="received">Diterima</option>
             <option value="reviewed">Ditinjau</option>
@@ -84,7 +84,7 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
         date.textContent = new Intl.DateTimeFormat('id-ID', { dateStyle: 'long', timeStyle: 'short' }).format(new Date(item.created_at));
 
         const select = document.createElement('select');
-        select.className = 'rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800';
+        select.className = 'ui-field ui-field-inline';
         for (const [value, label] of Object.entries(labels)) {
           const option = document.createElement('option');
           option.value = value; option.textContent = label; option.selected = item.status === value; select.append(option);

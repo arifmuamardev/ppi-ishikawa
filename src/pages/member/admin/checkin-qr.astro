@@ -18,15 +18,15 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
       <form id="qr-session-form" class="mt-6 grid gap-5 md:grid-cols-3">
         <label class="md:col-span-3">
           <span class="text-sm font-bold text-slate-800">Kegiatan</span>
-          <select name="event_id" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3"></select>
+          <select name="event_id" required class="ui-field mt-2"></select>
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Buka</span>
-          <input name="opens_at" type="datetime-local" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="opens_at" type="datetime-local" required class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Tutup</span>
-          <input name="closes_at" type="datetime-local" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="closes_at" type="datetime-local" class="ui-field mt-2" />
         </label>
         <div class="flex items-end">
           <button class="w-full rounded-xl bg-brand px-5 py-3 font-bold text-white">Buat QR</button>

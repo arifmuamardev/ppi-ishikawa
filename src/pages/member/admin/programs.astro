@@ -23,11 +23,11 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
         <input name="id" type="hidden" />
         <label>
           <span class="text-sm font-bold text-slate-800">Unit</span>
-          <select name="unit_id" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3"></select>
+          <select name="unit_id" required class="ui-field mt-2"></select>
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Status</span>
-          <select name="status" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3">
+          <select name="status" class="ui-field mt-2">
             <option value="planned">Direncanakan</option>
             <option value="active">Berjalan</option>
             <option value="on_hold">Ditunda</option>
@@ -37,37 +37,37 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
         </label>
         <label class="md:col-span-2">
           <span class="text-sm font-bold text-slate-800">Nama program</span>
-          <input name="title" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="title" required class="ui-field mt-2" />
         </label>
         <label class="md:col-span-2">
           <span class="text-sm font-bold text-slate-800">Ringkasan</span>
-          <textarea name="summary" rows="3" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3"></textarea>
+          <textarea name="summary" rows="3" class="ui-field mt-2"></textarea>
         </label>
         <label class="md:col-span-2">
           <span class="text-sm font-bold text-slate-800">Tujuan</span>
-          <textarea name="objective" rows="3" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3"></textarea>
+          <textarea name="objective" rows="3" class="ui-field mt-2"></textarea>
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Mulai</span>
-          <input name="starts_on" type="date" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="starts_on" type="date" class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Selesai</span>
-          <input name="ends_on" type="date" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="ends_on" type="date" class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Progress (%)</span>
-          <input name="progress_percent" type="number" min="0" max="100" value="0" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="progress_percent" type="number" min="0" max="100" value="0" class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Visibilitas</span>
-          <select name="visibility" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3">
+          <select name="visibility" class="ui-field mt-2">
             <option value="members">Semua anggota</option>
             <option value="internal">Pengelola program</option>
           </select>
         </label>
         <div class="md:col-span-2 flex justify-end">
-          <button class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Simpan program</button>
+          <button class="ui-action-primary">Simpan program</button>
         </div>
       </form>
     </section>
