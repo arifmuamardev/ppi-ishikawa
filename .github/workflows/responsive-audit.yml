@@ -1,0 +1,54 @@
+name: Responsive visual audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/audit-responsive.mjs'
+      - '.github/workflows/responsive-audit.yml'
+      - 'package.json'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/audit-responsive.mjs'
+      - '.github/workflows/responsive-audit.yml'
+      - 'package.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  responsive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PUBLIC_SUPABASE_URL: ${{ vars.PUBLIC_SUPABASE_URL }}
+      PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - name: Install dependencies
+        run: npm install --no-package-lock
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Build site
+        run: npm run build
+      - name: Audit 360, 390, 430, and 768px layouts
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 &
+          preview_pid=$!
+          trap 'kill $preview_pid || true' EXIT
+          node scripts/audit-responsive.mjs
+      - name: Upload screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: responsive-visual-audit
+          path: responsive-audit/
+          if-no-files-found: warn
+          retention-days: 7
