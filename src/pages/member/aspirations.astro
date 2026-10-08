@@ -18,7 +18,7 @@ import AppPageHeader from '../../components/AppPageHeader.astro';
       <form id="aspiration-form" class="mt-6 grid gap-5 md:grid-cols-2">
         <label>
           <span class="text-sm font-bold text-slate-800">Kategori</span>
-          <select name="category" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+          <select name="category" required class="ui-field mt-2">
             <option value="">Pilih kategori</option>
             <option>Kegiatan</option>
             <option>Akademik</option>
@@ -31,11 +31,11 @@ import AppPageHeader from '../../components/AppPageHeader.astro';
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Judul singkat</span>
-          <input name="subject" type="text" maxlength="120" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" placeholder="Contoh: Usulan kegiatan badminton" />
+          <input name="subject" type="text" maxlength="120" required class="ui-field mt-2" placeholder="Contoh: Usulan kegiatan badminton" />
         </label>
         <label class="md:col-span-2">
           <span class="text-sm font-bold text-slate-800">Pesan</span>
-          <textarea name="message" rows="6" maxlength="1500" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" placeholder="Jelaskan kebutuhan, ide, atau masukan Anda."></textarea>
+          <textarea name="message" rows="6" maxlength="1500" required class="ui-field mt-2" placeholder="Jelaskan kebutuhan, ide, atau masukan Anda."></textarea>
         </label>
         <label class="md:col-span-2 flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
           <input name="anonymous" type="checkbox" class="mt-1 size-4" />
@@ -45,7 +45,7 @@ import AppPageHeader from '../../components/AppPageHeader.astro';
           </span>
         </label>
         <div class="md:col-span-2 flex justify-end">
-          <button type="submit" class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Kirim aspirasi</button>
+          <button type="submit" class="ui-action-primary">Kirim aspirasi</button>
         </div>
       </form>
     </section>
