@@ -112,6 +112,11 @@ const authPages = [
   'src/pages/member/reset-password.astro',
 ];
 
+const verificationPages = [
+  'src/pages/verify/member.astro',
+  'src/pages/verify/certificate.astro',
+];
+
 for (const relativePath of survivalGuides) {
   await checkFile(relativePath, {
     required: [
@@ -197,6 +202,16 @@ for (const relativePath of directFamilyGuides) {
 for (const relativePath of authPages) {
   await checkFile(relativePath, {
     required: [['<AuthShell', 'shared AuthShell']],
+  });
+}
+
+for (const relativePath of verificationPages) {
+  await checkFile(relativePath, {
+    required: [['<VerificationShell', 'shared VerificationShell']],
+    forbidden: [
+      ['rounded-[2rem]', 'verification pages must use the shared standard-radius shell'],
+      ['text-sm font-bold uppercase tracking-[0.16em] text-brand', 'verification header belongs inside VerificationShell'],
+    ],
   });
 }
 
