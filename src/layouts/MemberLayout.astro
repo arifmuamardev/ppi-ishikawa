@@ -81,14 +81,17 @@ const navLinkClass = (href: string) =>
     data-require-admin={requireAdmin ? '1' : '0'}
     class="mx-auto max-w-7xl px-5 py-8 lg:px-8 lg:py-10"
   >
-    <details class="mb-5 rounded-2xl border border-slate-200 bg-white lg:hidden">
+    <details class="group mb-5 rounded-2xl border border-slate-200 bg-white lg:hidden">
       <summary class="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 px-4 py-3">
         <div class="min-w-0">
           <p class="type-eyebrow text-brand">Area Anggota</p>
           <p data-member-nav-name class="mt-1 truncate font-bold text-slate-950">PPI Ishikawa</p>
           <p data-member-nav-status class="mt-0.5 text-xs text-slate-500">Memuat keanggotaan…</p>
         </div>
-        <span class="shrink-0 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700">Menu ↓</span>
+        <span class="shrink-0 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700">
+          <span class="group-open:hidden">Menu ↓</span>
+          <span class="hidden group-open:inline">Tutup ↑</span>
+        </span>
       </summary>
 
       <div class="max-h-[65dvh] overflow-y-auto border-t border-slate-100 p-3">
