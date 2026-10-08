@@ -247,3 +247,13 @@ Implemented across the Family detail branch:
 - migrated Starter Pack and Timeline to the same shell language
 - removed nested main-landmark markup from Starter Pack
 - preserved specialized checklist, print, progress, and timeline interactions
+
+
+### Pass 9 — Family Guide shell
+Implemented across the Keluarga guide branch:
+- added `FamilyGuideHeader`
+- consolidated six standard family guides through `FamilyGuidePage`
+- standardized Timeline and Starter Pack around the same header/TOC/source/end-navigation language
+- removed repeated child-destination grids from guide pages
+- removed nested-main markup from Starter Pack
+- preserved Activities and Municipality as Finder archetypes
