@@ -1,5 +1,7 @@
 # Public Page Archetypes & Element Rules
 
+> **Status: referensi inventaris & catatan migrasi (snapshot 6 Oktober 2026), bukan kebijakan desain yang paling baru.** Aturan normatif untuk halaman baru, komposisi visual, tiga keluarga A/B/C, dan proses review berada di [Design System & UI Governance](DESIGN-SYSTEM-GOVERNANCE.md). Kolom “Level” pada tabel historis ini mengikuti hierarki informasi/URL lama dan **tidak boleh** digunakan untuk menyimpulkan bahwa Kampus bukan destinasi menu utama. Bila ada perbedaan, ikuti pedoman governance baru dan jelaskan status migrasinya.
+
 Date: 2026-10-06  
 Scope: all 43 public routes in `src/pages` (Member, Admin, Verify, and 404 excluded)
 
