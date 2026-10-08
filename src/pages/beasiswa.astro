@@ -214,20 +214,20 @@ const staleCount = scholarships.filter(needsReview).length;
             )}
           </div>
 
-          <dl class="mt-5 grid gap-3 sm:grid-cols-2">
-            <div class="rounded-xl bg-slate-50 p-4">
+          <dl class="mt-5 grid gap-x-4 gap-y-4 border-y border-slate-200 py-4 sm:grid-cols-2">
+            <div class="min-w-0">
               <dt class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">Bantuan</dt>
               <dd class="mt-1 text-sm font-semibold leading-6 text-slate-900">{item.amount}</dd>
             </div>
-            <div class="rounded-xl bg-slate-50 p-4">
+            <div class="min-w-0">
               <dt class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">Pola waktu</dt>
               <dd class="mt-1 text-sm font-semibold leading-6 text-slate-900">{item.typicalWindow ?? item.applicationPeriod}</dd>
             </div>
-            <div class="rounded-xl bg-slate-50 p-4">
+            <div class="min-w-0">
               <dt class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">Cara mendaftar</dt>
               <dd class="mt-1 text-sm font-semibold leading-6 text-slate-900">{routeLabels[item.applicationRoute]}</dd>
             </div>
-            <div class="rounded-xl bg-slate-50 p-4">
+            <div class="min-w-0">
               <dt class="text-[11px] font-bold uppercase tracking-[0.1em] text-slate-500">Jenis pendanaan</dt>
               <dd class="mt-1 text-sm font-semibold leading-6 text-slate-900">{fundingLabels[item.fundingType]}</dd>
             </div>
