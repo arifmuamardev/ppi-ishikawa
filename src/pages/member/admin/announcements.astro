@@ -22,28 +22,28 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
         <input name="id" type="hidden" />
         <label class="md:col-span-2">
           <span class="text-sm font-bold text-slate-800">Judul</span>
-          <input name="title" type="text" maxlength="160" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          <input name="title" type="text" maxlength="160" required class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Kategori</span>
-          <select name="category" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+          <select name="category" class="ui-field mt-2">
             <option>Kegiatan</option><option>Membership</option><option>Kampus</option><option>Akademik</option><option>Karier</option><option>Lainnya</option>
           </select>
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Audiens</span>
-          <input name="audience" type="text" value="Semua anggota" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          <input name="audience" type="text" value="Semua anggota" required class="ui-field mt-2" />
         </label>
         <label class="md:col-span-2">
           <span class="text-sm font-bold text-slate-800">Isi pengumuman</span>
-          <textarea name="body" rows="5" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900"></textarea>
+          <textarea name="body" rows="5" required class="ui-field mt-2"></textarea>
         </label>
         <label class="md:col-span-2 flex items-start gap-3 rounded-2xl bg-accent/10 p-4">
           <input name="important" type="checkbox" class="mt-1 size-4" />
           <span class="text-sm font-semibold text-slate-700">Tandai sebagai pengumuman penting</span>
         </label>
         <div class="md:col-span-2 flex justify-end">
-          <button type="submit" class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Simpan pengumuman</button>
+          <button type="submit" class="ui-action-primary">Simpan pengumuman</button>
         </div>
       </form>
     </section>
