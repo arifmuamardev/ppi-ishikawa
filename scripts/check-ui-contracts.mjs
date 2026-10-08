@@ -281,6 +281,83 @@ for (const relativePath of sourceFiles) {
   }
 }
 
+// Govern public destinations in the global navigation. This deliberately checks
+// the existing route-family contracts, not subjective visual composition.
+// NestedLandingHeader on Kampus is a documented temporary exception; its
+// navigation LEVEL is still top-level (see Design System Governance).
+const siteNavigation = await read('src/data/site.ts');
+const navList = siteNavigation.match(/export const nav\s*=\s*\[([\s\S]*?)\];/);
+assertions += 1;
+if (!navList) {
+  errors.push('src/data/site.ts: expected parseable primary navigation array');
+} else {
+  const destinations = [
+    ...navList[1].matchAll(/\{\s*label:\s*'([^']+)'\s*,\s*href:\s*'([^']+)'\s*\}/g)
+  ].map((match) => ({ label: match[1], href: match[2] }));
+  assertions += 1;
+  if (destinations.length === 0) errors.push('src/data/site.ts: primary menu must not be empty');
+
+  const pagePaths = new Set(pageFiles);
+  const visualAudit = await read('scripts/audit-responsive.mjs');
+  const checkedHrefs = new Set();
+  const checkedLabels = new Set();
+  const headerTypes = ['LandingHeader', 'NestedLandingHeader', 'FinderHeader'];
+
+  for (const { label, href } of destinations) {
+    assertions += 1;
+    if (!href.startsWith('/') || href === '/') {
+      errors.push('src/data/site.ts: navigation destinations must have a non-root absolute path: ' + href);
+      continue;
+    }
+
+    const route = href.replace(/\/+$/, '');
+    if (checkedHrefs.has(route) || checkedLabels.has(label)) {
+      errors.push('src/data/site.ts: duplicate navigation route or label: ' + label + ' → ' + route);
+    }
+    checkedHrefs.add(route);
+    checkedLabels.add(label);
+
+    const candidates = ['src/pages' + route + '.astro', 'src/pages' + route + '/index.astro'];
+    const file = candidates.find((candidate) => pagePaths.has(candidate));
+    assertions += 1;
+    if (!file) {
+      errors.push('src/data/site.ts: no static Astro page for menu route ' + route);
+      continue;
+    }
+
+    const expected = landingPages.includes(file)
+      ? 'LandingHeader'
+      : finderPages.includes(file)
+        ? 'FinderHeader'
+        : nestedLandingPages.includes(file)
+          ? 'NestedLandingHeader'
+          : null;
+
+    assertions += 1;
+    if (!expected) {
+      errors.push(file + ': primary navigation route must declare a Landing or Finder page contract');
+      continue;
+    }
+    if (expected === 'NestedLandingHeader' && route !== '/community/kampus') {
+      errors.push(file + ': Nested Landing is not allowed for a new level-1 menu destination without an approved exception');
+    }
+
+    const markup = await read(file);
+    const used = headerTypes.filter((component) => markup.includes('<' + component));
+    assertions += 1;
+    if (used.length !== 1 || used[0] !== expected) {
+      errors.push(file + ': expected exactly one canonical ' + expected + ' header; found ' + (used.join(', ') || 'none'));
+    }
+
+    // Every top-nav route must be explicitly captured by the responsive test.
+    // Keep the test's route list in sync whenever src/data/site.ts changes.
+    assertions += 1;
+    if (!visualAudit.includes(", '" + route + "/']")) {
+      errors.push('scripts/audit-responsive.mjs: screenshot coverage missing for menu route ' + route);
+    }
+  }
+}
+
 if (errors.length > 0) {
   console.error(`UI contract check failed with ${errors.length} issue(s):\n`);
   for (const error of errors) console.error(`- ${error}`);
