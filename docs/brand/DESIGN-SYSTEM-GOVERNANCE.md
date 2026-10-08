@@ -120,6 +120,8 @@ Satu jenis kartu untuk satu *peran informasi* (navigation, result, status, advis
 **Opsional:** jalan pintas ke query yang sudah terfilter, source verification, ringkasan singkat, konten edukasi sekunder.  
 **Dilarang:** header dipisahkan dari filter oleh banyak bagian promosi/penjelasan; navigasi section baru muncul setelah daftar hasil; default menampilkan kartu berat tanpa pembatasan/pengelompokan yang dapat diterima.
 
+**Progressive results:** untuk Finder dengan kartu hasil panjang, tampilkan kelompok awal yang terbatas dan sediakan aksi eksplisit untuk menampilkan hasil lain. Filter harus tetap dievaluasi pada **seluruh data**, jumlah hasil menjelaskan *ditampilkan X dari Y hasil cocok*, dan pilihan filter baru mengembalikan batas tampilan awal. Jangan hilangkan hasil dari DOM hanya untuk ringkasan, sehingga konten tetap tersedia jika JavaScript tidak aktif. Pola ini diterapkan dahulu pada Beasiswa; bukan kewajiban untuk Finder yang memang hanya memiliki sedikit hasil.
+
 ### C — Detail / Guide
 
 **Wajib:** breadcrumb yang benar, intro, satu hierarki h1/h2/h3, sumber relevan, satu mekanisme “langkah selanjutnya”.  
