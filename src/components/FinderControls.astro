@@ -1,0 +1,12 @@
+---
+interface Props {
+  columns?: 'three' | 'seven';
+}
+const { columns = 'three' } = Astro.props;
+---
+<div class:list={[
+  'mt-6 grid gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-5',
+  columns === 'seven' ? 'sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7' : 'md:grid-cols-3'
+]}>
+  <slot />
+</div>
