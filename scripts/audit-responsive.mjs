@@ -82,6 +82,19 @@ try {
         if (check.default.overflowPx > 2) check.errors.push('Horizontal overflow: ' + check.default.overflowPx + 'px');
         if (check.default.h1Count !== 1) check.errors.push('Expected 1 main h1; got ' + check.default.h1Count);
 
+        // Kampus is in the main menu even though its URL is nested under
+        // Komunitas; Keluarga remains a nested landing with breadcrumbs.
+        if ((width === 390 || width === 1280) && (key === 'campus' || key === 'family')) {
+          const breadcrumbs = await page.locator('main nav[aria-label="Breadcrumb"]').count();
+          check.breadcrumbCount = breadcrumbs;
+          if (key === 'campus' && breadcrumbs !== 0) {
+            check.errors.push('Kampus is a primary menu route and must not show breadcrumbs');
+          }
+          if (key === 'family' && breadcrumbs !== 1) {
+            check.errors.push('Nested Family landing must keep its breadcrumb');
+          }
+        }
+
         const menu = page.locator('header details summary').first();
         if (await menu.count() && await menu.isVisible()) {
           await menu.click();
