@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import FamilyGuideHeader from '../../../components/FamilyGuideHeader.astro';
+import GuideToc from '../../../components/GuideToc.astro';
+import OfficialSources from '../../../components/OfficialSources.astro';
 import TopicIcon from '../../../components/TopicIcon.astro';
 import { withBase } from '../../../utils/paths';
-import { familyLastVerified } from '../../../data/family';
 
 const groups = [
   {
@@ -34,7 +35,7 @@ const groups = [
       'Kontak City Hall, kampus, sekolah/daycare, PPI, dan IFIE sudah disimpan.'
     ],
     href: '/life-in-ishikawa/family/timeline/',
-    label: 'Lihat Family Timeline'
+    label: 'Lihat Timeline Keluarga'
   },
   {
     code: 'C',
@@ -97,7 +98,7 @@ const emergency = [
   ['Ambulance / Fire', '119'],
   ['Police', '110'],
   ['IFIE consultation', 'https://www.ifie.or.jp/foreigners_life/soudan/'],
-  ['Family by Municipality', '/life-in-ishikawa/family/municipality/']
+  ['Layanan keluarga per municipality', '/life-in-ishikawa/family/municipality/']
 ];
 
 const sources = [
@@ -120,39 +121,44 @@ const sources = [
     url: 'https://www4.city.kanazawa.lg.jp/material/files/group/6/seikatsu_guide_2026_en.pdf'
   }
 ];
+
+const tocSections = groups.map((group) => ({
+  id: `starter-${group.code.toLowerCase()}`,
+  label: group.code,
+  title: group.title
+}));
+
+const officialSources = sources.map((source) => ({
+  owner: source.owner,
+  title: source.title,
+  description: source.note,
+  url: source.url
+}));
 ---
 
 <BaseLayout
   title="Family Starter Pack"
   description="Checklist ringkas untuk keluarga mahasiswa Indonesia di Ishikawa: sebelum datang, 14 hari pertama, anak, kesehatan, municipality, emergency, dan pindah."
 >
-  <section class="starter-hero mx-auto max-w-6xl px-5 pb-8 pt-16 lg:px-8 lg:pt-24">
-    <Breadcrumbs items={[
-      { label: 'Beranda', href: '/' },
-      { label: 'Hidup di Ishikawa', href: '/life-in-ishikawa/' },
-      { label: 'Family', href: '/life-in-ishikawa/family-anak/' },
-      { label: 'Starter Pack' }
-    ]} />
+  <FamilyGuideHeader
+    code="F10"
+    title="Family Starter Pack"
+    intro="Checklist ringkas untuk keluarga yang akan datang atau baru mulai tinggal di Ishikawa. Centang yang sudah selesai, lalu buka panduan detail hanya ketika diperlukan."
+  >
+    <button
+      slot="actions"
+      id="print-starter-pack"
+      type="button"
+      class="no-print inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl bg-slate-950 px-5 text-sm font-bold text-white transition-colors hover:bg-slate-800"
+    >
+      Cetak / Simpan PDF
+    </button>
+  </FamilyGuideHeader>
 
-    <div class="mt-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-      <div class="max-w-4xl">
-        <p class="text-sm font-bold uppercase tracking-[0.18em] text-brand">Family · F10</p>
-        <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Family Starter Pack</h1>
-        <p class="mt-5 text-lg leading-8 text-slate-600">
-          Checklist ringkas untuk keluarga yang akan datang atau baru mulai tinggal di Ishikawa.
-          Centang yang sudah selesai, lalu buka panduan detail hanya ketika diperlukan.
-        </p>
-        <p class="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-slate-400">Terakhir diverifikasi · {familyLastVerified}</p>
-      </div>
-
-      <button id="print-starter-pack" type="button" class="no-print inline-flex shrink-0 items-center justify-center rounded-xl bg-slate-950 px-5 py-3 text-sm font-bold text-white hover:bg-slate-800">
-        Cetak / Simpan PDF
-      </button>
-    </div>
-  </section>
+  <GuideToc sections={tocSections} />
 
   <section class="mx-auto max-w-6xl px-5 pb-8 lg:px-8">
-    <div class="rounded-3xl border border-accent/35 bg-accent/10 p-6 sm:p-8">
+    <div class="rounded-2xl border border-accent/35 bg-accent/10 p-6 sm:p-8">
       <div class="grid gap-5 md:grid-cols-3">
         <div>
           <p class="font-bold text-slate-950">Gunakan sebagai checklist</p>
@@ -170,10 +176,10 @@ const sources = [
     </div>
   </section>
 
-  <main class="mx-auto max-w-6xl px-5 py-8 lg:px-8">
+  <section class="mx-auto max-w-6xl px-5 py-8 lg:px-8">
     <div class="grid gap-6">
       {groups.map((group) => (
-        <section class="starter-section rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        <section id={`starter-${group.code.toLowerCase()}`} class="starter-section scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
           <div class="flex gap-4">
             <span class="grid size-11 shrink-0 place-items-center rounded-2xl bg-accent/10 text-brand">
               <TopicIcon name={group.icon as any} class="size-6" />
@@ -181,7 +187,7 @@ const sources = [
             <div class="min-w-0 flex-1">
               <div class="flex flex-wrap items-center gap-3">
                 <span class="rounded-full bg-slate-950 px-3 py-1 text-xs font-bold text-white">{group.code}</span>
-                <h2 class="text-2xl font-bold tracking-tight text-slate-950">{group.title}</h2>
+                <h2 class="type-section text-slate-950">{group.title}</h2>
               </div>
 
               {group.highlight && (
@@ -203,22 +209,22 @@ const sources = [
         </section>
       ))}
     </div>
-  </main>
+  </section>
 
   <section class="mx-auto max-w-6xl px-5 py-8 lg:px-8">
     <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
-      <p class="text-sm font-bold uppercase tracking-[0.14em] text-red-300">Simpan di HP</p>
+      <p class="type-eyebrow text-red-300">Simpan di HP</p>
       <h2 class="mt-3 text-2xl font-bold">Kontak & shortcut penting</h2>
       <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {emergency.map(([label, value]) => (
           value.startsWith('http') || value.startsWith('/') ? (
             <a href={value.startsWith('/') ? withBase(value) : value} target={value.startsWith('http') ? '_blank' : undefined} rel={value.startsWith('http') ? 'noreferrer' : undefined} class="rounded-2xl border border-slate-700 bg-slate-900 p-4">
-              <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">{label}</p>
+              <p class="type-meta uppercase tracking-[0.12em] text-slate-400">{label}</p>
               <p class="mt-2 font-bold text-white">Buka ↗</p>
             </a>
           ) : (
             <div class="rounded-2xl border border-slate-700 bg-slate-900 p-4">
-              <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">{label}</p>
+              <p class="type-meta uppercase tracking-[0.12em] text-slate-400">{label}</p>
               <p class="mt-2 text-2xl font-bold text-white">{value}</p>
             </div>
           )
@@ -228,8 +234,8 @@ const sources = [
   </section>
 
   <section class="mx-auto max-w-6xl px-5 py-8 lg:px-8">
-    <div class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
-      <p class="text-sm font-bold uppercase tracking-[0.14em] text-brand">Progress checklist</p>
+    <div class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
+      <p class="type-eyebrow text-brand">Progress checklist</p>
       <div class="mt-3 flex items-end gap-3">
         <p id="starter-progress" class="text-3xl font-bold text-slate-950">0%</p>
         <p id="starter-progress-detail" class="pb-1 text-sm text-slate-500">0 item selesai</p>
@@ -241,26 +247,13 @@ const sources = [
     </div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-5 py-8 lg:px-8">
-    <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
-      <p class="text-sm font-bold uppercase tracking-[0.14em] text-red-300">Sumber resmi utama</p>
-      <div class="mt-6 grid gap-4 md:grid-cols-3">
-        {sources.map((source) => (
-          <a href={source.url} target="_blank" rel="noreferrer" class="rounded-2xl border border-slate-700 bg-slate-900 p-5 transition hover:border-slate-500 hover:bg-slate-800">
-            <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">{source.owner}</p>
-            <h3 class="mt-2 font-bold text-white">{source.title} ↗</h3>
-            <p class="mt-2 text-sm leading-6 text-slate-400">{source.note}</p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
+  <OfficialSources
+    sources={officialSources}
+    title="Gunakan sumber asli untuk prosedur, syarat, dan jadwal terbaru."
+  />
 
-  <section class="no-print mx-auto max-w-6xl px-5 pb-24 pt-4 lg:px-8">
-    <div class="flex flex-wrap gap-3">
-      <a href={withBase('/life-in-ishikawa/family-anak/')} class="rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800 hover:bg-slate-50">← Keluarga</a>
-      <a href={withBase('/life-in-ishikawa/family/timeline/')} class="rounded-xl bg-slate-950 px-5 py-3 text-sm font-bold text-white">Lihat timeline lengkap →</a>
-    </div>
+  <section class="no-print mx-auto max-w-5xl px-5 pb-24 pt-4 lg:px-8">
+    <a href={withBase('/life-in-ishikawa/family-anak/')} class="type-ui inline-flex min-h-11 items-center rounded-xl border border-slate-300 bg-white px-5 text-slate-800 transition-colors hover:border-accent/35 hover:bg-accent/5">← Kembali ke Keluarga</a>
   </section>
 
   <script>
@@ -320,7 +313,7 @@ const sources = [
         background: white !important;
       }
 
-      .starter-hero {
+      :global(.family-guide-header) {
         padding-top: 1rem !important;
       }
 
