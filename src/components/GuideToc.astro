@@ -12,10 +12,11 @@ interface Props {
 const { sections } = Astro.props;
 ---
 <nav class="mx-auto max-w-5xl px-5 pb-2 lg:px-8" aria-label="Daftar isi panduan">
-  <details class="rounded-2xl border border-slate-200 bg-white p-4">
-    <summary class="flex cursor-pointer list-none items-center justify-between gap-3 font-bold text-slate-950">
-      <span>Di halaman ini</span>
-      <span class="text-xs font-semibold text-slate-500">Buka daftar section ↓</span>
+  <details class="group rounded-2xl border border-slate-200 bg-white p-4">
+    <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 rounded-xl font-bold text-slate-950">
+      <span class="min-w-0">Di halaman ini</span>
+      <span class="ml-auto shrink-0 text-xs font-semibold text-slate-500 group-open:hidden">Lihat bagian ↓</span>
+      <span class="ml-auto hidden shrink-0 text-xs font-semibold text-slate-500 group-open:inline">Tutup bagian ↑</span>
     </summary>
     <div class="mt-4 flex flex-wrap gap-2">
       {sections.map((section) => (
