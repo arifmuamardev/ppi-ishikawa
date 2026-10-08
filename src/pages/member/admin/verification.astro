@@ -80,7 +80,7 @@ import { campuses } from '../../../data/campuses';
 
         const controls = node('div', 'flex flex-col gap-2 sm:flex-row');
         const select = document.createElement('select');
-        select.className = 'rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800';
+        select.className = 'ui-field ui-field-inline';
         for (const [value, label] of [['incoming','Incoming'],['active','Anggota aktif'],['alumni','Alumni'],['inactive','Tidak aktif']]) {
           const option = document.createElement('option');
           option.value = value; option.textContent = label; option.selected = member.membership_status === value; select.append(option);
