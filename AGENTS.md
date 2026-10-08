@@ -24,8 +24,8 @@ Before changing public website UI, **read** `docs/brand/DESIGN-SYSTEM-GOVERNANCE
 
 ## Current known design debt
 
-- Kampus uses `NestedLandingHeader`/breadcrumb even though it is a primary nav destination. This is a documented temporary exception, **not** a pattern for new primary pages.
-- The six primary navigation destinations do not yet share fully harmonized visual Page Intro and module ordering. Do not claim this is already solved.
+- Kampus remains a top-level main-menu route despite the nested URL. `NestedLandingHeader` delegates to shared `PublicPageHeader` and omits breadcrumb when its route is in `src/data/site.ts`. Nested Keluarga retains breadcrumb. Do not reintroduce URL-depth breadcrumb logic.
+- All six main-menu destinations now use shared Page Intro geometry, but their downstream modules are intentionally specialized. Do not claim every section/card layout is identical; inspect screenshots.
 - Do not copy the independent layout structure of one page into a new route without checking the standard and an appropriate reference.
 
 Never commit personal/member data, credentials, tokens, or secrets to this public repository.
