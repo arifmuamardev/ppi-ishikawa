@@ -29,7 +29,7 @@ const report = {
   routes: routes.map((item) => item[1]),
   checks: [],
 };
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, channel: 'chrome' });
 
 async function measure(page) {
   return page.evaluate(() => {
