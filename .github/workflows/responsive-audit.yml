@@ -20,7 +20,7 @@ permissions:
 
 jobs:
   responsive:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
       PUBLIC_SUPABASE_URL: ${{ vars.PUBLIC_SUPABASE_URL }}
@@ -34,8 +34,6 @@ jobs:
           node-version: 24
       - name: Install dependencies
         run: npm install --no-package-lock
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
       - name: Build site
         run: npm run build
       - name: Audit 360, 390, 430, and 768px layouts
