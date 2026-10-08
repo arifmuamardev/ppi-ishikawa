@@ -44,7 +44,7 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
         </div>
         <label class="text-sm">
           <span class="sr-only">Filter status</span>
-          <select id="story-admin-filter" class="rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800">
+          <select id="story-admin-filter" class="ui-field ui-field-inline">
             <option value="">Semua status</option>
             <option value="proposed">Diajukan</option>
             <option value="contacted">Sudah dihubungi</option>
@@ -136,7 +136,7 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
         info.append(h, meta, topics, note);
 
         const select = document.createElement('select');
-        select.className = 'rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800';
+        select.className = 'ui-field ui-field-inline';
         for (const [value, label] of Object.entries(labels)) {
           const option = document.createElement('option');
           option.value = value;
