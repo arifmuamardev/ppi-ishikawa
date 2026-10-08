@@ -12,6 +12,7 @@ on:
       - 'src/styles/**'
       - 'package.json'
       - 'scripts/check-brand-theme.mjs'
+      - 'scripts/check-ui-contracts.mjs'
       - 'scripts/check-links.mjs'
       - 'scripts/check-internal-links.mjs'
       - '.github/workflows/link-check.yml'
@@ -51,6 +52,8 @@ jobs:
         run: npm install --no-package-lock
       - name: Check theme source of truth
         run: npm run check:theme
+      - name: Check UI contracts
+        run: npm run check:ui
       - name: Build site
         run: npm run build
       - name: Check internal links
