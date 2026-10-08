@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FinderHeader from '../components/FinderHeader.astro';
+import FinderControls from '../components/FinderControls.astro';
 import TopicIcon from '../components/TopicIcon.astro';
 import InstitutionMark from '../components/InstitutionMark.astro';
 import ScrollPillNav from '../components/ScrollPillNav.astro';
@@ -42,7 +43,7 @@ const campusCareerEntries = campuses.flatMap((campus) => {
         <p id="career-count" class="text-sm font-semibold text-slate-500" aria-live="polite" aria-atomic="true">{careerSources.length} sumber ditampilkan</p>
       </div>
 
-      <div class="mt-7 grid gap-3 rounded-3xl border border-slate-200 bg-slate-50 p-5 md:grid-cols-3">
+      <FinderControls>
         <label class="block">
           <span class="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">Jenis peluang</span>
           <select id="career-type" class="ui-field mt-2">
@@ -69,6 +70,21 @@ const campusCareerEntries = campuses.flatMap((campus) => {
             Reset filter
           </button>
         </div>
+      </FinderControls>
+
+      <div class="-mx-5 mt-5 lg:-mx-8">
+        <ScrollPillNav
+          ariaLabel="Navigasi Karier"
+          items={[
+            ['Cari peluang', '#sources'],
+            ['Bekerja di Jepang', '#japan'],
+            ['Academic & research', '#academic'],
+            ['Persiapan karier', '#preparation'],
+            ['Career center kampus', '#campus-career'],
+            ['Cerita karier', '#career-stories'],
+            ['Untuk alumni', '#alumni']
+          ]}
+        />
       </div>
 
       <div id="career-empty" role="status" aria-live="polite" class="mt-6 hidden rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
@@ -120,20 +136,6 @@ const campusCareerEntries = campuses.flatMap((campus) => {
 
   
 
-  <div class="py-6">
-    <ScrollPillNav
-      ariaLabel="Navigasi Karier"
-      items={[
-        ['Cari peluang', '#sources'],
-        ['Bekerja di Jepang', '#japan'],
-        ['Academic & research', '#academic'],
-        ['Persiapan karier', '#preparation'],
-        ['Career center kampus', '#campus-career'],
-        ['Cerita karier', '#career-stories'],
-        ['Untuk alumni', '#alumni']
-      ]}
-    />
-  </div>
 
   <section class="mx-auto max-w-7xl px-5 ui-section-space lg:px-8">
     <div class="max-w-3xl">
