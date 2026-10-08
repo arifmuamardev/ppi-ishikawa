@@ -21,7 +21,8 @@ const mobileStartIndex = Math.max(0, items.length - 2);
       <li
         class:list={[
           'min-w-0 items-center gap-x-2',
-          index < mobileStartIndex ? 'hidden sm:flex' : 'flex'
+          index < mobileStartIndex ? 'hidden sm:flex' : 'flex',
+          index === items.length - 1 ? 'flex-1 sm:flex-none' : 'shrink-0 sm:shrink'
         ]}
       >
         {index > 0 && (
@@ -39,13 +40,18 @@ const mobileStartIndex = Math.max(0, items.length - 2);
         {item.href ? (
           <a
             href={withBase(item.href)}
-            class="shrink-0 font-semibold text-slate-500 transition hover:text-brand hover:underline sm:shrink"
+            class:list={[
+              'block min-w-0 font-semibold text-slate-500 transition hover:text-brand hover:underline',
+              index === items.length - 1
+                ? 'flex-1 truncate sm:overflow-visible sm:whitespace-normal'
+                : 'max-w-[42vw] truncate sm:max-w-none sm:overflow-visible sm:whitespace-normal'
+            ]}
           >
             {item.label}
           </a>
         ) : (
           <span
-            class="max-w-[68vw] truncate font-semibold text-slate-700 sm:max-w-none sm:overflow-visible sm:text-clip"
+            class="min-w-0 max-w-full flex-1 truncate font-semibold text-slate-700 sm:flex-none sm:max-w-none sm:overflow-visible sm:whitespace-normal"
             aria-current="page"
             title={item.label}
           >
