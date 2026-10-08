@@ -23,46 +23,46 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
         <input name="id" type="hidden" />
         <label class="md:col-span-2">
           <span class="text-sm font-bold text-slate-800">Judul</span>
-          <input name="title" type="text" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          <input name="title" type="text" required class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Kategori</span>
-          <select name="category" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+          <select name="category" required class="ui-field mt-2">
             <option>Akademik</option><option>Karier</option><option>Komunitas</option><option>Olahraga</option><option>Seni & Budaya</option><option>Lainnya</option>
           </select>
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Mode</span>
-          <select name="mode" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900">
+          <select name="mode" required class="ui-field mt-2">
             <option value="onsite">Onsite</option><option value="online">Online</option><option value="hybrid">Hybrid</option>
           </select>
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Mulai</span>
-          <input name="starts_at" type="datetime-local" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          <input name="starts_at" type="datetime-local" required class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Selesai</span>
-          <input name="ends_at" type="datetime-local" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          <input name="ends_at" type="datetime-local" required class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Lokasi</span>
-          <input name="location" type="text" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          <input name="location" type="text" required class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Kapasitas</span>
-          <input name="capacity" type="number" min="1" placeholder="Kosong = tanpa batas" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          <input name="capacity" type="number" min="1" placeholder="Kosong = tanpa batas" class="ui-field mt-2" />
         </label>
         <label class="md:col-span-2">
           <span class="text-sm font-bold text-slate-800">Batas RSVP</span>
-          <input name="registration_deadline" type="datetime-local" class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900" />
+          <input name="registration_deadline" type="datetime-local" class="ui-field mt-2" />
         </label>
         <label class="md:col-span-2">
           <span class="text-sm font-bold text-slate-800">Deskripsi</span>
-          <textarea name="description" rows="4" required class="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900"></textarea>
+          <textarea name="description" rows="4" required class="ui-field mt-2"></textarea>
         </label>
         <div class="md:col-span-2 flex justify-end">
-          <button type="submit" class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Simpan kegiatan</button>
+          <button type="submit" class="ui-action-primary">Simpan kegiatan</button>
         </div>
       </form>
     </section>
