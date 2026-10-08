@@ -6,12 +6,22 @@ on:
     paths:
       - 'scripts/audit-responsive.mjs'
       - '.github/workflows/responsive-audit.yml'
+      - 'src/pages/**'
+      - 'src/components/**'
+      - 'src/layouts/**'
+      - 'src/styles/**'
+      - 'src/data/**'
       - 'package.json'
   push:
     branches: [main]
     paths:
       - 'scripts/audit-responsive.mjs'
       - '.github/workflows/responsive-audit.yml'
+      - 'src/pages/**'
+      - 'src/components/**'
+      - 'src/layouts/**'
+      - 'src/styles/**'
+      - 'src/data/**'
       - 'package.json'
   workflow_dispatch:
 
