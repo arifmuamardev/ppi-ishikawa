@@ -84,7 +84,7 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
         date.textContent = new Intl.DateTimeFormat('id-ID', { dateStyle: 'long', timeStyle: 'short' }).format(new Date(item.created_at));
 
         const select = document.createElement('select');
-        select.className = 'rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800';
+        select.className = 'ui-field ui-field-inline';
         for (const [value, label] of Object.entries(labels)) {
           const option = document.createElement('option');
           option.value = value; option.textContent = label; option.selected = item.status === value; select.append(option);
