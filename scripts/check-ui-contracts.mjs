@@ -283,6 +283,26 @@ await checkFile('src/pages/beasiswa.astro', {
   ],
 });
 
+// Major section headings must use the semantic responsive type scale,
+// not ad-hoc text-3xl styles that diverge across primary navigation pages.
+for (const relativePath of [
+  'src/pages/community/kampus/index.astro',
+  'src/pages/beasiswa.astro',
+  'src/pages/career.astro',
+]) {
+  await checkFile(relativePath, {
+    required: [['type-section', 'semantic section-heading typography']],
+    forbidden: [['text-3xl font-bold tracking-tight', 'use type-section for major headings']],
+  });
+}
+
+forbidText(
+  'src/pages/community/kampus/index.astro',
+  await read('src/pages/community/kampus/index.astro'),
+  'eyebrow="Kampus"',
+  'a level-1 page eyebrow must not duplicate the page title'
+);
+
 // A nested route can still be a top-level menu destination.
 // Keep the nested Landing shell based on navigation semantics, not URL depth.
 await checkFile('src/components/NestedLandingHeader.astro', {
