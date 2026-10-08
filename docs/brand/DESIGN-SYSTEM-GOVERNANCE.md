@@ -50,18 +50,18 @@ Semua halaman publik non-pengecualian masuk tepat **satu** dari tiga keluarga te
 
 Sumber daftar menu aktual: `src/data/site.ts` (`nav`). Matriks ini adalah **target kebijakan**, bukan klaim bahwa migrasi sudah tuntas.
 
-| Menu | Template | Aksi paling awal yang harus jelas | Header terpasang per 8 Okt 2026 | Status |
+| Menu | Template | Aksi paling awal yang harus jelas | Komponen header | Status harmonisasi (Okt 2026) |
 | --- | --- | --- | --- | --- |
-| Tentang PPI | A | Mengenal PPI, menjelajah bagian organisasinya | `LandingHeader` | Perlu evaluasi section/nav |
-| Kampus | A | Memilih kampus | `NestedLandingHeader` | **Pengecualian sementara**: breadcrumb walau menu utama |
-| Hidup di Ishikawa | A | Memilih situasi/panduan | `LandingHeader` | Foto besar sebelum aksi utama |
-| Beasiswa | B | Menyaring beasiswa | `FinderHeader` | Kartu pengantar mendahului filter |
-| Karier | B | Menyaring peluang/sumber | `FinderHeader` | Navigasi section berada setelah hasil |
-| Komunitas | A | Menemukan kegiatan/jejaring | `LandingHeader` | Foto besar sebelum pilihan utama |
+| Tentang PPI | A | Mengenal PPI, menjelajah bagian organisasinya | `LandingHeader` | Page Intro bersama (#44); navigasi section tersedia |
+| Kampus | A | Memilih kampus | `NestedLandingHeader` → `PublicPageHeader` | Breadcrumb dinonaktifkan di level menu utama; Keluarga tetap memakai breadcrumb (#47) |
+| Hidup di Ishikawa | A | Memilih situasi/panduan | `LandingHeader` | Pilihan utama sebelum foto (#45) |
+| Beasiswa | B | Menyaring beasiswa | `FinderHeader` | Filter lebih dahulu, pintasan ringkas kemudian (#46); kepadatan hasil masih perlu dikaji |
+| Karier | B | Menyaring peluang/sumber | `FinderHeader` | Navigasi section setelah filter, sebelum hasil (#46) |
+| Komunitas | A | Menemukan kegiatan/jejaring | `LandingHeader` | Pilihan utama sebelum foto (#45) |
 
 Tidak ada “Nested Landing” sebagai kategori keempat dalam menu utama: **Kampus tetap A**. Saat proses migrasi selesai, keenam halaman menu utama perlu mengikuti aturan Page Intro level-1, terlepas dari path.
 
-**Pengecualian Kampus:** penggunaan `NestedLandingHeader` dan breadcrumb boleh dipertahankan **hanya sampai migrasi Page Intro utama**. Pengecualian ini tidak boleh dicontohkan pada menu utama baru dan harus ditinjau dalam PR harmonisasi. Tidak ada deadline kalender yang dipalsukan; pencabutan dilakukan ketika screenshot dan navigasi sudah tervalidasi.
+**Kampus:** `NestedLandingHeader` tetap dipakai sebagai adapter untuk data konteks/metadata halaman, tetapi menggunakan `PublicPageHeader` bersama. Breadcrumb ditentukan dari posisi rute pada navigasi utama di `src/data/site.ts`, bukan dari bentuk URL. Kampus tidak menampilkan breadcrumb karena merupakan menu utama; Keluarga tetap menampilkannya sebagai halaman turunan. Implementasi ini divalidasi lewat screenshot dan pengecekan browser dalam PR #47.
 
 ## 4. Visual contract: bagian yang harus seragam
 
