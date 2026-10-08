@@ -128,14 +128,16 @@ try {
             const cards = [...document.querySelectorAll('.scholarship-card')];
             const shown = cards.filter((card) => !card.classList.contains('hidden'));
             const stage = document.querySelector('#filter-stage')?.value || '';
+            const route = document.querySelector('#filter-route')?.value || '';
             const matched = cards.filter((card) =>
-              !stage || (card.dataset.stage || '').split(',').some((value) => value === stage || value === 'both')
+              (!stage || (card.dataset.stage || '').split(',').some((value) => value === stage || value === 'both'))
+              && (!route || card.dataset.route === route)
             );
             const countText = document.querySelector('#scholarship-count')?.textContent?.trim() || '';
             const emptyShown = !document.querySelector('#scholarship-empty')?.classList.contains('hidden');
             const moreShown = !document.querySelector('#scholarship-more')?.classList.contains('hidden');
             return {
-              total: cards.length, shown: shown.length, stage, matched: matched.length,
+              total: cards.length, shown: shown.length, stage, route, matched: matched.length,
               countText, emptyShown, moreShown,
               invalidShown: shown.some((card) => !matched.includes(card))
             };
@@ -162,10 +164,17 @@ try {
           }
 
           await page.locator('[data-stage-jump="before-arrival"]').click();
-          await page.waitForFunction(() =>
-            document.querySelector('#filter-stage')?.value === 'before-arrival'
-            && document.querySelector('#scholarship-count')?.textContent?.trim()?.startsWith('Menampilkan '),
-          null, { timeout: 4000 });
+          await page.waitForFunction(() => {
+            const cards = [...document.querySelectorAll('.scholarship-card')];
+            const relevant = cards.filter((card) =>
+              (card.dataset.stage || '').split(',').some((value) => value === 'before-arrival' || value === 'both')
+            ).length;
+            const shown = cards.filter((card) => !card.classList.contains('hidden')).length;
+            return document.querySelector('#filter-stage')?.value === 'before-arrival'
+              && shown === Math.min(4, relevant)
+              && document.querySelector('#scholarship-count')?.textContent?.trim() ===
+                'Menampilkan ' + shown + ' dari ' + relevant + ' beasiswa';
+          }, null, { timeout: 4000 });
           const filtered = await snapshot();
           if (filtered.stage !== 'before-arrival') check.errors.push('stage shortcut did not update filter');
           verify(filtered, Math.min(4, filtered.matched), filtered.matched, 'stage shortcut');
@@ -176,15 +185,15 @@ try {
 
           // A synthetic unmatched select option validates the empty-state and reset
           // without relying on any particular scholarship dataset composition.
-          await page.locator('#filter-stage').evaluate((select) => {
+          await page.locator('#filter-route').evaluate((select) => {
             select.add(new Option('Tidak ada hasil (tes)', '__no_match__'));
           });
-          await page.locator('#filter-stage').selectOption('__no_match__');
+          await page.locator('#filter-route').selectOption('__no_match__');
           const noMatches = await snapshot();
           verify(noMatches, 0, 0, 'no matches');
           await page.locator('#filter-reset').click();
           const reset = await snapshot();
-          if (reset.stage) check.errors.push('Reset did not clear scholarship stage');
+          if (reset.stage || reset.route) check.errors.push('Reset did not clear scholarship filters');
           verify(reset, Math.min(4, initial.total), initial.total, 'reset');
           check.finderInteractions = 'scholarship pagination, shortcut, empty state and reset passed';
         }
