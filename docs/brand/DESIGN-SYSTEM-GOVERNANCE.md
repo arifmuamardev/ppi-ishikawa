@@ -97,6 +97,7 @@ Pakai semantic utility yang tersedia terlebih dahulu; **hindari angka baru yang 
 | Lapisan | Prinsip | Referensi |
 | --- | --- | --- |
 | Width | Intro/menu utama & Landing/Finder `max-w-7xl`; konten baca panduan lebih sempit, mis. `max-w-5xl` | `src/styles/global.css` |
+| Section heading | Untuk judul section utama gunakan kelas semantik `type-section` (24 px mobile, 30 px mulai breakpoint 640px); pertahankan ukuran lebih kecil untuk judul **di dalam** kartu/callout | `src/styles/global.css` |
 | Rhythm | Compact 24–32 px; section umum 48 px mobile / 64 px desktop; major 64 px mobile / 80 px desktop | `ui-section-space-compact`, `ui-section-space`, `ui-section-space-major` |
 | Surfaces | Feature panel jarang; kartu actionable standar; soft group untuk keterangan; list row untuk hasil berulang | `docs/brand/UI-UX-AUDIT.md` |
 | Radius | Kontrol `rounded-xl`; kartu umum `rounded-2xl`; feature panel `rounded-3xl` | gunakan pola yang sudah ada |
