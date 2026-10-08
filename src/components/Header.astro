@@ -47,14 +47,14 @@ const isActive = (href: string) => {
 
     <div class="flex items-center gap-2">
       <ThemeToggle />
-      <a href={withBase('/member/')} class="type-ui hidden rounded-full border border-slate-300 bg-white px-4 py-2.5 text-slate-800 transition hover:border-accent/50 hover:text-brand sm:inline-flex">
+      <a href={withBase('/member/')} class="type-ui hidden min-h-11 items-center rounded-xl border border-slate-300 bg-white px-4 text-slate-800 transition-colors hover:border-accent/50 hover:bg-accent/5 hover:text-brand sm:inline-flex">
         Area Anggota
       </a>
-      <a href={withBase('/contact')} class="type-ui hidden rounded-full bg-ink px-4 py-2.5 text-white transition hover:bg-brand xl:inline-flex">
+      <a href={withBase('/contact')} class="type-ui hidden min-h-11 items-center rounded-xl bg-ink px-4 text-white transition-colors hover:bg-brand xl:inline-flex">
         Hubungi Kami
       </a>
       <details class="group relative lg:hidden">
-        <summary class="type-ui inline-flex min-h-11 cursor-pointer list-none items-center rounded-full border border-slate-300 bg-white px-4 text-slate-800">
+        <summary class="type-ui inline-flex min-h-11 cursor-pointer list-none items-center rounded-xl border border-slate-300 bg-white px-4 text-slate-800 transition-colors hover:border-accent/50 hover:bg-accent/5">
             <span class="group-open:hidden">Menu</span>
             <span class="hidden group-open:inline">Tutup</span>
           </summary>

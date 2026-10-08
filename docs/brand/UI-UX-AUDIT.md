@@ -247,3 +247,21 @@ Implemented across the Family detail branch:
 - migrated Starter Pack and Timeline to the same shell language
 - removed nested main-landmark markup from Starter Pack
 - preserved specialized checklist, print, progress, and timeline interactions
+
+
+### Pass 10 — Home & global shell polish
+Implemented on the three global surfaces that sit outside normal page archetypes:
+- Home
+- Header
+- Footer
+
+Key changes:
+- Home primary CTAs now use the standard control radius and minimum 44 px touch height
+- removed routine hero-image shadow
+- reduced the six primary domains from a cramped six-column desktop row to a three-column grid
+- aligned remaining Home headings/eyebrows with semantic typography roles
+- reserved `3xl` radius for feature panels while ordinary supporting cards use `2xl`
+- standardized Header action controls to the same radius/touch-target language
+- reduced Footer logo dominance and aligned footer labels/tap targets with the global UI system
+
+This pass changes presentation only; Home destinations and global navigation content are unchanged.
