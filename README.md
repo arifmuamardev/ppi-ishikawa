@@ -74,5 +74,9 @@ Jangan menyimpan data pribadi anggota, nomor telepon personal, token, password, 
 - Struktur organisasi: `src/data/organization.ts`
 - Source registry: `docs/survival/OFFICIAL-SOURCE-REGISTRY.md`
 - Editorial style: `docs/EDITORIAL-STYLE.md`
+- **UI/UX Design System & Governance (wajib untuk kontribusi UI):** `docs/brand/DESIGN-SYSTEM-GOVERNANCE.md`
+- Inventory / catatan migrasi Page Archetypes: `docs/brand/PUBLIC-PAGE-ARCHETYPES.md`
+- Audit visual responsif: `.github/workflows/responsive-audit.yml` (screenshots di artifact GitHub Actions)
+- Checklist review perubahan UI: `.github/PULL_REQUEST_TEMPLATE.md`
 - Content maintenance: `docs/CONTENT-GUIDE.md`
 - External link audit: `.github/workflows/link-check.yml`
