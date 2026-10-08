@@ -28,6 +28,7 @@ on:
       - 'src/styles/**'
       - 'package.json'
       - 'scripts/check-brand-theme.mjs'
+      - 'scripts/check-ui-contracts.mjs'
       - 'scripts/check-links.mjs'
       - 'scripts/check-internal-links.mjs'
       - '.github/workflows/link-check.yml'
