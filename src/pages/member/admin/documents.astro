@@ -17,11 +17,11 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
       <form id="document-upload-form" class="grid gap-5 md:grid-cols-2">
         <label>
           <span class="text-sm font-bold text-slate-800">Judul</span>
-          <input name="title" required class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3" />
+          <input name="title" required class="ui-field mt-2" />
         </label>
         <label>
           <span class="text-sm font-bold text-slate-800">Audiens</span>
-          <select name="audience" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3">
+          <select name="audience" class="ui-field mt-2">
             <option value="verified">Semua anggota terverifikasi</option>
             <option value="officers">Pengurus</option>
             <option value="alumni">Alumni</option>
@@ -29,7 +29,7 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
         </label>
         <label class="md:col-span-2">
           <span class="text-sm font-bold text-slate-800">Deskripsi</span>
-          <textarea name="description" rows="3" class="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3"></textarea>
+          <textarea name="description" rows="3" class="ui-field mt-2"></textarea>
         </label>
         <label class="md:col-span-2">
           <span class="text-sm font-bold text-slate-800">File</span>
@@ -37,7 +37,7 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
           <span class="mt-2 block text-xs text-slate-500">Batas antarmuka: 10 MB per file.</span>
         </label>
         <div class="md:col-span-2 flex justify-end">
-          <button class="rounded-xl bg-brand px-6 py-3 font-bold text-white">Upload dokumen</button>
+          <button class="ui-action-primary">Upload dokumen</button>
         </div>
       </form>
     </section>
