@@ -231,6 +231,22 @@ if ((communityLayout.match(/ui-section-space lg:px-8/g) || []).length !== 2) {
   errors.push('src/pages/community.astro: two supporting sections should use shared normal spacing');
 }
 
+// Featured narrative and contact CTA panels must share the same accent surface
+// and remain distinct from navigation, result, and advisory roles.
+for (const relativePath of ['src/pages/about.astro', 'src/pages/community.astro']) {
+  await checkFile(relativePath, {
+    required: [['<HighlightPanel>', 'shared accent highlight panel']],
+    forbidden: [['class="rounded-[2rem] border border-accent/35 bg-accent/10', 'duplicate highlight panel styling']],
+  });
+}
+await checkFile('src/components/HighlightPanel.astro', {
+  required: [
+    ['data-ui-panel="highlight"', 'semantic panel test hook'],
+    ['rounded-[2rem] border border-accent/35 bg-accent/10', 'shared accent visual style'],
+    ['<slot />', 'slot preserves narrative content'],
+  ],
+});
+
 // Navigation cards are a single cross-route role, separate from results and
 // informational panels. Protect the shared implementation and its consumers.
 for (const relativePath of ['src/pages/about.astro', 'src/pages/community.astro']) {
