@@ -215,6 +215,22 @@ for (const relativePath of verificationPages) {
   });
 }
 
+// Supporting sections use the semantic layout rhythm. Main tasks remain
+// closest to Page Intro; do not force major padding before primary actions.
+for (const id of ['arah', 'nilai', 'cara-kerja', 'struktur-organisasi']) {
+  requireText(
+    'src/pages/about.astro',
+    await read('src/pages/about.astro'),
+    'id="' + id + '" class="scroll-mt-24 mx-auto max-w-7xl px-5 ui-section-space-compact',
+    'shared compact spacing for About supporting sections'
+  );
+}
+const communityLayout = await read('src/pages/community.astro');
+assertions += 1;
+if ((communityLayout.match(/ui-section-space lg:px-8/g) || []).length !== 2) {
+  errors.push('src/pages/community.astro: two supporting sections should use shared normal spacing');
+}
+
 // Navigation cards are a single cross-route role, separate from results and
 // informational panels. Protect the shared implementation and its consumers.
 for (const relativePath of ['src/pages/about.astro', 'src/pages/community.astro']) {
