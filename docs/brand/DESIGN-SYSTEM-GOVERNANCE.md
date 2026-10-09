@@ -107,6 +107,13 @@ Pakai semantic utility yang tersedia terlebih dahulu; **hindari angka baru yang 
 
 Satu jenis kartu untuk satu *peran informasi* (navigation, result, status, advisory); **jangan** menyatukan semua gaya tanpa membedakan fungsi. Namun kartu dengan peran sama harus berperilaku dan tampil konsisten lintas halaman.
 
+**Taksonomi kartu yang ditegakkan:** 
+- **Navigation card:** seluruh permukaan kartu adalah tautan ke satu destinasi. Gunakan `src/components/NavigationCard.astro` dengan `density="comfortable"` untuk pilihan utama dan `density="compact"` untuk directory padat; judul, deskripsi, hover, radius, dan focus mengikuti satu pola. Mulai diterapkan pada Komunitas dan Tentang PPI. Jangan gunakan untuk hasil filter, panel bantuan, atau kontrol yang mengubah state.
+- **Result card:** `article` berisi data, metadata, dan aksi tersendiri; bukan seluruh card sebagai link. Kartu Beasiswa/Karier mempertahankan data-attributes untuk filter dan pola hasil/empty/pagination.
+- **Advisory / status panel:** informasi kontekstual; bukan kartu navigasi dan tidak perlu seluruh panel clickable. Gunakan semantic tokens dan prioritas visual yang lebih rendah dari aksi utama.
+
+**Prinsip spacing:** area sesudah Page Intro memprioritaskan aksi utama tanpa padding awal tambahan yang berlebihan. Section pendukung mengikuti `ui-section-space-compact`, `ui-section-space`, atau `ui-section-space-major` menurut tingkat pentingnya, bukan angka ad-hoc untuk tiap halaman. Perubahan spacing lintas halaman harus divalidasi lewat screenshot mobile dan desktop.
+
 ## 5. Kewajiban setiap template
 
 ### A — Landing / Directory

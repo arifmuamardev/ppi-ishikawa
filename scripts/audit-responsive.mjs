@@ -120,6 +120,21 @@ try {
           path: path.join(outputDir, check.screenshot),
           type: 'jpeg', quality: 65, fullPage: true, animations: 'disabled', timeout: 30000
         });
+        // Navigation cards keep a consistent interactive surface across Landing
+        // destinations. Check both mobile and desktop without assuming content is identical.
+        if ((width === 390 || width === 1280) && (key === 'about' || key === 'community')) {
+          const cards = page.locator('main a[data-ui-card="navigation"]');
+          const total = await cards.count();
+          const expected = key === 'about' ? 7 : 5;
+          check.navigationCardCount = total;
+          if (total !== expected) check.errors.push('Expected ' + expected + ' shared navigation cards; found ' + total);
+          const invalid = await cards.evaluateAll((links) => links.filter((link) =>
+            link.querySelectorAll('h3').length !== 1 ||
+            !link.getAttribute('href')?.startsWith('/ppi-ishikawa/') ||
+            !link.classList.contains('rounded-2xl')
+          ).length);
+          if (invalid) check.errors.push(invalid + ' navigation cards violate heading, route, or visual contract');
+        }
         // Exercise the real Finder interactions once at a representative phone width.
         // These assertions supplement the screenshot/overflow checks, rather than
         // treating a successful static render as proof the filters still work.

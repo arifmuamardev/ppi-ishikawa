@@ -215,6 +215,23 @@ for (const relativePath of verificationPages) {
   });
 }
 
+// Navigation cards are a single cross-route role, separate from results and
+// informational panels. Protect the shared implementation and its consumers.
+for (const relativePath of ['src/pages/about.astro', 'src/pages/community.astro']) {
+  await checkFile(relativePath, {
+    required: [['<NavigationCard', 'navigation destinations use shared NavigationCard']],
+    forbidden: [['class="group rounded-2xl border border-slate-200 bg-white p-5 transition-colors hover:border-accent/35 hover:bg-accent/5"', 'deprecated inline navigation card surface']],
+  });
+}
+await checkFile('src/components/NavigationCard.astro', {
+  required: [
+    ['data-ui-card="navigation"', 'stable navigation-card test hook'],
+    ['type-card-title', 'shared compact title scale'],
+    ['hover:border-accent/35', 'shared navigation interaction'],
+    ["withBase(href)", 'internal destinations respect deployment base path'],
+  ],
+});
+
 // For task-first Landing pages, photography remains contextual and must not
 // precede the primary destination choices users came to find.
 for (const [relativePath, choiceMarker] of [
