@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LandingHeader from '../components/LandingHeader.astro';
+import HighlightPanel from '../components/HighlightPanel.astro';
 import NavigationCard from '../components/NavigationCard.astro';
 import TopicIcon from '../components/TopicIcon.astro';
 import InstagramFeed from '../components/InstagramFeed.astro';
@@ -105,11 +106,11 @@ const communityPaths = [
   </section>
 
   <section class="mx-auto max-w-7xl px-5 ui-section-space lg:px-8">
-    <div class="rounded-[2rem] border border-accent/35 bg-accent/10 p-7 sm:p-9">
+    <HighlightPanel>
       <p class="type-eyebrow text-accent-dark">Ingin terhubung?</p>
       <h2 class="mt-3 text-2xl font-bold text-slate-950">Mulai dari percakapan.</h2>
       <p class="mt-3 max-w-3xl leading-7 text-slate-700">Mahasiswa baru, mahasiswa aktif, keluarga, alumni, maupun mitra dapat menghubungi PPI Ishikawa melalui jalur kontak yang tersedia.</p>
       <a href={withBase('/contact/')} class="mt-5 inline-flex rounded-xl bg-brand px-5 py-3 text-sm font-bold text-white">Hubungi PPI Ishikawa →</a>
-    </div>
+    </HighlightPanel>
   </section>
 </BaseLayout>
