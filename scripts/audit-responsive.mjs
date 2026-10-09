@@ -10,6 +10,8 @@ const routes = [
   ['home', '/'],
   ['about', '/about/'],
   ['community', '/community/'],
+  ['directory', '/resources/'],
+  ['stories', '/stories/'],
   ['life-in-ishikawa', '/life-in-ishikawa/'],
   ['contact', '/contact/'],
   ['member', '/member/'],
@@ -139,6 +141,23 @@ try {
           check.supportingSectionPadding = spacing;
           if (spacing.length !== 2 || spacing.some((value) => !Number.isFinite(value) || Math.abs(value - spacing[0]) > 1)) {
             check.errors.push('Community supporting sections should share normal vertical spacing');
+          }
+        }
+
+        if ((width === 390 || width === 1280) && key === 'directory') {
+          const cards = page.locator('main a[data-ui-card="navigation"]');
+          const total = await cards.count();
+          check.navigationCardCount = total;
+          if (total !== 6) check.errors.push('Directory must show six navigation destinations');
+          const headings = await page.locator('main h2.type-section').count();
+          if (headings < 1) check.errors.push('Directory needs a section heading for its h3 card titles');
+        }
+        if ((width === 390 || width === 1280) && key === 'stories') {
+          const resultsExist = await page.locator('#story-grid').count() > 0;
+          const highlight = await page.locator('main [data-ui-panel="highlight"]').count();
+          check.storyComingSoonHighlight = highlight;
+          if (highlight !== (resultsExist ? 0 : 1)) {
+            check.errors.push('Stories must use HighlightPanel only for the coming-soon state');
           }
         }
 
