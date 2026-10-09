@@ -142,6 +142,25 @@ try {
           }
         }
 
+        // Shared highlight panels must render exactly once on both Landing
+        // pages and keep their visual treatment aligned at phone/desktop width.
+        if ((width === 390 || width === 1280) && (key === 'about' || key === 'community')) {
+          const panels = page.locator('main [data-ui-panel="highlight"]');
+          const total = await panels.count();
+          check.highlightPanelCount = total;
+          if (total !== 1) check.errors.push('Expected one shared highlight panel, got ' + total);
+          if (total === 1) {
+            const props = await panels.first().evaluate((element) => {
+              const css = getComputedStyle(element);
+              return { radius: css.borderRadius, padding: css.paddingLeft, background: css.backgroundColor };
+            });
+            check.highlightPanelStyle = props;
+            if (!props.radius || !props.background || !props.padding) {
+              check.errors.push('Highlight panel has incomplete computed visual style');
+            }
+          }
+        }
+
         // Navigation cards keep a consistent interactive surface across Landing
         // destinations. Check both mobile and desktop without assuming content is identical.
         if ((width === 390 || width === 1280) && (key === 'about' || key === 'community')) {
