@@ -42,6 +42,8 @@ Semua halaman publik non-pengecualian masuk tepat **satu** dari tiga keluarga te
 4. Bila campuran, tentukan satu **primary user task**; modul lain tetap boleh hadir sebagai modul pendukung. Jangan menggabungkan dua shell.
 5. Jika tidak cocok, ajukan pengecualian terdokumentasi; jangan menciptakan jenis template keempat diam-diam.
 
+**Halaman Direktori (`/resources/`) merupakan Template A**, bukan Finder: tugas pengguna adalah memilih tujuan, tanpa filter/pencarian. Gunakan `LandingHeader` dan kartu navigasi bersama. Halaman Cerita (`/stories/`) memakai Finder hanya saat ada cerita yang dapat difilter; keadaan belum ada cerita boleh memakai `HighlightPanel` untuk pemberitahuan tanpa mengganti keluarga Page Intro.
+
 **Subtipe bukan template baru:** halaman Landing bertingkat dapat mempunyai konteks induk (A/nested); panduan dapat mempunyai metadata spesifik, tetapi tetap C. “Hub” boleh menjadi istilah internal historis, **bukan label UI**. **Tingkat navigasi berbeda dari kedalaman URL**: `/community/kampus/` adalah destinasi menu utama walaupun URL berada di bawah `/community/`.
 
 **Pengecualian yang sah:** Beranda (portal/hero khusus), `MemberLayout` (aplikasi), `AuthShell`, `VerificationShell`, dan 404. Halaman utilitas tidak dipaksa mengikuti A/B/C; tetap mengikuti token, aksesibilitas, dan tata bahasa komponen bersama.

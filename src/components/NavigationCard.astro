@@ -31,7 +31,8 @@ const compact = density === 'compact';
   )}
   <h3 class:list={[
     'font-bold text-slate-950 group-hover:text-brand',
-    compact ? 'type-card-title' : 'mt-4 text-lg',
+    icon && 'mt-4',
+    compact ? 'type-card-title' : 'text-lg',
   ]}>
     {title}
   </h3>

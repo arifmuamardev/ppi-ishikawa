@@ -64,6 +64,7 @@ const landingPages = [
   'src/pages/about.astro',
   'src/pages/programs.astro',
   'src/pages/contact.astro',
+  'src/pages/resources.astro',
 ];
 
 const nestedLandingPages = [
@@ -78,7 +79,6 @@ const finderPages = [
   'src/pages/life-in-ishikawa/municipality-guides.astro',
   'src/pages/life-in-ishikawa/family/aktivitas.astro',
   'src/pages/life-in-ishikawa/family/municipality.astro',
-  'src/pages/resources.astro',
   'src/pages/stories.astro',
 ];
 
@@ -230,6 +230,24 @@ assertions += 1;
 if ((communityLayout.match(/ui-section-space lg:px-8/g) || []).length !== 2) {
   errors.push('src/pages/community.astro: two supporting sections should use shared normal spacing');
 }
+
+// Directory is a Landing even when historically implemented with FinderHeader;
+// its six destinations reuse cards and follow the h1 → h2 → h3 hierarchy.
+await checkFile('src/pages/resources.astro', {
+  required: [
+    ['<LandingHeader', 'Directory is a Landing, not a Finder'],
+    ['<NavigationCard', 'Directory uses shared navigation cards'],
+    ['<h2 class="type-section', 'Directory groups cards under a section heading'],
+  ],
+  forbidden: [
+    ['<FinderHeader', 'Directory should not use the Finder family'],
+    ['<TopicIcon', 'NavigationCard owns icons'],
+  ],
+});
+await checkFile('src/pages/stories.astro', {
+  required: [['<HighlightPanel>', 'Stories empty-state uses shared highlight panel']],
+  forbidden: [['class="rounded-[2rem] border border-accent/35 bg-accent/10', 'duplicate highlight surface']],
+});
 
 // Featured narrative and contact CTA panels must share the same accent surface
 // and remain distinct from navigation, result, and advisory roles.

@@ -1,8 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import FinderHeader from '../components/FinderHeader.astro';
-import TopicIcon from '../components/TopicIcon.astro';
-import { withBase } from '../utils/paths';
+import LandingHeader from '../components/LandingHeader.astro';
+import NavigationCard from '../components/NavigationCard.astro';
 
 const directories = [
   {
@@ -44,25 +43,17 @@ const directories = [
 ];
 ---
 <BaseLayout title="Direktori">
-  <FinderHeader
+  <LandingHeader
     title="Direktori"
     description="Halaman ringkas untuk menuju area utama website PPI Ishikawa."
   />
 
   <section class="mx-auto max-w-7xl px-5 pb-20 lg:px-8">
-    <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
-      <p class="text-sm leading-6 text-slate-600">Pilih area sesuai kebutuhan Anda.</p>
-    </div>
+    <h2 class="type-section text-slate-950">Pilih area sesuai kebutuhan Anda.</h2>
 
     <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
       {directories.map((item) => (
-        <a href={withBase(item.href)} class="group rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-accent/35 hover:shadow-sm">
-          <span class="grid size-10 place-items-center rounded-xl bg-accent/10 text-accent-dark">
-            <TopicIcon name={item.icon as any} class="size-5" />
-          </span>
-          <h2 class="mt-4 font-bold text-slate-950 group-hover:text-brand">{item.title}</h2>
-          <p class="mt-2 text-sm leading-6 text-slate-600">{item.description}</p>
-        </a>
+        <NavigationCard href={item.href} title={item.title} description={item.description} icon={item.icon} density="compact" />
       ))}
     </div>
   </section>
