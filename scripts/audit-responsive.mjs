@@ -120,6 +120,28 @@ try {
           path: path.join(outputDir, check.screenshot),
           type: 'jpeg', quality: 65, fullPage: true, animations: 'disabled', timeout: 30000
         });
+        // Supporting section spacing should be uniform within the same role,
+        // without increasing the gap before the initial task on Landing pages.
+        if ((width === 390 || width === 1280) && key === 'about') {
+          const spacing = await page.evaluate(() =>
+            ['arah', 'nilai', 'cara-kerja', 'struktur-organisasi'].map((id) =>
+              Number.parseFloat(getComputedStyle(document.getElementById(id)).paddingTop))
+          );
+          check.supportingSectionPadding = spacing;
+          if (spacing.some((value) => !Number.isFinite(value) || Math.abs(value - spacing[0]) > 1)) {
+            check.errors.push('About supporting sections have inconsistent vertical padding');
+          }
+        }
+        if ((width === 390 || width === 1280) && key === 'community') {
+          const spacing = await page.locator('main .ui-section-space').evaluateAll((elements) =>
+            elements.map((element) => Number.parseFloat(getComputedStyle(element).paddingTop))
+          );
+          check.supportingSectionPadding = spacing;
+          if (spacing.length !== 2 || spacing.some((value) => !Number.isFinite(value) || Math.abs(value - spacing[0]) > 1)) {
+            check.errors.push('Community supporting sections should share normal vertical spacing');
+          }
+        }
+
         // Navigation cards keep a consistent interactive surface across Landing
         // destinations. Check both mobile and desktop without assuming content is identical.
         if ((width === 390 || width === 1280) && (key === 'about' || key === 'community')) {
