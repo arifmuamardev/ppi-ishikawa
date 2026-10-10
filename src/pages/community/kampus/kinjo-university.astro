@@ -269,11 +269,11 @@ const priorityFaq = kinjoFaq.filter((item) => ["tuition-reduction","peer-support
     title="Cerita mahasiswa dan alumni dari kampus ini"
   />
 
+  <CampusOfficialSources sources={kinjoPack.officialSources} lastVerified={kinjoPack.lastVerified} />
+
   <RelatedLinks
     items={campusRelatedContent['kinjo-university']}
     eyebrow="Topik terkait"
     title="Lanjutkan ke informasi kampus dan kehidupan sehari-hari"
   />
-
-  <CampusOfficialSources sources={kinjoPack.officialSources} lastVerified={kinjoPack.lastVerified} />
 </BaseLayout>
