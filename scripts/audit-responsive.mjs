@@ -300,7 +300,10 @@ try {
             };
           });
           const m = check.motion;
-          if (!m.present || m.token !== '160ms' ||
+          const tokenMs = m.token?.endsWith('ms')
+            ? Number.parseFloat(m.token)
+            : Number.parseFloat(m.token) * 1000;
+          if (!m.present || Math.abs(tokenMs-160)>.5 ||
               Math.abs(Number.parseFloat(m.duration)-.16)>.001 ||
               Math.abs(Number.parseFloat(m.colorDuration)-.16)>.001) {
             check.errors.push('Approved 160ms motion drift: '+JSON.stringify(m));
