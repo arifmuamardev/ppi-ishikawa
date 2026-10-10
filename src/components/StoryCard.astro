@@ -1,5 +1,6 @@
 ---
 import TopicIcon from './TopicIcon.astro';
+import ResultCard from './ResultCard.astro';
 import { withBase } from '../utils/paths';
 import { campuses } from '../data/campuses';
 import { storyTopicLabels, type Story } from '../data/stories';
@@ -12,7 +13,7 @@ const { story } = Astro.props;
 const campus = campuses.find((item) => item.slug === story.campusSlug);
 ---
 
-<article class="group overflow-hidden rounded-2xl border border-slate-200 bg-white transition-colors hover:border-accent/35 hover:bg-accent/5">
+<ResultCard interactive clip>
   {story.imageUrl ? (
     <img
       src={story.imageUrl}
@@ -46,4 +47,4 @@ const campus = campuses.find((item) => item.slug === story.campusSlug);
       <a href={withBase(`/stories/${story.slug}/`)} class="shrink-0 text-sm font-bold text-brand hover:underline">Baca cerita →</a>
     </div>
   </div>
-</article>
+</ResultCard>

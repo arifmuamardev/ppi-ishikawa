@@ -249,6 +249,37 @@ await checkFile('src/pages/stories.astro', {
   forbidden: [['class="rounded-[2rem] border border-accent/35 bg-accent/10', 'duplicate highlight surface']],
 });
 
+// A filter result keeps independent actions and metadata inside a semantic
+// article. A status advisory is a non-disruptive note, not a navigation link.
+await checkFile('src/components/StoryCard.astro', {
+  required: [
+    ['<ResultCard interactive clip>', 'published story result uses shared surface'],
+    ['Baca cerita →', 'result retains its independent read action'],
+  ],
+  forbidden: [['<article class="group overflow-hidden', 'result outer shell must not be duplicated']],
+});
+await checkFile('src/components/ResultCard.astro', {
+  required: [
+    ['data-ui-card="result"', 'stable result role selector'],
+    ['<article', 'semantic result article'],
+    ['hover:border-accent/35', 'shared interactive result state'],
+    ['<slot />', 'result-specific content and metadata'],
+  ],
+  forbidden: [['<a ', 'the result container must not be a whole-card link']],
+});
+await checkFile('src/pages/programs.astro', {
+  required: [['<AdvisoryPanel tone="info">', 'program status uses shared advisory']],
+  forbidden: [['class="border-y border-accent/35 bg-accent/10', 'duplicate inline status panel']],
+});
+await checkFile('src/components/AdvisoryPanel.astro', {
+  required: [
+    ['role="note"', 'non-interruptive advisory semantics'],
+    ['data-ui-panel="advisory"', 'stable advisory role selector'],
+    ["tone === 'info'", 'information and caution variants'],
+    ['<slot />', 'content remains with caller'],
+  ],
+});
+
 // Featured narrative and contact CTA panels must share the same accent surface
 // and remain distinct from navigation, result, and advisory roles.
 for (const relativePath of ['src/pages/about.astro', 'src/pages/community.astro']) {

@@ -12,6 +12,7 @@ const routes = [
   ['community', '/community/'],
   ['directory', '/resources/'],
   ['stories', '/stories/'],
+  ['programs', '/programs/'],
   ['life-in-ishikawa', '/life-in-ishikawa/'],
   ['contact', '/contact/'],
   ['member', '/member/'],
@@ -158,6 +159,39 @@ try {
           check.storyComingSoonHighlight = highlight;
           if (highlight !== (resultsExist ? 0 : 1)) {
             check.errors.push('Stories must use HighlightPanel only for the coming-soon state');
+          }
+        }
+
+        // Advisory status is shown as a note with its own action, not a
+        // whole-surface link, while published stories use semantic result cards.
+        if ((width === 390 || width === 1280) && key === 'programs') {
+          const panel = page.locator('main [data-ui-panel="advisory"]');
+          const total = await panel.count();
+          check.advisoryPanelCount = total;
+          if (total !== 1) {
+            check.errors.push('Programs must show one standard status advisory');
+          } else {
+            const state = await panel.first().evaluate((node) => ({
+              tag: node.tagName.toLowerCase(),
+              role: node.getAttribute('role'),
+              tone: node.getAttribute('data-tone'),
+              text: node.textContent || '',
+              cta: node.querySelector('a[href*="/about/"]') !== null,
+              style: getComputedStyle(node).backgroundColor
+            }));
+            if (state.tag !== 'div' || state.role !== 'note' || state.tone !== 'info'
+                || !state.text.includes('Program dan jadwal resmi')
+                || !state.cta || !state.style) {
+              check.errors.push('Programs advisory is missing status, independent action, or visual style');
+            }
+          }
+        }
+        if ((width === 390 || width === 1280) && key === 'stories') {
+          const entries = await page.locator('.story-entry').count();
+          const resultCards = await page.locator('.story-entry article[data-ui-card="result"]').count();
+          check.storyResultCards = resultCards;
+          if (entries !== resultCards) {
+            check.errors.push('Each published story must have a semantic result-card surface');
           }
         }
 
