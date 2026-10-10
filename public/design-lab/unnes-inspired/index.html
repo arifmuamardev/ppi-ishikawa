@@ -555,10 +555,78 @@
     body[data-lab-theme="dark"] .shadow-dropdown-panel a:hover{background:#325253}
     @media(max-width:820px){.shadow-usecase-grid{grid-template-columns:1fr}}
     @media(max-width:640px){.shadow-compare{grid-template-columns:1fr}.shadow-compare-slot{padding:16px}.shadow-usecase{padding:17px}.shadow-controls-label{flex:1 1 100%}}
+
+    /* Layout rhythm: one token set across preview and template playground.
+       Local study only; never hardcode a different spacing system per page. */
+    body[data-layout-density="compact"]{
+      --lab-section-padding:48px;--lab-section-mobile:40px;
+      --lab-card-padding:18px;--lab-grid-gap:12px;
+      --lab-template-padding:22px;--lab-template-mobile:15px;
+      --lab-intro-padding:22px;--lab-demo-padding:15px;--lab-demo-gap:10px;
+    }
+    body[data-layout-density="balanced"]{
+      --lab-section-padding:68px;--lab-section-mobile:52px;
+      --lab-card-padding:23px;--lab-grid-gap:14px;
+      --lab-template-padding:30px;--lab-template-mobile:17px;
+      --lab-intro-padding:30px;--lab-demo-padding:18px;--lab-demo-gap:12px;
+    }
+    body[data-layout-density="spacious"]{
+      --lab-section-padding:82px;--lab-section-mobile:64px;
+      --lab-card-padding:30px;--lab-grid-gap:20px;
+      --lab-template-padding:36px;--lab-template-mobile:20px;
+      --lab-intro-padding:36px;--lab-demo-padding:22px;--lab-demo-gap:17px;
+    }
+    body[data-layout-density] .preview-section{padding-block:var(--lab-section-padding)}
+    body[data-layout-density] .cards{gap:var(--lab-grid-gap)}
+    body[data-layout-density] .card{padding:var(--lab-card-padding)}
+    body[data-layout-density] .ds-page{padding:var(--lab-template-padding)}
+    body[data-layout-density] .ds-page-intro{padding:var(--lab-intro-padding)}
+    body[data-layout-density] .ds-page .ds-demo-cards{gap:var(--lab-demo-gap)}
+    body[data-layout-density] .ds-page .ds-nav-card,
+    body[data-layout-density] .ds-page .ds-result-card{padding:var(--lab-demo-padding)}
+    @media(max-width:600px){
+      body[data-layout-density] .preview-section{padding-block:var(--lab-section-mobile)}
+    }
+    @container(max-width:650px){
+      body[data-layout-density] .ds-page{padding:var(--lab-template-mobile)}
+      body[data-layout-density] .ds-page-intro{padding:clamp(20px,var(--lab-intro-padding),30px)}
+    }
+    .spacing-controls{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin:22px 0 18px}
+    .spacing-controls-label{margin-right:auto;font-size:12px;font-weight:900;color:#335249}
+    .spacing-controls-label small{font-weight:500;color:#63766B}
+    .spacing-controls button{min-height:44px;padding:9px 14px;border-radius:7px;border:1px solid #ADBBB4;background:#fff;color:#264A43;font-size:12px;font-weight:800;cursor:pointer}
+    .spacing-controls button:hover:not([aria-pressed="true"]){background:#EDF5F0}
+    .spacing-controls button[aria-pressed="true"]{background:#176B6A;color:white;border-color:#176B6A}
+    .spacing-controls button:focus-visible{outline:3px solid #5BA8A6;outline-offset:3px}
+    .spacing-compare{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+    .spacing-spec{display:flex;flex-direction:column;min-width:0;background:#E8F1EC;border:1px solid #D1E0D8;border-radius:12px}
+    .spacing-spec>small{font-size:10px;font-weight:900;letter-spacing:.12em;color:#24534D;padding:16px 17px 4px}
+    .spacing-spec .spacing-card{background:#FFF;border:1px solid #C5D5CD;border-radius:8px;color:#23413C;font-size:15px;font-weight:800;margin-inline:16px}
+    .spacing-spec .spacing-card span{display:block;margin-top:6px;font-size:12px;color:#53675C;font-weight:500}
+    .spacing-spec p{font-size:12px;line-height:1.55;color:#54685E;margin:12px 17px 17px}
+    [data-spacing-example="compact"]{gap:10px}
+    [data-spacing-example="compact"] .spacing-card{padding:13px 14px}
+    [data-spacing-example="balanced"]{gap:14px}
+    [data-spacing-example="balanced"] .spacing-card{padding:19px}
+    [data-spacing-example="spacious"]{gap:18px}
+    [data-spacing-example="spacious"] .spacing-card{padding:26px}
+    .spacing-note{margin-top:20px}
+    .spacing-note a{font-weight:800;text-underline-offset:3px}
+    body[data-lab-theme="dark"] .spacing-controls-label{color:#E8F5EE}
+    body[data-lab-theme="dark"] .spacing-controls-label small{color:#B8D4C9}
+    body[data-lab-theme="dark"] .spacing-controls button{background:#1C3337;border-color:#648078;color:#EBF9F2}
+    body[data-lab-theme="dark"] .spacing-controls button[aria-pressed="true"]{background:#B9EDDB;border-color:#B9EDDB;color:#173D35}
+    body[data-lab-theme="dark"] .spacing-spec{background:#192F33;border-color:#3A5658}
+    body[data-lab-theme="dark"] .spacing-spec>small{color:#B3EEDA}
+    body[data-lab-theme="dark"] .spacing-spec .spacing-card{background:#20373B;border-color:#4A6866;color:#EFF9F3}
+    body[data-lab-theme="dark"] .spacing-spec .spacing-card span,
+    body[data-lab-theme="dark"] .spacing-spec p{color:#CBDDD5}
+    @media(max-width:850px){.spacing-compare{grid-template-columns:1fr}}
+    @media(max-width:640px){.spacing-controls-label{flex:1 1 100%}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
   </style>
 </head>
-<body data-lab-theme="light" data-contour-strength="subtle" data-contour-motif="map" data-elevation="soft">
+<body data-lab-theme="light" data-contour-strength="subtle" data-contour-motif="map" data-elevation="soft" data-layout-density="balanced">
 <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;overflow:hidden"><defs>
 <symbol id="ppi-contour-mark" viewBox="0 0 720 380">
 <g fill="none" stroke="currentColor" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round">
@@ -585,7 +653,7 @@
   </header>
   <nav class="ds-jump" aria-label="Navigasi Design System"><div class="wrap">
     <a href="#demo-panduan">Fondasi</a><a href="#design-contour">Logo Contour</a>
-    <a href="#design-components">Komponen</a><a href="#design-shadow">Elevation</a>
+    <a href="#design-components">Komponen</a><a href="#design-shadow">Elevation</a><a href="#design-spacing">Spacing &amp; Grid</a>
     <a href="#design-templates">Template A/B/C</a>
     <a href="#design-governance">Governance & QA</a>
   </div></nav>
@@ -858,6 +926,24 @@
       <p class="ds-muted shadow-system-note"><strong>Token desain:</strong> Level 0 <code>none</code> · Soft <code>0 2px 8px / 6%</code> · Hover <code>0 8px 24px / 10%</code> · Floating <code>0 16px 40px / 16%</code>. Dalam Dark Mode gunakan shadow hitam lebih dalam, tetapi tetap pertahankan border. <a href="#preview">↑ Tinjau pada homepage contoh</a>.</p>
     </section>
 
+    <section class="ds-section" id="design-spacing" aria-labelledby="spacing-title">
+      <p class="ds-kicker">02C / Layout rhythm</p>
+      <h2 class="ds-heading" id="spacing-title">Ruang yang terukur.<br>Hierarki yang lebih tenang.</h2>
+      <p class="ds-muted">Coba tiga ritme layout untuk <strong>desain B — Solid Institutional</strong>. Ini bukan tiga template berbeda: tiap mode memakai grid responsif, bentuk kartu, dan isi yang sama. Yang berbeda hanya jarak section, ruang di dalam kartu, serta sela antar item.</p>
+      <div class="spacing-controls" role="group" aria-label="Pilih kepadatan spacing Design Lab">
+        <span class="spacing-controls-label">Density <small>· diterapkan ke homepage contoh dan Template A/B/C</small></span>
+        <button type="button" data-spacing-choice="compact" aria-pressed="false">Compact</button>
+        <button type="button" data-spacing-choice="balanced" aria-pressed="true">Balanced</button>
+        <button type="button" data-spacing-choice="spacious" aria-pressed="false">Spacious</button>
+      </div>
+      <div class="spacing-compare" aria-label="Perbandingan ritme kartu secara berdampingan">
+        <div class="spacing-spec" data-spacing-example="compact"><small>01 · COMPACT</small><div class="spacing-card">Lebih rapat<span>Direktori padat</span></div><div class="spacing-card">Efisien<span>Hasil berulang</span></div><p>Jarak minimum yang tetap menjaga keterbacaan.</p></div>
+        <div class="spacing-spec" data-spacing-example="balanced"><small>02 · BALANCED</small><div class="spacing-card">Seimbang<span>Landing utama</span></div><div class="spacing-card">Nyaman<span>Panduan umum</span></div><p>Ritme default untuk halaman publik PPI.</p></div>
+        <div class="spacing-spec" data-spacing-example="spacious"><small>03 · SPACIOUS</small><div class="spacing-card">Bernafas<span>Editorial</span></div><div class="spacing-card">Terarah<span>Feature khusus</span></div><p>Ruang lebih lega; hindari pada daftar yang panjang.</p></div>
+      </div>
+      <p class="ds-muted spacing-note"><strong>Token demo:</strong> Compact 48/18/12 px · Balanced 68/23/14 px · Spacious 82/30/20 px (section/card/grid). Pilih mode di atas lalu buka <a href="#preview">homepage contoh ↑</a> dan <a href="#design-templates">Template A/B/C ↑</a>. Perubahan ini hanya berlaku di Design Lab; mode Balanced menjadi baseline eksperimen, belum keputusan produksi.</p>
+    </section>
+
     <section class="ds-section" id="design-templates" aria-labelledby="templates-title">
       <p class="ds-kicker">03 / Page archetypes</p>
       <h2 class="ds-heading" id="templates-title">Satu gaya B.<br>Tiga tugas halaman.</h2>
@@ -1015,6 +1101,25 @@
       applyElevation(initialElevation);
       elevationButtons.forEach(function(button) {
         button.addEventListener('click', function(){ applyElevation(button.dataset.shadowChoice); });
+      });
+
+      // Design Lab-only layout rhythm. Changing density must not reset motif,
+      // color mode, selected visual variant, templates, or elevation state.
+      const spacingButtons = Array.from(document.querySelectorAll('[data-spacing-choice]'));
+      const spacingKey = 'ppi-ishikawa-design-lab-layout-density';
+      function applySpacing(value) {
+        const chosen = ['compact','balanced','spacious'].includes(value) ? value : 'balanced';
+        document.body.dataset.layoutDensity = chosen;
+        spacingButtons.forEach(function(button) {
+          button.setAttribute('aria-pressed',String(button.dataset.spacingChoice === chosen));
+        });
+        try { localStorage.setItem(spacingKey,chosen); } catch (_error) { /* optional storage */ }
+      }
+      let initialSpacing = 'balanced';
+      try { initialSpacing = localStorage.getItem(spacingKey) || 'balanced'; } catch (_error) { /* default */ }
+      applySpacing(initialSpacing);
+      spacingButtons.forEach(function(button) {
+        button.addEventListener('click',function() { applySpacing(button.dataset.spacingChoice); });
       });
       const motifButtons = Array.from(document.querySelectorAll('[data-motif-choice]'));
       const motifKey = 'ppi-ishikawa-design-lab-contour-motif';

@@ -38,6 +38,54 @@ try {
       await page.screenshot({ path: directory + '/lab-light-' + width + '.jpg', type: 'jpeg', quality: 62, fullPage: true, animations: 'disabled' });
 
 
+
+      // Spacing study should adjust layout rhythm without creating a fourth
+      // page template, changing colors, or creating horizontal overflow.
+      verify(await page.locator('#design-spacing').count() === 1,
+        'Spacing & Grid section should be visible in the Design Lab', width);
+      verify(await page.locator('body').getAttribute('data-layout-density') === 'balanced',
+        'Balanced must be the default spacing preset', width);
+      const readDensity = () => page.evaluate(() => {
+        const style = (selector) => getComputedStyle(document.querySelector(selector));
+        return {
+          section: parseFloat(style('.preview-section').paddingTop),
+          card: parseFloat(style('.cards .card').paddingTop),
+          gap: parseFloat(style('.cards').columnGap),
+          template: parseFloat(style('.ds-page:not([hidden])').paddingTop)
+        };
+      });
+      const balanced = await readDensity();
+      await page.locator('[data-spacing-choice="compact"]').click();
+      verify(await page.locator('[data-spacing-choice="compact"]').getAttribute('aria-pressed') === 'true',
+        'Compact selection should update accessible pressed state', width);
+      const compact = await readDensity();
+      await page.locator('[data-spacing-choice="spacious"]').click();
+      const spacious = await readDensity();
+      verify(compact.section < balanced.section && balanced.section < spacious.section,
+        'Section spacing must follow Compact < Balanced < Spacious', width);
+      verify(compact.card < balanced.card && balanced.card < spacious.card,
+        'Card padding must follow Compact < Balanced < Spacious', width);
+      verify(compact.gap < balanced.gap && balanced.gap < spacious.gap,
+        'Grid spacing must follow Compact < Balanced < Spacious', width);
+      verify(compact.template < balanced.template && balanced.template < spacious.template,
+        'Template spacing must follow Compact < Balanced < Spacious', width);
+      verify((await overflow(page)) <= 2, 'Spacious layout caused horizontal overflow', width);
+      verify(await page.locator('#preview').getAttribute('data-view') === 'b',
+        'Spacing control should preserve visual variant B', width);
+      if (width === 390 || width === 1280) {
+        await page.screenshot({path: directory + '/layout-spacious-' + width + '.jpg',
+          type: 'jpeg', quality: 62, fullPage: true, animations: 'disabled'});
+      }
+      await page.reload({waitUntil:'domcontentloaded'});
+      verify(await page.locator('body').getAttribute('data-layout-density') === 'spacious',
+        'Spacing setting should survive reload', width);
+      await page.locator('[data-spacing-choice="balanced"]').click();
+      const restored = await readDensity();
+      verify(Math.abs(restored.section - balanced.section) <= 1 &&
+        Math.abs(restored.card - balanced.card) <= 1,
+        'Balanced layout should be restored exactly', width);
+      verify((await overflow(page)) <= 2, 'Balanced layout caused horizontal overflow', width);
+
       // Contour design study must remain decorative and independently adjustable.
       const contours = page.locator('.ppi-contour, .ppi-map');
       verify(await page.locator('.ppi-contour').count() === 10, 'Expected ten original line motifs (including comparison)', width);
