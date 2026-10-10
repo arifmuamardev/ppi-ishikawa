@@ -449,6 +449,59 @@ try {
       verify((await overflow(page)) <= 2,
         'Restored Standard motion should not overflow',width);
       
+
+      // State lab: every mode must change real semantics and usable recovery,
+      // not only a color swatch. All actions are local simulations.
+      verify(await page.locator('#design-states').count() === 1,
+        'Interaction States section is required', width);
+      verify(await page.locator('body').getAttribute('data-feedback-state') === 'idle',
+        'Initial state should be idle, without a fake pending operation', width);
+      const stateButton=(name)=>page.locator('[data-feedback-choice="'+name+'"]');
+      await stateButton('loading').click();
+      verify(await page.locator('#feedback-form').getAttribute('aria-busy') === 'true' &&
+        await page.locator('#feedback-submit').isDisabled() &&
+        (await page.locator('#feedback-live').innerText()).includes('tidak ada permintaan jaringan'),
+        'Loading must be accessible, informative and prevent duplicate submit',width);
+      await stateButton('error').click();
+      verify(await page.locator('#feedback-input').getAttribute('aria-invalid') === 'true' &&
+        (await page.locator('#feedback-input').getAttribute('aria-describedby')).includes('feedback-error') &&
+        await page.locator('#feedback-error').isVisible() &&
+        await page.locator('#feedback-submit').isEnabled(),
+        'Error must link the invalid field to actionable feedback',width);
+      await stateButton('empty').click();
+      verify(await page.locator('#feedback-empty-action').isVisible() &&
+        (await page.locator('#feedback-heading').innerText()).includes('Tidak ditemukan'),
+        'Empty state needs useful next action', width);
+      await page.locator('#feedback-reset').click();
+      verify(await page.locator('body').getAttribute('data-feedback-state') === 'idle',
+        'Reset must return to usable idle state',width);
+      await stateButton('disabled').click();
+      verify(await page.locator('#feedback-submit').isDisabled() &&
+        (await page.locator('#feedback-description').innerText()).includes('prasyarat'),
+        'Disabled needs a visible reason and real disabled attribute', width);
+      await stateButton('idle').click();
+      await page.locator('#feedback-submit').click();
+      verify(await page.locator('body').getAttribute('data-feedback-state') === 'success' &&
+        (await page.locator('#feedback-live').innerText()).includes('tidak ada data dikirim') &&
+        await page.locator('#feedback-live').getAttribute('role') === 'status',
+        'Local action must announce a clearly simulated success',width);
+      verify(await stateButton('success').getAttribute('aria-pressed') === 'true' &&
+        await page.locator('#feedback-error').isHidden(),
+        'Selection state and error cleanup are required',width);
+      await page.locator('[data-mode-choice="dark"]').click();
+      verify((await overflow(page)) <= 2 &&
+        await page.locator('body').getAttribute('data-feedback-state') === 'success',
+        'Dark Mode should preserve state without overflow',width);
+      await page.locator('[data-mode-choice="light"]').click();
+      await page.emulateMedia({reducedMotion:'reduce'});
+      if(width===390||width===1280)
+        await page.screenshot({path:directory+'/interaction-states-'+width+'.jpg',
+          type:'jpeg',quality:62,fullPage:true,animations:'disabled'});
+      await page.reload({waitUntil:'domcontentloaded'});
+      verify(await page.locator('body').getAttribute('data-feedback-state') === 'idle',
+        'UI demonstration should reset on reload; no persisted backend state',width);
+      verify((await overflow(page)) <= 2,'State examples must not overflow viewport',width);
+
       // Contour design study must remain decorative and independently adjustable.
       const contours = page.locator('.ppi-contour, .ppi-map');
       verify(await page.locator('.ppi-contour').count() === 10, 'Expected ten original line motifs (including comparison)', width);

@@ -967,10 +967,55 @@
       body[data-motion-style] .shadow-usecase-card[data-shadow-surface="navigation"]:hover,
       body[data-motion-style] .motion-demo-card:hover{transform:none!important}
     }
+
+    /* Interaction states: text and semantics are primary; color is supplemental. */
+    .feedback-controls{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:20px 0}
+    .feedback-controls-label{margin-right:auto;font-size:12px;font-weight:900;color:#335249}
+    .feedback-controls-label small{font-weight:500;color:#63766B}
+    .feedback-controls button{min-height:44px;padding:9px 13px;border:1px solid #ADBBB4;border-radius:var(--lab-radius-control);background:#fff;color:#264A43;font-size:12px;font-weight:800;cursor:pointer}
+    .feedback-controls button[aria-pressed="true"]{background:#176B6A;color:#fff;border-color:#176B6A}
+    .feedback-controls button:focus-visible,.feedback-form button:focus-visible,.feedback-form input:focus-visible,#feedback-reset:focus-visible{outline:3px solid #5BA8A6;outline-offset:3px}
+    .feedback-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+    .feedback-panel{min-width:0;border:1px solid #CCDCD3;background:#fff;border-radius:var(--lab-radius-card);padding:22px}
+    .feedback-panel .ds-tag{margin-bottom:16px}
+    .feedback-form{display:flex;flex-direction:column;align-items:flex-start;gap:9px}
+    .feedback-form label{font-size:13px;font-weight:800;color:#28483E}
+    .feedback-form input{min-height:44px;width:100%;border:1px solid #AEBFB6;border-radius:var(--lab-radius-control);padding:10px 12px;font:inherit;font-size:13px;background:#fff;color:#23483F}
+    .feedback-form input[aria-invalid="true"]{border:2px solid #B3263E}
+    .feedback-form p{margin:0;font-size:12px;line-height:1.6;color:#53685F}
+    .feedback-form button{min-height:44px;padding:10px 16px;border:1px solid transparent;border-radius:var(--lab-radius-control);background:var(--red);color:#fff;font-size:13px;font-weight:800;cursor:pointer;transition:background-color var(--motion-duration) ease-out}
+    .feedback-form button:disabled{background:#CED9D0;color:#586C61;border-color:#A9BCB0;cursor:not-allowed}
+    .feedback-form button:hover:not(:disabled){background:var(--red-dark)}
+    .feedback-live{font-size:12px;line-height:1.55;color:#356354;margin:17px 0 0}
+    .feedback-error{font-size:12px;line-height:1.55;background:#FBE9EE;color:#8A2B3D;border:1px solid #D8A7B6;padding:12px;border-radius:var(--lab-radius-control)}
+    .feedback-error[hidden],#feedback-empty-action[hidden]{display:none!important}
+    .feedback-state-surface{min-height:225px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:10px;padding:23px;background:#F4FAF6;border:1px solid #D2E0D7;border-radius:var(--lab-radius-card);color:#2B5548}
+    .feedback-state-surface strong{font-size:18px}
+    .feedback-state-surface p{font-size:12px;line-height:1.6;color:#536E60;margin:0}
+    .feedback-state-glyph{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#DDEFE5;color:#176B6A;font-size:20px;font-weight:900}
+    body[data-feedback-state="error"] .feedback-state-glyph{background:#F7E0E6;color:#A32B43}
+    body[data-feedback-state="disabled"] .feedback-state-glyph{background:#E5EAE5;color:#667C70}
+    #feedback-reset{min-height:44px;padding:9px 14px;border-radius:var(--lab-radius-control);background:#fff;border:1px solid #99B8A5;color:#23594A;font-size:12px;font-weight:800;cursor:pointer}
+    .feedback-rules{margin-top:17px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .feedback-rules p{margin:0;padding:14px 16px;background:#EAF3EC;border:1px solid #D0DFD7;border-radius:var(--lab-radius-card);font-size:12px;line-height:1.6;color:#3D614F}
+    .feedback-note{margin-top:20px}
+    body[data-lab-theme="dark"] .feedback-controls-label{color:#E8F5EE}
+    body[data-lab-theme="dark"] .feedback-controls-label small{color:#B8D4C9}
+    body[data-lab-theme="dark"] .feedback-controls button{background:#1C3337;border-color:#648078;color:#EBF9F2}
+    body[data-lab-theme="dark"] .feedback-controls button[aria-pressed="true"]{background:#B9EDDB;color:#173D35;border-color:#B9EDDB}
+    body[data-lab-theme="dark"] .feedback-panel,body[data-lab-theme="dark"] .feedback-state-surface{background:#20373B;border-color:#4A6866;color:#EBF7EE}
+    body[data-lab-theme="dark"] .feedback-form label{color:#E5F8ED}
+    body[data-lab-theme="dark"] .feedback-form input{background:#294448;color:#EFF8F1;border-color:#77998A}
+    body[data-lab-theme="dark"] .feedback-form p,body[data-lab-theme="dark"] .feedback-live,
+    body[data-lab-theme="dark"] .feedback-state-surface p{color:#CAE2D3}
+    body[data-lab-theme="dark"] .feedback-rules p{background:#20373B;color:#D2E8D7;border-color:#4A6866}
+    body[data-lab-theme="dark"] .feedback-error{background:#4C2C39;color:#FFE1E7;border-color:#A86B7E}
+    @media(max-width:800px){.feedback-grid{grid-template-columns:1fr}}
+    @media(max-width:740px){.feedback-controls-label{flex:1 1 100%}.feedback-rules{grid-template-columns:1fr}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
   </style>
 </head>
-<body data-lab-theme="light" data-contour-strength="subtle" data-contour-motif="map" data-elevation="soft" data-layout-density="balanced" data-radius-style="balanced" data-border-style="subtle" data-icon-weight="standard" data-icon-treatment="tinted" data-media-ratio="wide" data-media-focus="center" data-media-overlay="off" data-media-caption="standard" data-motion-style="standard">
+<body data-lab-theme="light" data-contour-strength="subtle" data-contour-motif="map" data-elevation="soft" data-layout-density="balanced" data-radius-style="balanced" data-border-style="subtle" data-icon-weight="standard" data-icon-treatment="tinted" data-media-ratio="wide" data-media-focus="center" data-media-overlay="off" data-media-caption="standard" data-motion-style="standard" data-feedback-state="idle">
 <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;overflow:hidden"><defs>
 <!-- Real TopicIcon.astro path geometry, reused for iconography comparison. -->
 <g id="ds-topic-icon-campus"><path d="m3 9 9-5 9 5-9 5-9-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/><path d="M21 9v6"/></g>
@@ -1003,7 +1048,7 @@
   </header>
   <nav class="ds-jump" aria-label="Navigasi Design System"><div class="wrap">
     <a href="#demo-panduan">Fondasi</a><a href="#design-contour">Logo Contour</a>
-    <a href="#design-components">Komponen</a><a href="#design-shadow">Elevation</a><a href="#design-spacing">Spacing &amp; Grid</a><a href="#design-radius">Radius &amp; Border</a><a href="#design-icons">Iconography</a><a href="#design-media">Images &amp; Media</a><a href="#design-motion">Motion &amp; Interaction</a>
+    <a href="#design-components">Komponen</a><a href="#design-shadow">Elevation</a><a href="#design-spacing">Spacing &amp; Grid</a><a href="#design-radius">Radius &amp; Border</a><a href="#design-icons">Iconography</a><a href="#design-media">Images &amp; Media</a><a href="#design-motion">Motion &amp; Interaction</a><a href="#design-states">Interaction States</a>
     <a href="#design-templates">Template A/B/C</a>
     <a href="#design-governance">Governance & QA</a>
   </div></nav>
@@ -1481,6 +1526,51 @@
       <p class="ds-muted motion-guidance"><strong>Aturan aksesibilitas:</strong> <code>prefers-reduced-motion: reduce</code> menghapus seluruh transisi dan lift, terlepas preset pilihan. Durasi hanya berlaku pada warna, border, bayangan, dan transform ringan—tidak pada tinggi/posisi layout atau elemen dekoratif Ishikawa Fragments. Touch tidak membutuhkan hover; focus-visible dan feedback teks tetap bekerja. <strong><strong>Standard (160 ms, lift 2 px) telah disetujui sebagai motion standar produksi.</strong> Quiet dan Expressive tetap tersedia untuk studi perbandingan.</strong></p>
     </section>
 
+
+    <section class="ds-section" id="design-states" aria-labelledby="states-title">
+      <p class="ds-kicker">02H / Interaction states</p>
+      <h2 class="ds-heading" id="states-title">Setiap kondisi jelas.<br>Setiap pesan membantu.</h2>
+      <p class="ds-muted">Contoh fungsional untuk <strong>Idle, Loading, Success, Error, Empty, dan Disabled</strong>. Ini simulasi di browser, bukan proses server sungguhan. Perhatikan teks, bentuk, dan tindakan pemulihan—tidak hanya warna.</p>
+      <div class="feedback-controls" role="group" aria-label="Pilih state interaksi">
+        <span class="feedback-controls-label">State preview <small>· dapat diuji dengan keyboard dan screen reader</small></span>
+        <button type="button" data-feedback-choice="idle" aria-pressed="true">Idle</button>
+<button type="button" data-feedback-choice="loading" aria-pressed="false">Loading</button>
+<button type="button" data-feedback-choice="success" aria-pressed="false">Success</button>
+<button type="button" data-feedback-choice="error" aria-pressed="false">Error</button>
+<button type="button" data-feedback-choice="empty" aria-pressed="false">Empty</button>
+<button type="button" data-feedback-choice="disabled" aria-pressed="false">Disabled</button>
+      </div>
+      <div class="feedback-grid">
+        <div class="feedback-panel">
+          <p class="ds-tag">Form / simulated action</p>
+          <div id="feedback-form" class="feedback-form" aria-busy="false">
+            <label for="feedback-input">Topik informasi</label>
+            <input id="feedback-input" type="text" value="Kampus Ishikawa" aria-describedby="feedback-hint">
+            <p id="feedback-hint">Data contoh; tidak dikirim atau disimpan di server.</p>
+            <button type="button" id="feedback-submit">Simulasikan selesai <span aria-hidden="true">›</span></button>
+          </div>
+          <p class="feedback-live" id="feedback-live" role="status" aria-live="polite">Siap digunakan. Coba salah satu state.</p>
+          <p class="feedback-error" id="feedback-error" role="alert" hidden>Topik tidak valid. Periksa isian lalu coba kembali.</p>
+        </div>
+        <div class="feedback-panel">
+          <p class="ds-tag">Status / recovery</p>
+          <div class="feedback-state-surface">
+            <div class="feedback-state-glyph" id="feedback-glyph" aria-hidden="true">○</div>
+            <strong id="feedback-heading">Siap digunakan</strong>
+            <p id="feedback-description">Belum ada proses berjalan.</p>
+            <div id="feedback-empty-action" hidden><button type="button" id="feedback-reset">Reset contoh</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="feedback-rules">
+        <p><strong>Loading:</strong> <code>aria-busy</code>, tombol dinonaktifkan untuk mencegah aksi ganda; indikator gerak tidak wajib.</p>
+        <p><strong>Success:</strong> umpan balik lewat <code>role="status"</code>, tanpa klaim server sukses.</p>
+        <p><strong>Error:</strong> gunakan <code>aria-invalid</code>, pesan yang jelas, dan cara memperbaiki.</p>
+        <p><strong>Empty / Disabled:</strong> bedakan tidak adanya hasil dari aksi yang belum dapat digunakan.</p>
+      </div>
+      <p class="ds-muted feedback-note">Loading, error, dan konfirmasi nyata nantinya harus terkait status operasi yang sesungguhnya. Tidak boleh memakai timer palsu, menganggap request berhasil sebelum ada respons, atau menyembunyikan alasan tombol disabled. Tahap ini adalah studi sebelum adopsi produksi.</p>
+    </section>
+
     <section class="ds-section" id="design-templates" aria-labelledby="templates-title">
       <p class="ds-kicker">03 / Page archetypes</p>
       <h2 class="ds-heading" id="templates-title">Satu gaya B.<br>Tiga tugas halaman.</h2>
@@ -1785,6 +1875,47 @@
         motionFeedback.textContent = 'Interaksi contoh tercatat secara lokal (' +
           actionCount + '×). Tidak ada data yang dikirim.';
       });
+
+      // Semantic, fully local state preview; no network or fake timer.
+      const feedbackModes={
+        idle:['○','Siap digunakan','Belum ada proses berjalan.','Siap digunakan. Coba salah satu state.'],
+        loading:['…','Memproses…','Aksi ditahan agar tidak dikirim berulang.','Contoh loading saja; tidak ada permintaan jaringan.'],
+        success:['✓','Simulasi selesai','Tidak ada data yang dikirim.','Simulasi berhasil secara lokal; tidak ada data dikirim.'],
+        error:['!','Ada masalah','Periksa kolom yang ditandai dan coba lagi.','Validasi contoh gagal. Periksa isian.'],
+        empty:['⌕','Tidak ditemukan hasil','Ubah kata kunci atau reset contoh.','Contoh hasil kosong. Gunakan Reset untuk kembali.'],
+        disabled:['–','Aksi belum tersedia','Lengkapi prasyarat sebelum melanjutkan.','Aksi belum tersedia; pilih Idle untuk mencoba.']
+      };
+      const feedbackButtons=Array.from(document.querySelectorAll('[data-feedback-choice]'));
+      const feedbackBusy=document.getElementById('feedback-form');
+      const feedbackSubmit=document.getElementById('feedback-submit');
+      const feedbackInput=document.getElementById('feedback-input');
+      const feedbackError=document.getElementById('feedback-error');
+      function setFeedbackState(name) {
+        const state=feedbackModes[name] ? name : 'idle';
+        const [glyph,heading,description,message]=feedbackModes[state];
+        document.body.dataset.feedbackState=state;
+        feedbackButtons.forEach(button=>button.setAttribute('aria-pressed',
+          String(button.dataset.feedbackChoice===state)));
+        document.getElementById('feedback-glyph').textContent=glyph;
+        document.getElementById('feedback-heading').textContent=heading;
+        document.getElementById('feedback-description').textContent=description;
+        document.getElementById('feedback-live').textContent=message;
+        feedbackBusy.setAttribute('aria-busy',String(state==='loading'));
+        feedbackSubmit.disabled=state==='loading'||state==='disabled';
+        feedbackSubmit.textContent=state==='loading'?'Sedang memproses…':
+          state==='disabled'?'Belum tersedia':'Simulasikan selesai ›';
+        feedbackInput.setAttribute('aria-invalid',String(state==='error'));
+        feedbackInput.setAttribute('aria-describedby',state==='error'?
+          'feedback-hint feedback-error':'feedback-hint');
+        feedbackError.hidden=state!=='error';
+        document.getElementById('feedback-empty-action').hidden=state!=='empty';
+      }
+      feedbackButtons.forEach(button=>button.addEventListener('click',
+        ()=>setFeedbackState(button.dataset.feedbackChoice)));
+      feedbackSubmit.addEventListener('click',()=>setFeedbackState('success'));
+      document.getElementById('feedback-reset').addEventListener('click',
+        ()=>setFeedbackState('idle'));
+      setFeedbackState('idle');
       const motifButtons = Array.from(document.querySelectorAll('[data-motif-choice]'));
       const motifKey = 'ppi-ishikawa-design-lab-contour-motif';
       function applyMotif(value) {
