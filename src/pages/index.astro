@@ -87,7 +87,7 @@ const primaryPaths = [
       <div class="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
         <div class="max-w-3xl">
           <div class="flex items-center gap-3">
-            <span class="grid size-11 place-items-center rounded-2xl bg-white/10 text-accent-soft"><TopicIcon name="family" class="size-6" /></span>
+            <span class="ui-icon-tile ui-icon-tile-inverse text-accent-soft"><TopicIcon name="family" class="size-6" /></span>
             <p class="type-eyebrow text-accent-soft">Keluarga</p>
           </div>
           <h2 class="type-section mt-4">Datang atau tinggal di Ishikawa bersama pasangan dan anak?</h2>
@@ -109,7 +109,7 @@ const primaryPaths = [
       <div class="mt-8 grid ui-grid-gap-balanced sm:grid-cols-2 lg:grid-cols-3">
         {primaryPaths.map((item) => (
           <a href={withBase(item.href)} class="group ui-card-space-balanced ui-radius-card ui-border-subtle border-slate-200 bg-white transition-colors hover:border-accent/35 hover:bg-accent/5">
-            <span class="grid size-11 place-items-center rounded-2xl bg-accent/10 text-accent-dark">
+            <span class="ui-icon-tile text-accent-dark">
               <TopicIcon name={item.icon as any} class="size-6" />
             </span>
             <h3 class="mt-4 font-bold text-slate-950 group-hover:text-brand">{item.title}</h3>
