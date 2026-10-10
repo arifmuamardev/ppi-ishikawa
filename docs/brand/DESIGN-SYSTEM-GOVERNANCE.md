@@ -100,12 +100,15 @@ Pakai semantic utility yang tersedia terlebih dahulu; **hindari angka baru yang 
 | --- | --- | --- |
 | Width | Intro/menu utama & Landing/Finder `max-w-7xl`; konten baca panduan lebih sempit, mis. `max-w-5xl` | `src/styles/global.css` |
 | Section heading | Untuk judul section utama gunakan kelas semantik `type-section` (24 px mobile, 30 px mulai breakpoint 640px); pertahankan ukuran lebih kecil untuk judul **di dalam** kartu/callout | `src/styles/global.css` |
-| Rhythm | Compact 24–32 px; section umum 48 px mobile / 64 px desktop; major 64 px mobile / 80 px desktop | `ui-section-space-compact`, `ui-section-space`, `ui-section-space-major` |
+| Rhythm | **Balanced disetujui**: section umum 52 px mobile sampai 68 px desktop; Compact/Major tetap sesuai fungsi. | `ui-section-space-compact`, `ui-section-space`, `ui-section-space-major` |
+| Grid & card spacing | **Balanced**: sela grid 14 px; padding kartu comfortable 23 px. Untuk hasil berulang dan mobile padat, pertahankan compact bila sesuai tugas. | `ui-grid-gap-balanced`, `ui-card-space-balanced` |
 | Surfaces | Feature panel jarang; kartu actionable standar; soft group untuk keterangan; list row untuk hasil berulang | `docs/brand/UI-UX-AUDIT.md` |
 | Radius | Kontrol `rounded-xl`; kartu umum `rounded-2xl`; feature panel `rounded-3xl` | gunakan pola yang sudah ada |
 | CTA | Aksi utama menonjol terbatas; secondary lebih tenang; hasil berulang tidak perlu tombol utama penuh semua | `ui-action-*` jika sesuai |
 | Touch & keyboard | Target interaksi diusahakan minimal 44 px; focus-visible, navigasi keyboard, semantik, state kosong dan pesan hasil | verifikasi manual + CI |
 | Color & font | Ambil warna melalui semantic tokens; **jangan hardcode palet periode** pada tiap komponen | `src/data/brand.ts`, Fira Sans |
+
+**Keputusan desain (11 Oktober 2026):** preset **Balanced** dipilih dari Live Design Lab. Token bersama kini mengikuti section 52–68 px, padding kartu comfortable 23 px, dan grid gap 14 px. Rollout dimulai dari beranda dan `NavigationCard` comfortable, dengan pemeriksaan responsif. **Ini target bersama, bukan klaim seluruh halaman telah dimigrasikan.** Opsi Compact/Spacious di Design Lab tetap tersedia untuk pembandingan; opsi tersebut bukan standar produksi. Elemen Finder yang padat tetap boleh memakai padding compact sesuai fungsi.
 
 Satu jenis kartu untuk satu *peran informasi* (navigation, result, status, advisory); **jangan** menyatukan semua gaya tanpa membedakan fungsi. Namun kartu dengan peran sama harus berperilaku dan tampil konsisten lintas halaman.
 
