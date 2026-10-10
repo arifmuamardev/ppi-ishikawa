@@ -130,6 +130,58 @@ try {
       await page.screenshot({path: directory + '/abstract-subtle-' + width + '.jpg', type: 'jpeg', quality: 62, fullPage: true, animations: 'disabled'});
       await page.locator('[data-motif-choice="map"]').click();
 
+
+      // Flat vs Soft Elevation: verify computed depth, interactivity and persisted choice.
+      const getShadow = async (selector) => page.locator(selector).first().evaluate(
+        (node) => getComputedStyle(node).boxShadow
+      );
+      verify(await page.locator('body').getAttribute('data-elevation') === 'soft',
+        'Soft Elevation should be the initial shadow mode', width);
+      verify(await page.locator('#design-shadow').count() === 1,
+        'Shadow study section missing', width);
+      verify(await getShadow('.browser') !== 'none',
+        'Soft mode should keep a restrained browser-frame shadow', width);
+      verify(await getShadow('.ds-frame') !== 'none',
+        'Soft mode should give the template frame slight depth', width);
+      verify(await getShadow('.ds-result-card') === 'none',
+        'Result cards must remain flat in Soft mode', width);
+      verify(await getShadow('.ds-notice') === 'none',
+        'Advisory panels must remain flat in Soft mode', width);
+      const navShadowDemo = page.locator('a[data-shadow-surface="navigation"]');
+      await navShadowDemo.scrollIntoViewIfNeeded();
+      await navShadowDemo.hover();
+      verify(await getShadow('a[data-shadow-surface="navigation"]') !== 'none',
+        'Navigation hover should gain subtle elevation in Soft mode', width);
+      verify(await navShadowDemo.getAttribute('href') === '#design-templates',
+        'Navigation shadow demo should be a functional link', width);
+      await page.locator('#shadow-dropdown summary').click();
+      verify(await page.locator('#shadow-dropdown').evaluate((el) => el.open),
+        'Dropdown must open by user interaction', width);
+      verify(await getShadow('.shadow-dropdown-panel') !== 'none',
+        'Floating dropdown must cast a distinct shadow in Soft mode', width);
+      await page.screenshot({path: directory + '/shadow-soft-' + width + '.jpg',
+        type: 'jpeg', quality: 62, fullPage: true, animations: 'disabled'});
+      await page.locator('[data-shadow-choice="flat"]').click();
+      verify(await page.locator('body').getAttribute('data-elevation') === 'flat',
+        'Flat shadow mode did not activate', width);
+      verify(await page.locator('[data-shadow-choice="flat"]').getAttribute('aria-pressed') === 'true',
+        'Flat shadow toggle should announce its state', width);
+      for (const selector of ['.browser','.ds-frame','.ds-result-card','.shadow-dropdown-panel']) {
+        verify(await getShadow(selector) === 'none',
+          'Flat mode should remove shadow on ' + selector, width);
+      }
+      verify(await getShadow('.shadow-example-soft') !== 'none',
+        'Side-by-side elevation reference should always show its comparison example', width);
+      await page.screenshot({path: directory + '/shadow-flat-' + width + '.jpg',
+        type: 'jpeg', quality: 62, fullPage: true, animations: 'disabled'});
+      await page.locator('[data-shadow-choice="soft"]').click();
+      verify(await page.locator('body').getAttribute('data-elevation') === 'soft',
+        'Soft elevation cannot be restored after flat', width);
+      await page.reload({ waitUntil: 'domcontentloaded' });
+      verify(await page.locator('body').getAttribute('data-elevation') === 'soft',
+        'Shadow selection did not persist after reload', width);
+      verify((await overflow(page)) <= 2, 'Shadow study caused horizontal overflow', width);
+
       await page.locator('[data-mode-choice="dark"]').click();
       verify(await page.locator('#preview').getAttribute('data-mode') === 'dark', 'Dark preview mode not applied', width);
       verify(await page.locator('body').getAttribute('data-lab-theme') === 'dark', 'Dark global lab background not applied', width);
