@@ -170,6 +170,75 @@ try {
       verify((await overflow(page)) <= 2,
         'Balanced/Subtle comparison must not cause horizontal overflow', width);
 
+
+      // Iconography uses the same SVG glyph paths as production TopicIcon;
+      // only the stylistic controls are varied in this isolated Lab.
+      verify(await page.locator('#design-icons').count() === 1,
+        'Iconography section missing', width);
+      verify(await page.locator('body').getAttribute('data-icon-weight') === 'standard' &&
+        await page.locator('body').getAttribute('data-icon-treatment') === 'tinted',
+        'Standard stroke and tinted tile should be initial preview choices', width);
+      const glyphs = ['campus','guide','housing','family','search'];
+      for (const name of glyphs) {
+        verify(await page.locator('#ds-topic-icon-' + name).count() === 1,
+          'Icon glyph not defined: ' + name, width);
+      }
+      const getIconState = () => page.evaluate(() => {
+        const s = (selector) => getComputedStyle(document.querySelector(selector));
+        return {
+          stroke: Number.parseFloat(s('.icon-case-card .ds-ui-icon').strokeWidth),
+          tile: s('.icon-case-card .ds-icon-tile').backgroundColor,
+          actionSize: document.querySelector('.icon-case-inline .ds-ui-icon').getBoundingClientRect().width,
+          cardSize: document.querySelector('.icon-case-card .ds-ui-icon').getBoundingClientRect().width
+        };
+      });
+      const standardIcon = await getIconState();
+      verify(standardIcon.stroke === 1.8 && standardIcon.cardSize === 24 &&
+        standardIcon.actionSize === 16,
+        'Icon baseline should be 1.8 stroke and 16/24 size tokens: '+JSON.stringify(standardIcon),width);
+      verify(await page.locator('svg.ds-ui-icon[aria-hidden="true"]').count() >= 10,
+        'Decorative icons must not masquerade as accessible unlabeled controls', width);
+      const iconVariants = await page.locator('.icon-spec').evaluateAll((nodes) =>
+        nodes.map((el) => Number.parseFloat(getComputedStyle(el.querySelector('svg')).strokeWidth)));
+      verify(JSON.stringify(iconVariants) === '[1.6,1.8,2.2]',
+        'Reference icon specimens must actually compare 1.6, 1.8 and 2.2', width);
+      await page.locator('[data-icon-choice="fine"]').click();
+      const fineIcon = await getIconState();
+      verify(fineIcon.stroke === 1.6, 'Fine stroke should be 1.6', width);
+      await page.locator('[data-icon-choice="strong"]').click();
+      const strongIcon = await getIconState();
+      verify(strongIcon.stroke === 2.2, 'Strong stroke should be 2.2', width);
+      await page.locator('[data-icon-tile-choice="plain"]').click();
+      const plainIcon = await getIconState();
+      verify(plainIcon.tile === 'rgba(0, 0, 0, 0)' ||
+        plainIcon.tile === 'transparent',
+        'Plain treatment should remove tile fill: '+JSON.stringify(plainIcon), width);
+      verify(await page.locator('[data-icon-tile-choice="plain"]').getAttribute('aria-pressed') === 'true',
+        'Plain choice must announce selected state', width);
+      verify(await page.locator('body').getAttribute('data-layout-density') === 'balanced' &&
+        await page.locator('body').getAttribute('data-radius-style') === 'balanced' &&
+        await page.locator('body').getAttribute('data-border-style') === 'subtle',
+        'Icon controls must not reset previously approved layout and geometry', width);
+      await page.locator('[data-mode-choice="dark"]').click();
+      verify((await overflow(page)) <= 2,
+        'Icon variants should not overflow in Dark Mode', width);
+      await page.locator('[data-mode-choice="light"]').click();
+      if(width===390 || width===1280) {
+        await page.screenshot({path:directory+'/iconography-strong-plain-'+width+'.jpg',
+          type:'jpeg',quality:62,fullPage:true,animations:'disabled'});
+      }
+      await page.reload({waitUntil:'domcontentloaded'});
+      verify(await page.locator('body').getAttribute('data-icon-weight') === 'strong' &&
+        await page.locator('body').getAttribute('data-icon-treatment') === 'plain',
+        'Icon controls should persist after page reload', width);
+      await page.locator('[data-icon-choice="standard"]').click();
+      await page.locator('[data-icon-tile-choice="tinted"]').click();
+      const restoredIcon = await getIconState();
+      verify(restoredIcon.stroke === 1.8 && restoredIcon.tile !== plainIcon.tile,
+        'Restoring Standard/Tinted must restore original icon style', width);
+      verify((await overflow(page)) <= 2,
+        'Iconography study must not introduce horizontal overflow', width);
+
       // Contour design study must remain decorative and independently adjustable.
       const contours = page.locator('.ppi-contour, .ppi-map');
       verify(await page.locator('.ppi-contour').count() === 10, 'Expected ten original line motifs (including comparison)', width);
