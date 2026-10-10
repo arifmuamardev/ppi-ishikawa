@@ -358,6 +358,97 @@ try {
       verify((await overflow(page)) <= 2,
         'Restoring media defaults should not cause overflow', width);
 
+
+      // Motion must be a real design choice with low-motion accessibility.
+      // The existing baseline context requests reduced motion; briefly emulate
+      // no-preference to verify transition timing, then restore it.
+      verify(await page.locator('#design-motion').count() === 1,
+        'Motion & Interaction section missing', width);
+      verify(await page.locator('body').getAttribute('data-motion-style') === 'standard',
+        'Standard motion must be the initial preset', width);
+      const motionStatus = () => page.evaluate(() => {
+        const card = document.querySelector('.motion-demo-card');
+        const action = document.querySelector('.motion-demo-action');
+        const s = getComputedStyle(card), b = getComputedStyle(action);
+        const parseTime = (value) => value.endsWith('ms') ?
+          Number.parseFloat(value) : Number.parseFloat(value)*1000;
+        return {
+          duration:parseTime(s.transitionDuration.split(',')[0].trim()),
+          lift:getComputedStyle(document.body).getPropertyValue('--motion-lift').trim(),
+          transform:s.transform,
+          buttonDuration:parseTime(b.transitionDuration.split(',')[0].trim()),
+          feedback:document.querySelector('#motion-demo-feedback').textContent,
+          disclosure:document.querySelector('#motion-demo-disclosure').open,
+          disabled:document.querySelector('.motion-demo-disabled').disabled
+        };
+      });
+      let reducedMotion = await motionStatus();
+      verify(reducedMotion.duration === 0 && reducedMotion.lift === '0px',
+        'Reduced motion must remove transitions and lift even at Standard preset: '+
+        JSON.stringify(reducedMotion), width);
+      await page.emulateMedia({reducedMotion:'no-preference'});
+      const standardMotion = await motionStatus();
+      verify(standardMotion.duration === 160 && standardMotion.buttonDuration === 160 &&
+        standardMotion.lift === '-2px',
+        'Standard motion must be 160ms with -2px lift: '+JSON.stringify(standardMotion),width);
+      await page.locator('[data-motion-choice="quiet"]').click();
+      const quietMotion = await motionStatus();
+      verify(quietMotion.duration === 0 && quietMotion.lift === '0px',
+        'Quiet must remove motion even without a reduced-motion setting', width);
+      await page.locator('[data-motion-choice="expressive"]').click();
+      const expressiveMotion = await motionStatus();
+      verify(expressiveMotion.duration === 260 && expressiveMotion.lift === '-4px' &&
+        expressiveMotion.buttonDuration === 260,
+        'Expressive motion must be 260ms with -4px lift',width);
+      await page.locator('.motion-demo-card').hover();
+      await page.waitForTimeout(295);
+      const lifted = await page.locator('.motion-demo-card').evaluate(el=>
+        getComputedStyle(el).transform);
+      verify(lifted.includes('-4') || lifted.includes('-3.99'),
+        'Navigation hover must perform actual -4px lift: '+lifted,width);
+      await page.locator('#motion-demo-action').click();
+      verify((await page.locator('#motion-demo-feedback').innerText()).includes('Tidak ada data yang dikirim'),
+        'Action must produce immediate accessible local feedback',width);
+      const demoFeedback = await page.locator('#motion-demo-feedback').getAttribute('role');
+      verify(demoFeedback === 'status' &&
+        await page.locator('#motion-demo-feedback').getAttribute('aria-live') === 'polite',
+        'Feedback should be readable by assistive technology',width);
+      verify(await page.locator('.motion-demo-disabled').isDisabled(),
+        'Disabled button must not be interactive',width);
+      await page.locator('#motion-demo-disclosure summary').click();
+      verify(await page.locator('#motion-demo-disclosure').getAttribute('open') !== null,
+        'Native details must open on click',width);
+      await page.locator('#motion-demo-disclosure summary').click();
+      verify(await page.locator('#motion-demo-disclosure').getAttribute('open') === null,
+        'Native details must close on click',width);
+      await page.locator('[data-mode-choice="dark"]').click();
+      verify(await page.locator('body').getAttribute('data-motion-style') === 'expressive' &&
+        await page.locator('body').getAttribute('data-radius-style') === 'balanced' &&
+        await page.locator('body').getAttribute('data-icon-weight') === 'standard',
+        'Dark Mode must not reset motion or existing approved tokens',width);
+      verify((await overflow(page)) <= 2,
+        'Expressive motion should not cause horizontal overflow in dark mode',width);
+      await page.locator('[data-mode-choice="light"]').click();
+      if(width===390 || width===1280)
+        await page.screenshot({path:directory+'/motion-expressive-'+width+'.jpg',
+          type:'jpeg',quality:62,fullPage:true,animations:'disabled'});
+      await page.reload({waitUntil:'domcontentloaded'});
+      verify(await page.locator('body').getAttribute('data-motion-style') === 'expressive' &&
+        await page.locator('[data-motion-choice="expressive"]').getAttribute('aria-pressed') === 'true',
+        'Motion selection should persist after reload',width);
+      await page.emulateMedia({reducedMotion:'reduce'});
+      const reducedExpressive = await motionStatus();
+      verify(reducedExpressive.duration === 0 && reducedExpressive.lift === '0px',
+        'System reduce must override Expressive even after reload',width);
+      await page.locator('.motion-demo-card').hover();
+      const reducedTransform = await page.locator('.motion-demo-card').evaluate(el=>
+        getComputedStyle(el).transform);
+      verify(reducedTransform === 'none',
+        'Reduced-motion hover must not lift a navigation card: '+reducedTransform,width);
+      await page.locator('[data-motion-choice="standard"]').click();
+      verify((await overflow(page)) <= 2,
+        'Restored Standard motion should not overflow',width);
+      
       // Contour design study must remain decorative and independently adjustable.
       const contours = page.locator('.ppi-contour, .ppi-map');
       verify(await page.locator('.ppi-contour').count() === 10, 'Expected ten original line motifs (including comparison)', width);
