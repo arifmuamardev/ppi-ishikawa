@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FinderHeader from '../components/FinderHeader.astro';
 import FinderControls from '../components/FinderControls.astro';
+import ResultCard from '../components/ResultCard.astro';
 import TopicIcon from '../components/TopicIcon.astro';
 import InstitutionMark from '../components/InstitutionMark.astro';
 import ScrollPillNav from '../components/ScrollPillNav.astro';
@@ -94,8 +95,8 @@ const campusCareerEntries = campuses.flatMap((campus) => {
 
       <div id="career-grid" class="mt-7 grid gap-5 lg:grid-cols-2">
         {careerSources.map((source) => (
-          <article
-            class="career-source rounded-2xl border border-slate-200 bg-white p-6"
+          <ResultCard
+            class="career-source p-6"
             data-type={source.types.join(',')}
             data-location={source.locations.join(',')}
             data-audience={source.audiences.join(',')}
@@ -128,7 +129,7 @@ const campusCareerEntries = campuses.flatMap((campus) => {
               </div>
               <a href={source.url} target="_blank" rel="noreferrer" class="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-800 transition-colors hover:border-accent/50 hover:text-brand">Buka sumber ↗</a>
             </div>
-          </article>
+          </ResultCard>
         ))}
       </div>
     </div>
