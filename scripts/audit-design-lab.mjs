@@ -39,8 +39,15 @@ try {
 
 
       // Contour design study must remain decorative and independently adjustable.
-      const contours = page.locator('.ppi-contour');
-      verify(await contours.count() === 9, 'Expected nine SVG contour placements', width);
+      const contours = page.locator('.ppi-contour, .ppi-map');
+      verify(await page.locator('.ppi-contour').count() === 10, 'Expected ten original line motifs (including comparison)', width);
+      verify(await page.locator('.ppi-map').count() === 10, 'Expected ten Ishikawa outline motifs (including comparison)', width);
+      verify(await page.locator('symbol#ppi-ishikawa-map').count() === 1, 'Geographic outline symbol missing', width);
+      verify(await page.locator('body').getAttribute('data-contour-motif') === 'map', 'Ishikawa should be the initial motif', width);
+      const mapAsset = await page.request.get(baseURL + '/design-lab/unnes-inspired/ishikawa-outline.svg');
+      verify(mapAsset.ok() && (await mapAsset.text()).includes('viewBox="1159.74 1083.45 90.81 139.84"'), 'Downloadable boundary SVG unavailable', width);
+      const licenseAsset = await page.request.get(baseURL + '/design-lab/unnes-inspired/LICENSE-ishikawa-map.txt');
+      verify(licenseAsset.ok() && (await licenseAsset.text()).includes('MIT License'), 'Map attribution/license unavailable', width);
       verify(await page.locator('symbol#ppi-contour-mark').count() === 1, 'Reusable SVG contour symbol missing', width);
       const contourLogo = page.locator('.contour-logo img');
       await contourLogo.scrollIntoViewIfNeeded({ timeout: 10000 });
@@ -51,7 +58,15 @@ try {
           node.getAttribute('focusable') === 'false' && getComputedStyle(node).pointerEvents === 'none')
       );
       verify(motifSemantics, 'Decorative contours should be non-interactive and hidden to assistive technology', width);
-      const stroke = () => page.locator('.ppi-contour--hero').evaluate((node) => getComputedStyle(node).opacity);
+      const stroke = () => page.locator('.ppi-map--hero').evaluate((node) => getComputedStyle(node).opacity);
+      verify(await page.locator('.ppi-map--hero').isVisible(), 'Initial map outline should be visible', width);
+      await page.locator('[data-motif-choice="lines"]').click();
+      verify(await page.locator('body').getAttribute('data-contour-motif') === 'lines', 'Old motif not selected', width);
+      verify(await page.locator('.ppi-contour--hero').isVisible(), 'Original line contour should show', width);
+      verify(!(await page.locator('.ppi-map--hero').isVisible()), 'Map should hide in line mode', width);
+      await page.locator('[data-motif-choice="map"]').click();
+      verify(await page.locator('.ppi-map--hero').isVisible(), 'Map outline should show again', width);
+      verify(!(await page.locator('.ppi-contour--hero').isVisible()), 'Original motif should hide in map mode', width);
       verify(Number(await stroke()) > 0, 'Subtle contour should be visible', width);
       await page.locator('[data-contour-choice="off"]').click();
       verify(await page.locator('body').getAttribute('data-contour-strength') === 'off', 'Off contour mode did not apply', width);
@@ -60,9 +75,13 @@ try {
       verify(Number(await stroke()) >= .5, 'Strong contour should increase intensity', width);
       await page.reload({ waitUntil: 'domcontentloaded' });
       verify(await page.locator('body').getAttribute('data-contour-strength') === 'strong', 'Contour choice did not persist', width);
+      verify(await page.locator('body').getAttribute('data-contour-motif') === 'map', 'Map motif did not persist', width);
       await page.locator('[data-contour-choice="subtle"]').click();
       verify((await overflow(page)) <= 2, 'Contour study caused horizontal overflow', width);
-      await page.screenshot({path: directory + '/contour-subtle-' + width + '.jpg', type: 'jpeg', quality: 62, fullPage: true, animations: 'disabled'});
+      await page.screenshot({path: directory + '/map-subtle-' + width + '.jpg', type: 'jpeg', quality: 62, fullPage: true, animations: 'disabled'});
+      await page.locator('[data-motif-choice="lines"]').click();
+      await page.screenshot({path: directory + '/abstract-subtle-' + width + '.jpg', type: 'jpeg', quality: 62, fullPage: true, animations: 'disabled'});
+      await page.locator('[data-motif-choice="map"]').click();
 
       await page.locator('[data-mode-choice="dark"]').click();
       verify(await page.locator('#preview').getAttribute('data-mode') === 'dark', 'Dark preview mode not applied', width);
