@@ -288,16 +288,21 @@ try {
             : ['type', 'location', 'audience'];
           const details = await page.locator(root + ' ' + selector).evaluateAll((cards, attributes) => ({
             total: cards.length,
-            invalid: cards.filter((card) =>
+            invalidSemantics: cards.filter((card) =>
               card.tagName !== 'ARTICLE' ||
               card.dataset.uiCard !== 'result' ||
-              attributes.some((attribute) => !(attribute in card.dataset)) ||
-              !card.querySelector('a[href]')
+              attributes.some((attribute) => !(attribute in card.dataset))
             ).length,
+            linked: cards.filter((card) => card.querySelector('a[href]')).length,
           }), expectedAttributes);
-          check.primaryFinderResults = details.total;
-          if (details.total < 1 || details.invalid) {
-            check.errors.push(key + ': results must be semantic articles with intact data attributes and own links');
+          check.primaryFinderResults = details;
+          if (details.total < 1 || details.invalidSemantics) {
+            check.errors.push(key + ': results lost article semantics or filter data attributes');
+          }
+          // sourceUrl is optional in scholarship data; do not invent links.
+          // Career data must still retain an independent link on each result.
+          if (details.linked < 1 || (!isScholarship && details.linked !== details.total)) {
+            check.errors.push(key + ': available official source links were not retained');
           }
         }
 
