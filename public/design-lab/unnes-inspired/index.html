@@ -406,25 +406,25 @@
     @media(max-width:720px){.contour-gallery{grid-template-columns:1fr}.contour-sample{min-height:185px}.contour-reference{grid-template-columns:1fr}.contour-logo{min-height:130px}}
     @media(max-width:600px){.ppi-contour--hero{width:110%;right:-51%;height:70%;top:-10%}.ppi-contour--section{right:-44%;top:13px;width:330px}.ppi-contour--cta{right:-55%;top:-70px;width:500px}.preview-footer{padding:23px 20px}.preview-footer strong{font-size:19px}.contour-controls strong{flex:1 1 100%}}
 
-    /* Geographically faithful Ishikawa outline, presented as a second optional motif. */
+    /* Three open, coast-derived artistic fragments instead of a repeated full map. */
     body[data-contour-motif="map"] .ppi-contour{display:none}
     body[data-contour-motif="lines"] .ppi-map{display:none}
     /* Thin fixed-pixel outline and restrained alpha; do not use source coordinates as stroke scale. */
-    body[data-contour-motif="map"]{--map-strength:.52}
+    body[data-contour-motif="map"]{--map-strength:.35}
     body[data-contour-motif="map"][data-contour-strength="off"]{--map-strength:0}
-    body[data-contour-motif="map"][data-contour-strength="strong"]{--map-strength:.78}
-    body[data-lab-theme="dark"][data-contour-motif="map"]{--map-strength:.58}
+    body[data-contour-motif="map"][data-contour-strength="strong"]{--map-strength:.61}
+    body[data-lab-theme="dark"][data-contour-motif="map"]{--map-strength:.43}
     body[data-lab-theme="dark"][data-contour-motif="map"][data-contour-strength="off"]{--map-strength:0}
-    body[data-lab-theme="dark"][data-contour-motif="map"][data-contour-strength="strong"]{--map-strength:.84}
+    body[data-lab-theme="dark"][data-contour-motif="map"][data-contour-strength="strong"]{--map-strength:.69}
     .ppi-map{position:absolute;z-index:0;pointer-events:none;user-select:none;display:block;
       overflow:visible;fill:none;color:#86E3CD;opacity:var(--map-strength,var(--line-strength));
       transition:opacity .15s ease}
-    .ppi-map--hero{right:-2%;top:-14%;width:39%;height:114%;color:#8EF0DA}
-    .art .ppi-map--art{right:-8%;top:-16%;height:132%;width:100%;color:#fff}
-    .ppi-map--section{right:0;top:-58px;width:230px;height:320px;color:#176B6A}
-    .ppi-map--cta{right:3%;top:-105px;width:290px;height:440px;color:#E1FFF5}
-    .ppi-map--footer{right:6%;top:-65px;width:180px;height:270px;color:#B4FFE4}
-    .ds-page-intro .ppi-map--guide{right:1%;top:-97px;width:185px;height:270px;color:#B5EEDC}
+    .ppi-map--hero{right:-11%;top:-13%;width:62%;height:115%;color:#ACF1DD;transform:rotate(-8deg)}
+    .art .ppi-map--art{right:-26%;top:-17%;height:142%;width:140%;color:#FFF7F4;transform:rotate(-6deg)}
+    .ppi-map--section{right:-6%;top:-35px;width:350px;height:230px;color:#176B6A;transform:rotate(6deg)}
+    .ppi-map--cta{right:-7%;top:-84px;width:72%;height:325px;color:#D8F6E9;transform:rotate(-6deg)}
+    .ppi-map--footer{right:-9%;top:-100px;width:67%;height:265px;color:#BCF5E3;transform:rotate(-3deg)}
+    .ds-page-intro .ppi-map--guide{right:-8%;top:-36px;width:280px;height:200px;color:#B5EEDC;transform:rotate(4deg)}
     .preview[data-mode="dark"] .ppi-map--section{color:#ACEEDA}
     .motif-controls{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-bottom:12px}
     .motif-controls-title{font-size:12px;font-weight:850;margin-right:12px;color:#31544C}
@@ -440,7 +440,10 @@
     .motif-compare-art .ppi-map{display:block!important;opacity:.72}
     .motif-compare-art .ppi-contour{display:block!important;opacity:.8}
     .motif-compare-art .ppi-contour--compare{width:110%;height:110%;top:5%;left:-7%;color:#A1F0DE}
-    .motif-compare-art .ppi-map--compare{width:80%;height:94%;top:3%;left:10%;color:#A1F0DE}
+    .motif-compare-art .ppi-map--compare{width:94%;height:105%;top:-4%;left:3%;color:#A1F0DE;transform:rotate(-8deg)}
+    .ppi-map--sample{width:118%;height:116%;right:-29%;top:-12%;transform:rotate(-8deg)}
+    .sample-section .ppi-map--sample{right:-42%;top:-20%;transform:rotate(8deg)}
+    .sample-cta .ppi-map--sample{width:115%;height:100%;right:-28%;top:-4%;transform:rotate(-6deg)}
     .motif-license a{font-weight:800;text-underline-offset:3px}
     body[data-lab-theme="dark"] .motif-controls-title{color:#DFEFE8}
     body[data-lab-theme="dark"] .motif-controls-title small{color:#CADCD2}
@@ -451,11 +454,11 @@
     body[data-lab-theme="dark"] .motif-compare-card p{color:#D2E7DD}
     @media(max-width:720px){.motif-compare{grid-template-columns:1fr}.motif-compare-art{height:190px}}
     @media(max-width:600px){.motif-controls-title{flex:1 1 100%}
-      .ppi-map--hero{right:-40%;top:8%;width:78%;height:78%}
-      .art .ppi-map--art{right:-8%;top:-24%;width:73%;height:145%}
-      .ppi-map--section{right:-24%;top:-32px;width:145px;height:210px}
-      .ppi-map--cta{right:-12%;top:-60px;width:195px;height:260px}
-      .ppi-map--footer{right:-24px;top:-20px;width:105px;height:180px}}
+      .ppi-map--hero{right:-48%;top:12%;width:107%;height:80%}
+      .art .ppi-map--art{right:-30%;top:-10%;width:145%;height:135%}
+      .ppi-map--section{right:-41%;top:-6px;width:285px;height:195px}
+      .ppi-map--cta{right:-47%;top:-52px;width:116%;height:230px}
+      .ppi-map--footer{right:-39%;top:-65px;width:116%;height:230px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
   </style>
 </head>
@@ -468,7 +471,10 @@
 <path d="M-58 376h200q45 0 72-30l165-163q30-28 70-28h328"/>
 <path d="M234 389l111-110q29-29 70-29h125q36 0 61-25l105-103"/>
 </g></symbol>
-<g id="ppi-ishikawa-map"><path d="M1192.40 1216.70 L1188.70 1213.51 L1184.80 1212.22 L1180.69 1212.81 L1178.14 1212.22 L1177.14 1210.44 L1175.34 1209.47 L1172.75 1209.29 L1171.51 1208.26 L1171.63 1206.37 L1169.95 1203.83 L1166.48 1200.62 L1169.51 1193.15 L1179.05 1181.40 L1186.16 1174.06 L1190.85 1171.12 L1194.86 1166.47 L1198.20 1160.12 L1200.54 1154.66 L1201.90 1150.09 L1202.73 1144.33 L1203.02 1137.36 L1202.69 1132.17 L1201.73 1128.76 L1200.17 1125.89 L1198.00 1123.55 L1196.97 1121.04 L1197.06 1118.34 L1198.30 1113.72 L1200.70 1107.17 L1203.03 1102.95 L1205.30 1101.07 L1208.67 1099.87 L1213.15 1099.36 L1217.94 1097.35 L1223.04 1093.83 L1229.41 1091.17 L1237.06 1089.36 L1241.65 1088.74 L1243.18 1089.32 L1244.35 1090.90 L1245.15 1093.49 L1243.73 1095.16 L1240.08 1095.92 L1237.66 1099.50 L1236.48 1105.88 L1234.01 1109.00 L1230.26 1108.84 L1226.67 1111.30 L1223.23 1116.39 L1219.70 1118.53 L1216.06 1117.73 L1213.86 1119.01 L1213.11 1122.37 L1211.91 1124.90 L1210.27 1126.61 L1211.35 1128.14 L1215.16 1129.49 L1218.71 1129.45 L1222.01 1128.01 L1223.57 1130.16 L1223.40 1135.89 L1220.55 1139.33 L1215.02 1140.49 L1211.62 1142.10 L1210.36 1144.16 L1209.29 1148.17 L1208.41 1154.13 L1207.05 1157.69 L1205.22 1158.87 L1204.81 1160.70 L1205.82 1163.19 L1205.63 1165.63 L1204.24 1168.01 L1204.04 1170.96 L1205.04 1174.48 L1204.84 1178.55 L1203.45 1183.17 L1203.28 1187.57 L1204.34 1191.77 L1204.45 1194.91 L1203.61 1196.98 L1204.16 1199.04 L1206.08 1201.06 L1205.57 1205.99 L1202.64 1213.82 L1199.44 1217.87 L1195.98 1218.15 Z" fill="none" stroke="currentColor" stroke-width="0.95" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g></defs></svg>
+<!-- Creative open-ended motifs inspired by selected sections of Ishikawa’s coastline, not precise map boundaries. -->
+<g id="ppi-ishikawa-fragment-hero"><path d="M1169.51 1193.15 C1171.1 1191.19 1176.27 1184.58 1179.05 1181.4 C1181.83 1178.22 1184.19 1175.77 1186.16 1174.06 C1188.13 1172.35 1189.4 1172.38 1190.85 1171.12 C1192.3 1169.86 1193.63 1168.3 1194.86 1166.47 C1196.09 1164.64 1197.25 1162.09 1198.2 1160.12 C1199.15 1158.15 1199.92 1156.33 1200.54 1154.66 C1201.16 1152.99 1201.54 1151.81 1201.9 1150.09 C1202.27 1148.37 1202.54 1146.45 1202.73 1144.33 C1202.92 1142.21 1203.03 1139.39 1203.02 1137.36 C1203.01 1135.33 1202.91 1133.6 1202.69 1132.17 C1202.48 1130.74 1202.15 1129.81 1201.73 1128.76 C1201.31 1127.71 1200.79 1126.76 1200.17 1125.89 C1199.55 1125.02 1198.53 1124.36 1198 1123.55 C1197.47 1122.74 1197.14 1121.46 1196.97 1121.04" fill="none" stroke="currentColor" stroke-width="0.95" stroke-opacity="0.9" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M1198.3 1113.72 C1198.7 1112.63 1199.91 1108.97 1200.7 1107.17 C1201.49 1105.38 1202.26 1103.97 1203.03 1102.95 C1203.8 1101.93 1204.36 1101.58 1205.3 1101.07 C1206.24 1100.56 1207.36 1100.16 1208.67 1099.87 C1209.98 1099.58 1211.61 1099.78 1213.15 1099.36 C1214.7 1098.94 1216.29 1098.27 1217.94 1097.35 C1219.59 1096.43 1221.13 1094.86 1223.04 1093.83 C1224.95 1092.8 1227.07 1091.92 1229.41 1091.17 C1231.75 1090.43 1235.02 1089.76 1237.06 1089.36 C1239.1 1088.96 1240.63 1088.75 1241.65 1088.74 C1242.67 1088.73 1242.73 1088.96 1243.18 1089.32 C1243.63 1089.68 1244.02 1090.21 1244.35 1090.9 C1244.68 1091.6 1245.25 1092.78 1245.15 1093.49 C1245.05 1094.2 1244.58 1094.76 1243.73 1095.16 C1242.89 1095.57 1241.09 1095.2 1240.08 1095.92 C1239.07 1096.64 1238.26 1097.84 1237.66 1099.5 C1237.06 1101.16 1237.09 1104.3 1236.48 1105.88 C1235.87 1107.46 1235.05 1108.51 1234.01 1109 C1232.97 1109.49 1231.48 1108.46 1230.26 1108.84 C1229.04 1109.22 1227.84 1110.04 1226.67 1111.3 C1225.5 1112.56 1224.39 1115.19 1223.23 1116.39 C1222.07 1117.6 1220.9 1118.31 1219.7 1118.53 C1218.51 1118.75 1217.03 1117.65 1216.06 1117.73 C1215.09 1117.81 1214.35 1118.24 1213.86 1119.01 C1213.37 1119.78 1213.23 1121.81 1213.11 1122.37" fill="none" stroke="currentColor" stroke-width="0.95" stroke-opacity="0.9" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M1182.86 1178.66 C1183.64 1178.17 1186.1 1176.98 1187.55 1175.72 C1189 1174.46 1190.34 1172.9 1191.56 1171.07 C1192.78 1169.24 1193.95 1166.69 1194.9 1164.72 C1195.85 1162.75 1196.62 1160.93 1197.24 1159.26 C1197.86 1157.59 1198.24 1156.41 1198.6 1154.69 C1198.97 1152.97 1199.24 1151.05 1199.43 1148.93 C1199.62 1146.81 1199.73 1143.99 1199.72 1141.96 C1199.71 1139.93 1199.61 1138.2 1199.39 1136.77 C1199.18 1135.34 1198.85 1134.41 1198.43 1133.36 C1198.01 1132.31 1197.49 1131.36 1196.87 1130.49 C1196.25 1129.62 1195.23 1128.96 1194.7 1128.15 C1194.17 1127.34 1193.83 1126.51 1193.67 1125.64 C1193.51 1124.77 1193.54 1124.16 1193.76 1122.94 C1193.98 1121.72 1194.39 1120.18 1195 1118.32 C1195.61 1116.46 1196.61 1113.57 1197.4 1111.77 C1198.19 1109.97 1198.96 1108.57 1199.73 1107.55 C1200.5 1106.53 1201.06 1106.18 1202 1105.67 C1202.94 1105.16 1204.06 1104.75 1205.37 1104.47 C1206.68 1104.18 1208.31 1104.38 1209.85 1103.96 C1211.4 1103.54 1212.99 1102.87 1214.64 1101.95 C1216.29 1101.03 1217.83 1099.46 1219.74 1098.43 C1221.65 1097.4 1223.77 1096.51 1226.11 1095.77 C1228.45 1095.03 1231.72 1094.36 1233.76 1093.96 C1235.8 1093.55 1237.33 1093.35 1238.35 1093.34 C1239.37 1093.33 1239.43 1093.56 1239.88 1093.92 C1240.33 1094.28 1240.72 1094.81 1241.05 1095.5 C1241.38 1096.2 1241.95 1097.38 1241.85 1098.09 C1241.75 1098.8 1241.28 1099.36 1240.43 1099.76 C1239.59 1100.17 1237.79 1099.8 1236.78 1100.52 C1235.77 1101.24 1234.76 1103.5 1234.36 1104.1" fill="none" stroke="currentColor" stroke-width="0.78" stroke-opacity="0.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M1195.1 1159.59 C1195.24 1158.63 1195.74 1155.95 1195.93 1153.83 C1196.12 1151.71 1196.23 1148.89 1196.22 1146.86 C1196.21 1144.83 1196.11 1143.1 1195.89 1141.67 C1195.68 1140.24 1195.35 1139.31 1194.93 1138.26 C1194.51 1137.21 1193.99 1136.26 1193.37 1135.39 C1192.75 1134.52 1191.73 1133.86 1191.2 1133.05 C1190.67 1132.24 1190.33 1131.41 1190.17 1130.54 C1190.01 1129.67 1190.04 1129.06 1190.26 1127.84 C1190.48 1126.62 1190.89 1125.08 1191.5 1123.22 C1192.11 1121.36 1193.11 1118.47 1193.9 1116.67 C1194.69 1114.88 1195.46 1113.47 1196.23 1112.45 C1197 1111.43 1197.56 1111.08 1198.5 1110.57 C1199.44 1110.06 1200.56 1109.66 1201.87 1109.37 C1203.18 1109.08 1204.81 1109.28 1206.35 1108.86 C1207.9 1108.44 1209.49 1107.77 1211.14 1106.85 C1212.79 1105.93 1214.33 1104.36 1216.24 1103.33 C1218.15 1102.3 1220.27 1101.42 1222.61 1100.67 C1224.95 1099.93 1228.22 1099.26 1230.26 1098.86 C1232.3 1098.46 1233.83 1098.25 1234.85 1098.24 C1235.87 1098.23 1235.93 1098.46 1236.38 1098.82 C1236.83 1099.18 1237.36 1100.14 1237.55 1100.4" fill="none" stroke="currentColor" stroke-width="0.64" stroke-opacity="0.34" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g>
+<g id="ppi-ishikawa-fragment-corner"><path d="M1240.08 1095.92 C1239.68 1096.52 1238.26 1097.84 1237.66 1099.5 C1237.06 1101.16 1237.09 1104.3 1236.48 1105.88 C1235.87 1107.46 1235.05 1108.51 1234.01 1109 C1232.97 1109.49 1231.48 1108.46 1230.26 1108.84 C1229.04 1109.22 1227.84 1110.04 1226.67 1111.3 C1225.5 1112.56 1224.39 1115.19 1223.23 1116.39 C1222.07 1117.6 1220.9 1118.31 1219.7 1118.53 C1218.51 1118.75 1217.03 1117.65 1216.06 1117.73 C1215.09 1117.81 1214.35 1118.24 1213.86 1119.01 C1213.37 1119.78 1213.44 1121.39 1213.11 1122.37 C1212.78 1123.35 1212.38 1124.19 1211.91 1124.9 C1211.44 1125.61 1210.36 1126.07 1210.27 1126.61 C1210.18 1127.15 1210.53 1127.66 1211.35 1128.14 C1212.17 1128.62 1213.93 1129.27 1215.16 1129.49 C1216.39 1129.71 1217.57 1129.7 1218.71 1129.45 C1219.85 1129.2 1221.2 1127.89 1222.01 1128.01 C1222.82 1128.13 1223.34 1128.85 1223.57 1130.16 C1223.8 1131.47 1223.9 1134.36 1223.4 1135.89 C1222.9 1137.42 1221.95 1138.56 1220.55 1139.33 C1219.15 1140.1 1216.51 1140.03 1215.02 1140.49 C1213.53 1140.95 1212.4 1141.49 1211.62 1142.1 C1210.84 1142.71 1210.75 1143.15 1210.36 1144.16 C1209.97 1145.17 1209.62 1146.51 1209.29 1148.17 C1208.96 1149.83 1208.78 1152.54 1208.41 1154.13 C1208.04 1155.72 1207.28 1157.1 1207.05 1157.69" fill="none" stroke="currentColor" stroke-width="0.95" stroke-opacity="0.9" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M1240.28 1109.68 C1239.87 1110.2 1238.85 1112.31 1237.81 1112.8 C1236.77 1113.29 1235.28 1112.26 1234.06 1112.64 C1232.84 1113.02 1231.64 1113.84 1230.47 1115.1 C1229.3 1116.36 1228.19 1118.99 1227.03 1120.19 C1225.87 1121.4 1224.7 1122.11 1223.5 1122.33 C1222.31 1122.55 1220.83 1121.45 1219.86 1121.53 C1218.89 1121.61 1218.15 1122.04 1217.66 1122.81 C1217.17 1123.58 1217.23 1125.19 1216.91 1126.17 C1216.58 1127.15 1216.18 1127.99 1215.71 1128.7 C1215.24 1129.41 1214.16 1129.87 1214.07 1130.41 C1213.98 1130.95 1214.33 1131.46 1215.15 1131.94 C1215.96 1132.42 1217.73 1133.07 1218.96 1133.29 C1220.19 1133.51 1221.37 1133.5 1222.51 1133.25 C1223.65 1133 1225 1131.69 1225.81 1131.81 C1226.62 1131.93 1227.14 1132.65 1227.37 1133.96 C1227.6 1135.27 1227.7 1138.16 1227.2 1139.69 C1226.7 1141.22 1225.75 1142.36 1224.35 1143.13 C1222.95 1143.9 1220.31 1143.83 1218.82 1144.29 C1217.33 1144.75 1215.99 1145.63 1215.42 1145.9" fill="none" stroke="currentColor" stroke-width="0.78" stroke-opacity="0.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M1234.17 1119.3 C1233.6 1120.15 1231.89 1123.19 1230.73 1124.39 C1229.57 1125.6 1228.4 1126.31 1227.2 1126.53 C1226.01 1126.75 1224.53 1125.65 1223.56 1125.73 C1222.59 1125.81 1221.85 1126.24 1221.36 1127.01 C1220.87 1127.78 1220.94 1129.39 1220.61 1130.37 C1220.28 1131.35 1219.88 1132.19 1219.41 1132.9 C1218.94 1133.61 1217.86 1134.07 1217.77 1134.61 C1217.68 1135.15 1218.03 1135.66 1218.85 1136.14 C1219.67 1136.62 1221.43 1137.27 1222.66 1137.49 C1223.89 1137.71 1225.07 1137.7 1226.21 1137.45 C1227.35 1137.2 1228.96 1136.25 1229.51 1136.01" fill="none" stroke="currentColor" stroke-width="0.64" stroke-opacity="0.34" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g>
+<g id="ppi-ishikawa-fragment-ribbon"><path d="M34 129.38 C37.75 127.93 44.01 120.88 56.47 120.7 C68.93 120.52 86.34 123.04 108.76 128.27 C131.18 133.51 168.74 145.19 191.01 152.12 C213.28 159.06 230.4 164.98 242.39 169.9 C254.38 174.82 254.12 178 262.97 181.62 C271.83 185.25 282.69 188.59 295.52 191.65 C308.35 194.71 326.19 197.63 339.97 200 C353.75 202.37 366.49 204.31 378.19 205.85 C389.89 207.39 398.13 208.34 410.18 209.25 C422.23 210.16 435.65 210.86 450.5 211.33 C465.35 211.79 485.1 212.07 499.29 212.05 C513.48 212.03 525.59 211.76 535.62 211.23 C545.65 210.69 552.16 209.88 559.49 208.83 C566.82 207.78 573.5 206.48 579.58 204.93 C585.66 203.37 590.3 200.83 595.96 199.5 C601.62 198.17 607.45 197.32 613.53 196.93 C619.61 196.53 629.28 197.11 632.43 197.15" fill="none" stroke="currentColor" stroke-width="0.95" stroke-opacity="0.9" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M108.76 147.27 C122.47 151.25 168.74 164.19 191.01 171.12 C213.28 178.06 230.4 183.98 242.39 188.9 C254.38 193.82 254.12 197 262.97 200.62 C271.83 204.25 282.69 207.59 295.52 210.65 C308.35 213.71 326.19 216.63 339.97 219 C353.75 221.37 366.49 223.31 378.19 224.85 C389.89 226.39 398.13 227.34 410.18 228.25 C422.23 229.16 435.65 229.86 450.5 230.33 C465.35 230.79 485.1 231.07 499.29 231.05 C513.48 231.03 525.59 230.76 535.62 230.23 C545.65 229.69 552.16 228.88 559.49 227.83 C566.82 226.78 573.5 225.48 579.58 223.93 C585.66 222.37 590.3 219.83 595.96 218.5 C601.62 217.17 610.6 216.35 613.53 215.93" fill="none" stroke="currentColor" stroke-width="0.78" stroke-opacity="0.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="M242.39 205.9 C245.82 207.85 254.12 214 262.97 217.62 C271.83 221.25 282.69 224.59 295.52 227.65 C308.35 230.71 326.19 233.63 339.97 236 C353.75 238.37 366.49 240.31 378.19 241.85 C389.89 243.39 398.13 244.34 410.18 245.25 C422.23 246.16 435.65 246.86 450.5 247.33 C465.35 247.79 485.1 248.07 499.29 248.05 C513.48 248.03 525.59 247.76 535.62 247.23 C545.65 246.69 552.16 245.88 559.49 244.83 C566.82 243.78 573.5 242.48 579.58 240.93 C585.66 239.37 593.23 236.4 595.96 235.5" fill="none" stroke="currentColor" stroke-width="0.64" stroke-opacity="0.34" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></g></defs></svg>
   <div class="lab-top">
     <div class="wrap">
       <div class="lab-mark">PPI <span>ISHIKAWA</span> / DESIGN LAB <span aria-hidden="true">◆</span></div>
@@ -504,7 +510,7 @@
       <div class="motif-controls" role="group" aria-label="Pilih motif dekoratif untuk halaman">
         <span class="motif-controls-title">Motif halaman <small>· pilih bentuk, bukan template</small></span>
         <button type="button" data-motif-choice="lines" aria-pressed="false">Garis Abstrak</button>
-        <button type="button" data-motif-choice="map" aria-pressed="true">Outline Ishikawa</button>
+        <button type="button" data-motif-choice="map" aria-pressed="true">Ishikawa Fragments</button>
       </div>
       <div class="contour-controls" role="group" aria-label="Intensitas ornamen halaman">
         <strong>Intensitas <small>· eksperimen</small></strong>
@@ -519,7 +525,7 @@
             <a href="#preview" class="preview-brand">PPI<span>J</span> / ISHIKAWA<span>.</span></a>
             <nav aria-label="Navigasi contoh"><a href="#demo-kampus">Kampus</a><a href="#demo-kampus">Kehidupan</a><a href="#demo-panduan">Panduan</a></nav>
           </div>
-          <section class="stage" aria-label="Contoh hero"><svg class="ppi-contour ppi-contour--hero" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--hero" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg>
+          <section class="stage" aria-label="Contoh hero"><svg class="ppi-contour ppi-contour--hero" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--hero" viewBox="1160 1081 97 127" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-fragment-hero"></use></svg>
             <div class="hero-grid">
               <div>
                 <p class="eyebrow hero-eyebrow">Indonesian Students Association · Ishikawa</p>
@@ -534,7 +540,7 @@
                   <a class="action secondary" href="#demo-panduan">Lihat panduan <span aria-hidden="true">↓</span></a>
                 </div>
               </div>
-              <div class="art" aria-label="Visual dekoratif identitas Ishikawa"><svg class="ppi-contour ppi-contour--art" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--art" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg>
+              <div class="art" aria-label="Visual dekoratif identitas Ishikawa"><svg class="ppi-contour ppi-contour--art" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--art" viewBox="1160 1081 97 127" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-fragment-hero"></use></svg>
                 <p>PPI JEPANG · KOMISARIAT ISHIKAWA</p>
                 <div class="giant">ISHI<br>KAWA<span style="color:#FFFFFF75">.</span></div>
                 <div class="tag">JAPAN / 2026—2027</div>
@@ -546,7 +552,7 @@
             <div><strong>03</strong><span>Ruang eksplorasi</span></div>
             <div><strong>01</strong><span>Komunitas bersama</span></div>
           </div>
-          <section class="preview-section" id="demo-kampus" aria-labelledby="demo-title"><svg class="ppi-contour ppi-contour--section" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--section" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg>
+          <section class="preview-section" id="demo-kampus" aria-labelledby="demo-title"><svg class="ppi-contour ppi-contour--section" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--section" viewBox="1195 1083 64 96" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-fragment-corner"></use></svg>
             <div class="sec-header">
               <div>
                 <p>Mulai dari kebutuhanmu</p>
@@ -560,12 +566,12 @@
               <a class="card" href="#demo-panduan"><span class="index">03 <span class="arr" aria-hidden="true">›</span></span><h4>Komunitas PPI</h4><p>Bertemu pelajar, keluarga, dan jejaring Indonesia.</p></a>
             </div>
           </section>
-          <section class="stripe"><svg class="ppi-contour ppi-contour--cta" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--cta" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg>
+          <section class="stripe"><svg class="ppi-contour ppi-contour--cta" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--cta" viewBox="0 65 710 240" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-fragment-ribbon"></use></svg>
             <h3>Belajar jauh dari rumah.<br><em>Tetap dekat satu sama lain.</em></h3>
             <a href="#demo-panduan">Lihat gaya ini ›</a>
           </section>
         </div>
-        <div class="preview-footer"><svg class="ppi-contour ppi-contour--footer" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--footer" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg><strong>PPI ISHIKAWA.</strong><span>Dekat, relevan, bermanfaat.</span></div>
+        <div class="preview-footer"><svg class="ppi-contour ppi-contour--footer" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--footer" viewBox="0 65 710 240" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-fragment-ribbon"></use></svg><strong>PPI ISHIKAWA.</strong><span>Dekat, relevan, bermanfaat.</span></div>
       </div>
     </div>
     <section class="guide wrap" id="demo-panduan" aria-labelledby="guide-title">
@@ -611,10 +617,10 @@
     <section class="ds-section" id="design-contour" aria-labelledby="contour-title">
       <p class="ds-kicker">01B / Identity motif study</p>
       <h2 class="ds-heading" id="contour-title">Dua motif.<br>Satu identitas.</h2>
-      <p class="ds-muted">Bandingkan <strong>Garis Abstrak</strong> dari eksperimen sebelumnya dengan <strong>Outline Ishikawa</strong> yang mengikuti bentuk geografis prefektur. Keduanya adalah aksen dekoratif, bukan pengganti logo ataupun peta administratif resmi.</p>
+      <p class="ds-muted">Bandingkan <strong>Garis Abstrak</strong> dari eksperimen sebelumnya dengan <strong>Ishikawa Fragments</strong>: potongan garis pesisir Noto–Kaga yang dibuat terbuka, dihaluskan, dan diberi echo lines. Keduanya adalah aksen dekoratif, bukan pengganti logo ataupun peta administratif resmi.</p>
       <div class="contour-reference">
         <div class="contour-logo"><img src="../../brand/ppi-ishikawa-logo.webp" alt="Logo PPI Ishikawa yang digunakan di website saat ini" width="469" height="426" loading="lazy"></div>
-        <div><p class="ds-tag">Source of identity</p><h3>Logo yang digunakan website PPI</h3><p>Aset asli: <code>public/brand/ppi-ishikawa-logo.webp</code>. Garis Abstrak merupakan studi bahasa logo, sedangkan Outline Ishikawa berasal dari peta vektor geografis. Keduanya masih kandidat identitas visual.</p><p><strong>Status: kandidat visual — bukan motif resmi.</strong></p></div>
+        <div><p class="ds-tag">Source of identity</p><h3>Logo yang digunakan website PPI</h3><p>Aset asli: <code>public/brand/ppi-ishikawa-logo.webp</code>. Garis Abstrak merupakan studi bahasa logo, sedangkan Ishikawa Fragments mengolah bagian-bagian pesisir dari outline geografis sebagai pola dekoratif. Keduanya masih kandidat identitas visual.</p><p><strong>Status: kandidat visual — bukan motif resmi.</strong></p></div>
       </div>
 <div class="motif-compare" role="group" aria-label="Perbandingan dua pilihan motif">
         <div class="motif-compare-card">
@@ -623,18 +629,18 @@
           <p>Berangkat dari gagasan garis logo; bukan hasil tracing logo resmi.</p>
         </div>
         <div class="motif-compare-card">
-          <div class="motif-compare-art motif-compare-art--map"><svg class="ppi-map ppi-map--compare" viewBox="1159.74 1083.45 90.81 139.84" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg></div>
-          <h3>02 · Outline Ishikawa</h3>
-          <p>Versi stilisasi dari batas prefektur: lekuk disederhanakan, sudut diperhalus, dan garis lebih tipis.</p>
+          <div class="motif-compare-art motif-compare-art--map"><svg class="ppi-map ppi-map--compare" viewBox="1160 1081 97 127" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-fragment-hero"></use></svg></div>
+          <h3>02 · Ishikawa Fragments</h3>
+          <p>Fragmen terbuka dari lekukan Noto dan pesisir Kaga, dengan echo lines ringan—bukan siluet peta penuh.</p>
         </div>
       </div>
-      <p class="ds-muted motif-license"><strong>Sumber peta:</strong> layer “ishikawa” dalam <a href="https://github.com/PA4KEV/japan-vector-map" target="_blank" rel="noopener noreferrer">Japan Vector Map — Kevin Matsubara</a>, MIT License (2023). <a href="./ishikawa-outline.svg" download>SVG Ishikawa ›</a> · <a href="./LICENSE-ishikawa-map.txt" target="_blank" rel="noopener noreferrer">Lisensi dan atribusi ›</a>. Outline ini untuk dekorasi, bukan penegasan batas legal.</p>
+      <p class="ds-muted motif-license"><strong>Sumber peta:</strong> layer “ishikawa” dalam <a href="https://github.com/PA4KEV/japan-vector-map" target="_blank" rel="noopener noreferrer">Japan Vector Map — Kevin Matsubara</a>, MIT License (2023). <a href="./ishikawa-outline.svg" download>Outline geografis sumber (SVG) ›</a> · <a href="./LICENSE-ishikawa-map.txt" target="_blank" rel="noopener noreferrer">Lisensi dan atribusi ›</a>. Peta sumber hanya untuk rujukan bentuk; fragmen adalah interpretasi artistik, bukan batas resmi.</p>
       <div class="contour-gallery">
-        <div class="contour-sample sample-hero"><svg class="ppi-contour ppi-contour--sample" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--sample" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg><small>Hero / dominant</small><h3>Garis besar.<br>Satu karakter.</h3></div>
-        <div class="contour-sample sample-section"><svg class="ppi-contour ppi-contour--sample" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--sample" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg><small>Section / subtle</small><h3>Section contour</h3><p>Di tepi bidang, tidak di belakang isi bacaan.</p></div>
-        <div class="contour-sample sample-cta"><svg class="ppi-contour ppi-contour--sample" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--sample" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg><small>CTA & Footer</small><h3>Tetap terhubung.</h3><p>Warna solid tetap elemen dominan.</p></div>
+        <div class="contour-sample sample-hero"><svg class="ppi-contour ppi-contour--sample" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--sample" viewBox="1160 1081 97 127" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-fragment-hero"></use></svg><small>Hero / Noto echo</small><h3>Garis besar.<br>Satu karakter.</h3></div>
+        <div class="contour-sample sample-section"><svg class="ppi-contour ppi-contour--sample" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--sample" viewBox="1195 1083 64 96" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-fragment-corner"></use></svg><small>Section / coastal corner</small><h3>Section contour</h3><p>Fragmen pesisir kecil dengan ruang kosong untuk konten.</p></div>
+        <div class="contour-sample sample-cta"><svg class="ppi-contour ppi-contour--sample" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--sample" viewBox="0 65 710 240" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-fragment-ribbon"></use></svg><small>CTA &amp; Footer / ribbon</small><h3>Tetap terhubung.</h3><p>Pita garis terbuka yang mengikuti ritme pesisir.</p></div>
       </div>
-      <p class="ds-muted" style="margin-top:18px">Pilih Garis Abstrak atau Outline Ishikawa di atas, lalu coba Off / Subtle / Strong bersama Light/Dark Mode. Motif diterapkan pada hero, section, CTA/footer, dan intro Template C, tanpa perubahan website utama.</p>
+      <p class="ds-muted" style="margin-top:18px">Pilih Garis Abstrak atau Ishikawa Fragments dan coba Off / Subtle / Strong bersama Light/Dark Mode. Hero memakai Noto echo; section dan Guide memakai corner fragment; CTA/footer memakai ribbon fragment. Website utama tidak berubah.</p>
     </section>
     <section class="ds-section" id="design-components" aria-labelledby="components-title">
       <p class="ds-kicker">02 / Components</p>
@@ -742,7 +748,7 @@
           <div class="ds-page" data-page="guide" hidden>
             <div class="ds-page-nav"><span class="ds-logo">PPIJ / ISHIKAWA.</span><span class="ds-simulated-menu">Contoh · Template C</span></div>
             <nav class="ds-guide-breadcrumb" aria-label="Contoh breadcrumb"><a href="#design-templates">Hidup di Ishikawa</a><span aria-hidden="true">/</span><span aria-current="page">Panduan kedatangan</span></nav>
-            <div class="ds-page-intro"><svg class="ppi-contour ppi-contour--guide" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--guide" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg><p class="ds-tag">Detail / Guide</p><h3>Panduan kedatangan.</h3><p>Satu topik, satu hierarki, serta lokasi pengguna yang jelas. Metadata verifikasi harus berasal dari peninjauan sumber yang nyata.</p></div>
+            <div class="ds-page-intro"><svg class="ppi-contour ppi-contour--guide" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--guide" viewBox="1195 1083 64 96" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-fragment-corner"></use></svg><p class="ds-tag">Detail / Guide</p><h3>Panduan kedatangan.</h3><p>Satu topik, satu hierarki, serta lokasi pengguna yang jelas. Metadata verifikasi harus berasal dari peninjauan sumber yang nyata.</p></div>
             <p class="ds-summary">Contoh struktur · Tanggal verifikasi tidak disimulasikan</p>
             <nav class="ds-guide-toc" aria-label="Contoh daftar isi"><strong>Di halaman ini</strong><div><a href="#ds-guide-step">Langkah awal</a><a href="#ds-guide-evidence">Sumber dan navigasi</a></div></nav>
             <div class="ds-guide-copy" id="ds-guide-step"><h4>Langkah awal</h4><p>Urutan informasi memprioritaskan tindakan yang perlu dilakukan, bukan modul promosi atau kumpulan tautan acak. Bagian panjang sebaiknya menggunakan daftar isi yang benar-benar menuju kontennya.</p></div>
