@@ -464,7 +464,8 @@ try {
           const invalid = await cards.evaluateAll((links) => links.filter((link) =>
             link.querySelectorAll('h3').length !== 1 ||
             !link.getAttribute('href')?.startsWith('/ppi-ishikawa/') ||
-            !link.classList.contains('rounded-2xl')
+            !link.classList.contains('ui-radius-card') ||
+            !link.classList.contains('ui-border-subtle')
           ).length);
           if (invalid) check.errors.push(invalid + ' navigation cards violate heading, route, or visual contract');
         }
