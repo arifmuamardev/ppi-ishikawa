@@ -86,6 +86,90 @@ try {
         'Balanced layout should be restored exactly', width);
       verify((await overflow(page)) <= 2, 'Balanced layout caused horizontal overflow', width);
 
+
+      // Radius & Border experiment: controls must modify the actual components,
+      // and retain selection across reload, theme, spacing and page-template changes.
+      verify(await page.locator('#design-radius').count() === 1,
+        'Radius & Border comparison section missing', width);
+      verify(await page.locator('body').getAttribute('data-radius-style') === 'balanced',
+        'Balanced geometry must be the initial comparison preset', width);
+      verify(await page.locator('body').getAttribute('data-border-style') === 'subtle',
+        'Subtle border must be the initial comparison preset', width);
+      const readGeometry = () => page.evaluate(() => {
+        const get = (selector,prop) => {
+          const e=document.querySelector(selector);
+          return e ? parseFloat(getComputedStyle(e)[prop]) : null;
+        };
+        return {
+          action: get('.ds-btn','borderTopLeftRadius'),
+          card: get('.cards .card','borderTopLeftRadius'),
+          panel: get('.ds-panel','borderTopLeftRadius'),
+          template: get('.ds-page-intro','borderTopLeftRadius'),
+          cardBorder: get('.cards .card','borderTopWidth'),
+          fieldBorder: get('.radius-demo-field','borderTopWidth'),
+          focusRing: get('.radius-demo-field','outlineWidth'),
+        };
+      });
+      const balancedGeometry = await readGeometry();
+      verify(balancedGeometry.action === 12 &&
+        balancedGeometry.card === 16 &&
+        balancedGeometry.panel === 24 &&
+        balancedGeometry.template === 24 &&
+        balancedGeometry.cardBorder === 1,
+        'Default radius/border must match 12/16/24px and 1px: ' +
+        JSON.stringify(balancedGeometry), width);
+      await page.locator('[data-radius-choice="crisp"]').click();
+      const crispGeometry = await readGeometry();
+      verify(crispGeometry.action === 6 && crispGeometry.card === 10 &&
+        crispGeometry.panel === 16 && crispGeometry.template === 16,
+        'Crisp geometry should use 6/10/16px', width);
+      await page.locator('[data-radius-choice="rounded"]').click();
+      const roundedGeometry = await readGeometry();
+      verify(roundedGeometry.action === 16 && roundedGeometry.card === 24 &&
+        roundedGeometry.panel === 32 && roundedGeometry.template === 32,
+        'Rounded geometry should use 16/24/32px', width);
+      verify(await page.locator('[data-radius-choice="rounded"]').getAttribute('aria-pressed') === 'true',
+        'Radius selector should announce pressed state', width);
+      await page.locator('[data-border-choice="defined"]').click();
+      const definedGeometry = await readGeometry();
+      verify(definedGeometry.cardBorder === 2 &&
+        definedGeometry.fieldBorder === 2,
+        'Defined border should be 2px on cards and form controls: ' + JSON.stringify(definedGeometry), width);
+      verify(await page.locator('[data-border-choice="defined"]').getAttribute('aria-pressed') === 'true',
+        'Border selector should announce pressed state', width);
+      const lightBorder = await page.locator('.radius-demo-field').evaluate(
+        (el) => getComputedStyle(el).borderColor);
+      await page.locator('[data-mode-choice="dark"]').click();
+      const darkBorder = await page.locator('.radius-demo-field').evaluate(
+        (el) => getComputedStyle(el).borderColor);
+      verify(darkBorder !== lightBorder,
+        'Border tokens should change contrast in Dark Mode', width);
+      verify(await page.locator('body').getAttribute('data-radius-style') === 'rounded' &&
+        await page.locator('body').getAttribute('data-border-style') === 'defined' &&
+        await page.locator('body').getAttribute('data-layout-density') === 'balanced',
+        'Radius/Border must remain independent of Light/Dark and spacing', width);
+      verify((await overflow(page)) <= 2,
+        'Rounded + Defined in Dark Mode must not cause horizontal overflow', width);
+      await page.locator('[data-mode-choice="light"]').click();
+      if (width === 390 || width === 1280) {
+        await page.screenshot({path: directory + '/radius-rounded-defined-' + width + '.jpg',
+          type: 'jpeg', quality: 62, fullPage: true, animations: 'disabled'});
+      }
+      await page.reload({waitUntil:'domcontentloaded'});
+      verify(await page.locator('body').getAttribute('data-radius-style') === 'rounded' &&
+        await page.locator('body').getAttribute('data-border-style') === 'defined',
+        'Radius and border selections must persist after reload', width);
+      await page.locator('[data-radius-choice="balanced"]').click();
+      await page.locator('[data-border-choice="subtle"]').click();
+      const restoredGeometry = await readGeometry();
+      verify(restoredGeometry.action === balancedGeometry.action &&
+        restoredGeometry.card === balancedGeometry.card &&
+        restoredGeometry.panel === balancedGeometry.panel &&
+        restoredGeometry.cardBorder === balancedGeometry.cardBorder,
+        'Restoring Balanced/Subtle must restore original component geometry', width);
+      verify((await overflow(page)) <= 2,
+        'Balanced/Subtle comparison must not cause horizontal overflow', width);
+
       // Contour design study must remain decorative and independently adjustable.
       const contours = page.locator('.ppi-contour, .ppi-map');
       verify(await page.locator('.ppi-contour').count() === 10, 'Expected ten original line motifs (including comparison)', width);
