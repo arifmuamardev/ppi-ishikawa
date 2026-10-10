@@ -106,6 +106,36 @@ try {
               JSON.stringify(check.typography));
           }
         }
+        // Semantic type hierarchy is centrally controlled, not per-page.
+        // Hero and page display titles get the approved Fira Sans B hierarchy.
+        if ((width === 390 || width === 1280) &&
+          (key === 'home' || key === 'about' || key === 'scholarships' || key === 'guide-sg01')) {
+          check.typeHierarchy = await page.evaluate(() => {
+            const first = (selector) => {
+              const element = document.querySelector(selector);
+              return element ? {
+                weight: Number(getComputedStyle(element).fontWeight),
+                family: getComputedStyle(element).fontFamily,
+                size: parseFloat(getComputedStyle(element).fontSize)
+              } : null;
+            };
+            return {
+              hero: first('main h1.type-hero'),
+              display: first('main h1.type-display'),
+              section: first('main h2.type-section'),
+              lead: first('main .type-lead')
+            };
+          });
+          if (key === 'home' && check.typeHierarchy.hero?.weight !== 900)
+            check.errors.push('Homepage hero must use weight 900, not generic heading weight');
+          if (key !== 'home' && check.typeHierarchy.display?.weight !== 800)
+            check.errors.push('Page Intro title must use weight 800');
+          if (check.typeHierarchy.section && check.typeHierarchy.section.weight !== 700)
+            check.errors.push('Section titles should retain calm weight 700');
+          const headline = check.typeHierarchy.hero || check.typeHierarchy.display;
+          if (!headline?.family?.includes('Fira Sans'))
+            check.errors.push('Semantic page title must inherit approved Fira Sans family');
+        }
         check.default = await measure(page);
         if (check.default.overflowPx > 2) check.errors.push('Horizontal overflow: ' + check.default.overflowPx + 'px');
         if (check.default.h1Count !== 1) check.errors.push('Expected 1 main h1; got ' + check.default.h1Count);

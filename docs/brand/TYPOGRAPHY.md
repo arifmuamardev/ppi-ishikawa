@@ -60,8 +60,12 @@ Use the semantic roles below instead of inventing page-specific heading scales.
 
 - Body text: 400
 - UI / navigation: 600
-- Headings and eyebrows: 700
-- Avoid using 800–900 as the default. Heavy weights should be exceptional rather than the site's normal visual voice. The Design Lab B display headings may intentionally use these weights; do not automatically propagate them to every production heading.
+- **Hero** (one exceptional homepage or campaign headline): 900. Use only with the semantic `type-hero` class, not on every card.
+- **Display** (primary page heading): 800. Use `type-display` for the shared Page Intro.
+- **Section, card title, eyebrow**: 700 (keep ordinary page structure calm).
+- Body: 400; lead body text inherits 400; UI/navigation: 600; metadata: 500.
+- Strong weights are intentionally scarce: never set all headings/cards/eyebrows to 900 just because the Design Lab B example is expressive.
+- Fira Sans weights are defined in `src/styles/global.css`; production still follows shared type roles rather than ad-hoc per-page `font-black` classes.
 
 ### Typography behavior
 
