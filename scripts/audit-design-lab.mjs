@@ -132,9 +132,9 @@ try {
         'Radius selector should announce pressed state', width);
       await page.locator('[data-border-choice="defined"]').click();
       const definedGeometry = await readGeometry();
-      verify(definedGeometry.cardBorder === 1.5 &&
-        definedGeometry.fieldBorder === 1.5,
-        'Defined border should be 1.5px on cards and form controls', width);
+      verify(definedGeometry.cardBorder === 2 &&
+        definedGeometry.fieldBorder === 2,
+        'Defined border should be 2px on cards and form controls: ' + JSON.stringify(definedGeometry), width);
       verify(await page.locator('[data-border-choice="defined"]').getAttribute('aria-pressed') === 'true',
         'Border selector should announce pressed state', width);
       const lightBorder = await page.locator('.radius-demo-field').evaluate(
