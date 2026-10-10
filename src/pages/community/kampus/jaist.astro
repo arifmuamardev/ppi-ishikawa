@@ -248,11 +248,11 @@ const priorityFaq = jaistFaq.filter((item) => ["perlu-mobil","tinggal-di-luar-no
     title="Cerita mahasiswa dan alumni dari kampus ini"
   />
 
+  <CampusOfficialSources sources={jaistPack.officialSources} lastVerified={jaistPack.lastVerified} />
+
   <RelatedLinks
     items={campusRelatedContent['jaist']}
     eyebrow="Topik terkait"
     title="Lanjutkan ke informasi kampus dan kehidupan sehari-hari"
   />
-
-  <CampusOfficialSources sources={jaistPack.officialSources} lastVerified={jaistPack.lastVerified} />
 </BaseLayout>

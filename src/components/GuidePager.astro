@@ -33,7 +33,7 @@ if (index < 0) throw new Error(`GuidePager only supports linear Survival Guide a
 const previous = index > 0 ? linearGuides[index - 1] : undefined;
 const nextGuide = index < linearGuides.length - 1 ? linearGuides[index + 1] : undefined;
 ---
-<nav class="mx-auto max-w-5xl px-5 pb-24 pt-8 lg:px-8" aria-label="Navigasi Survival Guide">
+<nav data-ui-next-navigation="linear" class="mx-auto max-w-5xl px-5 pb-24 pt-8 lg:px-8" aria-label="Navigasi Survival Guide">
   <div class="border-t border-slate-200 pt-6">
     <div class="grid gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-stretch">
       <div>
