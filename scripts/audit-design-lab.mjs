@@ -42,7 +42,7 @@ try {
       const contours = page.locator('.ppi-contour, .ppi-map');
       verify(await page.locator('.ppi-contour').count() === 10, 'Expected ten original line motifs (including comparison)', width);
       verify(await page.locator('.ppi-map').count() === 10, 'Expected ten Ishikawa outline motifs (including comparison)', width);
-      verify(await page.locator('symbol#ppi-ishikawa-map').count() === 1, 'Geographic outline symbol missing', width);
+      verify(await page.locator('g#ppi-ishikawa-map').count() === 1, 'Geographic outline source group missing', width);
       verify(await page.locator('body').getAttribute('data-contour-motif') === 'map', 'Ishikawa should be the initial motif', width);
       const mapAsset = await page.request.get(baseURL + '/design-lab/unnes-inspired/ishikawa-outline.svg');
       verify(mapAsset.ok() && (await mapAsset.text()).includes('viewBox="1159.74 1083.45 90.81 139.84"'), 'Downloadable boundary SVG unavailable', width);
@@ -59,7 +59,21 @@ try {
       );
       verify(motifSemantics, 'Decorative contours should be non-interactive and hidden to assistive technology', width);
       const stroke = () => page.locator('.ppi-map--hero').evaluate((node) => getComputedStyle(node).opacity);
-      verify(await page.locator('.ppi-map--hero').isVisible(), 'Initial map outline should be visible', width);
+      verify(await page.locator('.ppi-map--hero').isVisible(), 'Initial map SVG container should be visible', width);
+      // isVisible() alone is insufficient: the previous SVG symbol nested a second viewBox
+      // and drew the path completely outside the viewport.
+      const shapeGeometry = await page.locator('.ppi-map--hero').evaluate((svg) => {
+        const bbox = svg.querySelector('use').getBBox();
+        const frame = svg.viewBox.baseVal;
+        const intersectW = Math.max(0, Math.min(bbox.x + bbox.width, frame.x + frame.width) - Math.max(bbox.x, frame.x));
+        const intersectH = Math.max(0, Math.min(bbox.y + bbox.height, frame.y + frame.height) - Math.max(bbox.y, frame.y));
+        const visibleRatio = bbox.width * bbox.height ? (intersectW * intersectH)/(bbox.width * bbox.height) : 0;
+        return { visibleRatio, bbox: [bbox.x, bbox.y, bbox.width, bbox.height], frame: [frame.x, frame.y, frame.width, frame.height] };
+      });
+      verify(shapeGeometry.visibleRatio > .95, 'Ishikawa path lies outside SVG viewBox: ' + JSON.stringify(shapeGeometry), width);
+      verify(await page.locator('.ppi-map--art').isVisible(), 'Ishikawa outline must appear on the red identity panel', width);
+      verify(Number(await page.locator('.ppi-map--art').evaluate((n) => getComputedStyle(n).opacity)) >= .6,
+        'Map in hero identity panel too faint in default Subtle mode', width);
       await page.locator('[data-motif-choice="lines"]').click();
       verify(await page.locator('body').getAttribute('data-contour-motif') === 'lines', 'Old motif not selected', width);
       verify(await page.locator('.ppi-contour--hero').isVisible(), 'Original line contour should show', width);
@@ -67,12 +81,12 @@ try {
       await page.locator('[data-motif-choice="map"]').click();
       verify(await page.locator('.ppi-map--hero').isVisible(), 'Map outline should show again', width);
       verify(!(await page.locator('.ppi-contour--hero').isVisible()), 'Original motif should hide in map mode', width);
-      verify(Number(await stroke()) > 0, 'Subtle contour should be visible', width);
+      verify(Number(await stroke()) >= .6, 'Default Ishikawa outline needs visible contrast even on Subtle', width);
       await page.locator('[data-contour-choice="off"]').click();
       verify(await page.locator('body').getAttribute('data-contour-strength') === 'off', 'Off contour mode did not apply', width);
       verify(Number(await stroke()) === 0, 'Off contour should be fully hidden', width);
       await page.locator('[data-contour-choice="strong"]').click();
-      verify(Number(await stroke()) >= .5, 'Strong contour should increase intensity', width);
+      verify(Number(await stroke()) >= .9, 'Strong Ishikawa outline should have clear visible contrast', width);
       await page.reload({ waitUntil: 'domcontentloaded' });
       verify(await page.locator('body').getAttribute('data-contour-strength') === 'strong', 'Contour choice did not persist', width);
       verify(await page.locator('body').getAttribute('data-contour-motif') === 'map', 'Map motif did not persist', width);

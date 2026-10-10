@@ -409,15 +409,22 @@
     /* Geographically faithful Ishikawa outline, presented as a second optional motif. */
     body[data-contour-motif="map"] .ppi-contour{display:none}
     body[data-contour-motif="lines"] .ppi-map{display:none}
+    /* Map needs a separate, legible intensity curve from abstract line ornaments. */
+    body[data-contour-motif="map"]{--map-strength:.65}
+    body[data-contour-motif="map"][data-contour-strength="off"]{--map-strength:0}
+    body[data-contour-motif="map"][data-contour-strength="strong"]{--map-strength:.92}
+    body[data-lab-theme="dark"][data-contour-motif="map"]{--map-strength:.7}
+    body[data-lab-theme="dark"][data-contour-motif="map"][data-contour-strength="off"]{--map-strength:0}
+    body[data-lab-theme="dark"][data-contour-motif="map"][data-contour-strength="strong"]{--map-strength:.96}
     .ppi-map{position:absolute;z-index:0;pointer-events:none;user-select:none;display:block;
-      overflow:visible;fill:none;color:#86E3CD;opacity:var(--line-strength);
+      overflow:visible;fill:none;color:#86E3CD;opacity:var(--map-strength,var(--line-strength));
       transition:opacity .15s ease}
-    .ppi-map--hero{right:-6%;top:-19%;width:43%;height:128%;color:#7CDEC9}
-    .art .ppi-map--art{right:-16%;top:-23%;height:136%;width:72%;color:#fff}
-    .ppi-map--section{right:-3%;top:-65px;width:190px;height:270px;color:#176B6A}
-    .ppi-map--cta{right:3%;top:-100px;width:245px;height:400px;color:#CCF1E5}
-    .ppi-map--footer{right:7%;top:-53px;width:155px;height:225px;color:#A3EEDA}
-    .ds-page-intro .ppi-map--guide{right:-14px;top:-100px;width:160px;height:260px;color:#B5EEDC}
+    .ppi-map--hero{right:-2%;top:-14%;width:39%;height:114%;color:#8EF0DA}
+    .art .ppi-map--art{right:-8%;top:-16%;height:132%;width:100%;color:#fff}
+    .ppi-map--section{right:0;top:-58px;width:230px;height:320px;color:#176B6A}
+    .ppi-map--cta{right:3%;top:-105px;width:290px;height:440px;color:#E1FFF5}
+    .ppi-map--footer{right:6%;top:-65px;width:180px;height:270px;color:#B4FFE4}
+    .ds-page-intro .ppi-map--guide{right:1%;top:-97px;width:185px;height:270px;color:#B5EEDC}
     .preview[data-mode="dark"] .ppi-map--section{color:#ACEEDA}
     .motif-controls{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-bottom:12px}
     .motif-controls-title{font-size:12px;font-weight:850;margin-right:12px;color:#31544C}
@@ -430,7 +437,7 @@
     .motif-compare-card h3{font-size:16px;font-weight:850;margin:12px 0 6px;color:#284840}
     .motif-compare-card p{font-size:12px;line-height:1.55;color:#5C6C65;margin:0 0 4px}
     .motif-compare-art{height:220px;background:#103D40;position:relative;overflow:hidden;border-radius:5px}
-    .motif-compare-art .ppi-map,.motif-compare-art .ppi-contour{display:block!important;opacity:.65}
+    .motif-compare-art .ppi-map,.motif-compare-art .ppi-contour{display:block!important;opacity:.8}
     .motif-compare-art .ppi-contour--compare{width:110%;height:110%;top:5%;left:-7%;color:#A1F0DE}
     .motif-compare-art .ppi-map--compare{width:80%;height:94%;top:3%;left:10%;color:#A1F0DE}
     .motif-license a{font-weight:800;text-underline-offset:3px}
@@ -460,7 +467,7 @@
 <path d="M-58 376h200q45 0 72-30l165-163q30-28 70-28h328"/>
 <path d="M234 389l111-110q29-29 70-29h125q36 0 61-25l105-103"/>
 </g></symbol>
-<symbol id="ppi-ishikawa-map" viewBox="1159.74 1083.45 90.81 139.84"><path d="m 1194.2513,1218.2935 -3.7514,-3.7055 -3.6504,-2.6681 -8.2141,1.1907 -1.9924,-3.5555 -5.1963,-0.3507 0.2386,-3.7747 -2.1734,-2.4768 -4.7723,-3.9342 0.7597,-0.9626 0.5255,-1.6725 2.6357,-3.9999 5.0876,-4.0443 2.5794,-1.6575 5.0045,-7.6178 2.4843,-3.5354 3.8877,-1.6894 3.825,-3.2488 1.6598,-0.939 0.6811,-1.9802 2.5252,-4.6004 0.8423,-0.3649 -0.057,-2.8388 1.3529,-2.6804 1.3327,-0.2453 0.2716,-3.1599 1.9582,-3.8226 0.4839,-2.1472 -0.3771,-5.0842 v -3.6339 l 0.629,-1.8058 0.3347,-3.4115 -1.3626,-1.1654 -0.1663,-4.3603 -0.3898,-1.2982 -2.1444,-1.3237 -0.1881,-2.0593 -1.9932,-1.2852 0.1543,-3.1941 0.026,-2.2011 h 0.9682 l 0.7161,-1.669 -0.7888,-1.797 1.1806,-1.5024 0.6122,-0.2073 -0.01,-0.8659 -0.064,-2.0885 1.3632,-1.3685 0.5149,-0.6398 0.4522,-0.1 -0.1501,-2.8536 0.8248,-1.1282 0.86,-1.1382 1.6426,-0.3073 0.7083,-0.1259 0.5039,-1.0741 3.8642,-0.4007 5.0869,-0.6144 5.356,-3.3594 3.5029,-1.5488 1.3411,-2.1291 5.9154,-2.2717 4.2038,0.5165 0.332,-1.0397 2.0925,-0.5339 2.7568,-0.2919 0.8988,0.7447 2.1619,0.4086 -0.1726,2.1635 0.2056,1.2192 0.9773,0.9151 0.5926,0.8849 -4.3852,0.023 -0.6146,1.4917 h -2.2924 l -0.7285,8.1266 -1.3979,0.1071 -0.3947,3.6621 0.1431,0.8809 -4.7227,-0.2939 -2.7746,-0.023 -1.1747,1.0972 -0.6895,2.0473 -2.4937,2.6235 -2.0365,1.642 -0.4731,2.7562 -5.4251,0.108 -0.1872,-1.6691 -1.6622,-0.03 -0.2856,1.1551 -0.1802,1.4502 -1.0792,1.5829 0.03,2.5214 -1.0891,1.3388 -2.1921,2.0825 1.8255,1.2155 1.5115,-0.1326 1.8975,0.7684 2.3891,0.8527 0.9907,-0.1455 1.6503,-0.9017 1.4554,-0.1082 1.2549,-1.663 1.2298,-0.056 0.3243,4.6082 -0.6521,6.8516 -3.0796,0.5006 -4.6662,0.1266 -3.3284,1.6791 -2.5162,4.1366 -0.9105,6.2083 -0.8532,5.6935 -3.6657,2.3543 2.021,4.9832 -2.7835,4.7626 2.0013,7.0382 -1.9511,6.3337 -0.8399,2.9018 1.8009,6.8124 0.3124,1.5808 -1.6696,4.155 2.9948,2.327 0.8487,1.7276 -2.486,5.4733 -1.3454,5.5268 -2.0343,4.657 z" fill="none" stroke="currentColor" stroke-width="1.12" stroke-linecap="round" stroke-linejoin="round"/></symbol></defs></svg>
+<g id="ppi-ishikawa-map"><path d="m 1194.2513,1218.2935 -3.7514,-3.7055 -3.6504,-2.6681 -8.2141,1.1907 -1.9924,-3.5555 -5.1963,-0.3507 0.2386,-3.7747 -2.1734,-2.4768 -4.7723,-3.9342 0.7597,-0.9626 0.5255,-1.6725 2.6357,-3.9999 5.0876,-4.0443 2.5794,-1.6575 5.0045,-7.6178 2.4843,-3.5354 3.8877,-1.6894 3.825,-3.2488 1.6598,-0.939 0.6811,-1.9802 2.5252,-4.6004 0.8423,-0.3649 -0.057,-2.8388 1.3529,-2.6804 1.3327,-0.2453 0.2716,-3.1599 1.9582,-3.8226 0.4839,-2.1472 -0.3771,-5.0842 v -3.6339 l 0.629,-1.8058 0.3347,-3.4115 -1.3626,-1.1654 -0.1663,-4.3603 -0.3898,-1.2982 -2.1444,-1.3237 -0.1881,-2.0593 -1.9932,-1.2852 0.1543,-3.1941 0.026,-2.2011 h 0.9682 l 0.7161,-1.669 -0.7888,-1.797 1.1806,-1.5024 0.6122,-0.2073 -0.01,-0.8659 -0.064,-2.0885 1.3632,-1.3685 0.5149,-0.6398 0.4522,-0.1 -0.1501,-2.8536 0.8248,-1.1282 0.86,-1.1382 1.6426,-0.3073 0.7083,-0.1259 0.5039,-1.0741 3.8642,-0.4007 5.0869,-0.6144 5.356,-3.3594 3.5029,-1.5488 1.3411,-2.1291 5.9154,-2.2717 4.2038,0.5165 0.332,-1.0397 2.0925,-0.5339 2.7568,-0.2919 0.8988,0.7447 2.1619,0.4086 -0.1726,2.1635 0.2056,1.2192 0.9773,0.9151 0.5926,0.8849 -4.3852,0.023 -0.6146,1.4917 h -2.2924 l -0.7285,8.1266 -1.3979,0.1071 -0.3947,3.6621 0.1431,0.8809 -4.7227,-0.2939 -2.7746,-0.023 -1.1747,1.0972 -0.6895,2.0473 -2.4937,2.6235 -2.0365,1.642 -0.4731,2.7562 -5.4251,0.108 -0.1872,-1.6691 -1.6622,-0.03 -0.2856,1.1551 -0.1802,1.4502 -1.0792,1.5829 0.03,2.5214 -1.0891,1.3388 -2.1921,2.0825 1.8255,1.2155 1.5115,-0.1326 1.8975,0.7684 2.3891,0.8527 0.9907,-0.1455 1.6503,-0.9017 1.4554,-0.1082 1.2549,-1.663 1.2298,-0.056 0.3243,4.6082 -0.6521,6.8516 -3.0796,0.5006 -4.6662,0.1266 -3.3284,1.6791 -2.5162,4.1366 -0.9105,6.2083 -0.8532,5.6935 -3.6657,2.3543 2.021,4.9832 -2.7835,4.7626 2.0013,7.0382 -1.9511,6.3337 -0.8399,2.9018 1.8009,6.8124 0.3124,1.5808 -1.6696,4.155 2.9948,2.327 0.8487,1.7276 -2.486,5.4733 -1.3454,5.5268 -2.0343,4.657 z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></g></defs></svg>
   <div class="lab-top">
     <div class="wrap">
       <div class="lab-mark">PPI <span>ISHIKAWA</span> / DESIGN LAB <span aria-hidden="true">◆</span></div>
