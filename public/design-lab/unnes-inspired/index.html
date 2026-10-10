@@ -871,10 +871,106 @@
     .preview[data-mode="dark"] .media-caption{background:#244949;color:#E2F4EC;border-color:#55796D}
     @media(max-width:850px){.media-workbench{grid-template-columns:1fr}}
     @media(max-width:740px){.media-specimens{grid-template-columns:1fr}.media-controls-label{flex:1 1 100%}.media-preview-support{grid-template-columns:1fr;padding:14px}}
+
+    /* Motion study: no perpetual animation, no movement of Ishikawa Fragments.
+       Separate preset CSS vars from shadow intensity and contrast tokens. */
+    body[data-motion-style="quiet"]{--motion-duration:0ms;--motion-lift:0px;--motion-press:1}
+    body[data-motion-style="standard"]{--motion-duration:160ms;--motion-lift:-2px;--motion-press:.985}
+    body[data-motion-style="expressive"]{--motion-duration:260ms;--motion-lift:-4px;--motion-press:.975}
+    body[data-motion-style] .action,
+    body[data-motion-style] .ds-btn,
+    body[data-motion-style] .ds-nav-card,
+    body[data-motion-style] .card,
+    body[data-motion-style] .shadow-usecase-card,
+    body[data-motion-style] .motion-demo-card,
+    body[data-motion-style] .motion-demo-action,
+    body[data-motion-style] .motion-demo-disclosure summary {
+      transition-property:background-color,border-color,color,box-shadow,transform;
+      transition-duration:var(--motion-duration);
+      transition-timing-function:ease-out;
+    }
+    body[data-motion-style] .card:hover,
+    body[data-motion-style] .ds-nav-card:hover,
+    body[data-motion-style] .shadow-usecase-card[data-shadow-surface="navigation"]:hover,
+    body[data-motion-style] .motion-demo-card:hover {
+      transform:translateY(var(--motion-lift));
+    }
+    body[data-motion-style] .action:hover,
+    body[data-motion-style] .ds-btn:hover {
+      transform:none;
+    }
+    body[data-motion-style] .motion-demo-action:active {
+      transform:scale(var(--motion-press));
+    }
+    /* Keyboard focus is a stationary affordance, not a forced transform. */
+    body[data-motion-style] .motion-demo-card:focus-visible,
+    body[data-motion-style] .ds-nav-card:focus-visible {
+      transform:none;
+    }
+    .motion-controls{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:23px 0 19px}
+    .motion-controls-label{margin-right:auto;font-size:12px;color:#335249;font-weight:900}
+    .motion-controls-label small{color:#63766B;font-weight:500}
+    .motion-controls button{min-height:44px;border-radius:var(--lab-radius-control);border:1px solid #ADBBB4;background:#fff;color:#264A43;padding:10px 16px;font-size:12px;font-weight:800;cursor:pointer}
+    .motion-controls button[aria-pressed="true"]{color:#fff;background:#176B6A;border-color:#176B6A}
+    .motion-controls button:hover:not([aria-pressed="true"]){background:#EDF5F0}
+    .motion-controls button:focus-visible,.motion-demo-action:focus-visible,.motion-demo-card:focus-visible,.motion-demo-disclosure summary:focus-visible{outline:3px solid #5BA8A6;outline-offset:3px}
+    .motion-compare{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .motion-spec{display:flex;flex-direction:column;min-width:0;gap:8px;padding:20px;border:1px solid #CCDCD3;border-radius:var(--lab-radius-card);background:#EAF2EC}
+    .motion-spec small{font-size:10px;font-weight:900;letter-spacing:.11em;color:#226458}
+    .motion-spec strong{font-size:16px;line-height:1.35;color:#23483F}
+    .motion-spec span{font-size:12px;line-height:1.6;color:#53675D}
+    .motion-workbench{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-top:20px}
+    .motion-stage{min-width:0;padding:20px;background:#fff;border:1px solid #CCDCD3;border-radius:var(--lab-radius-card)}
+    .motion-stage>.ds-tag{margin-bottom:16px}
+    .motion-demo-card{display:flex;flex-direction:column;gap:12px;min-height:159px;border:var(--lab-border-width) solid #BED1C6;background:#F7FAF9;padding:20px;border-radius:var(--lab-radius-card);color:#23443D;text-decoration:none}
+    .motion-demo-card:hover{border-color:var(--teal);background:#EAF4EE}
+    body[data-elevation="soft"] .motion-demo-card:hover{box-shadow:var(--elevation-hover)}
+    .motion-demo-card strong{font-size:17px;line-height:1.25}
+    .motion-demo-card>span{font-size:12px;color:#53675D;line-height:1.6}
+    .motion-demo-action{min-height:44px;display:inline-flex;align-items:center;gap:8px;background:var(--red);color:white;border:1px solid transparent;border-radius:var(--lab-radius-control);padding:11px 16px;font-size:13px;font-weight:850;cursor:pointer}
+    .motion-demo-action:hover{background:var(--red-dark)}
+    .motion-demo-disabled{display:block;margin-top:12px;min-height:44px;padding:10px 15px;border-radius:var(--lab-radius-control);background:#E8EEE9;color:#708077;border:1px solid #C7D5CA;cursor:not-allowed;font-size:12px;font-weight:700}
+    .motion-feedback,.motion-disclosure-note{font-size:12px;line-height:1.6;color:#506960;margin:13px 0 0}
+    .motion-demo-disclosure{border:1px solid #C7D8CE;background:#F7FAF9;border-radius:var(--lab-radius-card)}
+    .motion-demo-disclosure summary{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;cursor:pointer;padding:12px 15px;list-style:none;font-size:13px;font-weight:800;color:#23473E;border-radius:var(--lab-radius-control)}
+    .motion-demo-disclosure summary::-webkit-details-marker{display:none}
+    .motion-demo-disclosure summary:hover{background:#E9F2EB}
+    .motion-demo-disclosure[open] summary{border-bottom:1px solid #CFDED3}
+    .motion-disclosure-content{padding:12px 15px 17px}
+    .motion-disclosure-content p{font-size:12px;line-height:1.65;color:#4A685C;margin:0 0 10px}
+    .motion-disclosure-content a{font-size:12px;font-weight:800;color:#176B6A}
+    .motion-guidance{margin-top:20px}
+    body[data-lab-theme="dark"] .motion-controls-label{color:#E7F4EC}
+    body[data-lab-theme="dark"] .motion-controls-label small{color:#B8D4C9}
+    body[data-lab-theme="dark"] .motion-controls button{background:#1C3337;border-color:#648078;color:#EBF9F2}
+    body[data-lab-theme="dark"] .motion-controls button[aria-pressed="true"]{background:#B9EDDB;color:#173D35;border-color:#B9EDDB}
+    body[data-lab-theme="dark"] .motion-spec,
+    body[data-lab-theme="dark"] .motion-stage{background:#20373B;border-color:#4A6866}
+    body[data-lab-theme="dark"] .motion-spec small,body[data-lab-theme="dark"] .motion-spec strong{color:#D5F3E7}
+    body[data-lab-theme="dark"] .motion-spec span,body[data-lab-theme="dark"] .motion-feedback,
+    body[data-lab-theme="dark"] .motion-disclosure-note{color:#CDE3D7}
+    body[data-lab-theme="dark"] .motion-demo-card,
+    body[data-lab-theme="dark"] .motion-demo-disclosure{background:#294448;color:#F0F9F4;border-color:#527568}
+    body[data-lab-theme="dark"] .motion-demo-card>span,
+    body[data-lab-theme="dark"] .motion-disclosure-content p{color:#D0E6D9}
+    body[data-lab-theme="dark"] .motion-demo-card:hover,
+    body[data-lab-theme="dark"] .motion-demo-disclosure summary:hover{background:#305452}
+    body[data-lab-theme="dark"] .motion-demo-disclosure summary{color:#E9F8EF}
+    body[data-lab-theme="dark"] .motion-disclosure-content a{color:#B8EFE0}
+    body[data-lab-theme="dark"] .motion-demo-disabled{background:#304248;color:#B0C2BB;border-color:#57736B}
+    @media(max-width:900px){.motion-workbench{grid-template-columns:1fr}}
+    @media(max-width:740px){.motion-compare{grid-template-columns:1fr}.motion-controls-label{flex:1 1 100%}}
+    @media(prefers-reduced-motion:reduce){
+      body[data-motion-style]{--motion-duration:0ms;--motion-lift:0px;--motion-press:1}
+      body[data-motion-style] .card:hover,
+      body[data-motion-style] .ds-nav-card:hover,
+      body[data-motion-style] .shadow-usecase-card[data-shadow-surface="navigation"]:hover,
+      body[data-motion-style] .motion-demo-card:hover{transform:none!important}
+    }
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
   </style>
 </head>
-<body data-lab-theme="light" data-contour-strength="subtle" data-contour-motif="map" data-elevation="soft" data-layout-density="balanced" data-radius-style="balanced" data-border-style="subtle" data-icon-weight="standard" data-icon-treatment="tinted" data-media-ratio="wide" data-media-focus="center" data-media-overlay="off" data-media-caption="standard">
+<body data-lab-theme="light" data-contour-strength="subtle" data-contour-motif="map" data-elevation="soft" data-layout-density="balanced" data-radius-style="balanced" data-border-style="subtle" data-icon-weight="standard" data-icon-treatment="tinted" data-media-ratio="wide" data-media-focus="center" data-media-overlay="off" data-media-caption="standard" data-motion-style="standard">
 <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;overflow:hidden"><defs>
 <!-- Real TopicIcon.astro path geometry, reused for iconography comparison. -->
 <g id="ds-topic-icon-campus"><path d="m3 9 9-5 9 5-9 5-9-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/><path d="M21 9v6"/></g>
@@ -907,7 +1003,7 @@
   </header>
   <nav class="ds-jump" aria-label="Navigasi Design System"><div class="wrap">
     <a href="#demo-panduan">Fondasi</a><a href="#design-contour">Logo Contour</a>
-    <a href="#design-components">Komponen</a><a href="#design-shadow">Elevation</a><a href="#design-spacing">Spacing &amp; Grid</a><a href="#design-radius">Radius &amp; Border</a><a href="#design-icons">Iconography</a><a href="#design-media">Images &amp; Media</a>
+    <a href="#design-components">Komponen</a><a href="#design-shadow">Elevation</a><a href="#design-spacing">Spacing &amp; Grid</a><a href="#design-radius">Radius &amp; Border</a><a href="#design-icons">Iconography</a><a href="#design-media">Images &amp; Media</a><a href="#design-motion">Motion &amp; Interaction</a>
     <a href="#design-templates">Template A/B/C</a>
     <a href="#design-governance">Governance & QA</a>
   </div></nav>
@@ -1340,6 +1436,51 @@
       <p class="ds-muted media-system-note"><strong>Aturan awal:</strong> 16:9 untuk gambar pendukung Landing, 4:3 untuk editorial/Guide, 1:1 bila benar-benar perlu untuk tile. <code>object-fit: cover</code> boleh digunakan untuk dekorasi tetapi <strong>jangan memangkas peta, diagram, dokumen, atau teks penting</strong>; untuk itu gunakan <code>contain</code>. Alt text menjelaskan isi gambar; kredit sumber dan lisensi bukan bagian dari alt text. <strong>Wide 16:9 + Center + Overlay Off + Caption Standard telah disetujui sebagai baseline produksi.</strong> Untuk foto editorial di Guide tersedia varian 4:3; peta dan diagram menggunakan contain. Kontrol eksperimen lainnya tetap tersedia sebagai pembanding. <a href="#preview">Lihat dalam homepage contoh ↑</a>.</p>
     </section>
 
+
+    <section class="ds-section" id="design-motion" aria-labelledby="motion-title">
+      <p class="ds-kicker">02G / Motion &amp; feedback</p>
+      <h2 class="ds-heading" id="motion-title">Gerakan yang membantu.<br>Bukan mengalihkan perhatian.</h2>
+      <p class="ds-muted">Bandingkan tiga tingkat gerakan pada satu desain <strong>B — Solid Institutional</strong>. Perbedaannya ada pada <strong>durasi, respons hover, dan penekanan tombol</strong>, bukan pergantian layout atau warna. Motion tidak boleh menyembunyikan informasi, menghalangi klik, atau membuat konten bergoyang otomatis.</p>
+      <div class="motion-controls" role="group" aria-label="Intensitas Motion & Interaction">
+        <span class="motion-controls-label">Motion preset <small>· berlaku pada homepage contoh, Template A/B/C, serta komponen di bawah</small></span>
+        <button type="button" data-motion-choice="quiet" aria-pressed="false">Quiet</button>
+        <button type="button" data-motion-choice="standard" aria-pressed="true">Standard</button>
+        <button type="button" data-motion-choice="expressive" aria-pressed="false">Expressive</button>
+      </div>
+      <div class="motion-compare">
+        <div class="motion-spec" data-motion-example="quiet"><small>01 / QUIET</small><strong>Tanpa perpindahan</strong><span>Warna dan border langsung; 0 ms.</span></div>
+        <div class="motion-spec" data-motion-example="standard"><small>02 / STANDARD</small><strong>Halus dan responsif</strong><span>160 ms; lift 2 px hanya pada kartu navigasi.</span></div>
+        <div class="motion-spec" data-motion-example="expressive"><small>03 / EXPRESSIVE</small><strong>Lebih terasa</strong><span>260 ms; lift 4 px pada kartu navigasi.</span></div>
+      </div>
+      <div class="motion-workbench">
+        <div class="motion-stage">
+          <p class="ds-tag">Link / NavigationCard</p>
+          <a href="#design-templates" class="motion-demo-card" data-motion-surface="navigation">
+            <strong>Buka contoh halaman <span aria-hidden="true">↗</span></strong>
+            <span>Hover memperjelas navigasi; keyboard mendapat focus ring tanpa harus menggerakkan kartu.</span>
+          </a>
+        </div>
+        <div class="motion-stage">
+          <p class="ds-tag">Button / Feedback</p>
+          <button class="motion-demo-action" type="button" id="motion-demo-action">Coba interaksi <span aria-hidden="true">›</span></button>
+          <p class="motion-feedback" id="motion-demo-feedback" role="status" aria-live="polite">Tekan tombol untuk melihat feedback langsung di halaman.</p>
+          <button class="motion-demo-disabled" type="button" disabled>Contoh disabled</button>
+        </div>
+        <div class="motion-stage">
+          <p class="ds-tag">Disclosure / Native details</p>
+          <details class="motion-demo-disclosure" id="motion-demo-disclosure">
+            <summary>Buka informasi <span aria-hidden="true">⌄</span></summary>
+            <div class="motion-disclosure-content">
+              <p>Konten hanya terlihat jika dibuka. Gunakan native <code>details</code>; gerakan tidak boleh memperlambat akses informasi.</p>
+              <a href="#design-governance">Baca governance ↗</a>
+            </div>
+          </details>
+          <p class="motion-disclosure-note">Membuka dan menutup disclosure tetap instan secara struktural. Hanya perubahan warna indikator yang ditransisikan.</p>
+        </div>
+      </div>
+      <p class="ds-muted motion-guidance"><strong>Aturan aksesibilitas:</strong> <code>prefers-reduced-motion: reduce</code> menghapus seluruh transisi dan lift, terlepas preset pilihan. Durasi hanya berlaku pada warna, border, bayangan, dan transform ringan—tidak pada tinggi/posisi layout atau elemen dekoratif Ishikawa Fragments. Touch tidak membutuhkan hover; focus-visible dan feedback teks tetap bekerja. <strong>Ini eksperimen Design Lab, belum keputusan produksi.</strong></p>
+    </section>
+
     <section class="ds-section" id="design-templates" aria-labelledby="templates-title">
       <p class="ds-kicker">03 / Page archetypes</p>
       <h2 class="ds-heading" id="templates-title">Satu gaya B.<br>Tiga tugas halaman.</h2>
@@ -1619,6 +1760,30 @@
         photo.addEventListener('error',markUnavailable);
         // Handles cached failures that happened before this listener registered.
         if (photo.complete && photo.naturalWidth === 0) markUnavailable();
+      });
+
+      // Isolated motion preference; other lab selections remain unchanged.
+      const motionButtons = Array.from(document.querySelectorAll('[data-motion-choice]'));
+      const motionKey = 'ppi-ishikawa-design-lab-motion';
+      function applyMotion(value) {
+        const next = ['quiet','standard','expressive'].includes(value) ? value : 'standard';
+        document.body.dataset.motionStyle = next;
+        motionButtons.forEach((button) =>
+          button.setAttribute('aria-pressed',String(button.dataset.motionChoice === next)));
+        try {localStorage.setItem(motionKey,next)} catch (_error) { /* optional */ }
+      }
+      let savedMotion='standard';
+      try {savedMotion=localStorage.getItem(motionKey)||savedMotion} catch (_error) { /* default */ }
+      applyMotion(savedMotion);
+      motionButtons.forEach((button) =>
+        button.addEventListener('click',() => applyMotion(button.dataset.motionChoice)));
+      let actionCount=0;
+      const motionAction = document.getElementById('motion-demo-action');
+      const motionFeedback = document.getElementById('motion-demo-feedback');
+      motionAction.addEventListener('click',() => {
+        actionCount += 1;
+        motionFeedback.textContent = 'Interaksi contoh tercatat secara lokal (' +
+          actionCount + '×). Tidak ada data yang dikirim.';
       });
       const motifButtons = Array.from(document.querySelectorAll('[data-motif-choice]'));
       const motifKey = 'ppi-ishikawa-design-lab-contour-motif';
