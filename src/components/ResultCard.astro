@@ -3,18 +3,22 @@
  * Search / filter result surface. Unlike NavigationCard, this is an article
  * with metadata and an independent action (if any), not a whole-card link.
  */
-interface Props {
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'article'> {
   interactive?: boolean;
   clip?: boolean;
 }
-const { interactive = false, clip = false } = Astro.props;
+const { interactive = false, clip = false, class: className, ...attributes } = Astro.props;
 ---
 <article
+  {...attributes}
   data-ui-card="result"
   class:list={[
     'rounded-2xl border border-slate-200 bg-white',
     interactive && 'group transition-colors hover:border-accent/35 hover:bg-accent/5',
-    clip && 'overflow-hidden'
+    clip && 'overflow-hidden',
+    className
   ]}
 >
   <slot />

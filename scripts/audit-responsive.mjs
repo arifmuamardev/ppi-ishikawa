@@ -13,6 +13,7 @@ const routes = [
   ['directory', '/resources/'],
   ['stories', '/stories/'],
   ['programs', '/programs/'],
+  ['places', '/life-in-ishikawa/places/'],
   ['life-in-ishikawa', '/life-in-ishikawa/'],
   ['contact', '/contact/'],
   ['member', '/member/'],
@@ -160,6 +161,55 @@ try {
           if (highlight !== (resultsExist ? 0 : 1)) {
             check.errors.push('Stories must use HighlightPanel only for the coming-soon state');
           }
+        }
+
+        if (width === 390 && key === 'places') {
+          const snapshot = () => page.evaluate(() => {
+            const cards = [...document.querySelectorAll('#places-grid .place-card')];
+            const shown = cards.filter((card) => !card.classList.contains('hidden'));
+            return {
+              total: cards.length,
+              shown: shown.length,
+              count: document.querySelector('#place-count')?.textContent?.trim(),
+              empty: !document.querySelector('#places-empty')?.classList.contains('hidden'),
+              nonArticles: cards.filter((card) => card.tagName !== 'ARTICLE' ||
+                card.getAttribute('data-ui-card') !== 'result' ||
+                !card.dataset.placeId || !card.dataset.search ||
+                !card.querySelector('a[href*="google.com/maps/"]') ||
+                !card.querySelector('a[href^="http"]')).length,
+              invalidCategory: shown.some((card) => card.dataset.category !==
+                document.querySelector('[data-category-filters] [aria-pressed="true"]')?.dataset.category &&
+                document.querySelector('[data-category-filters] [aria-pressed="true"]')?.dataset.category !== '')
+            };
+          });
+          const initial = await snapshot();
+          check.placeResultCount = initial.total;
+          if (initial.total < 1 || initial.shown !== initial.total ||
+              initial.count !== String(initial.total) || initial.nonArticles || initial.empty) {
+            check.errors.push('Places ResultCard output lost filter data, independent links or initial result count');
+          }
+
+          await page.locator('#place-search').fill('____ppi_no_matching_place_2026____');
+          const none = await snapshot();
+          if (none.shown !== 0 || none.count !== '0' || !none.empty) {
+            check.errors.push('Places search does not expose a correct empty state');
+          }
+
+          await page.locator('#place-search').fill('');
+          const category = page.locator('[data-category-filters] button[data-category]:not([data-category=""])').first();
+          const selected = await category.getAttribute('data-category');
+          await category.click();
+          const filtered = await snapshot();
+          if (!selected || filtered.shown < 1 || filtered.invalidCategory ||
+              filtered.count !== String(filtered.shown)) {
+            check.errors.push('Places category filter not consistent with ResultCard data attributes');
+          }
+          await page.locator('[data-category-filters] button[data-category=""]').click();
+          const restored = await snapshot();
+          if (restored.shown !== initial.total || restored.count !== String(initial.total)) {
+            check.errors.push('Places category reset did not restore all result cards');
+          }
+          check.finderInteractions = 'places search, empty-state, category and restore checked';
         }
 
         // Advisory status is shown as a note with its own action, not a
