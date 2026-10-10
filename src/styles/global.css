@@ -407,12 +407,28 @@ html.dark .brand-gold-rule {
 
 /* Layout rhythm ------------------------------------------------------------ */
 
+/* Approved Balanced system: section 52–68px, card 23px, grid gap 14px.
+   Future pages adopt these semantic utilities instead of ad-hoc values. */
+:root {
+  --ui-space-section-balanced: clamp(3.25rem, 5.5vw, 4.25rem);
+  --ui-space-card-balanced: 1.4375rem;
+  --ui-gap-grid-balanced: 0.875rem;
+}
+
 .ui-section-space-compact {
   padding-block: clamp(1.75rem, 3.5vw, 2.5rem);
 }
 
 .ui-section-space {
-  padding-block: clamp(2.75rem, 5vw, 4rem);
+  padding-block: var(--ui-space-section-balanced);
+}
+
+.ui-card-space-balanced {
+  padding: var(--ui-space-card-balanced);
+}
+
+.ui-grid-gap-balanced {
+  gap: var(--ui-gap-grid-balanced);
 }
 
 .ui-section-space-major {
