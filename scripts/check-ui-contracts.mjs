@@ -249,6 +249,28 @@ await checkFile('src/pages/stories.astro', {
   forbidden: [['class="rounded-[2rem] border border-accent/35 bg-accent/10', 'duplicate highlight surface']],
 });
 
+// Places cards are live, filterable ResultCards. Attribute forwarding keeps
+// map visibility, category/city filtering and search data intact.
+await checkFile('src/pages/life-in-ishikawa/places.astro', {
+  required: [
+    ['<ResultCard', 'filterable Places entries use ResultCard'],
+    ['class="place-card flex h-full flex-col p-5"', 'existing filter selector and layout retained'],
+    ['data-place-id={place.id}', 'stable place-map identifier'],
+    ['data-mappable=', 'map visibility flag preserved'],
+    ['data-category={place.category}', 'category filter retained'],
+    ['data-city={place.city}', 'city filter retained'],
+    ['data-search=', 'text search retained'],
+  ],
+  forbidden: [['<article\n          class="place-card', 'duplicate Places surface']],
+});
+await checkFile('src/components/ResultCard.astro', {
+  required: [
+    ["HTMLAttributes<'article'>", 'result surface supports standard HTML/data attributes'],
+    ['{...attributes}', 'filter metadata forwards to the rendered article'],
+    ['className', 'per-card layout overrides are additive'],
+  ],
+});
+
 // A filter result keeps independent actions and metadata inside a semantic
 // article. A status advisory is a non-disruptive note, not a navigation link.
 await checkFile('src/components/StoryCard.astro', {
