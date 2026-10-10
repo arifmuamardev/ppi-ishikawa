@@ -211,6 +211,42 @@ try {
               JSON.stringify(g));
           }
         }
+        // Standard + Tinted Tile iconography: check actual SVG and tile CSS,
+        // including corner treatment, on representative 390/1280px routes.
+        if ((width === 390 || width === 1280) &&
+          (key === 'home' || key === 'community' || key === 'contact' ||
+           key === 'career' || key === 'life-in-ishikawa')) {
+          check.iconography = await page.evaluate(() => {
+            const root = getComputedStyle(document.documentElement);
+            const holder = document.querySelector('main .ui-icon-tile');
+            const svg = holder?.querySelector('svg.ui-topic-icon');
+            if (!holder || !svg) return { missing: true };
+            const surface = getComputedStyle(holder);
+            const icon = getComputedStyle(svg);
+            return {
+              strokeToken: Number.parseFloat(root.getPropertyValue('--ui-icon-stroke')),
+              stroke: Number.parseFloat(icon.strokeWidth),
+              tileWidth: holder.getBoundingClientRect().width,
+              tileHeight: holder.getBoundingClientRect().height,
+              glyphWidth: svg.getBoundingClientRect().width,
+              glyphHeight: svg.getBoundingClientRect().height,
+              tileRadius: Number.parseFloat(surface.borderTopLeftRadius),
+              tinted: surface.backgroundColor !== 'rgba(0, 0, 0, 0)' &&
+                surface.backgroundColor !== 'transparent',
+              hidden: svg.getAttribute('aria-hidden') === 'true',
+              rounded: svg.getAttribute('stroke-linecap') === 'round' &&
+                svg.getAttribute('stroke-linejoin') === 'round'
+            };
+          });
+          const i = check.iconography;
+          if (i.missing || i.strokeToken !== 1.8 || Math.abs(i.stroke - 1.8) > .1 ||
+              Math.abs(i.tileWidth - 44) > .75 || Math.abs(i.tileHeight - 44) > .75 ||
+              Math.abs(i.glyphWidth - 24) > .75 || Math.abs(i.glyphHeight - 24) > .75 ||
+              Math.abs(i.tileRadius - 12) > .75 || !i.tinted || !i.hidden || !i.rounded) {
+            check.errors.push('Approved Standard + Tinted iconography drift: ' +
+              JSON.stringify(i));
+          }
+        }
         check.default = await measure(page);
         if (check.default.overflowPx > 2) check.errors.push('Horizontal overflow: ' + check.default.overflowPx + 'px');
         if (check.default.h1Count !== 1) check.errors.push('Expected 1 main h1; got ' + check.default.h1Count);
