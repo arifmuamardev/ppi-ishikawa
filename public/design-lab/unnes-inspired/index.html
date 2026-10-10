@@ -273,7 +273,7 @@
     .ds-page-nav .ds-simulated-menu{color:#64736B}
     .ds-page-intro{padding:30px;background:#123E40;color:#fff;margin-bottom:20px}
     .ds-page-intro .ds-tag{color:#BDEEE0!important}
-    .ds-page-intro h4{font-size:clamp(26px,4.7vw,41px);font-weight:900;letter-spacing:-.05em;line-height:1.1;margin:0 0 11px}
+    .ds-page-intro h3{font-size:clamp(26px,4.7vw,41px);font-weight:900;letter-spacing:-.05em;line-height:1.1;margin:0 0 11px}
     .ds-page-intro p{color:#D1E9E1;margin:0;line-height:1.6;font-size:13px;max-width:530px}
     .ds-page .ds-nav-card,.ds-page .ds-result-card{background:#FAFCFB}
     .ds-page .ds-demo-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -282,7 +282,7 @@
     .ds-source strong{display:block;font-size:13px}
     .ds-guide-breadcrumb{font-size:11px;color:#57746A;display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
     .ds-guide-copy{font-size:13px;line-height:1.65;max-width:610px;color:#344B43}
-    .ds-guide-copy h5{font-size:20px;letter-spacing:-.02em;margin:18px 0 8px}
+    .ds-guide-copy h4{font-size:20px;letter-spacing:-.02em;margin:18px 0 8px}
     .ds-guide-toc{border:1px solid #C8DAD1;background:#F4F9F6;padding:15px;font-size:13px;margin-top:16px}
     .ds-guide-toc a{display:inline-block;margin:9px 13px 2px 0;font-weight:700;color:#155E57;text-underline-offset:3px}
     .ds-find-empty{padding:20px;border:1px dashed #B9CFC2;color:#5C6C64;font-size:12px}
@@ -297,7 +297,7 @@
     @container (max-width:650px){
       .ds-page{padding:15px}
       .ds-page-intro{padding:22px}
-      .ds-page-intro h4{font-size:29px}
+      .ds-page-intro h3{font-size:29px}
       .ds-page .ds-demo-cards,.ds-page .ds-field-row{grid-template-columns:1fr}
       .ds-page .ds-nav-card{padding:14px}
       .ds-page .ds-result-card{padding:14px}
@@ -552,7 +552,7 @@
         <div class="ds-canvas">
           <div class="ds-page" data-page="landing">
             <div class="ds-page-nav"><span class="ds-logo">PPIJ / ISHIKAWA.</span><span class="ds-simulated-menu">Contoh · Template A</span></div>
-            <div class="ds-page-intro"><p class="ds-tag">Landing / Directory</p><h4>Kampus di Ishikawa.</h4><p>Temukan kampus dan jalur informasi sesuai kebutuhan. Tidak ada filter atau konten yang menghalangi pilihan utama.</p></div>
+            <div class="ds-page-intro"><p class="ds-tag">Landing / Directory</p><h3>Kampus di Ishikawa.</h3><p>Temukan kampus dan jalur informasi sesuai kebutuhan. Tidak ada filter atau konten yang menghalangi pilihan utama.</p></div>
             <div class="ds-demo-cards">
               <a class="ds-nav-card" href="#design-components"><p class="ds-tag">01</p><strong>Universitas</strong><small>Lihat panduan studi dan lokasi <span aria-hidden="true">›</span></small></a>
               <a class="ds-nav-card" href="#design-components"><p class="ds-tag">02</p><strong>Persiapan</strong><small>Tempat tinggal dan administrasi <span aria-hidden="true">›</span></small></a>
@@ -562,7 +562,7 @@
           </div>
           <div class="ds-page" data-page="finder" hidden>
             <div class="ds-page-nav"><span class="ds-logo">PPIJ / ISHIKAWA.</span><span class="ds-simulated-menu">Contoh · Template B</span></div>
-            <div class="ds-page-intro"><p class="ds-tag">Finder / Explorer</p><h4>Temukan sumber yang relevan.</h4><p>Pengguna langsung diarahkan ke pencarian dan penyaringan, bukan banner atau berita.</p></div>
+            <div class="ds-page-intro"><p class="ds-tag">Finder / Explorer</p><h3>Temukan sumber yang relevan.</h3><p>Pengguna langsung diarahkan ke pencarian dan penyaringan, bukan banner atau berita.</p></div>
             <div class="ds-field-row">
               <div class="ds-field"><label for="ds-find-query">Cari dalam contoh</label><input id="ds-find-query" class="ds-control" type="search" placeholder="Coba: kampus, keluarga..."></div>
               <div class="ds-field"><label for="ds-find-category">Kategori</label><select id="ds-find-category" class="ds-control"><option value="all">Semua kategori</option><option value="kampus">Kampus</option><option value="beasiswa">Beasiswa</option><option value="keluarga">Keluarga</option></select></div>
@@ -584,10 +584,10 @@
           <div class="ds-page" data-page="guide" hidden>
             <div class="ds-page-nav"><span class="ds-logo">PPIJ / ISHIKAWA.</span><span class="ds-simulated-menu">Contoh · Template C</span></div>
             <nav class="ds-guide-breadcrumb" aria-label="Contoh breadcrumb"><a href="#design-templates">Hidup di Ishikawa</a><span aria-hidden="true">/</span><span aria-current="page">Panduan kedatangan</span></nav>
-            <div class="ds-page-intro"><p class="ds-tag">Detail / Guide</p><h4>Panduan kedatangan.</h4><p>Satu topik, satu hierarki, serta lokasi pengguna yang jelas. Metadata verifikasi harus berasal dari peninjauan sumber yang nyata.</p></div>
+            <div class="ds-page-intro"><p class="ds-tag">Detail / Guide</p><h3>Panduan kedatangan.</h3><p>Satu topik, satu hierarki, serta lokasi pengguna yang jelas. Metadata verifikasi harus berasal dari peninjauan sumber yang nyata.</p></div>
             <p class="ds-summary">Contoh struktur · Tanggal verifikasi tidak disimulasikan</p>
             <nav class="ds-guide-toc" aria-label="Contoh daftar isi"><strong>Di halaman ini</strong><div><a href="#ds-guide-step">Langkah awal</a><a href="#ds-guide-evidence">Sumber dan navigasi</a></div></nav>
-            <div class="ds-guide-copy" id="ds-guide-step"><h5>Langkah awal</h5><p>Urutan informasi memprioritaskan tindakan yang perlu dilakukan, bukan modul promosi atau kumpulan tautan acak. Bagian panjang sebaiknya menggunakan daftar isi yang benar-benar menuju kontennya.</p></div>
+            <div class="ds-guide-copy" id="ds-guide-step"><h4>Langkah awal</h4><p>Urutan informasi memprioritaskan tindakan yang perlu dilakukan, bukan modul promosi atau kumpulan tautan acak. Bagian panjang sebaiknya menggunakan daftar isi yang benar-benar menuju kontennya.</p></div>
             <div class="ds-source" id="ds-guide-evidence"><strong>Sumber resmi & verifikasi — struktur contoh</strong>Sumber asli harus dicantumkan sebelum navigasi menuju topik lain. Jangan menampilkan tanggal diverifikasi jika proses verifikasinya belum dilakukan.</div>
             <div class="ds-guide-next"><a href="#design-governance">Langkah berikutnya: aturan dan QA ›</a></div>
           </div>
