@@ -314,6 +314,9 @@ try {
             if (!transform.includes('-2)')) check.errors.push('Navigation hover lift should be -2px: '+transform);
           }
           await page.emulateMedia({reducedMotion:'reduce'});
+          // Allow the browser to finish its previous hover transition and
+          // recalculate media queries before testing the final reduced state.
+          await page.waitForTimeout(90);
           const reduced = await card.evaluate(el => ({
             duration:getComputedStyle(el).transitionDuration,
             transform:getComputedStyle(el).transform
