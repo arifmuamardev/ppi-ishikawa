@@ -623,10 +623,124 @@
     body[data-lab-theme="dark"] .spacing-spec p{color:#CBDDD5}
     @media(max-width:850px){.spacing-compare{grid-template-columns:1fr}}
     @media(max-width:640px){.spacing-controls-label{flex:1 1 100%}}
+
+    /* Radius & Border study. Keep identity contour SVG and fixed browser chrome untouched.
+       States are scoped to Design Lab; production retains its approved existing radii. */
+    body[data-radius-style="crisp"]{
+      --lab-radius-control:6px;--lab-radius-card:10px;--lab-radius-feature:16px;
+    }
+    body[data-radius-style="balanced"]{
+      --lab-radius-control:12px;--lab-radius-card:16px;--lab-radius-feature:24px;
+    }
+    body[data-radius-style="rounded"]{
+      --lab-radius-control:16px;--lab-radius-card:24px;--lab-radius-feature:32px;
+    }
+    body[data-border-style="subtle"]{--lab-border-width:1px}
+    body[data-border-style="defined"]{--lab-border-width:1.5px}
+    body{--lab-border-neutral:#BFCFC6;--lab-border-defined:#7A978C}
+    body[data-lab-theme="dark"]{--lab-border-neutral:#54726F;--lab-border-defined:#89A9A0}
+    body[data-radius-style] .action,
+    body[data-radius-style] .stripe a,
+    body[data-radius-style] .ds-btn,
+    body[data-radius-style] .ds-control,
+    body[data-radius-style] .ds-tabs button,
+    body[data-radius-style] .shadow-dropdown summary,
+    body[data-radius-style] .radius-demo-field,
+    body[data-radius-style] .radius-demo-action,
+    body[data-radius-style] .radius-controls button{border-radius:var(--lab-radius-control)}
+    body[data-radius-style] .card,
+    body[data-radius-style] .ds-nav-card,
+    body[data-radius-style] .ds-result-card,
+    body[data-radius-style] .shadow-usecase-card,
+    body[data-radius-style] .shadow-dropdown-panel,
+    body[data-radius-style] .radius-demo-card{border-radius:var(--lab-radius-card)}
+    body[data-radius-style] .ds-page-intro,
+    body[data-radius-style] .ds-panel,
+    body[data-radius-style] .art,
+    body[data-radius-style] .radius-demo-feature{border-radius:var(--lab-radius-feature)}
+    body[data-radius-style] .preview[data-view="c"] .card{border-radius:var(--lab-radius-card)}
+    body[data-border-style] .card,
+    body[data-border-style] .ds-nav-card,
+    body[data-border-style] .ds-result-card,
+    body[data-border-style] .ds-control,
+    body[data-border-style] .ds-panel,
+    body[data-border-style] .shadow-usecase-card,
+    body[data-border-style] .shadow-dropdown-panel,
+    body[data-border-style] .radius-demo-card,
+    body[data-border-style] .radius-demo-field{border-width:var(--lab-border-width)}
+    body[data-border-style] .ds-btn-outline,
+    body[data-border-style] .action.secondary,
+    body[data-border-style] .shadow-dropdown summary,
+    body[data-border-style] .radius-demo-action{border-width:var(--lab-border-width)}
+    body[data-border-style] .radius-demo-card,
+    body[data-border-style] .radius-demo-field{border-color:var(--lab-border-neutral)}
+    body[data-border-style="defined"] .radius-demo-card,
+    body[data-border-style="defined"] .radius-demo-field{border-color:var(--lab-border-defined)}
+    body[data-border-style="defined"] .ds-nav-card,
+    body[data-border-style="defined"] .ds-result-card,
+    body[data-border-style="defined"] .ds-panel,
+    body[data-border-style="defined"] .ds-control,
+    body[data-border-style="defined"] .card{border-color:var(--lab-border-defined)}
+    body[data-border-style="defined"] .preview[data-mode="dark"] .card{border-color:var(--lab-border-defined)}
+    body[data-border-style="defined"] .ds-nav-card:hover,
+    body[data-border-style="defined"] .radius-demo-card:hover{border-color:var(--teal)}
+    .radius-controls{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:22px 0 17px}
+    .radius-controls-label{font-size:12px;font-weight:900;color:#335249;margin-right:auto}
+    .radius-controls-label small{font-weight:500;color:#63766B}
+    .radius-controls button{min-height:44px;padding:9px 14px;border:1px solid #ADBBB4;background:#FFF;color:#264A43;font-size:12px;font-weight:800;cursor:pointer}
+    .radius-controls button[aria-pressed="true"]{background:#176B6A;color:white;border-color:#176B6A}
+    .radius-controls button:hover:not([aria-pressed="true"]){background:#EDF5F0}
+    .radius-controls button:focus-visible,.radius-demo-card:focus-visible,
+    .radius-demo-field:focus-visible,.radius-demo-action:focus-visible{outline:3px solid #5BA8A6;outline-offset:3px}
+    .radius-spec-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .radius-spec{min-width:0;background:#EAF2EC;border:1px solid #D0DFD7;border-radius:12px;padding:18px}
+    .radius-spec small{display:block;color:#28564F;font-weight:900;font-size:10px;letter-spacing:.11em;margin-bottom:12px}
+    .radius-spec-card{display:flex;flex-direction:column;gap:5px;padding:22px;border:1px solid #BFCFC6;background:#FFF;color:#24473E}
+    .radius-spec-card strong{font-size:17px}
+    .radius-spec-card span{font-size:12px;color:#567066;line-height:1.5}
+    .radius-spec p{font-size:12px;font-weight:800;margin:12px 0 0;color:#35564D}
+    [data-radius-example="crisp"] .radius-spec-card{border-radius:10px}
+    [data-radius-example="balanced"] .radius-spec-card{border-radius:16px}
+    [data-radius-example="rounded"] .radius-spec-card{border-radius:24px}
+    .radius-border-controls{margin-top:27px}
+    .radius-workbench{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+    .radius-workbench-stage{min-width:0;background:#FFF;border:1px solid #CADBD1;border-radius:12px;padding:20px}
+    .radius-workbench-stage .ds-tag{margin-bottom:16px!important}
+    .radius-demo-card{display:flex;flex-direction:column;gap:10px;background:#F7FAF9;color:#21453D;border:1px solid #BFCFC6;padding:20px;text-decoration:none;min-height:160px;transition:background .2s,border-color .2s,box-shadow .2s}
+    .radius-demo-card:hover{background:#E9F4EF;border-color:var(--teal)}
+    .radius-demo-card strong{font-size:17px}
+    .radius-demo-card span{font-size:12px;line-height:1.55;color:#536A61}
+    .radius-demo-label{display:block;font-size:12px;font-weight:800;color:#28574C;margin-bottom:8px}
+    .radius-demo-field{display:block;min-width:0;width:100%;font:inherit;font-size:13px;color:#24453D;background:#FFF;border:1px solid #BFCFC6;min-height:44px;padding:10px 12px}
+    .radius-demo-action{display:inline-flex;align-items:center;gap:8px;margin-top:14px;min-height:44px;padding:10px 14px;background:var(--red);color:white!important;text-decoration:none;font-size:12px;font-weight:800;border:1px solid transparent}
+    .radius-demo-action:hover{background:#902037}
+    .radius-demo-feature{min-height:160px;padding:20px;background:#125A59;color:white;display:flex;flex-direction:column;gap:13px}
+    .radius-demo-feature strong{font-size:17px;line-height:1.25}
+    .radius-demo-feature span{font-size:12px;line-height:1.55;color:#D5EEE5}
+    .radius-note{margin-top:20px}
+    body[data-lab-theme="dark"] .radius-controls-label{color:#E8F5EE}
+    body[data-lab-theme="dark"] .radius-controls-label small{color:#B8D4C9}
+    body[data-lab-theme="dark"] .radius-controls button{background:#1C3337;border-color:#648078;color:#EBF9F2}
+    body[data-lab-theme="dark"] .radius-controls button[aria-pressed="true"]{background:#B9EDDB;border-color:#B9EDDB;color:#173D35}
+    body[data-lab-theme="dark"] .radius-spec{background:#192F33;border-color:#3A5658}
+    body[data-lab-theme="dark"] .radius-spec small,
+    body[data-lab-theme="dark"] .radius-spec p{color:#B7E4D5}
+    body[data-lab-theme="dark"] .radius-spec-card,
+    body[data-lab-theme="dark"] .radius-workbench-stage{background:#20373B;border-color:#4A6866;color:#F2FAF5}
+    body[data-lab-theme="dark"] .radius-spec-card span{color:#D0E3D9}
+    body[data-lab-theme="dark"] .radius-demo-card{background:#294448;color:#F2FAF5;border-color:var(--lab-border-neutral)}
+    body[data-lab-theme="dark"][data-border-style="defined"] .radius-demo-card{border-color:var(--lab-border-defined)}
+    body[data-lab-theme="dark"] .radius-demo-card span{color:#D3E7DC}
+    body[data-lab-theme="dark"] .radius-demo-label{color:#D5ECE2}
+    body[data-lab-theme="dark"] .radius-demo-field{background:#294448;color:#F2FAF5;border-color:var(--lab-border-neutral)}
+    body[data-lab-theme="dark"][data-border-style="defined"] .radius-demo-field{border-color:var(--lab-border-defined)}
+    @media(max-width:900px){.radius-workbench{grid-template-columns:1fr}}
+    @media(max-width:750px){.radius-spec-grid{grid-template-columns:1fr}}
+    @media(max-width:640px){.radius-controls-label{flex:1 1 100%}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
   </style>
 </head>
-<body data-lab-theme="light" data-contour-strength="subtle" data-contour-motif="map" data-elevation="soft" data-layout-density="balanced">
+<body data-lab-theme="light" data-contour-strength="subtle" data-contour-motif="map" data-elevation="soft" data-layout-density="balanced" data-radius-style="balanced" data-border-style="subtle">
 <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;overflow:hidden"><defs>
 <symbol id="ppi-contour-mark" viewBox="0 0 720 380">
 <g fill="none" stroke="currentColor" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round">
@@ -653,7 +767,7 @@
   </header>
   <nav class="ds-jump" aria-label="Navigasi Design System"><div class="wrap">
     <a href="#demo-panduan">Fondasi</a><a href="#design-contour">Logo Contour</a>
-    <a href="#design-components">Komponen</a><a href="#design-shadow">Elevation</a><a href="#design-spacing">Spacing &amp; Grid</a>
+    <a href="#design-components">Komponen</a><a href="#design-shadow">Elevation</a><a href="#design-spacing">Spacing &amp; Grid</a><a href="#design-radius">Radius &amp; Border</a>
     <a href="#design-templates">Template A/B/C</a>
     <a href="#design-governance">Governance & QA</a>
   </div></nav>
@@ -944,6 +1058,61 @@
       <p class="ds-muted spacing-note"><strong>Token demo:</strong> Compact 48/18/12 px · Balanced 68/23/14 px · Spacious 82/30/20 px (section/card/grid). Pilih mode di atas lalu buka <a href="#preview">homepage contoh ↑</a> dan <a href="#design-templates">Template A/B/C ↑</a>. Mode Balanced sudah dipilih sebagai standar PPI Ishikawa. Token produksi diterapkan secara bertahap; Compact dan Spacious tetap dapat dicoba sebagai pembanding di Design Lab.</p>
     </section>
 
+
+    <section class="ds-section" id="design-radius" aria-labelledby="radius-title">
+      <p class="ds-kicker">02D / Component geometry</p>
+      <h2 class="ds-heading" id="radius-title">Sudut yang konsisten.<br>Border yang punya fungsi.</h2>
+      <p class="ds-muted">Tiga pilihan <strong>radius</strong> dan dua tingkat <strong>border</strong> untuk satu identitas B — Solid Institutional. Atur keduanya secara terpisah, lalu lihat bagaimana bentuk tersebut diterapkan pada homepage contoh serta Template A/B/C. Tidak semua elemen perlu border atau bayangan.</p>
+      <div class="radius-controls" role="group" aria-label="Pilih sistem radius">
+        <span class="radius-controls-label">Radius <small>· kontrol / kartu / panel</small></span>
+        <button type="button" data-radius-choice="crisp" aria-pressed="false">Crisp</button>
+        <button type="button" data-radius-choice="balanced" aria-pressed="true">Balanced</button>
+        <button type="button" data-radius-choice="rounded" aria-pressed="false">Rounded</button>
+      </div>
+      <div class="radius-spec-grid" aria-label="Perbandingan bentuk sudut">
+        <div class="radius-spec" data-radius-example="crisp">
+          <small>01 / CRISP</small><div class="radius-spec-card"><strong>Tegas</strong><span>Lebih geometris</span></div>
+          <p>6 / 10 / 16 px</p>
+        </div>
+        <div class="radius-spec" data-radius-example="balanced">
+          <small>02 / BALANCED</small><div class="radius-spec-card"><strong>Terukur</strong><span>Sejalan dengan produk saat ini</span></div>
+          <p>12 / 16 / 24 px</p>
+        </div>
+        <div class="radius-spec" data-radius-example="rounded">
+          <small>03 / ROUNDED</small><div class="radius-spec-card"><strong>Lembut</strong><span>Lebih ekspresif</span></div>
+          <p>16 / 24 / 32 px</p>
+        </div>
+      </div>
+      <div class="radius-controls radius-border-controls" role="group" aria-label="Pilih tingkat border">
+        <span class="radius-controls-label">Border <small>· tetap solid 1 tingkat, bukan double-border</small></span>
+        <button type="button" data-border-choice="subtle" aria-pressed="true">Subtle · 1 px</button>
+        <button type="button" data-border-choice="defined" aria-pressed="false">Defined · 1.5 px</button>
+      </div>
+      <div class="radius-workbench">
+        <div class="radius-workbench-stage">
+          <p class="ds-tag">Navigation / hover</p>
+          <a class="radius-demo-card" href="#design-templates">
+            <strong>Jelajahi kampus <span aria-hidden="true">›</span></strong>
+            <span>Border menunjukkan batas kartu; hover dan focus menunjukkan interaksi.</span>
+          </a>
+        </div>
+        <div class="radius-workbench-stage">
+          <p class="ds-tag">Controls / forms</p>
+          <label class="radius-demo-label" for="radius-demo-input">Cari panduan</label>
+          <input class="radius-demo-field" id="radius-demo-input" type="text" placeholder="Contoh: beasiswa">
+          <a class="radius-demo-action" href="#design-templates">Lihat template <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="radius-workbench-stage">
+          <p class="ds-tag">Feature / panel</p>
+          <div class="radius-demo-feature">
+            <strong>Dekat, relevan, bermanfaat.</strong>
+            <span>Bidang aksen boleh tanpa border; radius dipilih menurut peran komponen.</span>
+          </div>
+        </div>
+      </div>
+      <p class="ds-muted radius-note"><strong>Aturan:</strong> komponen kontrol 12 px, kartu 16 px, dan feature panel 24 px pada preset Balanced. Border Subtle tetap 1 px dengan warna berbeda untuk Light/Dark; Defined sedikit lebih tegas. Focus ring <strong>tidak diganti</strong> dengan border dan Ishikawa Fragments tetap tanpa shadow atau outline. Ini masih eksperimen, belum diterapkan ke website utama.</p>
+    </section>
+
     <section class="ds-section" id="design-templates" aria-labelledby="templates-title">
       <p class="ds-kicker">03 / Page archetypes</p>
       <h2 class="ds-heading" id="templates-title">Satu gaya B.<br>Tiga tugas halaman.</h2>
@@ -1121,6 +1290,38 @@
       spacingButtons.forEach(function(button) {
         button.addEventListener('click',function() { applySpacing(button.dataset.spacingChoice); });
       });
+
+      // Design Lab-only radius and border experiments; use separate persisted
+      // controls so geometry does not reset motif, density or elevation.
+      const radiusButtons = Array.from(document.querySelectorAll('[data-radius-choice]'));
+      const borderButtons = Array.from(document.querySelectorAll('[data-border-choice]'));
+      const radiusKey = 'ppi-ishikawa-design-lab-radius-style';
+      const borderKey = 'ppi-ishikawa-design-lab-border-style';
+      function applyRadius(value) {
+        const next = ['crisp','balanced','rounded'].includes(value) ? value : 'balanced';
+        document.body.dataset.radiusStyle = next;
+        radiusButtons.forEach((button) =>
+          button.setAttribute('aria-pressed',String(button.dataset.radiusChoice === next)));
+        try { localStorage.setItem(radiusKey,next); } catch (_error) { /* optional storage */ }
+      }
+      function applyBorder(value) {
+        const next = value === 'defined' ? 'defined' : 'subtle';
+        document.body.dataset.borderStyle = next;
+        borderButtons.forEach((button) =>
+          button.setAttribute('aria-pressed',String(button.dataset.borderChoice === next)));
+        try { localStorage.setItem(borderKey,next); } catch (_error) { /* optional storage */ }
+      }
+      let savedRadius = 'balanced', savedBorder = 'subtle';
+      try {
+        savedRadius = localStorage.getItem(radiusKey) || savedRadius;
+        savedBorder = localStorage.getItem(borderKey) || savedBorder;
+      } catch (_error) { /* defaults */ }
+      applyRadius(savedRadius);
+      applyBorder(savedBorder);
+      radiusButtons.forEach((button) =>
+        button.addEventListener('click',() => applyRadius(button.dataset.radiusChoice)));
+      borderButtons.forEach((button) =>
+        button.addEventListener('click',() => applyBorder(button.dataset.borderChoice)));
       const motifButtons = Array.from(document.querySelectorAll('[data-motif-choice]'));
       const motifKey = 'ppi-ishikawa-design-lab-contour-motif';
       function applyMotif(value) {
