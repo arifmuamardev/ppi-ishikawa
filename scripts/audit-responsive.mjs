@@ -136,6 +136,29 @@ try {
           if (!headline?.family?.includes('Fira Sans'))
             check.errors.push('Semantic page title must inherit approved Fira Sans family');
         }
+        // Approved Balanced tokens must have measurable effects on the homepage.
+        if ((width === 390 || width === 1280) && key === 'home') {
+          check.balancedSpacing = await page.evaluate(() => {
+            const px = (selector, property) => {
+              const element = document.querySelector(selector);
+              return element ? parseFloat(getComputedStyle(element)[property]) : null;
+            };
+            return {
+              section: px('main .ui-section-space', 'paddingTop'),
+              card: px('main .ui-card-space-balanced', 'paddingTop'),
+              grid: px('main .ui-grid-gap-balanced', 'columnGap'),
+              sections: document.querySelectorAll('main .ui-section-space').length,
+              cards: document.querySelectorAll('main .ui-card-space-balanced').length
+            };
+          });
+          const { section, card, grid, sections, cards } = check.balancedSpacing;
+          if (sections < 4 || cards < 1 ||
+            Math.abs(section - (width === 390 ? 52 : 68)) > .75 ||
+            Math.abs(card - 23) > .5 || Math.abs(grid - 14) > .5) {
+            check.errors.push('Balanced spacing tokens have drifted: ' +
+              JSON.stringify(check.balancedSpacing));
+          }
+        }
         check.default = await measure(page);
         if (check.default.overflowPx > 2) check.errors.push('Horizontal overflow: ' + check.default.overflowPx + 'px');
         if (check.default.h1Count !== 1) check.errors.push('Expected 1 main h1; got ' + check.default.h1Count);
