@@ -44,7 +44,7 @@ try {
       verify(await page.locator('symbol#ppi-contour-mark').count() === 1, 'Reusable SVG contour symbol missing', width);
       const contourLogo = page.locator('.contour-logo img');
       await contourLogo.scrollIntoViewIfNeeded({ timeout: 10000 });
-      await page.waitForFunction(() => { const img = document.querySelector('.contour-logo img'); return img && img.complete && img.naturalWidth > 0; }, { timeout: 15000 });
+      await page.waitForFunction(() => { const img = document.querySelector('.contour-logo img'); return img && img.complete && img.naturalWidth > 0; }, null, { timeout: 15000 });
       verify(await contourLogo.evaluate((img) => img.naturalWidth > 0), 'Reference logo asset failed to load', width);
       const motifSemantics = await contours.evaluateAll((nodes) =>
         nodes.every((node) => node.getAttribute('aria-hidden') === 'true' &&
