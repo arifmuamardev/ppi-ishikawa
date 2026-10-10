@@ -22,6 +22,15 @@ const routes = [
   ['family-timeline', '/life-in-ishikawa/family/timeline/'],
   ['campus', '/community/kampus/'],
   ['campus-kanazawa', '/community/kampus/kanazawa-university/'],
+  ['guide-campus-jaist', '/community/kampus/jaist/'],
+  ['guide-campus-kit', '/community/kampus/kanazawa-institute-of-technology/'],
+  ['guide-campus-ipu', '/community/kampus/ishikawa-prefectural-university/'],
+  ['guide-campus-kinjo', '/community/kampus/kinjo-university/'],
+  ['guide-campus-alice', '/community/kampus/alice-gakuen/'],
+  ['guide-sg01', '/life-in-ishikawa/sebelum-berangkat/'],
+  ['guide-sg03', '/life-in-ishikawa/administrasi/'],
+  ['guide-f01', '/life-in-ishikawa/family/datang-bersama-keluarga/'],
+  ['guide-f05', '/life-in-ishikawa/family/benefit-kesehatan/'],
   ['scholarships', '/beasiswa/'],
   ['career', '/career/'],
   ['family-activities', '/life-in-ishikawa/family/aktivitas/']
@@ -96,6 +105,66 @@ try {
           }
           if (key === 'family' && breadcrumbs !== 1) {
             check.errors.push('Nested Family landing must keep its breadcrumb');
+          }
+        }
+
+        // Template C quality gates are semantic, not screenshot-only:
+        // hierarchical breadcrumb, verified sources, usable TOC targets,
+        // and exactly one end-navigation family on linear/campus guides.
+        const isCampusGuide = key === 'campus-kanazawa' || key.startsWith('guide-campus-');
+        const isSurvivalGuide = key.startsWith('guide-sg');
+        const isFamilyGuide = key.startsWith('guide-f');
+        if ((width === 390 || width === 1280) &&
+            (isCampusGuide || isSurvivalGuide || isFamilyGuide)) {
+          const detail = await page.evaluate(() => {
+            const main = document.querySelector('main');
+            const breadcrumbs = main?.querySelectorAll('nav[aria-label="Breadcrumb"]') || [];
+            const source = main?.querySelector('[data-ui-source-block]');
+            const navs = [...(main?.querySelectorAll('[data-ui-next-navigation]') || [])];
+            const toc = [...(main?.querySelectorAll('nav[aria-label="Daftar isi panduan"] a[href^="#"]') || [])];
+            const deadAnchors = toc.filter((link) =>
+              !document.getElementById(decodeURIComponent(link.hash.slice(1)))
+            ).map((link) => link.getAttribute('href'));
+            const last = breadcrumbs[0]?.querySelector('[aria-current="page"]');
+            return {
+              breadcrumbCount: breadcrumbs.length,
+              breadcrumbCurrent: Boolean(last),
+              sourceCount: main?.querySelectorAll('[data-ui-source-block]').length ?? 0,
+              sourceType: source?.getAttribute('data-ui-source-block'),
+              sourceLinks: source?.querySelectorAll('a[href^="http"]').length ?? 0,
+              endNavigationCount: navs.length,
+              endNavigationType: navs[0]?.getAttribute('data-ui-next-navigation') || null,
+              sourceBeforeNav: Boolean(source && navs[0] &&
+                (source.compareDocumentPosition(navs[0]) & Node.DOCUMENT_POSITION_FOLLOWING)),
+              tocCount: toc.length,
+              deadAnchors,
+              verifiedText: main?.textContent?.includes('Diverifikasi') ||
+                main?.textContent?.includes('diverifikasi') || false,
+              familyReturn: Boolean(main?.querySelector('a[href*="/family-anak/"]'))
+            };
+          });
+          check.detailGuide = detail;
+          if (detail.breadcrumbCount !== 1 || !detail.breadcrumbCurrent ||
+              detail.sourceCount !== 1 || !detail.verifiedText ||
+              detail.deadAnchors.length > 0) {
+            check.errors.push('Detail Guide requires one current-page breadcrumb, verified metadata, one source block and working TOC anchors');
+          }
+          if (isCampusGuide && (detail.sourceType !== 'campus' ||
+              detail.sourceLinks < 1 || detail.endNavigationCount !== 1 ||
+              detail.endNavigationType !== 'related' || !detail.sourceBeforeNav ||
+              detail.tocCount < 1)) {
+            check.errors.push('Campus Guide requires TOC, official-source disclosure, then one related navigation');
+          }
+          if (isSurvivalGuide && (detail.sourceType !== 'official' ||
+              detail.sourceLinks < 1 || detail.endNavigationCount !== 1 ||
+              detail.endNavigationType !== 'linear' || !detail.sourceBeforeNav ||
+              detail.tocCount < 1)) {
+            check.errors.push('Survival Guide requires TOC, sources, then one linear pager');
+          }
+          if (isFamilyGuide && (detail.sourceType !== 'official' ||
+              detail.sourceLinks < 1 || detail.endNavigationCount !== 0 ||
+              !detail.familyReturn)) {
+            check.errors.push('Family Guide requires official sources and a return to the family landing, without pager/related duplication');
           }
         }
 
