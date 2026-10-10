@@ -62,8 +62,8 @@ const primaryPaths = [
         <p class="mt-6 text-xl font-semibold text-slate-800 sm:text-2xl">{vision.subheadline}</p>
         <p class="mt-4 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">{vision.supporting}</p>
         <div class="mt-8 flex flex-wrap gap-3">
-          <a href={withBase('/life-in-ishikawa/')} class="inline-flex min-h-11 items-center rounded-xl bg-brand px-5 text-sm font-semibold text-white transition-colors hover:bg-brand-dark">Hidup di Ishikawa</a>
-          <a href={withBase('/community/kampus/')} class="inline-flex min-h-11 items-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-800 transition-colors hover:border-slate-400 hover:bg-accent/5">Cari kampus</a>
+          <a href={withBase('/life-in-ishikawa/')} class="inline-flex min-h-11 items-center rounded-xl bg-brand px-5 text-sm font-semibold text-white ui-motion-color hover:bg-brand-dark">Hidup di Ishikawa</a>
+          <a href={withBase('/community/kampus/')} class="inline-flex min-h-11 items-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-800 ui-motion-color hover:border-slate-400 hover:bg-accent/5">Cari kampus</a>
         </div>
       </div>
       <LicensedPhoto media={publicMedia.kanazawaStation} eager />
@@ -81,7 +81,7 @@ const primaryPaths = [
           <h2 class="type-section mt-4">Datang atau tinggal di Ishikawa bersama pasangan dan anak?</h2>
           <p class="mt-3 leading-7 text-slate-300">Mulai dari residence status, pregnancy, childcare, sekolah, benefit, kesehatan, sampai tempat bermain dan dukungan keluarga.</p>
         </div>
-        <a href={withBase('/life-in-ishikawa/family-anak/')} class="inline-flex min-h-11 items-center rounded-xl bg-white px-5 text-sm font-bold text-slate-950 transition-colors hover:bg-slate-100">Buka Keluarga →</a>
+        <a href={withBase('/life-in-ishikawa/family-anak/')} class="inline-flex min-h-11 items-center rounded-xl bg-white px-5 text-sm font-bold text-slate-950 ui-motion-color hover:bg-slate-100">Buka Keluarga →</a>
       </div>
     </div>
   </section>
@@ -96,7 +96,7 @@ const primaryPaths = [
 
       <div class="mt-8 grid ui-grid-gap-balanced sm:grid-cols-2 lg:grid-cols-3">
         {primaryPaths.map((item) => (
-          <a href={withBase(item.href)} class="group ui-card-space-balanced ui-radius-card ui-border-subtle border-slate-200 bg-white transition-colors hover:border-accent/35 hover:bg-accent/5">
+          <a href={withBase(item.href)} class="group ui-card-space-balanced ui-radius-card ui-border-subtle border-slate-200 bg-white ui-motion-navigation hover:border-accent/35 hover:bg-accent/5">
             <span class="ui-icon-tile text-accent-dark">
               <TopicIcon name={item.icon as any} class="size-6" />
             </span>
@@ -116,7 +116,7 @@ const primaryPaths = [
           <h2 class="type-section mt-2 text-slate-950">Mulai dari persiapan sebelum berangkat.</h2>
           <p class="mt-3 max-w-3xl leading-7 text-slate-700">Cek dokumen, tempat tinggal pertama, kebutuhan awal, komunikasi, transportasi, dan langkah penting sebelum tiba di Ishikawa.</p>
         </div>
-        <a href={withBase('/life-in-ishikawa/sebelum-berangkat/')} class="inline-flex min-h-11 items-center rounded-xl bg-slate-950 px-5 text-sm font-bold text-white transition-colors hover:bg-slate-800">Buka panduan →</a>
+        <a href={withBase('/life-in-ishikawa/sebelum-berangkat/')} class="inline-flex min-h-11 items-center rounded-xl bg-slate-950 px-5 text-sm font-bold text-white ui-motion-color hover:bg-slate-800">Buka panduan →</a>
       </div>
     </div>
   </section>
@@ -135,7 +135,7 @@ const primaryPaths = [
           </div>
           <div class="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3">
             {campuses.map((campus) => (
-              <a href={withBase(`/community/kampus/${campus.slug}/`)} class="flex min-h-14 items-center gap-2 rounded-xl border border-slate-200 bg-white p-3 transition-colors hover:border-accent/35 hover:bg-accent/5">
+              <a href={withBase(`/community/kampus/${campus.slug}/`)} class="flex min-h-14 items-center gap-2 rounded-xl border border-slate-200 bg-white p-3 ui-motion-color hover:border-accent/35 hover:bg-accent/5">
                 <InstitutionMark id={campus.slug as any} size="sm" class="shrink-0" />
                 <span class="truncate text-xs font-bold text-slate-800">{campus.shortName}</span>
               </a>
@@ -158,7 +158,7 @@ const primaryPaths = [
               <span class="rounded-full border border-slate-700 bg-white/5 px-3 py-2 text-xs font-bold text-slate-200">{label}</span>
             ))}
           </div>
-          <a href={withBase('/beasiswa/')} class="mt-5 inline-flex min-h-11 items-center rounded-xl bg-white px-4 text-sm font-bold text-slate-950 transition-colors hover:bg-slate-100">Cari beasiswa →</a>
+          <a href={withBase('/beasiswa/')} class="mt-5 inline-flex min-h-11 items-center rounded-xl bg-white px-4 text-sm font-bold text-slate-950 ui-motion-color hover:bg-slate-100">Cari beasiswa →</a>
         </div>
       </div>
     </div>

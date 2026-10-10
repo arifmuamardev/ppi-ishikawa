@@ -14,7 +14,7 @@ const { items, ariaLabel } = Astro.props;
       {items.map(([label, href]) => (
         <a
           href={href.startsWith('/') ? withBase(href) : href}
-          class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 transition-colors hover:border-accent/35 hover:bg-accent/10 hover:text-brand"
+          class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 ui-motion-color hover:border-accent/35 hover:bg-accent/10 hover:text-brand"
         >
           {label}
         </a>
