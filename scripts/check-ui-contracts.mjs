@@ -407,11 +407,34 @@ for (const relativePath of ['src/pages/about.astro', 'src/pages/community.astro'
 }
 await checkFile('src/components/NavigationCard.astro', {
   required: [
+    ['ui-icon-tile text-accent-dark', 'canonical 44px tinted icon tile'],
     ['data-ui-card="navigation"', 'stable navigation-card test hook'],
     ['type-card-title', 'shared compact title scale'],
     ['ui-radius-card ui-border-subtle border-slate-200', 'approved navigation card geometry'],
     ['hover:border-accent/35', 'shared navigation interaction'],
     ["withBase(href)", 'internal destinations respect deployment base path'],
+  ],
+});
+
+// Approved iconography contract: one stroke source and one reusable tile.
+await checkFile('src/components/TopicIcon.astro', {
+  required: [
+    ["class:list={[className, 'ui-topic-icon']}", 'SVG accepts semantic icon stroke token'],
+    ['stroke-width="1.8"', 'SVG has 1.8px presentation fallback'],
+    ['stroke-linecap="round"', 'icons retain rounded line ends'],
+    ['stroke-linejoin="round"', 'icons retain rounded joins'],
+    ['aria-hidden="true"', 'topic icon is decorative alongside visible labels'],
+  ],
+});
+await checkFile('src/styles/global.css', {
+  required: [
+    ['--ui-icon-stroke: 1.8;', 'approved standard stroke'],
+    ['--ui-icon-tile-size: 2.75rem;', 'approved 44px tile'],
+    ['--ui-icon-size-card: 1.5rem;', 'approved 24px card glyph'],
+    ['--ui-icon-size-guide: 1.25rem;', 'approved 20px guide glyph'],
+    ['--ui-icon-size-inline: 1rem;', 'approved 16px inline glyph'],
+    ['background: color-mix(in srgb, var(--ppi-accent) 10%, transparent);',
+      'approved context-colored 10 percent tint'],
   ],
 });
 
