@@ -247,6 +247,43 @@ try {
               JSON.stringify(i));
           }
         }
+        // Approved photography: verify loaded CSS, semantic figures, visual
+        // order and persistent credits without requiring Wikimedia requests.
+        if ((width === 390 || width === 1280) &&
+            ['home','community','life-in-ishikawa','winter','transport','health','campus-kanazawa'].includes(key)) {
+          check.media = await page.evaluate(() => {
+            const figure = document.querySelector('main [data-ui-media]');
+            if (!figure) return {missing: true};
+            const frame = figure.querySelector('.ui-media-frame');
+            const image = figure.querySelector('.ui-media-image');
+            const fallback = figure.querySelector('.ui-media-fallback');
+            const caption = figure.querySelector('figcaption.ui-media-caption');
+            const s = getComputedStyle(frame);
+            const i = getComputedStyle(image);
+            const c = getComputedStyle(caption);
+            return {
+              ratio: s.aspectRatio,
+              fit: i.objectFit,
+              focus: i.objectPosition,
+              rounded: Number.parseFloat(getComputedStyle(figure).borderTopLeftRadius),
+              captionBelow: Boolean(figure.compareDocumentPosition(caption) & Node.DOCUMENT_POSITION_CONTAINED_BY),
+              hasSource: Boolean(caption?.querySelector('a[href^="https://commons.wikimedia.org/"]')),
+              hasLicense: /CC0|CC BY|Public Domain/.test(caption?.textContent||''),
+              hasAlt: Boolean(image.getAttribute('alt')),
+              hasFallback: Boolean(fallback?.getAttribute('role') === 'img'),
+              position: c.position,
+              mediaRole: figure.dataset.uiMedia !== undefined
+            };
+          });
+          const m = check.media;
+          const editorial = ['winter','transport','health'].includes(key);
+          if (m.missing || m.ratio !== (editorial ? '4 / 3' : '16 / 9') ||
+              m.fit !== 'cover' || m.focus !== '50% 50%' ||
+              Math.abs(m.rounded-24)>1 || !m.hasSource || !m.hasLicense ||
+              !m.hasAlt || !m.hasFallback || m.position !== 'static' || !m.mediaRole) {
+            check.errors.push('Approved media component drift: ' + JSON.stringify(m));
+          }
+        }
         check.default = await measure(page);
         if (check.default.overflowPx > 2) check.errors.push('Horizontal overflow: ' + check.default.overflowPx + 'px');
         if (check.default.h1Count !== 1) check.errors.push('Expected 1 main h1; got ' + check.default.h1Count);
