@@ -1,6 +1,7 @@
 Source: PA4KEV/japan-vector-map, layer “ishikawa” from japan-prefectures.svg
 Source URL: https://github.com/PA4KEV/japan-vector-map
 Copyright (c) 2023 Kevin Matsubara
+Derivative for PPI Ishikawa Design Lab: topology-preserving simplification at 1.3 source-coordinate units followed by one Chaikin smoothing pass. This decorative approximation is not suitable for surveying, boundaries, or GIS analysis. Full original MIT notice is retained below.
 
 MIT License
 
