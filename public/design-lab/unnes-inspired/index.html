@@ -356,11 +356,11 @@
     body[data-lab-theme="dark"][data-contour-strength="strong"]{--line-strength:.60}
     .ppi-contour{position:absolute;z-index:0;pointer-events:none;user-select:none;opacity:var(--line-strength);transition:opacity .15s;fill:none;color:#79E4D0}
     .stage,.preview-section,.stripe,.preview-footer,.ds-page-intro{position:relative;overflow:hidden}
-    .stage .hero-grid,.preview-section .sec-header,.preview-section .cards,.stripe>:not(.ppi-contour),.preview-footer>:not(.ppi-contour),.ds-page-intro>:not(.ppi-contour){position:relative;z-index:1}
+    .stage .hero-grid,.preview-section .sec-header,.preview-section .cards,.stripe>:not(.ppi-contour):not(.ppi-map),.preview-footer>:not(.ppi-contour):not(.ppi-map),.ds-page-intro>:not(.ppi-contour):not(.ppi-map){position:relative;z-index:1}
     .ppi-contour--hero{right:-14%;top:-13%;height:110%;width:66%;transform:rotate(-9deg)}
     .art:before,.art:after{display:none}
     .art .ppi-contour--art{right:-38%;top:-5%;height:105%;width:139%;color:#fff}
-    .art>:not(.ppi-contour){position:relative;z-index:1}
+    .art>:not(.ppi-contour):not(.ppi-map){position:relative;z-index:1}
     .ppi-contour--section{right:-10%;top:-19px;width:390px;height:180px;color:#176B6A}
     .ppi-contour--cta{right:-10%;top:-125px;width:650px;height:370px;color:#C0F2E0;transform:rotate(8deg)}
     .preview-footer{padding:30px 42px;background:#10292B;color:#E9F8F1;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
@@ -383,7 +383,7 @@
     .contour-reference code{overflow-wrap:anywhere}
     .contour-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
     .contour-sample{min-height:240px;position:relative;overflow:hidden;padding:24px;display:flex;flex-direction:column;justify-content:flex-end}
-    .contour-sample>:not(.ppi-contour){position:relative;z-index:1}
+    .contour-sample>:not(.ppi-contour):not(.ppi-map){position:relative;z-index:1}
     .contour-sample small{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
     .contour-sample h3{font-size:clamp(20px,2.5vw,31px);line-height:1.05;letter-spacing:-.04em;font-weight:900;margin:10px 0 6px}
     .contour-sample p{font-size:12px;line-height:1.5;margin:4px 0}
@@ -405,10 +405,53 @@
     body[data-lab-theme="dark"] .sample-section .ppi-contour--sample{color:#B0F1DD}
     @media(max-width:720px){.contour-gallery{grid-template-columns:1fr}.contour-sample{min-height:185px}.contour-reference{grid-template-columns:1fr}.contour-logo{min-height:130px}}
     @media(max-width:600px){.ppi-contour--hero{width:110%;right:-51%;height:70%;top:-10%}.ppi-contour--section{right:-44%;top:13px;width:330px}.ppi-contour--cta{right:-55%;top:-70px;width:500px}.preview-footer{padding:23px 20px}.preview-footer strong{font-size:19px}.contour-controls strong{flex:1 1 100%}}
+
+    /* Geographically faithful Ishikawa outline, presented as a second optional motif. */
+    body[data-contour-motif="map"] .ppi-contour{display:none}
+    body[data-contour-motif="lines"] .ppi-map{display:none}
+    .ppi-map{position:absolute;z-index:0;pointer-events:none;user-select:none;display:block;
+      overflow:visible;fill:none;color:#86E3CD;opacity:var(--line-strength);
+      transition:opacity .15s ease}
+    .ppi-map--hero{right:-6%;top:-19%;width:43%;height:128%;color:#7CDEC9}
+    .art .ppi-map--art{right:-16%;top:-23%;height:136%;width:72%;color:#fff}
+    .ppi-map--section{right:-3%;top:-65px;width:190px;height:270px;color:#176B6A}
+    .ppi-map--cta{right:3%;top:-100px;width:245px;height:400px;color:#CCF1E5}
+    .ppi-map--footer{right:7%;top:-53px;width:155px;height:225px;color:#A3EEDA}
+    .ds-page-intro .ppi-map--guide{right:-14px;top:-100px;width:160px;height:260px;color:#B5EEDC}
+    .preview[data-mode="dark"] .ppi-map--section{color:#ACEEDA}
+    .motif-controls{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+    .motif-controls-title{font-size:12px;font-weight:850;margin-right:12px;color:#31544C}
+    .motif-controls-title small{font-weight:500;color:#5D746B}
+    .motif-controls button{border:1px solid #B9CBC1;background:white;min-height:44px;padding:10px 14px;border-radius:7px;font-size:12px;font-weight:800;cursor:pointer;color:#31544C}
+    .motif-controls button[aria-pressed="true"]{background:#176B6A;color:#fff;border-color:#176B6A}
+    .motif-controls button:hover:not([aria-pressed="true"]){background:#E7F3EC}
+    .motif-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:22px 0}
+    .motif-compare-card{min-width:0;background:white;border:1px solid #CBDDD6;border-radius:9px;padding:14px}
+    .motif-compare-card h3{font-size:16px;font-weight:850;margin:12px 0 6px;color:#284840}
+    .motif-compare-card p{font-size:12px;line-height:1.55;color:#5C6C65;margin:0 0 4px}
+    .motif-compare-art{height:220px;background:#103D40;position:relative;overflow:hidden;border-radius:5px}
+    .motif-compare-art .ppi-map,.motif-compare-art .ppi-contour{display:block!important;opacity:.65}
+    .motif-compare-art .ppi-contour--compare{width:110%;height:110%;top:5%;left:-7%;color:#A1F0DE}
+    .motif-compare-art .ppi-map--compare{width:80%;height:94%;top:3%;left:10%;color:#A1F0DE}
+    .motif-license a{font-weight:800;text-underline-offset:3px}
+    body[data-lab-theme="dark"] .motif-controls-title{color:#DFEFE8}
+    body[data-lab-theme="dark"] .motif-controls-title small{color:#CADCD2}
+    body[data-lab-theme="dark"] .motif-controls button{background:#1B3539;color:#E7F9F0;border-color:#58786F}
+    body[data-lab-theme="dark"] .motif-controls button[aria-pressed="true"]{background:#B1EBDA;color:#123D38}
+    body[data-lab-theme="dark"] .motif-compare-card{background:#1B3034;border-color:#496C61}
+    body[data-lab-theme="dark"] .motif-compare-card h3{color:#EDF9F3}
+    body[data-lab-theme="dark"] .motif-compare-card p{color:#D2E7DD}
+    @media(max-width:720px){.motif-compare{grid-template-columns:1fr}.motif-compare-art{height:190px}}
+    @media(max-width:600px){.motif-controls-title{flex:1 1 100%}
+      .ppi-map--hero{right:-40%;top:8%;width:78%;height:78%}
+      .art .ppi-map--art{right:-8%;top:-24%;width:73%;height:145%}
+      .ppi-map--section{right:-24%;top:-32px;width:145px;height:210px}
+      .ppi-map--cta{right:-12%;top:-60px;width:195px;height:260px}
+      .ppi-map--footer{right:-24px;top:-20px;width:105px;height:180px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
   </style>
 </head>
-<body data-lab-theme="light" data-contour-strength="subtle">
+<body data-lab-theme="light" data-contour-strength="subtle" data-contour-motif="map">
 <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;overflow:hidden"><defs>
 <symbol id="ppi-contour-mark" viewBox="0 0 720 380">
 <g fill="none" stroke="currentColor" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round">
@@ -416,7 +459,8 @@
 <path d="M-58 331h180q44 0 70-29l164-164q30-28 68-28h353"/>
 <path d="M-58 376h200q45 0 72-30l165-163q30-28 70-28h328"/>
 <path d="M234 389l111-110q29-29 70-29h125q36 0 61-25l105-103"/>
-</g></symbol></defs></svg>
+</g></symbol>
+<symbol id="ppi-ishikawa-map" viewBox="1159.74 1083.45 90.81 139.84"><path d="m 1194.2513,1218.2935 -3.7514,-3.7055 -3.6504,-2.6681 -8.2141,1.1907 -1.9924,-3.5555 -5.1963,-0.3507 0.2386,-3.7747 -2.1734,-2.4768 -4.7723,-3.9342 0.7597,-0.9626 0.5255,-1.6725 2.6357,-3.9999 5.0876,-4.0443 2.5794,-1.6575 5.0045,-7.6178 2.4843,-3.5354 3.8877,-1.6894 3.825,-3.2488 1.6598,-0.939 0.6811,-1.9802 2.5252,-4.6004 0.8423,-0.3649 -0.057,-2.8388 1.3529,-2.6804 1.3327,-0.2453 0.2716,-3.1599 1.9582,-3.8226 0.4839,-2.1472 -0.3771,-5.0842 v -3.6339 l 0.629,-1.8058 0.3347,-3.4115 -1.3626,-1.1654 -0.1663,-4.3603 -0.3898,-1.2982 -2.1444,-1.3237 -0.1881,-2.0593 -1.9932,-1.2852 0.1543,-3.1941 0.026,-2.2011 h 0.9682 l 0.7161,-1.669 -0.7888,-1.797 1.1806,-1.5024 0.6122,-0.2073 -0.01,-0.8659 -0.064,-2.0885 1.3632,-1.3685 0.5149,-0.6398 0.4522,-0.1 -0.1501,-2.8536 0.8248,-1.1282 0.86,-1.1382 1.6426,-0.3073 0.7083,-0.1259 0.5039,-1.0741 3.8642,-0.4007 5.0869,-0.6144 5.356,-3.3594 3.5029,-1.5488 1.3411,-2.1291 5.9154,-2.2717 4.2038,0.5165 0.332,-1.0397 2.0925,-0.5339 2.7568,-0.2919 0.8988,0.7447 2.1619,0.4086 -0.1726,2.1635 0.2056,1.2192 0.9773,0.9151 0.5926,0.8849 -4.3852,0.023 -0.6146,1.4917 h -2.2924 l -0.7285,8.1266 -1.3979,0.1071 -0.3947,3.6621 0.1431,0.8809 -4.7227,-0.2939 -2.7746,-0.023 -1.1747,1.0972 -0.6895,2.0473 -2.4937,2.6235 -2.0365,1.642 -0.4731,2.7562 -5.4251,0.108 -0.1872,-1.6691 -1.6622,-0.03 -0.2856,1.1551 -0.1802,1.4502 -1.0792,1.5829 0.03,2.5214 -1.0891,1.3388 -2.1921,2.0825 1.8255,1.2155 1.5115,-0.1326 1.8975,0.7684 2.3891,0.8527 0.9907,-0.1455 1.6503,-0.9017 1.4554,-0.1082 1.2549,-1.663 1.2298,-0.056 0.3243,4.6082 -0.6521,6.8516 -3.0796,0.5006 -4.6662,0.1266 -3.3284,1.6791 -2.5162,4.1366 -0.9105,6.2083 -0.8532,5.6935 -3.6657,2.3543 2.021,4.9832 -2.7835,4.7626 2.0013,7.0382 -1.9511,6.3337 -0.8399,2.9018 1.8009,6.8124 0.3124,1.5808 -1.6696,4.155 2.9948,2.327 0.8487,1.7276 -2.486,5.4733 -1.3454,5.5268 -2.0343,4.657 z" fill="none" stroke="currentColor" stroke-width="1.12" stroke-linecap="round" stroke-linejoin="round"/></symbol></defs></svg>
   <div class="lab-top">
     <div class="wrap">
       <div class="lab-mark">PPI <span>ISHIKAWA</span> / DESIGN LAB <span aria-hidden="true">◆</span></div>
@@ -449,8 +493,13 @@
           <button type="button" data-mode-choice="dark" aria-pressed="false">☾ Gelap</button>
         </div>
       </div>
-      <div class="contour-controls" role="group" aria-label="Intensitas kontur logo">
-        <strong>Line Contour <small>· eksplorasi</small></strong>
+      <div class="motif-controls" role="group" aria-label="Pilih motif dekoratif untuk halaman">
+        <span class="motif-controls-title">Motif halaman <small>· pilih bentuk, bukan template</small></span>
+        <button type="button" data-motif-choice="lines" aria-pressed="false">Garis Abstrak</button>
+        <button type="button" data-motif-choice="map" aria-pressed="true">Outline Ishikawa</button>
+      </div>
+      <div class="contour-controls" role="group" aria-label="Intensitas ornamen halaman">
+        <strong>Intensitas <small>· eksperimen</small></strong>
         <button type="button" data-contour-choice="off" aria-pressed="false">Off</button>
         <button type="button" data-contour-choice="subtle" aria-pressed="true">Subtle</button>
         <button type="button" data-contour-choice="strong" aria-pressed="false">Strong</button>
@@ -462,7 +511,7 @@
             <a href="#preview" class="preview-brand">PPI<span>J</span> / ISHIKAWA<span>.</span></a>
             <nav aria-label="Navigasi contoh"><a href="#demo-kampus">Kampus</a><a href="#demo-kampus">Kehidupan</a><a href="#demo-panduan">Panduan</a></nav>
           </div>
-          <section class="stage" aria-label="Contoh hero"><svg class="ppi-contour ppi-contour--hero" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg>
+          <section class="stage" aria-label="Contoh hero"><svg class="ppi-contour ppi-contour--hero" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--hero" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg>
             <div class="hero-grid">
               <div>
                 <p class="eyebrow hero-eyebrow">Indonesian Students Association · Ishikawa</p>
@@ -477,7 +526,7 @@
                   <a class="action secondary" href="#demo-panduan">Lihat panduan <span aria-hidden="true">↓</span></a>
                 </div>
               </div>
-              <div class="art" aria-label="Visual dekoratif identitas Ishikawa"><svg class="ppi-contour ppi-contour--art" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg>
+              <div class="art" aria-label="Visual dekoratif identitas Ishikawa"><svg class="ppi-contour ppi-contour--art" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--art" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg>
                 <p>PPI JEPANG · KOMISARIAT ISHIKAWA</p>
                 <div class="giant">ISHI<br>KAWA<span style="color:#FFFFFF75">.</span></div>
                 <div class="tag">JAPAN / 2026—2027</div>
@@ -489,7 +538,7 @@
             <div><strong>03</strong><span>Ruang eksplorasi</span></div>
             <div><strong>01</strong><span>Komunitas bersama</span></div>
           </div>
-          <section class="preview-section" id="demo-kampus" aria-labelledby="demo-title"><svg class="ppi-contour ppi-contour--section" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg>
+          <section class="preview-section" id="demo-kampus" aria-labelledby="demo-title"><svg class="ppi-contour ppi-contour--section" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--section" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg>
             <div class="sec-header">
               <div>
                 <p>Mulai dari kebutuhanmu</p>
@@ -503,12 +552,12 @@
               <a class="card" href="#demo-panduan"><span class="index">03 <span class="arr" aria-hidden="true">›</span></span><h4>Komunitas PPI</h4><p>Bertemu pelajar, keluarga, dan jejaring Indonesia.</p></a>
             </div>
           </section>
-          <section class="stripe"><svg class="ppi-contour ppi-contour--cta" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg>
+          <section class="stripe"><svg class="ppi-contour ppi-contour--cta" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--cta" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg>
             <h3>Belajar jauh dari rumah.<br><em>Tetap dekat satu sama lain.</em></h3>
             <a href="#demo-panduan">Lihat gaya ini ›</a>
           </section>
         </div>
-        <div class="preview-footer"><svg class="ppi-contour ppi-contour--footer" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><strong>PPI ISHIKAWA.</strong><span>Dekat, relevan, bermanfaat.</span></div>
+        <div class="preview-footer"><svg class="ppi-contour ppi-contour--footer" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--footer" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg><strong>PPI ISHIKAWA.</strong><span>Dekat, relevan, bermanfaat.</span></div>
       </div>
     </div>
     <section class="guide wrap" id="demo-panduan" aria-labelledby="guide-title">
@@ -553,18 +602,31 @@
 
     <section class="ds-section" id="design-contour" aria-labelledby="contour-title">
       <p class="ds-kicker">01B / Identity motif study</p>
-      <h2 class="ds-heading" id="contour-title">Logo menjadi garis.<br>Garis menjadi kontur.</h2>
-      <p class="ds-muted">Ini <strong>studi abstraksi ritme garis</strong>, bukan tracing presisi atau revisi logo resmi. Bandingkan motif kandidat dengan aset logo PPI di bawah sebelum menentukan bentuk finalnya.</p>
+      <h2 class="ds-heading" id="contour-title">Dua motif.<br>Satu identitas.</h2>
+      <p class="ds-muted">Bandingkan <strong>Garis Abstrak</strong> dari eksperimen sebelumnya dengan <strong>Outline Ishikawa</strong> yang mengikuti bentuk geografis prefektur. Keduanya adalah aksen dekoratif, bukan pengganti logo ataupun peta administratif resmi.</p>
       <div class="contour-reference">
         <div class="contour-logo"><img src="../../brand/ppi-ishikawa-logo.webp" alt="Logo PPI Ishikawa yang digunakan di website saat ini" width="469" height="426" loading="lazy"></div>
-        <div><p class="ds-tag">Source of identity</p><h3>Logo yang digunakan website PPI</h3><p>Aset asli: <code>public/brand/ppi-ishikawa-logo.webp</code>. Motif kandidat ini menguji bahasa garis bersudut membulat dan bertingkat; kesesuaian dengan bentuk logo asli masih menunggu penilaianmu.</p><p><strong>Status: kandidat visual — bukan motif resmi.</strong></p></div>
+        <div><p class="ds-tag">Source of identity</p><h3>Logo yang digunakan website PPI</h3><p>Aset asli: <code>public/brand/ppi-ishikawa-logo.webp</code>. Garis Abstrak merupakan studi bahasa logo, sedangkan Outline Ishikawa berasal dari peta vektor geografis. Keduanya masih kandidat identitas visual.</p><p><strong>Status: kandidat visual — bukan motif resmi.</strong></p></div>
       </div>
+<div class="motif-compare" role="group" aria-label="Perbandingan dua pilihan motif">
+        <div class="motif-compare-card">
+          <div class="motif-compare-art motif-compare-art--lines"><svg class="ppi-contour ppi-contour--compare" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg></div>
+          <h3>01 · Garis Abstrak</h3>
+          <p>Berangkat dari gagasan garis logo; bukan hasil tracing logo resmi.</p>
+        </div>
+        <div class="motif-compare-card">
+          <div class="motif-compare-art motif-compare-art--map"><svg class="ppi-map ppi-map--compare" viewBox="1159.74 1083.45 90.81 139.84" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg></div>
+          <h3>02 · Outline Ishikawa</h3>
+          <p>Outline geografis prefektur; mudah dikenali tanpa mengulang logo.</p>
+        </div>
+      </div>
+      <p class="ds-muted motif-license"><strong>Sumber peta:</strong> layer “ishikawa” dalam <a href="https://github.com/PA4KEV/japan-vector-map" target="_blank" rel="noopener noreferrer">Japan Vector Map — Kevin Matsubara</a>, MIT License (2023). <a href="./ishikawa-outline.svg" download>SVG Ishikawa ›</a> · <a href="./LICENSE-ishikawa-map.txt" target="_blank" rel="noopener noreferrer">Lisensi dan atribusi ›</a>. Outline ini untuk dekorasi, bukan penegasan batas legal.</p>
       <div class="contour-gallery">
-        <div class="contour-sample sample-hero"><svg class="ppi-contour ppi-contour--sample" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><small>Hero / dominant</small><h3>Garis besar.<br>Satu karakter.</h3></div>
-        <div class="contour-sample sample-section"><svg class="ppi-contour ppi-contour--sample" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><small>Section / subtle</small><h3>Section contour</h3><p>Di tepi bidang, tidak di belakang isi bacaan.</p></div>
-        <div class="contour-sample sample-cta"><svg class="ppi-contour ppi-contour--sample" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><small>CTA & Footer</small><h3>Tetap terhubung.</h3><p>Warna solid tetap elemen dominan.</p></div>
+        <div class="contour-sample sample-hero"><svg class="ppi-contour ppi-contour--sample" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--sample" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg><small>Hero / dominant</small><h3>Garis besar.<br>Satu karakter.</h3></div>
+        <div class="contour-sample sample-section"><svg class="ppi-contour ppi-contour--sample" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--sample" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg><small>Section / subtle</small><h3>Section contour</h3><p>Di tepi bidang, tidak di belakang isi bacaan.</p></div>
+        <div class="contour-sample sample-cta"><svg class="ppi-contour ppi-contour--sample" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--sample" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg><small>CTA & Footer</small><h3>Tetap terhubung.</h3><p>Warna solid tetap elemen dominan.</p></div>
       </div>
-      <p class="ds-muted" style="margin-top:18px">Coba Off / Subtle / Strong di atas contoh homepage. Satu simbol SVG dipakai kembali di semua penempatan dan dikondisikan untuk light/dark mode. Tidak diterapkan pada situs utama.</p>
+      <p class="ds-muted" style="margin-top:18px">Pilih Garis Abstrak atau Outline Ishikawa di atas, lalu coba Off / Subtle / Strong bersama Light/Dark Mode. Motif diterapkan pada hero, section, CTA/footer, dan intro Template C, tanpa perubahan website utama.</p>
     </section>
     <section class="ds-section" id="design-components" aria-labelledby="components-title">
       <p class="ds-kicker">02 / Components</p>
@@ -672,7 +734,7 @@
           <div class="ds-page" data-page="guide" hidden>
             <div class="ds-page-nav"><span class="ds-logo">PPIJ / ISHIKAWA.</span><span class="ds-simulated-menu">Contoh · Template C</span></div>
             <nav class="ds-guide-breadcrumb" aria-label="Contoh breadcrumb"><a href="#design-templates">Hidup di Ishikawa</a><span aria-hidden="true">/</span><span aria-current="page">Panduan kedatangan</span></nav>
-            <div class="ds-page-intro"><svg class="ppi-contour ppi-contour--guide" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><p class="ds-tag">Detail / Guide</p><h3>Panduan kedatangan.</h3><p>Satu topik, satu hierarki, serta lokasi pengguna yang jelas. Metadata verifikasi harus berasal dari peninjauan sumber yang nyata.</p></div>
+            <div class="ds-page-intro"><svg class="ppi-contour ppi-contour--guide" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--guide" viewBox="1159.74 1083.45 90.81 139.84" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-map"></use></svg><p class="ds-tag">Detail / Guide</p><h3>Panduan kedatangan.</h3><p>Satu topik, satu hierarki, serta lokasi pengguna yang jelas. Metadata verifikasi harus berasal dari peninjauan sumber yang nyata.</p></div>
             <p class="ds-summary">Contoh struktur · Tanggal verifikasi tidak disimulasikan</p>
             <nav class="ds-guide-toc" aria-label="Contoh daftar isi"><strong>Di halaman ini</strong><div><a href="#ds-guide-step">Langkah awal</a><a href="#ds-guide-evidence">Sumber dan navigasi</a></div></nav>
             <div class="ds-guide-copy" id="ds-guide-step"><h4>Langkah awal</h4><p>Urutan informasi memprioritaskan tindakan yang perlu dilakukan, bukan modul promosi atau kumpulan tautan acak. Bagian panjang sebaiknya menggunakan daftar isi yang benar-benar menuju kontennya.</p></div>
@@ -757,6 +819,23 @@
       });
 
 
+
+      const motifButtons = Array.from(document.querySelectorAll('[data-motif-choice]'));
+      const motifKey = 'ppi-ishikawa-design-lab-contour-motif';
+      function applyMotif(value) {
+        const chosen = value === 'lines' ? 'lines' : 'map';
+        document.body.dataset.contourMotif = chosen;
+        motifButtons.forEach(function(button) {
+          button.setAttribute('aria-pressed',String(button.dataset.motifChoice === chosen));
+        });
+        try { localStorage.setItem(motifKey,chosen); } catch (_error) { /* optional storage */ }
+      }
+      let motifInitially = 'map';
+      try { motifInitially = localStorage.getItem(motifKey) || 'map'; } catch (_error) { /* default */ }
+      applyMotif(motifInitially);
+      motifButtons.forEach(function(button) {
+        button.addEventListener('click',function() { applyMotif(button.dataset.motifChoice); });
+      });
       const contourButtons = Array.from(document.querySelectorAll('[data-contour-choice]'));
       const contourKey = 'ppi-ishikawa-design-lab-contour-strength';
       function applyContour(value) {
