@@ -73,6 +73,14 @@
   --ui-radius-card: 1rem; /* 16px */
   --ui-radius-feature: 1.5rem; /* 24px */
   --ui-border-subtle-width: 1px;
+
+  /* Approved Standard + Tinted Tile icon language (11 October 2026).
+     Shape, size and treatment are centralized; ink follows contextual color. */
+  --ui-icon-stroke: 1.8;
+  --ui-icon-tile-size: 2.75rem; /* 44px; decorative, not an independent button */
+  --ui-icon-size-card: 1.5rem; /* 24px */
+  --ui-icon-size-guide: 1.25rem; /* 20px */
+  --ui-icon-size-inline: 1rem; /* 16px */
 }
 
 html {
@@ -463,6 +471,28 @@ html.dark .brand-gold-rule {
   border-style: solid;
   border-width: var(--ui-border-subtle-width);
   /* Border hue remains controlled by border-slate-200, border-accent/35, etc. */
+}
+
+/* Iconography -------------------------------------------------------------- */
+
+/* Same svg outline language throughout the public site. The icon itself is
+   decorative; the surrounding link or action supplies its accessible name. */
+.ui-topic-icon {
+  stroke-width: var(--ui-icon-stroke);
+}
+
+.ui-icon-tile {
+  display: grid;
+  flex: 0 0 var(--ui-icon-tile-size);
+  width: var(--ui-icon-tile-size);
+  height: var(--ui-icon-tile-size);
+  place-items: center;
+  border-radius: var(--ui-radius-control);
+  background: color-mix(in srgb, var(--ppi-accent) 10%, transparent);
+}
+
+.ui-icon-tile-inverse {
+  background: rgb(255 255 255 / 10%);
 }
 
 /* Form controls ------------------------------------------------------------ */
