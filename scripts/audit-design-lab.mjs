@@ -239,6 +239,125 @@ try {
       verify((await overflow(page)) <= 2,
         'Iconography study must not introduce horizontal overflow', width);
 
+
+      // Media study: independently adjustable aspect, crop, gradient, captions;
+      // credits must persist in all states, and failed photos get a real fallback.
+      verify(await page.locator('#design-media').count() === 1,
+        'Images & Media comparison section missing', width);
+      for (const [name,value] of [
+        ['media-ratio','wide'],['media-focus','center'],
+        ['media-overlay','off'],['media-caption','standard']
+      ]) verify(await page.locator('body').getAttribute('data-'+name) === value,
+        'Initial media preset incorrect: '+name, width);
+      const mediaState = () => page.evaluate(() => {
+        const figure = document.querySelector('.media-workbench-main .media-figure');
+        const frame = figure.querySelector('.media-frame');
+        const img = figure.querySelector('.media-photo');
+        const shade = figure.querySelector('.media-overlay');
+        const caption = figure.querySelector('.media-caption');
+        const get = (el) => getComputedStyle(el);
+        return {
+          ratio: Number.parseFloat(get(frame).aspectRatio.split('/')[0]) /
+            Number.parseFloat(get(frame).aspectRatio.split('/')[1]||'1'),
+          position: get(img).objectPosition,
+          fit: get(img).objectFit,
+          gradientOpacity: Number.parseFloat(get(shade).opacity),
+          captionFont: Number.parseFloat(get(caption).fontSize),
+          captionPadding: Number.parseFloat(get(caption).paddingTop),
+          hasCredit: caption.textContent.includes('Daderot / Wikimedia Commons') &&
+            caption.textContent.includes('CC0 1.0'),
+          sourceLink: caption.querySelector('a')?.getAttribute('href') || '',
+          alt: img.getAttribute('alt'),
+          sourceAboveActions: Boolean(
+            document.querySelector('.media-preview-support')
+            ?.compareDocumentPosition(document.querySelector('.preview .cards')) &
+            Node.DOCUMENT_POSITION_PRECEDING
+          ),
+          failVisible: !get(figure.querySelector('.media-fallback')).display.includes('none')
+        };
+      });
+      const initialMedia = await mediaState();
+      verify(Math.abs(initialMedia.ratio - 16/9) < .01 &&
+        initialMedia.position === '50% 50%' &&
+        initialMedia.fit === 'cover' &&
+        initialMedia.gradientOpacity === 0 &&
+        initialMedia.hasCredit &&
+        initialMedia.sourceLink.includes('commons.wikimedia.org/wiki/File:') &&
+        initialMedia.alt === 'Tsuzumi-mon di Kanazawa Station' &&
+        initialMedia.sourceAboveActions,
+        'Baseline media treatment must be 16:9 / center / off with real credit and choices-first ordering: '+
+        JSON.stringify(initialMedia), width);
+      // Ratios must change the same real figure, not just button labels.
+      await page.locator('[data-media-ratio-choice="classic"]').click();
+      const classicMedia = await mediaState();
+      verify(Math.abs(classicMedia.ratio - 4/3) < .01,
+        'Classic ratio should compute to 4:3', width);
+      await page.locator('[data-media-ratio-choice="square"]').click();
+      const squareMedia = await mediaState();
+      verify(Math.abs(squareMedia.ratio - 1) < .01,
+        'Square ratio should compute to 1:1', width);
+      await page.locator('[data-media-focus-choice="top"]').click();
+      const topMedia = await mediaState();
+      verify(topMedia.position === '50% 20%',
+        'Top-focused crop must change object-position', width);
+      await page.locator('[data-media-overlay-choice="soft"]').click();
+      const overlayMedia = await mediaState();
+      verify(overlayMedia.gradientOpacity === 1,
+        'Soft overlay must become visible', width);
+      await page.locator('[data-media-caption-choice="compact"]').click();
+      const compactMedia = await mediaState();
+      verify(compactMedia.captionPadding < initialMedia.captionPadding &&
+        compactMedia.captionFont < initialMedia.captionFont && compactMedia.hasCredit,
+        'Compact caption should be denser but retain attribution and license', width);
+      verify(await page.locator('[data-media-caption-choice="compact"]').getAttribute('aria-pressed') === 'true',
+        'Caption controls must announce pressed state', width);
+      verify(await page.locator('.media-fallback-reference[role="img"]').count() === 1,
+        'Unavailable media placeholder requires an accessible text alternative', width);
+      verify(await page.locator('body').getAttribute('data-icon-weight') === 'standard' &&
+        await page.locator('body').getAttribute('data-radius-style') === 'balanced',
+        'Media controls should preserve previously approved design decisions', width);
+      await page.locator('[data-mode-choice="dark"]').click();
+      verify((await overflow(page)) <= 2,
+        'Media variants should not create Dark Mode overflow', width);
+      await page.locator('[data-mode-choice="light"]').click();
+      if (width === 390 || width === 1280) {
+        await page.screenshot({path: directory+'/media-square-top-soft-'+width+'.jpg',
+          type:'jpeg',quality:62,fullPage:true,animations:'disabled'});
+      }
+      await page.reload({waitUntil:'domcontentloaded'});
+      verify(await page.locator('body').getAttribute('data-media-ratio') === 'square' &&
+        await page.locator('body').getAttribute('data-media-focus') === 'top' &&
+        await page.locator('body').getAttribute('data-media-overlay') === 'soft' &&
+        await page.locator('body').getAttribute('data-media-caption') === 'compact',
+        'Media choices must persist after reload', width);
+      // Simulate a failed external image deterministically, without relying
+      // on Wikimedia being accessible in the runner.
+      const tested = await page.locator('.media-workbench-main .media-figure').evaluate(figure => {
+        const img = figure.querySelector('img.media-photo');
+        img.dispatchEvent(new Event('error'));
+        return {
+          hidden: img.hidden,
+          fallbackVisible: !figure.querySelector('.media-fallback').hidden,
+          credit: figure.querySelector('figcaption')?.textContent || ''
+        };
+      });
+      verify(tested.hidden && tested.fallbackVisible &&
+        tested.credit.includes('Daderot / Wikimedia Commons'),
+        'Image failure must replace the broken photo without removing credit', width);
+      await page.locator('[data-media-ratio-choice="wide"]').click();
+      await page.locator('[data-media-focus-choice="center"]').click();
+      await page.locator('[data-media-overlay-choice="off"]').click();
+      await page.locator('[data-media-caption-choice="standard"]').click();
+      const restoredMedia = await mediaState();
+      verify(Math.abs(restoredMedia.ratio - 16/9) < .01 &&
+        restoredMedia.position === '50% 50%' &&
+        restoredMedia.gradientOpacity === 0 &&
+        restoredMedia.captionPadding === initialMedia.captionPadding &&
+        restoredMedia.hasCredit,
+        'Media defaults should be restorable while keeping attribution', width);
+      verify((await overflow(page)) <= 2,
+        'Restoring media defaults should not cause overflow', width);
+
       // Contour design study must remain decorative and independently adjustable.
       const contours = page.locator('.ppi-contour, .ppi-map');
       verify(await page.locator('.ppi-contour').count() === 10, 'Expected ten original line motifs (including comparison)', width);
