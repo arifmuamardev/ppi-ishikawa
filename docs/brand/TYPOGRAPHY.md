@@ -4,14 +4,14 @@ Typography is part of the long-term visual identity, not the annual period theme
 
 ## Primary typeface
 
-**Plus Jakarta Sans Variable**
+**Fira Sans**
 
-The site self-hosts the font through `@fontsource-variable/plus-jakarta-sans`.
+Approved for the long-term PPI Ishikawa identity on 11 October 2026, after the Design Lab B — Solid Institutional study. The public website self-hosts Fira Sans via `@fontsource/fira-sans` (bundled by Astro), with no production dependency on Google Fonts.
 
 Primary stack:
 
 ```css
-"Plus Jakarta Sans Variable",
+"Fira Sans",
 "Hiragino Sans",
 "Yu Gothic",
 Meiryo,
@@ -20,7 +20,7 @@ system-ui,
 sans-serif
 ```
 
-Japanese glyphs fall back to the installed Japanese system fonts so the site does not need to ship a large Japanese webfont by default.
+Japanese glyphs continue to fall back to Japanese system fonts; the Latin webfonts remain limited to their `latin-*` subsets to avoid unnecessarily shipping large CJK assets. Source font is licensed under the SIL Open Font License 1.1.
 
 ## Semantic font tokens
 
@@ -32,7 +32,7 @@ Defined in `src/styles/global.css`:
 - `font-ui` — controls and interface text
 - `font-sans` — compatibility/default alias
 
-They currently all point to the same family. Components should not hardcode font-family declarations.
+All semantic font tokens currently point to Fira Sans. Components should not hardcode font-family declarations. The experimental Design Lab uses Fira Sans from Google Fonts for its isolated prototype, whereas the production site self-hosts the same family.
 
 ## Usage
 
@@ -61,7 +61,7 @@ Use the semantic roles below instead of inventing page-specific heading scales.
 - Body text: 400
 - UI / navigation: 600
 - Headings and eyebrows: 700
-- Avoid using 800–900 as the default. Heavy weights should be exceptional rather than the site's normal visual voice.
+- Avoid using 800–900 as the default. Heavy weights should be exceptional rather than the site's normal visual voice. The Design Lab B display headings may intentionally use these weights; do not automatically propagate them to every production heading.
 
 ### Typography behavior
 

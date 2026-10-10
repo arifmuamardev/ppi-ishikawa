@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-brand: "Plus Jakarta Sans Variable", "Hiragino Sans", "Yu Gothic", Meiryo, ui-sans-serif, system-ui, sans-serif;
+  --font-brand: "Fira Sans", "Hiragino Sans", "Yu Gothic", Meiryo, ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-brand);
   --font-heading: var(--font-brand);
   --font-ui: var(--font-brand);

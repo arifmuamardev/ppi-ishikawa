@@ -105,7 +105,7 @@ Pakai semantic utility yang tersedia terlebih dahulu; **hindari angka baru yang 
 | Radius | Kontrol `rounded-xl`; kartu umum `rounded-2xl`; feature panel `rounded-3xl` | gunakan pola yang sudah ada |
 | CTA | Aksi utama menonjol terbatas; secondary lebih tenang; hasil berulang tidak perlu tombol utama penuh semua | `ui-action-*` jika sesuai |
 | Touch & keyboard | Target interaksi diusahakan minimal 44 px; focus-visible, navigasi keyboard, semantik, state kosong dan pesan hasil | verifikasi manual + CI |
-| Color & font | Ambil warna melalui semantic tokens; **jangan hardcode palet periode** pada tiap komponen | `src/data/brand.ts`, Plus Jakarta Sans |
+| Color & font | Ambil warna melalui semantic tokens; **jangan hardcode palet periode** pada tiap komponen | `src/data/brand.ts`, Fira Sans |
 
 Satu jenis kartu untuk satu *peran informasi* (navigation, result, status, advisory); **jangan** menyatukan semua gaya tanpa membedakan fungsi. Namun kartu dengan peran sama harus berperilaku dan tampil konsisten lintas halaman.
 
