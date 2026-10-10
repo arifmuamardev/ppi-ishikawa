@@ -407,6 +407,7 @@ for (const relativePath of ['src/pages/about.astro', 'src/pages/community.astro'
 }
 await checkFile('src/components/NavigationCard.astro', {
   required: [
+    ['ui-motion-navigation', 'approved subtle navigation-only motion'],
     ['ui-icon-tile text-accent-dark', 'canonical 44px tinted icon tile'],
     ['data-ui-card="navigation"', 'stable navigation-card test hook'],
     ['type-card-title', 'shared compact title scale'],
@@ -414,6 +415,24 @@ await checkFile('src/components/NavigationCard.astro', {
     ['hover:border-accent/35', 'shared navigation interaction'],
     ["withBase(href)", 'internal destinations respect deployment base path'],
   ],
+});
+
+// Standard Motion uses central tokens and role-based semantics.
+await checkFile('src/styles/global.css', {
+  required: [
+    ['--ui-motion-duration: 160ms;', 'approved motion duration'],
+    ['--ui-motion-lift: -2px;', 'approved navigation lift'],
+    ['@media (hover: hover) and (pointer: fine)', 'hover guarded for pointer devices'],
+    ['@media (prefers-reduced-motion: reduce)', 'system reduced motion respected'],
+    ['.ui-motion-navigation:focus-visible', 'stationary keyboard focus'],
+  ],
+});
+await checkFile('src/components/ResultCard.astro', {
+  required: [['ui-motion-color', 'result cards only transition color']],
+  forbidden: [['ui-motion-navigation', 'filter results must not lift']],
+});
+await checkFile('src/pages/index.astro', {
+  required: [['ui-motion-navigation', 'homepage navigation uses standard motion']],
 });
 
 // Approved iconography contract: one stroke source and one reusable tile.
