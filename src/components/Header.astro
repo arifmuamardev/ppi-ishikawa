@@ -36,7 +36,7 @@ const isActive = (href: string) => {
     <nav class="type-ui hidden items-center gap-5 text-slate-600 lg:flex" aria-label="Navigasi utama">
       {nav.map((item) => (
         <a
-          class={`transition hover:text-brand ${isActive(item.href) ? 'font-bold text-brand' : ''}`}
+          class={`ui-motion-color hover:text-brand ${isActive(item.href) ? 'font-bold text-brand' : ''}`}
           href={withBase(item.href)}
           aria-current={isActive(item.href) ? 'page' : undefined}
         >
@@ -47,14 +47,14 @@ const isActive = (href: string) => {
 
     <div class="flex items-center gap-2">
       <ThemeToggle />
-      <a href={withBase('/member/')} class="type-ui hidden min-h-11 items-center rounded-xl border border-slate-300 bg-white px-4 text-slate-800 transition-colors hover:border-accent/50 hover:bg-accent/5 hover:text-brand sm:inline-flex">
+      <a href={withBase('/member/')} class="type-ui hidden min-h-11 items-center rounded-xl border border-slate-300 bg-white px-4 text-slate-800 ui-motion-color hover:border-accent/50 hover:bg-accent/5 hover:text-brand sm:inline-flex">
         Area Anggota
       </a>
-      <a href={withBase('/contact')} class="type-ui hidden min-h-11 items-center rounded-xl bg-ink px-4 text-white transition-colors hover:bg-brand xl:inline-flex">
+      <a href={withBase('/contact')} class="type-ui hidden min-h-11 items-center rounded-xl bg-ink px-4 text-white ui-motion-color hover:bg-brand xl:inline-flex">
         Hubungi Kami
       </a>
       <details class="group relative lg:hidden">
-        <summary class="type-ui inline-flex min-h-11 cursor-pointer list-none items-center rounded-xl border border-slate-300 bg-white px-4 text-slate-800 transition-colors hover:border-accent/50 hover:bg-accent/5">
+        <summary class="type-ui inline-flex min-h-11 cursor-pointer list-none items-center rounded-xl border border-slate-300 bg-white px-4 text-slate-800 ui-motion-color hover:border-accent/50 hover:bg-accent/5">
             <span class="group-open:hidden">Menu</span>
             <span class="hidden group-open:inline">Tutup</span>
           </summary>
