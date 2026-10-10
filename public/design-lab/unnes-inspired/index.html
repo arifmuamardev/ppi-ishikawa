@@ -625,7 +625,7 @@
     @media(max-width:640px){.spacing-controls-label{flex:1 1 100%}}
 
     /* Radius & Border study. Keep identity contour SVG and fixed browser chrome untouched.
-       States are scoped to Design Lab; production retains its approved existing radii. */
+       States are scoped to Design Lab; production adopts Balanced + Subtle via its own semantic tokens. */
     body[data-radius-style="crisp"]{
       --lab-radius-control:6px;--lab-radius-card:10px;--lab-radius-feature:16px;
     }
@@ -1110,7 +1110,7 @@
           </div>
         </div>
       </div>
-      <p class="ds-muted radius-note"><strong>Aturan:</strong> komponen kontrol 12 px, kartu 16 px, dan feature panel 24 px pada preset Balanced. Border Subtle tetap 1 px dengan warna berbeda untuk Light/Dark; Defined sedikit lebih tegas. Focus ring <strong>tidak diganti</strong> dengan border dan Ishikawa Fragments tetap tanpa shadow atau outline. Ini masih eksperimen, belum diterapkan ke website utama.</p>
+      <p class="ds-muted radius-note"><strong>Aturan:</strong> komponen kontrol 12 px, kartu 16 px, dan feature panel 24 px pada preset Balanced. Border Subtle tetap 1 px dengan warna berbeda untuk Light/Dark; Defined sedikit lebih tegas. Focus ring <strong>tidak diganti</strong> dengan border dan Ishikawa Fragments tetap tanpa shadow atau outline. **Balanced + Subtle sudah disetujui** sebagai standar produksi. Token semantik telah diterapkan bertahap pada komponen bersama; pilihan Crisp, Rounded, dan Defined tetap tersedia hanya untuk studi perbandingan.</p>
     </section>
 
     <section class="ds-section" id="design-templates" aria-labelledby="templates-title">
