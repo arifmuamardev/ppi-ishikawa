@@ -209,6 +209,144 @@
     .preview[data-mode="dark"] .stripe h3 em{color:#C3F2E2}
     .preview[data-mode="dark"] .stripe a{background:#F1FAF6;color:#174340}
     @media(max-width:600px){.preview-tools{align-items:stretch}.mode-switch{width:100%}.mode-switch button{flex:1}}
+
+    /* Live Design System layer — isolated to this prototype. */
+    [hidden]{display:none!important}
+    .ds-jump{position:sticky;top:0;z-index:8;border-bottom:1px solid #D2DDD8;background:#F6FAF8F2;backdrop-filter:blur(15px)}
+    .ds-jump .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding-block:10px}
+    .ds-jump a{min-height:42px;display:inline-flex;align-items:center;padding:9px 13px;font-size:12px;font-weight:800;text-decoration:none;border-radius:5px}
+    .ds-jump a:hover{background:#E4ECE8}
+    .ds-kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;color:var(--red)}
+    .ds-heading{font-size:clamp(31px,4.5vw,49px);letter-spacing:-.05em;font-weight:900;line-height:1.05;margin:10px 0 15px}
+    .ds-muted{font-size:14px;line-height:1.65;color:#526360;max-width:760px}
+    .ds-section{padding:60px 0;border-top:1px solid #CBD9D3;scroll-margin-top:75px}
+    .ds-section:first-of-type{border-top:0}
+    .ds-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+    .ds-panel{background:#fff;border:1px solid #CEDDD7;padding:24px;border-radius:12px;min-width:0}
+    .ds-panel h3{font-size:20px;letter-spacing:-.025em;margin:0 0 14px;font-weight:850}
+    .ds-panel p{font-size:13px;line-height:1.6;color:#576561}
+    .ds-token-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .ds-token{background:#fff;border:1px solid #D2DFDA;padding:17px;border-radius:9px}
+    .ds-token strong{font-size:23px;letter-spacing:-.035em;display:block}
+    .ds-token small{display:block;margin-top:8px;font-size:12px;line-height:1.5;color:#61706C}
+    .ds-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;background:#E8F0EC;padding:3px 6px;border-radius:4px;overflow-wrap:anywhere}
+    .ds-live-buttons{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .ds-btn{min-height:44px;padding:12px 16px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;border-radius:7px;font-size:13px;font-weight:800;border:1px solid transparent;cursor:pointer}
+    .ds-btn-primary{background:var(--red);color:white}
+    .ds-btn-primary:hover{background:#902037}
+    .ds-btn-outline{border-color:#A0B4AC;color:#243F3A;background:transparent}
+    .ds-btn-outline:hover{background:#E8F2ED}
+    .ds-btn:disabled{background:#DEE6E2;color:#6C7773;border-color:#C9D4CE;cursor:not-allowed}
+    .ds-btn:focus-visible,.ds-chip:focus-visible,.ds-control:focus-visible{outline:3px solid #5BA8A6;outline-offset:3px}
+    .ds-field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .ds-field{display:flex;flex-direction:column;gap:7px;margin-bottom:13px;min-width:0}
+    .ds-field label{font-size:12px;font-weight:850}
+    .ds-control{width:100%;min-width:0;border:1px solid #9DB4AA;background:#fff;color:#233D38;border-radius:7px;font:inherit;font-size:14px;min-height:44px;padding:10px 12px}
+    .ds-notice{display:block;border-left:5px solid var(--teal);background:#E7F3EF;padding:15px 18px;margin:12px 0;color:#1E4039;font-size:13px;line-height:1.55}
+    .ds-notice.caution{border-left-color:var(--red);background:#F9E9EC;color:#612839}
+    .ds-notice strong{display:block;margin-bottom:4px}
+    .ds-demo-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}
+    .ds-nav-card,.ds-result-card{border:1px solid #CBDBD4;background:#F7FAF9;border-radius:10px;padding:18px;min-width:0}
+    .ds-nav-card{display:block;text-decoration:none;transition:border-color .2s,transform .2s}
+    .ds-nav-card:hover{border-color:var(--teal);transform:translateY(-2px)}
+    .ds-nav-card strong,.ds-result-card strong{display:block;font-size:16px;line-height:1.3}
+    .ds-nav-card small,.ds-result-card small{display:block;color:#586A64;line-height:1.45;margin-top:7px}
+    .ds-result-card a{font-size:12px;font-weight:800;display:inline-flex;margin-top:13px;text-underline-offset:4px}
+    .ds-tag{font-size:10px!important;letter-spacing:.1em;text-transform:uppercase;font-weight:850;color:#A53248!important;margin:0 0 10px!important}
+    .ds-structure{margin:12px 0 0;padding-left:20px;font-size:13px;line-height:1.9}
+    .ds-structure li::marker{color:var(--red);font-weight:800}
+    .ds-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 16px}
+    .ds-tabs button{background:#fff;color:#28423B;border:2px solid #BCCFC5;border-radius:7px;padding:11px 15px;min-height:44px;font-weight:850;font-size:12px;cursor:pointer}
+    .ds-tabs button[aria-pressed="true"]{background:var(--teal);color:#fff;border-color:var(--teal)}
+    .ds-tabs button:hover:not([aria-pressed="true"]){background:#EAF3EF}
+    .ds-viewport{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding-bottom:15px}
+    .ds-viewport .ds-tabs{margin:0}
+    .ds-viewport-label{font-size:12px;color:#586B65}
+    .ds-frame{max-width:100%;width:100%;margin:0 auto;transition:width .2s,max-width .2s;border:1px solid #AFBFB8;border-radius:11px;overflow:hidden;background:#fff;box-shadow:0 14px 40px #1E40341A}
+    .ds-frame[data-viewport="tablet"]{max-width:768px}
+    .ds-frame[data-viewport="mobile"]{max-width:390px}
+    .ds-frame-bar{background:#E5EFEB;color:#52635C;padding:10px 14px;font-size:11px;display:flex;justify-content:space-between;gap:9px}
+    .ds-canvas{container-type:inline-size;background:#fff;color:#24322F}
+    .ds-page{padding:30px;min-height:420px}
+    .ds-page-nav{border-bottom:1px solid #D8E4DF;padding-bottom:14px;margin-bottom:25px;display:flex;justify-content:space-between;gap:12px;font-size:12px;font-weight:800;flex-wrap:wrap}
+    .ds-page-nav .ds-logo{font-size:16px;letter-spacing:-.04em;font-weight:900;color:var(--teal)}
+    .ds-page-nav .ds-simulated-menu{color:#64736B}
+    .ds-page-intro{padding:30px;background:#123E40;color:#fff;margin-bottom:20px}
+    .ds-page-intro .ds-tag{color:#BDEEE0!important}
+    .ds-page-intro h4{font-size:clamp(26px,4.7vw,41px);font-weight:900;letter-spacing:-.05em;line-height:1.1;margin:0 0 11px}
+    .ds-page-intro p{color:#D1E9E1;margin:0;line-height:1.6;font-size:13px;max-width:530px}
+    .ds-page .ds-nav-card,.ds-page .ds-result-card{background:#FAFCFB}
+    .ds-page .ds-demo-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .ds-summary{font-size:12px;color:#536A60;margin:12px 0 15px}
+    .ds-source{border-top:1px solid #C2D7CD;padding-top:15px;margin-top:20px;font-size:12px;line-height:1.6}
+    .ds-source strong{display:block;font-size:13px}
+    .ds-guide-breadcrumb{font-size:11px;color:#57746A;display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+    .ds-guide-copy{font-size:13px;line-height:1.65;max-width:610px;color:#344B43}
+    .ds-guide-copy h5{font-size:20px;letter-spacing:-.02em;margin:18px 0 8px}
+    .ds-guide-toc{border:1px solid #C8DAD1;background:#F4F9F6;padding:15px;font-size:13px;margin-top:16px}
+    .ds-guide-toc a{display:inline-block;margin:9px 13px 2px 0;font-weight:700;color:#155E57;text-underline-offset:3px}
+    .ds-find-empty{padding:20px;border:1px dashed #B9CFC2;color:#5C6C64;font-size:12px}
+    .ds-guide-next{margin-top:18px;font-size:12px;font-weight:800;color:#156059}
+    .ds-checklist{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}
+    .ds-checklist label{display:flex;align-items:flex-start;gap:10px;padding:14px;background:#F4F8F5;border:1px solid #D0DDD6;border-radius:7px;font-size:13px;line-height:1.4;cursor:pointer}
+    .ds-checklist input{width:19px;height:19px;accent-color:var(--teal);flex:none;margin-top:0}
+    .ds-outcome{font-size:12px;min-height:20px;color:#1C6158;margin-top:10px}
+    .ds-qa-count{font-size:13px;font-weight:800;margin:14px 0}
+    .ds-reference{border-left:4px solid var(--teal);padding-left:17px;margin-top:20px;font-size:13px;line-height:1.6}
+    .ds-reference a{text-underline-offset:3px;font-weight:800}
+    @container (max-width:650px){
+      .ds-page{padding:15px}
+      .ds-page-intro{padding:22px}
+      .ds-page-intro h4{font-size:29px}
+      .ds-page .ds-demo-cards,.ds-page .ds-field-row{grid-template-columns:1fr}
+      .ds-page .ds-nav-card{padding:14px}
+      .ds-page .ds-result-card{padding:14px}
+    }
+    @media(max-width:720px){
+      .ds-columns,.ds-token-grid,.ds-demo-cards,.ds-checklist{grid-template-columns:1fr}
+      .ds-field-row{grid-template-columns:1fr}
+      .ds-section{padding:44px 0}
+      .ds-jump .wrap{gap:0;overflow-x:auto;flex-wrap:nowrap}
+      .ds-jump a{flex:none}
+      .ds-viewport .ds-tabs{flex:1 1 100%}
+      .ds-viewport .ds-tabs button{flex:1}
+    }
+    body[data-lab-theme="dark"] .ds-jump{background:#102125F2;border-color:#355155}
+    body[data-lab-theme="dark"] .ds-jump a:hover{background:#274347}
+    body[data-lab-theme="dark"] .ds-section{border-color:#395257}
+    body[data-lab-theme="dark"] .ds-kicker{color:#FFA8BA}
+    body[data-lab-theme="dark"] .ds-muted,body[data-lab-theme="dark"] .ds-viewport-label{color:#C9DBD5}
+    body[data-lab-theme="dark"] .ds-panel,body[data-lab-theme="dark"] .ds-token{background:#1A2F33;border-color:#416064;color:#F0FAF5}
+    body[data-lab-theme="dark"] .ds-panel p,body[data-lab-theme="dark"] .ds-token small{color:#CEDFD9}
+    body[data-lab-theme="dark"] .ds-code{background:#284549;color:#F0FAF5}
+    body[data-lab-theme="dark"] .ds-btn-outline{border-color:#97BDB0;color:#F0FAF5}
+    body[data-lab-theme="dark"] .ds-btn-outline:hover{background:#294649}
+    body[data-lab-theme="dark"] .ds-btn:disabled{background:#3A4B4A;color:#BCC9C3;border-color:#4C6260}
+    body[data-lab-theme="dark"] .ds-control{background:#213B3D;color:#F0FAF6;border-color:#78938D}
+    body[data-lab-theme="dark"] .ds-notice{background:#214A46;color:#E2F8EF}
+    body[data-lab-theme="dark"] .ds-notice.caution{background:#55323C;color:#FFF0F2}
+    body[data-lab-theme="dark"] .ds-nav-card,body[data-lab-theme="dark"] .ds-result-card{background:#20383D;border-color:#456267;color:#F3FBF8}
+    body[data-lab-theme="dark"] .ds-nav-card small,body[data-lab-theme="dark"] .ds-result-card small{color:#CFDDD8}
+    body[data-lab-theme="dark"] .ds-tag{color:#FFAEBD!important}
+    body[data-lab-theme="dark"] .ds-tabs button{background:#20383C;color:#EFF8F2;border-color:#54736F}
+    body[data-lab-theme="dark"] .ds-tabs button[aria-pressed="true"]{background:#B6EADB;color:#123C37;border-color:#B6EADB}
+    body[data-lab-theme="dark"] .ds-tabs button:hover:not([aria-pressed="true"]){background:#30494C}
+    body[data-lab-theme="dark"] .ds-frame{border-color:#52716E}
+    body[data-lab-theme="dark"] .ds-frame-bar{background:#2B4548;color:#F0FAF7}
+    body[data-lab-theme="dark"] .ds-canvas{background:#16292E;color:#F3FAF7}
+    body[data-lab-theme="dark"] .ds-page-nav{border-color:#46625F}
+    body[data-lab-theme="dark"] .ds-page-nav .ds-logo{color:#93E6D2}
+    body[data-lab-theme="dark"] .ds-page-nav .ds-simulated-menu{color:#C1D8D0}
+    body[data-lab-theme="dark"] .ds-page .ds-nav-card,body[data-lab-theme="dark"] .ds-page .ds-result-card{background:#20393D}
+    body[data-lab-theme="dark"] .ds-summary{color:#D3E4DE}
+    body[data-lab-theme="dark"] .ds-source{border-color:#57736D}
+    body[data-lab-theme="dark"] .ds-guide-breadcrumb,body[data-lab-theme="dark"] .ds-guide-copy{color:#DBEAE3}
+    body[data-lab-theme="dark"] .ds-guide-toc{background:#23413F;border-color:#52746C}
+    body[data-lab-theme="dark"] .ds-guide-toc a,body[data-lab-theme="dark"] .ds-guide-next{color:#B7F1DF}
+    body[data-lab-theme="dark"] .ds-find-empty{color:#D2E4DC;border-color:#5B7D73}
+    body[data-lab-theme="dark"] .ds-checklist label{background:#20373B;border-color:#47625E}
+    body[data-lab-theme="dark"] .ds-outcome{color:#B3F0D9}
+    body[data-lab-theme="dark"] .ds-reference{border-color:#8BDACB}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
   </style>
 </head>
@@ -225,6 +363,12 @@
     <p>Uji gaya editorial yang terinspirasi dari UNNES: font Fira Sans, judul dengan bidang warna, dan palet PPI Ishikawa yang lebih berani. Pilih alternatif untuk melihat contoh halaman berubah langsung.</p>
     <div class="context-note"><strong>Prototype only.</strong> Tidak terhubung ke menu situs, tidak mengubah desain A/B/C, dan tidak menjadi keputusan identitas baru.</div>
   </header>
+  <nav class="ds-jump" aria-label="Navigasi Design System"><div class="wrap">
+    <a href="#demo-panduan">Fondasi</a>
+    <a href="#design-components">Komponen</a>
+    <a href="#design-templates">Template A/B/C</a>
+    <a href="#design-governance">Governance & QA</a>
+  </div></nav>
   <main>
     <div class="wrap">
       <div class="selector" role="group" aria-label="Pilih alternatif desain">
@@ -333,6 +477,160 @@
         <p><strong>Kriteria sebelum adopsi:</strong> nyaman dibaca pada ponsel, kontras AA, tidak ada horizontal overflow, dan konsisten untuk beranda, Landing, Finder, serta Detail tanpa menghilangkan fungsi masing-masing.</p>
       </div>
     </section>
+
+    <section class="ds-section" id="design-components" aria-labelledby="components-title">
+      <p class="ds-kicker">02 / Components</p>
+      <h2 class="ds-heading" id="components-title">Komponen yang konsisten.<br>Interaksi yang jelas.</h2>
+      <p class="ds-muted">Contoh di bawah mengilustrasikan fungsi komponen produksi PPI, bukan memindahkan komponen Astro atau CSS produksinya. Klik, isi, dan uji state untuk merasakan perlakuan desain B.</p>
+      <div class="ds-token-grid" style="margin:24px 0">
+        <div class="ds-token"><strong>44 px</strong><small>Minimum target sentuh untuk kontrol interaktif</small></div>
+        <div class="ds-token"><strong>8–12 px</strong><small>Radius tombol dan bidang kecil pada eksperimen</small></div>
+        <div class="ds-token"><strong>16–24 px</strong><small>Jarak dalam kartu; sesuai peran dan kepadatan</small></div>
+        <div class="ds-token"><strong>AA</strong><small>Target kontras teks dan interaksi; perlu diuji tiap keadaan</small></div>
+      </div>
+      <div class="ds-columns">
+        <div class="ds-panel">
+          <p class="ds-tag">Actions / States</p>
+          <h3>Tombol dan fokus</h3>
+          <div class="ds-live-buttons">
+            <a class="ds-btn ds-btn-primary" href="#design-templates">Lihat template <span aria-hidden="true">›</span></a>
+            <a class="ds-btn ds-btn-outline" href="#design-governance">Aturan UI <span aria-hidden="true">›</span></a>
+            <button class="ds-btn" disabled>Nonaktif</button>
+          </div>
+          <p>Primary terbatas pada aksi utama, secondary lebih tenang. Coba <kbd>Tab</kbd> untuk memeriksa outline fokus; tombol nonaktif tidak dapat dijalankan.</p>
+        </div>
+        <div class="ds-panel">
+          <p class="ds-tag">Form / Feedback</p>
+          <h3>Form dan validasi</h3>
+          <form id="ds-sample-form">
+            <div class="ds-field-row">
+              <div class="ds-field"><label for="ds-name">Nama contoh</label><input class="ds-control" id="ds-name" name="name" placeholder="Nama pengguna" required minlength="2"></div>
+              <div class="ds-field"><label for="ds-topic">Kebutuhan</label><select class="ds-control" id="ds-topic" name="topic" required><option value="">Pilih topik</option><option>Kampus</option><option>Beasiswa</option><option>Keluarga</option></select></div>
+            </div>
+            <button type="submit" class="ds-btn ds-btn-primary">Uji form <span aria-hidden="true">›</span></button>
+            <output class="ds-outcome" id="ds-form-feedback" aria-live="polite"></output>
+          </form>
+          <p>Ini simulasi lokal; data tidak dikirim atau disimpan ke server.</p>
+        </div>
+        <div class="ds-panel">
+          <p class="ds-tag">Navigation vs result</p>
+          <h3>Dua peran kartu, dua interaksi</h3>
+          <div class="ds-demo-cards">
+            <a class="ds-nav-card" href="#design-templates"><p class="ds-tag">NavigationCard</p><strong>Panduan kampus <span aria-hidden="true">›</span></strong><small>Seluruh kartu membuka satu destinasi.</small></a>
+            <article class="ds-result-card"><p class="ds-tag">ResultCard</p><strong>Contoh hasil pencarian</strong><small>Metadata dan aksi independen.</small><a href="#design-templates">Lihat contoh hasil <span aria-hidden="true">›</span></a></article>
+          </div>
+        </div>
+        <div class="ds-panel">
+          <p class="ds-tag">Advisory vs feature</p>
+          <h3>Catatan bukan promosi</h3>
+          <div class="ds-notice" role="note"><strong>Informasi</strong>Keterangan yang membantu pengguna, tanpa meminta perhatian berlebihan.</div>
+          <div class="ds-notice caution" role="note"><strong>Perlu diperiksa</strong>Syarat administrasi dan data resmi harus diverifikasi sebelum dipublikasi.</div>
+          <p><code>AdvisoryPanel</code> untuk info dan caution; <code>HighlightPanel</code> untuk visi atau ajakan penting.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="ds-section" id="design-templates" aria-labelledby="templates-title">
+      <p class="ds-kicker">03 / Page archetypes</p>
+      <h2 class="ds-heading" id="templates-title">Satu gaya B.<br>Tiga tugas halaman.</h2>
+      <p class="ds-muted"><strong>Desain visual B — Solid Institutional</strong> adalah arah tampilan. Berbeda dengan <strong>Template B — Finder</strong>, yaitu aturan struktur halaman. Pilih Template A/B/C di bawah untuk melihat penerapan gaya ini pada tugas pengguna yang berbeda.</p>
+      <div class="ds-tabs" role="group" aria-label="Template halaman yang disimulasikan">
+        <button type="button" data-page-choice="landing" aria-pressed="true">A · Landing</button>
+        <button type="button" data-page-choice="finder" aria-pressed="false">B · Finder</button>
+        <button type="button" data-page-choice="guide" aria-pressed="false">C · Guide</button>
+      </div>
+      <div class="ds-viewport">
+        <span class="ds-viewport-label" id="ds-page-description" aria-live="polite">Tugas utama: membantu memilih jalur atau topik.</span>
+        <div class="ds-tabs" role="group" aria-label="Lebar simulasi konten">
+          <button type="button" data-width-choice="desktop" aria-pressed="true">Desktop</button>
+          <button type="button" data-width-choice="tablet" aria-pressed="false">Tablet</button>
+          <button type="button" data-width-choice="mobile" aria-pressed="false">Mobile</button>
+        </div>
+      </div>
+      <div class="ds-frame" data-viewport="desktop" id="ds-template-frame">
+        <div class="ds-frame-bar"><span>Simulasi layout, bukan screenshot produksi</span><strong id="ds-frame-width">Responsif</strong></div>
+        <div class="ds-canvas">
+          <div class="ds-page" data-page="landing">
+            <div class="ds-page-nav"><span class="ds-logo">PPIJ / ISHIKAWA.</span><span class="ds-simulated-menu">Contoh · Template A</span></div>
+            <div class="ds-page-intro"><p class="ds-tag">Landing / Directory</p><h4>Kampus di Ishikawa.</h4><p>Temukan kampus dan jalur informasi sesuai kebutuhan. Tidak ada filter atau konten yang menghalangi pilihan utama.</p></div>
+            <div class="ds-demo-cards">
+              <a class="ds-nav-card" href="#design-components"><p class="ds-tag">01</p><strong>Universitas</strong><small>Lihat panduan studi dan lokasi <span aria-hidden="true">›</span></small></a>
+              <a class="ds-nav-card" href="#design-components"><p class="ds-tag">02</p><strong>Persiapan</strong><small>Tempat tinggal dan administrasi <span aria-hidden="true">›</span></small></a>
+              <a class="ds-nav-card" href="#design-components"><p class="ds-tag">03</p><strong>Komunitas</strong><small>Temukan informasi organisasi <span aria-hidden="true">›</span></small></a>
+            </div>
+            <div class="ds-source">Pilihan utama tampil sebelum konten orientasi dan foto. Tidak ada breadcrumb karena contoh ini berada pada level menu utama.</div>
+          </div>
+          <div class="ds-page" data-page="finder" hidden>
+            <div class="ds-page-nav"><span class="ds-logo">PPIJ / ISHIKAWA.</span><span class="ds-simulated-menu">Contoh · Template B</span></div>
+            <div class="ds-page-intro"><p class="ds-tag">Finder / Explorer</p><h4>Temukan sumber yang relevan.</h4><p>Pengguna langsung diarahkan ke pencarian dan penyaringan, bukan banner atau berita.</p></div>
+            <div class="ds-field-row">
+              <div class="ds-field"><label for="ds-find-query">Cari dalam contoh</label><input id="ds-find-query" class="ds-control" type="search" placeholder="Coba: kampus, keluarga..."></div>
+              <div class="ds-field"><label for="ds-find-category">Kategori</label><select id="ds-find-category" class="ds-control"><option value="all">Semua kategori</option><option value="kampus">Kampus</option><option value="beasiswa">Beasiswa</option><option value="keluarga">Keluarga</option></select></div>
+            </div>
+            <div class="ds-viewport">
+              <p class="ds-summary" id="ds-find-summary" role="status" aria-live="polite">4 contoh sumber tersedia</p>
+              <button type="button" class="ds-btn ds-btn-outline" id="ds-find-reset">Reset filter</button>
+            </div>
+            <div class="ds-demo-cards" id="ds-find-results">
+              <article class="ds-result-card ds-find-result" data-category="kampus" data-search="kampus lokasi universitas"><p class="ds-tag">Kampus</p><strong>Contoh informasi kampus</strong><small>Label, deskripsi, dan satu aksi independen.</small><a href="#design-components">Tentang kartu hasil ›</a></article>
+              <article class="ds-result-card ds-find-result" data-category="beasiswa" data-search="beasiswa sumber pendanaan"><p class="ds-tag">Beasiswa</p><strong>Contoh sumber pendanaan</strong><small>Pengguna menyaring hasil berdasarkan kriteria.</small><a href="#design-components">Tentang kartu hasil ›</a></article>
+              <article class="ds-result-card ds-find-result" data-category="keluarga" data-search="keluarga anak panduan"><p class="ds-tag">Keluarga</p><strong>Contoh panduan keluarga</strong><small>Hasil tetap dapat dicari dari dataset penuh.</small><a href="#design-components">Tentang kartu hasil ›</a></article>
+              <article class="ds-result-card ds-find-result" data-category="kampus" data-search="kampus tempat tinggal hunian"><p class="ds-tag">Kampus</p><strong>Contoh dukungan hunian</strong><small>Hanya sampel; bukan klaim data kampus aktual.</small><a href="#design-components">Tentang kartu hasil ›</a></article>
+            </div>
+            <p class="ds-find-empty" id="ds-find-empty" role="status" hidden>Tidak ada hasil cocok. Ubah kata kunci atau pilih Reset filter.</p>
+            <button type="button" class="ds-btn ds-btn-outline" id="ds-find-more" style="margin-top:15px">Tampilkan hasil lainnya ›</button>
+            <div class="ds-source"><strong>Metode & sumber</strong>Data ini hanya contoh UI. Finder produksi harus menyertakan asal, tanggal pembaruan, dan ketentuan yang diverifikasi.</div>
+          </div>
+          <div class="ds-page" data-page="guide" hidden>
+            <div class="ds-page-nav"><span class="ds-logo">PPIJ / ISHIKAWA.</span><span class="ds-simulated-menu">Contoh · Template C</span></div>
+            <nav class="ds-guide-breadcrumb" aria-label="Contoh breadcrumb"><a href="#design-templates">Hidup di Ishikawa</a><span aria-hidden="true">/</span><span aria-current="page">Panduan kedatangan</span></nav>
+            <div class="ds-page-intro"><p class="ds-tag">Detail / Guide</p><h4>Panduan kedatangan.</h4><p>Satu topik, satu hierarki, serta lokasi pengguna yang jelas. Metadata verifikasi harus berasal dari peninjauan sumber yang nyata.</p></div>
+            <p class="ds-summary">Contoh struktur · Tanggal verifikasi tidak disimulasikan</p>
+            <nav class="ds-guide-toc" aria-label="Contoh daftar isi"><strong>Di halaman ini</strong><div><a href="#ds-guide-step">Langkah awal</a><a href="#ds-guide-evidence">Sumber dan navigasi</a></div></nav>
+            <div class="ds-guide-copy" id="ds-guide-step"><h5>Langkah awal</h5><p>Urutan informasi memprioritaskan tindakan yang perlu dilakukan, bukan modul promosi atau kumpulan tautan acak. Bagian panjang sebaiknya menggunakan daftar isi yang benar-benar menuju kontennya.</p></div>
+            <div class="ds-source" id="ds-guide-evidence"><strong>Sumber resmi & verifikasi — struktur contoh</strong>Sumber asli harus dicantumkan sebelum navigasi menuju topik lain. Jangan menampilkan tanggal diverifikasi jika proses verifikasinya belum dilakukan.</div>
+            <div class="ds-guide-next"><a href="#design-governance">Langkah berikutnya: aturan dan QA ›</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="ds-columns" style="margin-top:16px">
+        <div class="ds-panel"><h3>Kontrak Template A</h3><ol class="ds-structure"><li>Page Intro</li><li>Pilihan utama</li><li>Informasi pendukung</li><li>Langkah lanjut bila perlu</li></ol><p>Direktori tanpa filter tetap A; jangan menyebut “Hub” sebagai label UI wajib.</p></div>
+        <div class="ds-panel"><h3>Kontrak Template B</h3><ol class="ds-structure"><li>Page Intro</li><li>Filter / pencarian</li><li>Jumlah dan hasil, termasuk empty state</li><li>Metode dan sumber</li></ol><p>ResultCard adalah artikel dengan aksi terpisah. Uji filter, reset, dan tampilkan lainnya di preview.</p></div>
+        <div class="ds-panel"><h3>Kontrak Template C</h3><ol class="ds-structure"><li>Breadcrumb dan intro</li><li>Artikel serta TOC bila perlu</li><li>Sumber resmi</li><li>Satu navigasi akhir</li></ol><p>Survival: pager; Kampus: related; Keluarga: kembali. Jangan menampilkan dua navigasi akhir sekaligus.</p></div>
+        <div class="ds-panel"><h3>Catatan responsivitas</h3><p>Tombol Desktop, Tablet, Mobile mengubah lebar contoh di dalam halaman. Ini membantu meninjau komposisi, tetapi <strong>tidak menggantikan</strong> uji browser nyata pada 360, 390, 430, 768, dan 1280 px.</p><p>Pengujian keyboard, kontras, teks panjang, dan browser asli tetap menjadi gate sebelum penerapan produksi.</p></div>
+      </div>
+    </section>
+
+    <section class="ds-section" id="design-governance" aria-labelledby="governance-title">
+      <p class="ds-kicker">04 / Governance & QA</p>
+      <h2 class="ds-heading" id="governance-title">Konsisten bukan berarti seragam.</h2>
+      <p class="ds-muted">Panduan normatif PPI menetapkan perilaku berdasarkan kebutuhan pengguna. Style B adalah eksplorasi visual; keputusan produksi baru sah setelah membandingkan screenshot, pengujian fungsi, dan persetujuan perubahan.</p>
+      <div class="ds-columns">
+        <div class="ds-panel">
+          <h3>Peran komponen</h3>
+          <ol class="ds-structure"><li>Header halaman mengikuti A/B/C dan level navigasi, bukan kedalaman URL.</li><li>Gunakan font, warna, dan spacing dari token bersama saat diterapkan ke produksi.</li><li>NavigationCard untuk satu destinasi; ResultCard untuk hasil filter.</li><li>AdvisoryPanel untuk info/caution; HighlightPanel untuk CTA atau visi.</li><li>Satu pola navigasi akhir pada Guide, setelah sumber.</li></ol>
+        </div>
+        <div class="ds-panel">
+          <h3>Checklist sebelum adopsi</h3>
+          <div class="ds-checklist" id="ds-checklist">
+            <label><input type="checkbox">Tugas utama dan template halaman jelas</label>
+            <label><input type="checkbox">Hierarki heading dan breadcrumb benar</label>
+            <label><input type="checkbox">Kartu, CTA, dan token reused</label>
+            <label><input type="checkbox">Light/Dark, hover, focus, disabled, empty state diuji</label>
+            <label><input type="checkbox">Screenshot 390/1280 px dibandingkan</label>
+            <label><input type="checkbox">Build, link, UI, theme, dan responsive audit lulus</label>
+          </div>
+          <div class="ds-qa-count" id="ds-qa-count" role="status" aria-live="polite">0 dari 6 langkah ditandai</div>
+          <p>Checklist ini hanya alat peninjauan mandiri. Menandainya bukan bukti bahwa pengujian otomatis atau audit visual sudah lulus.</p>
+        </div>
+      </div>
+      <div class="ds-reference">
+        <strong>Dokumentasi sumber:</strong>
+        <a href="https://github.com/arifmuamardev/ppi-ishikawa/blob/main/docs/brand/DESIGN-SYSTEM-GOVERNANCE.md" target="_blank" rel="noopener noreferrer">Design System & UI Governance ›</a>
+        dan <a href="https://github.com/arifmuamardev/ppi-ishikawa/blob/main/docs/brand/TEMPLATE-C-GUIDE-AUDIT.md" target="_blank" rel="noopener noreferrer">Template C Guide Audit ›</a>.
+        Contoh ini tidak menggantikan keduanya dan tidak mengubah struktur/komponen produksi tanpa review.
+      </div>
+    </section>
   </main>
   <footer class="footer wrap">
     <div>© PPI Ishikawa · Independent design experiment, not UNNES branding.</div>
@@ -367,6 +665,82 @@
           stage.setAttribute('data-view',key);
           desc.textContent = labels[key];
           buttons.forEach(function(other) {other.setAttribute('aria-pressed',String(other === button));});
+        });
+      });
+
+      const exampleButtons = Array.from(document.querySelectorAll('[data-page-choice]'));
+      const examplePages = Array.from(document.querySelectorAll('[data-page]'));
+      const templateDescriptions = {
+        landing: 'Tugas utama: membantu memilih jalur atau topik.',
+        finder: 'Tugas utama: mencari, memfilter, dan membandingkan hasil.',
+        guide: 'Tugas utama: membaca satu panduan dan sumber resminya.'
+      };
+      exampleButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+          const selected = button.dataset.pageChoice;
+          exampleButtons.forEach(function(item) { item.setAttribute('aria-pressed',String(item === button)); });
+          examplePages.forEach(function(page) { page.hidden = page.dataset.page !== selected; });
+          document.getElementById('ds-page-description').textContent = templateDescriptions[selected];
+        });
+      });
+      const frame = document.getElementById('ds-template-frame');
+      const widthButtons = Array.from(document.querySelectorAll('[data-width-choice]'));
+      widthButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+          frame.dataset.viewport = button.dataset.widthChoice;
+          widthButtons.forEach(function(item) { item.setAttribute('aria-pressed',String(item === button)); });
+          document.getElementById('ds-frame-width').textContent = {
+            desktop:'Responsif',tablet:'Maks. 768 px',mobile:'Maks. 390 px'
+          }[button.dataset.widthChoice];
+        });
+      });
+      const finder = document.getElementById('ds-find-results');
+      const finderQuery = document.getElementById('ds-find-query');
+      const finderCategory = document.getElementById('ds-find-category');
+      const finderRows = Array.from(finder.querySelectorAll('.ds-find-result'));
+      const finderSummary = document.getElementById('ds-find-summary');
+      const finderEmpty = document.getElementById('ds-find-empty');
+      const finderMore = document.getElementById('ds-find-more');
+      let showAllResults = false;
+      function updateFinder() {
+        const query = finderQuery.value.trim().toLocaleLowerCase('id');
+        const category = finderCategory.value;
+        const matching = finderRows.filter(function(row) {
+          return (category === 'all' || row.dataset.category === category) &&
+            (row.dataset.search + ' ' + row.textContent).toLocaleLowerCase('id').includes(query);
+        });
+        const limit = showAllResults ? matching.length : 2;
+        finderRows.forEach(function(row) {
+          const index = matching.indexOf(row);
+          row.hidden = index < 0 || index >= limit;
+        });
+        finderSummary.textContent = Math.min(matching.length,limit) + ' dari ' + matching.length + ' contoh hasil cocok';
+        finderEmpty.hidden = matching.length !== 0;
+        finderMore.hidden = matching.length <= limit;
+      }
+      finderQuery.addEventListener('input',function() {showAllResults=false;updateFinder();});
+      finderCategory.addEventListener('change',function() {showAllResults=false;updateFinder();});
+      finderMore.addEventListener('click',function() {showAllResults=true;updateFinder();});
+      document.getElementById('ds-find-reset').addEventListener('click',function() {
+        finderQuery.value='';finderCategory.value='all';showAllResults=false;updateFinder();
+      });
+      updateFinder();
+      document.getElementById('ds-sample-form').addEventListener('submit',function(event) {
+        event.preventDefault();
+        const name = document.getElementById('ds-name').value.trim();
+        const topic = document.getElementById('ds-topic').value;
+        const output = document.getElementById('ds-form-feedback');
+        if (name.length < 2 || !topic) {
+          output.textContent = 'Lengkapi nama dan topik sebelum melanjutkan.';
+          return;
+        }
+        output.textContent = 'Contoh berhasil: '+ name +' memilih '+ topic +'. Tidak ada data yang dikirim.';
+      });
+      const checks = Array.from(document.querySelectorAll('#ds-checklist input[type="checkbox"]'));
+      checks.forEach(function(box) {
+        box.addEventListener('change',function() {
+          const done = checks.filter(function(item) {return item.checked;}).length;
+          document.getElementById('ds-qa-count').textContent = done + ' dari ' + checks.length + ' langkah ditandai';
         });
       });
     })();
