@@ -481,6 +481,22 @@ html.dark .brand-gold-rule {
   stroke-width: var(--ui-icon-stroke);
 }
 
+/* The category tile size is fixed while glyph sizes follow their roles. */
+.ui-icon-tile > .ui-topic-icon {
+  width: var(--ui-icon-size-card);
+  height: var(--ui-icon-size-card);
+}
+
+.ui-icon-size-guide {
+  width: var(--ui-icon-size-guide);
+  height: var(--ui-icon-size-guide);
+}
+
+.ui-icon-size-inline {
+  width: var(--ui-icon-size-inline);
+  height: var(--ui-icon-size-inline);
+}
+
 .ui-icon-tile {
   display: grid;
   flex: 0 0 var(--ui-icon-tile-size);
