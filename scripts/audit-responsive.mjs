@@ -279,6 +279,28 @@ try {
           ).length);
           if (invalid) check.errors.push(invalid + ' navigation cards violate heading, route, or visual contract');
         }
+        if ((width === 390 || width === 1280) && (key === 'scholarships' || key === 'career')) {
+          const isScholarship = key === 'scholarships';
+          const root = isScholarship ? '#scholarship-grid' : '#career-grid';
+          const selector = isScholarship ? '.scholarship-card' : '.career-source';
+          const expectedAttributes = isScholarship
+            ? ['campus', 'campusScope', 'level', 'stage', 'indonesia', 'route', 'freshness']
+            : ['type', 'location', 'audience'];
+          const details = await page.locator(root + ' ' + selector).evaluateAll((cards, attributes) => ({
+            total: cards.length,
+            invalid: cards.filter((card) =>
+              card.tagName !== 'ARTICLE' ||
+              card.dataset.uiCard !== 'result' ||
+              attributes.some((attribute) => !(attribute in card.dataset)) ||
+              !card.querySelector('a[href]')
+            ).length,
+          }), expectedAttributes);
+          check.primaryFinderResults = details.total;
+          if (details.total < 1 || details.invalid) {
+            check.errors.push(key + ': results must be semantic articles with intact data attributes and own links');
+          }
+        }
+
         // Exercise the real Finder interactions once at a representative phone width.
         // These assertions supplement the screenshot/overflow checks, rather than
         // treating a successful static render as proof the filters still work.
