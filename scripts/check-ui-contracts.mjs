@@ -438,6 +438,29 @@ await checkFile('src/styles/global.css', {
   ],
 });
 
+// Approved media component: credits, photo alternatives, and fallback are mandatory.
+await checkFile('src/components/LicensedPhoto.astro', {
+  required: [
+    ['data-ui-media', 'canonical media role'],
+    ['<figcaption class="ui-media-caption">', 'always-visible credit and license'],
+    ['media.sourcePage', 'source link'],
+    ['media.credit', 'creator attribution'],
+    ['media.license', 'license attribution'],
+    ['media.alt', 'descriptive alternative text'],
+    ['class="ui-media-fallback"', 'unavailable state'],
+    ["image.addEventListener('error', showFallback)", 'image error fallback'],
+  ],
+});
+await checkFile('src/styles/global.css', {
+  required: [
+    ['--ui-media-ratio-wide: 16 / 9;', 'approved 16:9 default'],
+    ['--ui-media-ratio-editorial: 4 / 3;', '4:3 editorial variation'],
+    ['--ui-media-focus-center: 50% 50%;', 'approved center focus'],
+    ['.ui-media-image[hidden]', 'failed image can be hidden'],
+    ['.ui-media-caption', 'caption style is shared'],
+  ],
+});
+
 // For task-first Landing pages, photography remains contextual and must not
 // precede the primary destination choices users came to find.
 for (const [relativePath, choiceMarker] of [
@@ -447,7 +470,13 @@ for (const [relativePath, choiceMarker] of [
   const source = await read(relativePath);
   const header = source.indexOf('<LandingHeader');
   const choices = source.indexOf(choiceMarker, header);
-  const photo = source.indexOf('<figure', header);
+  // Supporting photo may be authored through the shared LicensedPhoto,
+  // or as an explicit figure during migration. Always check both.
+  const photos = [
+    source.indexOf('<figure', header),
+    source.indexOf('<LicensedPhoto', header)
+  ].filter((position) => position >= 0);
+  const photo = photos.length ? Math.min(...photos) : -1;
   assertions += 1;
   if (header < 0 || choices < 0 || photo < 0 || choices > photo) {
     errors.push(relativePath + ': Landing must show primary destination choices before supporting photography');
