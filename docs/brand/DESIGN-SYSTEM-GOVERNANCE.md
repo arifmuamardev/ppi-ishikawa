@@ -103,10 +103,13 @@ Pakai semantic utility yang tersedia terlebih dahulu; **hindari angka baru yang 
 | Rhythm | **Balanced disetujui**: section umum 52 px mobile sampai 68 px desktop; Compact/Major tetap sesuai fungsi. | `ui-section-space-compact`, `ui-section-space`, `ui-section-space-major` |
 | Grid & card spacing | **Balanced**: sela grid 14 px; padding kartu comfortable 23 px. Untuk hasil berulang dan mobile padat, pertahankan compact bila sesuai tugas. | `ui-grid-gap-balanced`, `ui-card-space-balanced` |
 | Surfaces | Feature panel jarang; kartu actionable standar; soft group untuk keterangan; list row untuk hasil berulang | `docs/brand/UI-UX-AUDIT.md` |
-| Radius | Kontrol `rounded-xl`; kartu umum `rounded-2xl`; feature panel `rounded-3xl` | gunakan pola yang sudah ada |
+| Radius | **Balanced disetujui:** 12 px kontrol, 16 px kartu, 24 px feature panel. Pengecualian pada pills, chips, imagery dan bidang khusus harus disengaja. | `--ui-radius-*`, `ui-radius-*` pada `src/styles/global.css` |
+| Border | **Subtle disetujui:** 1 px untuk permukaan yang memerlukan batas. Warna sesuai konteks dan mode gelap; jangan menambah border di semua elemen. Focus ring tetap terpisah. | `--ui-border-subtle-width`, `ui-border-subtle` |
 | CTA | Aksi utama menonjol terbatas; secondary lebih tenang; hasil berulang tidak perlu tombol utama penuh semua | `ui-action-*` jika sesuai |
 | Touch & keyboard | Target interaksi diusahakan minimal 44 px; focus-visible, navigasi keyboard, semantik, state kosong dan pesan hasil | verifikasi manual + CI |
 | Color & font | Ambil warna melalui semantic tokens; **jangan hardcode palet periode** pada tiap komponen | `src/data/brand.ts`, Fira Sans |
+
+**Keputusan Radius & Border (11 Oktober 2026):** **Balanced + Subtle** dipilih dari Live Design Lab. Token resmi 12/16/24 px dan border 1 px tersedia dalam CSS semantik. Rollout pertama mencakup `NavigationCard`, `ResultCard`, `AdvisoryPanel` caution, `HighlightPanel`, contoh kartu navigasi beranda, serta `ui-field` dan `ui-action-*`. Komponen yang tidak memerlukan border (misalnya highlight solid) tidak harus memilikinya. Warna border tetap mengacu pada token konteks, bukan satu warna global; status hover/focus tetap jelas. **Ini bukan klaim bahwa semua halaman sudah migrasi.** Pilihan Crisp/Rounded dan Defined dalam Lab tetap tersedia sebagai pembanding saja.
 
 **Keputusan desain (11 Oktober 2026):** preset **Balanced** dipilih dari Live Design Lab. Token bersama kini mengikuti section 52–68 px, padding kartu comfortable 23 px, dan grid gap 14 px. Rollout dimulai dari beranda dan `NavigationCard` comfortable, dengan pemeriksaan responsif. **Ini target bersama, bukan klaim seluruh halaman telah dimigrasikan.** Opsi Compact/Spacious di Design Lab tetap tersedia untuk pembandingan; opsi tersebut bukan standar produksi. Elemen Finder yang padat tetap boleh memakai padding compact sesuai fungsi.
 

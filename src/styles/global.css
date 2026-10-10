@@ -66,6 +66,13 @@
   --ppi-neutral-200: color-mix(in srgb, var(--ppi-ink) 13%, white);
   --ppi-neutral-100: color-mix(in srgb, var(--ppi-ink) 7%, white);
   --ppi-neutral-50: color-mix(in srgb, var(--ppi-surface) 94%, white);
+
+  /* Approved Balanced + Subtle geometry. Values are neutral across periods;
+     border *color* continues to come from semantic, theme-aware utilities. */
+  --ui-radius-control: 0.75rem; /* 12px */
+  --ui-radius-card: 1rem; /* 16px */
+  --ui-radius-feature: 1.5rem; /* 24px */
+  --ui-border-subtle-width: 1px;
 }
 
 html {
@@ -436,14 +443,36 @@ html.dark .brand-gold-rule {
 }
 
 
+/* Radius & border geometry ------------------------------------------------ */
+
+/* Classes are reusable only where the role matches. Pills, badges, imagery,
+   full-bleed sections and border-y notices are intentional exceptions. */
+.ui-radius-control {
+  border-radius: var(--ui-radius-control);
+}
+
+.ui-radius-card {
+  border-radius: var(--ui-radius-card);
+}
+
+.ui-radius-feature {
+  border-radius: var(--ui-radius-feature);
+}
+
+.ui-border-subtle {
+  border-style: solid;
+  border-width: var(--ui-border-subtle-width);
+  /* Border hue remains controlled by border-slate-200, border-accent/35, etc. */
+}
+
 /* Form controls ------------------------------------------------------------ */
 
 .ui-field {
   display: block;
   width: 100%;
   min-height: 2.75rem;
-  border: 1px solid var(--ppi-neutral-300);
-  border-radius: 0.75rem;
+  border: var(--ui-border-subtle-width) solid var(--ppi-neutral-300);
+  border-radius: var(--ui-radius-control);
   background: color-mix(in srgb, var(--ppi-surface) 94%, white);
   padding: 0.7rem 1rem;
   color: var(--ppi-neutral-900);
@@ -513,7 +542,7 @@ input[type='file'].ui-field::file-selector-button {
   min-height: 2.75rem;
   align-items: center;
   justify-content: center;
-  border-radius: 0.75rem;
+  border-radius: var(--ui-radius-control);
   padding-inline: 1.25rem;
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -525,7 +554,7 @@ input[type='file'].ui-field::file-selector-button {
 }
 
 .ui-action-primary {
-  border: 1px solid transparent;
+  border: var(--ui-border-subtle-width) solid transparent;
   background: var(--ppi-primary);
   color: white;
 }
@@ -535,7 +564,7 @@ input[type='file'].ui-field::file-selector-button {
 }
 
 .ui-action-secondary {
-  border: 1px solid var(--ppi-neutral-300);
+  border: var(--ui-border-subtle-width) solid var(--ppi-neutral-300);
   background: color-mix(in srgb, var(--ppi-surface) 94%, white);
   color: var(--ppi-neutral-700);
 }
