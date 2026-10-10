@@ -284,6 +284,42 @@ try {
             check.errors.push('Approved media component drift: ' + JSON.stringify(m));
           }
         }
+        // Standard motion is 160ms for normal-pointer users and is disabled
+        // without movement when the OS requests reduced motion.
+        if ((width === 390 || width === 1280) && key === 'home') {
+          await page.emulateMedia({reducedMotion:'no-preference'});
+          const card = page.locator('main .ui-motion-navigation').first();
+          check.motion = await page.evaluate(() => {
+            const nav = document.querySelector('main .ui-motion-navigation');
+            const color = document.querySelector('main .ui-motion-color');
+            return {
+              present: Boolean(nav),
+              duration: nav ? getComputedStyle(nav).transitionDuration : null,
+              colorDuration: color ? getComputedStyle(color).transitionDuration : null,
+              token: getComputedStyle(document.documentElement).getPropertyValue('--ui-motion-duration').trim()
+            };
+          });
+          const m = check.motion;
+          if (!m.present || m.token !== '160ms' ||
+              Math.abs(Number.parseFloat(m.duration)-.16)>.001 ||
+              Math.abs(Number.parseFloat(m.colorDuration)-.16)>.001) {
+            check.errors.push('Approved 160ms motion drift: '+JSON.stringify(m));
+          } else {
+            await card.hover();
+            await page.waitForTimeout(210);
+            const transform = await card.evaluate(el=>getComputedStyle(el).transform);
+            if (!transform.includes('-2)')) check.errors.push('Navigation hover lift should be -2px: '+transform);
+          }
+          await page.emulateMedia({reducedMotion:'reduce'});
+          const reduced = await card.evaluate(el => ({
+            duration:getComputedStyle(el).transitionDuration,
+            transform:getComputedStyle(el).transform
+          }));
+          if (reduced.transform !== 'none' ||
+              Number.parseFloat(reduced.duration) > .001) {
+            check.errors.push('Reduced Motion override failed: '+JSON.stringify(reduced));
+          }
+        }
         check.default = await measure(page);
         if (check.default.overflowPx > 2) check.errors.push('Horizontal overflow: ' + check.default.overflowPx + 'px');
         if (check.default.h1Count !== 1) check.errors.push('Expected 1 main h1; got ' + check.default.h1Count);
