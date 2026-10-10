@@ -42,17 +42,35 @@ try {
       const contours = page.locator('.ppi-contour, .ppi-map');
       verify(await page.locator('.ppi-contour').count() === 10, 'Expected ten original line motifs (including comparison)', width);
       verify(await page.locator('.ppi-map').count() === 10, 'Expected ten Ishikawa outline motifs (including comparison)', width);
-      verify(await page.locator('g#ppi-ishikawa-map').count() === 1, 'Geographic outline source group missing', width);
-      const editorialPath = await page.locator('#ppi-ishikawa-map path').evaluate((node) => ({
-        d: node.getAttribute('d'),
-        stroke: Number(node.getAttribute('stroke-width')),
-        nonScaling: node.getAttribute('vector-effect')
-      }));
-      verify(editorialPath.d.startsWith('M1192.40') &&
-        (editorialPath.d.match(/ L/g) || []).length + 1 === 88,
-        'Map outline should use the simplified, smoothed 88-point path', width);
-      verify(editorialPath.stroke <= 1 && editorialPath.nonScaling === 'non-scaling-stroke',
-        'Decorative map must use thin non-scaling stroke', width);
+      // Each decorative placement should reference one of three *open* fragments.
+      // A full, closed map outline must never be repeated as the page ornament.
+      for (const [kind, count] of [['hero',4], ['corner',3], ['ribbon',3]]) {
+        const group = page.locator('#ppi-ishikawa-fragment-' + kind);
+        verify(await group.count() === 1, kind + ' fragment group missing', width);
+        const detail = await group.locator('path').evaluateAll((paths) => ({
+          count: paths.length,
+          closed: paths.some((node) => /z\s*$/i.test(node.getAttribute('d') || '')),
+          notCurved: paths.some((node) => !(node.getAttribute('d') || '').includes(' C')),
+          thick: paths.some((node) => Number(node.getAttribute('stroke-width')) > 1),
+          scaling: paths.some((node) => node.getAttribute('vector-effect') !== 'non-scaling-stroke')
+        }));
+        verify(detail.count === count && !detail.closed && !detail.notCurved && !detail.thick && !detail.scaling,
+          'Fragments should be open, curved, thin, non-scaling paths: ' + kind + ' ' + JSON.stringify(detail), width);
+      }
+      const placements = {
+        hero:'hero',art:'hero',section:'corner',cta:'ribbon',footer:'ribbon',guide:'corner'
+      };
+      for (const [slot, kind] of Object.entries(placements)) {
+        const href = await page.locator('.ppi-map--' + slot + ' use').getAttribute('href');
+        verify(href === '#ppi-ishikawa-fragment-' + kind, 'Wrong fragment in ' + slot + ': ' + href, width);
+      }
+      const samples = await page.locator('.contour-sample .ppi-map use').evaluateAll((nodes) =>
+        nodes.map((node) => node.getAttribute('href')));
+      verify(JSON.stringify(samples) === JSON.stringify([
+        '#ppi-ishikawa-fragment-hero','#ppi-ishikawa-fragment-corner','#ppi-ishikawa-fragment-ribbon'
+      ]), 'Three gallery samples should show three distinct coastal fragments', width);
+      verify(await page.locator('g#ppi-ishikawa-map').count() === 0,
+        'The full map should not be embedded in preview', width);
       verify(await page.locator('body').getAttribute('data-contour-motif') === 'map', 'Ishikawa should be the initial motif', width);
       const mapAsset = await page.request.get(baseURL + '/design-lab/unnes-inspired/ishikawa-outline.svg');
       const mapSvg = await mapAsset.text();
@@ -73,7 +91,7 @@ try {
       verify(motifSemantics, 'Decorative contours should be non-interactive and hidden to assistive technology', width);
       const stroke = () => page.locator('.ppi-map--hero').evaluate((node) => getComputedStyle(node).opacity);
       verify(await page.locator('.ppi-map--hero').isVisible(), 'Initial map SVG container should be visible', width);
-      // isVisible() alone is insufficient: the previous SVG symbol nested a second viewBox
+      // isVisible() alone is insufficient: an SVG can exist while its strokes are clipped
       // and drew the path completely outside the viewport.
       const shapeGeometry = await page.locator('.ppi-map--hero').evaluate((svg) => {
         const bbox = svg.querySelector('use').getBBox();
@@ -85,7 +103,7 @@ try {
       });
       verify(shapeGeometry.visibleRatio > .95, 'Ishikawa path lies outside SVG viewBox: ' + JSON.stringify(shapeGeometry), width);
       verify(await page.locator('.ppi-map--art').isVisible(), 'Ishikawa outline must appear on the red identity panel', width);
-      verify(Number(await page.locator('.ppi-map--art').evaluate((n) => getComputedStyle(n).opacity)) >= .5,
+      verify(Number(await page.locator('.ppi-map--art').evaluate((n) => getComputedStyle(n).opacity)) >= .33,
         'Map in hero identity panel too faint in default Subtle mode', width);
       await page.locator('[data-motif-choice="lines"]').click();
       verify(await page.locator('body').getAttribute('data-contour-motif') === 'lines', 'Old motif not selected', width);
@@ -94,20 +112,20 @@ try {
       await page.locator('[data-motif-choice="map"]').click();
       verify(await page.locator('.ppi-map--hero').isVisible(), 'Map outline should show again', width);
       verify(!(await page.locator('.ppi-contour--hero').isVisible()), 'Original motif should hide in map mode', width);
-      verify(Number(await stroke()) >= .5 && Number(await stroke()) < .6,
-        'Subtle Ishikawa opacity should be restrained but discernible', width);
+      verify(Number(await stroke()) >= .33 && Number(await stroke()) <= .39,
+        'Subtle fragment opacity should stay decorative and restrained', width);
       await page.locator('[data-contour-choice="off"]').click();
       verify(await page.locator('body').getAttribute('data-contour-strength') === 'off', 'Off contour mode did not apply', width);
       verify(Number(await stroke()) === 0, 'Off contour should be fully hidden', width);
       await page.locator('[data-contour-choice="strong"]').click();
-      verify(Number(await stroke()) >= .75 && Number(await stroke()) < .85,
-        'Strong outline should stay controlled, not harsh', width);
+      verify(Number(await stroke()) >= .59 && Number(await stroke()) <= .63,
+        'Strong fragment opacity should remain refined', width);
       await page.reload({ waitUntil: 'domcontentloaded' });
       verify(await page.locator('body').getAttribute('data-contour-strength') === 'strong', 'Contour choice did not persist', width);
       verify(await page.locator('body').getAttribute('data-contour-motif') === 'map', 'Map motif did not persist', width);
       await page.locator('[data-contour-choice="subtle"]').click();
       verify((await overflow(page)) <= 2, 'Contour study caused horizontal overflow', width);
-      await page.screenshot({path: directory + '/map-subtle-' + width + '.jpg', type: 'jpeg', quality: 62, fullPage: true, animations: 'disabled'});
+      await page.screenshot({path: directory + '/fragments-subtle-' + width + '.jpg', type: 'jpeg', quality: 62, fullPage: true, animations: 'disabled'});
       await page.locator('[data-motif-choice="lines"]').click();
       await page.screenshot({path: directory + '/abstract-subtle-' + width + '.jpg', type: 'jpeg', quality: 62, fullPage: true, animations: 'disabled'});
       await page.locator('[data-motif-choice="map"]').click();
