@@ -249,6 +249,28 @@ await checkFile('src/pages/stories.astro', {
   forbidden: [['class="rounded-[2rem] border border-accent/35 bg-accent/10', 'duplicate highlight surface']],
 });
 
+// Primary Finder results now share the same article shell. Keep every
+// data-* selector intact: filters and scholarship pagination depend on them.
+for (const [relativePath, selector, keys] of [
+  ['src/pages/beasiswa.astro', 'scholarship-card', [
+    'data-campus=', 'data-campus-scope=', 'data-level=', 'data-stage=',
+    'data-indonesia=', 'data-route=', 'data-freshness=',
+  ]],
+  ['src/pages/career.astro', 'career-source', [
+    'data-type=', 'data-location=', 'data-audience=',
+  ]],
+]) {
+  await checkFile(relativePath, {
+    required: [
+      ['<ResultCard', 'shared Finder result-card component'],
+      ['class="' + selector + ' p-6"', 'existing JS result selector'],
+      ['</ResultCard>', 'proper component boundary'],
+      ...keys.map((key) => [key, 'filter metadata ' + key]),
+    ],
+    forbidden: [['class="' + selector + ' rounded-2xl', 'duplicate inline result-card surface']],
+  });
+}
+
 // Places cards are live, filterable ResultCards. Attribute forwarding keeps
 // map visibility, category/city filtering and search data intact.
 await checkFile('src/pages/life-in-ishikawa/places.astro', {

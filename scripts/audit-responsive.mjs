@@ -279,6 +279,33 @@ try {
           ).length);
           if (invalid) check.errors.push(invalid + ' navigation cards violate heading, route, or visual contract');
         }
+        if ((width === 390 || width === 1280) && (key === 'scholarships' || key === 'career')) {
+          const isScholarship = key === 'scholarships';
+          const root = isScholarship ? '#scholarship-grid' : '#career-grid';
+          const selector = isScholarship ? '.scholarship-card' : '.career-source';
+          const expectedAttributes = isScholarship
+            ? ['campus', 'campusScope', 'level', 'stage', 'indonesia', 'route', 'freshness']
+            : ['type', 'location', 'audience'];
+          const details = await page.locator(root + ' ' + selector).evaluateAll((cards, attributes) => ({
+            total: cards.length,
+            invalidSemantics: cards.filter((card) =>
+              card.tagName !== 'ARTICLE' ||
+              card.dataset.uiCard !== 'result' ||
+              attributes.some((attribute) => !(attribute in card.dataset))
+            ).length,
+            linked: cards.filter((card) => card.querySelector('a[href]')).length,
+          }), expectedAttributes);
+          check.primaryFinderResults = details;
+          if (details.total < 1 || details.invalidSemantics) {
+            check.errors.push(key + ': results lost article semantics or filter data attributes');
+          }
+          // sourceUrl is optional in scholarship data; do not invent links.
+          // Career data must still retain an independent link on each result.
+          if (details.linked < 1 || (!isScholarship && details.linked !== details.total)) {
+            check.errors.push(key + ': available official source links were not retained');
+          }
+        }
+
         // Exercise the real Finder interactions once at a representative phone width.
         // These assertions supplement the screenshot/overflow checks, rather than
         // treating a successful static render as proof the filters still work.
