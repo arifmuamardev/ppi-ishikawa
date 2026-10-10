@@ -133,6 +133,61 @@ for (const relativePath of survivalGuides) {
   });
 }
 
+// Template C: a reader must encounter verified sources before being
+// sent to another topic. Preserve exactly one *end-navigation* family.
+for (const relativePath of campusGuides) {
+  const source = await read(relativePath);
+  const toc = source.indexOf('<GuideToc');
+  const official = source.indexOf('<CampusOfficialSources');
+  const related = source.indexOf('<RelatedLinks');
+  assertions += 1;
+  if (toc < 0 || official < 0 || related < 0 || !(toc < official && official < related)
+      || source.includes('<GuidePager')) {
+    errors.push(relativePath + ': Campus Guide must have TOC -> official sources -> one RelatedLinks, without pager');
+  }
+}
+for (const relativePath of survivalGuides) {
+  const source = await read(relativePath);
+  const toc = source.indexOf('<GuideToc');
+  const official = source.indexOf('<OfficialSources');
+  const pager = source.indexOf('<GuidePager');
+  assertions += 1;
+  if (toc < 0 || official < 0 || pager < 0 || !(toc < official && official < pager)
+      || source.includes('<RelatedLinks')) {
+    errors.push(relativePath + ': linear guide must have TOC -> official sources -> pager, without RelatedLinks');
+  }
+}
+await checkFile('src/components/FamilyGuidePage.astro', {
+  required: [
+    ['<FamilyGuideHeader', 'Family C breadcrumb and verification metadata'],
+    ['<GuideToc', 'conditional family reference table of contents'],
+    ['<OfficialSources', 'family guide official source block'],
+    ['Kembali ke Keluarga', 'one final return navigation'],
+  ],
+  forbidden: [['<GuidePager', 'nonlinear Family guide must not use linear pager']],
+});
+for (const relativePath of [
+  'src/components/GuideHeader.astro',
+  'src/components/CampusGuideHeader.astro',
+  'src/components/FamilyGuideHeader.astro',
+]) {
+  await checkFile(relativePath, {
+    required: [
+      ['<Breadcrumbs', 'guide family breadcrumb'],
+      ['<h1', 'guide title'],
+      ['type-lead', 'intro reading typography'],
+    ],
+  });
+}
+for (const [relativePath, marker] of [
+  ['src/components/OfficialSources.astro', 'data-ui-source-block="official"'],
+  ['src/components/CampusOfficialSources.astro', 'data-ui-source-block="campus"'],
+  ['src/components/RelatedLinks.astro', 'data-ui-next-navigation="related"'],
+  ['src/components/GuidePager.astro', 'data-ui-next-navigation="linear"'],
+]) {
+  await checkFile(relativePath, { required: [[marker, 'semantic Guide role for browser regression']] });
+}
+
 for (const relativePath of landingPages) {
   await checkFile(relativePath, {
     required: [['<LandingHeader', 'shared LandingHeader']],
