@@ -43,9 +43,22 @@ try {
       verify(await page.locator('.ppi-contour').count() === 10, 'Expected ten original line motifs (including comparison)', width);
       verify(await page.locator('.ppi-map').count() === 10, 'Expected ten Ishikawa outline motifs (including comparison)', width);
       verify(await page.locator('g#ppi-ishikawa-map').count() === 1, 'Geographic outline source group missing', width);
+      const editorialPath = await page.locator('#ppi-ishikawa-map path').evaluate((node) => ({
+        d: node.getAttribute('d'),
+        stroke: Number(node.getAttribute('stroke-width')),
+        nonScaling: node.getAttribute('vector-effect')
+      }));
+      verify(editorialPath.d.startsWith('M1192.40') &&
+        (editorialPath.d.match(/ L/g) || []).length + 1 === 88,
+        'Map outline should use the simplified, smoothed 88-point path', width);
+      verify(editorialPath.stroke <= 1 && editorialPath.nonScaling === 'non-scaling-stroke',
+        'Decorative map must use thin non-scaling stroke', width);
       verify(await page.locator('body').getAttribute('data-contour-motif') === 'map', 'Ishikawa should be the initial motif', width);
       const mapAsset = await page.request.get(baseURL + '/design-lab/unnes-inspired/ishikawa-outline.svg');
-      verify(mapAsset.ok() && (await mapAsset.text()).includes('viewBox="1159.74 1083.45 90.81 139.84"'), 'Downloadable boundary SVG unavailable', width);
+      const mapSvg = await mapAsset.text();
+      verify(mapAsset.ok() && mapSvg.includes('viewBox="1159.74 1083.45 90.81 139.84"') &&
+        mapSvg.includes('M1192.40') && mapSvg.includes('stroke-width="0.95"'),
+        'Downloadable smoothed thin outline SVG unavailable or outdated', width);
       const licenseAsset = await page.request.get(baseURL + '/design-lab/unnes-inspired/LICENSE-ishikawa-map.txt');
       verify(licenseAsset.ok() && (await licenseAsset.text()).includes('MIT License'), 'Map attribution/license unavailable', width);
       verify(await page.locator('symbol#ppi-contour-mark').count() === 1, 'Reusable SVG contour symbol missing', width);
@@ -72,7 +85,7 @@ try {
       });
       verify(shapeGeometry.visibleRatio > .95, 'Ishikawa path lies outside SVG viewBox: ' + JSON.stringify(shapeGeometry), width);
       verify(await page.locator('.ppi-map--art').isVisible(), 'Ishikawa outline must appear on the red identity panel', width);
-      verify(Number(await page.locator('.ppi-map--art').evaluate((n) => getComputedStyle(n).opacity)) >= .6,
+      verify(Number(await page.locator('.ppi-map--art').evaluate((n) => getComputedStyle(n).opacity)) >= .5,
         'Map in hero identity panel too faint in default Subtle mode', width);
       await page.locator('[data-motif-choice="lines"]').click();
       verify(await page.locator('body').getAttribute('data-contour-motif') === 'lines', 'Old motif not selected', width);
@@ -81,12 +94,14 @@ try {
       await page.locator('[data-motif-choice="map"]').click();
       verify(await page.locator('.ppi-map--hero').isVisible(), 'Map outline should show again', width);
       verify(!(await page.locator('.ppi-contour--hero').isVisible()), 'Original motif should hide in map mode', width);
-      verify(Number(await stroke()) >= .6, 'Default Ishikawa outline needs visible contrast even on Subtle', width);
+      verify(Number(await stroke()) >= .5 && Number(await stroke()) < .6,
+        'Subtle Ishikawa opacity should be restrained but discernible', width);
       await page.locator('[data-contour-choice="off"]').click();
       verify(await page.locator('body').getAttribute('data-contour-strength') === 'off', 'Off contour mode did not apply', width);
       verify(Number(await stroke()) === 0, 'Off contour should be fully hidden', width);
       await page.locator('[data-contour-choice="strong"]').click();
-      verify(Number(await stroke()) >= .9, 'Strong Ishikawa outline should have clear visible contrast', width);
+      verify(Number(await stroke()) >= .75 && Number(await stroke()) < .85,
+        'Strong outline should stay controlled, not harsh', width);
       await page.reload({ waitUntil: 'domcontentloaded' });
       verify(await page.locator('body').getAttribute('data-contour-strength') === 'strong', 'Contour choice did not persist', width);
       verify(await page.locator('body').getAttribute('data-contour-motif') === 'map', 'Map motif did not persist', width);
