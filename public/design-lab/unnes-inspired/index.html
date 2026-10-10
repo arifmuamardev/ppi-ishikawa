@@ -795,10 +795,86 @@
     .preview[data-mode="dark"] .cards .ds-icon-tile{color:#BDE9DF}
     @media(max-width:860px){.icon-usecases{grid-template-columns:1fr}}
     @media(max-width:740px){.icon-compare{grid-template-columns:1fr}.icon-controls-label{flex:1 1 100%}}
+
+    /* Isolated photography governance experiment; media always follows primary navigation. */
+    body[data-media-ratio="wide"]{--lab-media-ratio:16/9}
+    body[data-media-ratio="classic"]{--lab-media-ratio:4/3}
+    body[data-media-ratio="square"]{--lab-media-ratio:1/1}
+    body[data-media-focus="center"]{--lab-media-position:50% 50%}
+    body[data-media-focus="top"]{--lab-media-position:50% 20%}
+    body[data-media-overlay="off"]{--lab-media-overlay-opacity:0}
+    body[data-media-overlay="soft"]{--lab-media-overlay-opacity:1}
+    .media-controls{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:18px 0}
+    .media-controls-label{margin-right:auto;font-size:12px;font-weight:900;color:#335249}
+    .media-controls-label small{font-weight:500;color:#63766B}
+    .media-controls button{min-height:44px;padding:9px 14px;border:1px solid #ADBBB4;border-radius:var(--lab-radius-control);background:#FFF;color:#264A43;font-size:12px;font-weight:800;cursor:pointer}
+    .media-controls button:hover:not([aria-pressed="true"]){background:#EDF5F0}
+    .media-controls button[aria-pressed="true"]{background:#176B6A;color:#FFF;border-color:#176B6A}
+    .media-controls button:focus-visible{outline:3px solid #5BA8A6;outline-offset:3px}
+    .media-specimens{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:20px 0 10px}
+    .media-ratio-spec{background:#FFF;border:1px solid #CCDCD3;border-radius:var(--lab-radius-card);padding:15px;min-width:0}
+    .media-ratio-spec>span{display:block;font-size:10px;font-weight:900;letter-spacing:.09em;color:#226458;margin-bottom:10px}
+    .media-ratio-spec p{font-size:12px;line-height:1.5;margin:9px 0 0;color:#51685F}
+    .media-spec-frame{overflow:hidden;border-radius:var(--lab-radius-control);background:linear-gradient(130deg,#BDD5CA,#E3EEE8);display:block}
+    .media-ratio-spec[data-media-ratio-example="wide"] .media-spec-frame{aspect-ratio:16/9}
+    .media-ratio-spec[data-media-ratio-example="classic"] .media-spec-frame{aspect-ratio:4/3}
+    .media-ratio-spec[data-media-ratio-example="square"] .media-spec-frame{aspect-ratio:1}
+    .media-spec-frame img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+    .media-reference-credit{font-size:11px;line-height:1.55;color:#546C63;margin:0 0 19px}
+    .media-reference-credit a,.media-caption a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+    .media-workbench{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:15px;margin-top:22px}
+    .media-workbench-main,.media-workbench-side{min-width:0;background:#FFF;border:1px solid #CCDCD3;border-radius:var(--lab-radius-card);padding:20px}
+    .media-workbench .ds-tag{margin:0 0 13px}
+    .media-figure{overflow:hidden;margin:0;border:var(--lab-border-width) solid #CAD9D1;border-radius:var(--lab-radius-feature);background:#FFF;color:#26443B}
+    .media-frame{position:relative;aspect-ratio:var(--lab-media-ratio);overflow:hidden;background:linear-gradient(135deg,#C2D9CF 0%,#E3ECE5 54%,#B3CBBF 100%)}
+    .media-frame img.media-photo{display:block;width:100%;height:100%;object-fit:cover;object-position:var(--lab-media-position);font-size:0}
+    .media-overlay{pointer-events:none;position:absolute;inset:0;background:linear-gradient(0deg,rgba(13,47,46,.32),transparent 48%);opacity:var(--lab-media-overlay-opacity);transition:opacity .18s ease}
+    .media-fallback{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:9px;padding:18px;background:linear-gradient(130deg,#D9E8DE,#EEF4EB);color:#294D42;text-align:center}
+    .media-fallback[hidden]{display:none!important}
+    .media-fallback strong,.media-fallback-reference strong{font-size:13px;font-weight:800}
+    .media-fallback span,.media-fallback-reference span{font-size:11px;line-height:1.5;max-width:230px}
+    .media-caption{border-top:1px solid #D6E0DA;padding:13px 15px;font-size:11px;line-height:1.6;color:#4C665B;background:#F7FAF9;overflow-wrap:anywhere}
+    body[data-media-caption="compact"] .media-caption{padding:8px 12px;font-size:10px;line-height:1.45}
+    .media-guidance{font-size:12px;color:#526B60;line-height:1.55;margin:13px 0 0}
+    .media-fallback-tag{margin-top:22px!important}
+    .media-fallback-reference{min-height:150px;border:1px dashed #91B3A3;border-radius:var(--lab-radius-card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:18px;background:#EBF3EE;color:#28544A}
+    .media-system-note{margin-top:20px}
+    .media-system-note a{font-weight:800;text-underline-offset:3px}
+    .media-preview-support{margin-top:27px;padding:20px;background:#EEF5F0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px;align-items:center;border-radius:var(--lab-radius-card)}
+    .media-preview-copy{min-width:0}
+    .media-preview-copy .ds-tag{margin:0 0 12px;color:#226254}
+    .media-preview-copy strong{display:block;font-size:clamp(19px,2.3vw,29px);letter-spacing:-.04em;line-height:1.14;color:#29483F}
+    .media-preview-copy>p:last-child{font-size:12px;line-height:1.65;color:#4D665C}
+    .media-preview-photo .media-caption{font-size:10px;padding:9px 11px}
+    .media-template-support{max-width:470px;margin-top:20px}
+    .media-template-photo .media-frame{aspect-ratio:4/3}
+    .media-template-photo .media-caption{font-size:10px;padding:8px 10px}
+    body[data-lab-theme="dark"] .media-controls-label{color:#E8F5EE}
+    body[data-lab-theme="dark"] .media-controls-label small{color:#B8D4C9}
+    body[data-lab-theme="dark"] .media-controls button{background:#1C3337;border-color:#648078;color:#EBF9F2}
+    body[data-lab-theme="dark"] .media-controls button[aria-pressed="true"]{background:#B9EDDB;border-color:#B9EDDB;color:#173D35}
+    body[data-lab-theme="dark"] .media-ratio-spec,
+    body[data-lab-theme="dark"] .media-workbench-main,
+    body[data-lab-theme="dark"] .media-workbench-side{background:#20373B;border-color:#4A6866}
+    body[data-lab-theme="dark"] .media-ratio-spec>span{color:#B6EBDB}
+    body[data-lab-theme="dark"] .media-ratio-spec p,
+    body[data-lab-theme="dark"] .media-reference-credit,
+    body[data-lab-theme="dark"] .media-guidance{color:#D0E4D8}
+    body[data-lab-theme="dark"] .media-figure{border-color:#57776A;background:#20373B;color:#F0F9F3}
+    body[data-lab-theme="dark"] .media-caption{border-color:#48645A;background:#294448;color:#D4EADF}
+    body[data-lab-theme="dark"] .media-fallback-reference{background:#294448;color:#D8F0E2;border-color:#729F90}
+    .preview[data-mode="dark"] .media-preview-support{background:#203F40}
+    .preview[data-mode="dark"] .media-preview-copy strong{color:#EDFBF3}
+    .preview[data-mode="dark"] .media-preview-copy>p:last-child{color:#C8E5D6}
+    .preview[data-mode="dark"] .media-preview-copy .ds-tag{color:#B3E8D5}
+    .preview[data-mode="dark"] .media-figure{border-color:#658A7E}
+    .preview[data-mode="dark"] .media-caption{background:#244949;color:#E2F4EC;border-color:#55796D}
+    @media(max-width:850px){.media-workbench{grid-template-columns:1fr}}
+    @media(max-width:740px){.media-specimens{grid-template-columns:1fr}.media-controls-label{flex:1 1 100%}.media-preview-support{grid-template-columns:1fr;padding:14px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
   </style>
 </head>
-<body data-lab-theme="light" data-contour-strength="subtle" data-contour-motif="map" data-elevation="soft" data-layout-density="balanced" data-radius-style="balanced" data-border-style="subtle" data-icon-weight="standard" data-icon-treatment="tinted">
+<body data-lab-theme="light" data-contour-strength="subtle" data-contour-motif="map" data-elevation="soft" data-layout-density="balanced" data-radius-style="balanced" data-border-style="subtle" data-icon-weight="standard" data-icon-treatment="tinted" data-media-ratio="wide" data-media-focus="center" data-media-overlay="off" data-media-caption="standard">
 <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;overflow:hidden"><defs>
 <!-- Real TopicIcon.astro path geometry, reused for iconography comparison. -->
 <g id="ds-topic-icon-campus"><path d="m3 9 9-5 9 5-9 5-9-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/><path d="M21 9v6"/></g>
@@ -831,7 +907,7 @@
   </header>
   <nav class="ds-jump" aria-label="Navigasi Design System"><div class="wrap">
     <a href="#demo-panduan">Fondasi</a><a href="#design-contour">Logo Contour</a>
-    <a href="#design-components">Komponen</a><a href="#design-shadow">Elevation</a><a href="#design-spacing">Spacing &amp; Grid</a><a href="#design-radius">Radius &amp; Border</a><a href="#design-icons">Iconography</a>
+    <a href="#design-components">Komponen</a><a href="#design-shadow">Elevation</a><a href="#design-spacing">Spacing &amp; Grid</a><a href="#design-radius">Radius &amp; Border</a><a href="#design-icons">Iconography</a><a href="#design-media">Images &amp; Media</a>
     <a href="#design-templates">Template A/B/C</a>
     <a href="#design-governance">Governance & QA</a>
   </div></nav>
@@ -907,6 +983,7 @@
               <a class="card" href="#demo-panduan"><span class="index">02 <span class="arr" aria-hidden="true">›</span></span><span class="ds-icon-tile"><svg class="ds-ui-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#ds-topic-icon-housing"></use></svg></span><h4>Hidup di Ishikawa</h4><p>Persiapan, tempat tinggal, dan kehidupan sehari-hari.</p></a>
               <a class="card" href="#demo-panduan"><span class="index">03 <span class="arr" aria-hidden="true">›</span></span><span class="ds-icon-tile"><svg class="ds-ui-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><use href="#ds-topic-icon-family"></use></svg></span><h4>Komunitas PPI</h4><p>Bertemu pelajar, keluarga, dan jejaring Indonesia.</p></a>
             </div>
+            <div class="media-preview-support"><div class="media-preview-copy"><p class="ds-tag">Foto pendukung / setelah pilihan utama</p><strong>Mengenal Ishikawa dari dekat.</strong><p>Visual memberi konteks setelah jalur navigasi utama tampil, bukan menggantikan hero dan pilihan pengguna.</p></div><figure class="media-figure media-preview-photo" data-media-figure><div class="media-frame"><img class="media-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Tsuzumi-mon,_Kanazawa_Station_-_Kanazawa,_Japan_-_DSC09640.jpg?width=1600" alt="Tsuzumi-mon di Kanazawa Station" loading="lazy" width="1280" height="960" referrerpolicy="no-referrer"><div class="media-fallback" role="img" aria-label="Pratinjau foto tidak tersedia: Tsuzumi-mon di Kanazawa Station" hidden><svg aria-hidden="true" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 3-3 6 5"/></svg><strong>Foto tidak tersedia</strong><span>Silakan lihat sumber asli melalui kredit di bawah.</span></div><div class="media-overlay" aria-hidden="true"></div></div><figcaption class="media-caption">Tsuzumi-mon, Kanazawa Station · <a href="https://commons.wikimedia.org/wiki/File:Tsuzumi-mon,_Kanazawa_Station_-_Kanazawa,_Japan_-_DSC09640.jpg" target="_blank" rel="noreferrer noopener">Daderot / Wikimedia Commons</a> · CC0 1.0</figcaption></figure></div>
           </section>
           <section class="stripe"><svg class="ppi-contour ppi-contour--cta" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><svg class="ppi-map ppi-map--cta" viewBox="0 65 710 240" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><use href="#ppi-ishikawa-fragment-ribbon"></use></svg>
             <h3>Belajar jauh dari rumah.<br><em>Tetap dekat satu sama lain.</em></h3>
@@ -1215,6 +1292,54 @@
       <p class="ds-muted icon-guidance"><strong>Aturan semantik:</strong> 24 px untuk kartu kategori, 20 px untuk navigasi/panduan, 16 px untuk tindakan inline; target klik tetap ≥44 px. Ikon dekoratif memakai <code>aria-hidden="true"</code>, sedangkan tombol yang hanya berisi ikon wajib memiliki <code>aria-label</code>. Jangan campurkan ikon solid, emoji, dan outline untuk peran UI yang sama tanpa alasan jelas. <strong>Standard (1,8 px) + Tinted Tile telah disetujui sebagai standar produksi PPI Ishikawa.</strong> Fine, Strong dan Plain tetap dapat dicoba untuk membandingkan alternatif visual.</p>
     </section>
 
+
+    <section class="ds-section" id="design-media" aria-labelledby="media-title">
+      <p class="ds-kicker">02F / Photography &amp; media</p>
+      <h2 class="ds-heading" id="media-title">Foto untuk konteks.<br>Bukan pengganti navigasi.</h2>
+      <p class="ds-muted">Lihat bagaimana foto berlisensi yang sudah digunakan PPI ditampilkan secara konsisten pada <strong>kartu editorial, bidang pendukung Landing, dan halaman Guide</strong>. Ubah rasio, titik crop, intensitas overlay, dan kepadatan caption secara independen. Kredit/lisensi tetap terlihat pada semua kombinasi.</p>
+      <div class="media-controls" role="group" aria-label="Rasio foto">
+        <span class="media-controls-label">Aspect ratio <small>· peran editorial</small></span>
+        <button type="button" data-media-ratio-choice="wide" aria-pressed="true">Wide · 16:9</button>
+        <button type="button" data-media-ratio-choice="classic" aria-pressed="false">Classic · 4:3</button>
+        <button type="button" data-media-ratio-choice="square" aria-pressed="false">Square · 1:1</button>
+      </div>
+      <div class="media-specimens" aria-label="Rasio visual berdampingan pada satu sumber foto">
+        <div class="media-ratio-spec" data-media-ratio-example="wide"><span>01 / 16:9</span><div class="media-spec-frame"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Tsuzumi-mon,_Kanazawa_Station_-_Kanazawa,_Japan_-_DSC09640.jpg?width=1600" alt="Perbandingan crop lebar Tsuzumi-mon di Kanazawa Station" loading="lazy" referrerpolicy="no-referrer"></div><p>Landscape / pendukung Landing</p></div>
+        <div class="media-ratio-spec" data-media-ratio-example="classic"><span>02 / 4:3</span><div class="media-spec-frame"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Tsuzumi-mon,_Kanazawa_Station_-_Kanazawa,_Japan_-_DSC09640.jpg?width=1600" alt="Perbandingan crop klasik Tsuzumi-mon di Kanazawa Station" loading="lazy" referrerpolicy="no-referrer"></div><p>Editorial / konten Guide</p></div>
+        <div class="media-ratio-spec" data-media-ratio-example="square"><span>03 / 1:1</span><div class="media-spec-frame"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Tsuzumi-mon,_Kanazawa_Station_-_Kanazawa,_Japan_-_DSC09640.jpg?width=1600" alt="Perbandingan crop persegi Tsuzumi-mon di Kanazawa Station" loading="lazy" referrerpolicy="no-referrer"></div><p>Kartu ringkas / galeri</p></div>
+      </div>
+      <p class="media-reference-credit">Sumber ketiga perbandingan: Tsuzumi-mon, Kanazawa Station · <a href="https://commons.wikimedia.org/wiki/File:Tsuzumi-mon,_Kanazawa_Station_-_Kanazawa,_Japan_-_DSC09640.jpg" target="_blank" rel="noreferrer noopener">Daderot / Wikimedia Commons</a> · CC0 1.0. Proporsi di atas tetap terlihat meskipun jaringan gambar eksternal bermasalah.</p>
+      <div class="media-controls" role="group" aria-label="Posisi crop foto">
+        <span class="media-controls-label">Crop focus <small>· object-position</small></span>
+        <button type="button" data-media-focus-choice="center" aria-pressed="true">Center</button>
+        <button type="button" data-media-focus-choice="top" aria-pressed="false">Top-biased</button>
+      </div>
+      <div class="media-controls" role="group" aria-label="Overlay foto">
+        <span class="media-controls-label">Overlay <small>· dekoratif saja, tanpa teks di foto</small></span>
+        <button type="button" data-media-overlay-choice="off" aria-pressed="true">Off</button>
+        <button type="button" data-media-overlay-choice="soft" aria-pressed="false">Soft gradient</button>
+      </div>
+      <div class="media-controls" role="group" aria-label="Kepadatan caption dan kredit">
+        <span class="media-controls-label">Caption <small>· lisensi selalu terlihat</small></span>
+        <button type="button" data-media-caption-choice="standard" aria-pressed="true">Standard</button>
+        <button type="button" data-media-caption-choice="compact" aria-pressed="false">Compact</button>
+      </div>
+      <div class="media-workbench">
+        <div class="media-workbench-main">
+          <p class="ds-tag">Editorial / photography</p>
+          <figure class="media-figure media-main" data-media-figure><div class="media-frame"><img class="media-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Tsuzumi-mon,_Kanazawa_Station_-_Kanazawa,_Japan_-_DSC09640.jpg?width=1600" alt="Tsuzumi-mon di Kanazawa Station" loading="lazy" width="1280" height="960" referrerpolicy="no-referrer"><div class="media-fallback" role="img" aria-label="Pratinjau foto tidak tersedia: Tsuzumi-mon di Kanazawa Station" hidden><svg aria-hidden="true" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 3-3 6 5"/></svg><strong>Foto tidak tersedia</strong><span>Silakan lihat sumber asli melalui kredit di bawah.</span></div><div class="media-overlay" aria-hidden="true"></div></div><figcaption class="media-caption">Tsuzumi-mon, Kanazawa Station · <a href="https://commons.wikimedia.org/wiki/File:Tsuzumi-mon,_Kanazawa_Station_-_Kanazawa,_Japan_-_DSC09640.jpg" target="_blank" rel="noreferrer noopener">Daderot / Wikimedia Commons</a> · CC0 1.0</figcaption></figure>
+          <p class="media-guidance">Credit and license stay <strong>below the photo</strong> to avoid covering details and to remain accessible at smaller screen sizes.</p>
+        </div>
+        <div class="media-workbench-side">
+          <p class="ds-tag">Secondary media / alternative subject</p>
+          <figure class="media-figure media-secondary" data-media-figure><div class="media-frame"><img class="media-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Kanazawa-C-3228.jpg?width=1500" alt="Area hijau dan air terjun di Central Park Kanazawa" loading="lazy" width="1280" height="960" referrerpolicy="no-referrer"><div class="media-fallback" role="img" aria-label="Pratinjau foto tidak tersedia: Area hijau dan air terjun di Central Park Kanazawa" hidden><svg aria-hidden="true" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 3-3 6 5"/></svg><strong>Foto tidak tersedia</strong><span>Silakan lihat sumber asli melalui kredit di bawah.</span></div><div class="media-overlay" aria-hidden="true"></div></div><figcaption class="media-caption">Central Park, Kanazawa · <a href="https://commons.wikimedia.org/wiki/File:Kanazawa-C-3228.jpg" target="_blank" rel="noreferrer noopener">Fg2 / Wikimedia Commons</a> · Public Domain</figcaption></figure>
+          <p class="ds-tag media-fallback-tag">Unavailable state</p>
+          <div class="media-fallback-reference" role="img" aria-label="Contoh placeholder ketika foto tidak tersedia"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 3-3 6 5"/></svg><strong>Foto belum tersedia</strong><span>Gunakan bidang pengganti yang informatif, bukan ikon gambar rusak.</span></div>
+        </div>
+      </div>
+      <p class="ds-muted media-system-note"><strong>Aturan awal:</strong> 16:9 untuk gambar pendukung Landing, 4:3 untuk editorial/Guide, 1:1 bila benar-benar perlu untuk tile. <code>object-fit: cover</code> boleh digunakan untuk dekorasi tetapi <strong>jangan memangkas peta, diagram, dokumen, atau teks penting</strong>; untuk itu gunakan <code>contain</code>. Alt text menjelaskan isi gambar; kredit sumber dan lisensi bukan bagian dari alt text. Ini masih studi visual, <strong>belum keputusan implementasi produksi</strong>. <a href="#preview">Lihat dalam homepage contoh ↑</a>.</p>
+    </section>
+
     <section class="ds-section" id="design-templates" aria-labelledby="templates-title">
       <p class="ds-kicker">03 / Page archetypes</p>
       <h2 class="ds-heading" id="templates-title">Satu gaya B.<br>Tiga tugas halaman.</h2>
@@ -1243,7 +1368,8 @@
               <a class="ds-nav-card" href="#design-components"><p class="ds-tag">02</p><strong>Persiapan</strong><small>Tempat tinggal dan administrasi <span aria-hidden="true">›</span></small></a>
               <a class="ds-nav-card" href="#design-components"><p class="ds-tag">03</p><strong>Komunitas</strong><small>Temukan informasi organisasi <span aria-hidden="true">›</span></small></a>
             </div>
-            <div class="ds-source">Pilihan utama tampil sebelum konten orientasi dan foto. Tidak ada breadcrumb karena contoh ini berada pada level menu utama.</div>
+            <div class="media-template-support"><figure class="media-figure media-template-photo" data-media-figure><div class="media-frame"><img class="media-photo" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Kanazawa-C-3228.jpg?width=1500" alt="Area hijau dan air terjun di Central Park Kanazawa" loading="lazy" width="1280" height="960" referrerpolicy="no-referrer"><div class="media-fallback" role="img" aria-label="Pratinjau foto tidak tersedia: Area hijau dan air terjun di Central Park Kanazawa" hidden><svg aria-hidden="true" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 3-3 6 5"/></svg><strong>Foto tidak tersedia</strong><span>Silakan lihat sumber asli melalui kredit di bawah.</span></div><div class="media-overlay" aria-hidden="true"></div></div><figcaption class="media-caption">Central Park, Kanazawa · <a href="https://commons.wikimedia.org/wiki/File:Kanazawa-C-3228.jpg" target="_blank" rel="noreferrer noopener">Fg2 / Wikimedia Commons</a> · Public Domain</figcaption></figure></div>
+                        <div class="ds-source">Pilihan utama tampil sebelum konten orientasi dan foto. Tidak ada breadcrumb karena contoh ini berada pada level menu utama.</div>
           </div>
           <div class="ds-page" data-page="finder" hidden>
             <div class="ds-page-nav"><span class="ds-logo">PPIJ / ISHIKAWA.</span><span class="ds-simulated-menu">Contoh · Template B</span></div>
@@ -1456,6 +1582,44 @@
         button.addEventListener('click',() => applyIconWeight(button.dataset.iconChoice)));
       iconTileButtons.forEach((button) =>
         button.addEventListener('click',() => applyIconTile(button.dataset.iconTileChoice)));
+
+      // Licensed photography: independent ratio/focus/overlay/caption controls.
+      // Always preserve visible source credit, even if an external photo fails.
+      const mediaControls = [
+        ['ratio',['wide','classic','square'],'wide'],
+        ['focus',['center','top'],'center'],
+        ['overlay',['off','soft'],'off'],
+        ['caption',['standard','compact'],'standard']
+      ];
+      mediaControls.forEach(([field,choices,defaultValue]) => {
+        const key = 'ppi-ishikawa-design-lab-media-'+field;
+        const attr = 'data-media-'+field+'-choice';
+        const buttons = Array.from(document.querySelectorAll('['+attr+']'));
+        const apply = (value) => {
+          const next = choices.includes(value) ? value : defaultValue;
+          document.body.dataset['media'+field[0].toUpperCase()+field.slice(1)] = next;
+          buttons.forEach(button => button.setAttribute('aria-pressed',
+            String(button.getAttribute(attr) === next)));
+          try {localStorage.setItem(key,next)} catch(_error) {/* optional storage */}
+        };
+        let stored=defaultValue;
+        try {stored=localStorage.getItem(key)||stored} catch(_error) {/* defaults */}
+        apply(stored);
+        buttons.forEach(button => button.addEventListener('click',()=>apply(button.getAttribute(attr))));
+      });
+      document.querySelectorAll('[data-media-figure]').forEach(figure => {
+        const photo = figure.querySelector('img.media-photo');
+        const fallback = figure.querySelector('.media-fallback');
+        if (!photo || !fallback) return;
+        const markUnavailable = () => {
+          photo.hidden=true;
+          fallback.hidden=false;
+          figure.dataset.mediaUnavailable='true';
+        };
+        photo.addEventListener('error',markUnavailable);
+        // Handles cached failures that happened before this listener registered.
+        if (photo.complete && photo.naturalWidth === 0) markUnavailable();
+      });
       const motifButtons = Array.from(document.querySelectorAll('[data-motif-choice]'));
       const motifKey = 'ppi-ishikawa-design-lab-contour-motif';
       function applyMotif(value) {
