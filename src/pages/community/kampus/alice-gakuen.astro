@@ -283,11 +283,11 @@ const priorityFaq = aliceFaq.filter((item) => ["lanjut-program-alice","internati
     </div>
   </section>
 
+  <CampusOfficialSources sources={alicePack.officialSources} lastVerified={alicePack.lastVerified} />
+
   <RelatedLinks
     items={campusRelatedContent['alice-gakuen']}
     eyebrow="Topik terkait"
     title="Lanjutkan ke informasi kampus dan kehidupan sehari-hari"
   />
-
-  <CampusOfficialSources sources={alicePack.officialSources} lastVerified={alicePack.lastVerified} />
 </BaseLayout>
