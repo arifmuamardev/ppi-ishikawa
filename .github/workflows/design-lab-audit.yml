@@ -1,0 +1,45 @@
+name: Design Lab browser audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'public/design-lab/**'
+      - 'scripts/audit-design-lab.mjs'
+      - '.github/workflows/design-lab-audit.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'public/design-lab/**'
+      - 'scripts/audit-design-lab.mjs'
+      - '.github/workflows/design-lab-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - run: npm install --no-package-lock
+      - run: npm run build
+      - name: Browser interactions across screen widths
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 &
+          preview_pid=$!
+          trap 'kill $preview_pid || true' EXIT
+          node scripts/audit-design-lab.mjs
+      - name: Upload visual comparison
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: design-lab-screenshots
+          path: design-lab-audit/
+          retention-days: 7
+          if-no-files-found: warn
