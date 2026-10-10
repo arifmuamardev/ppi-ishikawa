@@ -37,6 +37,33 @@ try {
       verify((await overflow(page)) <= 2, 'Initial horizontal overflow', width);
       await page.screenshot({ path: directory + '/lab-light-' + width + '.jpg', type: 'jpeg', quality: 62, fullPage: true, animations: 'disabled' });
 
+
+      // Contour design study must remain decorative and independently adjustable.
+      const contours = page.locator('.ppi-contour');
+      verify(await contours.count() === 9, 'Expected nine SVG contour placements', width);
+      verify(await page.locator('symbol#ppi-contour-mark').count() === 1, 'Reusable SVG contour symbol missing', width);
+      const contourLogo = page.locator('.contour-logo img');
+      await contourLogo.scrollIntoViewIfNeeded({ timeout: 10000 });
+      await page.waitForFunction(() => { const img = document.querySelector('.contour-logo img'); return img && img.complete && img.naturalWidth > 0; }, null, { timeout: 15000 });
+      verify(await contourLogo.evaluate((img) => img.naturalWidth > 0), 'Reference logo asset failed to load', width);
+      const motifSemantics = await contours.evaluateAll((nodes) =>
+        nodes.every((node) => node.getAttribute('aria-hidden') === 'true' &&
+          node.getAttribute('focusable') === 'false' && getComputedStyle(node).pointerEvents === 'none')
+      );
+      verify(motifSemantics, 'Decorative contours should be non-interactive and hidden to assistive technology', width);
+      const stroke = () => page.locator('.ppi-contour--hero').evaluate((node) => getComputedStyle(node).opacity);
+      verify(Number(await stroke()) > 0, 'Subtle contour should be visible', width);
+      await page.locator('[data-contour-choice="off"]').click();
+      verify(await page.locator('body').getAttribute('data-contour-strength') === 'off', 'Off contour mode did not apply', width);
+      verify(Number(await stroke()) === 0, 'Off contour should be fully hidden', width);
+      await page.locator('[data-contour-choice="strong"]').click();
+      verify(Number(await stroke()) >= .5, 'Strong contour should increase intensity', width);
+      await page.reload({ waitUntil: 'domcontentloaded' });
+      verify(await page.locator('body').getAttribute('data-contour-strength') === 'strong', 'Contour choice did not persist', width);
+      await page.locator('[data-contour-choice="subtle"]').click();
+      verify((await overflow(page)) <= 2, 'Contour study caused horizontal overflow', width);
+      await page.screenshot({path: directory + '/contour-subtle-' + width + '.jpg', type: 'jpeg', quality: 62, fullPage: true, animations: 'disabled'});
+
       await page.locator('[data-mode-choice="dark"]').click();
       verify(await page.locator('#preview').getAttribute('data-mode') === 'dark', 'Dark preview mode not applied', width);
       verify(await page.locator('body').getAttribute('data-lab-theme') === 'dark', 'Dark global lab background not applied', width);
