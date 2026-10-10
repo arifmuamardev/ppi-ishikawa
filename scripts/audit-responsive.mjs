@@ -171,10 +171,18 @@ try {
               return el ? Number.parseFloat(getComputedStyle(el)[name]) : null;
             };
             const root = getComputedStyle(document.documentElement);
+            // getPropertyValue returns the raw token (e.g. "0.75rem"),
+            // so resolve rem to px rather than incorrectly treating it as px.
+            const rem = Number.parseFloat(root.fontSize);
+            const radiusTokenPx = (name) => {
+              const token = root.getPropertyValue(name).trim();
+              const number = Number.parseFloat(token);
+              return token.endsWith('rem') ? number * rem : number;
+            };
             const tokens = {
-              control: Number.parseFloat(root.getPropertyValue('--ui-radius-control')),
-              card: Number.parseFloat(root.getPropertyValue('--ui-radius-card')),
-              feature: Number.parseFloat(root.getPropertyValue('--ui-radius-feature')),
+              control: radiusTokenPx('--ui-radius-control'),
+              card: radiusTokenPx('--ui-radius-card'),
+              feature: radiusTokenPx('--ui-radius-feature'),
               border: Number.parseFloat(root.getPropertyValue('--ui-border-subtle-width'))
             };
             return {
