@@ -142,6 +142,8 @@ Satu jenis kartu untuk satu *peran informasi* (navigation, result, status, advis
 **Opsional:** TOC (sekitar 4+ section bermakna atau sulit dipindai), metadata, ilustrasi, FAQ, tab/accordion saat benar-benar membantu.  
 **Dilarang:** satu panduan diperlakukan sekaligus sebagai Landing, Finder, dan Guide; Related + Pager bersamaan tanpa justifikasi eksplisit.
 
+**Urutan bukti dan navigasi akhir:** untuk semua panduan C yang menyertakan sumber resmi, letakkan sumber **setelah konten utama tetapi sebelum satu-satunya navigasi akhir**. Survival linear menggunakan `OfficialSources → GuidePager`; panduan Kampus menggunakan `CampusOfficialSources → RelatedLinks`; Family reference menggunakan `OfficialSources → kembali ke Keluarga`. Ketiganya mempertahankan identitas/metadata yang sesuai subjek; jangan menyalin komponen tambahan hanya untuk membuat tiap halaman identik. Daftar audit lengkap dan pengecualian ada pada [Template C Guide Audit](TEMPLATE-C-GUIDE-AUDIT.md).
+
 ## 6. Prosedur membuat/mengubah halaman
 
 Setiap PR yang menambah/mengubah layout halaman harus menjawab pertanyaan ini **sebelum coding**:
