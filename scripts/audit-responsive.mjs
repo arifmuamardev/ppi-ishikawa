@@ -91,6 +91,21 @@ try {
         check.httpStatus = response?.status() ?? null;
         if (check.httpStatus !== 200) check.errors.push('HTTP ' + check.httpStatus);
         await page.evaluate(() => document.fonts.ready);
+        // Typography regression: ensure the self-hosted Fira Sans has loaded,
+        // and do not let a browser fallback silently pass the responsive audit.
+        if (width === 390 && key === 'home') {
+          check.typography = await page.evaluate(() => ({
+            computedFamily: getComputedStyle(document.body).fontFamily,
+            loaded: Array.from(document.fonts).filter((face) =>
+              face.family.includes('Fira Sans') && face.status === 'loaded').length,
+            ready: document.fonts.check('400 16px "Fira Sans"')
+          }));
+          if (!check.typography.computedFamily.includes('Fira Sans') ||
+              !check.typography.ready || check.typography.loaded < 1) {
+            check.errors.push('Fira Sans must be the computed, locally loaded font: ' +
+              JSON.stringify(check.typography));
+          }
+        }
         check.default = await measure(page);
         if (check.default.overflowPx > 2) check.errors.push('Horizontal overflow: ' + check.default.overflowPx + 'px');
         if (check.default.h1Count !== 1) check.errors.push('Expected 1 main h1; got ' + check.default.h1Count);
