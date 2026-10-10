@@ -6,27 +6,60 @@ interface Props {
   eager?: boolean;
   class?: string;
   imageClass?: string;
+  variant?: 'wide' | 'editorial' | 'square' | 'contain';
+  focus?: 'center' | 'top';
 }
 
 const {
   media,
   eager = false,
   class: className = '',
-  imageClass = 'aspect-[16/9] w-full object-cover'
+  imageClass = '',
+  variant = 'wide',
+  focus = 'center'
 } = Astro.props;
 ---
 
-<figure class={`overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm ${className}`}>
-  <img
-    src={media.imageUrl}
-    alt={media.alt}
-    width="1280"
-    height="960"
-    class={imageClass}
-    loading={eager ? 'eager' : 'lazy'}
-    referrerpolicy="no-referrer"
-  />
-  <figcaption class="border-t border-slate-100 bg-slate-50 px-5 py-3 text-[11px] leading-5 text-slate-500">
-    {media.title} · <a href={media.sourcePage} target="_blank" rel="noreferrer" class="underline hover:text-slate-700">{media.credit}</a> · {media.license}
+<figure class:list={['ui-media-figure', className]} data-ui-media data-ui-media-variant={variant} data-ui-media-focus={focus}>
+  <div class="ui-media-frame">
+    <img
+      src={media.imageUrl}
+      alt={media.alt}
+      width="1280"
+      height="960"
+      class:list={['ui-media-image', imageClass]}
+      loading={eager ? 'eager' : 'lazy'}
+      decoding="async"
+      referrerpolicy="no-referrer"
+    />
+    <div class="ui-media-fallback" role="img" aria-label={`Foto tidak tersedia: ${media.alt}`} hidden>
+      <svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <circle cx="8" cy="8" r="1.5"/>
+        <path d="m3 17 5-5 4 4 3-3 6 5"/>
+      </svg>
+      <strong>Foto belum tersedia</strong>
+      <span>Lihat sumber foto melalui kredit di bawah.</span>
+    </div>
+  </div>
+  <figcaption class="ui-media-caption">
+    {media.title} · <a href={media.sourcePage} target="_blank" rel="noopener noreferrer">{media.credit}</a> · {media.license}
   </figcaption>
 </figure>
+
+<script>
+  // External Wikimedia images can fail or be blocked. Preserve credit and
+  // replace the broken image with a semantic, readable placeholder.
+  document.querySelectorAll<HTMLElement>('[data-ui-media]').forEach((figure) => {
+    const image = figure.querySelector<HTMLImageElement>('.ui-media-image');
+    const fallback = figure.querySelector<HTMLElement>('.ui-media-fallback');
+    if (!image || !fallback) return;
+    const showFallback = () => {
+      image.hidden = true;
+      fallback.hidden = false;
+      figure.dataset.mediaUnavailable = 'true';
+    };
+    image.addEventListener('error', showFallback);
+    if (image.complete && image.naturalWidth === 0) showFallback();
+  });
+</script>

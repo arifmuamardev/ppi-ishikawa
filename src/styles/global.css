@@ -81,6 +81,15 @@
   --ui-icon-size-card: 1.5rem; /* 24px */
   --ui-icon-size-guide: 1.25rem; /* 20px */
   --ui-icon-size-inline: 1rem; /* 16px */
+
+  /* Approved photography — Wide / Center / No overlay / Standard caption.
+     An editorial 4:3 variant and contain mode are available by media role. */
+  --ui-media-ratio-wide: 16 / 9;
+  --ui-media-ratio-editorial: 4 / 3;
+  --ui-media-ratio-square: 1;
+  --ui-media-radius: var(--ui-radius-feature);
+  --ui-media-focus-center: 50% 50%;
+  --ui-media-focus-top: 50% 20%;
 }
 
 html {
@@ -509,6 +518,98 @@ html.dark .brand-gold-rule {
 
 .ui-icon-tile-inverse {
   background: rgb(255 255 255 / 10%);
+}
+
+/* Licensed media ----------------------------------------------------------- */
+
+/* Media is supporting content. Credits are always below the photo, never
+   overlaid on the visual; image failures keep the frame and citation intact. */
+.ui-media-figure {
+  overflow: hidden;
+  border: var(--ui-border-subtle-width) solid var(--ppi-neutral-200);
+  border-radius: var(--ui-media-radius);
+  background: var(--ppi-surface);
+}
+
+.ui-media-frame {
+  position: relative;
+  aspect-ratio: var(--ui-media-ratio-wide);
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--ppi-neutral-200), var(--ppi-neutral-100));
+}
+
+[data-ui-media-variant="editorial"] .ui-media-frame {
+  aspect-ratio: var(--ui-media-ratio-editorial);
+}
+
+[data-ui-media-variant="square"] .ui-media-frame {
+  aspect-ratio: var(--ui-media-ratio-square);
+}
+
+.ui-media-image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--ui-media-focus-center);
+}
+
+[data-ui-media-variant="contain"] .ui-media-image {
+  object-fit: contain;
+}
+
+[data-ui-media-focus="top"] .ui-media-image {
+  object-position: var(--ui-media-focus-top);
+}
+
+.ui-media-image[hidden],
+.ui-media-fallback[hidden] {
+  display: none !important;
+}
+
+.ui-media-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+  color: var(--ppi-neutral-700);
+  background: var(--ppi-neutral-100);
+}
+
+.ui-media-fallback strong {
+  font-size: 0.875rem;
+}
+
+.ui-media-fallback span {
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.ui-media-caption {
+  border-top: var(--ui-border-subtle-width) solid var(--ppi-neutral-200);
+  background: color-mix(in srgb, var(--ppi-surface) 93%, var(--ppi-neutral-100));
+  color: var(--ppi-neutral-600);
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.ui-media-caption a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.ui-media-caption a:hover {
+  color: var(--ppi-ink);
 }
 
 /* Form controls ------------------------------------------------------------ */
