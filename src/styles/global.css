@@ -90,6 +90,10 @@
   --ui-media-radius: var(--ui-radius-feature);
   --ui-media-focus-center: 50% 50%;
   --ui-media-focus-top: 50% 20%;
+
+  /* Standard Motion approved 11 Oct 2026. No layout transitions or autoplay. */
+  --ui-motion-duration: 160ms;
+  --ui-motion-lift: -2px;
 }
 
 html {
@@ -612,6 +616,39 @@ html.dark .brand-gold-rule {
   color: var(--ppi-ink);
 }
 
+/* Motion & interactions ---------------------------------------------------- */
+
+/* Navigation may lift subtly only where hover is available. Keyboard focus
+   stays stationary with its own focus ring. Result cards never lift. */
+.ui-motion-navigation {
+  transition-property: background-color, border-color, color, box-shadow, transform;
+  transition-duration: var(--ui-motion-duration);
+  transition-timing-function: ease-out;
+}
+
+.ui-motion-color {
+  transition-property: background-color, border-color, color;
+  transition-duration: var(--ui-motion-duration);
+  transition-timing-function: ease-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ui-motion-navigation:hover:not(:focus-visible) {
+    transform: translateY(var(--ui-motion-lift));
+  }
+}
+
+.ui-motion-navigation:focus-visible {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-motion-navigation:hover,
+  .ui-motion-navigation:focus-visible {
+    transform: none !important;
+  }
+}
+
 /* Form controls ------------------------------------------------------------ */
 
 .ui-field {
@@ -626,9 +663,9 @@ html.dark .brand-gold-rule {
   font-size: 0.875rem;
   line-height: 1.4;
   transition:
-    border-color 150ms ease,
-    background-color 150ms ease,
-    color 150ms ease;
+    border-color var(--ui-motion-duration) ease,
+    background-color var(--ui-motion-duration) ease,
+    color var(--ui-motion-duration) ease;
 }
 
 .ui-field:hover {
@@ -695,9 +732,9 @@ input[type='file'].ui-field::file-selector-button {
   line-height: 1.25rem;
   font-weight: 700;
   transition:
-    background-color 150ms ease,
-    border-color 150ms ease,
-    color 150ms ease;
+    background-color var(--ui-motion-duration) ease,
+    border-color var(--ui-motion-duration) ease,
+    color var(--ui-motion-duration) ease;
 }
 
 .ui-action-primary {
