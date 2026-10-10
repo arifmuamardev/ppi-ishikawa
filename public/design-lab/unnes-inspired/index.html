@@ -347,10 +347,76 @@
     body[data-lab-theme="dark"] .ds-checklist label{background:#20373B;border-color:#47625E}
     body[data-lab-theme="dark"] .ds-outcome{color:#B3F0D9}
     body[data-lab-theme="dark"] .ds-reference{border-color:#8BDACB}
+
+    /* Candidate emblem-line grammar. Single reusable SVG, decoration only. */
+    body{--line-strength:.22}
+    body[data-contour-strength="off"]{--line-strength:0}
+    body[data-contour-strength="strong"]{--line-strength:.53}
+    body[data-lab-theme="dark"][data-contour-strength="subtle"]{--line-strength:.30}
+    body[data-lab-theme="dark"][data-contour-strength="strong"]{--line-strength:.60}
+    .ppi-contour{position:absolute;z-index:0;pointer-events:none;user-select:none;opacity:var(--line-strength);transition:opacity .15s;fill:none;color:#79E4D0}
+    .stage,.preview-section,.stripe,.preview-footer,.ds-page-intro{position:relative;overflow:hidden}
+    .stage .hero-grid,.preview-section .sec-header,.preview-section .cards,.stripe>:not(.ppi-contour),.preview-footer>:not(.ppi-contour),.ds-page-intro>:not(.ppi-contour){position:relative;z-index:1}
+    .ppi-contour--hero{right:-14%;top:-13%;height:110%;width:66%;transform:rotate(-9deg)}
+    .art:before,.art:after{display:none}
+    .art .ppi-contour--art{right:-38%;top:-5%;height:105%;width:139%;color:#fff}
+    .art>:not(.ppi-contour){position:relative;z-index:1}
+    .ppi-contour--section{right:-10%;top:-19px;width:390px;height:180px;color:#176B6A}
+    .ppi-contour--cta{right:-10%;top:-125px;width:650px;height:370px;color:#C0F2E0;transform:rotate(8deg)}
+    .preview-footer{padding:30px 42px;background:#10292B;color:#E9F8F1;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+    .preview-footer strong{font-size:22px;font-weight:900;letter-spacing:-.045em}
+    .preview-footer span{font-size:12px;color:#D4E9E1}
+    .ppi-contour--footer{right:-30px;top:-105px;width:300px;height:230px;color:#86E5CB}
+    .ds-page-intro .ppi-contour--guide{width:380px;height:250px;top:-55px;right:-150px;color:#9DE6D3}
+    .preview[data-mode="dark"] .ppi-contour--section{color:#9AEBD6}
+    .contour-controls{display:flex;justify-content:flex-end;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 16px}
+    .contour-controls strong{margin-right:auto;font-size:12px;color:#405F56}
+    .contour-controls small{font-weight:500;color:#647B70}
+    .contour-controls button{border:1px solid #B9CBC1;background:#fff;min-height:44px;min-width:65px;border-radius:7px;padding:9px 12px;font-size:12px;color:#31554D;cursor:pointer;font-weight:800}
+    .contour-controls button[aria-pressed="true"]{color:#fff;background:#176B6A;border-color:#176B6A}
+    .contour-controls button:hover:not([aria-pressed="true"]){background:#E7F3EC}
+    .contour-reference{display:grid;grid-template-columns:190px 1fr;gap:24px;padding:24px;margin:24px 0;background:white;border:1px solid #CBDDD6;border-radius:12px}
+    .contour-logo{display:grid;place-items:center;min-height:180px;background:#F9FBF9;border:1px solid #DEE6E1;border-radius:7px}
+    .contour-logo img{display:block;width:150px;max-width:100%;max-height:155px;object-fit:contain}
+    .contour-reference h3{font-size:22px;letter-spacing:-.025em;margin:0 0 12px}
+    .contour-reference p{font-size:13px;line-height:1.65;color:#52685E}
+    .contour-reference code{overflow-wrap:anywhere}
+    .contour-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .contour-sample{min-height:240px;position:relative;overflow:hidden;padding:24px;display:flex;flex-direction:column;justify-content:flex-end}
+    .contour-sample>:not(.ppi-contour){position:relative;z-index:1}
+    .contour-sample small{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+    .contour-sample h3{font-size:clamp(20px,2.5vw,31px);line-height:1.05;letter-spacing:-.04em;font-weight:900;margin:10px 0 6px}
+    .contour-sample p{font-size:12px;line-height:1.5;margin:4px 0}
+    .contour-sample--sample{width:100%}
+    .sample-hero{background:#113E40;color:#fff}
+    .sample-section{background:#EFF7F2;color:#163E37;border:1px solid #CFDDD5}
+    .sample-cta{background:#B3263E;color:#fff}
+    .ppi-contour--sample{width:360px;height:260px;right:-75px;top:-52px;transform:rotate(-8deg)}
+    .sample-section .ppi-contour--sample{color:#176B6A}
+    .sample-cta .ppi-contour--sample{color:#FFE7EB}
+    body[data-lab-theme="dark"] .contour-controls strong{color:#E0F2EA}
+    body[data-lab-theme="dark"] .contour-controls small{color:#BFCFC6}
+    body[data-lab-theme="dark"] .contour-controls button{background:#1B3539;color:#ECFAF4;border-color:#58786F}
+    body[data-lab-theme="dark"] .contour-controls button[aria-pressed="true"]{background:#B1EBDA;color:#123D38}
+    body[data-lab-theme="dark"] .contour-reference{background:#1B3034;border-color:#44635E}
+    body[data-lab-theme="dark"] .contour-reference p{color:#DAEDE5}
+    body[data-lab-theme="dark"] .contour-logo{background:#F9FBF9}
+    body[data-lab-theme="dark"] .sample-section{background:#264046;color:#EFFAF5;border-color:#58736A}
+    body[data-lab-theme="dark"] .sample-section .ppi-contour--sample{color:#B0F1DD}
+    @media(max-width:720px){.contour-gallery{grid-template-columns:1fr}.contour-sample{min-height:185px}.contour-reference{grid-template-columns:1fr}.contour-logo{min-height:130px}}
+    @media(max-width:600px){.ppi-contour--hero{width:110%;right:-51%;height:70%;top:-10%}.ppi-contour--section{right:-44%;top:13px;width:330px}.ppi-contour--cta{right:-55%;top:-70px;width:500px}.preview-footer{padding:23px 20px}.preview-footer strong{font-size:19px}.contour-controls strong{flex:1 1 100%}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
   </style>
 </head>
-<body data-lab-theme="light">
+<body data-lab-theme="light" data-contour-strength="subtle">
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;overflow:hidden"><defs>
+<symbol id="ppi-contour-mark" viewBox="0 0 720 380">
+<g fill="none" stroke="currentColor" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M-58 286H104q38 0 68-29L336 93q29-28 67-28h374"/>
+<path d="M-58 331h180q44 0 70-29l164-164q30-28 68-28h353"/>
+<path d="M-58 376h200q45 0 72-30l165-163q30-28 70-28h328"/>
+<path d="M234 389l111-110q29-29 70-29h125q36 0 61-25l105-103"/>
+</g></symbol></defs></svg>
   <div class="lab-top">
     <div class="wrap">
       <div class="lab-mark">PPI <span>ISHIKAWA</span> / DESIGN LAB <span aria-hidden="true">◆</span></div>
@@ -364,7 +430,7 @@
     <div class="context-note"><strong>Prototype only.</strong> Tidak terhubung ke menu situs, tidak mengubah desain A/B/C, dan tidak menjadi keputusan identitas baru.</div>
   </header>
   <nav class="ds-jump" aria-label="Navigasi Design System"><div class="wrap">
-    <a href="#demo-panduan">Fondasi</a>
+    <a href="#demo-panduan">Fondasi</a><a href="#design-contour">Logo Contour</a>
     <a href="#design-components">Komponen</a>
     <a href="#design-templates">Template A/B/C</a>
     <a href="#design-governance">Governance & QA</a>
@@ -383,6 +449,12 @@
           <button type="button" data-mode-choice="dark" aria-pressed="false">☾ Gelap</button>
         </div>
       </div>
+      <div class="contour-controls" role="group" aria-label="Intensitas kontur logo">
+        <strong>Line Contour <small>· eksplorasi</small></strong>
+        <button type="button" data-contour-choice="off" aria-pressed="false">Off</button>
+        <button type="button" data-contour-choice="subtle" aria-pressed="true">Subtle</button>
+        <button type="button" data-contour-choice="strong" aria-pressed="false">Strong</button>
+      </div>
       <div class="browser" aria-label="Contoh halaman PPI Ishikawa, interaktif">
         <div class="browser-bar" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="fake-url">ppi-ishikawa.org / contoh-desain</span></div>
         <div class="preview" id="preview" data-view="b" data-mode="light">
@@ -390,7 +462,7 @@
             <a href="#preview" class="preview-brand">PPI<span>J</span> / ISHIKAWA<span>.</span></a>
             <nav aria-label="Navigasi contoh"><a href="#demo-kampus">Kampus</a><a href="#demo-kampus">Kehidupan</a><a href="#demo-panduan">Panduan</a></nav>
           </div>
-          <section class="stage" aria-label="Contoh hero">
+          <section class="stage" aria-label="Contoh hero"><svg class="ppi-contour ppi-contour--hero" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg>
             <div class="hero-grid">
               <div>
                 <p class="eyebrow hero-eyebrow">Indonesian Students Association · Ishikawa</p>
@@ -405,7 +477,7 @@
                   <a class="action secondary" href="#demo-panduan">Lihat panduan <span aria-hidden="true">↓</span></a>
                 </div>
               </div>
-              <div class="art" aria-label="Visual dekoratif identitas Ishikawa">
+              <div class="art" aria-label="Visual dekoratif identitas Ishikawa"><svg class="ppi-contour ppi-contour--art" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg>
                 <p>PPI JEPANG · KOMISARIAT ISHIKAWA</p>
                 <div class="giant">ISHI<br>KAWA<span style="color:#FFFFFF75">.</span></div>
                 <div class="tag">JAPAN / 2026—2027</div>
@@ -417,7 +489,7 @@
             <div><strong>03</strong><span>Ruang eksplorasi</span></div>
             <div><strong>01</strong><span>Komunitas bersama</span></div>
           </div>
-          <section class="preview-section" id="demo-kampus" aria-labelledby="demo-title">
+          <section class="preview-section" id="demo-kampus" aria-labelledby="demo-title"><svg class="ppi-contour ppi-contour--section" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg>
             <div class="sec-header">
               <div>
                 <p>Mulai dari kebutuhanmu</p>
@@ -431,11 +503,12 @@
               <a class="card" href="#demo-panduan"><span class="index">03 <span class="arr" aria-hidden="true">›</span></span><h4>Komunitas PPI</h4><p>Bertemu pelajar, keluarga, dan jejaring Indonesia.</p></a>
             </div>
           </section>
-          <section class="stripe">
+          <section class="stripe"><svg class="ppi-contour ppi-contour--cta" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg>
             <h3>Belajar jauh dari rumah.<br><em>Tetap dekat satu sama lain.</em></h3>
             <a href="#demo-panduan">Lihat gaya ini ›</a>
           </section>
         </div>
+        <div class="preview-footer"><svg class="ppi-contour ppi-contour--footer" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><strong>PPI ISHIKAWA.</strong><span>Dekat, relevan, bermanfaat.</span></div>
       </div>
     </div>
     <section class="guide wrap" id="demo-panduan" aria-labelledby="guide-title">
@@ -478,6 +551,21 @@
       </div>
     </section>
 
+    <section class="ds-section" id="design-contour" aria-labelledby="contour-title">
+      <p class="ds-kicker">01B / Identity motif study</p>
+      <h2 class="ds-heading" id="contour-title">Logo menjadi garis.<br>Garis menjadi kontur.</h2>
+      <p class="ds-muted">Ini <strong>studi abstraksi ritme garis</strong>, bukan tracing presisi atau revisi logo resmi. Bandingkan motif kandidat dengan aset logo PPI di bawah sebelum menentukan bentuk finalnya.</p>
+      <div class="contour-reference">
+        <div class="contour-logo"><img src="../../brand/ppi-ishikawa-logo.webp" alt="Logo PPI Ishikawa yang digunakan di website saat ini" width="469" height="426" loading="lazy"></div>
+        <div><p class="ds-tag">Source of identity</p><h3>Logo yang digunakan website PPI</h3><p>Aset asli: <code>public/brand/ppi-ishikawa-logo.webp</code>. Motif kandidat ini menguji bahasa garis bersudut membulat dan bertingkat; kesesuaian dengan bentuk logo asli masih menunggu penilaianmu.</p><p><strong>Status: kandidat visual — bukan motif resmi.</strong></p></div>
+      </div>
+      <div class="contour-gallery">
+        <div class="contour-sample sample-hero"><svg class="ppi-contour ppi-contour--sample" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><small>Hero / dominant</small><h3>Garis besar.<br>Satu karakter.</h3></div>
+        <div class="contour-sample sample-section"><svg class="ppi-contour ppi-contour--sample" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><small>Section / subtle</small><h3>Section contour</h3><p>Di tepi bidang, tidak di belakang isi bacaan.</p></div>
+        <div class="contour-sample sample-cta"><svg class="ppi-contour ppi-contour--sample" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><small>CTA & Footer</small><h3>Tetap terhubung.</h3><p>Warna solid tetap elemen dominan.</p></div>
+      </div>
+      <p class="ds-muted" style="margin-top:18px">Coba Off / Subtle / Strong di atas contoh homepage. Satu simbol SVG dipakai kembali di semua penempatan dan dikondisikan untuk light/dark mode. Tidak diterapkan pada situs utama.</p>
+    </section>
     <section class="ds-section" id="design-components" aria-labelledby="components-title">
       <p class="ds-kicker">02 / Components</p>
       <h2 class="ds-heading" id="components-title">Komponen yang konsisten.<br>Interaksi yang jelas.</h2>
@@ -584,7 +672,7 @@
           <div class="ds-page" data-page="guide" hidden>
             <div class="ds-page-nav"><span class="ds-logo">PPIJ / ISHIKAWA.</span><span class="ds-simulated-menu">Contoh · Template C</span></div>
             <nav class="ds-guide-breadcrumb" aria-label="Contoh breadcrumb"><a href="#design-templates">Hidup di Ishikawa</a><span aria-hidden="true">/</span><span aria-current="page">Panduan kedatangan</span></nav>
-            <div class="ds-page-intro"><p class="ds-tag">Detail / Guide</p><h3>Panduan kedatangan.</h3><p>Satu topik, satu hierarki, serta lokasi pengguna yang jelas. Metadata verifikasi harus berasal dari peninjauan sumber yang nyata.</p></div>
+            <div class="ds-page-intro"><svg class="ppi-contour ppi-contour--guide" viewBox="0 0 720 380" aria-hidden="true" focusable="false"><use href="#ppi-contour-mark"></use></svg><p class="ds-tag">Detail / Guide</p><h3>Panduan kedatangan.</h3><p>Satu topik, satu hierarki, serta lokasi pengguna yang jelas. Metadata verifikasi harus berasal dari peninjauan sumber yang nyata.</p></div>
             <p class="ds-summary">Contoh struktur · Tanggal verifikasi tidak disimulasikan</p>
             <nav class="ds-guide-toc" aria-label="Contoh daftar isi"><strong>Di halaman ini</strong><div><a href="#ds-guide-step">Langkah awal</a><a href="#ds-guide-evidence">Sumber dan navigasi</a></div></nav>
             <div class="ds-guide-copy" id="ds-guide-step"><h4>Langkah awal</h4><p>Urutan informasi memprioritaskan tindakan yang perlu dilakukan, bukan modul promosi atau kumpulan tautan acak. Bagian panjang sebaiknya menggunakan daftar isi yang benar-benar menuju kontennya.</p></div>
@@ -668,6 +756,23 @@
         });
       });
 
+
+      const contourButtons = Array.from(document.querySelectorAll('[data-contour-choice]'));
+      const contourKey = 'ppi-ishikawa-design-lab-contour-strength';
+      function applyContour(value) {
+        const next = ['off','subtle','strong'].includes(value) ? value : 'subtle';
+        document.body.dataset.contourStrength = next;
+        contourButtons.forEach(function(button) {
+          button.setAttribute('aria-pressed',String(button.dataset.contourChoice === next));
+        });
+        try { localStorage.setItem(contourKey,next); } catch (_error) { /* optional storage */ }
+      }
+      let initialContour = 'subtle';
+      try { initialContour = localStorage.getItem(contourKey) || 'subtle'; } catch (_error) { /* default */ }
+      applyContour(initialContour);
+      contourButtons.forEach(function(button) {
+        button.addEventListener('click',function() { applyContour(button.dataset.contourChoice); });
+      });
       const exampleButtons = Array.from(document.querySelectorAll('[data-page-choice]'));
       const examplePages = Array.from(document.querySelectorAll('[data-page]'));
       const templateDescriptions = {
