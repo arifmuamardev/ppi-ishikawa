@@ -159,6 +159,50 @@ try {
               JSON.stringify(check.balancedSpacing));
           }
         }
+        // Approved Balanced + Subtle radius / border contract, measured from
+        // real production elements rather than only inspecting CSS constants.
+        if ((width === 390 || width === 1280) &&
+          (key === 'home' || key === 'community' || key === 'programs' ||
+           key === 'scholarships' || key === 'guide-sg01')) {
+          check.geometry = await page.evaluate(() => {
+            const element = (selector) => document.querySelector(selector);
+            const numeric = (selector, name) => {
+              const el = element(selector);
+              return el ? Number.parseFloat(getComputedStyle(el)[name]) : null;
+            };
+            const root = getComputedStyle(document.documentElement);
+            const tokens = {
+              control: Number.parseFloat(root.getPropertyValue('--ui-radius-control')),
+              card: Number.parseFloat(root.getPropertyValue('--ui-radius-card')),
+              feature: Number.parseFloat(root.getPropertyValue('--ui-radius-feature')),
+              border: Number.parseFloat(root.getPropertyValue('--ui-border-subtle-width'))
+            };
+            return {
+              tokens,
+              navigationRadius: numeric('[data-ui-card="navigation"]', 'borderTopLeftRadius'),
+              navigationBorder: numeric('[data-ui-card="navigation"]', 'borderTopWidth'),
+              resultRadius: numeric('[data-ui-card="result"]', 'borderTopLeftRadius'),
+              resultBorder: numeric('[data-ui-card="result"]', 'borderTopWidth'),
+              cautionRadius: numeric('[data-ui-panel="advisory"][data-tone="caution"]', 'borderTopLeftRadius'),
+              highlightRadius: numeric('[data-ui-panel="highlight"]', 'borderTopLeftRadius'),
+              fieldRadius: numeric('.ui-field', 'borderTopLeftRadius'),
+              fieldBorder: numeric('.ui-field', 'borderTopWidth'),
+              actionRadius: numeric('.ui-action-primary, .ui-action-secondary', 'borderTopLeftRadius')
+            };
+          });
+          const g = check.geometry;
+          const nearly = (actual, expected) => actual === null || Math.abs(actual - expected) <= .5;
+          if (g.tokens.control !== 12 || g.tokens.card !== 16 ||
+              g.tokens.feature !== 24 || g.tokens.border !== 1 ||
+              !nearly(g.navigationRadius, 16) || !nearly(g.navigationBorder, 1) ||
+              !nearly(g.resultRadius, 16) || !nearly(g.resultBorder, 1) ||
+              !nearly(g.cautionRadius, 16) || !nearly(g.highlightRadius, 24) ||
+              !nearly(g.fieldRadius, 12) || !nearly(g.fieldBorder, 1) ||
+              !nearly(g.actionRadius, 12)) {
+            check.errors.push('Approved Balanced + Subtle geometry drift: ' +
+              JSON.stringify(g));
+          }
+        }
         check.default = await measure(page);
         if (check.default.overflowPx > 2) check.errors.push('Horizontal overflow: ' + check.default.overflowPx + 'px');
         if (check.default.h1Count !== 1) check.errors.push('Expected 1 main h1; got ' + check.default.h1Count);
