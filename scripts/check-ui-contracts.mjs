@@ -361,6 +361,7 @@ await checkFile('src/components/ResultCard.astro', {
   required: [
     ['data-ui-card="result"', 'stable result role selector'],
     ['<article', 'semantic result article'],
+    ['ui-radius-card ui-border-subtle border-slate-200', 'approved result card geometry'],
     ['hover:border-accent/35', 'shared interactive result state'],
     ['<slot />', 'result-specific content and metadata'],
   ],
@@ -374,6 +375,7 @@ await checkFile('src/components/AdvisoryPanel.astro', {
   required: [
     ['role="note"', 'non-interruptive advisory semantics'],
     ['data-ui-panel="advisory"', 'stable advisory role selector'],
+    ['ui-radius-card ui-border-subtle border-brand/35', 'caution uses approved geometry'],
     ["tone === 'info'", 'information and caution variants'],
     ['<slot />', 'content remains with caller'],
   ],
@@ -390,7 +392,7 @@ for (const relativePath of ['src/pages/about.astro', 'src/pages/community.astro'
 await checkFile('src/components/HighlightPanel.astro', {
   required: [
     ['data-ui-panel="highlight"', 'semantic panel test hook'],
-    ['rounded-[2rem] border border-accent/35 bg-accent/10', 'shared accent visual style'],
+    ['ui-radius-feature ui-border-subtle border-accent/35 bg-accent/10', 'approved 24px feature radius and 1px subtle border'],
     ['<slot />', 'slot preserves narrative content'],
   ],
 });
@@ -407,6 +409,7 @@ await checkFile('src/components/NavigationCard.astro', {
   required: [
     ['data-ui-card="navigation"', 'stable navigation-card test hook'],
     ['type-card-title', 'shared compact title scale'],
+    ['ui-radius-card ui-border-subtle border-slate-200', 'approved navigation card geometry'],
     ['hover:border-accent/35', 'shared navigation interaction'],
     ["withBase(href)", 'internal destinations respect deployment base path'],
   ],
