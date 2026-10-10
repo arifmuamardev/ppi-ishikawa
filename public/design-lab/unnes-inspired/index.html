@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow, noarchive">
-  <meta name="color-scheme" content="light">
+  <meta name="color-scheme" content="light dark">
   <title>Live Design Lab — PPI Ishikawa × UNNES-inspired</title>
   <meta name="description" content="Eksperimen desain terisolasi PPI Ishikawa dengan tipografi Fira Sans, judul berlatar warna, dan tiga arah visual editorial.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -148,10 +148,71 @@
       .color-grid{grid-template-columns:repeat(3,1fr)}.swatch{height:60px}
       .treatment-grid{grid-template-columns:1fr}.treat{min-height:140px}
     }
+
+    /* Isolated, opt-in dark mode: never affects the actual PPI site. */
+    .preview-tools{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:0 0 18px}
+    .preview-tools .state-line{padding:0}
+    .mode-switch{display:inline-flex;gap:3px;align-items:center;background:#D8E3DE;border:1px solid #BCCBC5;padding:4px;border-radius:10px}
+    .mode-switch button{cursor:pointer;border:0;border-radius:7px;background:transparent;color:#425654;font-size:13px;font-weight:800;min-height:38px;padding:7px 15px;transition:background-color .15s,color .15s}
+    .mode-switch button[aria-pressed="true"]{background:#fff;color:#1F3A37;box-shadow:0 1px 5px #142a221c}
+    .mode-switch button:hover:not([aria-pressed="true"]){background:#ffffff80}
+    body[data-lab-theme="dark"]{color-scheme:dark;background:#101B1F;color:#F0F8F5}
+    body[data-lab-theme="dark"] :focus-visible{outline-color:#83DCD0}
+    body[data-lab-theme="dark"] .lab-top{background:#071315;border-bottom:1px solid #294044}
+    body[data-lab-theme="dark"] .lab-intro p:not(.eyebrow),
+    body[data-lab-theme="dark"] .context-note,
+    body[data-lab-theme="dark"] .guide-head p{color:#C4D7D1}
+    body[data-lab-theme="dark"] .lab-intro .eyebrow{color:#FFA5B4!important}
+    body[data-lab-theme="dark"] .selector button{background:#1B3033;border-color:#3F5A5C;color:#EDF8F3}
+    body[data-lab-theme="dark"] .selector button[aria-pressed="true"]{border-color:#FA91A3;box-shadow:0 0 0 2px #FA91A31E}
+    body[data-lab-theme="dark"] .selector small{color:#C8D9D5}
+    body[data-lab-theme="dark"] .selector button:hover{background:#264246}
+    body[data-lab-theme="dark"] .state-line{color:#CEDFDB}
+    body[data-lab-theme="dark"] .state-line strong{color:#FFACB9}
+    body[data-lab-theme="dark"] .mode-switch{background:#152A2E;border-color:#42595A}
+    body[data-lab-theme="dark"] .mode-switch button{color:#D5E9E4}
+    body[data-lab-theme="dark"] .mode-switch button[aria-pressed="true"]{background:#B7EBDD;color:#143632}
+    body[data-lab-theme="dark"] .mode-switch button:hover:not([aria-pressed="true"]){background:#2B474A}
+    body[data-lab-theme="dark"] .browser{background:#142529;border-color:#416062;box-shadow:0 25px 65px #0005}
+    body[data-lab-theme="dark"] .browser-bar{background:#24393D;border-color:#425E61}
+    body[data-lab-theme="dark"] .dot{background:#73928E}
+    body[data-lab-theme="dark"] .fake-url{background:#172C30;color:#DBEBE6}
+    body[data-lab-theme="dark"] .guide-head h2 span{color:#FF9BAE!important}
+    body[data-lab-theme="dark"] .panel{background:#1A2B30;border-color:#3A5457;color:#E9F5F0}
+    body[data-lab-theme="dark"] .panel p,
+    body[data-lab-theme="dark"] .type-body{color:#CFDFDA}
+    body[data-lab-theme="dark"] .color code{color:#C3D7D0}
+    body[data-lab-theme="dark"] .type-meta{color:#FFA5B4}
+    body[data-lab-theme="dark"] .badge{background:#24544B;color:#C4F1E3}
+    body[data-lab-theme="dark"] .treat{border-color:#466063;color:#F4FBF8}
+    body[data-lab-theme="dark"] .treat small{color:#C5D9D2}
+    body[data-lab-theme="dark"] .treat:nth-child(1),
+    body[data-lab-theme="dark"] .treat:nth-child(3){background:#213A3E}
+    body[data-lab-theme="dark"] .treat:nth-child(3) h4 span{color:#142B2B}
+    body[data-lab-theme="dark"] .footer{border-color:#3B5356;color:#C8DAD4}
+    /* Theme the whole sample page, not only variant B's already-dark hero. */
+    .preview[data-mode="dark"]{background:#122327;color:#EDF7F3}
+    .preview[data-mode="dark"][data-view="a"],
+    .preview[data-mode="dark"][data-view="c"]{--stage:#172C30;--heading:#F2FAF6;--sub:#C8DCD6}
+    .preview[data-mode="dark"] .preview-brand span{color:#91E5D2}
+    .preview[data-mode="dark"] .statline{background:#1B3033;color:#EDF7F4;border-color:#385356}
+    .preview[data-mode="dark"] .statline div{border-color:#385356}
+    .preview[data-mode="dark"] .statline span{color:#C7D9D4}
+    .preview[data-mode="dark"] .preview-section{background:#122327;color:#EDF7F3}
+    .preview[data-mode="dark"] .sec-header p,
+    .preview[data-mode="dark"] .card .index{color:#FF9CAD}
+    .preview[data-mode="dark"] .card{background:#1B3337;border-color:#446064;color:#EEF9F5}
+    .preview[data-mode="dark"] .card:hover{background:#294A4D}
+    .preview[data-mode="dark"] .card p{color:#CEDEDA}
+    .preview[data-mode="dark"] .stripe{background:#124F50}
+    .preview[data-mode="dark"][data-view="c"] .stripe{background:#912439}
+    .preview[data-mode="dark"] .stripe h3 em{color:#C3F2E2}
+    .preview[data-mode="dark"] .stripe a{background:#F1FAF6;color:#174340}
+    @media(max-width:600px){.preview-tools{align-items:stretch}.mode-switch{width:100%}.mode-switch button{flex:1}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
   </style>
 </head>
-<body>
+<body data-lab-theme="light">
   <div class="lab-top">
     <div class="wrap">
       <div class="lab-mark">PPI <span>ISHIKAWA</span> / DESIGN LAB <span aria-hidden="true">◆</span></div>
@@ -171,10 +232,16 @@
         <button type="button" data-variant="b" aria-pressed="true"><strong><i class="variant-bullet" aria-hidden="true"></i>B · Solid Institutional</strong><small>Bidang teal gelap, kontras tinggi, institusional</small></button>
         <button type="button" data-variant="c" aria-pressed="false"><strong><i class="variant-bullet" aria-hidden="true"></i>C · Clean Editorial</strong><small>Putih dominan, highlight terukur, lebih tenang</small></button>
       </div>
-      <div class="state-line" role="status" aria-live="polite">Sedang menampilkan: <strong id="active-description">B · Solid Institutional</strong></div>
+      <div class="preview-tools">
+        <div class="state-line" role="status" aria-live="polite">Sedang menampilkan: <strong id="active-description">B · Solid Institutional</strong></div>
+        <div class="mode-switch" role="group" aria-label="Mode warna untuk Design Lab">
+          <button type="button" data-mode-choice="light" aria-pressed="true">☀ Terang</button>
+          <button type="button" data-mode-choice="dark" aria-pressed="false">☾ Gelap</button>
+        </div>
+      </div>
       <div class="browser" aria-label="Contoh halaman PPI Ishikawa, interaktif">
         <div class="browser-bar" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="fake-url">ppi-ishikawa.org / contoh-desain</span></div>
-        <div class="preview" id="preview" data-view="b">
+        <div class="preview" id="preview" data-view="b" data-mode="light">
           <div class="preview-nav">
             <a href="#preview" class="preview-brand">PPI<span>J</span> / ISHIKAWA<span>.</span></a>
             <nav aria-label="Navigasi contoh"><a href="#demo-kampus">Kampus</a><a href="#demo-kampus">Kehidupan</a><a href="#demo-panduan">Panduan</a></nav>
@@ -277,6 +344,23 @@
       const stage = document.getElementById('preview');
       const desc = document.getElementById('active-description');
       const labels = {a:'A · Bold Highlight',b:'B · Solid Institutional',c:'C · Clean Editorial'};
+      const modeButtons = Array.from(document.querySelectorAll('[data-mode-choice]'));
+      const storageKey = 'ppi-ishikawa-design-lab-mode';
+      function applyMode(mode) {
+        const next = mode === 'dark' ? 'dark' : 'light';
+        document.body.dataset.labTheme = next;
+        stage.dataset.mode = next;
+        modeButtons.forEach(function(button) {
+          button.setAttribute('aria-pressed', String(button.dataset.modeChoice === next));
+        });
+        try { localStorage.setItem(storageKey, next); } catch (_error) { /* browser storage may be unavailable */ }
+      }
+      let initialMode = 'light';
+      try { initialMode = localStorage.getItem(storageKey) === 'dark' ? 'dark' : 'light'; } catch (_error) { /* default to light */ }
+      applyMode(initialMode);
+      modeButtons.forEach(function(button) {
+        button.addEventListener('click', function() { applyMode(button.dataset.modeChoice); });
+      });
       buttons.forEach(function(button) {
         button.addEventListener('click', function() {
           const key = button.getAttribute('data-variant');
