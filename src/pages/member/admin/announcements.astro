@@ -1,6 +1,7 @@
 ---
 import MemberLayout from '../../../layouts/MemberLayout.astro';
 import AppPageHeader from '../../../components/AppPageHeader.astro';
+import FormFeedback from '../../../components/FormFeedback.astro';
 ---
 
 <MemberLayout title="Kelola Pengumuman" requireAdmin={true}>
@@ -11,14 +12,14 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
       description="Buat pengumuman dan tentukan audiens yang dituju."
     />
 
-    <div id="announcement-admin-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+    <FormFeedback id="announcement-admin-message" />
 
     <section class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
       <div class="flex items-center justify-between gap-3">
         <h2 id="announcement-form-title" class="text-xl font-bold text-slate-950">Tambah pengumuman</h2>
         <button id="announcement-form-reset" type="button" class="hidden text-sm font-bold text-brand hover:underline">Batal edit</button>
       </div>
-      <form id="announcement-admin-form" class="mt-6 grid gap-5 md:grid-cols-2">
+      <form id="announcement-admin-form" aria-busy="false" data-auth-state="idle" class="mt-6 grid gap-5 md:grid-cols-2">
         <input name="id" type="hidden" />
         <label class="md:col-span-2">
           <span class="text-sm font-bold text-slate-800">Judul</span>
@@ -53,29 +54,28 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
         <h2 class="text-xl font-bold text-slate-950">Pengumuman tersedia</h2>
         <p id="announcement-admin-count" class="text-sm font-semibold text-slate-500" aria-live="polite" aria-atomic="true">Memuat…</p>
       </div>
-      <div id="announcement-admin-list" class="mt-6 space-y-3"></div>
+      <div id="announcement-admin-list" aria-busy="false" class="mt-6 space-y-3"></div>
+      <p id="announcement-admin-empty" role="status" aria-live="polite" class="mt-6 hidden rounded-2xl bg-slate-50 p-6 text-center text-sm text-slate-600">Belum ada pengumuman. Gunakan form di atas untuk membuat pengumuman pertama.</p>
     </section>
   </div>
 
   <script>
-    import { deleteAnnouncement, getAnnouncements, saveAnnouncement } from '../../../lib/member-community';
+    import { deleteAnnouncement, getAnnouncements, saveAnnouncement, type MemberAnnouncement } from '../../../lib/member-community';
+    import { createFormFeedback } from '../../../lib/form-feedback';
 
-    const form = document.getElementById('announcement-admin-form');
+    const form = document.querySelector<HTMLFormElement>('#announcement-admin-form');
     const list = document.getElementById('announcement-admin-list');
     const count = document.getElementById('announcement-admin-count');
-    const message = document.getElementById('announcement-admin-message');
+    const empty = document.getElementById('announcement-admin-empty');
+    const feedback = createFormFeedback(form, 'announcement-admin-message');
     const formTitle = document.getElementById('announcement-form-title');
-    const resetButton = document.getElementById('announcement-form-reset');
-    let announcements = [];
-
-    const show = (text, error = false) => {
-      if (!message) return;
-      message.textContent = text;
-      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
-    };
+    const resetButton = document.querySelector<HTMLButtonElement>('#announcement-form-reset');
+    let announcements: MemberAnnouncement[] = [];
+    const pendingDeletes = new Set<string>();
+    const saving = () => form?.getAttribute('aria-busy') === 'true';
 
     const resetForm = () => {
-      if (!(form instanceof HTMLFormElement)) return;
+      if (!form || saving()) return;
       form.reset();
       const id = form.elements.namedItem('id');
       if (id instanceof HTMLInputElement) id.value = '';
@@ -85,24 +85,48 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
       resetButton?.classList.add('hidden');
     };
 
-    const editItem = (item) => {
-      if (!(form instanceof HTMLFormElement)) return;
-      const set = (name, value) => {
+    const editItem = (item: MemberAnnouncement) => {
+      if (!form || saving() || pendingDeletes.size) return;
+      const set = (name: string, value: string | null) => {
         const input = form.elements.namedItem(name);
         if (input instanceof HTMLInputElement || input instanceof HTMLSelectElement || input instanceof HTMLTextAreaElement) input.value = value ?? '';
       };
-      set('id', item.id); set('title', item.title); set('category', item.category); set('audience', item.audience); set('body', item.body);
+      set('id', item.id);
+      set('title', item.title);
+      set('category', item.category);
+      set('audience', item.audience);
+      set('body', item.body);
       const important = form.elements.namedItem('important');
       if (important instanceof HTMLInputElement) important.checked = item.important;
       if (formTitle) formTitle.textContent = 'Edit pengumuman';
       resetButton?.classList.remove('hidden');
-      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      form.scrollIntoView({ block: 'start' });
+    };
+
+    const load = async (): Promise<boolean> => {
+      list?.setAttribute('aria-busy', 'true');
+      try {
+        const { data, error } = await getAnnouncements();
+        if (error) {
+          feedback.show('Pengumuman belum dapat dimuat. Muat ulang halaman untuk mencoba lagi.', 'error');
+          return false;
+        }
+        announcements = data || [];
+        render();
+        return true;
+      } catch {
+        feedback.show('Pengumuman belum dapat dimuat karena kendala koneksi.', 'error');
+        return false;
+      } finally {
+        list?.setAttribute('aria-busy', 'false');
+      }
     };
 
     const render = () => {
       if (!list) return;
       list.replaceChildren();
       if (count) count.textContent = `${announcements.length} pengumuman`;
+      empty?.classList.toggle('hidden', announcements.length !== 0);
 
       for (const item of announcements) {
         const card = document.createElement('article');
@@ -119,16 +143,40 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
         const controls = document.createElement('div');
         controls.className = 'flex gap-2';
         const edit = document.createElement('button');
-        edit.type = 'button'; edit.className = 'rounded-xl border border-slate-300 px-4 py-2 text-sm font-bold text-slate-700'; edit.textContent = 'Edit';
+        edit.type = 'button';
+        edit.className = 'ui-action-secondary';
+        edit.textContent = 'Edit';
         edit.addEventListener('click', () => editItem(item));
         const remove = document.createElement('button');
-        remove.type = 'button'; remove.className = 'rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-bold text-red-700'; remove.textContent = 'Hapus';
+        remove.type = 'button';
+        remove.className = 'rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-bold text-red-700';
+        remove.textContent = 'Hapus';
         remove.addEventListener('click', async () => {
+          if (saving() || pendingDeletes.has(item.id)) return;
           if (!window.confirm('Hapus pengumuman ini?')) return;
-          const { error } = await deleteAnnouncement(item.id);
-          if (error) return show('Pengumuman belum dapat dihapus.', true);
-          show('Pengumuman berhasil dihapus.');
-          await load();
+          pendingDeletes.add(item.id);
+          remove.disabled = true;
+          edit.disabled = true;
+          remove.textContent = 'Menghapus…';
+          card.setAttribute('aria-busy', 'true');
+          feedback.show('Sedang menghapus pengumuman…');
+          try {
+            const { error } = await deleteAnnouncement(item.id);
+            if (error) {
+              feedback.show('Pengumuman belum dapat dihapus. Coba lagi.', 'error');
+              return;
+            }
+            if (await load()) feedback.show('Pengumuman berhasil dihapus.', 'success');
+            else feedback.show('Pengumuman berhasil dihapus, tetapi daftar belum dapat diperbarui. Muat ulang halaman.');
+          } catch {
+            feedback.show('Pengumuman belum dapat dihapus karena kendala koneksi.', 'error');
+          } finally {
+            pendingDeletes.delete(item.id);
+            remove.disabled = false;
+            edit.disabled = false;
+            remove.textContent = 'Hapus';
+            card.setAttribute('aria-busy', 'false');
+          }
         });
         controls.append(edit, remove);
         card.append(info, controls);
@@ -136,30 +184,34 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
       }
     };
 
-    const load = async () => {
-      const { data, error } = await getAnnouncements();
-      if (error) return show('Pengumuman belum dapat dimuat.', true);
-      announcements = data || [];
-      render();
-    };
-
-    form?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!(form instanceof HTMLFormElement)) return;
-      const values = new FormData(form);
-      const { error } = await saveAnnouncement({
-        id: String(values.get('id') || '') || undefined,
-        title: String(values.get('title') || '').trim(),
-        body: String(values.get('body') || '').trim(),
-        category: String(values.get('category') || ''),
-        audience: String(values.get('audience') || '').trim(),
-        published_at: new Date().toISOString(),
-        important: values.get('important') === 'on',
-      });
-      if (error) return show('Pengumuman belum dapat disimpan.', true);
-      show('Pengumuman berhasil disimpan.');
-      resetForm();
-      await load();
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!form || saving() || pendingDeletes.size) return;
+      await feedback.run('Menyimpan…', async () => {
+        const values = new FormData(form);
+        const { error } = await saveAnnouncement({
+          id: String(values.get('id') || '') || undefined,
+          title: String(values.get('title') || '').trim(),
+          body: String(values.get('body') || '').trim(),
+          category: String(values.get('category') || ''),
+          audience: String(values.get('audience') || '').trim(),
+          published_at: new Date().toISOString(),
+          important: values.get('important') === 'on',
+        });
+        if (error) {
+          feedback.show('Pengumuman belum dapat disimpan. Periksa data lalu coba lagi.', 'error');
+          return;
+        }
+        if (await load()) feedback.show('Pengumuman berhasil disimpan.', 'success');
+        else feedback.show('Pengumuman tersimpan, tetapi daftar belum dapat diperbarui. Muat ulang halaman.');
+        form.reset();
+        const id = form.elements.namedItem('id');
+        if (id instanceof HTMLInputElement) id.value = '';
+        const audience = form.elements.namedItem('audience');
+        if (audience instanceof HTMLInputElement) audience.value = 'Semua anggota';
+        if (formTitle) formTitle.textContent = 'Tambah pengumuman';
+        resetButton?.classList.add('hidden');
+      }, 'Pengumuman belum dapat diproses karena kendala koneksi. Coba lagi.');
     });
 
     resetButton?.addEventListener('click', resetForm);
