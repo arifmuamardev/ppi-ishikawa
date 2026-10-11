@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AuthShell from '../../components/AuthShell.astro';
+import AuthFeedback from '../../components/AuthFeedback.astro';
 import { campuses } from '../../data/campuses';
 import { ishikawaCities, studyLevels } from '../../data/membership';
 import { withBase } from '../../utils/paths';
@@ -14,9 +15,9 @@ import { withBase } from '../../utils/paths';
     size="md"
   >
 
-      <div id="register-message" class="mt-6 hidden rounded-2xl border p-4 text-sm leading-6"></div>
+      <AuthFeedback id="register-message" />
 
-      <form id="member-register-form" class="mt-8 grid gap-5 md:grid-cols-2">
+      <form id="member-register-form" aria-busy="false" data-auth-state="idle" class="mt-8 grid gap-5 md:grid-cols-2">
         <label class="md:col-span-2">
           <span class="text-sm font-bold text-slate-800">Nama lengkap</span>
           <input name="full_name" type="text" autocomplete="name" required class="ui-field mt-2" />
@@ -79,57 +80,50 @@ import { withBase } from '../../utils/paths';
       </form>
   </AuthShell>
 
-  <script>
-    import { isSupabaseConfigured, supabase } from '../../lib/supabase';
-    import { demoRegister, isMembershipDemoMode, memberAbsoluteUrl, memberPath } from '../../lib/member';
 
-    const form = document.getElementById('member-register-form');
-    const message = document.getElementById('register-message');
+<script>
+  import { isSupabaseConfigured, supabase } from '../../lib/supabase';
+  import { demoRegister, isMembershipDemoMode, memberAbsoluteUrl, memberPath } from '../../lib/member';
+  import { createAuthFeedback } from '../../lib/auth-feedback';
 
-    const showMessage = (text, type = 'info') => {
-      if (!message) return;
-      message.textContent = text;
-      message.className = `mt-6 rounded-2xl border p-4 text-sm leading-6 ${type === 'error' ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
-    };
+  const form = document.querySelector<HTMLFormElement>('#member-register-form');
+  const feedback = createAuthFeedback(form, 'register-message');
+  const confirmationField = form?.querySelector<HTMLInputElement>('[name="password_confirm"]');
 
-    if (isMembershipDemoMode) {
-      showMessage('Mode demo aktif. Data pendaftaran hanya akan disimpan di browser ini dan tidak dikirim ke PPI Ishikawa.');
-      form?.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const values = new FormData(form);
-        const password = String(values.get('password') || '');
-        const confirmation = String(values.get('password_confirm') || '');
-        if (password !== confirmation) {
-          showMessage('Password dan konfirmasi password tidak sama.', 'error');
-          return;
-        }
-        demoRegister({
-          full_name: String(values.get('full_name') || '').trim(),
-          email: String(values.get('email') || '').trim(),
-          campus_slug: String(values.get('campus_slug') || ''),
-          program: String(values.get('program') || '').trim(),
-          study_level: String(values.get('study_level') || ''),
-          field_of_study: String(values.get('field_of_study') || '').trim(),
-          city: String(values.get('city') || ''),
-        });
-        window.location.replace(memberPath('/member/'));
+  if (isMembershipDemoMode) {
+    feedback.show('Mode demo aktif. Data pendaftaran hanya akan disimpan di browser ini dan tidak dikirim ke PPI Ishikawa.');
+    form?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const values = new FormData(form);
+      const password = String(values.get('password') || '');
+      const confirmation = String(values.get('password_confirm') || '');
+      if (password !== confirmation) {
+        feedback.show('Password dan konfirmasi password tidak sama.', 'error', confirmationField ?? undefined);
+        return;
+      }
+      demoRegister({
+        full_name: String(values.get('full_name') || '').trim(),
+        email: String(values.get('email') || '').trim(),
+        campus_slug: String(values.get('campus_slug') || ''),
+        program: String(values.get('program') || '').trim(),
+        study_level: String(values.get('study_level') || ''),
+        field_of_study: String(values.get('field_of_study') || '').trim(),
+        city: String(values.get('city') || ''),
       });
-    } else if (isSupabaseConfigured && supabase) {
-      form?.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const values = new FormData(form);
-        const password = String(values.get('password') || '');
-        const confirmation = String(values.get('password_confirm') || '');
+      window.location.replace(memberPath('/member/'));
+    });
+  } else if (isSupabaseConfigured && supabase) {
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const values = new FormData(form);
+      const password = String(values.get('password') || '');
+      const confirmation = String(values.get('password_confirm') || '');
+      if (password !== confirmation) {
+        feedback.show('Password dan konfirmasi password tidak sama.', 'error', confirmationField ?? undefined);
+        return;
+      }
 
-        if (password !== confirmation) {
-          showMessage('Password dan konfirmasi password tidak sama.', 'error');
-          return;
-        }
-
-        const submit = form.querySelector('button[type="submit"]');
-        submit?.setAttribute('disabled', '');
-        if (submit) submit.textContent = 'Mendaftarkan…';
-
+      await feedback.run('Mendaftarkan…', async () => {
         const redirectTo = memberAbsoluteUrl('/member/login/?confirmed=1');
         const { data, error } = await supabase.auth.signUp({
           email: String(values.get('email') || '').trim(),
@@ -148,9 +142,7 @@ import { withBase } from '../../utils/paths';
         });
 
         if (error) {
-          showMessage('Pendaftaran belum dapat diproses. Periksa email, password, dan data yang Anda isi.', 'error');
-          submit?.removeAttribute('disabled');
-          if (submit) submit.textContent = 'Daftar';
+          feedback.show('Pendaftaran belum dapat diproses. Periksa email, password, dan data yang Anda isi.', 'error');
           return;
         }
 
@@ -158,11 +150,10 @@ import { withBase } from '../../utils/paths';
         if (data.session) {
           window.location.replace(memberPath('/member/'));
         } else {
-          showMessage('Pendaftaran diterima. Periksa email Anda untuk konfirmasi, lalu masuk. Setelah itu status membership akan menunggu verifikasi pengurus.');
-          submit?.removeAttribute('disabled');
-          if (submit) submit.textContent = 'Daftar';
+          feedback.show('Pendaftaran diterima. Periksa email Anda untuk konfirmasi, lalu masuk. Setelah itu status membership akan menunggu verifikasi pengurus.', 'success');
         }
-      });
-    }
-  </script>
+      }, 'Pendaftaran belum dapat diproses karena kendala koneksi. Coba lagi.');
+    });
+  }
+</script>
 </BaseLayout>
