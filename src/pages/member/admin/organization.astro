@@ -339,7 +339,7 @@ import FormFeedback from '../../../components/FormFeedback.astro';
       }
     }
 
-    async function loadTerms(): Promise<boolean> {
+    async function loadTerms(preferCurrent = false): Promise<boolean> {
       try {
         const { data, error } = await getOrganizationTerms();
         if (error) {
@@ -350,7 +350,7 @@ import FormFeedback from '../../../components/FormFeedback.astro';
         if (!termSelector) return false;
         const previous = selectedTermId();
         fillSelect(termSelector, terms, item => `${item.label}${item.is_current ? ' · aktif' : ''}`);
-        if (!terms.some(item => item.id === previous)) {
+        if (preferCurrent || !terms.some(item => item.id === previous)) {
           const current = terms.find(item => item.is_current);
           if (current) termSelector.value = current.id;
         }
@@ -380,7 +380,7 @@ import FormFeedback from '../../../components/FormFeedback.astro';
         });
         if (error) return termFeedback.show('Periode belum dapat ditambahkan. Periksa data lalu coba lagi.', 'error');
         termForm.reset();
-        if (await loadTerms()) termFeedback.show('Periode berhasil ditambahkan.', 'success');
+        if (await loadTerms(values.get('is_current') === 'on')) termFeedback.show('Periode berhasil ditambahkan.', 'success');
         else termFeedback.show('Periode tersimpan, tetapi daftar belum dapat diperbarui. Muat ulang halaman.');
       }, 'Periode belum dapat diproses karena kendala koneksi. Coba lagi.');
     });
