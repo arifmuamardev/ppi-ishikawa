@@ -12,6 +12,7 @@ on:
       - 'src/lib/form-feedback.ts'
       - 'src/lib/auth-feedback.ts'
       - 'scripts/audit-member-feedback.mjs'
+      - 'scripts/audit-member-aspirations.mjs'
       - '.github/workflows/member-feedback-audit.yml'
   push:
     branches: [main]
@@ -24,6 +25,7 @@ on:
       - 'src/lib/form-feedback.ts'
       - 'src/lib/auth-feedback.ts'
       - 'scripts/audit-member-feedback.mjs'
+      - 'scripts/audit-member-aspirations.mjs'
       - '.github/workflows/member-feedback-audit.yml'
   workflow_dispatch:
 
@@ -47,11 +49,14 @@ jobs:
           preview_pid=$!
           trap 'kill $preview_pid || true' EXIT
           node scripts/audit-member-feedback.mjs
+          node scripts/audit-member-aspirations.mjs
       - name: Upload screenshots and report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: member-feedback-audit
-          path: member-feedback-audit/
+          path: |
+            member-feedback-audit/
+            member-aspiration-audit/
           if-no-files-found: warn
           retention-days: 7
