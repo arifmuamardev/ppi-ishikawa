@@ -1,0 +1,57 @@
+name: Auth interaction-state browser audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/pages/member/login.astro'
+      - 'src/pages/member/register.astro'
+      - 'src/pages/member/forgot-password.astro'
+      - 'src/pages/member/reset-password.astro'
+      - 'src/components/AuthFeedback.astro'
+      - 'src/lib/auth-feedback.ts'
+      - 'src/styles/global.css'
+      - 'scripts/audit-auth-feedback.mjs'
+      - '.github/workflows/auth-feedback-audit.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/pages/member/login.astro'
+      - 'src/pages/member/register.astro'
+      - 'src/pages/member/forgot-password.astro'
+      - 'src/pages/member/reset-password.astro'
+      - 'src/components/AuthFeedback.astro'
+      - 'src/lib/auth-feedback.ts'
+      - 'src/styles/global.css'
+      - 'scripts/audit-auth-feedback.mjs'
+      - '.github/workflows/auth-feedback-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - run: npm install --no-package-lock
+      - run: npm run check:theme && npm run check:ui && npm run build
+      - name: Mock-network browser acceptance
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 &
+          preview_pid=$!
+          trap 'kill $preview_pid || true' EXIT
+          node scripts/audit-auth-feedback.mjs
+      - name: Upload screenshots and audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: auth-feedback-audit
+          path: auth-feedback-audit/
+          retention-days: 7
+          if-no-files-found: warn
