@@ -1,0 +1,7 @@
+---
+/** Member/Admin adapter to the already approved accessible feedback surface. */
+import AuthFeedback from './AuthFeedback.astro';
+interface Props { id: string; }
+const { id } = Astro.props;
+---
+<AuthFeedback id={id} />

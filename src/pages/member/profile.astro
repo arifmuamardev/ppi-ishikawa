@@ -1,6 +1,7 @@
 ---
 import MemberLayout from '../../layouts/MemberLayout.astro';
 import AppPageHeader from '../../components/AppPageHeader.astro';
+import FormFeedback from '../../components/FormFeedback.astro';
 import { campuses } from '../../data/campuses';
 import { ishikawaCities, studyLevels } from '../../data/membership';
 ---
@@ -13,9 +14,9 @@ import { ishikawaCities, studyLevels } from '../../data/membership';
       description="Perbarui data akademik dan pilih informasi yang boleh terlihat oleh anggota lain. Email akun tidak ditampilkan di direktori."
     />
 
-    <div id="profile-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+    <FormFeedback id="profile-message" />
 
-    <form id="member-profile-form" class="space-y-6">
+    <form id="member-profile-form" aria-busy="false" data-auth-state="idle" class="space-y-6">
       <section class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
         <h2 class="text-xl font-bold text-slate-950">Informasi utama</h2>
         <div class="mt-6 grid gap-5 md:grid-cols-2">
@@ -98,78 +99,74 @@ import { ishikawaCities, studyLevels } from '../../data/membership';
 
   <script>
     import { getCurrentMember, updateCurrentMemberProfile } from '../../lib/member';
+    import { createFormFeedback } from '../../lib/form-feedback';
 
-    const form = document.getElementById('member-profile-form');
-    const message = document.getElementById('profile-message');
-    const show = (text, error = false) => {
-      if (!message) return;
-      message.textContent = text;
-      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
-    };
+    const form = document.querySelector<HTMLFormElement>('#member-profile-form');
+    const feedback = createFormFeedback(form, 'profile-message');
 
-    if (form instanceof HTMLFormElement) {
-      const member = await getCurrentMember();
-      if (member.user && member.profile) {
-        const p = member.profile;
-        const setValue = (name, value) => {
-          const input = form.elements.namedItem(name);
-          if (input instanceof HTMLInputElement || input instanceof HTMLSelectElement || input instanceof HTMLTextAreaElement) input.value = value || '';
-        };
-        const setChecked = (name, value) => {
-          const input = form.elements.namedItem(name);
-          if (input instanceof HTMLInputElement) input.checked = Boolean(value);
-        };
-
-        setValue('full_name', p.full_name);
-        setValue('campus_slug', p.campus_slug);
-        setValue('program', p.program);
-        setValue('study_level', p.study_level);
-        setValue('field_of_study', p.field_of_study);
-        setValue('city', p.city);
-        setValue('instagram', p.instagram);
-        setValue('linkedin_url', p.linkedin_url);
-        setValue('bio', p.bio);
-        setChecked('directory_visible', p.directory_visible);
-        setChecked('show_field_of_study', p.show_field_of_study);
-        setChecked('show_city', p.show_city);
-        setChecked('show_instagram', p.show_instagram);
-        setChecked('show_linkedin', p.show_linkedin);
-
-        const email = document.getElementById('profile-email');
-        if (email instanceof HTMLInputElement) email.value = member.user.email || '';
-
-        form.addEventListener('submit', async (event) => {
-          event.preventDefault();
-          const values = new FormData(form);
-          const payload = {
-            full_name: String(values.get('full_name') || '').trim(),
-            campus_slug: String(values.get('campus_slug') || '') || null,
-            program: String(values.get('program') || '').trim() || null,
-            study_level: String(values.get('study_level') || '') || null,
-            field_of_study: String(values.get('field_of_study') || '').trim() || null,
-            city: String(values.get('city') || '') || null,
-            instagram: String(values.get('instagram') || '').trim() || null,
-            linkedin_url: String(values.get('linkedin_url') || '').trim() || null,
-            bio: String(values.get('bio') || '').trim() || null,
-            directory_visible: values.get('directory_visible') === 'on',
-            show_field_of_study: values.get('show_field_of_study') === 'on',
-            show_city: values.get('show_city') === 'on',
-            show_instagram: values.get('show_instagram') === 'on',
-            show_linkedin: values.get('show_linkedin') === 'on',
+    if (form) {
+      try {
+        const member = await getCurrentMember();
+        if (member.user && member.profile) {
+          const p = member.profile;
+          const setValue = (name: string, value: string | null) => {
+            const input = form.elements.namedItem(name);
+            if (input instanceof HTMLInputElement || input instanceof HTMLSelectElement || input instanceof HTMLTextAreaElement) input.value = value || '';
+          };
+          const setChecked = (name: string, value: boolean) => {
+            const input = form.elements.namedItem(name);
+            if (input instanceof HTMLInputElement) input.checked = Boolean(value);
           };
 
-          const submit = form.querySelector('button[type="submit"]');
-          submit?.setAttribute('disabled', '');
-          const { error } = await updateCurrentMemberProfile(payload);
-          submit?.removeAttribute('disabled');
+          setValue('full_name', p.full_name);
+          setValue('campus_slug', p.campus_slug);
+          setValue('program', p.program);
+          setValue('study_level', p.study_level);
+          setValue('field_of_study', p.field_of_study);
+          setValue('city', p.city);
+          setValue('instagram', p.instagram);
+          setValue('linkedin_url', p.linkedin_url);
+          setValue('bio', p.bio);
+          setChecked('directory_visible', p.directory_visible);
+          setChecked('show_field_of_study', p.show_field_of_study);
+          setChecked('show_city', p.show_city);
+          setChecked('show_instagram', p.show_instagram);
+          setChecked('show_linkedin', p.show_linkedin);
 
-          if (error) {
-            show('Perubahan belum dapat disimpan. Coba lagi atau hubungi pengurus bila masalah berlanjut.', true);
-            return;
-          }
+          const email = document.getElementById('profile-email');
+          if (email instanceof HTMLInputElement) email.value = member.user.email || '';
 
-          show('Profil dan pengaturan privasi berhasil disimpan.');
-        });
+          form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            await feedback.run('Menyimpan…', async () => {
+              const values = new FormData(form);
+              const payload = {
+                full_name: String(values.get('full_name') || '').trim(),
+                campus_slug: String(values.get('campus_slug') || '') || null,
+                program: String(values.get('program') || '').trim() || null,
+                study_level: String(values.get('study_level') || '') || null,
+                field_of_study: String(values.get('field_of_study') || '').trim() || null,
+                city: String(values.get('city') || '') || null,
+                instagram: String(values.get('instagram') || '').trim() || null,
+                linkedin_url: String(values.get('linkedin_url') || '').trim() || null,
+                bio: String(values.get('bio') || '').trim() || null,
+                directory_visible: values.get('directory_visible') === 'on',
+                show_field_of_study: values.get('show_field_of_study') === 'on',
+                show_city: values.get('show_city') === 'on',
+                show_instagram: values.get('show_instagram') === 'on',
+                show_linkedin: values.get('show_linkedin') === 'on',
+              };
+              const { error } = await updateCurrentMemberProfile(payload);
+              if (error) {
+                feedback.show('Perubahan belum dapat disimpan. Coba lagi atau hubungi pengurus bila masalah berlanjut.', 'error');
+                return;
+              }
+              feedback.show('Profil dan pengaturan privasi berhasil disimpan.', 'success');
+            }, 'Perubahan belum dapat diproses. Periksa koneksi lalu coba lagi.');
+          });
+        }
+      } catch {
+        feedback.show('Data profil belum dapat dimuat. Muat ulang halaman atau coba lagi nanti.', 'error');
       }
     }
   </script>
