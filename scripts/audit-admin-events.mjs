@@ -76,7 +76,7 @@ try {
   const heldSave = new Promise(resolve => { releaseSave = resolve; });
   let releaseDelete = () => {};
   const heldDelete = new Promise(resolve => { releaseDelete = resolve; });
-  let inserts = 0, deletes = 0, existing = [sample];
+  let inserts = 0, updates = 0, deletes = 0, existing = [sample];
   const page = await browser.newPage({ viewport: { width: 390, height: 850 }, reducedMotion: 'reduce' });
   page.on('dialog', d => d.accept());
   await setup(page, {
@@ -92,6 +92,12 @@ try {
         const obj = { ...sample, ...req.postDataJSON(), id: '33333333-3333-4333-8333-333333333333' };
         existing = [...existing, obj];
         return { status: 201, body: obj };
+      }
+      if (method === 'PATCH') {
+        updates++;
+        const changed = req.postDataJSON();
+        existing = existing.map(item => item.id === sample.id ? { ...item, ...changed } : item);
+        return { status: 200, body: existing.find(item => item.id === sample.id) };
       }
       if (method === 'DELETE') {
         deletes++;
@@ -133,8 +139,18 @@ try {
     assert(inserts === 2, 'save retry exactly once');
     await page.getByText('2 kegiatan').waitFor();
 
+    // Edit must preserve the existing ID and update the row, not create a third event.
+    await page.locator('#event-admin-list article').filter({ hasText: 'Kegiatan Uji' }).getByRole('button', { name: 'Edit' }).click();
+    assert(await page.locator('#event-form-title').textContent() === 'Edit kegiatan', 'edit: form switched to edit mode');
+    await page.locator('input[name="title"]').fill('Kegiatan Uji Diperbarui');
+    await page.locator('#event-admin-form button[type="submit"]').click();
+    await page.locator('#event-admin-list article').filter({ hasText: 'Kegiatan Uji Diperbarui' }).waitFor();
+    assert(updates === 1, 'edit: one PATCH request');
+    assert(await page.locator('input[name="id"]').inputValue() === '', 'edit: form reset after save');
+    assert(existing.length === 2, 'edit: does not create another event');
+
     // Delete failure should keep row and permit retry; confirm is still required.
-    const card = page.locator('#event-admin-list article').filter({ hasText: 'Kegiatan Uji' });
+    const card = page.locator('#event-admin-list article').filter({ hasText: 'Kegiatan Uji Diperbarui' });
     const remove = card.getByRole('button', { name: 'Hapus' });
     await remove.click();
     await card.waitFor({ state: 'visible' });
