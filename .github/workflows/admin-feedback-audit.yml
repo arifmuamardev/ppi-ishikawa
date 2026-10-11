@@ -10,6 +10,7 @@ on:
       - 'src/lib/form-feedback.ts'
       - 'src/lib/auth-feedback.ts'
       - 'scripts/audit-admin-events.mjs'
+      - 'scripts/audit-admin-announcements.mjs'
       - '.github/workflows/admin-feedback-audit.yml'
   push:
     branches: [main]
@@ -20,6 +21,7 @@ on:
       - 'src/lib/form-feedback.ts'
       - 'src/lib/auth-feedback.ts'
       - 'scripts/audit-admin-events.mjs'
+      - 'scripts/audit-admin-announcements.mjs'
       - '.github/workflows/admin-feedback-audit.yml'
   workflow_dispatch:
 
@@ -51,11 +53,14 @@ jobs:
           done
           curl -fsS http://127.0.0.1:4321/ppi-ishikawa/ >/dev/null
           node scripts/audit-admin-events.mjs
+          node scripts/audit-admin-announcements.mjs
       - name: Upload screenshots and report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: admin-feedback-audit
-          path: admin-event-audit/
+          path: |
+            admin-event-audit/
+            admin-announcement-audit/
           if-no-files-found: warn
           retention-days: 7
