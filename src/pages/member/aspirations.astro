@@ -1,6 +1,7 @@
 ---
 import MemberLayout from '../../layouts/MemberLayout.astro';
 import AppPageHeader from '../../components/AppPageHeader.astro';
+import FormFeedback from '../../components/FormFeedback.astro';
 ---
 
 <MemberLayout title="Aspirasi Anggota" requireApproved={true}>
@@ -11,11 +12,11 @@ import AppPageHeader from '../../components/AppPageHeader.astro';
       description="Gunakan kanal ini untuk menyampaikan ide kegiatan, kebutuhan anggota, masukan layanan, atau hal lain yang perlu diketahui pengurus."
     />
 
-    <div id="aspiration-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+    <FormFeedback id="aspiration-message" />
 
     <section class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
       <h2 class="text-xl font-bold text-slate-950">Kirim aspirasi</h2>
-      <form id="aspiration-form" class="mt-6 grid gap-5 md:grid-cols-2">
+      <form id="aspiration-form" aria-busy="false" data-auth-state="idle" class="mt-6 grid gap-5 md:grid-cols-2">
         <label>
           <span class="text-sm font-bold text-slate-800">Kategori</span>
           <select name="category" required class="ui-field mt-2">
@@ -56,33 +57,28 @@ import AppPageHeader from '../../components/AppPageHeader.astro';
           <p class="type-meta uppercase tracking-[0.12em] text-slate-500">Riwayat</p>
           <h2 class="mt-2 text-xl font-bold text-slate-950">Aspirasi saya</h2>
         </div>
-        <p id="aspiration-count" class="text-sm font-semibold text-slate-500">0 aspirasi</p>
+        <p id="aspiration-count" aria-live="polite" aria-atomic="true" class="text-sm font-semibold text-slate-500">0 aspirasi</p>
       </div>
-      <div id="aspiration-empty" class="mt-6 rounded-2xl bg-slate-50 p-6 text-center text-sm text-slate-600">Belum ada aspirasi yang dikirim.</div>
+      <div id="aspiration-empty" role="status" aria-live="polite" class="mt-6 rounded-2xl bg-slate-50 p-6 text-center text-sm text-slate-600">Belum ada aspirasi yang dikirim.</div>
       <div id="aspiration-list" class="mt-6 space-y-3"></div>
     </section>
   </div>
 
   <script>
     import { getMyAspirations, submitAspiration } from '../../lib/member-community';
+    import { createFormFeedback } from '../../lib/form-feedback';
 
     const form = document.getElementById('aspiration-form');
     const list = document.getElementById('aspiration-list');
     const empty = document.getElementById('aspiration-empty');
     const count = document.getElementById('aspiration-count');
-    const messageBox = document.getElementById('aspiration-message');
+    const feedback = createFormFeedback(form instanceof HTMLFormElement ? form : null, 'aspiration-message');
 
     const statusLabels = {
       received: 'Diterima',
       reviewed: 'Ditinjau',
       planned: 'Direncanakan',
       completed: 'Selesai',
-    };
-
-    const show = (text, error = false) => {
-      if (!messageBox) return;
-      messageBox.textContent = text;
-      messageBox.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
     };
 
     const render = async () => {
@@ -125,22 +121,24 @@ import AppPageHeader from '../../components/AppPageHeader.astro';
     form?.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (!(form instanceof HTMLFormElement)) return;
-      const values = new FormData(form);
-      const { error } = await submitAspiration({
-        subject: String(values.get('subject') || '').trim(),
-        message: String(values.get('message') || '').trim(),
-        category: String(values.get('category') || ''),
-        anonymous: values.get('anonymous') === 'on',
-      });
+      await feedback.run('Mengirim…', async () => {
+        const values = new FormData(form);
+        const { error } = await submitAspiration({
+          subject: String(values.get('subject') || '').trim(),
+          message: String(values.get('message') || '').trim(),
+          category: String(values.get('category') || ''),
+          anonymous: values.get('anonymous') === 'on',
+        });
 
-      if (error) {
-        show('Aspirasi belum dapat dikirim.', true);
-        return;
-      }
+        if (error) {
+          feedback.show('Aspirasi belum dapat dikirim. Periksa kembali data lalu coba lagi.', 'error');
+          return;
+        }
 
-      form.reset();
-      show('Aspirasi berhasil disimpan.');
-      await render();
+        form.reset();
+        feedback.show('Aspirasi berhasil disimpan.', 'success');
+        await render();
+      }, 'Aspirasi belum dapat diproses karena kendala koneksi. Coba lagi.');
     });
 
     render();
