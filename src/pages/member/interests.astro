@@ -1,6 +1,7 @@
 ---
 import MemberLayout from '../../layouts/MemberLayout.astro';
 import AppPageHeader from '../../components/AppPageHeader.astro';
+import FormFeedback from '../../components/FormFeedback.astro';
 import { memberInterestOptions, memberSkillOptions } from '../../data/member-community-demo';
 ---
 
@@ -12,9 +13,9 @@ import { memberInterestOptions, memberSkillOptions } from '../../data/member-com
       description="Informasi ini dapat membantu PPI Ishikawa menemukan anggota yang relevan ketika ada kegiatan, volunteer, atau kolaborasi. Memilih minat tidak berarti Anda wajib menjadi pengurus atau panitia."
     />
 
-    <div id="interest-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+    <FormFeedback id="interest-message" />
 
-    <form id="interest-form" class="space-y-6">
+    <form id="interest-form" aria-busy="false" data-auth-state="idle" class="space-y-6">
       <section class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
         <p class="type-meta uppercase tracking-[0.12em] text-slate-500">Ketertarikan</p>
         <h2 class="mt-2 text-xl font-bold text-slate-950">Topik yang ingin Anda ikuti</h2>
@@ -57,42 +58,47 @@ import { memberInterestOptions, memberSkillOptions } from '../../data/member-com
 
   <script>
     import { getMemberPreferences, saveMemberPreferences } from '../../lib/member-community';
+    import { createFormFeedback } from '../../lib/form-feedback';
 
-    const form = document.getElementById('interest-form');
-    const message = document.getElementById('interest-message');
+    const form = document.querySelector<HTMLFormElement>('#interest-form');
+    const feedback = createFormFeedback(form, 'interest-message');
 
-    const show = (text, error = false) => {
-      if (!message) return;
-      message.textContent = text;
-      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
-    };
+    if (form) {
+      try {
+        const preferences = await getMemberPreferences();
+        for (const input of form.querySelectorAll<HTMLInputElement>('input[name="interests"]')) {
+          input.checked = preferences.interests.includes(input.value);
+        }
+        for (const input of form.querySelectorAll<HTMLInputElement>('input[name="skills"]')) {
+          input.checked = preferences.skills.includes(input.value);
+        }
+        const volunteer = form.elements.namedItem('volunteer_available');
+        if (volunteer instanceof HTMLInputElement) volunteer.checked = preferences.volunteer_available;
 
-    if (form instanceof HTMLFormElement) {
-      const preferences = await getMemberPreferences();
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          await feedback.run('Menyimpan…', async () => {
+            const interests = [...form.querySelectorAll<HTMLInputElement>('input[name="interests"]:checked')].map((input) => input.value);
+            const skills = [...form.querySelectorAll<HTMLInputElement>('input[name="skills"]:checked')].map((input) => input.value);
+            const volunteerInput = form.elements.namedItem('volunteer_available');
 
-      for (const input of form.querySelectorAll('input[name="interests"]')) {
-        if (input instanceof HTMLInputElement) input.checked = preferences.interests.includes(input.value);
-      }
-      for (const input of form.querySelectorAll('input[name="skills"]')) {
-        if (input instanceof HTMLInputElement) input.checked = preferences.skills.includes(input.value);
-      }
-      const volunteer = form.elements.namedItem('volunteer_available');
-      if (volunteer instanceof HTMLInputElement) volunteer.checked = preferences.volunteer_available;
-
-      form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const interests = [...form.querySelectorAll('input[name="interests"]:checked')].map((input) => input.value);
-        const skills = [...form.querySelectorAll('input[name="skills"]:checked')].map((input) => input.value);
-        const volunteerInput = form.elements.namedItem('volunteer_available');
-
-        const { error } = await saveMemberPreferences({
-          interests,
-          skills,
-          volunteer_available: volunteerInput instanceof HTMLInputElement && volunteerInput.checked,
+            const { error } = await saveMemberPreferences({
+              interests,
+              skills,
+              volunteer_available: volunteerInput instanceof HTMLInputElement && volunteerInput.checked,
+            });
+            if (error) {
+              feedback.show('Data belum dapat disimpan. Pilihan Anda tetap tersimpan di form ini; coba lagi.', 'error');
+              return;
+            }
+            feedback.show('Minat, skills, dan preferensi volunteer berhasil disimpan.', 'success');
+          }, 'Preferensi belum dapat diproses karena kendala koneksi. Coba lagi.');
         });
-
-        show(error ? 'Data belum dapat disimpan.' : 'Minat, skills, dan preferensi volunteer berhasil disimpan.', Boolean(error));
-      });
+      } catch {
+        // Never allow an uninitialized blank form to overwrite existing preferences.
+        feedback.show('Preferensi belum dapat dimuat. Muat ulang halaman sebelum menyimpan perubahan.', 'error');
+        form.querySelector<HTMLButtonElement>('button[type="submit"]')?.setAttribute('disabled', '');
+      }
     }
   </script>
 </MemberLayout>
