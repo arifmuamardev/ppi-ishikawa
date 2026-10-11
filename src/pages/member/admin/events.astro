@@ -1,6 +1,7 @@
 ---
 import MemberLayout from '../../../layouts/MemberLayout.astro';
 import AppPageHeader from '../../../components/AppPageHeader.astro';
+import FormFeedback from '../../../components/FormFeedback.astro';
 ---
 
 <MemberLayout title="Kelola Agenda" requireAdmin={true}>
@@ -11,7 +12,7 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
       description="Tambahkan, ubah, atau hapus agenda yang tampil di Area Anggota."
     />
 
-    <div id="event-admin-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+    <FormFeedback id="event-admin-message" />
 
     <section class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
       <div class="flex items-center justify-between gap-3">
@@ -19,7 +20,7 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
         <button id="event-form-reset" type="button" class="hidden text-sm font-bold text-brand hover:underline">Batal edit</button>
       </div>
 
-      <form id="event-admin-form" class="mt-6 grid gap-5 md:grid-cols-2">
+      <form id="event-admin-form" aria-busy="false" data-auth-state="idle" class="mt-6 grid gap-5 md:grid-cols-2">
         <input name="id" type="hidden" />
         <label class="md:col-span-2">
           <span class="text-sm font-bold text-slate-800">Judul</span>
@@ -73,37 +74,36 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
           <p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Agenda</p>
           <h2 class="mt-2 text-xl font-bold text-slate-950">Kegiatan yang tersedia</h2>
         </div>
-        <p id="event-admin-count" class="text-sm font-semibold text-slate-500">Memuat…</p>
+        <p id="event-admin-count" aria-live="polite" aria-atomic="true" class="text-sm font-semibold text-slate-500">Memuat…</p>
       </div>
-      <div id="event-admin-list" class="mt-6 space-y-3"></div>
+      <div id="event-admin-list" aria-busy="false" class="mt-6 space-y-3"></div>
+      <p id="event-admin-empty" role="status" aria-live="polite" class="mt-6 hidden rounded-2xl bg-slate-50 p-6 text-center text-sm text-slate-600">Belum ada kegiatan. Gunakan form di atas untuk menambahkan agenda.</p>
     </section>
   </div>
 
   <script>
-    import { deleteEvent, getMemberEvents, saveEvent } from '../../../lib/member-community';
+    import { deleteEvent, getMemberEvents, saveEvent, type MemberEvent } from '../../../lib/member-community';
+    import { createFormFeedback } from '../../../lib/form-feedback';
 
-    const form = document.getElementById('event-admin-form');
+    const form = document.querySelector<HTMLFormElement>('#event-admin-form');
     const list = document.getElementById('event-admin-list');
     const count = document.getElementById('event-admin-count');
-    const message = document.getElementById('event-admin-message');
+    const empty = document.getElementById('event-admin-empty');
+    const feedback = createFormFeedback(form, 'event-admin-message');
     const title = document.getElementById('event-form-title');
-    const resetButton = document.getElementById('event-form-reset');
-    let events = [];
+    const resetButton = document.querySelector<HTMLButtonElement>('#event-form-reset');
+    const pendingDeletes = new Set<string>();
+    let events: MemberEvent[] = [];
+    const saving = () => form?.getAttribute('aria-busy') === 'true';
 
-    const show = (text, error = false) => {
-      if (!message) return;
-      message.textContent = text;
-      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
-    };
-
-    const toLocalInput = (value) => {
+    const toLocalInput = (value: string) => {
       const date = new Date(value);
       const shifted = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
       return shifted.toISOString().slice(0, 16);
     };
 
     const resetForm = () => {
-      if (!(form instanceof HTMLFormElement)) return;
+      if (!form || saving()) return;
       form.reset();
       const id = form.elements.namedItem('id');
       if (id instanceof HTMLInputElement) id.value = '';
@@ -111,11 +111,11 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
       resetButton?.classList.add('hidden');
     };
 
-    const editEvent = (event) => {
-      if (!(form instanceof HTMLFormElement)) return;
-      const set = (name, value) => {
+    const editEvent = (event: MemberEvent) => {
+      if (!form || saving() || pendingDeletes.size) return;
+      const set = (name: string, value: string | number | null) => {
         const input = form.elements.namedItem(name);
-        if (input instanceof HTMLInputElement || input instanceof HTMLSelectElement || input instanceof HTMLTextAreaElement) input.value = value ?? '';
+        if (input instanceof HTMLInputElement || input instanceof HTMLSelectElement || input instanceof HTMLTextAreaElement) input.value = value == null ? '' : String(value);
       };
       set('id', event.id);
       set('title', event.title);
@@ -129,18 +129,37 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
       set('description', event.description);
       if (title) title.textContent = 'Edit kegiatan';
       resetButton?.classList.remove('hidden');
-      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      form.scrollIntoView({ block: 'start' });
+    };
+
+    const load = async (): Promise<boolean> => {
+      list?.setAttribute('aria-busy', 'true');
+      try {
+        const { data, error } = await getMemberEvents();
+        if (error) {
+          feedback.show('Agenda belum dapat dimuat. Muat ulang halaman untuk mencoba lagi.', 'error');
+          return false;
+        }
+        events = data || [];
+        render();
+        return true;
+      } catch {
+        feedback.show('Agenda belum dapat dimuat karena kendala koneksi.', 'error');
+        return false;
+      } finally {
+        list?.setAttribute('aria-busy', 'false');
+      }
     };
 
     const render = () => {
       if (!list) return;
       list.replaceChildren();
       if (count) count.textContent = `${events.length} kegiatan`;
+      empty?.classList.toggle('hidden', events.length !== 0);
 
       for (const event of events) {
         const card = document.createElement('article');
         card.className = 'flex flex-col gap-4 rounded-2xl border border-slate-200 p-5 lg:flex-row lg:items-center lg:justify-between';
-
         const info = document.createElement('div');
         const heading = document.createElement('h3');
         heading.className = 'font-bold text-slate-950';
@@ -154,7 +173,7 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
         controls.className = 'flex gap-2';
         const edit = document.createElement('button');
         edit.type = 'button';
-        edit.className = 'rounded-xl border border-slate-300 px-4 py-2 text-sm font-bold text-slate-700';
+        edit.className = 'ui-action-secondary';
         edit.textContent = 'Edit';
         edit.addEventListener('click', () => editEvent(event));
         const remove = document.createElement('button');
@@ -162,11 +181,32 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
         remove.className = 'rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-bold text-red-700';
         remove.textContent = 'Hapus';
         remove.addEventListener('click', async () => {
+          // Button state is not the guard: synthetic or repeated clicks must be safe.
+          if (saving() || pendingDeletes.has(event.id)) return;
           if (!window.confirm('Hapus kegiatan ini?')) return;
-          const { error } = await deleteEvent(event.id);
-          if (error) return show('Kegiatan belum dapat dihapus.', true);
-          show('Kegiatan berhasil dihapus.');
-          await load();
+          pendingDeletes.add(event.id);
+          remove.disabled = true;
+          edit.disabled = true;
+          remove.textContent = 'Menghapus…';
+          card.setAttribute('aria-busy', 'true');
+          feedback.show('Sedang menghapus kegiatan…');
+          try {
+            const { error } = await deleteEvent(event.id);
+            if (error) {
+              feedback.show('Kegiatan belum dapat dihapus. Coba lagi.', 'error');
+              return;
+            }
+            if (await load()) feedback.show('Kegiatan berhasil dihapus.', 'success');
+            else feedback.show('Kegiatan berhasil dihapus, tetapi daftar belum dapat diperbarui. Muat ulang halaman.');
+          } catch {
+            feedback.show('Kegiatan belum dapat dihapus karena kendala koneksi.', 'error');
+          } finally {
+            pendingDeletes.delete(event.id);
+            remove.disabled = false;
+            edit.disabled = false;
+            remove.textContent = 'Hapus';
+            card.setAttribute('aria-busy', 'false');
+          }
         });
         controls.append(edit, remove);
         card.append(info, controls);
@@ -174,39 +214,47 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
       }
     };
 
-    const load = async () => {
-      const { data, error } = await getMemberEvents();
-      if (error) return show('Agenda belum dapat dimuat.', true);
-      events = data || [];
-      render();
-    };
-
-    form?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!(form instanceof HTMLFormElement)) return;
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!form || saving() || pendingDeletes.size) return;
       const values = new FormData(form);
       const starts = String(values.get('starts_at') || '');
       const ends = String(values.get('ends_at') || '');
-      if (new Date(ends) <= new Date(starts)) return show('Waktu selesai harus setelah waktu mulai.', true);
+      if (new Date(ends) <= new Date(starts)) {
+        feedback.show('Waktu selesai harus setelah waktu mulai.', 'error', form.elements.namedItem('ends_at') as HTMLInputElement);
+        return;
+      }
 
-      const deadline = String(values.get('registration_deadline') || '');
-      const capacity = String(values.get('capacity') || '');
-      const { error } = await saveEvent({
-        id: String(values.get('id') || '') || undefined,
-        title: String(values.get('title') || '').trim(),
-        description: String(values.get('description') || '').trim(),
-        category: String(values.get('category') || ''),
-        starts_at: new Date(starts).toISOString(),
-        ends_at: new Date(ends).toISOString(),
-        location: String(values.get('location') || '').trim(),
-        mode: String(values.get('mode') || 'onsite'),
-        capacity: capacity ? Number(capacity) : null,
-        registration_deadline: deadline ? new Date(deadline).toISOString() : null,
-      });
-      if (error) return show('Kegiatan belum dapat disimpan.', true);
-      show('Kegiatan berhasil disimpan.');
-      resetForm();
-      await load();
+      await feedback.run('Menyimpan…', async () => {
+        const deadline = String(values.get('registration_deadline') || '');
+        const capacity = String(values.get('capacity') || '');
+        const { error } = await saveEvent({
+          id: String(values.get('id') || '') || undefined,
+          title: String(values.get('title') || '').trim(),
+          description: String(values.get('description') || '').trim(),
+          category: String(values.get('category') || ''),
+          starts_at: new Date(starts).toISOString(),
+          ends_at: new Date(ends).toISOString(),
+          location: String(values.get('location') || '').trim(),
+          mode: String(values.get('mode') || 'onsite') as MemberEvent['mode'],
+          capacity: capacity ? Number(capacity) : null,
+          registration_deadline: deadline ? new Date(deadline).toISOString() : null,
+        });
+        if (error) {
+          feedback.show('Kegiatan belum dapat disimpan. Periksa kembali data lalu coba lagi.', 'error');
+          return;
+        }
+        // run() keeps aria-busy until this action finishes. Reset only after it returns.
+        const updated = await load();
+        if (updated) feedback.show('Kegiatan berhasil disimpan.', 'success');
+        else feedback.show('Kegiatan tersimpan, tetapi daftar belum dapat diperbarui. Muat ulang halaman.');
+        // Clearing the form is safe only after the backend confirmed success.
+        form.reset();
+        const id = form.elements.namedItem('id');
+        if (id instanceof HTMLInputElement) id.value = '';
+        if (title) title.textContent = 'Tambah kegiatan';
+        resetButton?.classList.add('hidden');
+      }, 'Kegiatan belum dapat diproses karena kendala koneksi. Coba lagi.');
     });
 
     resetButton?.addEventListener('click', resetForm);

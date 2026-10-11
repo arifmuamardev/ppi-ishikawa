@@ -1,0 +1,61 @@
+name: Admin interaction-state browser audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/pages/member/admin/events.astro'
+      - 'src/pages/member/admin/announcements.astro'
+      - 'src/components/FormFeedback.astro'
+      - 'src/lib/form-feedback.ts'
+      - 'src/lib/auth-feedback.ts'
+      - 'scripts/audit-admin-events.mjs'
+      - '.github/workflows/admin-feedback-audit.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/pages/member/admin/events.astro'
+      - 'src/pages/member/admin/announcements.astro'
+      - 'src/components/FormFeedback.astro'
+      - 'src/lib/form-feedback.ts'
+      - 'src/lib/auth-feedback.ts'
+      - 'scripts/audit-admin-events.mjs'
+      - '.github/workflows/admin-feedback-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - run: npm install --no-package-lock
+      - run: npm run check:theme && npm run check:ui && npm run build
+      - name: Admin mock-network browser acceptance
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 &
+          preview_pid=$!
+          trap 'kill $preview_pid || true' EXIT
+          # Prevent a false failure when Chromium starts before Astro preview.
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4321/ppi-ishikawa/ >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:4321/ppi-ishikawa/ >/dev/null
+          node scripts/audit-admin-events.mjs
+      - name: Upload screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: admin-feedback-audit
+          path: admin-event-audit/
+          if-no-files-found: warn
+          retention-days: 7
