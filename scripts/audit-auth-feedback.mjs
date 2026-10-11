@@ -116,7 +116,7 @@ try {
     verify(await page.locator('form').getAttribute('data-auth-state') === 'loading', 'recovery: loading state');
     await page.locator('form').evaluate((el) => el.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true })));
     release();
-    await page.locator('#forgot-message-status').getByText(/Jika email tersebut terdaftar/).waitFor();
+    await page.locator('#forgot-message-status').filter({ hasText: 'Jika email tersebut terdaftar' }).waitFor({ state: 'visible' });
     verify(recoverCalls === 1, 'recovery: only one request for two submit events');
     verify(await page.locator('button[type="submit"]').isEnabled(), 'recovery: action re-enabled');
     verify(await page.locator('form').getAttribute('aria-busy') === 'false', 'recovery: pending cleared');
@@ -136,7 +136,7 @@ try {
     await login.locator('input[name="email"]').fill('example@example.invalid');
     await login.locator('input[name="password"]').fill('ExampleWrong999');
     await login.locator('button[type="submit"]').click();
-    await login.locator('#login-message-error').getByText(/Email atau password belum/).waitFor();
+    await login.locator('#login-message-error').filter({ hasText: 'Email atau password belum' }).waitFor({ state: 'visible' });
     verify(await login.locator('button[type="submit"]').isEnabled(), 'login: unlocked after failure');
     verify(await login.locator('form').getAttribute('data-auth-state') === 'error', 'login: error not success');
     verify(await login.locator('input[name="email"]').inputValue() === 'example@example.invalid', 'login: retains email on failure');
