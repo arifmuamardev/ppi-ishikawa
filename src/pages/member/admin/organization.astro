@@ -1,6 +1,7 @@
 ---
 import MemberLayout from '../../../layouts/MemberLayout.astro';
 import AppPageHeader from '../../../components/AppPageHeader.astro';
+import FormFeedback from '../../../components/FormFeedback.astro';
 ---
 
 <MemberLayout title="Kelola Organisasi" requireAdmin={true}>
@@ -11,12 +12,13 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
       description="Kelola periode kepengurusan, unit, posisi, dan penugasan pengurus tanpa mengubah source code."
     />
 
-    <div id="org-admin-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+    <FormFeedback id="org-admin-message" />
 
     <section class="grid gap-5 xl:grid-cols-2">
       <article class="rounded-2xl border border-slate-200 bg-white p-6">
         <h2 class="text-xl font-bold text-slate-950">Periode kepengurusan</h2>
-        <form id="term-form" class="mt-5 grid gap-4 sm:grid-cols-2">
+        <FormFeedback id="org-term-message" />
+        <form id="term-form" aria-busy="false" data-auth-state="idle" class="mt-5 grid gap-4 sm:grid-cols-2">
           <label class="sm:col-span-2">
             <span class="text-sm font-bold text-slate-800">Label periode</span>
             <input name="label" required placeholder="Contoh: 2027/28" class="ui-field mt-2" />
@@ -34,7 +36,7 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
             <span class="text-sm font-semibold text-slate-700">Jadikan periode aktif</span>
           </label>
           <div class="sm:col-span-2 flex justify-end">
-            <button class="rounded-xl bg-brand px-5 py-2.5 text-sm font-bold text-white">Tambah periode</button>
+            <button type="submit" class="ui-action-primary">Tambah periode</button>
           </div>
         </form>
       </article>
@@ -42,7 +44,7 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
       <article class="rounded-2xl border border-slate-200 bg-white p-6">
         <p class="type-meta uppercase tracking-[0.12em] text-slate-500">Konteks pengelolaan</p>
         <h2 class="mt-2 text-xl font-bold text-slate-950">Pilih periode</h2>
-        <select id="term-selector" class="mt-5 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900"></select>
+        <select id="term-selector" aria-label="Pilih periode yang dikelola" class="ui-field mt-5"></select>
         <p id="term-meta" class="mt-3 text-sm leading-6 text-slate-600">—</p>
       </article>
     </section>
@@ -50,7 +52,8 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
     <section class="grid gap-5 xl:grid-cols-2">
       <article class="rounded-2xl border border-slate-200 bg-white p-6">
         <h2 class="text-xl font-bold text-slate-950">Tambah unit</h2>
-        <form id="unit-form" class="mt-5 space-y-4">
+        <FormFeedback id="org-unit-message" />
+        <form id="unit-form" aria-busy="false" data-auth-state="idle" class="mt-5 space-y-4">
           <label class="block">
             <span class="text-sm font-bold text-slate-800">Nama unit</span>
             <input name="name" required class="ui-field mt-2" />
@@ -72,13 +75,14 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
             <span class="text-sm font-bold text-slate-800">Deskripsi</span>
             <textarea name="description" rows="3" class="ui-field mt-2"></textarea>
           </label>
-          <button class="rounded-xl bg-brand px-5 py-2.5 text-sm font-bold text-white">Tambah unit</button>
+          <button type="submit" class="ui-action-primary">Tambah unit</button>
         </form>
       </article>
 
       <article class="rounded-2xl border border-slate-200 bg-white p-6">
         <h2 class="text-xl font-bold text-slate-950">Tambah posisi</h2>
-        <form id="position-form" class="mt-5 space-y-4">
+        <FormFeedback id="org-position-message" />
+        <form id="position-form" aria-busy="false" data-auth-state="idle" class="mt-5 space-y-4">
           <label class="block">
             <span class="text-sm font-bold text-slate-800">Unit</span>
             <select name="unit_id" required class="ui-field mt-2"></select>
@@ -91,7 +95,7 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
             <span class="text-sm font-bold text-slate-800">Slug</span>
             <input name="slug" required placeholder="nama-posisi" class="ui-field mt-2" />
           </label>
-          <button class="rounded-xl bg-brand px-5 py-2.5 text-sm font-bold text-white">Tambah posisi</button>
+          <button type="submit" class="ui-action-primary">Tambah posisi</button>
         </form>
       </article>
     </section>
@@ -102,10 +106,11 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
           <p class="type-meta uppercase tracking-[0.12em] text-slate-500">Penugasan</p>
           <h2 class="mt-2 text-xl font-bold text-slate-950">Tetapkan pengurus</h2>
         </div>
-        <p id="assignment-count" class="text-sm font-semibold text-slate-500">—</p>
+        <p id="assignment-count" aria-live="polite" aria-atomic="true" class="text-sm font-semibold text-slate-500">—</p>
       </div>
 
-      <form id="assignment-form" class="mt-6 grid gap-4 md:grid-cols-[1fr_1fr_auto] md:items-end">
+      <FormFeedback id="org-assignment-message" />
+      <form id="assignment-form" aria-busy="false" data-auth-state="idle" class="mt-6 grid gap-4 md:grid-cols-[1fr_1fr_auto] md:items-end">
         <label>
           <span class="text-sm font-bold text-slate-800">Posisi</span>
           <select name="position_id" required class="ui-field mt-2"></select>
@@ -119,11 +124,12 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
             <input name="can_manage" type="checkbox" class="size-4" />
             Dapat mengelola unit
           </label>
-          <button class="w-full rounded-xl bg-brand px-5 py-2.5 text-sm font-bold text-white">Tetapkan</button>
+          <button type="submit" class="ui-action-primary w-full">Tetapkan</button>
         </div>
       </form>
 
-      <div id="assignment-list" class="mt-6 space-y-3"></div>
+      <div id="assignment-list" aria-busy="false" class="mt-6 space-y-3"></div>
+      <p id="assignment-empty" role="status" aria-live="polite" class="mt-6 hidden rounded-2xl bg-slate-50 p-5 text-sm text-slate-600">Belum ada penugasan pada periode ini.</p>
     </section>
   </div>
 
@@ -139,51 +145,104 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
       saveOrganizationPosition,
       saveOrganizationTerm,
       saveOrganizationUnit,
+      type OrganizationTerm,
+      type OrganizationUnit,
+      type OrganizationPosition,
     } from '../../../lib/member-organization';
+    import { createFormFeedback } from '../../../lib/form-feedback';
 
-    const message = document.getElementById('org-admin-message');
-    const termSelector = document.getElementById('term-selector');
+    type Assignment = { id: string; user_id: string; position_id: string; can_manage: boolean };
+    type Member = { user_id: string; full_name: string };
+
+    const termForm = document.querySelector<HTMLFormElement>('#term-form');
+    const unitForm = document.querySelector<HTMLFormElement>('#unit-form');
+    const positionForm = document.querySelector<HTMLFormElement>('#position-form');
+    const assignmentForm = document.querySelector<HTMLFormElement>('#assignment-form');
+    const forms = [termForm, unitForm, positionForm, assignmentForm];
+    const termFeedback = createFormFeedback(termForm, 'org-term-message');
+    const unitFeedback = createFormFeedback(unitForm, 'org-unit-message');
+    const positionFeedback = createFormFeedback(positionForm, 'org-position-message');
+    const assignmentFeedback = createFormFeedback(assignmentForm, 'org-assignment-message');
+    const globalFeedback = createFormFeedback(null, 'org-admin-message');
+    const termSelector = document.querySelector<HTMLSelectElement>('#term-selector');
     const termMeta = document.getElementById('term-meta');
-    const unitForm = document.getElementById('unit-form');
-    const positionForm = document.getElementById('position-form');
-    const assignmentForm = document.getElementById('assignment-form');
     const assignmentList = document.getElementById('assignment-list');
     const assignmentCount = document.getElementById('assignment-count');
-    let terms = [];
-    let units = [];
-    let positions = [];
-    let members = [];
-    let assignments = [];
+    const assignmentEmpty = document.getElementById('assignment-empty');
 
-    const show = (text, error = false) => {
-      if (!message) return;
-      message.textContent = text;
-      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
-    };
+    let terms: OrganizationTerm[] = [];
+    let units: OrganizationUnit[] = [];
+    let positions: OrganizationPosition[] = [];
+    let members: Member[] = [];
+    let assignments: Assignment[] = [];
+    let mutationBusy = false;
+    let contextReady = false;
+    let contextSequence = 0;
+    let deletingId: string | null = null;
+    const selectedTermId = () => termSelector?.value || '';
 
-    const selectedTermId = () => termSelector instanceof HTMLSelectElement ? termSelector.value : '';
+    function updateControls() {
+      if (termSelector) termSelector.disabled = mutationBusy || terms.length === 0;
+      const buttons = forms.map(form => form?.querySelector<HTMLButtonElement>('button[type="submit"]'));
+      buttons[0] && (buttons[0].disabled = mutationBusy);
+      buttons[1] && (buttons[1].disabled = mutationBusy || !contextReady || !selectedTermId());
+      buttons[2] && (buttons[2].disabled = mutationBusy || !contextReady || units.length === 0);
+      buttons[3] && (buttons[3].disabled = mutationBusy || !contextReady || positions.length === 0 || members.length === 0);
+      assignmentList?.querySelectorAll<HTMLButtonElement>('button[data-remove-assignment]').forEach(button => {
+        button.disabled = mutationBusy;
+      });
+    }
 
-    const fillSelect = (select, items, labelFn) => {
-      if (!(select instanceof HTMLSelectElement)) return;
+    async function mutate(
+      feedback: ReturnType<typeof createFormFeedback>,
+      label: string,
+      action: () => Promise<void>,
+      errorMessage: string
+    ) {
+      if (mutationBusy) return;
+      mutationBusy = true; // lock all four related forms, even on a synthetic duplicate submit
+      updateControls();
+      try {
+        // run() handles aria-busy, the active submit label, thrown errors and finally reset.
+        await feedback.run(label, action, errorMessage);
+      } finally {
+        mutationBusy = false;
+        updateControls();
+      }
+    }
+
+    function fillSelect<T extends { id: string }>(
+      select: HTMLSelectElement | null, items: T[], label: (item: T) => string
+    ) {
+      if (!select) return;
+      const previous = select.value;
       select.replaceChildren();
+      if (!items.length) {
+        const placeholder = document.createElement('option');
+        placeholder.value = '';
+        placeholder.textContent = 'Belum tersedia';
+        select.append(placeholder);
+        return;
+      }
       for (const item of items) {
         const option = document.createElement('option');
         option.value = item.id;
-        option.textContent = labelFn(item);
+        option.textContent = label(item);
         select.append(option);
       }
-    };
+      if (items.some(item => item.id === previous)) select.value = previous;
+    }
 
-    const renderAssignments = () => {
+    function renderAssignments() {
       if (!assignmentList) return;
       assignmentList.replaceChildren();
       if (assignmentCount) assignmentCount.textContent = `${assignments.length} penugasan`;
+      assignmentEmpty?.classList.toggle('hidden', assignments.length !== 0);
 
       for (const assignment of assignments) {
-        const position = positions.find((item) => item.id === assignment.position_id);
-        const unit = units.find((item) => item.id === position?.unit_id);
-        const member = members.find((item) => item.user_id === assignment.user_id);
-
+        const position = positions.find(item => item.id === assignment.position_id);
+        const unit = units.find(item => item.id === position?.unit_id);
+        const member = members.find(item => item.user_id === assignment.user_id);
         const row = document.createElement('article');
         row.className = 'flex flex-col gap-3 rounded-2xl border border-slate-200 p-5 sm:flex-row sm:items-center sm:justify-between';
         const info = document.createElement('div');
@@ -194,134 +253,194 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
         meta.className = 'mt-1 text-sm text-slate-600';
         meta.textContent = `${position?.title || 'Posisi'} · ${unit?.name || 'Unit'}${assignment.can_manage ? ' · Dapat mengelola unit' : ''}`;
         info.append(heading, meta);
-
         const remove = document.createElement('button');
         remove.type = 'button';
+        remove.dataset.removeAssignment = assignment.id;
         remove.className = 'rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-bold text-red-700';
         remove.textContent = 'Hapus';
         remove.addEventListener('click', async () => {
-          const { error } = await removeOrganizationAssignment(assignment.id);
-          if (error) return show('Penugasan belum dapat dihapus.', true);
-          show('Penugasan dihapus.');
-          await loadContext();
+          if (mutationBusy || deletingId) return;
+          if (!window.confirm('Hapus penugasan pengurus ini?')) return;
+          mutationBusy = true;
+          deletingId = assignment.id;
+          row.setAttribute('aria-busy', 'true');
+          remove.textContent = 'Menghapus…';
+          updateControls();
+          globalFeedback.show('Sedang menghapus penugasan…');
+          try {
+            const { error } = await removeOrganizationAssignment(assignment.id);
+            if (error) {
+              globalFeedback.show('Penugasan belum dapat dihapus. Coba lagi.', 'error');
+              return;
+            }
+            if (await loadContext()) globalFeedback.show('Penugasan berhasil dihapus.', 'success');
+            else globalFeedback.show('Penugasan dihapus, tetapi daftar belum dapat diperbarui. Muat ulang halaman.');
+          } catch {
+            globalFeedback.show('Penugasan belum dapat dihapus karena kendala koneksi.', 'error');
+          } finally {
+            deletingId = null;
+            mutationBusy = false;
+            row.setAttribute('aria-busy', 'false');
+            remove.textContent = 'Hapus';
+            updateControls();
+          }
         });
         row.append(info, remove);
         assignmentList.append(row);
       }
-    };
+      updateControls();
+    }
 
-    const loadContext = async () => {
+    async function loadContext(): Promise<boolean> {
+      const seq = ++contextSequence;
       const termId = selectedTermId();
-      if (!termId) return;
-      const term = terms.find((item) => item.id === termId);
-      if (termMeta && term) termMeta.textContent = `${term.starts_on} – ${term.ends_on}${term.is_current ? ' · Periode aktif' : ''}`;
-
-      const [unitResult, positionResult, assignmentResult, memberResult] = await Promise.all([
-        getOrganizationUnits(termId),
-        getOrganizationPositions(termId),
-        getOrganizationAssignments(termId),
-        getAssignableMembers(),
-      ]);
-
-      units = unitResult.data || [];
-      positions = positionResult.data || [];
-      assignments = assignmentResult.data || [];
-      members = memberResult.data || [];
-
-      fillSelect(positionForm?.querySelector('select[name="unit_id"]'), units, (item) => item.name);
-      fillSelect(assignmentForm?.querySelector('select[name="position_id"]'), positions, (item) => {
-        const unit = units.find((u) => u.id === item.unit_id);
-        return `${unit?.name || 'Unit'} · ${item.title}`;
-      });
-      fillSelect(assignmentForm?.querySelector('select[name="user_id"]'), members, (item) => item.full_name);
-      renderAssignments();
-    };
-
-    const loadTerms = async () => {
-      const { data, error } = await getOrganizationTerms();
-      if (error) return show('Periode belum dapat dimuat.', true);
-      terms = data || [];
-      if (!(termSelector instanceof HTMLSelectElement)) return;
-      termSelector.replaceChildren();
-      for (const term of terms) {
-        const option = document.createElement('option');
-        option.value = term.id;
-        option.textContent = `${term.label}${term.is_current ? ' · aktif' : ''}`;
-        option.selected = term.is_current;
-        termSelector.append(option);
+      contextReady = false;
+      updateControls();
+      if (!termId) {
+        units = []; positions = []; members = []; assignments = [];
+        if (termMeta) termMeta.textContent = 'Belum ada periode. Tambahkan periode terlebih dahulu.';
+        assignmentEmpty?.classList.add('hidden');
+        if (assignmentCount) assignmentCount.textContent = '—';
+        assignmentList?.replaceChildren();
+        return false;
       }
-      await loadContext();
-    };
+      const term = terms.find(item => item.id === termId);
+      if (term && termMeta) termMeta.textContent = `${term.starts_on} – ${term.ends_on}${term.is_current ? ' · Periode aktif' : ''}`;
+      assignmentList?.setAttribute('aria-busy', 'true');
+      try {
+        const [u, p, a, m] = await Promise.all([
+          getOrganizationUnits(termId), getOrganizationPositions(termId),
+          getOrganizationAssignments(termId), getAssignableMembers(),
+        ]);
+        if (seq !== contextSequence || termId !== selectedTermId()) return false;
+        if (u.error || p.error || a.error || m.error) {
+          globalFeedback.show('Data organisasi belum dapat dimuat. Periksa koneksi dan pilih periode kembali.', 'error');
+          return false;
+        }
+        units = u.data || [];
+        positions = p.data || [];
+        assignments = a.data || [];
+        members = m.data || [];
+        fillSelect(positionForm?.querySelector('select[name="unit_id"]') || null, units, item => item.name);
+        fillSelect(assignmentForm?.querySelector('select[name="position_id"]') || null, positions, item => {
+          const unit = units.find(u => u.id === item.unit_id);
+          return `${unit?.name || 'Unit'} · ${item.title}`;
+        });
+        fillSelect(assignmentForm?.querySelector('select[name="user_id"]') || null, members.map(x=>({...x,id:x.user_id})), item => item.full_name);
+        contextReady = true;
+        renderAssignments();
+        return true;
+      } catch {
+        if (seq === contextSequence) globalFeedback.show('Data organisasi gagal dimuat. Periksa koneksi dan coba lagi.', 'error');
+        return false;
+      } finally {
+        assignmentList?.setAttribute('aria-busy', 'false');
+        updateControls();
+      }
+    }
 
-    document.getElementById('term-form')?.addEventListener('submit', async (event) => {
+    async function loadTerms(): Promise<boolean> {
+      try {
+        const { data, error } = await getOrganizationTerms();
+        if (error) {
+          globalFeedback.show('Periode belum dapat dimuat. Muat ulang halaman untuk mencoba lagi.', 'error');
+          return false;
+        }
+        terms = data || [];
+        if (!termSelector) return false;
+        const previous = selectedTermId();
+        fillSelect(termSelector, terms, item => `${item.label}${item.is_current ? ' · aktif' : ''}`);
+        if (!terms.some(item => item.id === previous)) {
+          const current = terms.find(item => item.is_current);
+          if (current) termSelector.value = current.id;
+        }
+        return !terms.length || await loadContext();
+      } catch {
+        globalFeedback.show('Periode gagal dimuat. Periksa koneksi dan coba lagi.', 'error');
+        return false;
+      }
+    }
+
+    termForm?.addEventListener('submit', async event => {
       event.preventDefault();
-      const form = event.currentTarget;
-      if (!(form instanceof HTMLFormElement)) return;
-      const values = new FormData(form);
+      if (!termForm || mutationBusy) return;
+      const values = new FormData(termForm);
       const starts = String(values.get('starts_on') || '');
       const ends = String(values.get('ends_on') || '');
-      if (ends < starts) return show('Tanggal selesai harus setelah tanggal mulai.', true);
-      const { error } = await saveOrganizationTerm({
-        label: String(values.get('label') || '').trim(),
-        starts_on: starts,
-        ends_on: ends,
-        is_current: values.get('is_current') === 'on',
-      });
-      if (error) return show('Periode belum dapat disimpan.', true);
-      form.reset();
-      show('Periode berhasil ditambahkan.');
-      await loadTerms();
+      if (ends <= starts) {
+        termFeedback.show('Tanggal selesai harus setelah tanggal mulai.', 'error', termForm.elements.namedItem('ends_on') as HTMLInputElement);
+        return;
+      }
+      await mutate(termFeedback, 'Menyimpan…', async () => {
+        const { error } = await saveOrganizationTerm({
+          label: String(values.get('label') || '').trim(),
+          starts_on: starts,
+          ends_on: ends,
+          is_current: values.get('is_current') === 'on',
+        });
+        if (error) return termFeedback.show('Periode belum dapat ditambahkan. Periksa data lalu coba lagi.', 'error');
+        termForm.reset();
+        if (await loadTerms()) termFeedback.show('Periode berhasil ditambahkan.', 'success');
+        else termFeedback.show('Periode tersimpan, tetapi daftar belum dapat diperbarui. Muat ulang halaman.');
+      }, 'Periode belum dapat diproses karena kendala koneksi. Coba lagi.');
     });
 
-    unitForm?.addEventListener('submit', async (event) => {
+    unitForm?.addEventListener('submit', async event => {
       event.preventDefault();
-      if (!(unitForm instanceof HTMLFormElement)) return;
+      if (!unitForm || mutationBusy || !contextReady || !selectedTermId()) return;
       const values = new FormData(unitForm);
-      const { error } = await saveOrganizationUnit({
-        term_id: selectedTermId(),
-        name: String(values.get('name') || '').trim(),
-        slug: String(values.get('slug') || '').trim(),
-        description: String(values.get('description') || '').trim(),
-        unit_type: String(values.get('unit_type') || 'department'),
-      });
-      if (error) return show('Unit belum dapat ditambahkan.', true);
-      unitForm.reset();
-      show('Unit berhasil ditambahkan.');
-      await loadContext();
+      await mutate(unitFeedback, 'Menyimpan…', async () => {
+        const { error } = await saveOrganizationUnit({
+          term_id: selectedTermId(),
+          name: String(values.get('name') || '').trim(),
+          slug: String(values.get('slug') || '').trim(),
+          description: String(values.get('description') || '').trim(),
+          unit_type: String(values.get('unit_type') || 'department'),
+        });
+        if (error) return unitFeedback.show('Unit belum dapat ditambahkan. Periksa data lalu coba lagi.', 'error');
+        unitForm.reset();
+        if (await loadContext()) unitFeedback.show('Unit berhasil ditambahkan.', 'success');
+        else unitFeedback.show('Unit tersimpan, tetapi daftar belum dapat diperbarui. Muat ulang halaman.');
+      }, 'Unit belum dapat diproses karena kendala koneksi. Coba lagi.');
     });
 
-    positionForm?.addEventListener('submit', async (event) => {
+    positionForm?.addEventListener('submit', async event => {
       event.preventDefault();
-      if (!(positionForm instanceof HTMLFormElement)) return;
+      if (!positionForm || mutationBusy || !contextReady || !units.length) return;
       const values = new FormData(positionForm);
-      const { error } = await saveOrganizationPosition({
-        term_id: selectedTermId(),
-        unit_id: String(values.get('unit_id') || ''),
-        title: String(values.get('title') || '').trim(),
-        slug: String(values.get('slug') || '').trim(),
-      });
-      if (error) return show('Posisi belum dapat ditambahkan.', true);
-      positionForm.reset();
-      show('Posisi berhasil ditambahkan.');
-      await loadContext();
+      await mutate(positionFeedback, 'Menyimpan…', async () => {
+        const { error } = await saveOrganizationPosition({
+          term_id: selectedTermId(),
+          unit_id: String(values.get('unit_id') || ''),
+          title: String(values.get('title') || '').trim(),
+          slug: String(values.get('slug') || '').trim(),
+        });
+        if (error) return positionFeedback.show('Posisi belum dapat ditambahkan. Periksa data lalu coba lagi.', 'error');
+        positionForm.reset();
+        if (await loadContext()) positionFeedback.show('Posisi berhasil ditambahkan.', 'success');
+        else positionFeedback.show('Posisi tersimpan, tetapi daftar belum dapat diperbarui. Muat ulang halaman.');
+      }, 'Posisi belum dapat diproses karena kendala koneksi. Coba lagi.');
     });
 
-    assignmentForm?.addEventListener('submit', async (event) => {
+    assignmentForm?.addEventListener('submit', async event => {
       event.preventDefault();
-      if (!(assignmentForm instanceof HTMLFormElement)) return;
+      if (!assignmentForm || mutationBusy || !contextReady || !positions.length || !members.length) return;
       const values = new FormData(assignmentForm);
-      const { error } = await saveOrganizationAssignment({
-        term_id: selectedTermId(),
-        position_id: String(values.get('position_id') || ''),
-        user_id: String(values.get('user_id') || ''),
-        can_manage: values.get('can_manage') === 'on',
-      });
-      if (error) return show('Penugasan belum dapat disimpan.', true);
-      show('Pengurus berhasil ditetapkan.');
-      await loadContext();
+      await mutate(assignmentFeedback, 'Menetapkan…', async () => {
+        const { error } = await saveOrganizationAssignment({
+          term_id: selectedTermId(),
+          position_id: String(values.get('position_id') || ''),
+          user_id: String(values.get('user_id') || ''),
+          can_manage: values.get('can_manage') === 'on',
+        });
+        if (error) return assignmentFeedback.show('Penugasan belum dapat disimpan. Coba lagi.', 'error');
+        if (await loadContext()) assignmentFeedback.show('Pengurus berhasil ditetapkan.', 'success');
+        else assignmentFeedback.show('Penugasan tersimpan, tetapi daftar belum dapat diperbarui. Muat ulang halaman.');
+      }, 'Penugasan belum dapat diproses karena kendala koneksi. Coba lagi.');
     });
 
-    termSelector?.addEventListener('change', loadContext);
+    termSelector?.addEventListener('change', () => { if (!mutationBusy) loadContext(); });
+    updateControls();
     loadTerms();
   </script>
 </MemberLayout>
