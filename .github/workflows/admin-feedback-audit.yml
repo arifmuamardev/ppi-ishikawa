@@ -42,6 +42,14 @@ jobs:
           npm run preview -- --host 127.0.0.1 --port 4321 &
           preview_pid=$!
           trap 'kill $preview_pid || true' EXIT
+          # Prevent a false failure when Chromium starts before Astro preview.
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4321/ppi-ishikawa/ >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:4321/ppi-ishikawa/ >/dev/null
           node scripts/audit-admin-events.mjs
       - name: Upload screenshots and report
         if: always()
