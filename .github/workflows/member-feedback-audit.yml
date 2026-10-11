@@ -1,0 +1,57 @@
+name: Member feedback browser audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/pages/member/profile.astro'
+      - 'src/pages/member/aspirations.astro'
+      - 'src/pages/member/interests.astro'
+      - 'src/components/FormFeedback.astro'
+      - 'src/components/AuthFeedback.astro'
+      - 'src/lib/form-feedback.ts'
+      - 'src/lib/auth-feedback.ts'
+      - 'scripts/audit-member-feedback.mjs'
+      - '.github/workflows/member-feedback-audit.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/pages/member/profile.astro'
+      - 'src/pages/member/aspirations.astro'
+      - 'src/pages/member/interests.astro'
+      - 'src/components/FormFeedback.astro'
+      - 'src/components/AuthFeedback.astro'
+      - 'src/lib/form-feedback.ts'
+      - 'src/lib/auth-feedback.ts'
+      - 'scripts/audit-member-feedback.mjs'
+      - '.github/workflows/member-feedback-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - run: npm install --no-package-lock
+      - run: npm run check:theme && npm run check:ui && npm run build
+      - name: Member mock-network browser acceptance
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 &
+          preview_pid=$!
+          trap 'kill $preview_pid || true' EXIT
+          node scripts/audit-member-feedback.mjs
+      - name: Upload screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: member-feedback-audit
+          path: member-feedback-audit/
+          if-no-files-found: warn
+          retention-days: 7
