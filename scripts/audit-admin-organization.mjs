@@ -67,6 +67,9 @@ async function mock(page, state) {
           state[key] = [...state[key], newItem];
           status = 201;
           body = newItem;
+        } else if (method === 'PATCH' && key === 'terms') {
+          state.terms = state.terms.map(item => ({ ...item, is_current: false }));
+          body = state.terms;
         } else {
           status = 400;
           body = { message: 'Unexpected PATCH' };
@@ -124,6 +127,7 @@ try {
     { form: 'term-form', key: 'terms:POST', feedback: 'org-term-message', field: 'label', value: '2027/2028', fill: async page => {
       await page.locator('#term-form input[name="starts_on"]').fill('2027-10-01');
       await page.locator('#term-form input[name="ends_on"]').fill('2028-09-30');
+      await page.locator('#term-form input[name="is_current"]').check();
     }},
     { form: 'unit-form', key: 'units:POST', feedback: 'org-unit-message', field: 'name', value: 'Riset', fill: async page => {
       await page.locator('#unit-form input[name="slug"]').fill('riset');
@@ -158,6 +162,9 @@ try {
       await page.locator('#' + target.form + ' button[type="submit"]').click();
       await page.locator('#' + target.feedback + '-status').filter({ hasText: 'berhasil' }).waitFor({ state: 'visible' });
       check(state.attempts[target.key] === 2, target.form + ': exactly one retry');
+      if (target.form === 'term-form') {
+        check(await page.locator('#term-selector').inputValue() === '99999999-9999-4999-8999-999999999999', 'new active term selected for context');
+      }
       check(await page.locator('#' + target.form).getAttribute('aria-busy') === 'false', target.form + ': loading cleared');
     } catch (e) { errors.push(target.form + ' lifecycle: ' + e.message); }
     finally { release(); await page.close(); }
