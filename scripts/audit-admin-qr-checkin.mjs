@@ -68,7 +68,7 @@ async function ready(page) {
   await page.locator('#member-content').waitFor({ state: 'visible' });
   await page.getByText('1 sesi', { exact: true }).waitFor();
   await page.locator('#qr-session-form button[type="submit"]').waitFor({ state: 'visible' });
-  await page.locator('#qr-session-form button[type="submit"]').isEnabled();
+  await page.waitForFunction(() => document.querySelector('#qr-session-form button[type="submit"]')?.disabled === false);
 }
 try {
   for (const width of widths) {
