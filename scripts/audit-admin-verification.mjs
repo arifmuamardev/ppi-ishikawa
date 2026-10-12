@@ -151,12 +151,18 @@ try {
       await ready(page);
       s.failNextLoad = true;
       await page.locator('#verification-admin-list article').first().getByRole('button', { name: 'Setujui' }).click();
-      await page.locator('#verification-admin-message-status').filter({ hasText: 'Keputusan berhasil disimpan, tetapi antrean belum dapat dimuat ulang' }).waitFor({ state: 'visible' });
+      await page.locator('#verification-admin-message-status').filter({ hasText: 'Keputusan berhasil disimpan, tetapi antrean belum dapat dimuat ulang' }).waitFor({ state: 'visible', timeout: 10000 });
       check(s.attempts === 1, 'refresh failure: write performed once');
       check(await page.locator('#verification-refresh').isEnabled(), 'refresh failure: manual retry enabled');
       await page.locator('#verification-refresh').click();
       await page.getByText('1 menunggu', { exact: true }).waitFor();
-    } catch (error) { failures.push('refresh recovery: ' + error.message); }
+    } catch (error) {
+      const statusText = await page.locator('#verification-admin-message-status').textContent().catch(() => 'unavailable');
+      const errorText = await page.locator('#verification-admin-message-error').textContent().catch(() => 'unavailable');
+      failures.push('refresh recovery: ' + error.message
+        + ' | attempts=' + s.attempts + ' reads=' + s.reads
+        + ' pending=' + s.pending.length + ' lastStatus=' + statusText + ' lastError=' + errorText);
+    }
     finally { await page.close(); }
   }
 } finally { await browser.close(); }
