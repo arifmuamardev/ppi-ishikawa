@@ -15,6 +15,7 @@ import { site } from '../data/site';
 // three-line institutional headline in a compact, editorial composition.
 const heroKeywords = vision.headline
   .replace(/^PPI Ishikawa yang\s+/i, '')
+  .replace(/^./, (character) => character.toUpperCase())
   .replace(/\.$/, '')
   .split(/,\s*(?:dan\s+)?|\s+dan\s+/);
 
