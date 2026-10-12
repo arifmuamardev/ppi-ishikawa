@@ -35,7 +35,7 @@ async function mock(page, s) {
         s.reads++;
         if (s.failNextLoad) {
           s.failNextLoad = false;
-          response = { status: 503, body: { code: 'PGRST000', message: 'Synthetic refresh failure' } };
+          response = { status: 403, body: { code: '42501', message: 'Synthetic permission failure; do not retry' } };
         } else response.body = s.pending;
       } else response.body = profile;
     } else if (path === '/rest/v1/rpc/review_membership' && request.method() === 'POST') {
