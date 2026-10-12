@@ -423,6 +423,7 @@ try {
           if (opened.overflowPx > 2) check.errors.push('TOC open caused overflow: ' + opened.overflowPx + 'px');
           await toc.click();
         }
+        await page.evaluate(() => window.scrollTo(0, 0));
         check.screenshot = path.join('screenshots', key + '-' + width + '.jpg');
         await page.screenshot({
           path: path.join(outputDir, check.screenshot),
@@ -442,7 +443,7 @@ try {
             const photo = hero?.querySelector('[data-ui-media]');
 
             const readRGB = (raw) => {
-              const values = raw?.match(/[0-9]*\\.?[0-9]+/g)?.map(Number) || [];
+              const values = raw?.match(/[0-9]*\.?[0-9]+/g)?.map(Number) || [];
               if (values.length < 3) return null;
               const unit = raw.startsWith('color(') ? 1 : 255;
               return values.slice(0, 3).map(n => n / unit);
@@ -458,7 +459,7 @@ try {
               background, rgb,
               whiteContrast: luminance === null ? 0 : 1.05 / (luminance + 0.05),
               titleColor: h1 ? getComputedStyle(h1).color : '',
-              headline: h1?.textContent?.replace(/\\s+/g, ' ').trim(),
+              headline: h1?.textContent?.replace(/\s+/g, ' ').trim(),
               highlight: highlight?.textContent || '',
               highlightBackground: highlight ? getComputedStyle(highlight).backgroundColor : '',
               primaryBackground: primary ? getComputedStyle(primary).backgroundColor : '',
@@ -489,6 +490,7 @@ try {
           await page.reload({ waitUntil: 'domcontentloaded' });
           check.homeHeroDark = await heroState();
           validateHero(check.homeHeroDark);
+          await page.evaluate(() => window.scrollTo(0, 0));
           await page.screenshot({
             path: path.join(screenshotDir, 'home-dark-' + width + '.jpg'),
             type: 'jpeg', quality: 65, fullPage: true, animations: 'disabled'
