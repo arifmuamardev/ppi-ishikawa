@@ -484,12 +484,53 @@ try {
                 JSON.stringify(state));
             }
           };
+          // Header and hero must resolve to the same actual CSS surface.
+          // Check the first post-hero panel to prevent two adjacent dark blocks.
+          const seamState = () => page.evaluate(() => {
+            const header = document.querySelector('[data-site-header]');
+            const hero = document.querySelector('[data-home-hero]');
+            const panel = document.querySelector('.home-family__card');
+            const family = document.querySelector('.home-family');
+            const title = hero?.querySelector('h1');
+            const navLink = header?.querySelector('nav a');
+            const contact = header?.querySelector('.site-header__contact');
+            const bg = (el) => el ? getComputedStyle(el).backgroundColor : '';
+            return {
+              header: bg(header),
+              hero: bg(hero),
+              panel: bg(panel),
+              family: bg(family),
+              headingLines: title?.querySelectorAll('.home-hero__line').length || 0,
+              navColor: navLink ? getComputedStyle(navLink).color : '',
+              contactColor: contact ? getComputedStyle(contact).color : '',
+              contactBackground: bg(contact)
+            };
+          });
+          const validateSeam = (state, dark) => {
+            const componentOK = state.header === state.hero &&
+              state.headingLines === 3 &&
+              state.contactBackground !== state.header &&
+              state.contactColor !== state.contactBackground &&
+              state.navColor !== state.header;
+            // In light mode the transitional family card must be pale rather
+            // than the near-black panel that previously collided with the hero.
+            const lightBridge = dark || !state.panel.startsWith('rgb(') ||
+              (state.panel.match(/\\d+/g) || []).slice(0,3).every(n => Number(n) > 200);
+            if (!componentOK || !lightBridge) {
+              check.errors.push('Header / hero / family seam mismatch (' +
+                (dark ? 'dark' : 'light') + '): ' + JSON.stringify(state));
+            }
+          };
           check.homeHeroLight = await heroState();
           validateHero(check.homeHeroLight);
+          check.homeSeamLight = await seamState();
+          validateSeam(check.homeSeamLight, false);
           await page.evaluate(() => localStorage.setItem('ppi-ishikawa-theme', 'dark'));
           await page.reload({ waitUntil: 'domcontentloaded' });
           check.homeHeroDark = await heroState();
           validateHero(check.homeHeroDark);
+          check.homeSeamDark = await seamState();
+          validateSeam(check.homeSeamDark, true);
           await page.evaluate(() => window.scrollTo(0, 0));
           await page.screenshot({
             path: path.join(screenshotDir, 'home-dark-' + width + '.jpg'),
