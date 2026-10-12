@@ -1,6 +1,7 @@
 ---
 import MemberLayout from '../../../layouts/MemberLayout.astro';
 import AppPageHeader from '../../../components/AppPageHeader.astro';
+import FormFeedback from '../../../components/FormFeedback.astro';
 ---
 
 <MemberLayout title="QR Check-in" requireAdmin={true}>
@@ -11,11 +12,11 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
       description="QR hanya valid pada window yang ditentukan. Anggota tetap harus login dan sudah RSVP hadir sebelum check-in."
     />
 
-    <div id="qr-admin-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+    <FormFeedback id="qr-admin-message" />
 
     <section class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
       <h2 class="text-xl font-bold text-slate-950">Session baru</h2>
-      <form id="qr-session-form" class="mt-6 grid gap-5 md:grid-cols-3">
+      <form id="qr-session-form" aria-busy="false" data-auth-state="idle" class="mt-6 grid gap-5 md:grid-cols-3">
         <label class="md:col-span-3">
           <span class="text-sm font-bold text-slate-800">Kegiatan</span>
           <select name="event_id" required class="ui-field mt-2"></select>
@@ -29,42 +30,71 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
           <input name="closes_at" type="datetime-local" class="ui-field mt-2" />
         </label>
         <div class="flex items-end">
-          <button class="w-full rounded-xl bg-brand px-5 py-3 font-bold text-white">Buat QR</button>
+          <button type="submit" class="ui-action-primary w-full">Buat QR</button>
         </div>
       </form>
     </section>
 
-    <section id="qr-session-list" class="space-y-5"></section>
+    <section aria-labelledby="qr-list-heading" class="space-y-4">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <h2 id="qr-list-heading" class="text-xl font-bold text-slate-950">Sesi QR tersedia</h2>
+        <p id="qr-session-count" aria-live="polite" aria-atomic="true" class="text-sm font-semibold text-slate-500">Memuat…</p>
+      </div>
+      <div id="qr-session-list" aria-busy="false" class="space-y-5"></div>
+      <p id="qr-session-empty" role="status" aria-live="polite" class="hidden rounded-2xl bg-slate-50 p-6 text-center text-sm text-slate-600">Belum ada sesi QR. Pilih kegiatan dan tentukan waktunya untuk membuat sesi.</p>
+    </section>
   </div>
 
   <script>
     import QRCode from 'qrcode';
-    import { getMemberEvents } from '../../../lib/member-community';
+    import { getMemberEvents, type MemberEvent } from '../../../lib/member-community';
     import { memberAbsoluteUrl } from '../../../lib/member';
     import {
       createCheckinSession,
       getCheckinSessions,
       setCheckinSessionActive,
     } from '../../../lib/member-advanced';
+    import { createFormFeedback } from '../../../lib/form-feedback';
 
-    const form = document.getElementById('qr-session-form');
-    const list = document.getElementById('qr-session-list');
-    const message = document.getElementById('qr-admin-message');
-    let events = [];
-
-    const show = (text, error = false) => {
-      if (!message) return;
-      message.textContent = text;
-      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
+    type Session = {
+      id: string;
+      event_id: string;
+      checkin_token: string;
+      opens_at: string;
+      closes_at: string | null;
+      active: boolean;
+      member_events?: { title: string } | null;
     };
 
-    const toLocalInput = (date) => {
+    const form = document.querySelector<HTMLFormElement>('#qr-session-form');
+    const list = document.getElementById('qr-session-list');
+    const count = document.getElementById('qr-session-count');
+    const empty = document.getElementById('qr-session-empty');
+    const feedback = createFormFeedback(form, 'qr-admin-message');
+    const eventSelect = form?.querySelector<HTMLSelectElement>('select[name="event_id"]') ?? null;
+    const submit = form?.querySelector<HTMLButtonElement>('button[type="submit"]') ?? null;
+    let events: MemberEvent[] = [];
+    let sessions: Session[] = [];
+    let initialized = false;
+    let mutating = false;
+    let listLoaded = false;
+    let loadVersion = 0;
+
+    const isFormPending = () => form?.getAttribute('aria-busy') === 'true';
+    const updateActions = () => {
+      if (submit) submit.disabled = !initialized || events.length === 0 || mutating || isFormPending();
+      if (eventSelect) eventSelect.disabled = !initialized || events.length === 0 || mutating;
+      list?.querySelectorAll<HTMLButtonElement>('button[data-qr-toggle]').forEach(button => {
+        button.disabled = mutating;
+      });
+    };
+
+    const toLocalInput = (date: Date) => {
       const shifted = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
       return shifted.toISOString().slice(0, 16);
     };
-
     const initializeDefaults = () => {
-      if (!(form instanceof HTMLFormElement)) return;
+      if (!form) return;
       const opens = form.elements.namedItem('opens_at');
       const closes = form.elements.namedItem('closes_at');
       const now = new Date();
@@ -73,19 +103,17 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
       if (closes instanceof HTMLInputElement) closes.value = toLocalInput(later);
     };
 
-    const load = async () => {
-      const { data, error } = await getCheckinSessions();
-      if (error) return show('Session QR belum dapat dimuat.', true);
+    async function renderSessions() {
       if (!list) return;
       list.replaceChildren();
+      if (count) count.textContent = `${sessions.length} sesi`;
+      empty?.classList.toggle('hidden', sessions.length !== 0);
 
-      for (const session of data || []) {
+      for (const session of sessions) {
         const card = document.createElement('article');
         card.className = 'rounded-2xl border border-slate-200 bg-white p-6';
-
         const layout = document.createElement('div');
         layout.className = 'grid gap-6 lg:grid-cols-[1fr_190px] lg:items-center';
-
         const info = document.createElement('div');
         const status = document.createElement('span');
         status.className = session.active
@@ -93,10 +121,9 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
           : 'rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold text-slate-600';
         status.textContent = session.active ? 'Aktif' : 'Nonaktif';
 
-        const h = document.createElement('h2');
+        const h = document.createElement('h3');
         h.className = 'mt-4 text-xl font-bold text-slate-950';
         h.textContent = session.member_events?.title || 'Kegiatan';
-
         const meta = document.createElement('p');
         meta.className = 'mt-2 text-sm leading-6 text-slate-600';
         const closeText = session.closes_at
@@ -111,78 +138,167 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
 
         const controls = document.createElement('div');
         controls.className = 'mt-4 flex flex-wrap gap-2';
-
         const toggle = document.createElement('button');
         toggle.type = 'button';
+        toggle.dataset.qrToggle = session.id;
         toggle.className = session.active
           ? 'rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-bold text-red-700'
-          : 'rounded-xl border border-slate-300 px-4 py-2 text-sm font-bold text-slate-700';
+          : 'ui-action-secondary';
         toggle.textContent = session.active ? 'Nonaktifkan' : 'Aktifkan kembali';
+        toggle.disabled = mutating;
         toggle.addEventListener('click', async () => {
-          const { error } = await setCheckinSessionActive(session.id, !session.active);
-          if (error) return show('Status session belum dapat diperbarui.', true);
-          show('Status session QR diperbarui.');
-          await load();
+          if (mutating || isFormPending()) return;
+          if (session.active && !window.confirm('Nonaktifkan sesi QR ini? Anggota tidak akan dapat check-in menggunakan tautannya selama sesi nonaktif.')) return;
+          mutating = true;
+          card.setAttribute('aria-busy', 'true');
+          toggle.textContent = session.active ? 'Menonaktifkan…' : 'Mengaktifkan…';
+          updateActions();
+          feedback.show('Sedang memperbarui status sesi…');
+          try {
+            const { error } = await setCheckinSessionActive(session.id, !session.active);
+            if (error) {
+              feedback.show('Status sesi belum dapat diperbarui. Coba lagi.', 'error');
+              return;
+            }
+            if (await load()) feedback.show('Status sesi QR berhasil diperbarui.', 'success');
+            else feedback.show('Status sesi berhasil diubah, tetapi daftar belum dapat dimuat ulang. Muat ulang halaman.');
+          } catch {
+            feedback.show('Status sesi belum dapat diperbarui karena kendala koneksi.', 'error');
+          } finally {
+            mutating = false;
+            card.setAttribute('aria-busy', 'false');
+            toggle.textContent = session.active ? 'Nonaktifkan' : 'Aktifkan kembali';
+            updateActions();
+          }
         });
 
         const copy = document.createElement('button');
         copy.type = 'button';
-        copy.className = 'rounded-xl border border-slate-300 px-4 py-2 text-sm font-bold text-slate-700';
+        copy.className = 'ui-action-secondary';
         copy.textContent = 'Salin link';
         copy.addEventListener('click', async () => {
-          await navigator.clipboard.writeText(url);
-          show('Link check-in disalin.');
+          copy.disabled = true;
+          try {
+            await navigator.clipboard.writeText(url);
+            feedback.show('Link check-in berhasil disalin.', 'success');
+          } catch {
+            feedback.show('Link tidak dapat disalin otomatis. Salin tautan yang ditampilkan pada kartu secara manual.', 'error');
+            urlText.setAttribute('tabindex', '-1');
+            urlText.focus();
+          } finally {
+            copy.disabled = false;
+          }
         });
 
         controls.append(toggle, copy);
         info.append(status, h, meta, urlText, controls);
-
         const qrBox = document.createElement('div');
         qrBox.className = 'rounded-2xl bg-slate-50 p-3';
         const canvas = document.createElement('canvas');
+        canvas.setAttribute('role', 'img');
+        canvas.setAttribute('aria-label', `QR check-in untuk ${session.member_events?.title || 'kegiatan'}`);
         qrBox.append(canvas);
-        await QRCode.toCanvas(canvas, url, { width: 165, margin: 1, errorCorrectionLevel: 'M' });
-
         layout.append(info, qrBox);
         card.append(layout);
         list.append(card);
-      }
-    };
-
-    const eventResult = await getMemberEvents();
-    events = eventResult.data || [];
-    if (form instanceof HTMLFormElement) {
-      const select = form.elements.namedItem('event_id');
-      if (select instanceof HTMLSelectElement) {
-        for (const event of events) {
-          const option = document.createElement('option');
-          option.value = event.id;
-          option.textContent = `${event.title} · ${new Intl.DateTimeFormat('id-ID', { dateStyle: 'medium', timeZone: 'Asia/Tokyo' }).format(new Date(event.starts_at))}`;
-          select.append(option);
+        try {
+          await QRCode.toCanvas(canvas, url, { width: 165, margin: 1, errorCorrectionLevel: 'M' });
+        } catch {
+          canvas.remove();
+          const fallback = document.createElement('p');
+          fallback.className = 'text-sm text-slate-700';
+          fallback.textContent = 'QR belum dapat ditampilkan. Gunakan tautan check-in di samping.';
+          qrBox.append(fallback);
         }
       }
+      updateActions();
     }
-    initializeDefaults();
+
+    async function load(): Promise<boolean> {
+      const requestVersion = ++loadVersion;
+      list?.setAttribute('aria-busy', 'true');
+      if (count && !listLoaded) count.textContent = 'Memuat…';
+      try {
+        const { data, error } = await getCheckinSessions();
+        if (requestVersion !== loadVersion) return false;
+        if (error) {
+          feedback.show('Sesi QR belum dapat dimuat. Periksa koneksi lalu muat ulang halaman.', 'error');
+          return false;
+        }
+        sessions = (data || []) as Session[];
+        await renderSessions();
+        listLoaded = true;
+        return true;
+      } catch {
+        feedback.show('Sesi QR belum dapat dimuat karena kendala koneksi.', 'error');
+        return false;
+      } finally {
+        if (requestVersion === loadVersion) list?.setAttribute('aria-busy', 'false');
+      }
+    }
+
+    async function loadEvents() {
+      try {
+        const { data, error } = await getMemberEvents();
+        if (error) {
+          feedback.show('Daftar kegiatan belum dapat dimuat. Muat ulang halaman untuk mencoba lagi.', 'error');
+          return;
+        }
+        events = data || [];
+        if (eventSelect) {
+          eventSelect.replaceChildren();
+          for (const event of events) {
+            const option = document.createElement('option');
+            option.value = event.id;
+            option.textContent = `${event.title} · ${new Intl.DateTimeFormat('id-ID', { dateStyle: 'medium', timeZone: 'Asia/Tokyo' }).format(new Date(event.starts_at))}`;
+            eventSelect.append(option);
+          }
+        }
+        initialized = true;
+        updateActions();
+        if (!events.length) feedback.show('Belum ada kegiatan untuk dibuatkan sesi QR. Tambahkan kegiatan terlebih dahulu.');
+      } catch {
+        feedback.show('Daftar kegiatan gagal dimuat. Periksa koneksi lalu muat ulang halaman.', 'error');
+      }
+    }
 
     form?.addEventListener('submit', async (event) => {
       event.preventDefault();
-      if (!(form instanceof HTMLFormElement)) return;
+      if (!form || !initialized || !events.length || mutating || isFormPending()) return;
       const values = new FormData(form);
       const opens = String(values.get('opens_at') || '');
       const closes = String(values.get('closes_at') || '');
-      if (closes && new Date(closes) <= new Date(opens)) return show('Waktu tutup harus setelah waktu buka.', true);
-
-      const { error } = await createCheckinSession({
-        event_id: String(values.get('event_id') || ''),
-        opens_at: new Date(opens).toISOString(),
-        closes_at: closes ? new Date(closes).toISOString() : null,
-      });
-      if (error) return show('Session QR belum dapat dibuat.', true);
-      show('Session QR berhasil dibuat.');
-      initializeDefaults();
-      await load();
+      const endField = form.querySelector<HTMLInputElement>('input[name="closes_at"]');
+      if (closes && new Date(closes) <= new Date(opens)) {
+        feedback.show('Waktu tutup harus setelah waktu buka.', 'error', endField ?? undefined);
+        return;
+      }
+      mutating = true;
+      updateActions();
+      try {
+        await feedback.run('Membuat…', async () => {
+          const { error } = await createCheckinSession({
+            event_id: String(values.get('event_id') || ''),
+            opens_at: new Date(opens).toISOString(),
+            closes_at: closes ? new Date(closes).toISOString() : null,
+          });
+          if (error) {
+            feedback.show('Sesi QR belum dapat dibuat. Periksa data lalu coba lagi.', 'error');
+            return;
+          }
+          initializeDefaults();
+          if (await load()) feedback.show('Sesi QR berhasil dibuat.', 'success');
+          else feedback.show('Sesi QR dibuat, tetapi daftar belum dapat dimuat ulang. Muat ulang halaman.');
+        }, 'Sesi QR belum dapat dibuat karena kendala koneksi. Coba lagi.');
+      } finally {
+        mutating = false;
+        updateActions();
+      }
     });
 
+    initializeDefaults();
+    updateActions();
+    loadEvents();
     load();
   </script>
 </MemberLayout>
