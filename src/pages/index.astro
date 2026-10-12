@@ -11,6 +11,14 @@ import { publicMedia } from '../data/media';
 import { stories } from '../data/stories';
 import { site } from '../data/site';
 
+// Preserve the canonical vision sentence while presenting the approved
+// three-line institutional headline in a compact, editorial composition.
+const heroKeywords = vision.headline
+  .replace(/^PPI Ishikawa yang\s+/i, '')
+  .replace(/^./, (character) => character.toUpperCase())
+  .replace(/\.$/, '')
+  .split(/,\s*(?:dan\s+)?|\s+dan\s+/);
+
 const primaryPaths = [
   {
     icon: 'campus',
@@ -55,16 +63,18 @@ const primaryPaths = [
   description={`Rumah digital PPI Ishikawa ${site.period} untuk kampus, kehidupan di Ishikawa, beasiswa, karier, komunitas, dan informasi organisasi.`}
 >
   <section class="home-hero" data-home-hero aria-label="Selamat datang di PPI Ishikawa">
-    <div class="home-hero__inner mx-auto max-w-7xl px-5 pb-14 pt-16 lg:px-8 lg:pb-20 lg:pt-24">
-      <div class="grid items-center gap-12 lg:grid-cols-[1.2fr_.8fr]">
+    <div class="home-hero__inner mx-auto max-w-7xl px-5 lg:px-8">
+      <div class="grid items-center gap-10 lg:grid-cols-[1.15fr_.85fr] lg:gap-14">
         <div>
           <p class="type-eyebrow inline-flex rounded-full border border-white/30 bg-white/10 px-3 py-1 text-white">PPI Ishikawa · {site.period}</p>
-          <h1 class="type-hero mt-6 max-w-5xl text-white">
-            {vision.headline.split(/(relevan,)/i).map((segment) =>
-              segment.toLowerCase() === 'relevan,'
-                ? <span class="home-hero__highlight">{segment}</span>
-                : segment
-            )}
+          <h1 class="home-hero__title type-hero mt-6 text-white" aria-label={vision.headline}>
+            {heroKeywords.length === 3 ? (
+              <>
+                <span class="home-hero__line">{heroKeywords[0]},</span>
+                <span class="home-hero__line home-hero__highlight">{heroKeywords[1]},</span>
+                <span class="home-hero__line">{heroKeywords[2]}.</span>
+              </>
+            ) : vision.headline}
           </h1>
           <p class="mt-6 text-xl font-semibold text-white sm:text-2xl">{vision.subheadline}</p>
           <p class="mt-4 max-w-2xl text-base leading-7 text-white/85 sm:text-lg">{vision.supporting}</p>
@@ -73,23 +83,30 @@ const primaryPaths = [
             <a href={withBase('/community/kampus/')} class="home-hero__action-secondary inline-flex min-h-11 items-center rounded-xl px-5 text-sm font-semibold ui-motion-color">Cari kampus <span class="ml-2" aria-hidden="true">›</span></a>
           </div>
         </div>
-        <LicensedPhoto media={publicMedia.kanazawaStation} class="home-hero__media" eager />
+        <div class="home-hero__visual">
+          <svg class="home-hero__motif" viewBox="0 0 480 340" fill="none" aria-hidden="true" focusable="false">
+            <path d="M-40 250C70 160 98 330 183 202S306 90 466 10M-60 292C72 202 113 365 211 224S321 122 503 44M-30 327C101 251 133 380 241 260S355 150 522 91" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          <LicensedPhoto media={publicMedia.kanazawaStation} class="home-hero__media" eager />
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="mx-auto max-w-7xl px-5 pb-14 lg:px-8 lg:pb-16">
-    <div class="rounded-3xl bg-slate-950 p-7 text-white sm:p-9">
-      <div class="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
-        <div class="max-w-3xl">
-          <div class="flex items-center gap-3">
-            <span class="ui-icon-tile ui-icon-tile-inverse text-accent-soft"><TopicIcon name="family" class="size-6" /></span>
-            <p class="type-eyebrow text-accent-soft">Keluarga</p>
+  <section class="home-family" aria-label="Panduan keluarga di Ishikawa">
+    <div class="home-family__inner mx-auto max-w-7xl px-5 lg:px-8">
+      <div class="home-family__card p-7 sm:p-8">
+        <div class="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div class="max-w-3xl">
+            <div class="flex items-center gap-3">
+              <span class="ui-icon-tile home-family__icon"><TopicIcon name="family" class="size-6" /></span>
+              <p class="home-family__eyebrow type-eyebrow">Keluarga</p>
+            </div>
+            <h2 class="type-section mt-4">Datang atau tinggal di Ishikawa bersama pasangan dan anak?</h2>
+            <p class="home-family__description mt-3 leading-7">Mulai dari residence status, pregnancy, childcare, sekolah, benefit, kesehatan, sampai tempat bermain dan dukungan keluarga.</p>
           </div>
-          <h2 class="type-section mt-4">Datang atau tinggal di Ishikawa bersama pasangan dan anak?</h2>
-          <p class="mt-3 leading-7 text-slate-300">Mulai dari residence status, pregnancy, childcare, sekolah, benefit, kesehatan, sampai tempat bermain dan dukungan keluarga.</p>
+          <a href={withBase('/life-in-ishikawa/family-anak/')} class="home-family__action inline-flex min-h-11 items-center rounded-xl px-5 text-sm font-bold ui-motion-color">Buka Keluarga →</a>
         </div>
-        <a href={withBase('/life-in-ishikawa/family-anak/')} class="inline-flex min-h-11 items-center rounded-xl bg-white px-5 text-sm font-bold text-slate-950 ui-motion-color hover:bg-slate-100">Buka Keluarga →</a>
       </div>
     </div>
   </section>

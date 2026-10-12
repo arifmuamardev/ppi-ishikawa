@@ -94,6 +94,8 @@
   /* Standard Motion approved 11 Oct 2026. No layout transitions or autoplay. */
   --ui-motion-duration: 160ms;
   --ui-motion-lift: -2px;
+  /* Identical institutional surface for the sticky navigation and home hero. */
+  --ui-institutional-bg: color-mix(in srgb, var(--theme-secondary) 58%, black);
 }
 
 html {
@@ -530,6 +532,82 @@ html.dark .brand-gold-rule {
   background: rgb(255 255 255 / 10%);
 }
 
+
+/* Institutional navigation ------------------------------------------------- */
+/* Use the same period-derived surface as the hero, on every route.
+   Explicit component roles prevent the generic dark-mode utility overrides
+   from producing unreadable nav text/buttons. */
+.site-header {
+  color: white;
+  background: var(--ui-institutional-bg);
+  border-bottom: 1px solid rgb(255 255 255 / 14%);
+}
+.site-header__period { color: color-mix(in srgb, var(--theme-accent) 55%, white); }
+.site-header__nav { color: rgb(255 255 255 / 83%); }
+.site-header__nav-link { position: relative; color: inherit; }
+.site-header__nav-link:hover,
+.site-header__nav-link--active { color: white; }
+.site-header__nav-link--active::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -12px;
+  height: 2px;
+  background: var(--theme-accent);
+}
+.site-header [data-theme-toggle],
+.site-header__member,
+.site-header__menu-trigger {
+  color: white;
+  background: rgb(255 255 255 / 8%);
+  border: var(--ui-border-subtle-width) solid rgb(255 255 255 / 35%);
+}
+.site-header [data-theme-toggle]:hover,
+.site-header__member:hover,
+.site-header__menu-trigger:hover {
+  color: white;
+  background: rgb(255 255 255 / 18%);
+  border-color: rgb(255 255 255 / 65%);
+}
+.site-header__contact {
+  color: var(--theme-ink);
+  background: var(--theme-surface);
+}
+.site-header__contact:hover {
+  color: var(--theme-ink);
+  background: color-mix(in srgb, var(--theme-surface) 86%, var(--theme-accent));
+}
+.site-header__dropdown {
+  color: white;
+  background: var(--ui-institutional-bg);
+  border: var(--ui-border-subtle-width) solid rgb(255 255 255 / 26%);
+  box-shadow: 0 16px 32px rgb(0 0 0 / 20%);
+}
+.site-header__dropdown-link { color: rgb(255 255 255 / 88%); }
+.site-header__dropdown-link:hover,
+.site-header__dropdown-link[aria-current="page"] {
+  color: white;
+  background: rgb(255 255 255 / 13%);
+}
+.site-header__dropdown-divider { border-color: rgb(255 255 255 / 16%); }
+.site-header :is(a, button, summary):focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--theme-accent) 70%, white);
+  outline-offset: 3px;
+}
+html.dark .site-header,
+html.dark .site-header__dropdown { color: white; background: var(--ui-institutional-bg); }
+html.dark .site-header [data-theme-toggle],
+html.dark .site-header__member,
+html.dark .site-header__menu-trigger {
+  color: white;
+  background: rgb(255 255 255 / 8%);
+  border-color: rgb(255 255 255 / 35%);
+}
+html.dark .site-header__contact { color: var(--theme-ink); background: var(--theme-surface); }
+html.dark .site-header__dropdown-link { color: rgb(255 255 255 / 88%); }
+html.dark .site-header__dropdown-link:hover,
+html.dark .site-header__dropdown-link[aria-current="page"] { color: white; background: rgb(255 255 255 / 13%); }
+
 /* Homepage / institutional B hero ----------------------------------------- */
 /* The approved B study uses a deep green-teal surface rather than the
    previous pale page background. Derive it from the current period's
@@ -539,7 +617,7 @@ html.dark .brand-gold-rule {
   isolation: isolate;
   overflow: hidden;
   color: white;
-  background-color: color-mix(in srgb, var(--theme-secondary) 58%, black);
+  background-color: var(--ui-institutional-bg);
   background-image:
     radial-gradient(ellipse at 94% 12%,
       color-mix(in srgb, var(--theme-accent) 20%, transparent),
@@ -584,6 +662,113 @@ html.dark .brand-gold-rule {
 }
 .home-hero__media .ui-media-caption a:hover {
   color: color-mix(in srgb, var(--theme-surface) 80%, var(--theme-accent));
+}
+
+
+/* A compact three-line display plus restrained decorative framing gives
+   the photograph an editorial role without overlaying its license credit. */
+.home-hero__inner { padding-top: 4rem; padding-bottom: 4.5rem; }
+.home-hero__title {
+  max-width: 780px;
+  font-size: clamp(3.75rem, 5.6vw, 5.7rem);
+  line-height: 1.01;
+  letter-spacing: -0.06em;
+}
+.home-hero__line { display: block; width: fit-content; }
+.home-hero__line.home-hero__highlight {
+  padding: 0.02em 0.12em 0.05em;
+  margin: 0.06em 0 0.07em -0.025em;
+}
+.home-hero__visual {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  padding: 0 12px 14px 0;
+}
+.home-hero__visual::before {
+  content: "";
+  position: absolute;
+  inset: 18px 0 0 22px;
+  border: 1px solid color-mix(in srgb, var(--theme-accent) 55%, white);
+  border-radius: var(--ui-radius-feature);
+  pointer-events: none;
+  z-index: -1;
+}
+.home-hero__visual::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 74px;
+  height: 5px;
+  background: var(--theme-primary);
+  pointer-events: none;
+}
+.home-hero__visual .home-hero__media { width: 100%; margin: 0; }
+.home-hero__motif {
+  position: absolute;
+  inset: auto -8% -7% auto;
+  width: 60%;
+  height: auto;
+  max-height: 440px;
+  color: color-mix(in srgb, var(--theme-accent) 55%, white);
+  opacity: 0.16;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Light bridge from the teal hero to informational content: the family
+   feature no longer forms a black block touching the hero boundary. */
+.home-family {
+  background: color-mix(in srgb, var(--theme-surface) 94%, var(--theme-accent));
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-accent) 20%, transparent);
+}
+.home-family__inner { padding-top: 3rem; padding-bottom: 3rem; }
+.home-family__card {
+  color: var(--theme-ink);
+  background: var(--theme-surface);
+  border: 1px solid color-mix(in srgb, var(--theme-accent) 26%, transparent);
+  border-left: 4px solid var(--theme-primary);
+  border-radius: var(--ui-radius-card);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 4%);
+}
+.home-family__eyebrow { color: color-mix(in srgb, var(--theme-secondary) 77%, black); }
+.home-family__description { color: color-mix(in srgb, var(--theme-ink) 78%, var(--theme-surface)); }
+.home-family__icon {
+  color: var(--theme-secondary);
+  background: color-mix(in srgb, var(--theme-secondary) 11%, var(--theme-surface));
+}
+.home-family__action { color: white; background: var(--ui-institutional-bg); }
+.home-family__action:hover {
+  color: white;
+  background: color-mix(in srgb, var(--theme-secondary) 74%, black);
+}
+html.dark .home-family { background: color-mix(in srgb, var(--theme-ink) 88%, black); }
+html.dark .home-family__card {
+  color: white;
+  background: color-mix(in srgb, var(--theme-ink) 82%, black);
+  border-color: rgb(255 255 255 / 18%);
+  border-left-color: var(--theme-primary);
+}
+html.dark .home-family__eyebrow { color: color-mix(in srgb, var(--theme-accent) 70%, white); }
+html.dark .home-family__description { color: rgb(255 255 255 / 78%); }
+html.dark .home-family__icon {
+  color: color-mix(in srgb, var(--theme-accent) 65%, white);
+  background: rgb(255 255 255 / 10%);
+}
+@media (max-width: 1023px) {
+  .home-hero__inner { padding-top: 3rem; padding-bottom: 3.25rem; }
+  .home-hero__title { font-size: clamp(3rem, 9.3vw, 4.8rem); }
+  .home-hero__visual { max-width: 600px; }
+  .home-hero__motif { max-height: 300px; }
+}
+@media (max-width: 639px) {
+  .home-hero__title { font-size: clamp(3rem, 11.4vw, 3.65rem); line-height: 1.03; }
+  .home-hero__inner { padding-top: 2.75rem; padding-bottom: 3rem; }
+  .home-family__inner { padding-top: 2rem; padding-bottom: 2.5rem; }
+  .home-hero__visual { padding-right: 8px; padding-bottom: 10px; }
+  .home-hero__visual::before { inset: 16px 0 0 16px; }
+  .home-hero__visual::after { width: 46px; height: 4px; }
 }
 
 /* Licensed media ----------------------------------------------------------- */
