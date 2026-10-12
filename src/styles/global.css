@@ -574,7 +574,7 @@ html.dark .brand-gold-rule {
 .home-hero__action-secondary:hover {
   background-color: rgb(255 255 255 / 18%);
 }
-.home-hero__media {
+.home-hero .home-hero__media {
   border-color: rgb(255 255 255 / 26%);
 }
 .home-hero__media .ui-media-caption {
