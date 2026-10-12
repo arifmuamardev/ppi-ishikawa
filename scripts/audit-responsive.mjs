@@ -423,11 +423,82 @@ try {
           if (opened.overflowPx > 2) check.errors.push('TOC open caused overflow: ' + opened.overflowPx + 'px');
           await toc.click();
         }
+        await page.evaluate(() => window.scrollTo(0, 0));
         check.screenshot = path.join('screenshots', key + '-' + width + '.jpg');
         await page.screenshot({
           path: path.join(outputDir, check.screenshot),
           type: 'jpeg', quality: 65, fullPage: true, animations: 'disabled', timeout: 30000
         });
+        // Approved Institutional B hero: verify the actual production color,
+        // text contrast and CTA treatments (in both light and dark mode).
+        // This catches a future regression to the old pale homepage hero even
+        // if theme tokens and typography still pass their independent checks.
+        if ((width === 390 || width === 1280) && key === 'home') {
+          const heroState = () => page.evaluate(() => {
+            const hero = document.querySelector('[data-home-hero]');
+            const h1 = hero?.querySelector('h1');
+            const highlight = hero?.querySelector('.home-hero__highlight');
+            const primary = hero?.querySelector('.home-hero__action-primary');
+            const secondary = hero?.querySelector('.home-hero__action-secondary');
+            const photo = hero?.querySelector('[data-ui-media]');
+
+            const readRGB = (raw) => {
+              const values = raw?.match(/[0-9]*\.?[0-9]+/g)?.map(Number) || [];
+              if (values.length < 3) return null;
+              const unit = raw.startsWith('color(') ? 1 : 255;
+              return values.slice(0, 3).map(n => n / unit);
+            };
+            const background = hero ? getComputedStyle(hero).backgroundColor : '';
+            const rgb = readRGB(background);
+            const linear = value => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+            const luminance = rgb
+              ? rgb.map(linear).reduce((sum, value, index) => sum + value * [0.2126,0.7152,0.0722][index], 0)
+              : null;
+            return {
+              theme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+              background, rgb,
+              whiteContrast: luminance === null ? 0 : 1.05 / (luminance + 0.05),
+              titleColor: h1 ? getComputedStyle(h1).color : '',
+              headline: h1?.textContent?.replace(/\s+/g, ' ').trim(),
+              highlight: highlight?.textContent || '',
+              highlightBackground: highlight ? getComputedStyle(highlight).backgroundColor : '',
+              primaryBackground: primary ? getComputedStyle(primary).backgroundColor : '',
+              secondaryBorder: secondary ? getComputedStyle(secondary).borderTopWidth : '',
+              primaryHeight: primary ? primary.getBoundingClientRect().height : 0,
+              secondaryHeight: secondary ? secondary.getBoundingClientRect().height : 0,
+              photoCredit: Boolean(photo?.querySelector('figcaption a[href]'))
+            };
+          });
+          const validateHero = (state) => {
+            const rgb = state.rgb || [];
+            if (!(rgb.length === 3 && rgb[1] > rgb[0] * 1.5 &&
+                  rgb[1] > 0.15 && rgb[1] < 0.5 && state.whiteContrast >= 7 &&
+                  state.titleColor === 'rgb(255, 255, 255)' &&
+                  state.highlight === 'relevan,' &&
+                  state.highlightBackground !== 'rgba(0, 0, 0, 0)' &&
+                  state.primaryBackground !== 'rgba(0, 0, 0, 0)' &&
+                  parseFloat(state.secondaryBorder) >= 1 &&
+                  state.primaryHeight >= 44 && state.secondaryHeight >= 44 &&
+                  state.photoCredit)) {
+              check.errors.push('Institutional B hero mismatch (' + state.theme + '): ' +
+                JSON.stringify(state));
+            }
+          };
+          check.homeHeroLight = await heroState();
+          validateHero(check.homeHeroLight);
+          await page.evaluate(() => localStorage.setItem('ppi-ishikawa-theme', 'dark'));
+          await page.reload({ waitUntil: 'domcontentloaded' });
+          check.homeHeroDark = await heroState();
+          validateHero(check.homeHeroDark);
+          await page.evaluate(() => window.scrollTo(0, 0));
+          await page.screenshot({
+            path: path.join(screenshotDir, 'home-dark-' + width + '.jpg'),
+            type: 'jpeg', quality: 65, fullPage: true, animations: 'disabled'
+          });
+          await page.evaluate(() => localStorage.removeItem('ppi-ishikawa-theme'));
+          await page.reload({ waitUntil: 'domcontentloaded' });
+        }
+
         // Supporting section spacing should be uniform within the same role,
         // without increasing the gap before the initial task on Landing pages.
         if ((width === 390 || width === 1280) && key === 'about') {
