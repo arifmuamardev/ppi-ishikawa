@@ -54,19 +54,27 @@ const primaryPaths = [
   title="Beranda"
   description={`Rumah digital PPI Ishikawa ${site.period} untuk kampus, kehidupan di Ishikawa, beasiswa, karier, komunitas, dan informasi organisasi.`}
 >
-  <section class="mx-auto max-w-7xl px-5 pb-14 pt-16 lg:px-8 lg:pb-20 lg:pt-24">
-    <div class="grid items-center gap-12 lg:grid-cols-[1.2fr_.8fr]">
-      <div>
-        <p class="type-eyebrow inline-flex rounded-full border border-accent/35 bg-accent/10 px-3 py-1 text-accent-dark">PPI Ishikawa · {site.period}</p>
-        <h1 class="type-hero mt-6 max-w-5xl text-slate-950">{vision.headline}</h1>
-        <p class="mt-6 text-xl font-semibold text-slate-800 sm:text-2xl">{vision.subheadline}</p>
-        <p class="mt-4 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">{vision.supporting}</p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a href={withBase('/life-in-ishikawa/')} class="inline-flex min-h-11 items-center rounded-xl bg-brand px-5 text-sm font-semibold text-white ui-motion-color hover:bg-brand-dark">Hidup di Ishikawa</a>
-          <a href={withBase('/community/kampus/')} class="inline-flex min-h-11 items-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-800 ui-motion-color hover:border-slate-400 hover:bg-accent/5">Cari kampus</a>
+  <section class="home-hero" data-home-hero aria-label="Selamat datang di PPI Ishikawa">
+    <div class="home-hero__inner mx-auto max-w-7xl px-5 pb-14 pt-16 lg:px-8 lg:pb-20 lg:pt-24">
+      <div class="grid items-center gap-12 lg:grid-cols-[1.2fr_.8fr]">
+        <div>
+          <p class="type-eyebrow inline-flex rounded-full border border-white/30 bg-white/10 px-3 py-1 text-white">PPI Ishikawa · {site.period}</p>
+          <h1 class="type-hero mt-6 max-w-5xl text-white">
+            {vision.headline.split(/(relevan,)/i).map((segment) =>
+              segment.toLowerCase() === 'relevan,'
+                ? <span class="home-hero__highlight">{segment}</span>
+                : segment
+            )}
+          </h1>
+          <p class="mt-6 text-xl font-semibold text-white sm:text-2xl">{vision.subheadline}</p>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-white/85 sm:text-lg">{vision.supporting}</p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href={withBase('/life-in-ishikawa/')} class="home-hero__action-primary inline-flex min-h-11 items-center rounded-xl px-5 text-sm font-semibold ui-motion-color">Hidup di Ishikawa <span class="ml-2" aria-hidden="true">›</span></a>
+            <a href={withBase('/community/kampus/')} class="home-hero__action-secondary inline-flex min-h-11 items-center rounded-xl px-5 text-sm font-semibold ui-motion-color">Cari kampus <span class="ml-2" aria-hidden="true">›</span></a>
+          </div>
         </div>
+        <LicensedPhoto media={publicMedia.kanazawaStation} class="home-hero__media" eager />
       </div>
-      <LicensedPhoto media={publicMedia.kanazawaStation} eager />
     </div>
   </section>
 
