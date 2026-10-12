@@ -530,6 +530,62 @@ html.dark .brand-gold-rule {
   background: rgb(255 255 255 / 10%);
 }
 
+/* Homepage / institutional B hero ----------------------------------------- */
+/* The approved B study uses a deep green-teal surface rather than the
+   previous pale page background. Derive it from the current period's
+   secondary color: no copied hex colors or hardcoded period palette. */
+.home-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: white;
+  background-color: color-mix(in srgb, var(--theme-secondary) 58%, black);
+  background-image:
+    radial-gradient(ellipse at 94% 12%,
+      color-mix(in srgb, var(--theme-accent) 20%, transparent),
+      transparent 48%);
+}
+
+.home-hero__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.home-hero__highlight {
+  color: white;
+  background-color: var(--theme-primary);
+  padding: 0.02em 0.13em 0.06em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.home-hero__action-primary {
+  color: var(--theme-ink);
+  background: var(--theme-surface);
+}
+.home-hero__action-primary:hover {
+  background: color-mix(in srgb, var(--theme-surface) 83%, var(--theme-accent));
+}
+.home-hero__action-secondary {
+  color: white;
+  border: var(--ui-border-subtle-width) solid rgb(255 255 255 / 68%);
+  background-color: rgb(255 255 255 / 8%);
+}
+.home-hero__action-secondary:hover {
+  background-color: rgb(255 255 255 / 18%);
+}
+.home-hero__media {
+  border-color: rgb(255 255 255 / 26%);
+}
+.home-hero__media .ui-media-caption {
+  border-color: rgb(255 255 255 / 15%);
+  background: color-mix(in srgb, var(--theme-secondary) 44%, black);
+  color: white;
+}
+.home-hero__media .ui-media-caption a:hover {
+  color: color-mix(in srgb, var(--theme-surface) 80%, var(--theme-accent));
+}
+
 /* Licensed media ----------------------------------------------------------- */
 
 /* Media is supporting content. Credits are always below the photo, never
