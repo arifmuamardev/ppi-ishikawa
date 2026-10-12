@@ -62,6 +62,9 @@ async function ready(page) {
   await page.goto(base + '/member/admin/verification/', { waitUntil: 'domcontentloaded' });
   await page.locator('#member-content').waitFor({ state: 'visible' });
   await page.getByText('2 menunggu', { exact: true }).waitFor({ timeout: 20000 });
+  await page.waitForFunction(() => document.querySelector('#verification-admin-list')?.getAttribute('aria-busy') === 'false');
+  await page.locator('#verification-refresh').waitFor({ state: 'visible' });
+  await page.waitForFunction(() => document.querySelector('#verification-refresh')?.disabled === false);
 }
 try {
   for (const width of widths) {
@@ -99,7 +102,7 @@ try {
     try {
       await ready(page);
       const row = page.locator('#verification-admin-list article').filter({ hasText: 'Anggota Satu Uji' });
-      const approve = row.getByRole('button', { name: 'Setujui' });
+      const approve = row.locator('button[data-review-control="approve"]');
       const selected = row.locator('select[data-review-control]');
       await selected.selectOption('active');
       await approve.click();
