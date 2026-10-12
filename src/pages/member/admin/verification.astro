@@ -2,6 +2,7 @@
 import MemberLayout from '../../../layouts/MemberLayout.astro';
 import AppPageHeader from '../../../components/AppPageHeader.astro';
 import { campuses } from '../../../data/campuses';
+import FormFeedback from '../../../components/FormFeedback.astro';
 ---
 
 <MemberLayout title="Verifikasi Anggota" requireAdmin={true}>
@@ -12,7 +13,7 @@ import { campuses } from '../../../data/campuses';
       description="Periksa data pendaftaran, tentukan status membership, lalu setujui atau tandai untuk tindak lanjut."
     />
 
-    <div id="verification-admin-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
+    <FormFeedback id="verification-admin-message" />
 
     <section class="rounded-2xl border border-slate-200 bg-white p-5">
       <div class="flex flex-wrap items-center justify-between gap-3">
@@ -27,44 +28,51 @@ import { campuses } from '../../../data/campuses';
     <div id="verification-admin-empty" role="status" aria-live="polite" class="hidden rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
       <p class="font-bold text-slate-950">Tidak ada pendaftaran yang menunggu verifikasi.</p>
     </div>
-    <section id="verification-admin-list" class="space-y-4"></section>
+    <section id="verification-admin-list" aria-busy="false" aria-label="Antrean pendaftaran anggota" class="space-y-4"></section>
   </div>
 
   <script>
     import { campuses } from '../../../data/campuses';
     import { getPendingMembers, reviewMembership } from '../../../lib/member';
+    import { createFormFeedback } from '../../../lib/form-feedback';
+
+    type PendingMember = {
+      user_id: string;
+      full_name: string | null;
+      campus_slug: string | null;
+      program: string | null;
+      study_level: string | null;
+      field_of_study: string | null;
+      membership_status: string;
+    };
+    type Decision = 'approved' | 'rejected';
+    type Membership = 'incoming' | 'active' | 'alumni' | 'inactive';
 
     const list = document.getElementById('verification-admin-list');
     const count = document.getElementById('verification-admin-count');
     const empty = document.getElementById('verification-admin-empty');
-    const message = document.getElementById('verification-admin-message');
-    const refresh = document.getElementById('verification-refresh');
-    const campusMap = new Map(campuses.map((item) => [item.slug, item.shortName]));
+    const refresh = document.querySelector<HTMLButtonElement>('#verification-refresh');
+    const feedback = createFormFeedback(null, 'verification-admin-message');
+    const campusMap = new Map(campuses.map(item => [item.slug, item.shortName]));
+    let mutating = false;
+    let loading = false;
+    let loaded = false;
 
-    const show = (text, error = false) => {
-      if (!message) return;
-      message.textContent = text;
-      message.className = `rounded-2xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
-    };
-
-    const node = (tag, className, text) => {
+    const node = (tag: string, className: string, label?: string) => {
       const el = document.createElement(tag);
       if (className) el.className = className;
-      if (text !== undefined && text !== null) el.textContent = text;
+      if (label != null) el.textContent = label;
       return el;
     };
 
-    const review = async (userId, decision, nextStatus) => {
-      const { error } = await reviewMembership(userId, decision, nextStatus);
-      if (error) {
-        show('Keputusan belum dapat disimpan.', true);
-        return;
-      }
-      show(decision === 'approved' ? 'Membership berhasil disetujui.' : 'Pendaftaran ditandai untuk tindak lanjut.');
-      await load();
+    const updateControls = () => {
+      if (refresh) refresh.disabled = mutating || loading;
+      list?.querySelectorAll<HTMLButtonElement | HTMLSelectElement>('[data-review-control]').forEach(el => {
+        el.disabled = mutating || loading;
+      });
     };
 
-    const render = (members) => {
+    const render = (members: PendingMember[]) => {
       if (!list) return;
       list.replaceChildren();
       if (count) count.textContent = `${members.length} menunggu`;
@@ -74,46 +82,111 @@ import { campuses } from '../../../data/campuses';
         const card = node('article', 'rounded-2xl border border-slate-200 bg-white p-6');
         const header = node('div', 'flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between');
         const info = node('div', '');
-        info.append(node('h2', 'text-xl font-bold text-slate-950', member.full_name || 'Nama belum diisi'));
-        info.append(node('p', 'mt-2 text-sm text-slate-600', [campusMap.get(member.campus_slug) || member.campus_slug, member.program, member.study_level].filter(Boolean).join(' · ')));
+        const name = member.full_name || 'Nama belum diisi';
+        info.append(node('h2', 'text-xl font-bold text-slate-950', name));
+        info.append(node('p', 'mt-2 text-sm text-slate-600',
+          [campusMap.get(member.campus_slug || '') || member.campus_slug, member.program, member.study_level].filter(Boolean).join(' · ')));
         if (member.field_of_study) info.append(node('p', 'mt-2 text-sm text-slate-500', member.field_of_study));
 
         const controls = node('div', 'flex flex-col gap-2 sm:flex-row');
         const select = document.createElement('select');
         select.className = 'ui-field ui-field-inline';
+        select.dataset.reviewControl = 'status';
+        select.setAttribute('aria-label', `Status membership untuk ${name}`);
         for (const [value, label] of [['incoming','Incoming'],['active','Anggota aktif'],['alumni','Alumni'],['inactive','Tidak aktif']]) {
           const option = document.createElement('option');
-          option.value = value; option.textContent = label; option.selected = member.membership_status === value; select.append(option);
+          option.value = value;
+          option.textContent = label;
+          option.selected = member.membership_status === value;
+          select.append(option);
         }
 
-        const approve = node('button', 'rounded-xl bg-brand px-4 py-2.5 text-sm font-bold text-white', 'Setujui');
+        const approve = node('button', 'ui-action-primary', 'Setujui') as HTMLButtonElement;
         approve.type = 'button';
-        approve.addEventListener('click', () => review(member.user_id, 'approved', select.value));
-
-        const reject = node('button', 'rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-bold text-red-700', 'Tindak lanjut');
+        approve.dataset.reviewControl = 'approve';
+        const reject = node('button', 'rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-bold text-red-700', 'Tindak lanjut') as HTMLButtonElement;
         reject.type = 'button';
-        reject.addEventListener('click', () => review(member.user_id, 'rejected', select.value));
+        reject.dataset.reviewControl = 'followup';
 
+        const review = async (decision: Decision) => {
+          // Request guard is synchronous; controls and refresh are locked until resolved.
+          if (mutating || loading) return;
+          const nextStatus = select.value as Membership;
+          const description = decision === 'approved'
+            ? `Setujui membership ${name} dengan status ${select.selectedOptions[0]?.textContent || nextStatus}?`
+            : `Tandai pendaftaran ${name} untuk tindak lanjut?`;
+          if (!window.confirm(description)) return;
+          mutating = true;
+          updateControls();
+          card.setAttribute('aria-busy', 'true');
+          const trigger = decision === 'approved' ? approve : reject;
+          const previousLabel = trigger.textContent || '';
+          trigger.textContent = 'Memproses…';
+          feedback.show('Sedang menyimpan keputusan verifikasi…');
+
+          try {
+            const { error } = await reviewMembership(member.user_id, decision, nextStatus);
+            if (error) {
+              feedback.show('Keputusan verifikasi belum dapat disimpan. Coba lagi.', 'error');
+              return;
+            }
+            const saved = await load();
+            if (saved) feedback.show(decision === 'approved'
+              ? 'Membership berhasil disetujui.'
+              : 'Pendaftaran berhasil ditandai untuk tindak lanjut.', 'success');
+            else feedback.show('Keputusan berhasil disimpan, tetapi antrean belum dapat dimuat ulang. Gunakan Muat ulang.');
+            refresh?.focus();
+          } catch {
+            feedback.show('Keputusan belum dapat diproses karena kendala koneksi. Coba lagi.', 'error');
+          } finally {
+            mutating = false;
+            card.setAttribute('aria-busy', 'false');
+            trigger.textContent = previousLabel;
+            updateControls();
+          }
+        };
+
+        approve.addEventListener('click', () => review('approved'));
+        reject.addEventListener('click', () => review('rejected'));
         controls.append(select, approve, reject);
         header.append(info, controls);
         card.append(header);
         list.append(card);
       }
+      updateControls();
     };
 
-    const load = async () => {
-      if (count) count.textContent = 'Memuat…';
-      const { data, error } = await getPendingMembers();
-
-      if (error) {
-        show('Antrian verifikasi belum dapat dimuat. Pastikan akun ini memiliki role admin.', true);
-        if (count) count.textContent = '—';
-        return;
+    const load = async (): Promise<boolean> => {
+      if (loading) return false;
+      loading = true;
+      list?.setAttribute('aria-busy', 'true');
+      if (!loaded && count) count.textContent = 'Memuat…';
+      updateControls();
+      try {
+        const { data, error } = await getPendingMembers();
+        if (error) {
+          feedback.show('Antrean belum dapat dimuat. Pastikan akun memiliki akses admin lalu coba lagi.', 'error');
+          if (!loaded && count) count.textContent = '—';
+          return false;
+        }
+        render((data || []) as PendingMember[]);
+        loaded = true;
+        return true;
+      } catch {
+        feedback.show('Antrean verifikasi belum dapat dimuat karena kendala koneksi.', 'error');
+        return false;
+      } finally {
+        loading = false;
+        list?.setAttribute('aria-busy', 'false');
+        updateControls();
       }
-      render(data || []);
     };
 
-    refresh?.addEventListener('click', load);
+    refresh?.addEventListener('click', () => {
+      if (mutating || loading) return;
+      feedback.clear();
+      load();
+    });
     load();
   </script>
 </MemberLayout>
