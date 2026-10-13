@@ -5,7 +5,7 @@ import { chromium } from 'playwright';
 // Render the built Astro site in Chromium, at fixed widths. No production data is modified.
 // Run locally: npm run build && npm run preview -- --host 127.0.0.1 --port 4321
 // Then: node scripts/audit-responsive.mjs
-const baseURL = (process.env.RESPONSIVE_BASE_URL || 'http://127.0.0.1:4321/ppi-ishikawa').replace(/\/$/, '');
+const baseURL = (process.env.RESPONSIVE_BASE_URL || 'http://127.0.0.1:4321').replace(/\/$/, '');
 const routes = [
   ['home', '/'],
   ['about', '/about/'],
@@ -85,7 +85,7 @@ try {
     for (const [key, pathname] of routes) {
       const check = { width, route: pathname, name: key, errors: [], warnings: [] };
       try {
-        // Paths include Astro's /ppi-ishikawa base, including for the root page.
+        // Routes now resolve directly at / on the custom domain.
         const URL = baseURL + (pathname === '/' ? '/' : pathname);
         const response = await page.goto(URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
         check.httpStatus = response?.status() ?? null;
@@ -310,8 +310,11 @@ try {
           } else {
             await card.hover();
             await page.waitForTimeout(210);
-            const transform = await card.evaluate(el=>getComputedStyle(el).transform);
-            if (!transform.includes('-2)')) check.errors.push('Navigation hover lift should be -2px: '+transform);
+            // Browser compositing can report a fractional pixel near the 2px target.
+            const lift = await card.evaluate(el => new DOMMatrixReadOnly(getComputedStyle(el).transform).m42);
+            if (!Number.isFinite(lift) || Math.abs(lift + 2) > 0.1) {
+              check.errors.push('Navigation hover lift should be approximately -2px: ' + lift);
+            }
           }
           await page.emulateMedia({reducedMotion:'reduce'});
           // Allow the browser to finish its previous hover transition and
@@ -690,7 +693,7 @@ try {
           if (total !== expected) check.errors.push('Expected ' + expected + ' shared navigation cards; found ' + total);
           const invalid = await cards.evaluateAll((links) => links.filter((link) =>
             link.querySelectorAll('h3').length !== 1 ||
-            !link.getAttribute('href')?.startsWith('/ppi-ishikawa/') ||
+            !link.getAttribute('href')?.startsWith('/') ||
             !link.classList.contains('ui-radius-card') ||
             !link.classList.contains('ui-border-subtle')
           ).length);

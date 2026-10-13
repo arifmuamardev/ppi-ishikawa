@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 
 // Test-only user and intercepted Supabase requests. Never touch a live session or QR token.
-const origin = (process.env.ADMIN_AUDIT_BASE_URL || 'http://127.0.0.1:4321/ppi-ishikawa').replace(/\/$/, '');
+const origin = (process.env.ADMIN_AUDIT_BASE_URL || 'http://127.0.0.1:4321').replace(/\/$/, '');
 const out = 'admin-qr-audit';
 const widths = [360, 390, 768, 1280];
 await mkdir(out, { recursive: true });

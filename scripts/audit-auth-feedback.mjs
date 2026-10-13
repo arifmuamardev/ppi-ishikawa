@@ -3,7 +3,7 @@ import { chromium } from 'playwright';
 
 // Mock Supabase entirely. Never send test credentials or requests to a real backend.
 // Run after build + preview: node scripts/audit-auth-feedback.mjs
-const baseURL = (process.env.AUTH_AUDIT_BASE_URL || 'http://127.0.0.1:4321/ppi-ishikawa').replace(/\/$/, '');
+const baseURL = (process.env.AUTH_AUDIT_BASE_URL || 'http://127.0.0.1:4321').replace(/\/$/, '');
 const paths = ['login', 'register', 'forgot-password', 'reset-password'];
 const widths = [360, 390, 768, 1280];
 const dir = 'auth-feedback-audit';

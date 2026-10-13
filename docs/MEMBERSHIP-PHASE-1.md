@@ -53,10 +53,12 @@ When Supabase is later configured, the same routes and UI automatically use the 
 
 1. Create or connect a Supabase project.
 2. Run `supabase/migrations/20261003_phase1_membership.sql`.
-3. In Supabase Auth URL Configuration, add the deployed member URLs as allowed redirect URLs, including:
-   - `https://arifmuamardev.github.io/ppi-ishikawa/member/login/`
-   - `https://arifmuamardev.github.io/ppi-ishikawa/member/reset-password/`
-   - the equivalent URLs on the production custom domain when it is active.
+3. In Supabase Auth → URL Configuration, set **Site URL** to `https://ppi-ishikawa.org`
+   and add the deployed member callbacks as allowed redirect URLs:
+   - `https://ppi-ishikawa.org/member/login/` (email confirmation, with `?confirmed=1`)
+   - `https://ppi-ishikawa.org/member/reset-password/` (password recovery)
+   - Keep the legacy GitHub Pages callbacks only temporarily if needed for older sent emails.
+   Validate both flows on the custom domain before announcing them to members.
 4. Set these GitHub Actions repository variables:
    - `PUBLIC_SUPABASE_URL`
    - `PUBLIC_SUPABASE_PUBLISHABLE_KEY`

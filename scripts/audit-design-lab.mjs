@@ -4,7 +4,7 @@ import { chromium } from 'playwright';
 // Separate browser QA for the noindex, isolated public Design Lab.
 // Usage: npm run build && npm run preview -- --host 127.0.0.1 --port 4321
 // Then: node scripts/audit-design-lab.mjs
-const baseURL = (process.env.DESIGN_LAB_BASE_URL || 'http://127.0.0.1:4321/ppi-ishikawa').replace(/\/$/, '');
+const baseURL = (process.env.DESIGN_LAB_BASE_URL || 'http://127.0.0.1:4321').replace(/\/$/, '');
 const widths = [360, 390, 768, 1280];
 const directory = 'design-lab-audit/screenshots';
 await mkdir(directory, { recursive: true });

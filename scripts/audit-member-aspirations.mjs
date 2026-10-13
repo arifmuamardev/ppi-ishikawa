@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 
 // Entirely synthetic member + mocked Supabase HTTP. No real credentials/records.
-const url = (process.env.MEMBER_FEEDBACK_BASE_URL || 'http://127.0.0.1:4321/ppi-ishikawa').replace(/\/$/, '') + '/member/aspirations/';
+const url = (process.env.MEMBER_FEEDBACK_BASE_URL || 'http://127.0.0.1:4321').replace(/\/$/, '') + '/member/aspirations/';
 const widths = [360, 390, 768, 1280];
 const directory = 'member-aspiration-audit';
 await mkdir(directory, { recursive: true });

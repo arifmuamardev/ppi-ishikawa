@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 
 // No production credentials: every Supabase HTTP request is intercepted.
-const base = (process.env.ADMIN_AUDIT_BASE_URL || 'http://127.0.0.1:4321/ppi-ishikawa').replace(/\/$/, '');
+const base = (process.env.ADMIN_AUDIT_BASE_URL || 'http://127.0.0.1:4321').replace(/\/$/, '');
 const output = 'admin-organization-audit';
 const widths = [360, 390, 768, 1280];
 await mkdir(output, { recursive: true });

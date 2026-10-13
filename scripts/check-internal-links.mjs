@@ -2,7 +2,6 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
 const distRoot = path.resolve('dist');
-const base = '/ppi-ishikawa';
 
 async function walk(dir, filter = () => true) {
   const out = [];
@@ -28,7 +27,7 @@ function normalizeInternalHref(raw) {
   const [beforeHash, fragment = ''] = raw.split('#');
   const pathname = beforeHash.split('?')[0];
 
-  const assetPath = pathname.startsWith(base + '/') ? pathname.slice(base.length) : pathname;
+  const assetPath = pathname;
   if (
     assetPath.startsWith('/_astro/') ||
     assetPath.startsWith('/brand/') ||
@@ -38,8 +37,6 @@ function normalizeInternalHref(raw) {
   ) return null;
 
   let normalized = pathname;
-  if (normalized.startsWith(base + '/')) normalized = normalized.slice(base.length);
-  else if (normalized === base) normalized = '/';
 
   if (!normalized.startsWith('/')) return null;
   if (normalized !== '/' && !normalized.endsWith('/')) normalized += '/';
@@ -67,6 +64,11 @@ let checkedFragments = 0;
 let broken = 0;
 
 for (const [sourceRoute, page] of routes) {
+  // The custom domain serves from /; catch legacy absolute asset and navigation URLs.
+  for (const match of page.html.matchAll(/\s(?:href|src)=["'](\/ppi-ishikawa(?:\/[^"']*)?)["']/g)) {
+    broken += 1;
+    console.error(`LEGACY PATH ${match[1]} :: linked from ${sourceRoute}`);
+  }
   for (const match of page.html.matchAll(/\shref=["']([^"']+)["']/g)) {
     const raw = match[1];
 
