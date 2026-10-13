@@ -20,14 +20,57 @@ jobs:
     env:
       PUBLIC_SUPABASE_URL: ${{ vars.PUBLIC_SUPABASE_URL }}
       PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+      # Default closed. Only explicit "live" publishes the complete website.
+      PPI_LAUNCH_MODE: ${{ vars.PPI_LAUNCH_MODE }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Install, build, and upload site
-        uses: withastro/action@v6
+      - name: Set up Node
+        uses: actions/setup-node@v6
         with:
           node-version: 24
-          package-manager: npm@latest
+      - name: Install dependencies
+        run: npm install --no-package-lock
+      - name: Validate full website
+        run: |
+          npm run check:theme
+          npm run check:ui
+          npm run build
+          node scripts/check-internal-links.mjs
+      - name: Preserve complete development build (GitHub Actions artifact)
+        if: env.PPI_LAUNCH_MODE != 'live'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ppi-ishikawa-development-build
+          path: dist/
+          retention-days: 7
+          include-hidden-files: true
+          if-no-files-found: error
+      - name: Select public launch content
+        run: |
+          if [ "$PPI_LAUNCH_MODE" = "live" ]; then
+            echo "Live mode: publishing the full website."
+          else
+            echo "Prelaunch mode: publishing only the holding page."
+            rm -rf dist
+            mkdir -p dist/brand
+            cp public/launch/index.html dist/index.html
+            cp public/launch/robots.txt dist/robots.txt
+            cp public/brand/ppi-ishikawa-logo.webp dist/brand/ppi-ishikawa-logo.webp
+            touch dist/.nojekyll
+          fi
+          if [ "$PPI_LAUNCH_MODE" != "live" ]; then
+            test "$(find dist -type f | wc -l)" -eq 4
+            test ! -e dist/member/index.html
+            test ! -e dist/about/index.html
+            test ! -d dist/_astro
+          fi
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload selected public site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist/
 
   deploy:
     needs: build
