@@ -16,3 +16,16 @@ No URL is advertised as private until an independent full-site deployment is pro
 - Check `/about/`, `/member/`, and `/design-lab/unnes-inspired/` do **not** expose the full site.
 - Check `https://www.ppi-ishikawa.org` redirect and HTTPS.
 - On approved launch, validate Supabase Auth redirect allowlist and real email confirmation/password-reset flows before making membership public.
+
+## Private online preview (Cloudflare Worker)
+- URL: `https://preview.ppi-ishikawa.org/` (Cloudflare Worker custom domain).
+- Worker: `ppi-ishikawa-preview`, with Cloudflare Access attached **to the Worker itself**, not merely the hostname. No unauthenticated `workers.dev` or Version URLs are configured.
+- Cloudflare Access policy initially allows exactly the Cloudflare account owner's email; change the policy in Zero Trust to add approved developers.
+- App identity and policy are set in Cloudflare Zero Trust. Do not remove Cloudflare Access, or publish the preview assets on an unrelated public origin.
+- The Worker code in `cloudflare/preview-worker.mjs` also fails closed (HTTP 401) if the Access context is absent. `run_worker_first = true` ensures assets pass through the Worker.
+- Cloudflare Worker preview build runs with `PUBLIC_PREVIEW_DEMO_MODE=true` so the preview cannot connect to the production Supabase membership database. Member UI remains in simulated/demo mode.
+- Astro sets `site` to the preview URL for that build only; production remains `https://ppi-ishikawa.org`.
+- The separate GitHub Actions workflow `.github/workflows/deploy-preview.yml` builds and checks the full site. Deployment requires GitHub repository secret `CLOUDFLARE_PREVIEW_API_TOKEN` (Cloudflare API token scoped to this account and Worker script edits). Never store the secret in source files, chat, or public GitHub variables.
+- Without the secret, CI builds/test checks may pass, but the preview Worker will **continue to show a setup placeholder**. This is intentional.
+- Verify Access in an unauthenticated/private browsing session after the first successful deployment; expect login/denial rather than page content. Then verify the authorized account can browse the complete site, and check all direct origin routes.
+- The public GitHub Pages deployment remains the independent Coming Soon page until explicitly set to live.
