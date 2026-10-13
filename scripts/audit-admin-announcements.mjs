@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 
 // Mock administrator and Supabase HTTP only. No real member data or production writes.
-const origin = (process.env.ADMIN_AUDIT_BASE_URL || 'http://127.0.0.1:4321/ppi-ishikawa').replace(/\/$/, '');
+const origin = (process.env.ADMIN_AUDIT_BASE_URL || 'http://127.0.0.1:4321').replace(/\/$/, '');
 const widths = [360, 390, 768, 1280];
 const output = 'admin-announcement-audit';
 await mkdir(output, { recursive: true });

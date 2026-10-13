@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 
 // Mocked test only: no production authentication, database writes, or real member data.
-const baseURL = (process.env.MEMBER_FEEDBACK_BASE_URL || 'http://127.0.0.1:4321/ppi-ishikawa').replace(/\/$/, '');
+const baseURL = (process.env.MEMBER_FEEDBACK_BASE_URL || 'http://127.0.0.1:4321').replace(/\/$/, '');
 const widths = [360, 390, 768, 1280];
 const directory = 'member-feedback-audit';
 await mkdir(directory, { recursive: true });

@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 
 // Synthetic administrator and intercepted Supabase HTTP only. Never access real member records.
-const baseURL = (process.env.ADMIN_AUDIT_BASE_URL || 'http://127.0.0.1:4321/ppi-ishikawa').replace(/\/$/, '');
+const baseURL = (process.env.ADMIN_AUDIT_BASE_URL || 'http://127.0.0.1:4321').replace(/\/$/, '');
 const widths = [360, 390, 768, 1280];
 const output = 'admin-event-audit';
 await mkdir(output, { recursive: true });
