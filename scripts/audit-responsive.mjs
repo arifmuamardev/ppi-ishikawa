@@ -310,8 +310,11 @@ try {
           } else {
             await card.hover();
             await page.waitForTimeout(210);
-            const transform = await card.evaluate(el=>getComputedStyle(el).transform);
-            if (!transform.includes('-2)')) check.errors.push('Navigation hover lift should be -2px: '+transform);
+            // Browser compositing can report a fractional pixel near the 2px target.
+            const lift = await card.evaluate(el => new DOMMatrixReadOnly(getComputedStyle(el).transform).m42);
+            if (!Number.isFinite(lift) || Math.abs(lift + 2) > 0.1) {
+              check.errors.push('Navigation hover lift should be approximately -2px: ' + lift);
+            }
           }
           await page.emulateMedia({reducedMotion:'reduce'});
           // Allow the browser to finish its previous hover transition and
