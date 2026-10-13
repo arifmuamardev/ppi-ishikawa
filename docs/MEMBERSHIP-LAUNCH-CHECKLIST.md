@@ -18,7 +18,9 @@ Status: core platform is production-capable. Operational data still needs to be 
 - [x] Current organization term exists
 - [x] Admin Center available
 - [x] Member calendar starts from the current month
-- [x] Registration and password recovery callbacks point to production
+- [x] Registration and password recovery callbacks were validated on the previous GitHub Pages deployment
+- [ ] Update Supabase Auth Site URL and allowlist for `https://ppi-ishikawa.org`
+- [ ] Recheck confirmation email, login, and password recovery end-to-end on the custom domain
 - [ ] Final 2026/27 officer assignments entered
 - [ ] Member onboarding message prepared
 

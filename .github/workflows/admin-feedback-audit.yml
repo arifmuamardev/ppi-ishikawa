@@ -58,12 +58,12 @@ jobs:
           trap 'kill $preview_pid || true' EXIT
           # Prevent a false failure when Chromium starts before Astro preview.
           for attempt in $(seq 1 30); do
-            if curl -fsS http://127.0.0.1:4321/ppi-ishikawa/ >/dev/null; then
+            if curl -fsS http://127.0.0.1:4321/ >/dev/null; then
               break
             fi
             sleep 1
           done
-          curl -fsS http://127.0.0.1:4321/ppi-ishikawa/ >/dev/null
+          curl -fsS http://127.0.0.1:4321/ >/dev/null
           node scripts/audit-admin-events.mjs
           node scripts/audit-admin-announcements.mjs
           node scripts/audit-admin-organization.mjs

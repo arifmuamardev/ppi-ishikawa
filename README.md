@@ -30,21 +30,29 @@ Repository saat ini:
 
 `arifmuamardev/ppi-ishikawa`
 
-dengan deployment publik di:
+dengan domain resmi:
 
-`https://arifmuamardev.github.io/ppi-ishikawa/`
+`https://ppi-ishikawa.org/`
 
 Workflow `.github/workflows/deploy.yml` melakukan build dan deployment setiap ada push ke `main`.
+GitHub Pages mengelola domain kustom melalui **Settings → Pages → Custom domain**. Karena
+deployment memakai GitHub Actions, file `CNAME` di repository tidak diperlukan.
 
-## Saat pindah ke ppi-ishikawa.org
+## Infrastruktur domain dan keamanan
 
-Setelah domain resmi dibeli:
+- Registrar dan perpanjangan: Spaceship.
+- Nameserver dan DNS: Cloudflare (mulai dengan **DNS only** / gray cloud).
+- Hosting: GitHub Pages; domain utama `ppi-ishikawa.org`, alias `www.ppi-ishikawa.org`.
+- Astro: `site: 'https://ppi-ishikawa.org'` tanpa `base` agar seluruh route memakai root `/`.
+- GitHub Pages: aktifkan **Enforce HTTPS** setelah sertifikat siap.
+- Supabase Auth → URL Configuration: set **Site URL** ke `https://ppi-ishikawa.org`; izinkan redirect:
+  `https://ppi-ishikawa.org/member/login/` dan
+  `https://ppi-ishikawa.org/member/reset-password/` (tambahkan callback dengan query bila diperlukan).
+- Sesudah DNS dan deploy berubah, uji signup/konfirmasi email, login, logout, dan reset password di domain resmi.
+- `public/robots.txt` tetap menolak indexing hingga peluncuran publik disetujui.
 
-1. Ubah `site` di `astro.config.mjs` menjadi `https://ppi-ishikawa.org`.
-2. Hapus `base: '/ppi-ishikawa'`.
-3. Tambahkan `public/CNAME` berisi `ppi-ishikawa.org`.
-4. Konfigurasikan DNS domain sesuai petunjuk GitHub Pages.
-5. Karena helper URL menggunakan `import.meta.env.BASE_URL`, navigasi akan menyesuaikan setelah `base` dihapus.
+Jangan ubah Cloudflare menjadi proxied / orange cloud atau ubah mode TLS sebelum
+sertifikat dan callback GitHub Pages terverifikasi.
 
 ## Prinsip konten
 
