@@ -1,31 +1,17 @@
-# Prelaunch deployment — PPI Ishikawa
+# Deployment operations — PPI Ishikawa
 
-## Public release contract
-- `ppi-ishikawa.org` remains hosted on GitHub Pages.
-- Unless GitHub Actions repository variable `PPI_LAUNCH_MODE` equals the exact string `live`, deployment publishes **only** `public/launch/index.html`, `public/launch/robots.txt`, and the logo asset (plus `.nojekyll`).
-- The complete site is always built and its internal links verified; in prelaunch mode that compiled build is stored as a **7-day GitHub Actions artifact** named `ppi-ishikawa-development-build` before the live output is replaced. Artifacts are not an interactive/private hosted preview, and on a public repository they must not be treated as confidential.
-- Production hosting of the full site resumes only when `PPI_LAUNCH_MODE=live` is set and the main branch is redeployed.
-- Do not use client-side redirects, JavaScript hiding, or robots.txt alone as an access barrier. The source repository remains public, so source code is not confidential.
-- Keep member and admin flows off the public deployment until launch; no sensitive data belongs in the static repository.
+## Production (public website)
+- `https://ppi-ishikawa.org/` serves the **complete Astro website** via GitHub Pages.
+- GitHub Actions `.github/workflows/deploy.yml` builds and deploys on every push to `main`, using `withastro/action@v6` and `actions/deploy-pages@v5`.
+- The temporary Coming Soon / launch-mode gate was retired on 15 October 2026. There is **no** `PPI_LAUNCH_MODE` dependency and no replacement holding-page bundle.
+- `public/robots.txt` may still restrict search indexing. Search indexing is a separate editorial decision; it does not restrict normal visitor access.
+- GitHub Pages custom domain remains `ppi-ishikawa.org`; DNS is managed in Cloudflare.
+- Validate live HTTPS, apex/www behavior, `/about/`, `/community/`, `/member/`, and Design Lab after deployment.
+- Live member registration, confirmation, and password recovery still require properly configured Supabase Auth URL allowlists; do not presume these workflows are verified by static build checks.
 
-## Private browser preview — not enabled by this change
-No URL is advertised as private until an independent full-site deployment is protected by Cloudflare Access **and** all direct origins / preview URLs are checked for bypass. A password gate on the same public GitHub Pages origin is not sufficient. An authenticated Cloudflare Pages deployment or other genuinely gated staging origin can be provisioned separately. In the meantime, develop locally or download the complete GitHub Actions build artifact (which contains only data safe for public distribution).
-
-## Checks
-- Verify the public deployment contains only 4 expected files and responds with the holding page on `/`.
-- Check `/about/`, `/member/`, and `/design-lab/unnes-inspired/` do **not** expose the full site.
-- Check `https://www.ppi-ishikawa.org` redirect and HTTPS.
-- On approved launch, validate Supabase Auth redirect allowlist and real email confirmation/password-reset flows before making membership public.
-
-## Private online preview (Cloudflare Worker)
-- URL: `https://preview.ppi-ishikawa.org/` (Cloudflare Worker custom domain).
-- Worker: `ppi-ishikawa-preview`, with Cloudflare Access attached **to the Worker itself**, not merely the hostname. No unauthenticated `workers.dev` or Version URLs are configured.
-- Cloudflare Access policy initially allows exactly the Cloudflare account owner's email; change the policy in Zero Trust to add approved developers.
-- App identity and policy are set in Cloudflare Zero Trust. Do not remove Cloudflare Access, or publish the preview assets on an unrelated public origin.
-- The Worker code in `cloudflare/preview-worker.mjs` also fails closed (HTTP 401) if the Access context is absent. `run_worker_first = true` ensures assets pass through the Worker.
-- Cloudflare Worker preview build runs with `PUBLIC_PREVIEW_DEMO_MODE=true` so the preview cannot connect to the production Supabase membership database. Member UI remains in simulated/demo mode.
-- Astro sets `site` to the preview URL for that build only; production remains `https://ppi-ishikawa.org`.
-- The separate GitHub Actions workflow `.github/workflows/deploy-preview.yml` builds and checks the full site. Deployment requires GitHub repository secret `CLOUDFLARE_PREVIEW_API_TOKEN` (Cloudflare API token scoped to this account and Worker script edits). Never store the secret in source files, chat, or public GitHub variables.
-- Without the secret, CI builds/test checks may pass, but the preview Worker will **continue to show a setup placeholder**. This is intentional.
-- Verify Access in an unauthenticated/private browsing session after the first successful deployment; expect login/denial rather than page content. Then verify the authorized account can browse the complete site, and check all direct origin routes.
-- The public GitHub Pages deployment remains the independent Coming Soon page until explicitly set to live.
+## Separate private preview (optional infrastructure retained)
+- The Cloudflare Worker is `ppi-ishikawa-preview` at `https://preview.ppi-ishikawa.org/`; a Worker-level Cloudflare Access application restricts authenticated access to the approved owner email.
+- The worker is distinct from GitHub Pages production. Its presence **does not affect public website deployment**.
+- `cloudflare/preview-worker.mjs` denies when the Access context is absent. `wrangler.preview.toml` is configured to run Worker logic before serving static assets.
+- `.github/workflows/deploy-preview.yml` builds the preview in demo membership mode to avoid production Supabase. Actual preview deployment requires secret `CLOUDFLARE_PREVIEW_API_TOKEN` and should not be treated as complete until authorized and unauthenticated browser testing passes.
+- Do not put the API token into repository files or chat messages.
