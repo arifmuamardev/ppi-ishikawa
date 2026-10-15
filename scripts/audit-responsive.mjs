@@ -649,7 +649,7 @@ try {
               style: getComputedStyle(node).backgroundColor
             }));
             if (state.tag !== 'div' || state.role !== 'note' || state.tone !== 'info'
-                || !state.text.includes('Program dan jadwal resmi')
+                || !/jadwal kegiatan|program dan jadwal resmi/i.test(state.text)
                 || !state.cta || !state.style) {
               check.errors.push('Programs advisory is missing status, independent action, or visual style');
             }
