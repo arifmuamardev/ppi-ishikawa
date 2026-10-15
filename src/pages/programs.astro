@@ -45,6 +45,15 @@ import { site } from '../data/site';
             </div>
           </div>
           <p class="mt-4 text-sm leading-6 text-slate-600">{department.description}</p>
+          <h3 class="mt-5 text-sm font-bold text-slate-950">Fokus kerja</h3>
+          <ul class="mt-2 space-y-2 text-sm leading-6 text-slate-600">
+            {department.focus.map((focus) => (
+              <li class="flex gap-2">
+                <span aria-hidden="true" class="shrink-0 text-accent-dark">•</span>
+                <span>{focus}</span>
+              </li>
+            ))}
+          </ul>
         </article>
       ))}
     </div>
