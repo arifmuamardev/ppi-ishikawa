@@ -47,9 +47,6 @@ const isActive = (href: string) => {
 
     <div class="flex items-center gap-2">
       <ThemeToggle />
-      <a href={withBase('/member/')} class="site-header__member type-ui hidden min-h-11 items-center rounded-xl px-4 ui-motion-color sm:inline-flex">
-        Area Anggota
-      </a>
       <a href={withBase('/contact')} class="site-header__contact type-ui hidden min-h-11 items-center rounded-xl px-4 ui-motion-color xl:inline-flex">
         Hubungi Kami
       </a>
@@ -69,13 +66,6 @@ const isActive = (href: string) => {
             </a>
           ))}
           <div class="site-header__dropdown-divider my-2 border-t"></div>
-          <a
-            class="site-header__dropdown-link block rounded-xl px-4 py-3 text-sm font-bold ui-motion-color"
-            href={withBase('/member/')}
-            aria-current={isActive('/member') ? 'page' : undefined}
-          >
-            Area Anggota
-          </a>
           <a
             class="site-header__dropdown-link block rounded-xl px-4 py-3 text-sm font-bold ui-motion-color"
             href={withBase('/contact')}
