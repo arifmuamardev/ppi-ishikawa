@@ -4,7 +4,8 @@ import LandingHeader from '../components/LandingHeader.astro';
 import AdvisoryPanel from '../components/AdvisoryPanel.astro';
 import RelatedLinks from '../components/RelatedLinks.astro';
 import ScrollPillNav from '../components/ScrollPillNav.astro';
-import { departments } from '../data/organization';
+import { departments, contributionTypes, memberServices } from '../data/organization';
+import NavigationCard from '../components/NavigationCard.astro';
 import { withBase } from '../utils/paths';
 import { generalRelatedContent } from '../data/related-content';
 import { site } from '../data/site';
@@ -12,22 +13,22 @@ import { site } from '../data/site';
 <BaseLayout title="Program & Kegiatan">
   <LandingHeader
     title="Program & kegiatan"
-    description={`Kenali fokus kerja tujuh departemen PPI Ishikawa dan bidang layanan yang ditangani pada periode ${site.period}.`}
+    description={`Kenali fungsi, layanan anggota, dan fokus kerja tujuh divisi PPI Ishikawa pada periode ${site.period}.`}
   />
 
   <section class="mx-auto max-w-7xl px-5 pb-10 lg:px-8">
     <AdvisoryPanel tone="info">
       <p class="type-eyebrow text-secondary-dark">Status {site.period}</p>
-      <h2 class="type-section mt-3 text-slate-950">Kenali fokus kerja setiap departemen.</h2>
-      <p class="mt-3 max-w-3xl leading-7 text-slate-700">Lihat bidang tanggung jawab masing-masing departemen. Program dan jadwal resmi akan ditampilkan ketika sudah ditetapkan.</p>
+      <h2 class="type-section mt-3 text-slate-950">Tujuh divisi, beragam bentuk kontribusi.</h2>
+      <p class="mt-3 max-w-3xl leading-7 text-slate-700">Setiap divisi memiliki fungsi dan layanan. Jadwal kegiatan serta pendaftaran ditampilkan ketika tersedia.</p>
       <a href={withBase('/about/#struktur-organisasi')} class="mt-4 inline-flex text-sm font-bold text-brand hover:underline">Lihat struktur organisasi →</a>
     </AdvisoryPanel>
   </section>
 
   <div class="pb-2">
-    <p class="mx-auto mb-3 max-w-7xl px-5 text-xs font-bold uppercase tracking-[0.14em] text-slate-500 lg:px-8">Lompat ke departemen</p>
+    <p class="mx-auto mb-3 max-w-7xl px-5 text-xs font-bold uppercase tracking-[0.14em] text-slate-500 lg:px-8">Lompat ke divisi</p>
     <ScrollPillNav
-      ariaLabel="Navigasi departemen"
+      ariaLabel="Navigasi divisi"
       items={departments.map((department) => [department.name, `#${department.slug}`] as [string, string])}
     />
   </div>
@@ -39,11 +40,51 @@ import { site } from '../data/site';
           <span id={`departemen-${String(index + 1).padStart(2, '0')}`} class="sr-only" aria-hidden="true"></span>
           <div class="flex items-start justify-between gap-4">
             <div>
-              <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Departemen {String(index + 1).padStart(2, '0')}</p>
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-brand">Divisi {String(index + 1).padStart(2, '0')}</p>
               <h2 class="type-card-title mt-2 text-slate-950">{department.name}</h2>
             </div>
           </div>
           <p class="mt-4 text-sm leading-6 text-slate-600">{department.description}</p>
+          <h3 class="mt-5 text-sm font-bold text-slate-950">Fokus kerja</h3>
+          <ul class="mt-2 space-y-2 text-sm leading-6 text-slate-600">
+            {department.focus.map((focus) => (
+              <li class="flex gap-2">
+                <span aria-hidden="true" class="shrink-0 text-accent-dark">•</span>
+                <span>{focus}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+  <section id="layanan-anggota" class="scroll-mt-24 border-y border-slate-200 bg-white">
+    <div class="mx-auto max-w-7xl px-5 ui-section-space lg:px-8">
+      <div class="max-w-3xl">
+        <p class="type-eyebrow text-brand">Layanan anggota</p>
+        <h2 class="type-section mt-3 text-slate-950">Informasi dan dukungan sesuai kebutuhan.</h2>
+        <p class="mt-3 leading-7 text-slate-600">PPI Ishikawa menghubungkan pelajar dengan panduan praktis, ruang komunitas, dan sumber bantuan yang relevan.</p>
+      </div>
+      <div class="mt-7 grid gap-4 md:grid-cols-2">
+        {memberServices.map((service) => (
+          <NavigationCard href={service.href} title={service.title} description={service.description} action="Lihat informasi" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="bentuk-kontribusi" class="scroll-mt-24 mx-auto max-w-7xl px-5 ui-section-space lg:px-8">
+    <div class="max-w-3xl">
+      <p class="type-eyebrow text-brand">Bentuk kontribusi</p>
+      <h2 class="type-section mt-3 text-slate-950">Tidak semua manfaat harus berupa acara.</h2>
+      <p class="mt-3 leading-7 text-slate-600">Fungsi rutin, layanan, kegiatan, dan proyek khusus saling melengkapi. Setiap pekerjaan dijalankan sesuai manfaat serta kapasitas organisasi.</p>
+    </div>
+    <div class="mt-7 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {contributionTypes.map((item, index) => (
+        <article class="rounded-2xl border border-slate-200 bg-white p-6">
+          <p class="type-meta text-accent-dark">{String(index + 1).padStart(2, '0')}</p>
+          <h3 class="mt-3 text-lg font-bold text-slate-950">{item.title}</h3>
+          <p class="mt-3 text-sm leading-6 text-slate-600">{item.description}</p>
         </article>
       ))}
     </div>

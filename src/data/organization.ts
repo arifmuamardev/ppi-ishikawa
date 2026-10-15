@@ -3,8 +3,23 @@ export const vision = {
   subheadline: 'Bagi pelajar Indonesia di Ishikawa.',
   supporting: 'Bukan untuk membuat PPI lebih ramai, tetapi untuk membuatnya lebih berarti.',
   studentFirst: 'Student First, Organization Sustainable',
-  studentFirstDescription: 'PPI berjalan baik tanpa mengabaikan kewajiban utama kita sebagai pelajar.'
+  studentFirstDescription: 'Kontribusi pengurus dilakukan secara sukarela dengan tetap menjaga prioritas studi, riset, pekerjaan, kesehatan, dan keluarga. Komitmen yang disepakati dijalankan secara realistis dan bertanggung jawab.'
 };
+
+export const directionPillars = [
+  {
+    title: 'Dekat',
+    description: 'Hubungan yang terbuka dan hangat, komunikasi yang mudah dijangkau, serta kesediaan saling membantu.'
+  },
+  {
+    title: 'Relevan',
+    description: 'Kegiatan dan layanan disusun dari kebutuhan anggota serta kondisi nyata organisasi.'
+  },
+  {
+    title: 'Bermanfaat',
+    description: 'Setiap kontribusi memiliki tujuan yang jelas dan menghadirkan manfaat, tanpa harus selalu berskala besar.'
+  }
+];
 
 export const values = [
   {
@@ -26,14 +41,47 @@ export const values = [
 ];
 
 export const kaizen = {
-  title: 'Kaizen',
-  description: 'Lanjutkan yang baik. Perbaiki yang kurang. Sederhanakan yang terlalu berat.',
+  title: 'Kaizen: perbaikan berkelanjutan',
+  description:
+    'Program dan cara kerja ditinjau berdasarkan manfaat, kebutuhan anggota, dan kapasitas organisasi—bukan hanya karena sudah menjadi kebiasaan.',
   steps: [
-    ['Lanjutkan', 'yang sudah terbukti bernilai'],
-    ['Perbaiki', 'yang belum efektif'],
-    ['Sederhanakan', 'yang terlalu berat']
+    ['Lanjutkan', 'Continue — kegiatan yang tetap dibutuhkan dan terbukti bermanfaat.'],
+    ['Perbaiki', 'Improve — kegiatan yang masih relevan tetapi perlu disempurnakan.'],
+    ['Gabungkan', 'Merge — kegiatan dengan sasaran atau fungsi yang saling beririsan.'],
+    ['Hentikan', 'Stop — kegiatan yang tidak lagi relevan atau tidak sebanding dengan kapasitas.']
   ]
 };
+
+export const workPrinciples = [
+  {
+    title: 'Student First',
+    description: 'Studi, riset, pekerjaan, kesehatan, dan keluarga tetap menjadi prioritas. Pembagian tugas dan jadwal memperhatikan kapasitas tiap pengurus.'
+  },
+  {
+    title: 'Proporsional',
+    description: 'Kegiatan dirancang sesuai kebutuhan, manfaat, kompleksitas, dan risiko. Kegiatan kecil tidak harus menggunakan kepanitiaan besar.'
+  },
+  {
+    title: 'Kaizen',
+    description: 'Kegiatan dievaluasi agar yang baik dapat dilanjutkan, yang kurang dapat diperbaiki, dan pekerjaan yang tidak relevan tidak dipaksakan.'
+  },
+  {
+    title: 'Memperhatikan keluarga dan keberagaman',
+    description: 'Pelajar Indonesia memiliki kondisi studi, lokasi, dan kebutuhan keluarga yang berbeda. Bentuk partisipasi dirancang seinklusif mungkin.'
+  },
+  {
+    title: 'Menjangkau lintas kampus',
+    description: 'Kegiatan dan layanan terbuka bagi pelajar Indonesia dari berbagai institusi di Ishikawa, tidak berpusat pada satu kampus.'
+  },
+  {
+    title: 'Komunikasi yang efektif',
+    description: 'Informasi disampaikan secara jelas dan seperlunya. Website menjadi rujukan informasi jangka panjang, bukan sekadar arsip promosi.'
+  },
+  {
+    title: 'Setiap kegiatan memiliki penanggung jawab',
+    description: 'Sebuah kegiatan dijalankan setelah tujuan, PIC, dan sumber daya minimumnya jelas. Ide yang belum siap tetap dapat dicatat untuk dikembangkan.'
+  }
+];
 
 export const communityOffers = [
   {
@@ -56,26 +104,30 @@ export const communityOffers = [
 
 export const closingStatement = 'PPI yang dekat, relevan, dan bermanfaat tumbuh dari kepedulian, kerja bersama, dan tanggung jawab yang dijalankan dengan baik.';
 
+// Portofolio dan fungsi di bawah merupakan struktur kepengurusan 2026/2027.
+// Nama dan foto pemegang jabatan dikelola terpisah setelah data personal tersedia.
 export const leadership = [
   {
     title: 'Ketua',
-    description: 'Memimpin organisasi, menetapkan arah bersama pengurus, dan memastikan koordinasi lintas fungsi.'
+    description: 'Memimpin organisasi, menetapkan prioritas bersama pengurus, mengambil keputusan strategis, dan mewakili PPI Ishikawa.'
   },
   {
     title: 'Wakil Ketua I',
-    description: 'Mendampingi ketua dan mengoordinasikan bidang sesuai pembagian kerja kepengurusan.'
+    description: 'Mengoordinasikan Kekeluargaan, Seni Budaya, dan Media serta menyelaraskan kegiatan dan kebutuhan dukungan lintas divisi.',
+    portfolio: ['kekeluargaan-internal', 'seni-budaya', 'media']
   },
   {
     title: 'Wakil Ketua II',
-    description: 'Mendampingi ketua dan mengoordinasikan bidang sesuai pembagian kerja kepengurusan.'
+    description: 'Mengoordinasikan Akademik, Kemahasiswaan, Olahraga, dan Eksternal serta memastikan layanan dan kerja sama berjalan selaras.',
+    portfolio: ['akademik', 'kemahasiswaan', 'olahraga', 'humas-eksternal']
   },
   {
     title: 'Sekretaris',
-    description: 'Mengelola administrasi, agenda, dokumentasi organisasi, arsip, dan kesinambungan informasi.'
+    description: 'Menangani administrasi, agenda, korespondensi, dokumentasi, arsip, serta keberlanjutan informasi dan aset organisasi.'
   },
   {
     title: 'Bendahara',
-    description: 'Mengelola perencanaan, pencatatan, dan pertanggungjawaban keuangan organisasi.'
+    description: 'Mengelola kas, perencanaan anggaran, transaksi, pencatatan, laporan keuangan, dan pertanggungjawaban bersama PIC kegiatan.'
   }
 ];
 
@@ -83,37 +135,93 @@ export const departments = [
   {
     name: 'Akademik',
     slug: 'akademik',
-    description: 'Kegiatan akademik, riset, pengembangan kapasitas, dan berbagi pengetahuan.'
+    description: 'Mendukung pengembangan akademik, riset, beasiswa, karier, dan pertukaran pengetahuan anggota.',
+    focus: ['Diskusi riset, study group, serta forum akademik.', 'Workshop metodologi, penulisan, dan publikasi ilmiah.', 'Informasi beasiswa, karier, magang, dan jejaring mentor.']
   },
   {
     name: 'Olahraga',
     slug: 'olahraga',
-    description: 'Aktivitas olahraga, kebugaran, dan ruang interaksi anggota melalui kegiatan fisik.'
+    description: 'Mewadahi olahraga, rekreasi aktif, kebugaran, dan kebersamaan dengan mengutamakan keselamatan peserta.',
+    focus: ['Kegiatan dan komunitas olahraga rutin.', 'Kompetisi, sparing, dan partisipasi olahraga lintas komunitas.', 'Koordinasi fasilitas dan perlengkapan olahraga.']
   },
   {
     name: 'Kemahasiswaan',
     slug: 'kemahasiswaan',
-    description: 'Dukungan kebutuhan mahasiswa, pendatang baru, kesejahteraan, dan akses informasi.'
+    description: 'Menjadi penghubung awal untuk kebutuhan, aspirasi, informasi, dan pendampingan praktis pelajar Indonesia.',
+    focus: ['Informasi pra-kedatangan, orientasi, dan dukungan mahasiswa baru.', 'Panduan kehidupan dan studi di Ishikawa.', 'Penyaluran aspirasi, kebutuhan, serta rujukan bantuan yang tepat.']
   },
   {
-    name: 'Kekeluargaan / Internal',
+    name: 'Kekeluargaan',
     slug: 'kekeluargaan-internal',
-    description: 'Kebersamaan anggota, komunikasi internal, keterlibatan keluarga, dan rasa memiliki terhadap komunitas.'
+    description: 'Mempererat hubungan antaranggota, pengurus, dan keluarga sekaligus mendukung keterlibatan serta regenerasi organisasi.',
+    focus: ['Kegiatan kebersamaan, penyambutan, dan perpisahan.', 'Keterlibatan keluarga dan penguatan hubungan internal.', 'Onboarding, kebersamaan pengurus, dan regenerasi.']
   },
   {
     name: 'Seni Budaya',
     slug: 'seni-budaya',
-    description: 'Kegiatan seni, budaya Indonesia, ekspresi kreatif, dan representasi budaya di Ishikawa.'
+    description: 'Membuka ruang berkarya, berekspresi, dan memperkenalkan budaya Indonesia kepada komunitas di Ishikawa.',
+    focus: ['Kegiatan seni, musik, tari, kuliner, dan komunitas kreatif.', 'Pertukaran budaya dengan kampus serta masyarakat lokal.', 'Partisipasi dalam acara budaya dan pengelolaan perlengkapan kegiatan.']
   },
   {
     name: 'Media',
     slug: 'media',
-    description: 'Informasi publik, dokumentasi, desain, konten, dan pengelolaan kanal digital organisasi.'
+    description: 'Mengelola informasi publik, dokumentasi, identitas visual, media sosial, dan kanal digital PPI Ishikawa.',
+    focus: ['Informasi kegiatan, layanan, dan publikasi organisasi.', 'Dokumentasi foto/video serta materi visual.', 'Pengelolaan website, media sosial, dan identitas digital.']
   },
   {
-    name: 'Humas / Eksternal',
+    name: 'Eksternal',
     slug: 'humas-eksternal',
-    description: 'Hubungan dengan mitra, institusi, komunitas, media, dan jejaring di luar organisasi.'
+    description: 'Mengembangkan hubungan dengan kampus, PPI, komunitas, institusi, dan mitra serta mendukung kerja sama organisasi.',
+    focus: ['Hubungan kelembagaan, undangan, dan partisipasi lintas kampus.', 'Kolaborasi dengan komunitas, universitas, dan mitra.', 'Kemitraan, dukungan sponsor, serta inisiatif penggalangan dana.']
+  }
+];
+
+// Pengelompokan ini dipakai pada bagan organisasi dan laman program.
+// Nilainya mengikuti portofolio Wakil Ketua I dan II.
+export const viceChairPortfolios = [
+  { title: 'Wakil Ketua I', departmentSlugs: ['kekeluargaan-internal', 'seni-budaya', 'media'] },
+  { title: 'Wakil Ketua II', departmentSlugs: ['akademik', 'kemahasiswaan', 'olahraga', 'humas-eksternal'] }
+];
+
+export const contributionTypes = [
+  {
+    title: 'Fungsi organisasi',
+    description: 'Tugas rutin untuk menjaga organisasi berjalan, seperti administrasi, keuangan, koordinasi, dan komunikasi.'
+  },
+  {
+    title: 'Layanan anggota',
+    description: 'Dukungan yang dapat digunakan sesuai kebutuhan, seperti informasi kedatangan, panduan hidup, dan penghubung bantuan.'
+  },
+  {
+    title: 'Program dan kegiatan',
+    description: 'Aktivitas berbasis kebutuhan anggota, seperti forum akademik, olahraga, kebersamaan, atau pertukaran budaya.'
+  },
+  {
+    title: 'Proyek khusus',
+    description: 'Inisiatif lebih besar yang memerlukan tim lintas divisi, anggaran, dan perencanaan tersendiri.'
+  }
+];
+
+export const memberServices = [
+  {
+    title: 'Informasi kedatangan dan kehidupan',
+    description: 'Panduan persiapan, administrasi, akomodasi, transportasi, dan adaptasi di Ishikawa.',
+    href: '/life-in-ishikawa/'
+  },
+  {
+    title: 'Informasi studi dan pengembangan',
+    description: 'Panduan kampus, beasiswa, jalur karier, dan ruang berbagi pengetahuan.',
+    href: '/community/kampus/'
+  },
+  {
+    title: 'Komunitas lintas kampus dan keluarga',
+    description: 'Ruang untuk terhubung, berkegiatan, dan berpartisipasi sesuai kondisi serta minat anggota.',
+    href: '/community/'
+  },
+  {
+    title: 'Aspirasi dan penghubung bantuan',
+    description: 'Arah informasi atau rujukan ketika anggota membutuhkan bantuan dari kampus, layanan resmi, atau komunitas.',
+    href: '/contact/'
   }
 ];
 
