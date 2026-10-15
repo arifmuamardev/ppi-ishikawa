@@ -6,6 +6,21 @@ export const vision = {
   studentFirstDescription: 'Kontribusi pengurus dilakukan secara sukarela dengan tetap menjaga prioritas studi, riset, pekerjaan, kesehatan, dan keluarga. Komitmen yang disepakati dijalankan secara realistis dan bertanggung jawab.'
 };
 
+export const directionPillars = [
+  {
+    title: 'Dekat',
+    description: 'Hubungan yang terbuka dan hangat, komunikasi yang mudah dijangkau, serta kesediaan saling membantu.'
+  },
+  {
+    title: 'Relevan',
+    description: 'Kegiatan dan layanan disusun dari kebutuhan anggota serta kondisi nyata organisasi.'
+  },
+  {
+    title: 'Bermanfaat',
+    description: 'Setiap kontribusi memiliki tujuan yang jelas dan menghadirkan manfaat, tanpa harus selalu berskala besar.'
+  }
+];
+
 export const values = [
   {
     title: 'Relevan',
