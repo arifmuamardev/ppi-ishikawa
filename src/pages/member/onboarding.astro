@@ -1,0 +1,102 @@
+---
+import MemberLayout from '../../layouts/MemberLayout.astro';
+import AppPageHeader from '../../components/AppPageHeader.astro';
+import FormFeedback from '../../components/FormFeedback.astro';
+import { campuses } from '../../data/campuses';
+import { studyLevels } from '../../data/membership';
+---
+
+<MemberLayout title="Lengkapi Keanggotaan" allowIncomplete={true}>
+  <div class="mx-auto max-w-2xl space-y-6">
+    <AppPageHeader
+      eyebrow="Langkah terakhir · Keanggotaan"
+      title="Lengkapi profil PPI Ishikawa"
+      description="Email sudah diverifikasi. Cukup lengkapi informasi dasar di bawah ini; tidak perlu membuat password."
+    />
+    <div class="rounded-2xl border border-accent/30 bg-accent/10 p-5 text-sm leading-6 text-slate-700">
+      Akun Anda telah dibuat. Profil baru akan berstatus <strong>menunggu verifikasi pengurus</strong>.
+      Informasi pribadi tidak tampil di direktori anggota kecuali Anda mengaktifkannya sendiri nanti.
+    </div>
+    <FormFeedback id="onboarding-message" />
+    <form id="member-onboarding-form" class="space-y-5 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8" aria-busy="false" data-auth-state="idle">
+      <label class="block">
+        <span class="text-sm font-bold text-slate-800">Nama lengkap <span aria-hidden="true">*</span></span>
+        <input name="full_name" type="text" autocomplete="name" required minlength="2" maxlength="120" class="ui-field mt-2" />
+      </label>
+      <label class="block">
+        <span class="text-sm font-bold text-slate-800">Email terverifikasi</span>
+        <input id="onboarding-email" type="email" readonly class="ui-field mt-2" />
+      </label>
+      <label class="block">
+        <span class="text-sm font-bold text-slate-800">Kampus / institusi pendidikan <span aria-hidden="true">*</span></span>
+        <select name="campus_slug" required class="ui-field mt-2">
+          <option value="">Pilih kampus</option>
+          {campuses.map((item) => <option value={item.slug}>{item.shortName}</option>)}
+        </select>
+      </label>
+      <label class="block">
+        <span class="text-sm font-bold text-slate-800">Program / jurusan <span aria-hidden="true">*</span></span>
+        <input name="program" type="text" required maxlength="160" class="ui-field mt-2" placeholder="Contoh: Computer Science" />
+      </label>
+      <label class="block">
+        <span class="text-sm font-bold text-slate-800">Jenjang studi <span aria-hidden="true">*</span></span>
+        <select name="study_level" required class="ui-field mt-2">
+          <option value="">Pilih jenjang</option>
+          {studyLevels.map((item) => <option value={item.value}>{item.label}</option>)}
+        </select>
+      </label>
+      <label class="flex items-start gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
+        <input name="consent" type="checkbox" class="ui-check mt-1" required />
+        <span class="text-sm leading-6 text-slate-700">
+          Saya setuju data yang saya isi digunakan oleh pengurus PPI Ishikawa
+          untuk administrasi dan verifikasi keanggotaan. Data saya tidak akan
+          ditampilkan di direktori tanpa pilihan izin terpisah.
+        </span>
+      </label>
+      <button type="submit" class="ui-action-primary w-full">Simpan & lanjutkan</button>
+    </form>
+  </div>
+  <script>
+    import { getCurrentMember, completeMemberOnboarding, memberPath } from '../../lib/member';
+    import { createFormFeedback } from '../../lib/form-feedback';
+    const form = document.querySelector<HTMLFormElement>('#member-onboarding-form');
+    const feedback = createFormFeedback(form, 'onboarding-message');
+    const member = await getCurrentMember();
+    if (!member.user) {
+      window.location.replace(memberPath('/member/login/'));
+    } else if (member.profile?.onboarding_completed_at) {
+      window.location.replace(memberPath('/member/'));
+    } else if (form && member.profile) {
+      const email = document.querySelector<HTMLInputElement>('#onboarding-email');
+      if (email) email.value = member.user.email || '';
+      const name = form.elements.namedItem('full_name');
+      if (name instanceof HTMLInputElement) {
+        const fallback = (member.user.email || '').split('@')[0];
+        if (member.profile.full_name && member.profile.full_name !== fallback) {
+          name.value = member.profile.full_name;
+        }
+      }
+      form.addEventListener('submit', async event => {
+        event.preventDefault();
+        await feedback.run('Menyimpan…', async () => {
+          const values = new FormData(form);
+          const input = {
+            full_name: String(values.get('full_name') || '').trim(),
+            campus_slug: String(values.get('campus_slug') || '').trim(),
+            program: String(values.get('program') || '').trim(),
+            study_level: String(values.get('study_level') || ''),
+            consent: values.get('consent') === 'on',
+          };
+          const { error } = await completeMemberOnboarding(input);
+          if (error) {
+            feedback.show('Profil belum dapat disimpan. Periksa isian dan coba lagi.', 'error');
+            return;
+          }
+          window.location.replace(memberPath('/member/'));
+        }, 'Terjadi kendala koneksi. Coba lagi.');
+      });
+    } else {
+      feedback.show('Profil belum tersedia. Muat ulang halaman atau hubungi pengurus.', 'error');
+    }
+  </script>
+</MemberLayout>
