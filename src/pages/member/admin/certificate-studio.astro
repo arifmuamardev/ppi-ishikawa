@@ -364,7 +364,7 @@ import { withBase } from '../../../utils/paths';
       issuing = true;
       refresh();
       const snapshot = getSnapshot();
-      if (!activeBatchId) activeBatchId = crypto.randomUUID();
+      if (!activeBatchId || (issued.length > 0 && issuedSnapshot !== snapshot)) activeBatchId = crypto.randomUUID();
       const {data,error} = await issueStudioCertificates(activeBatchId, {
         event: fields.event.value.trim(), date: fields.date.value,
         role: fields.role.value, organizer: fields.organizer.value.trim(), names: list,
