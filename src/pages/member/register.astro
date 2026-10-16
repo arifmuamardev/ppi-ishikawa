@@ -11,7 +11,7 @@ import { withBase } from '../../utils/paths';
   <AuthShell
     eyebrow="Membership PPI Ishikawa"
     title="Daftar sebagai anggota"
-    description="Setelah email dikonfirmasi, pendaftaran akan berstatus menunggu verifikasi pengurus. Data yang Anda isi digunakan untuk administrasi keanggotaan dan tidak otomatis ditampilkan di direktori."
+    description="Pendaftaran tanpa password. Setelah data dikirim, buka tautan sekali pakai pada email Anda. Keanggotaan tetap memerlukan verifikasi pengurus; profil tidak otomatis tampil di direktori."
     size="md"
   >
 
@@ -59,14 +59,9 @@ import { withBase } from '../../utils/paths';
           </select>
         </label>
 
-        <label>
-          <span class="text-sm font-bold text-slate-800">Password</span>
-          <input name="password" type="password" minlength="8" autocomplete="new-password" required class="ui-field mt-2" />
-        </label>
-        <label>
-          <span class="text-sm font-bold text-slate-800">Ulangi password</span>
-          <input name="password_confirm" type="password" minlength="8" autocomplete="new-password" required class="ui-field mt-2" />
-        </label>
+        <p class="md:col-span-2 rounded-xl border border-accent/25 bg-accent/10 p-4 text-sm leading-6 text-slate-700">
+          Tidak perlu membuat password. Tautan pendaftaran dikirim ke alamat email Anda dan hanya bisa dipakai sekali.
+        </p>
 
         <label class="md:col-span-2 flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
           <input name="consent" type="checkbox" required class="ui-check mt-0.5" />
@@ -88,19 +83,12 @@ import { withBase } from '../../utils/paths';
 
   const form = document.querySelector<HTMLFormElement>('#member-register-form');
   const feedback = createAuthFeedback(form, 'register-message');
-  const confirmationField = form?.querySelector<HTMLInputElement>('[name="password_confirm"]');
 
   if (isMembershipDemoMode) {
     feedback.show('Mode demo aktif. Data pendaftaran hanya akan disimpan di browser ini dan tidak dikirim ke PPI Ishikawa.');
     form?.addEventListener('submit', (event) => {
       event.preventDefault();
       const values = new FormData(form);
-      const password = String(values.get('password') || '');
-      const confirmation = String(values.get('password_confirm') || '');
-      if (password !== confirmation) {
-        feedback.show('Password dan konfirmasi password tidak sama.', 'error', confirmationField ?? undefined);
-        return;
-      }
       demoRegister({
         full_name: String(values.get('full_name') || '').trim(),
         email: String(values.get('email') || '').trim(),
@@ -116,19 +104,13 @@ import { withBase } from '../../utils/paths';
     form?.addEventListener('submit', async (event) => {
       event.preventDefault();
       const values = new FormData(form);
-      const password = String(values.get('password') || '');
-      const confirmation = String(values.get('password_confirm') || '');
-      if (password !== confirmation) {
-        feedback.show('Password dan konfirmasi password tidak sama.', 'error', confirmationField ?? undefined);
-        return;
-      }
 
       await feedback.run('Mendaftarkan…', async () => {
         const redirectTo = memberAbsoluteUrl('/member/login/?confirmed=1');
-        const { data, error } = await supabase.auth.signUp({
-          email: String(values.get('email') || '').trim(),
-          password,
+        const { error } = await supabase.auth.signInWithOtp({
+          email: String(values.get('email') || '').trim().toLowerCase(),
           options: {
+            shouldCreateUser: true,
             emailRedirectTo: redirectTo,
             data: {
               full_name: String(values.get('full_name') || '').trim(),
@@ -142,16 +124,17 @@ import { withBase } from '../../utils/paths';
         });
 
         if (error) {
-          feedback.show('Pendaftaran belum dapat diproses. Periksa email, password, dan data yang Anda isi.', 'error');
+          if (error.status === 429) {
+            feedback.show('Terlalu banyak permintaan. Tunggu beberapa saat lalu coba kembali.', 'error');
+          } else if (/email.*not authorized/i.test(error.message)) {
+            feedback.show('Layanan email belum siap untuk alamat ini. Silakan hubungi pengurus PPI Ishikawa.', 'error');
+          } else {
+            feedback.show('Pendaftaran belum dapat diproses. Periksa data, koneksi, atau coba lagi nanti.', 'error');
+          }
           return;
         }
-
         form.reset();
-        if (data.session) {
-          window.location.replace(memberPath('/member/'));
-        } else {
-          feedback.show('Pendaftaran diterima. Periksa email Anda untuk konfirmasi, lalu masuk. Setelah itu status membership akan menunggu verifikasi pengurus.', 'success');
-        }
+        feedback.show('Permintaan pendaftaran diterima. Periksa email dan folder spam untuk membuka tautan masuk. Setelah masuk, data keanggotaan menunggu verifikasi pengurus.', 'success');
       }, 'Pendaftaran belum dapat diproses karena kendala koneksi. Coba lagi.');
     });
   }
