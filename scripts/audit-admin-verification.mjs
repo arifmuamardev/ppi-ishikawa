@@ -31,7 +31,7 @@ async function mock(page, s) {
     let response = { status: 200, body: {} };
     if (path === '/auth/v1/user') response.body = user;
     else if (path === '/rest/v1/profiles') {
-      if (url.searchParams.get('verification_status') === 'eq.pending') {
+      if ((url.searchParams.get('verification_status') || '').startsWith('in.')) {
         s.reads++;
         if (s.failNextLoad) {
           s.failNextLoad = false;
@@ -46,7 +46,8 @@ async function mock(page, s) {
         await s.held;
         response = { status: 409, body: { code: '23505', message: 'Synthetic request failure' } };
       } else {
-        s.pending = s.pending.filter(item => item.user_id !== payload.target_user_id);
+        if (payload.decision === 'approved') s.pending = s.pending.filter(item => item.user_id !== payload.target_user_id);
+        else s.pending = s.pending.map(item => item.user_id === payload.target_user_id ? { ...item, verification_status: 'rejected' } : item);
         response.body = null;
       }
     } else response = { status: 404, body: { message: 'Unmocked endpoint ' + path } };
@@ -61,7 +62,7 @@ async function mock(page, s) {
 async function ready(page) {
   await page.goto(base + '/member/admin/verification/', { waitUntil: 'domcontentloaded' });
   await page.locator('#member-content').waitFor({ state: 'visible' });
-  await page.getByText('2 menunggu', { exact: true }).waitFor({ timeout: 20000 });
+  await page.getByText('2 menunggu · 0 tindak lanjut', { exact: true }).waitFor({ timeout: 20000 });
   await page.waitForFunction(() => document.querySelector('#verification-admin-list')?.getAttribute('aria-busy') === 'false');
   await page.locator('#verification-refresh').waitFor({ state: 'visible' });
   await page.waitForFunction(() => document.querySelector('#verification-refresh')?.disabled === false);
@@ -128,14 +129,20 @@ try {
       check(s.payloads[1]?.next_status === 'active', 'success: selected status sent');
       check(s.payloads[1]?.decision === 'approved', 'success: approval decision sent');
       check(confirmations === 3, 'confirm before each deliberate decision');
-      await page.getByText('1 menunggu', { exact: true }).waitFor();
+      await page.getByText('1 menunggu · 0 tindak lanjut', { exact: true }).waitFor();
 
       // Rejection/tindak lanjut uses the same guard with distinct decision value.
       const other = page.locator('#verification-admin-list article').filter({ hasText: 'Anggota Dua Uji' });
       await other.getByRole('button', { name: 'Tindak lanjut' }).click();
       await page.locator('#verification-admin-message-status').filter({ hasText: 'Pendaftaran berhasil ditandai' }).waitFor({ state: 'visible' });
       check(s.attempts === 3 && s.payloads[2]?.decision === 'rejected', 'rejection: correct RPC decision');
-      await page.getByText('0 menunggu', { exact: true }).waitFor();
+      await page.getByText('0 menunggu · 1 tindak lanjut', { exact: true }).waitFor();
+      check(await page.locator('#verification-admin-list article').count() === 1, 'follow-up: applicant remains reviewable');
+      const followup = page.locator('#verification-admin-list article').filter({ hasText: 'Anggota Dua Uji' });
+      check(await followup.getByRole('button', { name: 'Tindak lanjut' }).count() === 0, 'follow-up: no repeated rejection action');
+      await followup.getByRole('button', { name: 'Setujui' }).click();
+      await page.getByText('0 menunggu · 0 tindak lanjut', { exact: true }).waitFor();
+      check(s.attempts === 4 && s.payloads[3]?.decision === 'approved', 'follow-up: can approve after correction');
       check(await page.locator('#verification-admin-empty').isVisible(), 'empty queue announced');
     } catch (error) { failures.push('decision lifecycle: ' + error.message); }
     finally { release(); await page.close(); }
@@ -155,7 +162,7 @@ try {
       check(s.attempts === 1, 'refresh failure: write performed once');
       check(await page.locator('#verification-refresh').isEnabled(), 'refresh failure: manual retry enabled');
       await page.locator('#verification-refresh').click();
-      await page.getByText('1 menunggu', { exact: true }).waitFor();
+      await page.getByText('1 menunggu · 0 tindak lanjut', { exact: true }).waitFor();
     } catch (error) {
       const statusText = await page.locator('#verification-admin-message-status').textContent().catch(() => 'unavailable');
       const errorText = await page.locator('#verification-admin-message-error').textContent().catch(() => 'unavailable');
