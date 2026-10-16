@@ -71,6 +71,8 @@ jobs:
         run: npm run check:ui
       - name: Test feature registry and route gating
         run: npm run check:features
+      - name: Check certificate studio parsing
+        run: npm run check:certificates
       - name: Build site
         run: npm run build
       - name: Check internal links

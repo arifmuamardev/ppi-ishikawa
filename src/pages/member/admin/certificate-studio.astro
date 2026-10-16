@@ -1,0 +1,302 @@
+---
+import MemberLayout from '../../../layouts/MemberLayout.astro';
+import AppPageHeader from '../../../components/AppPageHeader.astro';
+import { withBase } from '../../../utils/paths';
+---
+
+<MemberLayout title="Studio Sertifikat" requireAdmin={true}>
+  <div class="space-y-6">
+    <AppPageHeader
+      eyebrow="Admin · Studio Sertifikat"
+      title="Buat sertifikat acara dalam beberapa langkah."
+      description="Bisa untuk peserta webinar, narasumber, panitia, atau tamu—tanpa wajib memiliki akun anggota. Unduh satu PDF dengan satu halaman per penerima."
+    />
+
+    <div class="rounded-2xl border border-accent/35 bg-accent/10 px-5 py-4 text-sm leading-6 text-slate-700">
+      <strong class="text-slate-950">Privasi & penerbitan:</strong> Nama peserta dan gambar tanda tangan diproses hanya di browser. PDF dari studio ini belum terdaftar dalam sistem verifikasi online; nomor sertifikat dan QR validasi tidak dibuat. Periksa serta setujui hasil sebelum dibagikan.
+    </div>
+
+    <div class="grid gap-6 2xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+      <div class="space-y-6">
+        <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7" aria-labelledby="studio-event-heading">
+          <div class="flex items-center gap-3">
+            <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand font-bold text-white">1</span>
+            <h2 id="studio-event-heading" class="text-lg font-bold text-slate-950">Informasi kegiatan</h2>
+          </div>
+          <div class="mt-5 grid gap-4 sm:grid-cols-2">
+            <label class="sm:col-span-2">
+              <span class="text-sm font-bold text-slate-800">Nama kegiatan <span class="text-red-600">*</span></span>
+              <input id="studio-event" type="text" maxlength="160" class="ui-field mt-2" placeholder="Contoh: Webinar Persiapan Studi di Jepang" required />
+            </label>
+            <label>
+              <span class="text-sm font-bold text-slate-800">Tanggal kegiatan <span class="text-red-600">*</span></span>
+              <input id="studio-date" type="date" class="ui-field mt-2" required />
+            </label>
+            <label>
+              <span class="text-sm font-bold text-slate-800">Peran penerima</span>
+              <select id="studio-role" class="ui-field mt-2">
+                <option>Peserta</option>
+                <option>Narasumber</option>
+                <option>Panitia</option>
+                <option>Moderator</option>
+                <option>Fasilitator</option>
+                <option>Relawan</option>
+                <option>Pemenang</option>
+              </select>
+            </label>
+            <label class="sm:col-span-2">
+              <span class="text-sm font-bold text-slate-800">Penyelenggara</span>
+              <input id="studio-organizer" type="text" maxlength="120" class="ui-field mt-2" value="PPI Jepang Komisariat Ishikawa" />
+            </label>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7" aria-labelledby="studio-names-heading">
+          <div class="flex items-center gap-3">
+            <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand font-bold text-white">2</span>
+            <h2 id="studio-names-heading" class="text-lg font-bold text-slate-950">Daftar penerima</h2>
+          </div>
+          <p class="mt-3 text-sm leading-6 text-slate-600">Salin satu kolom nama dari Excel, lalu tempel di bawah. Satu nama per baris. Nama ganda otomatis disatukan.</p>
+          <label class="mt-4 block">
+            <span class="text-sm font-bold text-slate-800">Nama penerima <span class="text-red-600">*</span></span>
+            <textarea id="studio-names" rows="6" class="ui-field mt-2 w-full" placeholder="Andi Pratama&#10;Siti Rahmawati&#10;Budi Santoso" spellcheck="false"></textarea>
+          </label>
+          <div class="mt-4 flex flex-wrap items-center gap-3">
+            <label class="inline-flex min-h-11 cursor-pointer items-center rounded-xl border border-slate-300 bg-white px-4 text-sm font-bold text-slate-700 hover:border-accent/50">
+              <span>Impor CSV/TSV</span>
+              <input id="studio-csv" type="file" class="sr-only" accept=".csv,.tsv,text/csv,text/tab-separated-values" />
+            </label>
+            <span id="studio-count" class="text-sm font-semibold text-slate-600" aria-live="polite">0 nama</span>
+          </div>
+          <p class="mt-2 text-xs leading-5 text-slate-500">File impor menggunakan kolom “Nama” / “Name”, jika ada. Maksimal 200 penerima per PDF.</p>
+        </section>
+
+        <section class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-7" aria-labelledby="studio-approval-heading">
+          <div class="flex items-center gap-3">
+            <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand font-bold text-white">3</span>
+            <h2 id="studio-approval-heading" class="text-lg font-bold text-slate-950">Penanda tangan</h2>
+          </div>
+          <p class="mt-3 text-sm leading-6 text-slate-600">Nama dan jabatan diisi oleh pengurus yang berwenang. Gambar tanda tangan bersifat opsional.</p>
+          <div class="mt-4 grid gap-4 sm:grid-cols-2">
+            <label>
+              <span class="text-sm font-bold text-slate-800">Nama penanda tangan <span class="text-red-600">*</span></span>
+              <input id="studio-signer" type="text" maxlength="90" class="ui-field mt-2" placeholder="Nama Ketua/PIC" required />
+            </label>
+            <label>
+              <span class="text-sm font-bold text-slate-800">Jabatan</span>
+              <input id="studio-signer-role" type="text" maxlength="90" class="ui-field mt-2" placeholder="Ketua PPI Ishikawa" value="Ketua PPI Ishikawa" />
+            </label>
+          </div>
+          <details class="mt-4 rounded-xl border border-slate-200 p-4">
+            <summary class="cursor-pointer text-sm font-bold text-slate-700">Tambahkan gambar tanda tangan (opsional)</summary>
+            <label class="mt-4 block text-sm leading-6 text-slate-600">
+              Unggah PNG/JPG milik penanda tangan dengan izin penggunaannya (maksimal 2 MB).
+              <input id="studio-signature" type="file" accept="image/png,image/jpeg" class="mt-2 block w-full text-sm" />
+            </label>
+            <button id="studio-clear-signature" type="button" class="mt-3 text-sm font-semibold text-brand hover:underline">Hapus gambar tanda tangan</button>
+          </details>
+        </section>
+      </div>
+
+      <section class="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 sm:p-7" aria-labelledby="studio-preview-heading">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p class="type-eyebrow text-brand">Pratinjau langsung</p>
+            <h2 id="studio-preview-heading" class="mt-2 text-lg font-bold text-slate-950">Sertifikat A4 lanskap</h2>
+          </div>
+          <span class="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600">PDF · 1 halaman/penerima</span>
+        </div>
+        <div class="mt-5 overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+          <canvas id="studio-preview" class="block h-auto w-full" width="1800" height="1273" role="img" aria-label="Pratinjau visual sertifikat dari data yang diisi"></canvas>
+        </div>
+        <p id="studio-preview-name" class="mt-3 text-sm text-slate-600">Pratinjau menggunakan nama penerima pertama.</p>
+        <div id="studio-message" role="status" aria-live="polite" class="mt-5 hidden rounded-xl border p-4 text-sm leading-6"></div>
+        <div class="mt-6 grid gap-3 sm:grid-cols-2">
+          <button id="studio-export-preview" type="button" class="min-h-12 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800 disabled:cursor-not-allowed disabled:opacity-50" disabled>Unduh 1 sertifikat</button>
+          <button id="studio-export-all" type="button" class="min-h-12 rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-50" disabled>Unduh PDF semua penerima</button>
+        </div>
+        <p class="mt-3 text-xs leading-5 text-slate-500">Pratinjau dan PDF dibuat pada perangkat Anda. Tidak ada email otomatis, database penerbitan, atau kode QR verifikasi.</p>
+        <a href={withBase('/member/admin/certificates/')} class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">Butuh sertifikat anggota dengan QR terverifikasi? Gunakan penerbitan anggota →</a>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    import { namesFromText, namesFromCsv, safeCertificateFileName, indonesianDate } from '../../../lib/certificate-studio.mjs';
+    import { renderCertificate, CERTIFICATE_WIDTH, CERTIFICATE_HEIGHT } from '../../../lib/certificate-renderer.mjs';
+    import { getCurrentMember } from '../../../lib/member';
+
+    const find = (id) => document.getElementById(id);
+    const fields = {
+      event: find('studio-event'),
+      date: find('studio-date'),
+      role: find('studio-role'),
+      organizer: find('studio-organizer'),
+      names: find('studio-names'),
+      signer: find('studio-signer'),
+      signerRole: find('studio-signer-role'),
+    };
+    const preview = find('studio-preview');
+    const count = find('studio-count');
+    const previewName = find('studio-preview-name');
+    const message = find('studio-message');
+    const exportOne = find('studio-export-preview');
+    const exportAll = find('studio-export-all');
+    let logo = null;
+    let signature = null;
+    let busy = false;
+    let authorized = false;
+
+    const inform = (text, error = false) => {
+      if (!message) return;
+      message.textContent = text;
+      message.className = `mt-5 rounded-xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
+    };
+    const names = () => namesFromText(fields.names?.value || '');
+    const details = (recipient) => ({
+      event: fields.event?.value.trim() || '',
+      date: indonesianDate(fields.date?.value || ''),
+      category: fields.role?.value || 'Peserta',
+      organizer: fields.organizer?.value.trim() || 'PPI Jepang Komisariat Ishikawa',
+      recipient,
+      signer: fields.signer?.value.trim() || '',
+      signerRole: fields.signerRole?.value.trim() || '',
+      logo,
+      signature,
+    });
+    const validate = () => {
+      const event = fields.event?.value.trim();
+      const date = fields.date?.value;
+      const signer = fields.signer?.value.trim();
+      if (!event) throw new Error('Isi nama kegiatan terlebih dahulu.');
+      if (!date || indonesianDate(date) === 'Tanggal kegiatan') throw new Error('Pilih tanggal kegiatan yang valid.');
+      if (!signer) throw new Error('Isi nama penanda tangan yang berwenang.');
+      const list = names();
+      if (!list.length) throw new Error('Masukkan minimal satu nama penerima.');
+      return list;
+    };
+
+    const refresh = () => {
+      let current = [];
+      try {
+        current = names();
+        if (message?.dataset.kind === 'input') message.classList.add('hidden');
+      } catch (error) {
+        if (message) message.dataset.kind = 'input';
+        inform(error.message, true);
+      }
+      if (count) count.textContent = `${current.length} nama`;
+      if (previewName) previewName.textContent = current.length
+        ? `Pratinjau untuk: ${current[0]}${current.length > 1 ? ` (+${current.length - 1} nama lain)` : ''}`
+        : 'Pratinjau menggunakan nama penerima pertama.';
+      if (preview instanceof HTMLCanvasElement) renderCertificate(preview, details(current[0] || 'Nama Penerima'));
+      let valid = !busy && authorized;
+      if (valid) {
+        try { validate(); } catch { valid = false; }
+      }
+      if (exportOne) exportOne.disabled = !valid;
+      if (exportAll) exportAll.disabled = !valid;
+    };
+
+    let scheduled = 0;
+    const queueRefresh = () => {
+      if (scheduled) cancelAnimationFrame(scheduled);
+      scheduled = requestAnimationFrame(() => { scheduled = 0; refresh(); });
+    };
+    Object.values(fields).forEach((input) => input?.addEventListener('input', queueRefresh));
+
+    const logoImage = new Image();
+    logoImage.onload = () => { logo = logoImage; queueRefresh(); };
+    logoImage.src = "/brand/ppi-ishikawa-logo.webp";
+
+    find('studio-csv')?.addEventListener('change', async (event) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      try {
+        if (file.size > 1024 * 1024) throw new Error('File terlalu besar (maksimal 1 MB).');
+        const imported = namesFromCsv(await file.text());
+        const combined = namesFromText(`${fields.names?.value || ''}\n${imported.join('\n')}`);
+        if (fields.names) fields.names.value = combined.join('\n');
+        inform(`${imported.length} nama berhasil dibaca dari berkas; total ${combined.length} nama unik.`);
+        if (message) message.dataset.kind = '';
+        queueRefresh();
+      } catch (error) { inform(error.message, true); }
+      event.target.value = '';
+    });
+
+    find('studio-signature')?.addEventListener('change', async (event) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      if (!['image/png', 'image/jpeg'].includes(file.type) || file.size > 2 * 1024 * 1024) {
+        inform('Gunakan file tanda tangan PNG/JPG maksimal 2 MB.', true);
+        event.target.value = '';
+        return;
+      }
+      const url = URL.createObjectURL(file);
+      const image = new Image();
+      image.onload = () => {
+        if (image.naturalWidth > 4000 || image.naturalHeight > 4000) {
+          inform('Resolusi gambar tanda tangan terlalu besar (maksimal 4000 piksel per sisi).', true);
+        } else {
+          signature = image;
+          queueRefresh();
+        }
+        URL.revokeObjectURL(url);
+      };
+      image.onerror = () => { URL.revokeObjectURL(url); inform('Gambar tanda tangan tidak dapat dibaca.', true); };
+      image.src = url;
+    });
+
+    find('studio-clear-signature')?.addEventListener('click', () => {
+      signature = null;
+      const input = find('studio-signature');
+      if (input) input.value = '';
+      queueRefresh();
+    });
+
+    const exportPdf = async (one) => {
+      if (busy) return;
+      if (!authorized) return inform('Akses hanya untuk pengurus dengan peran admin yang sudah masuk.', true);
+      let recipients;
+      try { recipients = validate(); } catch (error) { inform(error.message, true); return; }
+      const namesToExport = one ? recipients.slice(0, 1) : recipients;
+      busy = true;
+      refresh();
+      try {
+        await document.fonts.ready;
+        const { jsPDF } = await import('jspdf');
+        const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4', compress: true });
+        const canvas = document.createElement('canvas');
+        canvas.width = CERTIFICATE_WIDTH;
+        canvas.height = CERTIFICATE_HEIGHT;
+        for (let i = 0; i < namesToExport.length; i++) {
+          renderCertificate(canvas, details(namesToExport[i]));
+          if (i) pdf.addPage('a4', 'landscape');
+          const jpeg = canvas.toDataURL('image/jpeg', 0.85);
+          pdf.addImage(jpeg, 'JPEG', 0, 0, 297, 210, undefined, 'FAST');
+          if (namesToExport.length > 5 && i % 5 === 0) {
+            inform(`Menyiapkan sertifikat ${i + 1} dari ${namesToExport.length}…`);
+            await new Promise((resolve) => setTimeout(resolve, 0));
+          }
+        }
+        pdf.setProperties({ title: `Sertifikat — ${fields.event?.value.trim()}`, author: 'PPI Jepang Komisariat Ishikawa', creator: 'PPI Ishikawa Certificate Studio' });
+        pdf.save(safeCertificateFileName(fields.event?.value));
+        inform(`PDF siap: ${namesToExport.length} sertifikat dalam satu berkas. Pastikan nama dan persetujuan penanda tangan benar sebelum dibagikan.`);
+      } catch (error) {
+        inform('Pembuatan PDF gagal. Coba dengan daftar yang lebih pendek atau browser terbaru.', true);
+        console.error('Certificate Studio PDF error:', error);
+      } finally {
+        busy = false;
+        refresh();
+      }
+    };
+    exportOne?.addEventListener('click', () => exportPdf(true));
+    exportAll?.addEventListener('click', () => exportPdf(false));
+    document.fonts?.ready.then(queueRefresh);
+    getCurrentMember().then((member) => {
+      authorized = member?.profile?.role === 'admin';
+      refresh();
+    }).catch(() => { authorized = false; refresh(); });
+    refresh();
+  </script>
+</MemberLayout>

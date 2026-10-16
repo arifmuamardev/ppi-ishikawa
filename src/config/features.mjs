@@ -29,6 +29,7 @@ export const featureStates = Object.freeze({
   memberGrowth: 'enabled',
   memberCards: 'enabled',
   memberCertificates: 'enabled',
+  memberCertificateStudio: 'enabled',
   memberDocuments: 'enabled',
   memberAdministration: 'enabled',
   publicVerification: 'enabled',
@@ -41,6 +42,7 @@ export const FEATURE_MODES = Object.freeze(['enabled', 'hidden', 'disabled']);
 // All paths are site-relative, with a final slash. External URLs are never gated.
 const exact = (pathname, prefix) => pathname === prefix || pathname.startsWith(prefix);
 const memberRoutes = [
+  ['/member/admin/certificate-studio/', 'memberCertificateStudio'],
   ['/member/admin/', 'memberAdministration'],
   ['/member/events/', 'memberEvents'],
   ['/member/calendar/', 'memberEvents'],
@@ -94,6 +96,8 @@ export function featureState(key, overrides = featureStates) {
   if (!key) return 'enabled';
   const state = overrides[key] ?? featureStates[key];
   if (!FEATURE_MODES.includes(state)) throw new Error(`Unknown feature state for ${key}: ${state}`);
+  if (key === 'memberCertificateStudio' && featureState('memberAdministration', overrides) !== 'enabled')
+    return featureState('memberAdministration', overrides);
   if (key.startsWith('member') && key !== 'membership' &&
       (overrides.membership ?? featureStates.membership) === 'disabled') return 'disabled';
   return state;
