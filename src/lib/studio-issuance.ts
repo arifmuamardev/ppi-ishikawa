@@ -40,7 +40,7 @@ export async function issueStudioCertificates(
   // signer metadata and issuance timestamps.
   const { data, error } = await supabase.from('studio_certificates')
     .insert(rows).select('*');
-  if (!error) return { data: (data || []) as IssuedStudioCertificate[], error: null };
+  if (!error) return { data: ((data || []) as IssuedStudioCertificate[]).sort((a, b) => a.recipient_position - b.recipient_position), error: null };
   // An interrupted retry must never make new certificates for this batch.
   if (error.code === '23505') {
     const existing = await supabase.from('studio_certificates')
