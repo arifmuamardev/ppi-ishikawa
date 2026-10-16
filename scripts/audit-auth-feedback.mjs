@@ -4,7 +4,7 @@ import { chromium } from 'playwright';
 // Mock Supabase entirely. Never send test credentials or requests to a real backend.
 // Run after build + preview: node scripts/audit-auth-feedback.mjs
 const baseURL = (process.env.AUTH_AUDIT_BASE_URL || 'http://127.0.0.1:4321').replace(/\/$/, '');
-const paths = ['login', 'register', 'forgot-password', 'reset-password'];
+const paths = ['login', 'forgot-password', 'reset-password'];
 const widths = [360, 390, 768, 1280];
 const dir = 'auth-feedback-audit';
 await mkdir(dir, { recursive: true });
@@ -37,7 +37,7 @@ try {
       await mockAuth(page, signinFailure);
       try {
         const response = await page.goto(baseURL + '/member/' + route + '/', { waitUntil: 'domcontentloaded' });
-        const prefix = { login: 'login-message', register: 'register-message', 'forgot-password': 'forgot-message', 'reset-password': 'reset-message' }[route];
+        const prefix = { login: 'login-message', 'forgot-password': 'forgot-message', 'reset-password': 'reset-message' }[route];
         const form = page.locator('form');
         verify(response?.status() === 200, route + '/' + width + ': HTTP 200');
         verify(await form.count() === (route === 'login' ? 2 : 1), route + '/' + width + ': correct form count');
@@ -73,7 +73,7 @@ try {
       await pass.fill('ValidExample999');
       await confirm.fill('Mismatch999');
       await page.locator('button[type="submit"]').click();
-      const prefix = route === 'register' ? 'register-message' : 'reset-message';
+      const prefix = 'reset-message';
       verify(await confirm.getAttribute('aria-invalid') === 'true', route + ': invalid confirmation marked');
       verify((await confirm.getAttribute('aria-describedby') || '').includes(prefix + '-error'), route + ': alert associated with field');
       verify(await page.locator('#' + prefix + '-error').innerText() !== '', route + ': error feedback visible');
@@ -137,7 +137,7 @@ try {
     failures.push('login: failure state: ' + e.message);
   } finally { await login.close(); }
 
-  // Magic-link login must NOT create new users. Test the actual mocked Auth API payload.
+  // Unified Magic Link must support both existing and new users. Test the OTP request.
   const magicLogin = await browser.newPage({ viewport: { width: 390, height: 860 } });
   let magicLoginPayload = null;
   let magicLoginRedirect = null;
@@ -155,44 +155,22 @@ try {
     await magicLogin.goto(baseURL + '/member/login/', { waitUntil: 'domcontentloaded' });
     await magicLogin.locator('#member-login-form input[name="email"]').fill('member@example.invalid');
     await magicLogin.locator('#member-login-form button[type="submit"]').click();
-    await magicLogin.locator('#login-message-status').filter({ hasText: 'Jika alamat email sudah terdaftar' }).waitFor();
-    verify(magicLoginPayload?.create_user === false, 'magic login: auto-signup disabled');
+    await magicLogin.locator('#login-message-status').filter({ hasText: 'Jika alamat email dapat digunakan' }).waitFor();
+    verify(magicLoginPayload?.create_user === true, 'unified magic: allows account creation when email not registered');
     verify(magicLoginPayload?.email === 'member@example.invalid', 'magic login: email preserved');
     verify(magicLoginPayload?.gotrue_meta_security?.captcha_token === undefined, 'magic login: no secret metadata leaked');
     verify(magicLoginRedirect === 'https://ppi-ishikawa.org/member/login/', 'magic login: production callback requested, actual='+magicLoginRedirect);
   } catch(e) { failures.push('magic login: ' + e.message); } finally { await magicLogin.close(); }
 
-  // Registration carries existing profile fields while creating a passwordless account.
-  const magicRegister = await browser.newPage({ viewport: { width: 390, height: 860 } });
-  let magicRegisterPayload = null;
-  let magicRegisterRedirect = null;
-  await magicRegister.route(/^https:\/\/[^/]+\.supabase\.co\//, async (route) => {
-    const pathname = new URL(route.request().url()).pathname;
-    if (pathname.endsWith('/otp')) {
-      magicRegisterPayload = route.request().postDataJSON();
-      magicRegisterRedirect = new URL(route.request().url()).searchParams.get('redirect_to');
-      await route.fulfill({ status: 200, contentType:'application/json', headers: { 'access-control-allow-origin': '*', 'access-control-allow-headers':'*' }, body:'{}' });
-    } else {
-      await route.fulfill({ status: 401, contentType:'application/json', headers: { 'access-control-allow-origin': '*' }, body:'{"message":"unauthorized"}' });
-    }
-  });
+  // Old /member/register/ must lead to the same single email form.
+  const register = await browser.newPage({ viewport: { width: 390, height: 860 } });
+  await mockAuth(register, signinFailure);
   try {
-    await magicRegister.goto(baseURL + '/member/register/', { waitUntil: 'domcontentloaded' });
-    await magicRegister.locator('input[name="full_name"]').fill('Contoh Pengujian');
-    await magicRegister.locator('input[name="email"]').fill('newmember@example.invalid');
-    await magicRegister.locator('select[name="campus_slug"]').selectOption({ index: 1 });
-    await magicRegister.locator('input[name="program"]').fill('Information Science');
-    await magicRegister.locator('select[name="study_level"]').selectOption({ index: 1 });
-    await magicRegister.locator('input[name="consent"]').check();
-    verify(await magicRegister.locator('input[type="password"]').count() === 0, 'magic registration: no password field');
-    await magicRegister.locator('#member-register-form button[type="submit"]').click();
-    await magicRegister.locator('#register-message-status').filter({ hasText: 'Permintaan pendaftaran diterima' }).waitFor();
-    verify(magicRegisterPayload?.create_user === true, 'magic registration: new user creation enabled');
-    verify(magicRegisterPayload?.data?.full_name === 'Contoh Pengujian', 'magic registration: profile name metadata');
-    verify(magicRegisterPayload?.data?.program === 'Information Science', 'magic registration: program metadata');
-    verify(!('password' in (magicRegisterPayload||{})), 'magic registration: no password sent');
-    verify(magicRegisterRedirect === 'https://ppi-ishikawa.org/member/login/?confirmed=1', 'magic registration: production callback requested, actual='+magicRegisterRedirect);
-  } catch(e) { failures.push('magic registration: ' + e.message); } finally { await magicRegister.close(); }
+    await register.goto(baseURL + '/member/register/', { waitUntil:'domcontentloaded' });
+    await register.waitForURL(url => url.pathname === '/member/login/', { timeout: 15000 });
+    verify(await register.locator('#member-login-form input[name="email"]').count()===1,'register alias: unified email form');
+  } catch(e) { failures.push('register redirect: ' + e.message); }
+  finally { await register.close(); }
 } finally {
   await browser.close();
 }
@@ -200,4 +178,4 @@ await writeFile(dir + '/report.json', JSON.stringify({ routes: paths, widths, re
 if (failures.length) {
   console.error('Auth feedback audit failures:\n' + failures.join('\n'));
   process.exitCode = 1;
-} else console.log('Auth feedback audit OK: 4 auth routes at 4 widths, dark mode, validation and mocked async request states.');
+} else console.log('Auth feedback audit OK: 3 auth routes at 4 widths, dark mode, validation and mocked async request states.');
