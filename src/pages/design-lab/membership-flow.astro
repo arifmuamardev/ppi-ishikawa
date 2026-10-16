@@ -407,6 +407,7 @@ import { studyLevels } from '../../data/membership';
     document.querySelectorAll<HTMLInputElement>('input[name="intent"],input[name="study_level"]').forEach(input=>input.addEventListener('change',()=>{
       selectChoiceAppearance(input.name);
       if(input.name==='intent'){
+        if(consentField)consentField.checked=false;
         stepIndex=0;
         updateStep();
       }
