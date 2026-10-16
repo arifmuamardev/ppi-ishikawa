@@ -1,3 +1,4 @@
+import { brandTheme } from '../data/brand';
 // Branded A4-landscape renderer shared by preview and PDF export.
 // Canvas-based output supports browser-loaded fonts and Unicode participant names.
 export const CERTIFICATE_WIDTH = 1800;
@@ -67,7 +68,7 @@ export function renderCertificate(canvas, data) {
     c.drawImage(logo, W / 2 - w / 2, 124, w, h);
   }
 
-  centered(c, 'PPI JEPANG · KOMISARIAT ISHIKAWA', 262, 1350, 29, 20, '#176b6a', 700);
+  centered(c, 'PPI JEPANG · KOMISARIAT ISHIKAWA', 262, 1350, 29, 20, brandTheme.colors.secondary, 700);
   c.strokeStyle = '#d9ad78';
   c.lineWidth = 4;
   c.beginPath();
