@@ -186,12 +186,12 @@ export async function requireMember(options: { approved?: boolean; admin?: boole
 
   if (!member.profile) return member;
 
-  if (options.admin && member.profile.role !== 'admin') {
+  if (options.admin && (member.profile.role !== 'admin' || member.profile.verification_status !== 'approved')) {
     window.location.replace(memberPath('/member/'));
     return null;
   }
 
-  if (options.approved && member.profile.verification_status !== 'approved') {
+  if (options.approved && (member.profile.verification_status !== 'approved' || !['incoming', 'active', 'alumni'].includes(member.profile.membership_status))) {
     window.location.replace(memberPath('/member/'));
     return null;
   }
@@ -287,8 +287,8 @@ export async function getPendingMembers() {
 
   return supabase
     .from('profiles')
-    .select('user_id,full_name,campus_slug,program,study_level,field_of_study,membership_status,created_at')
-    .eq('verification_status', 'pending')
+    .select('user_id,full_name,campus_slug,program,study_level,field_of_study,membership_status,verification_status,created_at')
+    .in('verification_status', ['pending', 'rejected'])
     .order('created_at', { ascending: true });
 }
 
