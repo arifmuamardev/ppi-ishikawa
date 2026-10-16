@@ -1,6 +1,7 @@
 ---
 import MemberLayout from '../../../layouts/MemberLayout.astro';
 import AppPageHeader from '../../../components/AppPageHeader.astro';
+import { isDiscoverableHref } from '../../../config/features.mjs';
 ---
 
 <MemberLayout title="Kelola Sertifikat" requireAdmin={true}>
@@ -11,10 +12,12 @@ import AppPageHeader from '../../../components/AppPageHeader.astro';
       description="Daftar penerima diambil dari peserta yang benar-benar check-in. Setiap anggota hanya dapat memiliki satu sertifikat untuk event yang sama."
     />
 
-    <div class="rounded-2xl border border-accent/35 bg-accent/10 p-5 text-sm leading-6 text-slate-700">
-      Ingin membuat sertifikat untuk peserta webinar atau narasumber yang tidak punya akun anggota?
-      <a href="/member/admin/certificate-studio/" class="font-bold text-brand hover:underline">Buka Studio Sertifikat →</a>
-    </div>
+    {isDiscoverableHref('/member/admin/certificate-studio/', { withinMember: true }) && (
+      <div class="rounded-2xl border border-accent/35 bg-accent/10 p-5 text-sm leading-6 text-slate-700">
+        Ingin membuat sertifikat untuk peserta webinar atau narasumber yang tidak punya akun anggota?
+        <a href="/member/admin/certificate-studio/" class="font-bold text-brand hover:underline">Buka Studio Sertifikat →</a>
+      </div>
+    )}
 
     <div id="certificate-admin-message" class="hidden rounded-2xl border p-4 text-sm leading-6"></div>
 
