@@ -1,142 +1,20 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AuthShell from '../../components/AuthShell.astro';
-import AuthFeedback from '../../components/AuthFeedback.astro';
-import { campuses } from '../../data/campuses';
-import { ishikawaCities, studyLevels } from '../../data/membership';
 import { withBase } from '../../utils/paths';
 ---
 
-<BaseLayout title="Daftar Anggota" description="Pendaftaran membership PPI Ishikawa.">
+<BaseLayout title="Daftar Anggota" description="Masuk dan daftar anggota melalui satu formulir Magic Link.">
   <AuthShell
     eyebrow="Membership PPI Ishikawa"
-    title="Daftar sebagai anggota"
-    description="Pendaftaran tanpa password. Setelah data dikirim, buka tautan sekali pakai pada email Anda. Keanggotaan tetap memerlukan verifikasi pengurus; profil tidak otomatis tampil di direktori."
-    size="md"
+    title="Daftar atau masuk dengan email"
+    description="Sekarang cukup menggunakan satu formulir email untuk anggota baru maupun lama. Tidak perlu membuat password."
   >
-
-      <AuthFeedback id="register-message" />
-
-      <form id="member-register-form" aria-busy="false" data-auth-state="idle" class="mt-8 grid gap-5 md:grid-cols-2">
-        <label class="md:col-span-2">
-          <span class="text-sm font-bold text-slate-800">Nama lengkap</span>
-          <input name="full_name" type="text" autocomplete="name" required class="ui-field mt-2" />
-        </label>
-
-        <label>
-          <span class="text-sm font-bold text-slate-800">Email</span>
-          <input name="email" type="email" autocomplete="email" required class="ui-field mt-2" />
-        </label>
-        <label>
-          <span class="text-sm font-bold text-slate-800">Kampus</span>
-          <select name="campus_slug" required class="ui-field mt-2">
-            <option value="">Pilih kampus</option>
-            {campuses.map((campus) => <option value={campus.slug}>{campus.shortName}</option>)}
-          </select>
-        </label>
-
-        <label>
-          <span class="text-sm font-bold text-slate-800">Program / jurusan</span>
-          <input name="program" type="text" required placeholder="Contoh: Information Science" class="ui-field mt-2" />
-        </label>
-        <label>
-          <span class="text-sm font-bold text-slate-800">Jenjang / status studi</span>
-          <select name="study_level" required class="ui-field mt-2">
-            <option value="">Pilih jenjang</option>
-            {studyLevels.map((item) => <option value={item.value}>{item.label}</option>)}
-          </select>
-        </label>
-
-        <label>
-          <span class="text-sm font-bold text-slate-800">Bidang studi</span>
-          <input name="field_of_study" type="text" placeholder="Contoh: Artificial Intelligence" class="ui-field mt-2" />
-        </label>
-        <label>
-          <span class="text-sm font-bold text-slate-800">Kota tempat tinggal</span>
-          <select name="city" class="ui-field mt-2">
-            <option value="">Tidak diisi</option>
-            {ishikawaCities.map((city) => <option value={city}>{city}</option>)}
-          </select>
-        </label>
-
-        <p class="md:col-span-2 rounded-xl border border-accent/25 bg-accent/10 p-4 text-sm leading-6 text-slate-700">
-          Tidak perlu membuat password. Tautan pendaftaran dikirim ke alamat email Anda dan hanya bisa dipakai sekali.
-        </p>
-
-        <label class="md:col-span-2 flex items-start gap-3 rounded-2xl bg-slate-50 p-4">
-          <input name="consent" type="checkbox" required class="ui-check mt-0.5" />
-          <span class="text-sm leading-6 text-slate-600">Saya memahami bahwa data ini digunakan untuk verifikasi dan pengelolaan membership PPI Ishikawa. Saya dapat mengatur sendiri apakah profil saya tampil di direktori anggota.</span>
-        </label>
-
-        <div class="md:col-span-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <a href={withBase('/member/login/')} class="text-sm font-bold text-brand hover:underline">← Sudah punya akun</a>
-          <button type="submit" class="ui-action-primary">Daftar</button>
-        </div>
-      </form>
+    <p class="mt-6 text-sm leading-6 text-slate-700">Anda akan dialihkan ke halaman masuk atau daftar terpadu. Jika belum berpindah, gunakan tautan berikut.</p>
+    <a class="ui-action-primary mt-5 inline-flex w-full justify-center" href={withBase('/member/login/')}>Lanjutkan dengan email</a>
   </AuthShell>
-
-
-<script>
-  import { isSupabaseConfigured, supabase } from '../../lib/supabase';
-  import { demoRegister, isMembershipDemoMode, memberAbsoluteUrl, memberPath } from '../../lib/member';
-  import { createAuthFeedback } from '../../lib/auth-feedback';
-
-  const form = document.querySelector<HTMLFormElement>('#member-register-form');
-  const feedback = createAuthFeedback(form, 'register-message');
-
-  if (isMembershipDemoMode) {
-    feedback.show('Mode demo aktif. Data pendaftaran hanya akan disimpan di browser ini dan tidak dikirim ke PPI Ishikawa.');
-    form?.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const values = new FormData(form);
-      demoRegister({
-        full_name: String(values.get('full_name') || '').trim(),
-        email: String(values.get('email') || '').trim(),
-        campus_slug: String(values.get('campus_slug') || ''),
-        program: String(values.get('program') || '').trim(),
-        study_level: String(values.get('study_level') || ''),
-        field_of_study: String(values.get('field_of_study') || '').trim(),
-        city: String(values.get('city') || ''),
-      });
-      window.location.replace(memberPath('/member/'));
-    });
-  } else if (isSupabaseConfigured && supabase) {
-    form?.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const values = new FormData(form);
-
-      await feedback.run('Mendaftarkan…', async () => {
-        const redirectTo = memberAbsoluteUrl('/member/login/?confirmed=1');
-        const { error } = await supabase.auth.signInWithOtp({
-          email: String(values.get('email') || '').trim().toLowerCase(),
-          options: {
-            shouldCreateUser: true,
-            emailRedirectTo: redirectTo,
-            data: {
-              full_name: String(values.get('full_name') || '').trim(),
-              campus_slug: String(values.get('campus_slug') || ''),
-              program: String(values.get('program') || '').trim(),
-              study_level: String(values.get('study_level') || ''),
-              field_of_study: String(values.get('field_of_study') || '').trim(),
-              city: String(values.get('city') || ''),
-            },
-          },
-        });
-
-        if (error) {
-          if (error.status === 429) {
-            feedback.show('Terlalu banyak permintaan. Tunggu beberapa saat lalu coba kembali.', 'error');
-          } else if (/email.*not authorized/i.test(error.message)) {
-            feedback.show('Layanan email belum siap untuk alamat ini. Silakan hubungi pengurus PPI Ishikawa.', 'error');
-          } else {
-            feedback.show('Pendaftaran belum dapat diproses. Periksa data, koneksi, atau coba lagi nanti.', 'error');
-          }
-          return;
-        }
-        form.reset();
-        feedback.show('Permintaan pendaftaran diterima. Periksa email dan folder spam untuk membuka tautan masuk. Setelah masuk, data keanggotaan menunggu verifikasi pengurus.', 'success');
-      }, 'Pendaftaran belum dapat diproses karena kendala koneksi. Coba lagi.');
-    });
-  }
-</script>
+  <script>
+    import { memberPath } from '../../lib/member';
+    window.location.replace(memberPath('/member/login/'));
+  </script>
 </BaseLayout>

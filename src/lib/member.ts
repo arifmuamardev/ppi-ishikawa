@@ -26,6 +26,7 @@ export interface MemberProfile {
   show_field_of_study: boolean;
   created_at: string;
   updated_at: string;
+  onboarding_completed_at?: string | null;
 }
 
 export interface DirectoryMember {
@@ -117,6 +118,7 @@ export function demoRegister(input: {
     show_field_of_study: true,
     created_at: now,
     updated_at: now,
+    onboarding_completed_at: now,
   };
   setStoredDemoProfile(profile);
   localStorage.setItem(DEMO_SESSION_KEY, 'registered');
@@ -176,7 +178,7 @@ export async function getCurrentMember() {
   };
 }
 
-export async function requireMember(options: { approved?: boolean; admin?: boolean } = {}) {
+export async function requireMember(options: { approved?: boolean; admin?: boolean; allowIncomplete?: boolean } = {}) {
   const member = await getCurrentMember();
 
   if (!member.user) {
@@ -185,6 +187,14 @@ export async function requireMember(options: { approved?: boolean; admin?: boole
   }
 
   if (!member.profile) return member;
+
+  // New members authenticate first, then complete their PPI profile and
+  // consent. Older mock fixtures omit the new column; production always
+  // returns explicit null for unfinished signups.
+  if (!isMembershipDemoMode && !options.allowIncomplete && member.profile.onboarding_completed_at === null) {
+    window.location.replace(memberPath('/member/onboarding/'));
+    return null;
+  }
 
   if (options.admin && (member.profile.role !== 'admin' || member.profile.verification_status !== 'approved')) {
     window.location.replace(memberPath('/member/'));
@@ -238,6 +248,32 @@ export async function updateCurrentMemberProfile(payload: Partial<MemberProfile>
   return { data: data as MemberProfile | null, error };
 }
 
+export async function completeMemberOnboarding(payload: {
+  full_name: string;
+  campus_slug: string;
+  program: string;
+  study_level: string;
+  consent: boolean;
+}) {
+  if (!isSupabaseConfigured || !supabase) {
+    const profile = getStoredDemoProfile();
+    if (!profile) return { data: null, error: new Error('Profil belum ditemukan.') };
+    const next = { ...profile, full_name: payload.full_name,
+      campus_slug: payload.campus_slug, program: payload.program,
+      study_level: payload.study_level, onboarding_completed_at: new Date().toISOString() };
+    if (!payload.consent) return { data: null, error: new Error('Persetujuan diperlukan.') };
+    setStoredDemoProfile(next);
+    return { data: true, error: null };
+  }
+  return supabase.rpc('complete_member_onboarding', {
+    input_name: payload.full_name,
+    input_campus: payload.campus_slug,
+    input_program: payload.program,
+    input_study_level: payload.study_level,
+    consent_accepted: payload.consent,
+  });
+}
+
 export async function getMemberDirectory(filters: { search?: string; campus?: string; status?: string } = {}) {
   if (!isSupabaseConfigured || !supabase) {
     const search = (filters.search || '').toLowerCase();
@@ -289,6 +325,7 @@ export async function getPendingMembers() {
     .from('profiles')
     .select('user_id,full_name,campus_slug,program,study_level,field_of_study,membership_status,verification_status,created_at')
     .in('verification_status', ['pending', 'rejected'])
+    .not('onboarding_completed_at', 'is', null)
     .order('created_at', { ascending: true });
 }
 

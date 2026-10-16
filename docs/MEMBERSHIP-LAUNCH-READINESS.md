@@ -42,3 +42,18 @@ Status: **private test phase**. Public navigation must remain hidden until real 
 - Admin follow-up decisions do not yet record a reason or send an automatic notification. Contact the applicant separately.
 - No real second-user round-trip was performed during this code audit.
 - Public URL existence does not itself authorize access: Supabase RLS and RPC checks are authoritative. The member navigation remains hidden publicly.
+
+## Unified sign-in and registration (16 Oct 2026)
+
+Members now use one entry point, `/member/login/`:
+1. Enter email and choose **Lanjutkan dengan email**.
+2. Supabase `signInWithOtp({ options: { shouldCreateUser: true } })` sends a one-time Magic Link. It uses the existing account when present, or creates a **provisional pending account** otherwise; the page does not reveal account existence.
+3. After visiting the link, returning members reach their dashboard. New accounts with `onboarding_completed_at = null` are redirected to `/member/onboarding/`.
+4. New members provide name, campus, program, study level, and explicit consent to PPI membership administration. A server-validated RPC stores onboarding completion; the record then appears in the admin approval queue.
+5. New account role stays `member` and verification stays `pending` until an approved PPI administrator grants membership. Directory visibility remains opt-in and defaults off.
+
+The old registration URL redirects to the unified entry point; existing password login remains as a collapsed fallback. No new public navigation link has been enabled.
+
+**Safety model:** Newly created accounts exist in Supabase Auth before completing the profile. Unfinished accounts have no membership approval, are excluded from the review queue and must finish onboarding before entering the member portal. Backfilled existing approved members retain access. Onboarding consent is recorded server-side; role and verification cannot be changed by members. Email requests are rate limited by Supabase; CAPTCHA and admin MFA remain recommended before open registration.
+
+**Acceptance:** Browser-mocked tests verify both login and registration behavior, onboarding redirect, required consent, return to a pending dashboard and existing approved-member behavior. A consenting real-new-member end-to-end trial is still required before making the portal publicly discoverable.

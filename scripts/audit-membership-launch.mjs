@@ -59,6 +59,22 @@ async function testPage(testName, width, userProfile, execute, pendingList = [])
       } else {
         body = userProfile;
       }
+    } else if (pathname === '/rest/v1/rpc/complete_member_onboarding') {
+      const payload = route.request().postDataJSON();
+      updates.push(payload);
+      if (!payload.consent_accepted) {
+        status = 400;
+        body = { message: 'Consent required', code: '22023' };
+      } else {
+        Object.assign(userProfile, {
+          full_name: payload.input_name,
+          campus_slug: payload.input_campus,
+          program: payload.input_program,
+          study_level: payload.input_study_level,
+          onboarding_completed_at: new Date().toISOString(),
+        });
+        body = true;
+      }
     } else if (pathname === '/rest/v1/rpc/review_membership') {
       const payload = route.request().postDataJSON();
       reviews.push(payload);
@@ -87,6 +103,31 @@ async function testPage(testName, width, userProfile, execute, pendingList = [])
 }
 
 try {
+  await testPage('new member automatically enters consented onboarding', 390,
+    profile({ full_name:'audit', campus_slug:null, program:null, study_level:null, onboarding_completed_at:null }),
+    async (page, { updates }) => {
+      await page.goto(base + '/member/', { waitUntil:'domcontentloaded' });
+      await page.waitForURL(url => url.pathname === '/member/onboarding/', { timeout:15000 });
+      await page.locator('#member-onboarding-form').waitFor({state:'visible'});
+      await page.locator('[name="full_name"]').fill('Calon Anggota Baru');
+      await page.locator('[name="campus_slug"]').selectOption({index:1});
+      await page.locator('[name="program"]').fill('Information Science');
+      await page.locator('[name="study_level"]').selectOption('master');
+      await page.locator('[name="consent"]').check();
+      await page.locator('#member-onboarding-form button[type="submit"]').click();
+      await page.waitForURL(url => url.pathname === '/member/', {timeout:15000});
+      await page.locator('#verification-title').filter({hasText:'Menunggu verifikasi pengurus'}).waitFor({timeout:15000});
+      expect(updates.length===1&&updates[0]?.consent_accepted===true,'onboarding: consent stored via RPC');
+      expect(updates[0]?.input_name==='Calon Anggota Baru','onboarding: member name stored');
+    });
+  await testPage('returning approved member skips onboarding', 390,
+    profile({ verification_status:'approved', membership_status:'active', onboarding_completed_at:new Date().toISOString() }),
+    async page => {
+      await page.goto(base + '/member/', {waitUntil:'domcontentloaded'});
+      await page.locator('#member-content').waitFor({state:'visible'});
+      expect(page.url().includes('/member/')&&!page.url().includes('/onboarding/'),'returning member remains on dashboard');
+    });
+
   await testPage('pending member has dashboard but no approved directory', 390, profile(), async (page) => {
     await page.goto(base + '/member/directory/', { waitUntil: 'domcontentloaded' });
     await page.waitForURL(url => url.pathname === '/member/', { timeout: 15000 });
