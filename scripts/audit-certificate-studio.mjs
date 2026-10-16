@@ -18,10 +18,23 @@ try {
       await page.locator('#member-content').waitFor({state:'visible'});
       await page.locator('#studio-export-all').waitFor({state:'visible'});
       if(!await page.locator('#studio-export-all').isDisabled()) throw new Error('Empty form should disable export');
+      const defaultSigner = await page.locator('#studio-signer').inputValue();
+      if(defaultSigner !== "Arif Mu'amar Wahid")throw new Error('Default signatory incorrect: '+defaultSigner);
+      const baselineCanvas = await page.locator('#studio-preview').evaluate(el => el.toDataURL('image/png'));
       await page.locator('#studio-event').fill('Webinar Penelitian Ilmiah 2026');
       await page.locator('#studio-date').fill('2026-10-16');
       await page.locator('#studio-signer').fill('Ketua Pengujian');
       await page.locator('#studio-names').fill('Nama Lengkap\nSiti Aminah\nBudi Santoso\nSITI AMINAH');
+
+      // The QR points to event information, not the official certificate verifier.
+      await page.getByText('Tambahkan QR informasi kegiatan (opsional)').click();
+      await page.locator('#studio-enable-qr').check();
+      await page.locator('#studio-qr-url').fill('http://example.org/event');
+      if(!await page.locator('#studio-export-all').isDisabled()) throw new Error('Insecure QR URL should block PDF export');
+      await page.locator('#studio-qr-url').fill('https://ppi-ishikawa.org/programs/');
+      await page.waitForFunction(() => !document.querySelector('#studio-export-all')?.disabled, {timeout:15000});
+      const qrCanvas = await page.locator('#studio-preview').evaluate(el => el.toDataURL('image/png'));
+      if(baselineCanvas === qrCanvas)throw new Error('QR option does not affect certificate preview');
       await page.getByText('2 nama',{exact:true}).waitFor();
       await page.locator('#studio-export-all').waitFor({state:'visible'});
       if(await page.locator('#studio-export-all').isDisabled())throw new Error('Valid form must enable export');
