@@ -1,0 +1,312 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { campuses } from '../../data/campuses';
+import { studyLevels } from '../../data/membership';
+---
+<BaseLayout title="Design Lab — Membership tanpa password" description="Prototipe interaktif alur login Magic Link dan onboarding bertahap PPI Ishikawa.">
+  <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+    <div class="mb-7 flex flex-wrap items-start justify-between gap-4">
+      <div>
+        <p class="type-eyebrow text-brand">Design Lab / Membership · Konsep W01</p>
+        <h1 class="mt-2 text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl">Masuk mudah. Kenalan bertahap.</h1>
+        <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-600">Simulasikan perjalanan anggota baru atau lama. Ini rancangan UI, belum mengubah sistem login dan onboarding yang aktif.</p>
+      </div>
+      <span class="rounded-full border border-accent/35 bg-accent/10 px-3 py-2 text-xs font-bold text-brand">PROTOTIPE · TANPA DATABASE</span>
+    </div>
+
+    <div class="grid overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm lg:min-h-[650px] lg:grid-cols-[0.79fr_1fr]">
+      <aside class="relative isolate overflow-hidden bg-[#103D40] px-6 py-8 text-white sm:px-9 sm:py-12 lg:px-10">
+        <svg class="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-30" viewBox="0 0 440 670" fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+          <path d="M-45 442C62 336 56 519 163 425C286 318 311 438 489 245" stroke="#DBF0DF" stroke-width="1.5"/>
+          <path d="M-45 470C62 364 56 547 163 453C286 346 311 466 489 273" stroke="#DBF0DF" stroke-width="1.5"/>
+          <path d="M-45 498C62 392 56 575 163 481C286 374 311 494 489 301" stroke="#DBF0DF" stroke-width="1.5"/>
+          <path d="M-45 526C62 420 56 603 163 509C286 402 311 522 489 329" stroke="#DBF0DF" stroke-width="1.5"/>
+          <path d="M-45 554C62 448 56 631 163 537C286 430 311 550 489 357" stroke="#DBF0DF" stroke-width="1.5"/>
+          <circle cx="333" cy="92" r="123" stroke="#B7D9CC" stroke-width="1.5" stroke-dasharray="5 8"/>
+          <circle cx="333" cy="92" r="96" stroke="#B7D9CC" stroke-width="1.5"/>
+          <circle cx="333" cy="92" r="72" stroke="#B7D9CC" stroke-width="1.5"/>
+        </svg>
+        <div class="flex items-center gap-3">
+          <div class="flex h-11 w-11 items-center justify-center rounded-xl border border-white/30 bg-white/15 text-lg font-extrabold">P</div>
+          <div>
+            <p class="text-sm font-bold tracking-wide">PPI Ishikawa</p>
+            <p class="text-xs text-white/65">Student first, organization sustainable</p>
+          </div>
+        </div>
+
+        <div class="mt-16 lg:mt-24">
+          <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#B9E3D7]">Member Experience</p>
+          <h2 class="mt-4 text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">Satu email.<br/>Satu langkah<br/>setiap waktu.</h2>
+          <p class="mt-5 max-w-sm text-sm leading-7 text-white/80">Tidak perlu mengingat password atau mengisi formulir panjang. Kami hanya menanyakan informasi yang diperlukan, satu per satu.</p>
+        </div>
+
+        <div class="mt-10 space-y-4 border-t border-white/20 pt-7 text-sm lg:mt-20">
+          <div class="flex gap-3"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 font-bold">1</span><p class="pt-1">Masukkan email dan buka Magic Link</p></div>
+          <div class="flex gap-3"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 font-bold">2</span><p class="pt-1">Anggota baru melengkapi 5 pertanyaan singkat</p></div>
+          <div class="flex gap-3"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 font-bold">3</span><p class="pt-1">Profil menunggu persetujuan pengurus</p></div>
+        </div>
+      </aside>
+
+      <div class="min-w-0 px-5 py-7 sm:px-9 sm:py-11 lg:px-11">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-5">
+          <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Simulasi perjalanan</p>
+          <div role="group" aria-label="Jenis anggota dalam simulasi" class="flex items-center gap-1 rounded-xl bg-slate-100 p-1">
+            <button id="scenario-new" type="button" class="rounded-lg bg-white px-3 py-2 text-xs font-bold text-brand shadow-sm" aria-pressed="true">Anggota baru</button>
+            <button id="scenario-existing" type="button" class="rounded-lg px-3 py-2 text-xs font-bold text-slate-600" aria-pressed="false">Anggota lama</button>
+          </div>
+        </div>
+
+        <div id="prototype-login" class="pt-10 sm:pt-14">
+          <p class="text-xs font-bold uppercase tracking-[0.12em] text-brand">Langkah pertama</p>
+          <h3 class="mt-3 text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl">Masuk atau daftar anggota</h3>
+          <p class="mt-3 text-sm leading-7 text-slate-600">Cukup masukkan alamat email. Kami akan mengirimkan tautan untuk melanjutkan.</p>
+          <form id="prototype-login-form" class="mt-9 space-y-5">
+            <label class="block">
+              <span class="text-sm font-bold text-slate-800">Alamat email Anda</span>
+              <input id="prototype-email" type="email" autocomplete="off" placeholder="nama@email.com" required class="ui-field mt-2" />
+            </label>
+            <button type="submit" class="ui-action-primary w-full">Lanjutkan dengan email <span aria-hidden="true">→</span></button>
+          </form>
+          <div class="mt-6 flex gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <span aria-hidden="true" class="text-lg text-brand">✦</span>
+            <p class="text-xs leading-6 text-slate-600">Tidak perlu password. Alur anggota baru dan lama menggunakan formulir yang sama. <strong>Simulasi ini tidak benar-benar mengirim email.</strong></p>
+          </div>
+        </div>
+
+        <div id="prototype-email-sent" class="hidden pt-12 text-center sm:pt-16" aria-live="polite">
+          <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-accent/30 bg-accent/10 text-4xl text-brand" aria-hidden="true">✉</div>
+          <h3 class="mt-6 text-2xl font-extrabold text-slate-950">Periksa email Anda</h3>
+          <p class="mx-auto mt-3 max-w-sm text-sm leading-7 text-slate-600">Dalam sistem asli, kami akan mengirim tautan sekali pakai ke <strong id="sent-email" class="break-all text-slate-900"></strong>.</p>
+          <button id="prototype-open-link" type="button" class="ui-action-primary mt-8 w-full">Simulasikan membuka Magic Link <span aria-hidden="true">→</span></button>
+          <button id="prototype-change-email" type="button" class="mt-4 w-full min-h-11 text-sm font-bold text-brand hover:underline">Gunakan email lain</button>
+          <p class="mt-6 text-xs text-slate-500">Mode demo: tidak ada email yang dikirim, akun yang dibuat, atau informasi yang disimpan.</p>
+        </div>
+
+        <form id="prototype-wizard" class="hidden pt-8 sm:pt-10" novalidate>
+          <div class="mb-7 flex items-center justify-between gap-3">
+            <p id="wizard-counter" class="text-xs font-bold uppercase tracking-[0.12em] text-brand">Pertanyaan 1 dari 5</p>
+            <span id="wizard-estimate" class="text-xs font-semibold text-slate-500">± 1 menit</span>
+          </div>
+          <div class="mb-9 flex gap-1.5" role="progressbar" id="wizard-progress" aria-label="Progres onboarding" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1">
+            {Array.from({length:6},(_,i)=><span data-progress={i} class:list={['h-1.5 flex-1 rounded-full',i===0?'bg-brand':'bg-slate-200']} aria-hidden="true"></span>)}
+          </div>
+          <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Bergabung dengan komunitas Indonesia di Ishikawa</p>
+          <h3 id="wizard-title" class="mt-3 text-2xl font-extrabold leading-snug tracking-tight text-slate-950 sm:text-3xl">Siapa nama lengkapmu?</h3>
+          <p id="wizard-helper" class="mt-3 min-h-12 text-sm leading-7 text-slate-600">Gunakan nama yang ingin ditampilkan pada data keanggotaan.</p>
+
+          <div class="mt-7 min-h-36">
+            <div data-wizard-step="0">
+              <label class="sr-only" for="wizard-name">Nama lengkap</label>
+              <input id="wizard-name" name="full_name" type="text" minlength="2" maxlength="120" autocomplete="name" placeholder="Contoh: Budi Santoso" class="ui-field text-base" required />
+            </div>
+            <div data-wizard-step="1" class="hidden">
+              <label class="sr-only" for="wizard-campus">Kampus atau institusi pendidikan</label>
+              <select id="wizard-campus" name="campus_slug" class="ui-field text-base" required>
+                <option value="">Pilih kampus atau institusi</option>
+                {campuses.map(c=><option value={c.slug}>{c.shortName}</option>)}
+              </select>
+              <p class="mt-3 text-xs text-slate-500">Daftar mengikuti institusi dalam cakupan PPI Ishikawa.</p>
+            </div>
+            <div data-wizard-step="2" class="hidden">
+              <label class="sr-only" for="wizard-program">Program atau jurusan</label>
+              <input id="wizard-program" name="program" type="text" maxlength="160" placeholder="Contoh: Computer Science" class="ui-field text-base" required />
+            </div>
+            <div data-wizard-step="3" class="hidden">
+              <fieldset>
+                <legend class="sr-only">Jenjang pendidikan</legend>
+                <div class="grid grid-cols-2 gap-2.5">
+                  {studyLevels.map((level)=>
+                    <label class="wizard-level flex min-h-12 cursor-pointer items-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:border-brand">
+                      <input type="radio" name="study_level" value={level.value} class="ui-check shrink-0" />
+                      <span>{level.label}</span>
+                    </label>
+                  )}
+                </div>
+              </fieldset>
+            </div>
+            <div data-wizard-step="4" class="hidden">
+              <label class="flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <input id="wizard-consent" name="consent" type="checkbox" class="ui-check mt-1 shrink-0" required />
+                <span class="text-sm leading-7 text-slate-700">Saya setuju data yang saya berikan digunakan oleh pengurus PPI Ishikawa untuk administrasi dan verifikasi keanggotaan.</span>
+              </label>
+              <p class="mt-3 text-xs leading-6 text-slate-500">Profil tidak otomatis ditampilkan dalam direktori. Anda dapat mengaturnya nanti setelah menjadi anggota terverifikasi.</p>
+            </div>
+            <div data-wizard-step="5" class="hidden">
+              <div id="wizard-review" class="divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-slate-50 px-4" aria-label="Ringkasan data"></div>
+            </div>
+          </div>
+          <p id="wizard-error" class="min-h-6 text-sm font-semibold text-red-700" role="alert" aria-live="polite"></p>
+          <div class="mt-4 grid grid-cols-[auto_1fr] gap-3">
+            <button id="wizard-back" type="button" class="min-h-12 rounded-xl border border-slate-300 px-5 text-sm font-bold text-slate-700 hover:border-brand hover:text-brand">← Kembali</button>
+            <button id="wizard-next" type="submit" class="ui-action-primary w-full">Lanjut <span aria-hidden="true">→</span></button>
+          </div>
+          <p class="mt-6 text-center text-xs text-slate-500">Email terverifikasi <span id="wizard-email" class="font-semibold text-slate-700"></span></p>
+        </form>
+
+        <div id="prototype-existing" class="hidden pt-12 text-center sm:pt-16">
+          <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-accent/30 bg-accent/10 text-4xl text-brand" aria-hidden="true">✓</div>
+          <h3 class="mt-6 text-2xl font-extrabold text-slate-950">Selamat datang kembali!</h3>
+          <p class="mx-auto mt-3 max-w-sm text-sm leading-7 text-slate-600">Anggota yang sudah terdaftar langsung masuk ke dashboard. Tidak perlu mengulang onboarding.</p>
+          <button type="button" data-prototype-reset class="ui-action-secondary mt-8 w-full">Mulai ulang simulasi</button>
+        </div>
+
+        <div id="prototype-finished" class="hidden pt-12 text-center sm:pt-16">
+          <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-accent/30 bg-accent/10 text-4xl text-brand" aria-hidden="true">✓</div>
+          <h3 class="mt-6 text-2xl font-extrabold text-slate-950">Selesai, <span id="finished-name">anggota baru</span>!</h3>
+          <p class="mx-auto mt-3 max-w-sm text-sm leading-7 text-slate-600">Dalam sistem asli, profil Anda akan tercatat dan berstatus <strong>menunggu verifikasi pengurus</strong>. Akun belum otomatis mendapat hak anggota terverifikasi.</p>
+          <button type="button" data-prototype-reset class="ui-action-secondary mt-8 w-full">Ulangi dari awal</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-5 flex flex-wrap items-start justify-between gap-3 text-xs text-slate-500">
+      <p>Rancangan awal · Tanpa backend, tanpa email sungguhan, tanpa penyimpanan data.</p>
+      <p>Alur produksi tidak berubah sampai desain disetujui.</p>
+    </div>
+  </section>
+  <script>
+    const views = {
+      login: document.getElementById('prototype-login'),
+      email: document.getElementById('prototype-email-sent'),
+      wizard: document.getElementById('prototype-wizard'),
+      existing: document.getElementById('prototype-existing'),
+      finished: document.getElementById('prototype-finished'),
+    } as const;
+    const nameField = document.querySelector<HTMLInputElement>('#wizard-name');
+    const campusField = document.querySelector<HTMLSelectElement>('#wizard-campus');
+    const programField = document.querySelector<HTMLInputElement>('#wizard-program');
+    const consentField = document.querySelector<HTMLInputElement>('#wizard-consent');
+    const loginField = document.querySelector<HTMLInputElement>('#prototype-email');
+    const emailSent = document.getElementById('sent-email');
+    const wizardEmail = document.getElementById('wizard-email');
+    const wizardTitle = document.getElementById('wizard-title');
+    const wizardHelper = document.getElementById('wizard-helper');
+    const wizardCounter = document.getElementById('wizard-counter');
+    const wizardEstimate = document.getElementById('wizard-estimate');
+    const wizardError = document.getElementById('wizard-error');
+    const next = document.querySelector<HTMLButtonElement>('#wizard-next');
+    const back = document.querySelector<HTMLButtonElement>('#wizard-back');
+    const review = document.getElementById('wizard-review');
+    const stepControls = Array.from(document.querySelectorAll<HTMLElement>('[data-wizard-step]'));
+    const progress = Array.from(document.querySelectorAll<HTMLElement>('[data-progress]'));
+    const scenarioNew = document.querySelector<HTMLButtonElement>('#scenario-new');
+    const scenarioExisting = document.querySelector<HTMLButtonElement>('#scenario-existing');
+    const titles = ['Siapa nama lengkapmu?', 'Kamu kuliah di mana?', 'Program atau jurusanmu?', 'Jenjang studi saat ini?', 'Setujui penggunaan data', 'Tinjau sebelum selesai'];
+    const help = [
+      'Gunakan nama yang ingin ditampilkan pada data keanggotaan.',
+      'Pilih kampus atau institusi tempat kamu belajar.',
+      'Cukup tulis nama program atau jurusanmu.',
+      'Pilih satu jenjang yang paling sesuai.',
+      'Kami menggunakan data ini untuk memverifikasi keanggotaanmu.',
+      'Semua sudah sesuai? Dalam sistem asli, langkah terakhir akan mengirim data untuk verifikasi pengurus.',
+    ];
+    let scenario:'new'|'existing'='new';
+    let step=0;
+
+    function show(view:keyof typeof views) {
+      for (const [key,element] of Object.entries(views)) element?.classList.toggle('hidden',key!==view);
+    }
+    function scenarioSet(value:'new'|'existing') {
+      scenario=value;
+      for(const [button,selected] of [[scenarioNew,value==='new'],[scenarioExisting,value==='existing']] as const){
+        button?.setAttribute('aria-pressed',String(selected));
+        button?.classList.toggle('bg-white',selected);
+        button?.classList.toggle('text-brand',selected);
+        button?.classList.toggle('shadow-sm',selected);
+        button?.classList.toggle('text-slate-600',!selected);
+      }
+      reset();
+    }
+    function reset(){
+      step=0;
+      document.querySelector<HTMLFormElement>('#prototype-login-form')?.reset();
+      document.querySelector<HTMLFormElement>('#prototype-wizard')?.reset();
+      if(wizardError)wizardError.textContent='';
+      setStep(0);
+      show('login');
+    }
+    function fillReview(){
+      if(!review)return;
+      review.replaceChildren();
+      const level=document.querySelector<HTMLInputElement>('input[name="study_level"]:checked');
+      const values=[
+        ['Nama lengkap',nameField?.value.trim()||'—'],
+        ['Kampus',campusField?.selectedOptions[0]?.textContent||'—'],
+        ['Program',programField?.value.trim()||'—'],
+        ['Jenjang',level?.closest('label')?.querySelector('span')?.textContent||'—'],
+        ['Privasi','Tidak ditampilkan di direktori secara otomatis'],
+      ];
+      for(const [label,value] of values){
+        const row=document.createElement('div');row.className='flex flex-wrap items-start justify-between gap-2 py-3 text-sm';
+        const key=document.createElement('span');key.className='font-medium text-slate-600';key.textContent=label;
+        const val=document.createElement('strong');val.className='max-w-full break-words text-right font-semibold text-slate-900';val.textContent=value;
+        row.append(key,val);review.append(row);
+      }
+    }
+    function setStep(index:number){
+      step=index;
+      stepControls.forEach((control,i)=>control.classList.toggle('hidden',i!==index));
+      progress.forEach((bar,i)=>{
+        bar.classList.toggle('bg-brand',i<=index);
+        bar.classList.toggle('bg-slate-200',i>index);
+      });
+      const meter=document.getElementById('wizard-progress');
+      meter?.setAttribute('aria-valuenow',String(index+1));
+      if(wizardCounter)wizardCounter.textContent=index<5?`Pertanyaan ${index+1} dari 5`:'Tinjau jawaban · tahap akhir';
+      if(wizardEstimate)wizardEstimate.textContent=index===5?'Hampir selesai':'± 1 menit';
+      if(wizardTitle)wizardTitle.textContent=titles[index]||'';
+      if(wizardHelper)wizardHelper.textContent=help[index]||'';
+      if(wizardError)wizardError.textContent='';
+      if(next)next.innerHTML=index===5?'Selesaikan simulasi <span aria-hidden="true">✓</span>':'Lanjut <span aria-hidden="true">→</span>';
+      if(back)back.textContent=index===0?'← Ganti email':'← Kembali';
+      if(index===5)fillReview();
+      const target=stepControls[index]?.querySelector<HTMLElement>('input, select');
+      if(target)requestAnimationFrame(()=>target.focus({preventScroll:true}));
+    }
+    function validStep(){
+      if(step===0){
+        if(!nameField?.value.trim()||nameField.value.trim().length<2)return 'Masukkan nama lengkap minimal 2 karakter.';
+      }else if(step===1){
+        if(!campusField?.value)return 'Pilih kampus terlebih dahulu.';
+      }else if(step===2){
+        if(!programField?.value.trim())return 'Tuliskan program atau jurusanmu.';
+      }else if(step===3){
+        if(!document.querySelector('input[name="study_level"]:checked'))return 'Pilih jenjang studi.';
+      }else if(step===4){
+        if(!consentField?.checked)return 'Persetujuan penggunaan data diperlukan untuk melanjutkan.';
+      }
+      return '';
+    }
+    document.getElementById('prototype-login-form')?.addEventListener('submit',event=>{
+      event.preventDefault();
+      if(!loginField?.validity.valid){loginField?.reportValidity();return;}
+      if(emailSent)emailSent.textContent=loginField.value.trim();
+      if(wizardEmail)wizardEmail.textContent=loginField.value.trim();
+      show('email');
+    });
+    document.getElementById('prototype-open-link')?.addEventListener('click',()=>{
+      if(scenario==='existing')show('existing');
+      else{show('wizard');setStep(0);}
+    });
+    document.getElementById('prototype-change-email')?.addEventListener('click',()=>show('login'));
+    document.getElementById('prototype-wizard')?.addEventListener('submit',event=>{
+      event.preventDefault();
+      const error=validStep();
+      if(error){if(wizardError)wizardError.textContent=error;return;}
+      if(step===5){
+        const finish=document.getElementById('finished-name');
+        if(finish)finish.textContent=(nameField?.value.trim()||'anggota baru').split(' ')[0];
+        show('finished');
+      }else setStep(step+1);
+    });
+    back?.addEventListener('click',()=>step===0?show('login'):setStep(step-1));
+    scenarioNew?.addEventListener('click',()=>scenarioSet('new'));
+    scenarioExisting?.addEventListener('click',()=>scenarioSet('existing'));
+    document.querySelectorAll('[data-prototype-reset]').forEach(button=>button.addEventListener('click',reset));
+    document.querySelectorAll<HTMLElement>('.wizard-level').forEach(label=>label.addEventListener('click',()=>{
+      document.querySelectorAll('.wizard-level').forEach(el=>el.classList.remove('border-brand','bg-accent/10'));
+      label.classList.add('border-brand','bg-accent/10');
+    }));
+    setStep(0);
+  </script>
+</BaseLayout>
