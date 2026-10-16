@@ -28,7 +28,7 @@ function roundRect(ctx, x, y, w, h, r) {
 }
 
 export function renderCertificate(canvas, data) {
-  const { event, date, category, organizer, recipient, signer, signerRole, logo, signature, infoQr } = data;
+  const { event, date, category, organizer, recipient, signer, signerRole, logo, signature, infoQr, verificationQr, certificateNumber } = data;
   canvas.width = CERTIFICATE_WIDTH;
   canvas.height = CERTIFICATE_HEIGHT;
   const c = canvas.getContext('2d');
@@ -102,6 +102,15 @@ export function renderCertificate(canvas, data) {
   centered(c, signer || 'Nama penanda tangan', 1092, 1000, 31, 23, '#103d40', 700);
   centered(c, signerRole || 'PPI Jepang Komisariat Ishikawa', 1140, 1050, 24, 18, '#64748b', 400);
 
+  if (verificationQr?.width > 0) {
+    c.fillStyle = '#fff'; c.fillRect(1400, 910, 200, 200);
+    c.drawImage(verificationQr, 1414, 925, 168, 168);
+    c.fillStyle = '#103d40'; c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.font = '700 20px "Fira Sans", Arial, sans-serif';
+    c.fillText('VERIFIKASI RESMI', 1500, 1120);
+    c.font = '500 15px "Fira Sans", Arial, sans-serif';
+    c.fillText(certificateNumber, 1500, 1144);
+  }
   // Informational link ONLY. The QR never claims the certificate is registered/verified.
   if (infoQr?.width > 0 && infoQr?.height > 0) {
     c.fillStyle = '#fff';
