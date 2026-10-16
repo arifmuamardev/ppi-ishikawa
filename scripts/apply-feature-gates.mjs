@@ -1,10 +1,7 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
-import { featureForPath, featureState, featureStates } from '../src/config/features.mjs';
-
-// Runs after Astro generates dist/. GitHub Pages deploys ONLY that directory.
-// Unlike CSS/JS hiding, disabled routes are removed from the published artifact.
-const dist = path.resolve('dist');
+import { fileURLToPath } from 'node:url';
+import { featureForPath, featureState, featureStates, FEATURE_MODES } from '../src/config/features.mjs';
 
 async function walk(dir) {
   const result = [];
@@ -16,38 +13,43 @@ async function walk(dir) {
   return result;
 }
 
-function toRoute(file) {
-  const relative = path.relative(dist, file).replaceAll(path.sep, '/');
+function toRoute(root, file) {
+  const relative = path.relative(root, file).replaceAll(path.sep, '/');
   if (relative === 'index.html') return '/';
   return '/' + relative.replace(/index\.html$/, '').replace(/\.html$/, '/');
 }
 
-for (const [key, state] of Object.entries(featureStates)) {
-  if (!['enabled', 'hidden', 'disabled'].includes(state))
-    throw new Error(`Invalid feature state ${key} = ${state}`);
+// Used by both the actual build and isolated fixture tests.
+export async function applyFeatureGates(root = path.resolve('dist'), states = featureStates) {
+  for (const [key, value] of Object.entries(states)) {
+    if (!FEATURE_MODES.includes(value))
+      throw new Error(`Invalid feature state ${key} = ${value}`);
+  }
+  const htmlFiles = await walk(root);
+  let removed = 0;
+
+  for (const file of htmlFiles) {
+    const route = toRoute(root, file);
+    const key = featureForPath(route);
+    if (featureState(key, states) !== 'disabled') continue;
+    await fs.unlink(file);
+    removed++;
+    console.log(`DISABLED ${key}: ${route}`);
+  }
+
+  // The Design Lab includes copied non-HTML assets which must also disappear.
+  if (featureState('designLab', states) === 'disabled')
+    await fs.rm(path.join(root, 'design-lab'), { recursive: true, force: true });
+
+  // Don't accidentally upload an empty or homepage-less website.
+  await fs.access(path.join(root, 'index.html'));
+  const retained = await walk(root);
+  if (!retained.length) throw new Error('Feature gating produced an empty site.');
+  console.log(`Feature gating: ${removed} routes removed, ${retained.length} HTML pages retained.`);
+  return { removed, retained: retained.length };
 }
 
-const htmlFiles = await walk(dist);
-let removed = 0;
-for (const file of htmlFiles) {
-  const route = toRoute(file);
-  const key = featureForPath(route);
-  if (featureState(key) !== 'disabled') continue;
-  await fs.unlink(file);
-  removed++;
-  console.log(`DISABLED ${key}: ${route}`);
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  await applyFeatureGates();
+  console.log('The internal-link audit runs AFTER gating; dangling links block publication.');
 }
-
-// Static assets from public/design-lab are copied outside Astro page routing.
-// When disabled, remove the whole lab directory, including SVG and HTML assets.
-if (featureState('designLab') === 'disabled') {
-  await fs.rm(path.join(dist, 'design-lab'), { recursive: true, force: true });
-}
-
-// Avoid publishing an empty document tree or mistakenly removing the home page.
-await fs.access(path.join(dist, 'index.html'));
-const retained = await walk(dist);
-if (!retained.length) throw new Error('Feature gating produced an empty site.');
-
-console.log(`Feature gating: ${removed} routes removed, ${retained.length} HTML pages retained.`);
-console.log('Run check-internal-links.mjs after this script. Broken links block publication.');

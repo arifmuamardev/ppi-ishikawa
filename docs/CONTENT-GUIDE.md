@@ -43,3 +43,10 @@ Untuk bahasa, istilah, nada, dan aturan editorial publik, lihat `docs/EDITORIAL-
 - Sedang: minimal setiap 6 bulan.
 - Tinggi: minimal setiap 3 bulan.
 - Live: jangan mirror nilai live; audit link dan konteks secara berkala.
+
+## Feature Registry
+
+- Atur status fitur dalam `src/config/features.mjs` (enabled, hidden, disabled).
+- Jangan hapus komponen/halaman demi mematikan fitur; jalankan `npm run check:features`, `npm run build`, dan pemeriksaan tautan internal setelah perubahan.
+- `hidden` hanya menyembunyikan tautan yang memakai registry, sedangkan `disabled` menghapus halaman dari artefak build. Hak akses data Supabase tetap wajib ditegakkan secara terpisah.
+- Rincian modul, dependensi, batasan, dan prosedur rollback: `docs/FEATURE-MODULES.md`.

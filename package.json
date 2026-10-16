@@ -10,7 +10,7 @@
     "astro": "astro",
     "check:theme": "node scripts/check-brand-theme.mjs",
     "check:ui": "node scripts/check-ui-contracts.mjs",
-    "check:features": "node scripts/check-feature-registry.mjs"
+    "check:features": "node scripts/check-feature-registry.mjs && node scripts/check-feature-gates.mjs"
   },
   "dependencies": {
     "@fontsource/fira-sans": "5.3.0",

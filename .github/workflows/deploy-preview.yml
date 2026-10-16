@@ -10,6 +10,8 @@ on:
       - 'cloudflare/**'
       - 'wrangler.preview.toml'
       - 'scripts/check-internal-links.mjs'
+      - 'scripts/apply-feature-gates.mjs'
+      - 'scripts/check-feature-*.mjs'
       - '.github/workflows/deploy-preview.yml'
   push:
     branches: [main]
@@ -44,6 +46,7 @@ jobs:
         run: |
           npm run check:theme
           npm run check:ui
+          npm run check:features
           npm run build
           node scripts/check-internal-links.mjs
       - name: Validate Worker configuration offline
