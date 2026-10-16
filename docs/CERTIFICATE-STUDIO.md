@@ -14,12 +14,12 @@ Rute admin: `/member/admin/certificate-studio/`. Masuk melalui **Admin Center �
 Batas awal: 200 penerima per berkas PDF; untuk jumlah yang lebih besar, buat beberapa kelompok.
 
 ## Privasi dan keabsahan
-- Semua pemrosesan nama, pratinjau, dan gambar tanda tangan berlangsung **di browser**, tidak dikirim ke backend dan tidak tersimpan dalam riwayat database.
-- Studio tidak membuat kartu sertifikat di database, token verifikasi, nomor seri resmi, atau QR validasi; output **tidak dapat diverifikasi di /verify/certificate/**.\n- QR opsional hanya berisi URL informasi kegiatan yang sama untuk semua penerima. Pada PDF tercetak label **INFO KEGIATAN — Bukan verifikasi**. URL harus memakai HTTPS. Jangan menyertakan data peserta atau token privat dalam URL.
+- Pratinjau dan gambar tanda tangan diproses di browser, tanpa mengunggah gambar tanda tangan. **Saat tombol pengesahan resmi ditekan, nama penerima, kegiatan, peran, dan identitas pengesah dicatat pada registri Supabase** untuk pemeriksaan QR dan pencabutan. Jangan menerbitkan tanpa persetujuan peserta dan pemeriksaan data.
+- Mode resmi Studio membuat nomor sertifikat, token QR unik, dan registri tersendiri. Verifikasi sertifikat Studio ada di `/verify/studio-certificate/`, bukan di halaman sertifikat anggota `/verify/certificate/`.\n- QR informasi opsional hanya berisi URL informasi kegiatan yang sama untuk semua penerima; **nonaktifkan ketika menerbitkan sertifikat resmi**, karena QR pengesahan unik akan dibuat otomatis. Pada mode informasi saja, PDF akan memberi label **INFO KEGIATAN — Bukan verifikasi**. URL harus memakai HTTPS. Jangan menyertakan data peserta atau token privat dalam URL.
 - File PDF harus diperiksa oleh pengurus berwenang sebelum dibagikan. Gunakan tanda tangan hanya dengan izin pemilik.
 - Modul lama `/member/admin/certificates/` tetap ada untuk sertifikat anggota yang tercatat sebagai hadir/check-in, memakai database dan token verifikasi resmi.
 - **Penting:** GitHub Pages adalah hosting statis. UI admin memverifikasi sesi di browser; perlindungan data sebenarnya harus ditegakkan di Supabase RLS. Studio tidak memerlukan pembacaan data privat Supabase.
-- Tidak ada data peserta dalam URL, kode repository, log, atau localStorage.
+- Data peserta tidak disertakan dalam URL QR, kode repository, log, atau localStorage. QR hanya memiliki token acak; detail terbatas ditampilkan setelah pemindaian melalui query registri.
 
 ## Pengembangan lanjut (tidak termasuk rilis pertama)
 - Opsional impor XLSX jika benar-benar diperlukan; saat ini Excel dapat **copy-paste nama** langsung.
