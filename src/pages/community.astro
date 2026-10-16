@@ -8,6 +8,7 @@ import InstagramFeed from '../components/InstagramFeed.astro';
 import LicensedPhoto from '../components/LicensedPhoto.astro';
 import { withBase } from '../utils/paths';
 import { publicMedia } from '../data/media';
+import { isDiscoverableHref } from '../config/features.mjs';
 
 const communityPaths = [
   {
@@ -59,7 +60,7 @@ const communityPaths = [
     </div>
 
     <div class="mt-8 grid gap-4 md:grid-cols-2">
-      {communityPaths.map((item) => (
+      {communityPaths.filter((item) => isDiscoverableHref(item.href)).map((item) => (
         <NavigationCard href={item.href} title={item.title} description={item.description} icon={item.icon} />
       ))}
     </div>
@@ -78,15 +79,15 @@ const communityPaths = [
           <p class="type-eyebrow text-brand">Cakupan komunitas</p>
           <h2 class="mt-3 type-section text-slate-950">Lintas kampus, tetap satu komunitas.</h2>
           <p class="mt-4 max-w-2xl leading-7 text-slate-600">Enam institusi saat ini tercatat memiliki anggota terhubung, tetapi PPI Ishikawa tetap terbuka bagi pelajar Indonesia di seluruh Prefektur Ishikawa.</p>
-          <a href={withBase('/community/kampus/')} class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">Lihat jaringan kampus →</a>
+          {isDiscoverableHref('/community/kampus/') && <a href={withBase('/community/kampus/')} class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">Lihat jaringan kampus →</a>}
         </div>
         <div class="rounded-3xl bg-slate-950 p-6 text-white sm:p-8">
           <p class="text-sm font-bold uppercase tracking-[0.14em] text-accent-soft">Butuh informasi praktis?</p>
           <p class="mt-3 text-xl font-bold">Pilih panduan sesuai kebutuhan.</p>
           <div class="mt-5 space-y-3 text-sm">
-            <a href={withBase('/life-in-ishikawa/')} class="block rounded-xl border border-slate-700 bg-white/5 px-4 py-3 font-bold hover:bg-white/10">Hidup di Ishikawa →</a>
-            <a href={withBase('/beasiswa/')} class="block rounded-xl border border-slate-700 bg-white/5 px-4 py-3 font-bold hover:bg-white/10">Beasiswa →</a>
-            <a href={withBase('/community/kampus/')} class="block rounded-xl border border-slate-700 bg-white/5 px-4 py-3 font-bold hover:bg-white/10">Kampus →</a>
+            {isDiscoverableHref('/life-in-ishikawa/') && <a href={withBase('/life-in-ishikawa/')} class="block rounded-xl border border-slate-700 bg-white/5 px-4 py-3 font-bold hover:bg-white/10">Hidup di Ishikawa →</a>}
+            {isDiscoverableHref('/beasiswa/') && <a href={withBase('/beasiswa/')} class="block rounded-xl border border-slate-700 bg-white/5 px-4 py-3 font-bold hover:bg-white/10">Beasiswa →</a>}
+            {isDiscoverableHref('/community/kampus/') && <a href={withBase('/community/kampus/')} class="block rounded-xl border border-slate-700 bg-white/5 px-4 py-3 font-bold hover:bg-white/10">Kampus →</a>}
           </div>
         </div>
       </div>

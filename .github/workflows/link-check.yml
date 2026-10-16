@@ -8,6 +8,7 @@ on:
       - 'src/pages/**'
       - 'src/components/**'
       - 'src/data/**'
+      - 'src/config/**'
       - 'src/layouts/**'
       - 'src/styles/**'
       - 'package.json'
@@ -19,6 +20,8 @@ on:
       - 'docs/brand/DESIGN-SYSTEM-GOVERNANCE.md'
       - 'scripts/check-links.mjs'
       - 'scripts/check-internal-links.mjs'
+      - 'scripts/apply-feature-gates.mjs'
+      - 'scripts/check-feature-*.mjs'
       - '.github/workflows/link-check.yml'
   schedule:
     - cron: '17 0 * * 1'
@@ -28,6 +31,7 @@ on:
       - 'src/pages/**'
       - 'src/components/**'
       - 'src/data/**'
+      - 'src/config/**'
       - 'src/layouts/**'
       - 'src/styles/**'
       - 'package.json'
@@ -39,6 +43,8 @@ on:
       - 'docs/brand/DESIGN-SYSTEM-GOVERNANCE.md'
       - 'scripts/check-links.mjs'
       - 'scripts/check-internal-links.mjs'
+      - 'scripts/apply-feature-gates.mjs'
+      - 'scripts/check-feature-*.mjs'
       - '.github/workflows/link-check.yml'
 
 permissions:
@@ -63,6 +69,8 @@ jobs:
         run: npm run check:theme
       - name: Check UI contracts
         run: npm run check:ui
+      - name: Test feature registry and route gating
+        run: npm run check:features
       - name: Build site
         run: npm run build
       - name: Check internal links

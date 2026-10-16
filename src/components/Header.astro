@@ -1,5 +1,6 @@
 ---
-import { nav, site } from '../data/site';
+import { visibleNav, site } from '../data/site';
+import { showFeature } from '../config/features.mjs';
 import { withBase } from '../utils/paths';
 import ThemeToggle from './ThemeToggle.astro';
 
@@ -34,7 +35,7 @@ const isActive = (href: string) => {
     </a>
 
     <nav class="site-header__nav type-ui hidden items-center gap-5 lg:flex" aria-label="Navigasi utama">
-      {nav.map((item) => (
+      {visibleNav.map((item) => (
         <a
           class={`site-header__nav-link ui-motion-color ${isActive(item.href) ? 'site-header__nav-link--active font-bold' : ''}`}
           href={withBase(item.href)}
@@ -47,6 +48,11 @@ const isActive = (href: string) => {
 
     <div class="flex items-center gap-2">
       <ThemeToggle />
+      {showFeature('membership') && (
+        <a href={withBase('/member/')} class="site-header__member type-ui hidden min-h-11 items-center rounded-xl px-4 ui-motion-color sm:inline-flex">
+          Area Anggota
+        </a>
+      )}
       <a href={withBase('/contact')} class="site-header__contact type-ui hidden min-h-11 items-center rounded-xl px-4 ui-motion-color xl:inline-flex">
         Hubungi Kami
       </a>
@@ -56,7 +62,7 @@ const isActive = (href: string) => {
             <span class="hidden group-open:inline">Tutup</span>
           </summary>
         <div class="site-header__dropdown absolute right-0 mt-3 max-h-[calc(100dvh-6rem)] w-[min(18rem,calc(100vw-2rem))] overflow-y-auto rounded-2xl p-2">
-          {nav.map((item) => (
+          {visibleNav.map((item) => (
             <a
               class="site-header__dropdown-link block rounded-xl px-4 py-3 text-sm font-medium ui-motion-color"
               href={withBase(item.href)}
@@ -65,6 +71,15 @@ const isActive = (href: string) => {
               {item.label}
             </a>
           ))}
+          {showFeature('membership') && (
+            <a
+              class="site-header__dropdown-link block rounded-xl px-4 py-3 text-sm font-bold ui-motion-color"
+              href={withBase('/member/')}
+              aria-current={isActive('/member') ? 'page' : undefined}
+            >
+              Area Anggota
+            </a>
+          )}
           <div class="site-header__dropdown-divider my-2 border-t"></div>
           <a
             class="site-header__dropdown-link block rounded-xl px-4 py-3 text-sm font-bold ui-motion-color"

@@ -1,6 +1,7 @@
 ---
 import TopicIcon from './TopicIcon.astro';
 import { withBase } from '../utils/paths';
+import { isDiscoverableHref } from '../config/features.mjs';
 
 interface Props {
   href: string;
@@ -14,8 +15,9 @@ interface Props {
 const { href, title, description, icon, action, density = 'comfortable' } = Astro.props;
 const link = href.startsWith('/') ? withBase(href) : href;
 const compact = density === 'compact';
+const visible = isDiscoverableHref(href);
 ---
-<a
+{visible && <a
   href={link}
   data-ui-card="navigation"
   class:list={[
@@ -44,4 +46,4 @@ const compact = density === 'compact';
   </p>
   {action && <p class="mt-3 text-xs font-bold text-brand">{action}</p>}
   <slot />
-</a>
+</a>}

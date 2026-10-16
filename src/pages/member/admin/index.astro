@@ -2,6 +2,7 @@
 import MemberLayout from '../../../layouts/MemberLayout.astro';
 import AppPageHeader from '../../../components/AppPageHeader.astro';
 import { withBase } from '../../../utils/paths';
+import { isDiscoverableHref } from '../../../config/features.mjs';
 
 const groups = [
   {
@@ -64,7 +65,10 @@ const groups = [
     </section>
 
     <section class="grid gap-5 lg:grid-cols-2">
-      {groups.map((group) => (
+      {groups.map((group) => ({
+        ...group,
+        links: group.links.filter(([, href]) => isDiscoverableHref(href, { withinMember: true })),
+      })).filter((group) => group.links.length > 0).map((group) => (
         <article class="rounded-2xl border border-slate-200 bg-white p-6">
           <h2 class="text-xl font-bold text-slate-950">{group.title}</h2>
           <p class="mt-2 text-sm leading-6 text-slate-600">{group.description}</p>

@@ -8,7 +8,7 @@ Website publik PPI Ishikawa untuk periode 2026/27. Saat ini mencakup halaman ins
 - Tailwind CSS 4 via Vite plugin
 - GitHub Pages
 - GitHub Actions
-- Static-first: belum memakai database, CMS, atau login
+- Static-first: Astro dipublikasikan sebagai halaman statis; Area Anggota memiliki integrasi Supabase terpisah yang belum dipromosikan di navigasi publik.
 
 ## Jalankan secara lokal
 
@@ -88,3 +88,15 @@ Jangan menyimpan data pribadi anggota, nomor telepon personal, token, password, 
 - Checklist review perubahan UI: `.github/PULL_REQUEST_TEMPLATE.md`
 - Content maintenance: `docs/CONTENT-GUIDE.md`
 - External link audit: `.github/workflows/link-check.yml`
+
+## Menghidupkan / mematikan modul
+
+Ubah satu berkas: `src/config/features.mjs` (status `enabled`, `hidden`, atau `disabled`).
+
+```bash
+npm run check:features
+npm run build
+node scripts/check-internal-links.mjs
+```
+
+Pembatasan hak akses dan data keanggotaan **bukan** ditangani oleh pengaturan visual. Lihat `docs/FEATURE-MODULES.md`.

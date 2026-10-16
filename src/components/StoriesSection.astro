@@ -3,6 +3,7 @@ import StoryCard from './StoryCard.astro';
 import { stories, type StoryTopic } from '../data/stories';
 import { campuses } from '../data/campuses';
 import { withBase } from '../utils/paths';
+import { showFeature } from '../config/features.mjs';
 
 interface Props {
   eyebrow?: string;
@@ -35,7 +36,7 @@ const filtered = stories
   .slice(0, limit);
 ---
 
-{(filtered.length > 0 || showEmpty) && (
+{showFeature('stories') && (filtered.length > 0 || showEmpty) && (
   <section class={`mx-auto max-w-7xl px-5 py-14 lg:px-8 ${className}`}>
     <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
       <div class="max-w-3xl">

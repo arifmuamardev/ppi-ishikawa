@@ -1,5 +1,6 @@
 import { departments as departmentData } from './organization';
 import { brandTheme } from './brand';
+import { isDiscoverableHref } from '../config/features.mjs';
 
 export const site = {
   name: 'PPI Ishikawa',
@@ -19,3 +20,6 @@ export const nav = [
 ];
 
 export const departments = departmentData.map((department) => department.name);
+
+// Public navigation is derived from the central feature registry.
+export const visibleNav = nav.filter((item) => isDiscoverableHref(item.href));
