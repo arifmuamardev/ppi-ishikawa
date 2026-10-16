@@ -28,7 +28,7 @@ function roundRect(ctx, x, y, w, h, r) {
 }
 
 export function renderCertificate(canvas, data) {
-  const { event, date, category, organizer, recipient, signer, signerRole, logo, signature } = data;
+  const { event, date, category, organizer, recipient, signer, signerRole, logo, signature, infoQr } = data;
   canvas.width = CERTIFICATE_WIDTH;
   canvas.height = CERTIFICATE_HEIGHT;
   const c = canvas.getContext('2d');
@@ -101,5 +101,19 @@ export function renderCertificate(canvas, data) {
   c.beginPath(); c.moveTo(655, 1054); c.lineTo(1145, 1054); c.stroke();
   centered(c, signer || 'Nama penanda tangan', 1092, 1000, 31, 23, '#103d40', 700);
   centered(c, signerRole || 'PPI Jepang Komisariat Ishikawa', 1140, 1050, 24, 18, '#64748b', 400);
+
+  // Informational link ONLY. The QR never claims the certificate is registered/verified.
+  if (infoQr?.width > 0 && infoQr?.height > 0) {
+    c.fillStyle = '#fff';
+    c.fillRect(1422, 919, 180, 180);
+    c.drawImage(infoQr, 1432, 929, 160, 160);
+    c.textAlign = 'center';
+    c.textBaseline = 'middle';
+    c.fillStyle = '#103d40';
+    c.font = '700 19px "Fira Sans", Arial, sans-serif';
+    c.fillText('INFO KEGIATAN', 1512, 1120);
+    c.font = '400 16px "Fira Sans", Arial, sans-serif';
+    c.fillText('Bukan verifikasi', 1512, 1143);
+  }
   return canvas;
 }

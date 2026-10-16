@@ -7,6 +7,8 @@ on:
       - 'src/pages/member/admin/certificate-studio.astro'
       - 'src/lib/certificate-studio.mjs'
       - 'src/lib/certificate-renderer.mjs'
+      - 'src/lib/certificate-qr.mjs'
+      - 'scripts/check-certificate-qr.mjs'
       - 'src/config/features.mjs'
       - 'scripts/audit-certificate-studio.mjs'
       - '.github/workflows/certificate-studio-audit.yml'
