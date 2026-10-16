@@ -76,7 +76,7 @@ import { withBase } from '../../../utils/paths';
             <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand font-bold text-white">3</span>
             <h2 id="studio-approval-heading" class="text-lg font-bold text-slate-950">Penanda tangan</h2>
           </div>
-          <p class="mt-3 text-sm leading-6 text-slate-600">Nama dan jabatan Ketua sudah terisi otomatis dan dapat diubah untuk penanda tangan lain. Gambar tanda tangan asli tetap diunggah secara terpisah bila diperlukan.</p>
+          <p class="mt-3 text-sm leading-6 text-slate-600">Nama dan jabatan Ketua sudah terisi otomatis. Untuk sertifikat resmi, identitas pengesah diambil dari akun Ketua yang terdaftar, bukan dari kolom yang dapat diedit. Gambar tanda tangan asli tetap diunggah secara terpisah bila diperlukan.</p>
           <div class="mt-4 grid gap-4 sm:grid-cols-2">
             <label>
               <span class="text-sm font-bold text-slate-800">Nama penanda tangan <span class="text-red-600">*</span></span>
@@ -236,17 +236,18 @@ import { withBase } from '../../../utils/paths';
       if (previewName) previewName.textContent = current.length
         ? `Pratinjau untuk: ${current[0]}${current.length > 1 ? ` (+${current.length - 1} nama lain)` : ''}`
         : 'Pratinjau menggunakan nama penerima pertama.';
-      const first = issuedSnapshot === getSnapshot() && issued.length ? issued[0] : null;
+      const snapshot = current.length ? getSnapshot() : '';
+      const first = snapshot && issuedSnapshot === snapshot && issued.length ? issued[0] : null;
       if (preview instanceof HTMLCanvasElement) renderCertificate(preview, details(current[0] || 'Nama Penerima', first));
       let valid = !busy && !issuing && authorized && authorizedSigner && !isMembershipDemoMode;
       if (valid) {
         try { validate(); if (qrEnabled?.checked) valid = false; } catch { valid = false; }
       }
-      const finalized = valid && issued.length > 0 && issuedSnapshot === getSnapshot() && issued.every(c => !c.revoked_at);
-      if (issueButton) issueButton.disabled = !valid || finalized;
+      const finalized = valid && issued.length > 0 && issuedSnapshot === snapshot && issued.every(c => !c.revoked_at) && verifiedQrByRecipient.size === issued.length;
+      if (issueButton) issueButton.disabled = !valid || finalized || issued.length > 0 && issuedSnapshot === snapshot;
       if (exportOne) exportOne.disabled = !finalized;
       if (exportAll) exportAll.disabled = !finalized;
-      if (issueStatus) issueStatus.textContent = finalized ? `${issued.length} sertifikat terdaftar dan siap diunduh.` : issued.length ? 'Isi berubah setelah pengesahan. Kembalikan data semula atau mulai batch baru.' : 'Belum diterbitkan.';
+      if (issueStatus) issueStatus.textContent = issuing ? 'Mencatat pengesahan di database…' : finalized ? `${issued.length} sertifikat terdaftar dan siap diunduh.` : issued.length ? 'Isi berubah setelah pengesahan. Kembalikan data semula atau mulai batch baru.' : 'Belum diterbitkan.';
     };
 
     const updateQr = async () => {
@@ -363,7 +364,7 @@ import { withBase } from '../../../utils/paths';
       issuing = true;
       refresh();
       const snapshot = getSnapshot();
-      if (!activeBatchId || issuedSnapshot !== snapshot) activeBatchId = crypto.randomUUID();
+      if (!activeBatchId) activeBatchId = crypto.randomUUID();
       const {data,error} = await issueStudioCertificates(activeBatchId, {
         event: fields.event.value.trim(), date: fields.date.value,
         role: fields.role.value, organizer: fields.organizer.value.trim(), names: list,

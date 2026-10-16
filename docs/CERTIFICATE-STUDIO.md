@@ -28,3 +28,7 @@ Batas awal: 200 penerima per berkas PDF; untuk jumlah yang lebih besar, buat beb
 
 ## Pengujian
 `node scripts/check-certificate-studio.mjs`, `node scripts/check-certificate-qr.mjs`, `npm run build`, `node scripts/check-internal-links.mjs`, dan audit responsif GitHub Actions.
+
+## QR pengesahan resmi
+
+Sertifikat resmi diterbitkan melalui tombol **Terbitkan & sahkan seluruh sertifikat**. Database mencatat identitas Ketua yang berwenang, tanggal penerbitan, nomor unik, dan QR berbeda untuk setiap penerima. Unduhan PDF resmi baru diaktifkan setelah pencatatan berhasil. Penerima memindai QR menuju `/verify/studio-certificate/?token=...`. Ketua dapat mencabut/reaktivasi melalui `/member/admin/studio-registry/`. Sertifikat yang dicabut tetap memiliki jejak penerbitan. Ini verifikasi organisasi berbasis database, **bukan** tanda tangan kriptografis PDF (PAdES/X.509). Fitur hanya aktif saat Supabase production tersedia dan akun Ketua berwenang, bukan dalam demo.
