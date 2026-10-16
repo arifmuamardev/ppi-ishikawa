@@ -6,9 +6,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
     <div class="mb-7 flex flex-wrap items-start justify-between gap-4">
       <div class="max-w-3xl">
-        <p class="type-eyebrow text-brand">Design Lab / Event Registration · V1</p>
+        <p class="type-eyebrow text-brand">Design Lab / Event Registration · V2</p>
         <h1 class="mt-2 text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl">Dari poster, langsung daftar acara.</h1>
-        <p class="mt-3 text-sm leading-7 text-slate-600">Tiga tipe akun, satu jalur registrasi acara. Pengunjung publik dan anggota PPI memakai akun yang sama sepanjang perjalanan.</p>
+        <p class="mt-3 text-sm leading-7 text-slate-600">Bandingkan acara publik dan khusus anggota. Akun yang sudah login bisa daftar lebih cepat; syarat keanggotaan hanya berlaku jika acaranya dibatasi.</p>
       </div>
       <span class="rounded-full border border-accent/35 bg-accent/10 px-3 py-2 text-xs font-bold text-brand">PROTOTIPE · TANPA DATABASE</span>
     </div>
@@ -21,7 +21,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <aside class="bg-[#103D40] px-5 py-7 text-white sm:px-9 sm:py-10">
         <div class="flex items-center justify-between gap-3">
           <div class="flex items-center gap-2 text-sm font-bold"><span class="flex h-9 w-9 items-center justify-center rounded-xl border border-white/30 bg-white/10 text-lg">P</span> PPI Ishikawa</div>
-          <span class="rounded-full border border-white/25 bg-white/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest">Mock poster</span>
+          <span id="poster-policy" class="rounded-full border border-white/25 bg-white/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest">Poster · Publik</span>
         </div>
         <div class="relative mt-8 min-h-[300px] overflow-hidden rounded-2xl border border-white/20 bg-[#184F51] p-6 sm:min-h-[370px] sm:p-8">
           <svg class="pointer-events-none absolute inset-0 h-full w-full opacity-45" viewBox="0 0 440 480" fill="none" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
@@ -50,17 +50,25 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </div>
         <div class="mt-6 border-t border-white/20 pt-5">
           <p class="text-xs font-bold uppercase tracking-wider text-[#BCE8DA]">Prinsip desain</p>
-          <p class="mt-2 text-sm leading-6 text-white/80">Akun dan keanggotaan tidak sama dengan registrasi. Satu email dapat memiliki banyak registrasi acara, tanpa duplikasi identitas.</p>
+          <p class="mt-2 text-sm leading-6 text-white/80">Akun dan keanggotaan tidak sama dengan registrasi. Pengguna yang sudah login tidak perlu email ulang; kegiatan khusus anggota tetap memeriksa status keanggotaan.</p>
         </div>
       </aside>
 
       <div class="min-w-0 px-5 py-7 sm:px-9 sm:py-10">
+        <div class="mb-6 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+          <p class="text-xs font-bold uppercase tracking-wider text-slate-500">1 · Pilih aturan acara (simulasi)</p>
+          <div role="group" aria-label="Aturan pendaftaran acara" class="mt-3 grid grid-cols-2 gap-2">
+            <button data-event-type="public" type="button" aria-pressed="true" class="event-choice min-h-12 rounded-xl border border-brand bg-accent/10 px-3 py-2 text-sm font-bold text-brand">Acara publik</button>
+            <button data-event-type="members" type="button" aria-pressed="false" class="event-choice min-h-12 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-slate-600">Khusus anggota PPI</button>
+          </div>
+          <p id="event-rule-help" class="mt-3 text-xs leading-6 text-slate-600" aria-live="polite">Acara terbuka: akun publik dan anggota resmi sama-sama boleh mendaftar.</p>
+        </div>
         <div class="border-b border-slate-200 pb-5">
-          <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Simulasikan identitas pengunjung</p>
+          <p class="text-xs font-bold uppercase tracking-wider text-slate-500">2 · Simulasikan status pengunjung</p>
           <div role="group" aria-label="Skenario akun" class="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
-            <button type="button" data-scenario="new" aria-pressed="true" class="scenario-choice min-h-12 rounded-xl border border-brand bg-accent/10 px-3 py-2 text-left text-sm font-bold text-brand sm:text-center">Pengunjung baru</button>
-            <button type="button" data-scenario="public" aria-pressed="false" class="scenario-choice min-h-12 rounded-xl border border-slate-200 px-3 py-2 text-left text-sm font-bold text-slate-600 sm:text-center">Akun publik</button>
-            <button type="button" data-scenario="member" aria-pressed="false" class="scenario-choice min-h-12 rounded-xl border border-slate-200 px-3 py-2 text-left text-sm font-bold text-slate-600 sm:text-center">Anggota PPI</button>
+            <button type="button" data-scenario="new" aria-pressed="true" class="scenario-choice min-h-12 rounded-xl border border-brand bg-accent/10 px-3 py-2 text-left text-sm font-bold text-brand sm:text-center">Belum punya akun</button>
+            <button type="button" data-scenario="public" aria-pressed="false" class="scenario-choice min-h-12 rounded-xl border border-slate-200 px-3 py-2 text-left text-sm font-bold text-slate-600 sm:text-center">Akun publik · login</button>
+            <button type="button" data-scenario="member" aria-pressed="false" class="scenario-choice min-h-12 rounded-xl border border-slate-200 px-3 py-2 text-left text-sm font-bold text-slate-600 sm:text-center">Anggota PPI · login</button>
           </div>
           <p id="scenario-help" class="mt-3 text-xs leading-5 text-slate-500" aria-live="polite">Belum memiliki akun website maupun status keanggotaan.</p>
         </div>
@@ -69,25 +77,36 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <span id="flow-stage" class="text-xs font-extrabold uppercase tracking-[0.12em] text-brand">Halaman publik · 1/5</span>
           <span id="identity-badge" class="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600">Tanpa akun</span>
         </div>
-        <div class="mt-3 flex gap-1.5" id="flow-progress" role="progressbar" aria-label="Kemajuan registrasi" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1">
-          {Array.from({length:5}, (_,i) => <span data-progress={i} class:list={['h-1.5 flex-1 rounded-full', i===0 ? 'bg-brand' : 'bg-slate-200']} aria-hidden="true"></span>)}
+        <div class="mt-3 flex gap-1.5" id="flow-progress" role="progressbar" aria-label="Kemajuan registrasi" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1">
+          {Array.from({length:7}, (_,i) => <span data-progress={i} class:list={['h-1.5 flex-1 rounded-full', i===0 ? 'bg-brand' : 'bg-slate-200']} aria-hidden="true"></span>)}
         </div>
 
         <div id="view-landing" data-view class="pt-8">
           <div class="flex flex-wrap items-center gap-2">
-            <span class="rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-800">Pendaftaran terbuka</span>
-            <span class="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600">Terbuka untuk umum</span>
+            <span id="event-access-badge" class="rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-800">Pendaftaran terbuka</span>
+            <span id="event-audience-badge" class="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600">Terbuka untuk umum</span>
           </div>
           <h3 class="mt-4 text-2xl font-extrabold tracking-tight text-slate-950">Workshop Riset & Karier 2026</h3>
-          <p class="mt-3 text-sm leading-7 text-slate-600">Contoh halaman acara setelah peserta membuka link atau memindai QR poster. Informasi penting tampil sebelum mereka memasukkan email.</p>
+          <p class="mt-3 text-sm leading-7 text-slate-600">Contoh halaman acara setelah pengunjung membuka link poster. Syarat acara diperlihatkan sebelum proses pendaftaran.</p>
+          <div id="landing-session" class="mt-5 rounded-xl border border-accent/35 bg-accent/10 p-4 text-sm leading-6 text-slate-700" aria-live="polite">Anda belum login. Daftar lewat email terverifikasi.</div>
           <dl class="mt-6 grid gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-5 text-sm sm:grid-cols-2">
             <div><dt class="text-xs font-bold uppercase tracking-wider text-slate-500">Waktu</dt><dd class="mt-1 font-semibold text-slate-900">Sabtu, 21 November 2026</dd><dd class="text-slate-600">14.00 JST · Contoh</dd></div>
             <div><dt class="text-xs font-bold uppercase tracking-wider text-slate-500">Tempat</dt><dd class="mt-1 font-semibold text-slate-900">Online</dd><dd class="text-slate-600">Link setelah konfirmasi</dd></div>
             <div><dt class="text-xs font-bold uppercase tracking-wider text-slate-500">Biaya</dt><dd class="mt-1 font-semibold text-slate-900">Gratis</dd></div>
-            <div><dt class="text-xs font-bold uppercase tracking-wider text-slate-500">Syarat</dt><dd class="mt-1 font-semibold text-slate-900">Tidak wajib anggota PPI</dd></div>
+            <div><dt class="text-xs font-bold uppercase tracking-wider text-slate-500">Syarat</dt><dd id="landing-requirement" class="mt-1 font-semibold text-slate-900">Tidak wajib anggota PPI</dd></div>
           </dl>
-          <button id="event-register" type="button" class="ui-action-primary mt-7 w-full">Daftar acara ini <span aria-hidden="true">→</span></button>
-          <p class="mt-3 text-center text-xs text-slate-500">Bukan pengajuan keanggotaan PPI.</p>
+          <button id="event-register" type="button" class="ui-action-primary mt-7 w-full">Daftar acara ini →</button>
+          <p id="landing-registration-note" class="mt-3 text-center text-xs text-slate-500">Bukan pengajuan keanggotaan PPI.</p>
+        </div>
+
+        <div id="view-blocked" data-view class="hidden pt-8">
+          <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 text-2xl text-slate-600" aria-hidden="true">🔒</div>
+          <p class="mt-5 text-xs font-bold uppercase tracking-wider text-slate-500">Akses terbatas · Simulasi</p>
+          <h3 class="mt-2 text-2xl font-extrabold text-slate-950">Khusus anggota PPI terverifikasi</h3>
+          <p id="blocked-explanation" class="mt-3 text-sm leading-7 text-slate-600">Akun publik belum memenuhi syarat. Mendaftar acara tidak otomatis membuat Anda menjadi anggota resmi.</p>
+          <div class="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-700">Untuk keanggotaan resmi, ajukan permohonan terpisah dan tunggu persetujuan pengurus. Prototipe ini tidak mengajukan permohonan.</div>
+          <button type="button" id="blocked-public-event" class="ui-action-primary mt-7 w-full">Lihat simulasi acara publik →</button>
+          <button type="button" data-back="landing" class="mt-3 min-h-11 w-full text-sm font-bold text-brand">Kembali ke detail acara</button>
         </div>
 
         <form id="view-email" data-view class="hidden pt-8">
@@ -154,7 +173,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <div class="flex justify-between gap-3 py-3"><span class="text-slate-500">Status akun</span><strong id="review-status" class="text-right text-slate-900"></strong></div>
             <div class="flex justify-between gap-3 py-3"><span class="text-slate-500">Biaya</span><strong class="text-right text-slate-900">Gratis</strong></div>
           </div>
-          <p class="mt-3 text-xs leading-6 text-slate-500">Jika anggota PPI, status tetap disimpan terpisah. Tidak ada pembuatan akun kedua atau pengajuan keanggotaan baru.</p>
+          <p id="review-policy-note" class="mt-3 text-xs leading-6 text-slate-500">Registrasi acara tetap terpisah dari status keanggotaan, tanpa membuat akun kedua.</p>
           <div class="mt-6 grid grid-cols-[auto_1fr] gap-3">
             <button type="button" data-back="consent" class="min-h-12 rounded-xl border border-slate-300 px-4 text-sm font-bold text-slate-700">Kembali</button>
             <button type="button" id="confirm-event" class="ui-action-primary w-full">Konfirmasi pendaftaran →</button>
@@ -172,6 +191,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <p class="mt-2 text-xs text-slate-500">Belum tersimpan. QR check-in dan tautan acara tidak diterbitkan.</p>
           </div>
           <p id="success-explanation" class="mt-4 text-sm leading-6 text-slate-600"></p>
+          <p id="success-access" class="mt-3 rounded-xl bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-700"></p>
           <button type="button" id="register-another" class="ui-action-primary mt-7 w-full">Coba skenario akun lain →</button>
           <p class="mt-4 text-xs text-slate-500">Tidak ada registrasi atau perubahan membership yang diproses.</p>
         </div>
@@ -185,18 +205,21 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   <script>
     type Scenario = 'new' | 'public' | 'member';
-    type View = 'landing' | 'email' | 'verify' | 'name' | 'consent' | 'review' | 'success';
+    type View = 'landing' | 'blocked' | 'email' | 'verify' | 'name' | 'consent' | 'review' | 'success';
+    type EventType = 'public' | 'members';
     const scenarioInfo: Record<Scenario,{email:string; name:string; status:string; badge:string; helper:string; explanation:string}> = {
       new: {email:'',name:'',status:'Akun publik baru',badge:'Tanpa akun',helper:'Belum memiliki akun website maupun status keanggotaan.',explanation:'Akun publik dapat digunakan untuk acara lainnya. Tidak otomatis menjadi anggota PPI.'},
-      public: {email:'peserta@example.invalid',name:'Dina Peserta',status:'Akun publik',badge:'Akun publik',helper:'Sudah pernah ikut kegiatan PPI, tetapi belum menjadi anggota resmi.',explanation:'Riwayat kegiatan tersimpan pada akun publik yang sama. Keanggotaan PPI tetap opsional.'},
-      member: {email:'anggota@example.invalid',name:'Rani Anggota',status:'Anggota PPI terverifikasi',badge:'Anggota PPI',helper:'Sudah memiliki akun dan status keanggotaan resmi yang disetujui pengurus.',explanation:'Status anggota PPI tetap aktif. Acara ini tercatat pada akun yang sama, tanpa registrasi keanggotaan ulang.'},
+      public: {email:'peserta@example.invalid',name:'Dina Peserta',status:'Akun publik',badge:'Akun publik',helper:'Sudah login sebagai peserta publik. Nama dan email sudah tersedia; tidak perlu Magic Link ulang.',explanation:'Riwayat kegiatan tersimpan pada akun publik yang sama. Keanggotaan PPI tetap opsional.'},
+      member: {email:'anggota@example.invalid',name:'Rani Anggota',status:'Anggota PPI terverifikasi',badge:'Anggota PPI',helper:'Sudah login sebagai anggota PPI yang disetujui pengurus. Bisa mendaftar acara terbatas tanpa login ulang.',explanation:'Status anggota PPI tetap aktif. Acara ini tercatat pada akun yang sama, tanpa registrasi keanggotaan ulang.'},
     };
-    const views = ['landing','email','verify','name','consent','review','success'] as View[];
+    const views = ['landing','blocked','email','verify','name','consent','review','success'] as View[];
     const stages: Record<View,string> = {
-      landing:'Halaman publik',email:'Identifikasi akun',verify:'Verifikasi email',name:'Profil singkat',consent:'Persetujuan acara',review:'Tinjau data',success:'Selesai'
+      landing:'Halaman publik',blocked:'Tidak memenuhi syarat',email:'Identifikasi akun',verify:'Verifikasi email',name:'Profil singkat',consent:'Persetujuan acara',review:'Tinjau data',success:'Selesai'
     };
     const $ = (selector:string) => document.querySelector<HTMLElement>(selector);
-    const state: {scenario:Scenario;email:string;name:string;view:View} = {scenario:'new',email:'',name:'',view:'landing'};
+    const state: {scenario:Scenario;eventType:EventType;email:string;name:string;view:View} = {scenario:'new',eventType:'public',email:'',name:'',view:'landing'};
+    const eligible = () => state.eventType === 'public' || state.scenario === 'member';
+    const route = ():View[] => state.scenario === 'new' ? ['landing','email','verify','name','consent','review','success'] : ['landing','consent','review','success'];
     const setText = (selector:string,value:string) => { const el=$(selector); if(el)el.textContent=value; };
     const changeView = (view:View) => {
       state.view=view;
@@ -204,12 +227,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         const el=$('#view-'+item);
         el?.classList.toggle('hidden',item!==view);
       }
-      const route:View[]=state.scenario==='new' ? ['landing','email','verify','name','consent','review','success'] : ['landing','email','verify','consent','review','success'];
-      const position=route.indexOf(view);
-      const stage=Math.min(5,Math.max(1,position<0?1:Math.ceil((position+1)*5/route.length)));
-      setText('#flow-stage',stages[view]+' · '+stage+'/5');
+      const steps=route();
+      const stage=view==='blocked'?1:Math.max(1,steps.indexOf(view)+1);
+      setText('#flow-stage',stages[view]+' · '+stage+'/'+steps.length);
       $('#flow-progress')?.setAttribute('aria-valuenow',String(stage));
-      document.querySelectorAll<HTMLElement>('[data-progress]').forEach((el,i)=>{el.classList.toggle('bg-brand',i<stage);el.classList.toggle('bg-slate-200',i>=stage);});
+      $('#flow-progress')?.setAttribute('aria-valuemax',String(steps.length));
+      document.querySelectorAll<HTMLElement>('[data-progress]').forEach((el,i)=>{
+        el.classList.toggle('hidden',i>=steps.length);
+        el.classList.toggle('bg-brand',i<stage);
+        el.classList.toggle('bg-slate-200',i>=stage);
+      });
     };
     const reset = (scenario:Scenario) => {
       state.scenario=scenario;
@@ -224,6 +251,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       setText('#scenario-help',scenarioInfo[scenario].helper);
       setText('#identity-badge',scenarioInfo[scenario].badge);
       setText('#consent-error','');
+      renderLanding();
       document.querySelectorAll<HTMLButtonElement>('[data-scenario]').forEach(btn=>{
         const active=btn.dataset.scenario===scenario;
         btn.setAttribute('aria-pressed',String(active));
@@ -239,7 +267,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       const scenario=btn.dataset.scenario;
       if(scenario==='new'||scenario==='public'||scenario==='member')reset(scenario);
     }));
-    $('#event-register')?.addEventListener('click',()=>changeView('email'));
+    $('#event-register')?.addEventListener('click',()=>{
+      if(!eligible()) return changeView('blocked');
+      changeView(state.scenario==='new'?'email':'consent');
+    });
+    $('#blocked-public-event')?.addEventListener('click',()=>{setEventType('public');changeView('landing');});
     $('#view-email')?.addEventListener('submit',e=>{
       e.preventDefault();
       const field=$('#event-email') as HTMLInputElement|null;
@@ -261,7 +293,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       if(state.name.length<2)return;
       changeView('consent');
     });
-    $('#consent-back')?.addEventListener('click',()=>changeView(state.scenario==='new'?'name':'verify'));
+    $('#consent-back')?.addEventListener('click',()=>changeView(state.scenario==='new'?'name':'landing'));
     $('#view-consent')?.addEventListener('submit',e=>{
       e.preventDefault();
       const consent=$('#event-consent') as HTMLInputElement|null;
@@ -270,14 +302,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       setText('#review-name',state.name);
       setText('#review-email',state.email);
       setText('#review-status',scenarioInfo[state.scenario].status);
+      setText('#review-policy-note',state.eventType==='members'?'Kelayakan acara khusus anggota diperiksa dari status PPI terverifikasi; bukan dari pilihan peran pengguna.':'Acara publik terbuka tanpa keanggotaan, dan registrasi tidak mengubah status akun.');
       changeView('review');
     });
     $('#confirm-event')?.addEventListener('click',()=>{
+      if(!eligible()){changeView('blocked');return;}
       const consent=$('#event-consent') as HTMLInputElement|null;
       if(!consent?.checked){changeView('consent');setText('#consent-error','Persetujuan administrasi acara wajib diberikan.');return;}
       setText('#success-name',state.name);
       setText('#success-status',scenarioInfo[state.scenario].status);
       setText('#success-explanation',scenarioInfo[state.scenario].explanation);
+      setText('#success-access',state.eventType==='members'?'Contoh: acara khusus anggota, status resmi tetap aktif.':'Contoh: acara publik, terbuka untuk semua akun.');
       changeView('success');
     });
     $('#register-another')?.addEventListener('click',()=>reset('new'));
@@ -285,6 +320,41 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       const view=btn.dataset.back;
       if(view==='landing'||view==='email'||view==='consent')changeView(view);
     }));
+    function renderLanding(){
+      const membersOnly=state.eventType==='members';
+      const isMember=state.scenario==='member';
+      const session=state.scenario==='new'?'Belum login. Email dan Magic Link diperlukan sebelum pendaftaran.': 'Sudah login sebagai '+(isMember?'anggota resmi PPI':'pengguna publik')+' ('+state.name+'). Tidak perlu verifikasi email atau isi nama ulang.';
+      setText('#poster-policy',membersOnly?'Poster · Khusus anggota':'Poster · Publik');
+      setText('#event-rule-help',membersOnly?'Hanya akun dengan keanggotaan PPI yang telah disetujui pengurus dapat mendaftar.':'Acara terbuka: akun publik dan anggota resmi sama-sama boleh mendaftar.');
+      setText('#event-access-badge',membersOnly?'Pendaftaran dibatasi':'Pendaftaran terbuka');
+      setText('#event-audience-badge',membersOnly?'Khusus anggota PPI':'Terbuka untuk umum');
+      setText('#landing-requirement',membersOnly?'Anggota PPI terverifikasi':'Tidak wajib anggota PPI');
+      setText('#landing-session',session);
+      setText('#event-register',eligible()?(state.scenario==='new'?'Daftar dengan email →':'Daftar dengan akun saya →'):'Lihat persyaratan pendaftaran →');
+      setText('#landing-registration-note',!eligible()?'Akun ini tidak memenuhi syarat acara khusus anggota.':membersOnly?'Status PPI sudah terverifikasi; tidak perlu daftar anggota ulang.':'Bukan pengajuan keanggotaan PPI.');
+      setText('#blocked-explanation',state.scenario==='new'?'Anda belum memiliki akun terverifikasi dan status keanggotaan resmi PPI.':'Akun publik Anda belum berstatus anggota PPI yang disetujui. Registrasi acara tidak mengubahnya.');
+    }
+    function setEventType(next:EventType){
+      state.eventType=next;
+      const consent=$('#event-consent') as HTMLInputElement|null;
+      if(consent)consent.checked=false;
+      document.querySelectorAll<HTMLButtonElement>('[data-event-type]').forEach(btn=>{
+        const selected=btn.dataset.eventType===next;
+        btn.setAttribute('aria-pressed',String(selected));
+        btn.classList.toggle('border-brand',selected);
+        btn.classList.toggle('bg-accent/10',selected);
+        btn.classList.toggle('text-brand',selected);
+        btn.classList.toggle('border-slate-200',!selected);
+        btn.classList.toggle('bg-white',!selected);
+        btn.classList.toggle('text-slate-600',!selected);
+      });
+      renderLanding();
+      changeView('landing');
+    }
+    document.querySelectorAll<HTMLButtonElement>('[data-event-type]').forEach(btn=>btn.addEventListener('click',()=>{
+      if(btn.dataset.eventType==='public'||btn.dataset.eventType==='members')setEventType(btn.dataset.eventType);
+    }));
     reset('new');
+    setEventType('public');
   </script>
 </BaseLayout>
