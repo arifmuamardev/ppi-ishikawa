@@ -484,7 +484,7 @@ await checkFile('src/styles/global.css', {
 // precede the primary destination choices users came to find.
 for (const [relativePath, choiceMarker] of [
   ['src/pages/life-in-ishikawa.astro', 'journeys.map'],
-  ['src/pages/community.astro', 'communityPaths.map'],
+  ['src/pages/community.astro', 'communityPaths.filter'],
 ]) {
   const source = await read(relativePath);
   const header = source.indexOf('<LandingHeader');
