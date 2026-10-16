@@ -51,7 +51,7 @@ async function testPage(testName, width, userProfile, execute, pendingList = [])
       if (method === 'GET' && url.searchParams.get('verification_status')?.includes('pending')) {
         body = pendingList.filter(p => p.verification_status === 'pending' || p.verification_status === 'rejected');
       } else if (method === 'GET' && url.searchParams.get('verification_status')?.includes('in.')) {
-        body = [...pendingList];
+        body = pendingList.filter(p => p.verification_status === 'pending' || p.verification_status === 'rejected');
       } else if (method === 'PATCH') {
         const payload = route.request().postDataJSON();
         updates.push(payload);
