@@ -59,3 +59,9 @@ Halaman `/`, `/contact/`, `/resources/`, dan kesalahan 404 merupakan layanan int
 - `scripts/check-internal-links.mjs`: memeriksa keluaran akhir setelah gating.
 - Pengaturan ini tidak memerlukan perubahan DNS, hosting atau database.
 - PR #10 (nested-header lama) sengaja **tidak** digabung dalam perubahan modul.
+
+## Certificate Studio
+
+- `memberCertificateStudio`: rute `/member/admin/certificate-studio/`, default `enabled` **di dalam portal admin** (portal induk tetap hidden di navigasi publik).
+- Modul ini mengikuti status `memberAdministration` dan `membership`: jika admin/portal dimatikan, Studio ikut tidak tersedia.
+- Pengoperasian, batas kapasitas, privasi, dan perbedaan dengan sistem QR terverifikasi ada di `docs/CERTIFICATE-STUDIO.md`.

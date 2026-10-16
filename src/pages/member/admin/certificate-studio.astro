@@ -124,6 +124,7 @@ import { withBase } from '../../../utils/paths';
   <script>
     import { namesFromText, namesFromCsv, safeCertificateFileName, indonesianDate } from '../../../lib/certificate-studio.mjs';
     import { renderCertificate, CERTIFICATE_WIDTH, CERTIFICATE_HEIGHT } from '../../../lib/certificate-renderer.mjs';
+    import { getCurrentMember } from '../../../lib/member';
 
     const find = (id) => document.getElementById(id);
     const fields = {
@@ -144,6 +145,7 @@ import { withBase } from '../../../utils/paths';
     let logo = null;
     let signature = null;
     let busy = false;
+    let authorized = false;
 
     const inform = (text, error = false) => {
       if (!message) return;
@@ -188,7 +190,7 @@ import { withBase } from '../../../utils/paths';
         ? `Pratinjau untuk: ${current[0]}${current.length > 1 ? ` (+${current.length - 1} nama lain)` : ''}`
         : 'Pratinjau menggunakan nama penerima pertama.';
       if (preview instanceof HTMLCanvasElement) renderCertificate(preview, details(current[0] || 'Nama Penerima'));
-      let valid = !busy;
+      let valid = !busy && authorized;
       if (valid) {
         try { validate(); } catch { valid = false; }
       }
@@ -254,6 +256,7 @@ import { withBase } from '../../../utils/paths';
 
     const exportPdf = async (one) => {
       if (busy) return;
+      if (!authorized) return inform('Akses hanya untuk pengurus dengan peran admin yang sudah masuk.', true);
       let recipients;
       try { recipients = validate(); } catch (error) { inform(error.message, true); return; }
       const namesToExport = one ? recipients.slice(0, 1) : recipients;
@@ -290,6 +293,10 @@ import { withBase } from '../../../utils/paths';
     exportOne?.addEventListener('click', () => exportPdf(true));
     exportAll?.addEventListener('click', () => exportPdf(false));
     document.fonts?.ready.then(queueRefresh);
+    getCurrentMember().then((member) => {
+      authorized = member?.profile?.role === 'admin';
+      refresh();
+    }).catch(() => { authorized = false; refresh(); });
     refresh();
   </script>
 </MemberLayout>

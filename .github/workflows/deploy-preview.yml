@@ -47,6 +47,7 @@ jobs:
           npm run check:theme
           npm run check:ui
           npm run check:features
+          npm run check:certificates
           npm run build
           node scripts/check-internal-links.mjs
       - name: Validate Worker configuration offline

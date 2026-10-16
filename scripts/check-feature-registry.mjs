@@ -22,6 +22,7 @@ const routes = {
   '/member/': 'membership',
   '/member/login/': 'membership',
   '/member/admin/organization/': 'memberAdministration',
+  '/member/admin/certificate-studio/': 'memberCertificateStudio',
   '/member/mentoring/': 'memberGrowth',
   '/member/events/': 'memberEvents',
   '/member/card/': 'memberCards',
@@ -41,8 +42,11 @@ assert.equal(isDiscoverableHref('/member/events/'), false);
 const flags = { ...featureStates, membership: 'disabled', stories: 'disabled', campuses: 'hidden' };
 assert.equal(featureState('memberEvents', flags), 'disabled');
 assert.equal(isAvailableHref('/member/admin/organization/', flags), false);
+assert.equal(isAvailableHref('/member/admin/certificate-studio/', flags), false);
 assert.equal(isAvailableHref('/stories/example/', flags), false);
 assert.equal(isDiscoverableHref('/community/kampus/jaist/', { overrides: flags }), false);
 assert.equal(isAvailableHref('/community/kampus/jaist/', flags), true);
 assert.equal(isAvailableHref('/verify/member/', flags), true, 'Verification stays separate from the portal');
+assert.equal(isAvailableHref('/member/admin/certificate-studio/', { ...featureStates, memberCertificateStudio: 'disabled' }), false);
+assert.equal(isAvailableHref('/member/admin/certificate-studio/', { ...featureStates, memberAdministration: 'disabled' }), false);
 console.log(`Feature registry OK: ${Object.keys(featureStates).length} modules, ${Object.keys(routes).length} routing fixtures.`);
