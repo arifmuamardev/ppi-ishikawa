@@ -1,0 +1,42 @@
+name: Event registration design audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/pages/design-lab/event-registration.astro'
+      - 'scripts/audit-event-registration-design.mjs'
+      - '.github/workflows/event-registration-audit.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/pages/design-lab/event-registration.astro'
+      - 'scripts/audit-event-registration-design.mjs'
+      - '.github/workflows/event-registration-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - run: npm install --no-package-lock
+      - run: npm run build
+      - name: Audit new visitors, existing participants and PPI members
+        shell: bash
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 &
+          preview_pid=$!
+          trap 'kill $preview_pid || true' EXIT
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4321/design-lab/event-registration/ >/dev/null; then break; fi
+            sleep 1
+          done
+          node scripts/audit-event-registration-design.mjs
