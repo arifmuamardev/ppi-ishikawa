@@ -347,8 +347,13 @@ import { studyLevels } from '../../data/membership';
       }
     }
     function startUpgrade(){
+      const preservedEmail=loginField?.value||'';
+      const preservedName=nameField?.value||'';
       scenarioSet('new');
-      loginField!.value=loginField?.value||'';
+      if(loginField)loginField.value=preservedEmail;
+      if(nameField)nameField.value=preservedName;
+      const emailLabel=$('#wizard-email');
+      if(emailLabel)emailLabel.textContent=preservedEmail;
       const field=document.querySelector<HTMLInputElement>('input[name="intent"][value="membership"]');
       if(field)field.checked=true;
       selectChoiceAppearance('intent');
