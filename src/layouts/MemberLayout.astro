@@ -239,13 +239,20 @@ const navLinkClass = (href: string) =>
         : 'Menunggu verifikasi';
       statuses.forEach((node) => { node.textContent = membershipLabel; });
 
-      if (member.profile.role === 'admin') {
+      if (member.profile.role === 'admin' && member.profile.verification_status === 'approved') {
         adminTools.forEach((node) => node.classList.remove('hidden'));
       }
       if (isMembershipDemoMode) demoBanner?.classList.remove('hidden');
 
       loading?.classList.add('hidden');
       content?.classList.remove('hidden');
+    }
+
+    if (member?.user && !member.profile && loading) {
+      const heading = loading.querySelector('p.font-bold');
+      const description = loading.querySelector('p.mt-2');
+      if (heading) heading.textContent = 'Profil membership belum tersedia';
+      if (description) description.textContent = 'Sesi login berhasil, tetapi data profil belum dapat dimuat. Muat ulang halaman; jika masih terjadi, hubungi pengurus PPI Ishikawa.';
     }
 
     signoutButtons.forEach((button) => {
