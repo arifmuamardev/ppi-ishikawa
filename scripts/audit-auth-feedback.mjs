@@ -140,10 +140,12 @@ try {
   // Magic-link login must NOT create new users. Test the actual mocked Auth API payload.
   const magicLogin = await browser.newPage({ viewport: { width: 390, height: 860 } });
   let magicLoginPayload = null;
+  let magicLoginRedirect = null;
   await magicLogin.route(/^https:\/\/[^/]+\.supabase\.co\//, async (route) => {
     const pathname = new URL(route.request().url()).pathname;
     if (pathname.endsWith('/otp')) {
       magicLoginPayload = route.request().postDataJSON();
+      magicLoginRedirect = new URL(route.request().url()).searchParams.get('redirect_to');
       await route.fulfill({ status: 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*', 'access-control-allow-headers':'*' }, body: '{}' });
     } else {
       await route.fulfill({ status: 401, contentType:'application/json', headers: { 'access-control-allow-origin': '*' }, body: '{"message":"unauthorized"}' });
@@ -157,16 +159,18 @@ try {
     verify(magicLoginPayload?.create_user === false, 'magic login: auto-signup disabled');
     verify(magicLoginPayload?.email === 'member@example.invalid', 'magic login: email preserved');
     verify(magicLoginPayload?.gotrue_meta_security?.captcha_token === undefined, 'magic login: no secret metadata leaked');
-    verify((magicLoginPayload?.redirect_to || '') === '' || typeof magicLoginPayload?.redirect_to === 'string', 'magic login: redirect processed');
+    verify(magicLoginRedirect === 'https://ppi-ishikawa.org/member/login/', 'magic login: production callback requested, actual='+magicLoginRedirect);
   } catch(e) { failures.push('magic login: ' + e.message); } finally { await magicLogin.close(); }
 
   // Registration carries existing profile fields while creating a passwordless account.
   const magicRegister = await browser.newPage({ viewport: { width: 390, height: 860 } });
   let magicRegisterPayload = null;
+  let magicRegisterRedirect = null;
   await magicRegister.route(/^https:\/\/[^/]+\.supabase\.co\//, async (route) => {
     const pathname = new URL(route.request().url()).pathname;
     if (pathname.endsWith('/otp')) {
       magicRegisterPayload = route.request().postDataJSON();
+      magicRegisterRedirect = new URL(route.request().url()).searchParams.get('redirect_to');
       await route.fulfill({ status: 200, contentType:'application/json', headers: { 'access-control-allow-origin': '*', 'access-control-allow-headers':'*' }, body:'{}' });
     } else {
       await route.fulfill({ status: 401, contentType:'application/json', headers: { 'access-control-allow-origin': '*' }, body:'{"message":"unauthorized"}' });
@@ -187,6 +191,7 @@ try {
     verify(magicRegisterPayload?.data?.full_name === 'Contoh Pengujian', 'magic registration: profile name metadata');
     verify(magicRegisterPayload?.data?.program === 'Information Science', 'magic registration: program metadata');
     verify(!('password' in (magicRegisterPayload||{})), 'magic registration: no password sent');
+    verify(magicRegisterRedirect === 'https://ppi-ishikawa.org/member/login/?confirmed=1', 'magic registration: production callback requested, actual='+magicRegisterRedirect);
   } catch(e) { failures.push('magic registration: ' + e.message); } finally { await magicRegister.close(); }
 } finally {
   await browser.close();
