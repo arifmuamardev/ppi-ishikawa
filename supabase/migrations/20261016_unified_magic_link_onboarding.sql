@@ -14,9 +14,9 @@ where onboarding_completed_at is null
 
 revoke update(onboarding_completed_at) on public.profiles from authenticated;
 
--- The invoker has only the current member's RLS-permitted UPDATE rights;
--- this function cannot grant approval or change roles.
-create or replace function public.complete_member_onboarding(
+-- Privileged implementation stays in the unexposed private schema.
+-- Explicit auth.uid ownership check prevents writes to other profiles.
+create or replace function private.complete_member_onboarding_impl(
   input_name text,
   input_campus text,
   input_program text,
@@ -24,7 +24,7 @@ create or replace function public.complete_member_onboarding(
   consent_accepted boolean
 )
 returns boolean
-language plpgsql security invoker set search_path = ''
+language plpgsql security definer set search_path = ''
 as $fn$
 begin
   if (select auth.uid()) is null then
@@ -58,6 +58,23 @@ begin
   end if;
   return true;
 end;
+$fn$;
+revoke all on function private.complete_member_onboarding_impl(text,text,text,text,boolean) from public,anon,authenticated;
+grant execute on function private.complete_member_onboarding_impl(text,text,text,text,boolean) to authenticated;
+
+create or replace function public.complete_member_onboarding(
+  input_name text,
+  input_campus text,
+  input_program text,
+  input_study_level text,
+  consent_accepted boolean
+)
+returns boolean
+language sql security invoker set search_path = ''
+as $fn$
+  select private.complete_member_onboarding_impl(
+    input_name,input_campus,input_program,input_study_level,consent_accepted
+  );
 $fn$;
 revoke all on function public.complete_member_onboarding(text,text,text,text,boolean) from public,anon,authenticated;
 grant execute on function public.complete_member_onboarding(text,text,text,text,boolean) to authenticated;
