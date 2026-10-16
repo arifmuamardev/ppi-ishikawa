@@ -40,8 +40,8 @@ try {
         const prefix = { login: 'login-message', register: 'register-message', 'forgot-password': 'forgot-message', 'reset-password': 'reset-message' }[route];
         const form = page.locator('form');
         verify(response?.status() === 200, route + '/' + width + ': HTTP 200');
-        verify(await form.count() === 1, route + '/' + width + ': one form');
-        verify(await form.getAttribute('aria-busy') === 'false', route + '/' + width + ': idle form');
+        verify(await form.count() === (route === 'login' ? 2 : 1), route + '/' + width + ': correct form count');
+        verify(await (route === 'login' ? page.locator('#member-login-form') : form).first().getAttribute('aria-busy') === 'false', route + '/' + width + ': idle form');
         verify(await page.locator('#' + prefix + '-status').getAttribute('role') === 'status', route + '/' + width + ': status live region');
         verify(await page.locator('#' + prefix + '-error').getAttribute('role') === 'alert', route + '/' + width + ': error live region');
         verify(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth) <= 2, route + '/' + width + ': no overflow');
@@ -63,21 +63,13 @@ try {
   }
 
   // Validate mismatch is explicitly linked to confirmation field, and clears on correction.
-  for (const route of ['register', 'reset-password']) {
+  for (const route of ['reset-password']) {
     const page = await browser.newPage({ viewport: { width: 390, height: 860 } });
     await mockAuth(page, signinFailure);
     try {
       await page.goto(baseURL + '/member/' + route + '/', { waitUntil: 'domcontentloaded' });
       const pass = page.locator('input[name="password"]');
       const confirm = page.locator('input[name="password_confirm"]');
-      if (route === 'register') {
-        await page.locator('input[name="full_name"]').fill('Contoh Pengujian');
-        await page.locator('input[name="email"]').fill('example@example.invalid');
-        await page.locator('select[name="campus_slug"]').selectOption({ index: 1 });
-        await page.locator('input[name="program"]').fill('Example');
-        await page.locator('select[name="study_level"]').selectOption({ index: 1 });
-        await page.locator('input[name="consent"]').check();
-      }
       await pass.fill('ValidExample999');
       await confirm.fill('Mismatch999');
       await page.locator('button[type="submit"]').click();
@@ -133,16 +125,69 @@ try {
   await mockAuth(login, signinFailure);
   try {
     await login.goto(baseURL + '/member/login/', { waitUntil: 'domcontentloaded' });
-    await login.locator('input[name="email"]').fill('example@example.invalid');
-    await login.locator('input[name="password"]').fill('ExampleWrong999');
-    await login.locator('button[type="submit"]').click();
+    await login.locator('#password-login-option summary').click();
+    await login.locator('#member-password-form input[name="email"]').fill('example@example.invalid');
+    await login.locator('#member-password-form input[name="password"]').fill('ExampleWrong999');
+    await login.locator('#member-password-form button[type="submit"]').click();
     await login.locator('#login-message-error').filter({ hasText: 'Email atau password belum' }).waitFor({ state: 'visible' });
-    verify(await login.locator('button[type="submit"]').isEnabled(), 'login: unlocked after failure');
-    verify(await login.locator('form').getAttribute('data-auth-state') === 'error', 'login: error not success');
-    verify(await login.locator('input[name="email"]').inputValue() === 'example@example.invalid', 'login: retains email on failure');
+    verify(await login.locator('#member-password-form button[type="submit"]').isEnabled(), 'login: unlocked after failure');
+    verify(await login.locator('#member-password-form').getAttribute('data-auth-state') === 'error', 'login: error not success');
+    verify(await login.locator('#member-password-form input[name="email"]').inputValue() === 'example@example.invalid', 'login: retains email on failure');
   } catch (e) {
     failures.push('login: failure state: ' + e.message);
   } finally { await login.close(); }
+
+  // Magic-link login must NOT create new users. Test the actual mocked Auth API payload.
+  const magicLogin = await browser.newPage({ viewport: { width: 390, height: 860 } });
+  let magicLoginPayload = null;
+  await magicLogin.route(/^https:\/\/[^/]+\.supabase\.co\//, async (route) => {
+    const pathname = new URL(route.request().url()).pathname;
+    if (pathname.endsWith('/otp')) {
+      magicLoginPayload = route.request().postDataJSON();
+      await route.fulfill({ status: 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*', 'access-control-allow-headers':'*' }, body: '{}' });
+    } else {
+      await route.fulfill({ status: 401, contentType:'application/json', headers: { 'access-control-allow-origin': '*' }, body: '{"message":"unauthorized"}' });
+    }
+  });
+  try {
+    await magicLogin.goto(baseURL + '/member/login/', { waitUntil: 'domcontentloaded' });
+    await magicLogin.locator('#member-login-form input[name="email"]').fill('member@example.invalid');
+    await magicLogin.locator('#member-login-form button[type="submit"]').click();
+    await magicLogin.locator('#login-message-status').filter({ hasText: 'Jika alamat email sudah terdaftar' }).waitFor();
+    verify(magicLoginPayload?.create_user === false, 'magic login: auto-signup disabled');
+    verify(magicLoginPayload?.email === 'member@example.invalid', 'magic login: email preserved');
+    verify(magicLoginPayload?.gotrue_meta_security?.captcha_token === undefined, 'magic login: no secret metadata leaked');
+    verify((magicLoginPayload?.redirect_to || '') === '' || typeof magicLoginPayload?.redirect_to === 'string', 'magic login: redirect processed');
+  } catch(e) { failures.push('magic login: ' + e.message); } finally { await magicLogin.close(); }
+
+  // Registration carries existing profile fields while creating a passwordless account.
+  const magicRegister = await browser.newPage({ viewport: { width: 390, height: 860 } });
+  let magicRegisterPayload = null;
+  await magicRegister.route(/^https:\/\/[^/]+\.supabase\.co\//, async (route) => {
+    const pathname = new URL(route.request().url()).pathname;
+    if (pathname.endsWith('/otp')) {
+      magicRegisterPayload = route.request().postDataJSON();
+      await route.fulfill({ status: 200, contentType:'application/json', headers: { 'access-control-allow-origin': '*', 'access-control-allow-headers':'*' }, body:'{}' });
+    } else {
+      await route.fulfill({ status: 401, contentType:'application/json', headers: { 'access-control-allow-origin': '*' }, body:'{"message":"unauthorized"}' });
+    }
+  });
+  try {
+    await magicRegister.goto(baseURL + '/member/register/', { waitUntil: 'domcontentloaded' });
+    await magicRegister.locator('input[name="full_name"]').fill('Contoh Pengujian');
+    await magicRegister.locator('input[name="email"]').fill('newmember@example.invalid');
+    await magicRegister.locator('select[name="campus_slug"]').selectOption({ index: 1 });
+    await magicRegister.locator('input[name="program"]').fill('Information Science');
+    await magicRegister.locator('select[name="study_level"]').selectOption({ index: 1 });
+    await magicRegister.locator('input[name="consent"]').check();
+    verify(await magicRegister.locator('input[type="password"]').count() === 0, 'magic registration: no password field');
+    await magicRegister.locator('#member-register-form button[type="submit"]').click();
+    await magicRegister.locator('#register-message-status').filter({ hasText: 'Permintaan pendaftaran diterima' }).waitFor();
+    verify(magicRegisterPayload?.create_user === true, 'magic registration: new user creation enabled');
+    verify(magicRegisterPayload?.data?.full_name === 'Contoh Pengujian', 'magic registration: profile name metadata');
+    verify(magicRegisterPayload?.data?.program === 'Information Science', 'magic registration: program metadata');
+    verify(!('password' in (magicRegisterPayload||{})), 'magic registration: no password sent');
+  } catch(e) { failures.push('magic registration: ' + e.message); } finally { await magicRegister.close(); }
 } finally {
   await browser.close();
 }
