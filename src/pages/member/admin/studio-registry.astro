@@ -1,0 +1,46 @@
+---
+import MemberLayout from '../../../layouts/MemberLayout.astro';
+import AppPageHeader from '../../../components/AppPageHeader.astro';
+---
+<MemberLayout title="Registri Sertifikat" requireAdmin={true}>
+  <div class="space-y-6">
+    <AppPageHeader eyebrow="Admin · Registri Sertifikat" title="Sertifikat yang telah disahkan" description="Periksa sertifikat kegiatan, salin halaman verifikasi, atau cabut sertifikat bila penerbitannya keliru." />
+    <p class="rounded-2xl border border-accent/30 bg-accent/10 p-4 text-sm text-slate-700">Pencabutan mengubah status di halaman verifikasi publik. Data penerbitan tidak dapat diedit; terbitkan ulang jika ada kesalahan.</p>
+    <div id="studio-registry-message" role="status" class="text-sm text-slate-600">Memuat data…</div>
+    <div id="studio-registry-list" class="space-y-3"></div>
+  </div>
+  <script>
+    import {listStudioCertificates,setStudioCertificateRevoked,studioVerifyUrl} from '../../../lib/studio-issuance';
+    import {getCurrentMember,isMembershipDemoMode} from '../../../lib/member';
+    const msg=document.getElementById('studio-registry-message');
+    const root=document.getElementById('studio-registry-list');
+    const member=await getCurrentMember();
+    if(isMembershipDemoMode||member?.profile?.full_name!=="Arif Mu'amar Wahid"||member?.profile?.role!=='admin'||member?.profile?.verification_status!=='approved'){
+      if(msg)msg.textContent='Registri resmi hanya dapat dikelola oleh akun Ketua yang ditetapkan.';
+    }else{
+      const load=async()=>{
+        const {data,error}=await listStudioCertificates();
+        if(error){if(msg)msg.textContent='Tidak dapat mengambil registri. Periksa hak akses.';return;}
+        if(msg)msg.textContent=`${data.length} sertifikat terakhir`;
+        root?.replaceChildren();
+        for(const c of data){
+          const item=document.createElement('article');
+          item.className='rounded-2xl border border-slate-200 bg-white p-5';
+          const title=document.createElement('h2');title.className='font-bold text-slate-950';title.textContent=c.recipient_name+' · '+c.certificate_number;
+          const info=document.createElement('p');info.className='mt-2 text-sm text-slate-600';info.textContent=c.event_title+' — '+(c.revoked_at?'Dicabut':'Valid');
+          const row=document.createElement('div');row.className='mt-4 flex flex-wrap gap-3';
+          const link=document.createElement('a');link.href=studioVerifyUrl(c.verification_token);link.target='_blank';link.rel='noopener noreferrer';link.textContent='Lihat verifikasi';link.className='rounded-xl border border-slate-300 px-4 py-2 text-sm font-bold text-slate-700';
+          const button=document.createElement('button');button.type='button';button.className='rounded-xl bg-brand px-4 py-2 text-sm font-bold text-white';button.textContent=c.revoked_at?'Aktifkan kembali':'Cabut sertifikat';
+          button.onclick=async()=>{
+            if(!confirm(c.revoked_at?'Aktifkan kembali sertifikat ini?':'Cabut sertifikat ini? QR akan menunjukkan status tidak berlaku.'))return;
+            button.disabled=true;
+            const result=await setStudioCertificateRevoked(c.id,!c.revoked_at);
+            if(result.error){button.disabled=false;if(msg)msg.textContent='Perubahan status gagal.';return;}
+            await load();
+          };
+          row.append(link,button);item.append(title,info,row);root?.append(item);
+        }
+      };await load();
+    }
+  </script>
+</MemberLayout>

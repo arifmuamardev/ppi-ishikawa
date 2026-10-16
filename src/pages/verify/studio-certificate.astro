@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import VerificationShell from '../../components/VerificationShell.astro';
+---
+<BaseLayout title="Verifikasi Sertifikat Kegiatan" description="Periksa pengesahan elektronik sertifikat kegiatan PPI Ishikawa melalui QR unik.">
+  <VerificationShell eyebrow="Verifikasi Elektronik" title="Verifikasi Sertifikat Kegiatan" description="Periksa nomor, penerima, kegiatan, penanda tangan, dan status penerbitan yang tercatat di PPI Ishikawa.">
+    <div id="studio-verify-loading" role="status" class="mt-7 rounded-2xl bg-slate-50 p-5 text-sm text-slate-700">Memeriksa registri sertifikat…</div>
+    <div id="studio-verify-invalid" role="alert" class="mt-7 hidden rounded-2xl border border-red-200 bg-red-50 p-5 text-sm text-red-800">Sertifikat tidak ditemukan atau kode QR tidak valid.</div>
+    <section id="studio-verify-result" class="mt-7 hidden space-y-5" aria-live="polite">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <span id="studio-verify-status" class="rounded-full px-4 py-2 text-xs font-bold"></span>
+        <span id="studio-verify-number" class="font-mono text-sm font-semibold text-slate-700"></span>
+      </div>
+      <div><p class="text-sm text-slate-500">Diterbitkan untuk</p><h2 id="studio-verify-name" class="mt-2 text-2xl font-bold text-slate-950"></h2></div>
+      <dl class="grid gap-4 sm:grid-cols-2">
+        <div class="rounded-xl bg-slate-50 p-4"><dt class="text-xs font-bold text-slate-500">Kegiatan</dt><dd id="studio-verify-event" class="mt-2 font-semibold text-slate-900"></dd></div>
+        <div class="rounded-xl bg-slate-50 p-4"><dt class="text-xs font-bold text-slate-500">Tanggal kegiatan</dt><dd id="studio-verify-date" class="mt-2 font-semibold text-slate-900"></dd></div>
+        <div class="rounded-xl bg-slate-50 p-4"><dt class="text-xs font-bold text-slate-500">Peran</dt><dd id="studio-verify-role" class="mt-2 font-semibold text-slate-900"></dd></div>
+        <div class="rounded-xl bg-slate-50 p-4"><dt class="text-xs font-bold text-slate-500">Penyelenggara</dt><dd id="studio-verify-organizer" class="mt-2 font-semibold text-slate-900"></dd></div>
+        <div class="rounded-xl bg-slate-50 p-4"><dt class="text-xs font-bold text-slate-500">Disahkan oleh</dt><dd id="studio-verify-signer" class="mt-2 font-semibold text-slate-900"></dd><p id="studio-verify-signer-role" class="text-sm text-slate-600"></p></div>
+        <div class="rounded-xl bg-slate-50 p-4"><dt class="text-xs font-bold text-slate-500">Tanggal penerbitan</dt><dd id="studio-verify-issued" class="mt-2 font-semibold text-slate-900"></dd></div>
+      </dl>
+      <p class="text-xs leading-6 text-slate-500">Verifikasi ini memastikan kesesuaian data dengan registri penerbitan PPI Ishikawa. Ini bukan tanda tangan digital tersertifikasi dan tidak membuktikan bahwa seluruh isi berkas PDF tidak berubah.</p>
+    </section>
+  </VerificationShell>
+  <script>
+    import {verifyStudioCertificate} from '../../lib/studio-issuance';
+    const token = new URLSearchParams(location.search).get('token') || '';
+    const loading=document.getElementById('studio-verify-loading');
+    const invalid=document.getElementById('studio-verify-invalid');
+    const section=document.getElementById('studio-verify-result');
+    const set=(id,value)=>{const el=document.getElementById('studio-verify-'+id);if(el)el.textContent=String(value||'—');};
+    const format=(x)=>x ? new Intl.DateTimeFormat('id-ID',{dateStyle:'long',timeZone:'Asia/Tokyo'}).format(new Date(x)) : '—';
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(token)) {
+      loading?.classList.add('hidden');invalid?.classList.remove('hidden');
+    } else {
+      const {data,error}=await verifyStudioCertificate(token);
+      loading?.classList.add('hidden');
+      const cert=data?.[0];
+      if(error||!cert){invalid?.classList.remove('hidden');}
+      else {
+        section?.classList.remove('hidden');
+        set('number',cert.certificate_number);set('name',cert.recipient_name);
+        set('event',cert.event_title);set('date',format(cert.event_date));
+        set('role',cert.recipient_role);set('organizer',cert.organizer);
+        set('signer',cert.signer_name);set('signer-role',cert.signer_role);
+        set('issued',format(cert.issued_at));
+        const status=document.getElementById('studio-verify-status');
+        if(status) {
+          status.textContent=cert.valid?'VALID — TERCATAT':'DICABUT — TIDAK BERLAKU';
+          status.className=cert.valid?'rounded-full bg-emerald-50 px-4 py-2 text-xs font-bold text-emerald-800':'rounded-full bg-red-50 px-4 py-2 text-xs font-bold text-red-800';
+        }
+      }
+    }
+  </script>
+</BaseLayout>
