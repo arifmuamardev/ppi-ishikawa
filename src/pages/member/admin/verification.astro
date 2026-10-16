@@ -10,7 +10,7 @@ import FormFeedback from '../../../components/FormFeedback.astro';
     <AppPageHeader
       eyebrow="Admin Membership"
       title="Verifikasi anggota"
-      description="Periksa data pendaftaran, tentukan status membership, lalu setujui atau tandai untuk tindak lanjut."
+      description="Periksa pendaftaran baru maupun yang memerlukan tindak lanjut. Pengurus dapat menyetujui kembali setelah data diperbaiki."
     />
 
     <FormFeedback id="verification-admin-message" />
@@ -26,7 +26,7 @@ import FormFeedback from '../../../components/FormFeedback.astro';
     </section>
 
     <div id="verification-admin-empty" role="status" aria-live="polite" class="hidden rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
-      <p class="font-bold text-slate-950">Tidak ada pendaftaran yang menunggu verifikasi.</p>
+      <p class="font-bold text-slate-950">Tidak ada pendaftaran baru atau yang memerlukan tindak lanjut.</p>
     </div>
     <section id="verification-admin-list" aria-busy="false" aria-label="Antrean pendaftaran anggota" class="space-y-4"></section>
   </div>
@@ -44,6 +44,7 @@ import FormFeedback from '../../../components/FormFeedback.astro';
       study_level: string | null;
       field_of_study: string | null;
       membership_status: string;
+      verification_status: 'pending' | 'rejected';
     };
     type Decision = 'approved' | 'rejected';
     type Membership = 'incoming' | 'active' | 'alumni' | 'inactive';
@@ -75,7 +76,11 @@ import FormFeedback from '../../../components/FormFeedback.astro';
     const render = (members: PendingMember[]) => {
       if (!list) return;
       list.replaceChildren();
-      if (count) count.textContent = `${members.length} menunggu`;
+      if (count) {
+        const pending = members.filter(item => item.verification_status === 'pending').length;
+        const followup = members.length - pending;
+        count.textContent = `${pending} menunggu · ${followup} tindak lanjut`;
+      }
       empty?.classList.toggle('hidden', members.length !== 0);
 
       for (const member of members) {
@@ -84,6 +89,7 @@ import FormFeedback from '../../../components/FormFeedback.astro';
         const info = node('div', '');
         const name = member.full_name || 'Nama belum diisi';
         info.append(node('h2', 'text-xl font-bold text-slate-950', name));
+        info.append(node('p', 'mt-2 text-xs font-bold text-brand', member.verification_status === 'rejected' ? 'Perlu tindak lanjut · dapat disetujui kembali' : 'Menunggu verifikasi'));
         info.append(node('p', 'mt-2 text-sm text-slate-600',
           [campusMap.get(member.campus_slug || '') || member.campus_slug, member.program, member.study_level].filter(Boolean).join(' · ')));
         if (member.field_of_study) info.append(node('p', 'mt-2 text-sm text-slate-500', member.field_of_study));
@@ -148,7 +154,8 @@ import FormFeedback from '../../../components/FormFeedback.astro';
 
         approve.addEventListener('click', () => review('approved'));
         reject.addEventListener('click', () => review('rejected'));
-        controls.append(select, approve, reject);
+        controls.append(select, approve);
+        if (member.verification_status !== 'rejected') controls.append(reject);
         header.append(info, controls);
         card.append(header);
         list.append(card);
