@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LandingHeader from '../components/LandingHeader.astro';
 import NavigationCard from '../components/NavigationCard.astro';
+import { isDiscoverableHref } from '../config/features.mjs';
 
 const directories = [
   {
@@ -52,7 +53,7 @@ const directories = [
     <h2 class="type-section text-slate-950">Pilih area sesuai kebutuhan Anda.</h2>
 
     <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-      {directories.map((item) => (
+      {directories.filter((item) => isDiscoverableHref(item.href)).map((item) => (
         <NavigationCard href={item.href} title={item.title} description={item.description} icon={item.icon} density="compact" />
       ))}
     </div>
