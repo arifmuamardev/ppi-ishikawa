@@ -7,9 +7,9 @@ import { studyLevels } from '../../data/membership';
   <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
     <div class="mb-7 flex flex-wrap items-start justify-between gap-4">
       <div>
-        <p class="type-eyebrow text-brand">Design Lab / Membership · Konsep W01</p>
-        <h1 class="mt-2 text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl">Masuk mudah. Kenalan bertahap.</h1>
-        <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-600">Simulasikan perjalanan anggota baru atau lama. Ini rancangan UI, belum mengubah sistem login dan onboarding yang aktif.</p>
+        <p class="type-eyebrow text-brand">Design Lab / Membership · Konsep W02</p>
+        <h1 class="mt-2 text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl">Satu akun, dua jalur.</h1>
+        <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-600">Simulasikan akun peserta kegiatan atau pendaftaran keanggotaan resmi PPI. Login dan onboarding produksi tidak berubah.</p>
       </div>
       <span class="rounded-full border border-accent/35 bg-accent/10 px-3 py-2 text-xs font-bold text-brand">PROTOTIPE · TANPA DATABASE</span>
     </div>
@@ -37,13 +37,13 @@ import { studyLevels } from '../../data/membership';
         <div class="mt-16 lg:mt-24">
           <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#B9E3D7]">Member Experience</p>
           <h2 class="mt-4 text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">Satu email.<br/>Satu langkah<br/>setiap waktu.</h2>
-          <p class="mt-5 max-w-sm text-sm leading-7 text-white/80">Tidak perlu mengingat password atau mengisi formulir panjang. Kami hanya menanyakan informasi yang diperlukan, satu per satu.</p>
+          <p class="mt-5 max-w-sm text-sm leading-7 text-white/80">Tidak semua pengguna website adalah anggota organisasi. Pilih tujuan Anda, lalu isi hanya data yang diperlukan, satu pertanyaan setiap layar.</p>
         </div>
 
         <div class="mt-10 space-y-4 border-t border-white/20 pt-7 text-sm lg:mt-20">
           <div class="flex gap-3"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 font-bold">1</span><p class="pt-1">Masukkan email dan buka Magic Link</p></div>
-          <div class="flex gap-3"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 font-bold">2</span><p class="pt-1">Anggota baru melengkapi 5 pertanyaan singkat</p></div>
-          <div class="flex gap-3"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 font-bold">3</span><p class="pt-1">Profil menunggu persetujuan pengurus</p></div>
+          <div class="flex gap-3"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 font-bold">2</span><p class="pt-1">Pilih peserta kegiatan atau calon anggota PPI</p></div>
+          <div class="flex gap-3"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 font-bold">3</span><p class="pt-1">Hanya keanggotaan resmi perlu verifikasi</p></div>
         </div>
       </aside>
 
@@ -51,15 +51,15 @@ import { studyLevels } from '../../data/membership';
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-5">
           <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Simulasi perjalanan</p>
           <div role="group" aria-label="Jenis anggota dalam simulasi" class="flex items-center gap-1 rounded-xl bg-slate-100 p-1">
-            <button id="scenario-new" type="button" class="rounded-lg bg-white px-3 py-2 text-xs font-bold text-brand shadow-sm" aria-pressed="true">Anggota baru</button>
-            <button id="scenario-existing" type="button" class="rounded-lg px-3 py-2 text-xs font-bold text-slate-600" aria-pressed="false">Anggota lama</button>
+            <button id="scenario-new" type="button" class="rounded-lg bg-white px-3 py-2 text-xs font-bold text-brand shadow-sm" aria-pressed="true">Akun baru</button>
+            <button id="scenario-existing" type="button" class="rounded-lg px-3 py-2 text-xs font-bold text-slate-600" aria-pressed="false">Akun sudah ada</button>
           </div>
         </div>
 
         <div id="prototype-login" class="pt-10 sm:pt-14">
           <p class="text-xs font-bold uppercase tracking-[0.12em] text-brand">Langkah pertama</p>
-          <h3 class="mt-3 text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl">Masuk atau daftar anggota</h3>
-          <p class="mt-3 text-sm leading-7 text-slate-600">Cukup masukkan alamat email. Kami akan mengirimkan tautan untuk melanjutkan.</p>
+          <h3 class="mt-3 text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl">Masuk atau buat akun</h3>
+          <p class="mt-3 text-sm leading-7 text-slate-600">Satu email untuk mengikuti kegiatan atau mengajukan keanggotaan resmi.</p>
           <form id="prototype-login-form" class="mt-9 space-y-5">
             <label class="block">
               <span class="text-sm font-bold text-slate-800">Alamat email Anda</span>
@@ -69,7 +69,7 @@ import { studyLevels } from '../../data/membership';
           </form>
           <div class="mt-6 flex gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
             <span aria-hidden="true" class="text-lg text-brand">✦</span>
-            <p class="text-xs leading-6 text-slate-600">Tidak perlu password. Alur anggota baru dan lama menggunakan formulir yang sama. <strong>Simulasi ini tidak benar-benar mengirim email.</strong></p>
+            <p class="text-xs leading-6 text-slate-600">Tidak perlu password atau status mahasiswa untuk membuat akun website. <strong>Simulasi ini tidak benar-benar mengirim email.</strong></p>
           </div>
         </div>
 
@@ -83,37 +83,56 @@ import { studyLevels } from '../../data/membership';
         </div>
 
         <form id="prototype-wizard" class="hidden pt-8 sm:pt-10" novalidate>
-          <div class="mb-7 flex items-center justify-between gap-3">
-            <p id="wizard-counter" class="text-xs font-bold uppercase tracking-[0.12em] text-brand">Pertanyaan 1 dari 5</p>
-            <span id="wizard-estimate" class="text-xs font-semibold text-slate-500">± 1 menit</span>
+          <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <p id="wizard-counter" class="text-xs font-bold uppercase tracking-[0.12em] text-brand">Pilih tujuan Anda</p>
+            <span id="wizard-path-label" class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-600">Akun website</span>
           </div>
-          <div class="mb-9 flex gap-1.5" role="progressbar" id="wizard-progress" aria-label="Progres onboarding" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1">
-            {Array.from({length:6},(_,i)=><span data-progress={i} class:list={['h-1.5 flex-1 rounded-full',i===0?'bg-brand':'bg-slate-200']} aria-hidden="true"></span>)}
+          <div class="mb-9 flex gap-1.5" role="progressbar" id="wizard-progress" aria-label="Progres onboarding" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1">
+            {Array.from({length:7},(_,i)=><span data-progress={i} class:list={['h-1.5 flex-1 rounded-full',i===0?'bg-brand':'bg-slate-200']} aria-hidden="true"></span>)}
           </div>
-          <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Bergabung dengan komunitas Indonesia di Ishikawa</p>
-          <h3 id="wizard-title" class="mt-3 text-2xl font-extrabold leading-snug tracking-tight text-slate-950 sm:text-3xl">Siapa nama lengkapmu?</h3>
-          <p id="wizard-helper" class="mt-3 min-h-12 text-sm leading-7 text-slate-600">Gunakan nama yang ingin ditampilkan pada data keanggotaan.</p>
+          <p id="wizard-kicker" class="text-xs font-bold uppercase tracking-wider text-slate-500">Langkah awal · untuk semua pengguna</p>
+          <h3 id="wizard-title" class="mt-3 text-2xl font-extrabold leading-snug tracking-tight text-slate-950 sm:text-3xl">Apa tujuanmu menggunakan website PPI?</h3>
+          <p id="wizard-helper" class="mt-3 min-h-12 text-sm leading-7 text-slate-600">Pilih sesuai kebutuhan saat ini. Pilihan ini bisa berubah kemudian.</p>
 
           <div class="mt-7 min-h-36">
-            <div data-wizard-step="0">
+            <div data-wizard-step="intent">
+              <fieldset class="space-y-3">
+                <legend class="sr-only">Tujuan menggunakan website PPI</legend>
+                <label class="wizard-choice flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 transition-colors hover:border-brand">
+                  <input type="radio" name="intent" value="event" class="ui-check mt-1 shrink-0" />
+                  <span>
+                    <strong class="block text-base font-bold text-slate-950">Ikut kegiatan & webinar</strong>
+                    <span class="mt-1 block text-sm leading-6 text-slate-600">Untuk peserta umum. Tidak perlu data akademik, tidak menjadi anggota PPI otomatis.</span>
+                  </span>
+                </label>
+                <label class="wizard-choice flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 transition-colors hover:border-brand">
+                  <input type="radio" name="intent" value="membership" class="ui-check mt-1 shrink-0" />
+                  <span>
+                    <strong class="block text-base font-bold text-slate-950">Ajukan keanggotaan PPI</strong>
+                    <span class="mt-1 block text-sm leading-6 text-slate-600">Untuk pelajar atau peneliti yang memenuhi ketentuan. Memerlukan verifikasi pengurus.</span>
+                  </span>
+                </label>
+              </fieldset>
+            </div>
+            <div data-wizard-step="name" class="hidden">
               <label class="sr-only" for="wizard-name">Nama lengkap</label>
               <input id="wizard-name" name="full_name" type="text" minlength="2" maxlength="120" autocomplete="name" placeholder="Contoh: Budi Santoso" class="ui-field text-base" required />
             </div>
-            <div data-wizard-step="1" class="hidden">
+            <div data-wizard-step="campus" class="hidden">
               <label class="sr-only" for="wizard-campus">Kampus atau institusi pendidikan</label>
-              <select id="wizard-campus" name="campus_slug" class="ui-field text-base" required>
+              <select id="wizard-campus" name="campus_slug" class="ui-field text-base">
                 <option value="">Pilih kampus atau institusi</option>
                 {campuses.map(c=><option value={c.slug}>{c.shortName}</option>)}
               </select>
-              <p class="mt-3 text-xs text-slate-500">Daftar mengikuti institusi dalam cakupan PPI Ishikawa.</p>
+              <p class="mt-3 text-xs text-slate-500">Jika institusi Anda tidak ada, verifikasi kelayakan tetap dilakukan pengurus.</p>
             </div>
-            <div data-wizard-step="2" class="hidden">
-              <label class="sr-only" for="wizard-program">Program atau jurusan</label>
-              <input id="wizard-program" name="program" type="text" maxlength="160" placeholder="Contoh: Computer Science" class="ui-field text-base" required />
+            <div data-wizard-step="program" class="hidden">
+              <label class="sr-only" for="wizard-program">Program studi atau kegiatan riset</label>
+              <input id="wizard-program" name="program" type="text" maxlength="160" placeholder="Contoh: Computer Science" class="ui-field text-base" />
             </div>
-            <div data-wizard-step="3" class="hidden">
+            <div data-wizard-step="level" class="hidden">
               <fieldset>
-                <legend class="sr-only">Jenjang pendidikan</legend>
+                <legend class="sr-only">Jenjang atau status studi</legend>
                 <div class="grid grid-cols-2 gap-2.5">
                   {studyLevels.map((level)=>
                     <label class="wizard-level flex min-h-12 cursor-pointer items-center gap-2 rounded-xl border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:border-brand">
@@ -124,15 +143,16 @@ import { studyLevels } from '../../data/membership';
                 </div>
               </fieldset>
             </div>
-            <div data-wizard-step="4" class="hidden">
+            <div data-wizard-step="consent" class="hidden">
               <label class="flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <input id="wizard-consent" name="consent" type="checkbox" class="ui-check mt-1 shrink-0" required />
-                <span class="text-sm leading-7 text-slate-700">Saya setuju data yang saya berikan digunakan oleh pengurus PPI Ishikawa untuk administrasi dan verifikasi keanggotaan.</span>
+                <input id="wizard-consent" name="consent" type="checkbox" class="ui-check mt-1 shrink-0" />
+                <span id="wizard-consent-copy" class="text-sm leading-7 text-slate-700">Saya setuju data digunakan untuk administrasi akun website dan partisipasi kegiatan PPI Ishikawa.</span>
               </label>
-              <p class="mt-3 text-xs leading-6 text-slate-500">Profil tidak otomatis ditampilkan dalam direktori. Anda dapat mengaturnya nanti setelah menjadi anggota terverifikasi.</p>
+              <p id="wizard-privacy-note" class="mt-3 text-xs leading-6 text-slate-500">Mengikuti kegiatan tidak sama dengan menjadi anggota organisasi.</p>
             </div>
-            <div data-wizard-step="5" class="hidden">
+            <div data-wizard-step="review" class="hidden">
               <div id="wizard-review" class="divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-slate-50 px-4" aria-label="Ringkasan data"></div>
+              <p id="wizard-review-note" class="mt-3 text-xs leading-6 text-slate-500">Selesaikan untuk menyiapkan akun peserta. Pendaftaran ke webinar tertentu dilakukan terpisah.</p>
             </div>
           </div>
           <p id="wizard-error" class="min-h-6 text-sm font-semibold text-red-700" role="alert" aria-live="polite"></p>
@@ -146,14 +166,16 @@ import { studyLevels } from '../../data/membership';
         <div id="prototype-existing" class="hidden pt-12 text-center sm:pt-16">
           <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-accent/30 bg-accent/10 text-4xl text-brand" aria-hidden="true">✓</div>
           <h3 class="mt-6 text-2xl font-extrabold text-slate-950">Selamat datang kembali!</h3>
-          <p class="mx-auto mt-3 max-w-sm text-sm leading-7 text-slate-600">Anggota yang sudah terdaftar langsung masuk ke dashboard. Tidak perlu mengulang onboarding.</p>
-          <button type="button" data-prototype-reset class="ui-action-secondary mt-8 w-full">Mulai ulang simulasi</button>
+          <p class="mx-auto mt-3 max-w-sm text-sm leading-7 text-slate-600">Akun yang sudah ada langsung masuk ke dashboard sesuai hak aksesnya. Peserta kegiatan dapat mengajukan keanggotaan PPI jika nanti memenuhi syarat.</p>
+          <button type="button" id="prototype-existing-upgrade" class="ui-action-primary mt-8 w-full">Simulasi ajukan keanggotaan PPI →</button>
+          <button type="button" data-prototype-reset class="ui-action-secondary mt-3 w-full">Mulai ulang simulasi</button>
         </div>
 
         <div id="prototype-finished" class="hidden pt-12 text-center sm:pt-16">
           <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-accent/30 bg-accent/10 text-4xl text-brand" aria-hidden="true">✓</div>
-          <h3 class="mt-6 text-2xl font-extrabold text-slate-950">Selesai, <span id="finished-name">anggota baru</span>!</h3>
-          <p class="mx-auto mt-3 max-w-sm text-sm leading-7 text-slate-600">Dalam sistem asli, profil Anda akan tercatat dan berstatus <strong>menunggu verifikasi pengurus</strong>. Akun belum otomatis mendapat hak anggota terverifikasi.</p>
+          <h3 class="mt-6 text-2xl font-extrabold text-slate-950">Selesai, <span id="finished-name">teman PPI</span>!</h3>
+          <p id="finished-description" class="mx-auto mt-3 max-w-sm text-sm leading-7 text-slate-600">Akun peserta siap digunakan untuk mendaftar kegiatan terbuka. Anda bukan otomatis anggota organisasi, dan webinar tertentu tetap memerlukan registrasi kegiatan terpisah.</p>
+          <div id="prototype-upgrade-wrap" class="mt-7"><button id="prototype-upgrade" type="button" class="ui-action-primary w-full">Ajukan keanggotaan PPI nanti →</button></div>
           <button type="button" data-prototype-reset class="ui-action-secondary mt-8 w-full">Ulangi dari awal</button>
         </div>
       </div>
@@ -172,39 +194,61 @@ import { studyLevels } from '../../data/membership';
       existing: document.getElementById('prototype-existing'),
       finished: document.getElementById('prototype-finished'),
     } as const;
+    type View = keyof typeof views;
+    type Intent = 'event' | 'membership';
+    type StepKey = 'intent' | 'name' | 'campus' | 'program' | 'level' | 'consent' | 'review';
+    const tracks: Record<Intent, StepKey[]> = {
+      event: ['intent','name','consent','review'],
+      membership: ['intent','name','campus','program','level','consent','review'],
+    };
+    const titles: Record<StepKey,string> = {
+      intent: 'Apa tujuanmu menggunakan website PPI?',
+      name: 'Siapa nama lengkapmu?',
+      campus: 'Kamu belajar atau meneliti di mana?',
+      program: 'Apa program studi atau bidang risetmu?',
+      level: 'Apa jenjang atau status studimu?',
+      consent: 'Setujui penggunaan data',
+      review: 'Periksa jawabanmu',
+    };
+    const helpers: Record<StepKey,string> = {
+      intent: 'Pilih sesuai kebutuhan saat ini. Pilihan ini tidak mengunci akun selamanya.',
+      name: 'Satu nama yang dipakai untuk akun dan sertifikat kegiatan.',
+      campus: 'Pilih institusimu. Kelayakan sebagai anggota resmi tetap diverifikasi pengurus.',
+      program: 'Cukup tulis jurusan atau bidang riset singkat.',
+      level: 'Pilih kategori yang paling mendekati aktivitas akademik saat ini.',
+      consent: 'Penggunaan data disesuaikan dengan tujuan yang kamu pilih.',
+      review: 'Periksa kembali. Ini hanyalah simulasi; tidak ada data yang dikirim.',
+    };
+    const $ = (selector:string) => document.querySelector<HTMLElement>(selector);
     const nameField = document.querySelector<HTMLInputElement>('#wizard-name');
     const campusField = document.querySelector<HTMLSelectElement>('#wizard-campus');
     const programField = document.querySelector<HTMLInputElement>('#wizard-program');
     const consentField = document.querySelector<HTMLInputElement>('#wizard-consent');
     const loginField = document.querySelector<HTMLInputElement>('#prototype-email');
-    const emailSent = document.getElementById('sent-email');
-    const wizardEmail = document.getElementById('wizard-email');
-    const wizardTitle = document.getElementById('wizard-title');
-    const wizardHelper = document.getElementById('wizard-helper');
-    const wizardCounter = document.getElementById('wizard-counter');
-    const wizardEstimate = document.getElementById('wizard-estimate');
-    const wizardError = document.getElementById('wizard-error');
+    const counter = $('#wizard-counter');
+    const title = $('#wizard-title');
+    const helper = $('#wizard-helper');
+    const kicker = $('#wizard-kicker');
+    const error = $('#wizard-error');
+    const pathLabel = $('#wizard-path-label');
+    const progress = Array.from(document.querySelectorAll<HTMLElement>('[data-progress]'));
     const next = document.querySelector<HTMLButtonElement>('#wizard-next');
     const back = document.querySelector<HTMLButtonElement>('#wizard-back');
-    const review = document.getElementById('wizard-review');
-    const stepControls = Array.from(document.querySelectorAll<HTMLElement>('[data-wizard-step]'));
-    const progress = Array.from(document.querySelectorAll<HTMLElement>('[data-progress]'));
+    const review = $('#wizard-review');
     const scenarioNew = document.querySelector<HTMLButtonElement>('#scenario-new');
     const scenarioExisting = document.querySelector<HTMLButtonElement>('#scenario-existing');
-    const titles = ['Siapa nama lengkapmu?', 'Kamu kuliah di mana?', 'Program atau jurusanmu?', 'Jenjang studi saat ini?', 'Setujui penggunaan data', 'Tinjau sebelum selesai'];
-    const help = [
-      'Gunakan nama yang ingin ditampilkan pada data keanggotaan.',
-      'Pilih kampus atau institusi tempat kamu belajar.',
-      'Cukup tulis nama program atau jurusanmu.',
-      'Pilih satu jenjang yang paling sesuai.',
-      'Kami menggunakan data ini untuk memverifikasi keanggotaanmu.',
-      'Semua sudah sesuai? Dalam sistem asli, langkah terakhir akan mengirim data untuk verifikasi pengurus.',
-    ];
-    let scenario:'new'|'existing'='new';
-    let step=0;
+    let scenario: 'new' | 'existing' = 'new';
+    let stepIndex = 0;
 
-    function show(view:keyof typeof views) {
-      for (const [key,element] of Object.entries(views)) element?.classList.toggle('hidden',key!==view);
+    const selectedIntent=(): Intent | null => {
+      const v=document.querySelector<HTMLInputElement>('input[name="intent"]:checked')?.value;
+      return v==='event'||v==='membership'?v:null;
+    };
+    const currentTrack=(): Intent => selectedIntent()||'event';
+    const currentSteps=(): StepKey[] => tracks[currentTrack()];
+    const currentStep=(): StepKey => currentSteps()[stepIndex]||'intent';
+    function show(view:View) {
+      Object.entries(views).forEach(([name,element])=>element?.classList.toggle('hidden',name!==view));
     }
     function scenarioSet(value:'new'|'existing') {
       scenario=value;
@@ -218,95 +262,159 @@ import { studyLevels } from '../../data/membership';
       reset();
     }
     function reset(){
-      step=0;
+      stepIndex=0;
       document.querySelector<HTMLFormElement>('#prototype-login-form')?.reset();
       document.querySelector<HTMLFormElement>('#prototype-wizard')?.reset();
-      if(wizardError)wizardError.textContent='';
-      setStep(0);
+      document.querySelectorAll('.wizard-choice,.wizard-level').forEach(el=>el.classList.remove('border-brand','bg-accent/10'));
+      updateStep();
       show('login');
     }
-    function fillReview(){
-      if(!review)return;
-      review.replaceChildren();
-      const level=document.querySelector<HTMLInputElement>('input[name="study_level"]:checked');
-      const values=[
-        ['Nama lengkap',nameField?.value.trim()||'—'],
-        ['Kampus',campusField?.selectedOptions[0]?.textContent||'—'],
-        ['Program',programField?.value.trim()||'—'],
-        ['Jenjang',level?.closest('label')?.querySelector('span')?.textContent||'—'],
-        ['Privasi','Tidak ditampilkan di direktori secara otomatis'],
-      ];
-      for(const [label,value] of values){
-        const row=document.createElement('div');row.className='flex flex-wrap items-start justify-between gap-2 py-3 text-sm';
-        const key=document.createElement('span');key.className='font-medium text-slate-600';key.textContent=label;
-        const val=document.createElement('strong');val.className='max-w-full break-words text-right font-semibold text-slate-900';val.textContent=value;
-        row.append(key,val);review.append(row);
-      }
-    }
-    function setStep(index:number){
-      step=index;
-      stepControls.forEach((control,i)=>control.classList.toggle('hidden',i!==index));
-      progress.forEach((bar,i)=>{
-        bar.classList.toggle('bg-brand',i<=index);
-        bar.classList.toggle('bg-slate-200',i>index);
+    function selectChoiceAppearance(name:string) {
+      document.querySelectorAll<HTMLInputElement>(`input[name="${name}"]`).forEach(input=>{
+        const label=input.closest('label');
+        label?.classList.toggle('border-brand',input.checked);
+        label?.classList.toggle('bg-accent/10',input.checked);
       });
-      const meter=document.getElementById('wizard-progress');
-      meter?.setAttribute('aria-valuenow',String(index+1));
-      if(wizardCounter)wizardCounter.textContent=index<5?`Pertanyaan ${index+1} dari 5`:'Tinjau jawaban · tahap akhir';
-      if(wizardEstimate)wizardEstimate.textContent=index===5?'Hampir selesai':'± 1 menit';
-      if(wizardTitle)wizardTitle.textContent=titles[index]||'';
-      if(wizardHelper)wizardHelper.textContent=help[index]||'';
-      if(wizardError)wizardError.textContent='';
-      if(next)next.innerHTML=index===5?'Selesaikan simulasi <span aria-hidden="true">✓</span>':'Lanjut <span aria-hidden="true">→</span>';
-      if(back)back.textContent=index===0?'← Ganti email':'← Kembali';
-      if(index===5)fillReview();
-      const target=stepControls[index]?.querySelector<HTMLElement>('input, select');
-      if(target)requestAnimationFrame(()=>target.focus({preventScroll:true}));
     }
-    function validStep(){
-      if(step===0){
-        if(!nameField?.value.trim()||nameField.value.trim().length<2)return 'Masukkan nama lengkap minimal 2 karakter.';
-      }else if(step===1){
-        if(!campusField?.value)return 'Pilih kampus terlebih dahulu.';
-      }else if(step===2){
-        if(!programField?.value.trim())return 'Tuliskan program atau jurusanmu.';
-      }else if(step===3){
-        if(!document.querySelector('input[name="study_level"]:checked'))return 'Pilih jenjang studi.';
-      }else if(step===4){
-        if(!consentField?.checked)return 'Persetujuan penggunaan data diperlukan untuk melanjutkan.';
+    function reviewValue(label:string,value:string) {
+      const row=document.createElement('div');
+      row.className='flex flex-wrap items-start justify-between gap-2 py-3 text-sm';
+      const key=document.createElement('span');
+      key.className='font-medium text-slate-600';key.textContent=label;
+      const val=document.createElement('strong');
+      val.className='max-w-full break-words text-right font-semibold text-slate-900';val.textContent=value||'—';
+      row.append(key,val);review?.append(row);
+    }
+    function fillReview(){
+      review?.replaceChildren();
+      const intent=currentTrack();
+      reviewValue('Tujuan',intent==='event'?'Peserta kegiatan':'Calon anggota resmi PPI');
+      reviewValue('Nama lengkap',nameField?.value.trim()||'');
+      reviewValue('Email',loginField?.value.trim()||'');
+      if(intent==='membership'){
+        reviewValue('Institusi',campusField?.selectedOptions[0]?.textContent||'');
+        reviewValue('Jurusan / riset',programField?.value.trim()||'');
+        reviewValue('Jenjang',document.querySelector<HTMLInputElement>('input[name="study_level"]:checked')?.closest('label')?.querySelector('span')?.textContent||'');
       }
-      return '';
+      reviewValue('Persetujuan',consentField?.checked?'Diberikan':'Belum diberikan');
+      const note=$('#wizard-review-note');
+      if(note)note.textContent=intent==='event'
+        ? 'Akun peserta kegiatan bukan keanggotaan resmi. Registrasi webinar tertentu dilakukan kemudian di halaman event.'
+        : 'Pengajuan keanggotaan baru akan menunggu pemeriksaan pengurus. Belum ada hak anggota terverifikasi.';
+    }
+    function updateStep(){
+      const key=currentStep();
+      const steps=currentSteps();
+      document.querySelectorAll<HTMLElement>('[data-wizard-step]').forEach(el=>el.classList.toggle('hidden',el.dataset.wizardStep!==key));
+      progress.forEach((bar,i)=>{
+        bar.classList.toggle('hidden',i>=steps.length);
+        bar.classList.toggle('bg-brand',i<=stepIndex);
+        bar.classList.toggle('bg-slate-200',i>stepIndex);
+      });
+      const meter=$('#wizard-progress');
+      meter?.setAttribute('aria-valuemin','1');
+      meter?.setAttribute('aria-valuemax',String(steps.length));
+      meter?.setAttribute('aria-valuenow',String(stepIndex+1));
+      if(counter)counter.textContent=key==='intent'?'Pilih jalur pendaftaran':key==='review'?'Ringkasan · langkah terakhir':`Pertanyaan ${stepIndex+1} dari ${steps.length-1}`;
+      if(title)title.textContent=titles[key];
+      if(helper)helper.textContent=helpers[key];
+      if(kicker)kicker.textContent=key==='intent'?'Satu akun, dua kemungkinan':currentTrack()==='event'?'Jalur peserta kegiatan':'Jalur keanggotaan resmi';
+      if(pathLabel)pathLabel.textContent=selectedIntent()===null?'Tentukan tujuan':currentTrack()==='event'?'Peserta kegiatan':'Calon anggota PPI';
+      const consentCopy=$('#wizard-consent-copy');
+      if(consentCopy)consentCopy.textContent=currentTrack()==='event'
+        ? 'Saya setuju data akun digunakan untuk administrasi akun dan kegiatan PPI Ishikawa. Akun ini bukan status keanggotaan resmi.'
+        : 'Saya setuju data digunakan pengurus PPI Ishikawa untuk memeriksa permohonan keanggotaan sesuai ketentuan organisasi.';
+      const privacy=$('#wizard-privacy-note');
+      if(privacy)privacy.textContent=currentTrack()==='event'
+        ? 'Tidak perlu nama kampus, jurusan, atau jenjang studi. Daftar webinar tertentu dilakukan pada halaman acara.'
+        : 'Informasi akademik hanya untuk pengajuan. Profil tetap privat hingga Anda memilih untuk tampil di direktori.';
+      if(error)error.textContent='';
+      if(next)next.innerHTML=key==='review'?'Selesaikan simulasi <span aria-hidden="true">✓</span>':'Lanjut <span aria-hidden="true">→</span>';
+      if(back)back.textContent=stepIndex===0?'← Kembali ke email':'← Kembali';
+      if(key==='review')fillReview();
+      const target=document.querySelector<HTMLElement>(`[data-wizard-step="${key}"] input, [data-wizard-step="${key}"] select`);
+      if(target && key!=='intent')requestAnimationFrame(()=>target.focus({preventScroll:true}));
+    }
+    function validStep(): string {
+      switch(currentStep()){
+        case 'intent': return selectedIntent()?'':'Pilih tujuan pendaftaran terlebih dahulu.';
+        case 'name': return (nameField?.value.trim().length||0)>=2?'':'Nama lengkap minimal 2 karakter.';
+        case 'campus': return campusField?.value?'':'Pilih institusi pendidikan atau risetmu.';
+        case 'program': return programField?.value.trim()?'':'Tuliskan jurusan atau bidang risetmu.';
+        case 'level': return document.querySelector<HTMLInputElement>('input[name="study_level"]:checked')?'':'Pilih jenjang atau status studi.';
+        case 'consent': return consentField?.checked?'':'Persetujuan penggunaan data diperlukan.';
+        default: return '';
+      }
+    }
+    function startUpgrade(){
+      const preservedEmail=loginField?.value||'';
+      const preservedName=nameField?.value||'';
+      scenarioSet('new');
+      if(loginField)loginField.value=preservedEmail;
+      if(nameField)nameField.value=preservedName;
+      const emailLabel=$('#wizard-email');
+      if(emailLabel)emailLabel.textContent=preservedEmail;
+      const field=document.querySelector<HTMLInputElement>('input[name="intent"][value="membership"]');
+      if(field)field.checked=true;
+      selectChoiceAppearance('intent');
+      stepIndex=0;
+      updateStep();
+      show('wizard');
     }
     document.getElementById('prototype-login-form')?.addEventListener('submit',event=>{
       event.preventDefault();
       if(!loginField?.validity.valid){loginField?.reportValidity();return;}
-      if(emailSent)emailSent.textContent=loginField.value.trim();
-      if(wizardEmail)wizardEmail.textContent=loginField.value.trim();
+      const email=loginField.value.trim();
+      const emailSent=$('#sent-email');
+      const wizardEmail=$('#wizard-email');
+      if(emailSent)emailSent.textContent=email;
+      if(wizardEmail)wizardEmail.textContent=email;
       show('email');
     });
     document.getElementById('prototype-open-link')?.addEventListener('click',()=>{
       if(scenario==='existing')show('existing');
-      else{show('wizard');setStep(0);}
+      else{stepIndex=0;updateStep();show('wizard');}
     });
     document.getElementById('prototype-change-email')?.addEventListener('click',()=>show('login'));
     document.getElementById('prototype-wizard')?.addEventListener('submit',event=>{
       event.preventDefault();
-      const error=validStep();
-      if(error){if(wizardError)wizardError.textContent=error;return;}
-      if(step===5){
-        const finish=document.getElementById('finished-name');
-        if(finish)finish.textContent=(nameField?.value.trim()||'anggota baru').split(' ')[0];
+      const problem=validStep();
+      if(problem){if(error)error.textContent=problem;return;}
+      if(currentStep()==='review'){
+        const finish=$('#finished-name');
+        if(finish)finish.textContent=(nameField?.value.trim()||'teman PPI').split(' ')[0];
+        const description=$('#finished-description');
+        const upgrade=$('#prototype-upgrade-wrap');
+        if(currentTrack()==='event'){
+          if(description)description.textContent='Akun peserta siap digunakan untuk mendaftar kegiatan terbuka. Anda tidak otomatis menjadi anggota PPI; registrasi webinar tertentu tetap dilakukan terpisah.';
+          upgrade?.classList.remove('hidden');
+        }else{
+          if(description)description.textContent='Pengajuan keanggotaan PPI tercatat dalam simulasi dan masih perlu diperiksa pengurus. Hak anggota resmi belum aktif.';
+          upgrade?.classList.add('hidden');
+        }
         show('finished');
-      }else setStep(step+1);
+      }else{
+        stepIndex+=1;
+        updateStep();
+      }
     });
-    back?.addEventListener('click',()=>step===0?show('login'):setStep(step-1));
+    back?.addEventListener('click',()=>{
+      if(stepIndex===0){show('email');return;}
+      stepIndex-=1;updateStep();
+    });
     scenarioNew?.addEventListener('click',()=>scenarioSet('new'));
     scenarioExisting?.addEventListener('click',()=>scenarioSet('existing'));
-    document.querySelectorAll('[data-prototype-reset]').forEach(button=>button.addEventListener('click',reset));
-    document.querySelectorAll<HTMLElement>('.wizard-level').forEach(label=>label.addEventListener('click',()=>{
-      document.querySelectorAll('.wizard-level').forEach(el=>el.classList.remove('border-brand','bg-accent/10'));
-      label.classList.add('border-brand','bg-accent/10');
+    document.querySelectorAll<HTMLInputElement>('input[name="intent"],input[name="study_level"]').forEach(input=>input.addEventListener('change',()=>{
+      selectChoiceAppearance(input.name);
+      if(input.name==='intent'){
+        if(consentField)consentField.checked=false;
+        stepIndex=0;
+        updateStep();
+      }
     }));
-    setStep(0);
+    $('#prototype-upgrade')?.addEventListener('click',startUpgrade);
+    $('#prototype-existing-upgrade')?.addEventListener('click',startUpgrade);
+    document.querySelectorAll('[data-prototype-reset]').forEach(button=>button.addEventListener('click',reset));
+    updateStep();
   </script>
 </BaseLayout>
