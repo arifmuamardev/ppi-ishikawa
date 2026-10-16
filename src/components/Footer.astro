@@ -1,5 +1,5 @@
 ---
-import { nav, site } from '../data/site';
+import { visibleNav, site } from '../data/site';
 import { withBase } from '../utils/paths';
 ---
 <footer class="border-t border-slate-200 bg-white">
@@ -21,7 +21,7 @@ import { withBase } from '../utils/paths';
     <div>
       <p class="type-eyebrow text-slate-400">Navigasi</p>
       <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
-        {nav.map((item) => <a class="inline-flex min-h-11 items-center text-slate-600 transition-colors hover:text-brand" href={withBase(item.href)}>{item.label}</a>)}
+        {visibleNav.map((item) => <a class="inline-flex min-h-11 items-center text-slate-600 transition-colors hover:text-brand" href={withBase(item.href)}>{item.label}</a>)}
       </div>
       <div class="mt-6 border-t border-slate-100 pt-4">
         <p class="type-eyebrow text-slate-400">Lainnya</p>

@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/apply-feature-gates.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "check:theme": "node scripts/check-brand-theme.mjs",
-    "check:ui": "node scripts/check-ui-contracts.mjs"
+    "check:ui": "node scripts/check-ui-contracts.mjs",
+    "check:features": "node scripts/check-feature-registry.mjs"
   },
   "dependencies": {
     "@fontsource/fira-sans": "5.3.0",
