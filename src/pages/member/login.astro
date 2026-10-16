@@ -7,8 +7,8 @@ import { withBase } from '../../utils/paths';
 
 <BaseLayout title="Masuk Anggota" description="Masuk ke Area Anggota PPI Ishikawa.">
   <AuthShell
-    title="Masuk ke akun Anda"
-    description="Cukup masukkan email anggota. Kami akan mengirim tautan sekali pakai untuk masuk tanpa password."
+    title="Masuk atau daftar anggota"
+    description="Masukkan email saja. Jika sudah punya akun, Anda akan masuk. Jika belum, akun baru dibuat setelah verifikasi email, lalu Anda melengkapi profil."
   >
 
       <AuthFeedback id="login-message" />
@@ -24,11 +24,11 @@ import { withBase } from '../../utils/paths';
 
       <form id="member-login-form" aria-busy="false" data-auth-state="idle" class="mt-7 space-y-5">
         <label class="block">
-          <span class="text-sm font-bold text-slate-800">Alamat email anggota</span>
+          <span class="text-sm font-bold text-slate-800">Alamat email Anda</span>
           <input name="email" type="email" autocomplete="email" required class="ui-field mt-2" />
         </label>
-        <button type="submit" class="ui-action-primary w-full">Kirim tautan masuk</button>
-        <p class="text-xs leading-5 text-slate-600">Tautan hanya bisa digunakan sekali dan memiliki masa berlaku terbatas. Buka email di perangkat yang sama untuk masuk lebih mudah.</p>
+        <button type="submit" class="ui-action-primary w-full">Lanjutkan dengan email</button>
+        <p class="text-xs leading-5 text-slate-600">Akun baru otomatis dibuat bila email belum terdaftar. Setelah klik tautan, lengkapi profil dan setujui penggunaan data untuk administrasi membership. Keanggotaan tetap diverifikasi pengurus.</p>
       </form>
 
       <details id="password-login-option" class="mt-6 rounded-2xl border border-slate-200 bg-white p-4">
@@ -47,9 +47,7 @@ import { withBase } from '../../utils/paths';
         </form>
       </details>
 
-      <div class="mt-6 flex flex-wrap justify-between gap-3 text-sm">
-        <a href={withBase('/member/register/')} class="font-bold text-brand hover:underline">Belum punya akun? Daftar →</a>
-      </div>
+
   </AuthShell>
 
 
@@ -91,7 +89,7 @@ import { withBase } from '../../utils/paths';
         const { error } = await supabase.auth.signInWithOtp({
           email,
           options: {
-            shouldCreateUser: false,
+            shouldCreateUser: true,
             emailRedirectTo: memberAbsoluteUrl('/member/login/'),
           },
         });
@@ -107,7 +105,7 @@ import { withBase } from '../../utils/paths';
           }
           return;
         }
-        feedback.show('Jika alamat email sudah terdaftar, tautan masuk telah dikirim. Periksa kotak masuk dan folder spam. Tautan hanya bisa digunakan sekali.', 'success');
+        feedback.show('Jika alamat email dapat digunakan, tautan verifikasi telah dikirim. Periksa kotak masuk dan spam. Tautan hanya berlaku sekali.', 'success');
       }, 'Layanan email belum dapat dihubungi. Coba lagi.');
     });
 
