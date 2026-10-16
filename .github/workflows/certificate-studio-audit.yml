@@ -1,0 +1,66 @@
+name: Certificate Studio browser acceptance
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/pages/member/admin/certificate-studio.astro'
+      - 'src/lib/certificate-studio.mjs'
+      - 'src/lib/certificate-renderer.mjs'
+      - 'src/config/features.mjs'
+      - 'scripts/audit-certificate-studio.mjs'
+      - '.github/workflows/certificate-studio-audit.yml'
+      - 'package.json'
+  push:
+    branches: [main]
+    paths:
+      - 'src/pages/member/admin/certificate-studio.astro'
+      - 'src/lib/certificate-studio.mjs'
+      - 'src/lib/certificate-renderer.mjs'
+      - 'src/config/features.mjs'
+      - 'scripts/audit-certificate-studio.mjs'
+      - '.github/workflows/certificate-studio-audit.yml'
+      - 'package.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PUBLIC_PREVIEW_DEMO_MODE: 'true'
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - name: Install dependencies
+        run: npm install --no-package-lock
+      - name: Check and build
+        run: |
+          npm run check:theme
+          npm run check:features
+          npm run check:certificates
+          npm run build
+      - name: Browser integration with synthetic admin
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 &
+          preview_pid=$!
+          trap 'kill $preview_pid || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4321/ >/dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:4321/ >/dev/null
+          node scripts/audit-certificate-studio.mjs
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: certificate-studio-audit
+          path: certificate-studio-audit/
+          if-no-files-found: warn
+          retention-days: 7
