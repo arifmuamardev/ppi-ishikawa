@@ -8,6 +8,7 @@ interface Props {
   description?: string;
   requireApproved?: boolean;
   requireAdmin?: boolean;
+  allowIncomplete?: boolean;
 }
 
 const {
@@ -15,6 +16,7 @@ const {
   description = 'Area anggota PPI Ishikawa.',
   requireApproved = false,
   requireAdmin = false,
+  allowIncomplete = false,
 } = Astro.props;
 
 const navGroups = [
@@ -85,6 +87,7 @@ const navLinkClass = (href: string) =>
     id="member-area"
     data-require-approved={requireApproved ? '1' : '0'}
     data-require-admin={requireAdmin ? '1' : '0'}
+    data-allow-incomplete={allowIncomplete ? '1' : '0'}
     class="mx-auto max-w-7xl px-5 py-8 lg:px-8 lg:py-10"
   >
     <details class="group mb-5 rounded-2xl border border-slate-200 bg-white lg:hidden">
@@ -228,7 +231,8 @@ const navLinkClass = (href: string) =>
 
     const approved = area?.dataset.requireApproved === '1';
     const admin = area?.dataset.requireAdmin === '1';
-    const member = await requireMember({ approved, admin });
+    const allowIncomplete = area?.dataset.allowIncomplete === '1';
+    const member = await requireMember({ approved, admin, allowIncomplete });
 
     if (member?.profile) {
       const displayName = member.profile.full_name || 'Anggota PPI Ishikawa';
