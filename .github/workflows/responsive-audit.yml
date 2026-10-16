@@ -51,6 +51,11 @@ jobs:
           npm run preview -- --host 127.0.0.1 --port 4321 &
           preview_pid=$!
           trap 'kill $preview_pid || true' EXIT
+          for attempt in $(seq 1 45); do
+            if curl --silent --fail --output /dev/null http://127.0.0.1:4321/; then break; fi
+            sleep 1
+          done
+          curl --fail --silent --show-error --output /dev/null http://127.0.0.1:4321/
           node scripts/audit-responsive.mjs
       - name: Upload screenshots and report
         if: always()
