@@ -234,6 +234,7 @@ import { withBase } from '../../../utils/paths';
         qrRenderedUrl = '';
         qrCanvas = null;
         qrWorking = false;
+        if (message?.dataset.kind === 'qr') message.classList.add('hidden');
         refresh();
         return;
       }
@@ -243,7 +244,7 @@ import { withBase } from '../../../utils/paths';
         qrRenderedUrl = '';
         qrCanvas = null;
         qrWorking = false;
-        if (message) message.dataset.kind = 'input';
+        if (message) message.dataset.kind = 'qr';
         inform(error.message, true);
         refresh();
         return;
@@ -259,7 +260,7 @@ import { withBase } from '../../../utils/paths';
         if (qrRenderedUrl !== value) return;
         qrCanvas = canvas;
         qrWorking = false;
-        if (message?.dataset.kind === 'input') message.classList.add('hidden');
+        if (message?.dataset.kind === 'qr') message.classList.add('hidden');
         refresh();
       } catch {
         if (qrRenderedUrl !== value) return;
