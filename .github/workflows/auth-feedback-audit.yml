@@ -17,6 +17,8 @@ on:
       - 'src/lib/auth-feedback.ts'
       - 'src/styles/global.css'
       - 'scripts/audit-auth-feedback.mjs'
+      - 'src/pages/design-lab/membership-flow.astro'
+      - 'scripts/audit-membership-flow-design.mjs'
       - '.github/workflows/auth-feedback-audit.yml'
   push:
     branches: [main]
@@ -34,6 +36,8 @@ on:
       - 'src/lib/auth-feedback.ts'
       - 'src/styles/global.css'
       - 'scripts/audit-auth-feedback.mjs'
+      - 'src/pages/design-lab/membership-flow.astro'
+      - 'scripts/audit-membership-flow-design.mjs'
       - '.github/workflows/auth-feedback-audit.yml'
   workflow_dispatch:
 
@@ -58,11 +62,14 @@ jobs:
           trap 'kill $preview_pid || true' EXIT
           node scripts/audit-auth-feedback.mjs
           node scripts/audit-membership-launch.mjs
+          node scripts/audit-membership-flow-design.mjs
       - name: Upload screenshots and audit report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: auth-feedback-audit
-          path: auth-feedback-audit/
+          path: |
+            auth-feedback-audit/
+            membership-flow-design-audit/
           retention-days: 7
           if-no-files-found: warn
