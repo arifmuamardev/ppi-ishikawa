@@ -30,30 +30,21 @@ try {
       await page.getByText('Tambahkan QR informasi kegiatan (opsional)').click();
       await page.locator('#studio-enable-qr').check();
       await page.locator('#studio-qr-url').fill('http://example.org/event');
-      if(!await page.locator('#studio-export-all').isDisabled()) throw new Error('Insecure QR URL should block PDF export');
+      if(!await page.locator('#studio-issue').isDisabled()) throw new Error('Demo cannot issue certificates');
       await page.locator('#studio-qr-url').fill('https://ppi-ishikawa.org/programs/');
-      await page.waitForFunction(() => !document.querySelector('#studio-export-all')?.disabled, {timeout:15000});
+      await page.waitForFunction(() => document.querySelector('#studio-qr-url')?.value === 'https://ppi-ishikawa.org/programs/', {timeout:15000});
       const qrCanvas = await page.locator('#studio-preview').evaluate(el => el.toDataURL('image/png'));
       if(baselineCanvas === qrCanvas)throw new Error('QR option does not affect certificate preview');
       await page.getByText('2 nama',{exact:true}).waitFor();
       await page.locator('#studio-export-all').waitFor({state:'visible'});
-      if(await page.locator('#studio-export-all').isDisabled())throw new Error('Valid form must enable export');
+      if(!await page.locator('#studio-export-all').isDisabled())throw new Error('Demo must not permit official PDF export without database issuance');
       if(!await page.getByText('Pratinjau untuk: Siti Aminah (+1 nama lain)').isVisible())
         throw new Error('Preview does not track first recipient');
       if(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth+2))
         throw new Error('Horizontal layout overflow');
       await page.screenshot({path:`certificate-studio-audit/studio-${width}.jpg`,type:'jpeg',quality:65,fullPage:true,animations:'disabled'});
-      if(width===390){
-        const downloadPromise=page.waitForEvent('download',{timeout:60000});
-        await page.locator('#studio-export-all').click();
-        const download=await downloadPromise;
-        const file=await download.path();
-        const buffer=await readFile(file);
-        if(buffer.subarray(0,5).toString()!=='%PDF-')throw new Error('Downloaded file is not a PDF');
-        if(buffer.length < 15000)throw new Error('PDF looks unexpectedly small');
-        if(!download.suggestedFilename().includes('webinar-penelitian-ilmiah-2026'))
-          throw new Error('Unexpected filename: '+download.suggestedFilename());
-        await page.getByText(/PDF siap: 2 sertifikat/).waitFor();
+      if(width===390) {
+        if(!await page.locator('#studio-issue').isDisabled()) throw new Error('Preview/demo authorization bypass');
       }
       if(pageErrors.length)throw new Error('Browser JS error: '+pageErrors.join('; '));
     }catch(err){errors.push(`${width}px: ${err.message}`);}

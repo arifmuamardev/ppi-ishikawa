@@ -43,6 +43,7 @@ export const FEATURE_MODES = Object.freeze(['enabled', 'hidden', 'disabled']);
 const exact = (pathname, prefix) => pathname === prefix || pathname.startsWith(prefix);
 const memberRoutes = [
   ['/member/admin/certificate-studio/', 'memberCertificateStudio'],
+  ['/member/admin/studio-registry/', 'memberCertificateStudio'],
   ['/member/admin/', 'memberAdministration'],
   ['/member/events/', 'memberEvents'],
   ['/member/calendar/', 'memberEvents'],

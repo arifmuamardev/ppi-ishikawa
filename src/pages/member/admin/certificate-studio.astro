@@ -13,7 +13,7 @@ import { withBase } from '../../../utils/paths';
     />
 
     <div class="rounded-2xl border border-accent/35 bg-accent/10 px-5 py-4 text-sm leading-6 text-slate-700">
-      <strong class="text-slate-950">Privasi & penerbitan:</strong> Nama peserta, gambar tanda tangan, dan QR informasi diproses hanya di browser. PDF belum terdaftar dalam sistem verifikasi sertifikat; QR informasi tidak membuktikan keaslian sertifikat. Periksa serta setujui hasil sebelum dibagikan.
+      <strong class="text-slate-950">Privasi & penerbitan:</strong> Nama peserta, gambar tanda tangan, dan QR informasi diproses hanya di browser. Sertifikat resmi diterbitkan setelah persetujuan akun Ketua dan dicatat dalam database dengan QR verifikasi unik. QR informasi kegiatan tetap opsional dan berbeda. Periksa daftar nama sebelum mengesahkan penerbitan.
     </div>
 
     <div class="grid gap-6 2xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
@@ -76,7 +76,7 @@ import { withBase } from '../../../utils/paths';
             <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand font-bold text-white">3</span>
             <h2 id="studio-approval-heading" class="text-lg font-bold text-slate-950">Penanda tangan</h2>
           </div>
-          <p class="mt-3 text-sm leading-6 text-slate-600">Nama dan jabatan Ketua sudah terisi otomatis dan dapat diubah untuk penanda tangan lain. Gambar tanda tangan asli tetap diunggah secara terpisah bila diperlukan.</p>
+          <p class="mt-3 text-sm leading-6 text-slate-600">Nama dan jabatan Ketua sudah terisi otomatis. Untuk sertifikat resmi, identitas pengesah diambil dari akun Ketua yang terdaftar, bukan dari kolom yang dapat diedit. Gambar tanda tangan asli tetap diunggah secara terpisah bila diperlukan.</p>
           <div class="mt-4 grid gap-4 sm:grid-cols-2">
             <label>
               <span class="text-sm font-bold text-slate-800">Nama penanda tangan <span class="text-red-600">*</span></span>
@@ -127,11 +127,17 @@ import { withBase } from '../../../utils/paths';
         </div>
         <p id="studio-preview-name" class="mt-3 text-sm text-slate-600">Pratinjau menggunakan nama penerima pertama.</p>
         <div id="studio-message" role="status" aria-live="polite" class="mt-5 hidden rounded-xl border p-4 text-sm leading-6"></div>
+        <div class="mt-6 rounded-xl border border-brand/20 bg-accent/10 p-4">
+          <p class="font-bold text-slate-900">Pengesahan elektronik resmi</p>
+          <p class="mt-2 text-sm leading-6 text-slate-700">Tekan terbitkan untuk mencatat semua nama pada registri PPI Ishikawa. QR setiap sertifikat kemudian menunjukkan penerima, kegiatan, Ketua yang mengesahkan, nomor unik, dan status validitas.</p>
+          <button id="studio-issue" type="button" class="mt-3 min-h-12 w-full rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-50" disabled>Terbitkan & sahkan seluruh sertifikat</button>
+          <p id="studio-issue-status" class="mt-2 text-xs text-slate-600" role="status" aria-live="polite">Belum diterbitkan.</p>
+        </div>
         <div class="mt-6 grid gap-3 sm:grid-cols-2">
           <button id="studio-export-preview" type="button" class="min-h-12 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-bold text-slate-800 disabled:cursor-not-allowed disabled:opacity-50" disabled>Unduh 1 sertifikat</button>
           <button id="studio-export-all" type="button" class="min-h-12 rounded-xl bg-brand px-4 py-3 text-sm font-bold text-white disabled:cursor-not-allowed disabled:opacity-50" disabled>Unduh PDF semua penerima</button>
         </div>
-        <p class="mt-3 text-xs leading-5 text-slate-500">Pratinjau dan PDF dibuat pada perangkat Anda. QR opsional hanya membuka informasi kegiatan; tidak ada email otomatis, database penerbitan, atau QR verifikasi.</p>
+        <p class="mt-3 text-xs leading-5 text-slate-500">Sertifikat resmi memiliki nomor dan QR verifikasi unik berdasarkan catatan database. Jangan membagikan PDF sebelum proses pengesahan berhasil.</p>
         <a href={withBase('/member/admin/certificates/')} class="mt-5 inline-flex text-sm font-bold text-brand hover:underline">Butuh sertifikat anggota dengan QR terverifikasi? Gunakan penerbitan anggota →</a>
       </section>
     </div>
@@ -140,7 +146,8 @@ import { withBase } from '../../../utils/paths';
   <script>
     import { namesFromText, namesFromCsv, safeCertificateFileName, indonesianDate } from '../../../lib/certificate-studio.mjs';
     import { renderCertificate, CERTIFICATE_WIDTH, CERTIFICATE_HEIGHT } from '../../../lib/certificate-renderer.mjs';
-    import { getCurrentMember } from '../../../lib/member';
+    import { getCurrentMember, isMembershipDemoMode } from '../../../lib/member';
+    import { issueStudioCertificates, studioVerifyUrl } from '../../../lib/studio-issuance';
     import QRCode from 'qrcode';
     import { normalizeCertificateInfoUrl } from '../../../lib/certificate-qr.mjs';
 
@@ -162,6 +169,8 @@ import { withBase } from '../../../utils/paths';
     const message = find('studio-message');
     const exportOne = find('studio-export-preview');
     const exportAll = find('studio-export-all');
+    const issueButton = find('studio-issue');
+    const issueStatus = find('studio-issue-status');
     let logo = null;
     let signature = null;
     let busy = false;
@@ -169,6 +178,12 @@ import { withBase } from '../../../utils/paths';
     let qrRenderedUrl = '';
     let qrCanvas = null;
     let qrWorking = false;
+    let issued = [];
+    let issuedSnapshot = '';
+    let activeBatchId = '';
+    let issuing = false;
+    let verifiedQrByRecipient = new Map();
+    let authorizedSigner = false;
 
     const inform = (text, error = false) => {
       if (!message) return;
@@ -176,18 +191,21 @@ import { withBase } from '../../../utils/paths';
       message.className = `mt-5 rounded-xl border p-4 text-sm leading-6 ${error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-900'}`;
     };
     const names = () => namesFromText(fields.names?.value || '');
-    const details = (recipient) => ({
+    const details = (recipient, cert = null) => ({
       event: fields.event?.value.trim() || '',
       date: indonesianDate(fields.date?.value || ''),
       category: fields.role?.value || 'Peserta',
       organizer: fields.organizer?.value.trim() || 'PPI Jepang Komisariat Ishikawa',
       recipient,
-      signer: fields.signer?.value.trim() || '',
-      signerRole: fields.signerRole?.value.trim() || '',
+      signer: cert?.signer_name || fields.signer?.value.trim() || '',
+      signerRole: cert?.signer_role || fields.signerRole?.value.trim() || '',
       logo,
       signature,
       infoQr: qrEnabled?.checked ? qrCanvas : null,
+      verificationQr: cert ? verifiedQrByRecipient.get(cert.recipient_position) : null,
+      certificateNumber: cert?.certificate_number || '',
     });
+    const getSnapshot = () => JSON.stringify({ event: fields.event?.value.trim(), date: fields.date?.value, role: fields.role?.value, organizer: fields.organizer?.value.trim(), names: names() });
     const validate = () => {
       const event = fields.event?.value.trim();
       const date = fields.date?.value;
@@ -218,13 +236,18 @@ import { withBase } from '../../../utils/paths';
       if (previewName) previewName.textContent = current.length
         ? `Pratinjau untuk: ${current[0]}${current.length > 1 ? ` (+${current.length - 1} nama lain)` : ''}`
         : 'Pratinjau menggunakan nama penerima pertama.';
-      if (preview instanceof HTMLCanvasElement) renderCertificate(preview, details(current[0] || 'Nama Penerima'));
-      let valid = !busy && authorized;
+      const snapshot = current.length ? getSnapshot() : '';
+      const first = snapshot && issuedSnapshot === snapshot && issued.length ? issued[0] : null;
+      if (preview instanceof HTMLCanvasElement) renderCertificate(preview, details(current[0] || 'Nama Penerima', first));
+      let valid = !busy && !issuing && authorized && authorizedSigner && !isMembershipDemoMode;
       if (valid) {
-        try { validate(); } catch { valid = false; }
+        try { validate(); if (qrEnabled?.checked) valid = false; } catch { valid = false; }
       }
-      if (exportOne) exportOne.disabled = !valid;
-      if (exportAll) exportAll.disabled = !valid;
+      const finalized = valid && issued.length > 0 && issuedSnapshot === snapshot && issued.every(c => !c.revoked_at) && verifiedQrByRecipient.size === issued.length;
+      if (issueButton) issueButton.disabled = !valid || finalized || issued.length > 0 && issuedSnapshot === snapshot;
+      if (exportOne) exportOne.disabled = !finalized;
+      if (exportAll) exportAll.disabled = !finalized;
+      if (issueStatus) issueStatus.textContent = issuing ? 'Mencatat pengesahan di database…' : finalized ? `${issued.length} sertifikat terdaftar dan siap diunduh.` : issued.length ? 'Isi berubah setelah pengesahan. Kembalikan data semula atau mulai batch baru.' : 'Belum diterbitkan.';
     };
 
     const updateQr = async () => {
@@ -329,11 +352,54 @@ import { withBase } from '../../../utils/paths';
       queueRefresh();
     });
 
+    const issue = async () => {
+      if (issuing || busy || !authorizedSigner || isMembershipDemoMode) return;
+      let list;
+      try { list = validate(); } catch(error) { inform(error.message,true); return; }
+      if (qrEnabled?.checked) {
+        inform('Matikan QR informasi saat menerbitkan sertifikat resmi. QR resmi akan dibuat otomatis untuk setiap penerima.',true);
+        return;
+      }
+      if (!window.confirm(`Terbitkan dan sahkan ${list.length} sertifikat untuk ${fields.event?.value.trim()} atas nama Ketua PPI Ishikawa? Setelah terbit, data hanya dapat dicabut, bukan diubah.`)) return;
+      issuing = true;
+      refresh();
+      const snapshot = getSnapshot();
+      if (!activeBatchId || (issued.length > 0 && issuedSnapshot !== snapshot)) activeBatchId = crypto.randomUUID();
+      const {data,error} = await issueStudioCertificates(activeBatchId, {
+        event: fields.event.value.trim(), date: fields.date.value,
+        role: fields.role.value, organizer: fields.organizer.value.trim(), names: list,
+      });
+      if (error) {
+        issuing = false;
+        inform('Pengesahan gagal: ' + (error.message || 'Periksa koneksi dan hak akses.'),true);
+        refresh();
+        return;
+      }
+      const qrs = new Map();
+      try {
+        for (const cert of data) {
+          const canvas = document.createElement('canvas');
+          await QRCode.toCanvas(canvas, studioVerifyUrl(cert.verification_token), {width:210,margin:2,errorCorrectionLevel:'M'});
+          qrs.set(cert.recipient_position, canvas);
+        }
+        verifiedQrByRecipient = qrs;
+        issued = data;
+        issuedSnapshot = snapshot;
+        inform(`${data.length} sertifikat resmi diterbitkan. Setiap QR dapat diverifikasi pada website PPI Ishikawa.`);
+      } catch {
+        inform('Data sertifikat sudah tersimpan, tetapi QR gagal dibuat. Muat kembali batch sebelum mengunduh.', true);
+      }
+      issuing = false;
+      refresh();
+    };
+    issueButton?.addEventListener('click',issue);
+
     const exportPdf = async (one) => {
       if (busy) return;
       if (!authorized) return inform('Akses hanya untuk pengurus dengan peran admin yang sudah masuk.', true);
       let recipients;
       try { recipients = validate(); } catch (error) { inform(error.message, true); return; }
+      if (issuedSnapshot !== getSnapshot() || issued.length !== recipients.length || !verifiedQrByRecipient.size) return inform('Terbitkan sertifikat terlebih dahulu sebelum mengunduh.',true);
       const namesToExport = one ? recipients.slice(0, 1) : recipients;
       busy = true;
       refresh();
@@ -345,7 +411,7 @@ import { withBase } from '../../../utils/paths';
         canvas.width = CERTIFICATE_WIDTH;
         canvas.height = CERTIFICATE_HEIGHT;
         for (let i = 0; i < namesToExport.length; i++) {
-          renderCertificate(canvas, details(namesToExport[i]));
+          renderCertificate(canvas, details(namesToExport[i], issued[i]));
           if (i) pdf.addPage('a4', 'landscape');
           const jpeg = canvas.toDataURL('image/jpeg', 0.85);
           pdf.addImage(jpeg, 'JPEG', 0, 0, 297, 210, undefined, 'FAST');
@@ -370,6 +436,7 @@ import { withBase } from '../../../utils/paths';
     document.fonts?.ready.then(queueRefresh);
     getCurrentMember().then((member) => {
       authorized = member?.profile?.role === 'admin';
+      authorizedSigner = authorized && !isMembershipDemoMode && member?.profile?.verification_status === 'approved' && member?.profile?.full_name === "Arif Mu'amar Wahid";
       refresh();
     }).catch(() => { authorized = false; refresh(); });
     refresh();
